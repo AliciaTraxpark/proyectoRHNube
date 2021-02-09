@@ -1045,15 +1045,40 @@ function cargartabla(fecha) {
                                         );
 
                                         var cont8 = cont7.replace(
+                                            "Cambiar a entrada",
+                                            ""
+                                        );
+
+                                        var cont9 = cont8.replace(
+                                            "Cambiar a salida",
+                                            ""
+                                        );
+
+                                        var cont10 = cont9.replace(
+                                            "Convertir orden",
+                                            ""
+                                        );
+
+                                        var cont11 = cont10.replace(
+                                            "Asignar a nueva marc.",
+                                            ""
+                                        );
+
+                                        var cont12 = cont11.replace(
+                                            "Eliminar marc.",
+                                            ""
+                                        );
+
+                                        var cont13 = cont12.replace(
                                             "Agregar",
                                             ""
                                         );
-                                        var cont9 = cont8.replace(
+                                        var cont14 = cont13.replace(
                                             "Opciones",
                                             ""
                                         );
 
-                                        return $.trim(cont9);
+                                        return $.trim(cont14);
                                     },
                                 },
                             },
@@ -1155,16 +1180,40 @@ function cargartabla(fecha) {
                                                 "---"
                                             );
                                             var cambiar8 = cambiar7.replace(
+                                                "Cambiar a entrada",
+                                                ""
+                                            );
+
+                                            var cambiar9 = cambiar8.replace(
+                                                "Cambiar a salida",
+                                                ""
+                                            );
+
+                                            var cambiar10 = cambiar9.replace(
+                                                "Convertir orden",
+                                                ""
+                                            );
+
+                                            var cambiar11 = cambiar10.replace(
+                                                "Asignar a nueva marc.",
+                                                ""
+                                            );
+
+                                            var cambiar12 = cambiar11.replace(
+                                                "Eliminar marc.",
+                                                ""
+                                            );
+                                            var cambiar13 = cambiar12.replace(
                                                 "Agregar",
                                                 ""
                                             );
-                                            var cambiar9 = cambiar8.replace(
+                                            var cambiar14 = cambiar13.replace(
                                                 "Opciones",
                                                 ""
                                             );
-                                            var cambiar10 = cambiar9.trim();
+                                            var cambiar15 = cambiar14.trim();
                                             bodyNuevo.push({
-                                                text: cambiar10,
+                                                text: cambiar15,
                                                 style: "defaultStyle",
                                             });
                                         });
@@ -1302,9 +1351,68 @@ function cargartabla(fecha) {
             } else {
                 $("#MostarDetalles").hide();
                 $("#tbodyD").empty();
-                $("#tbodyD").append(
-                    '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
-                );
+
+
+
+                table = $("#tablaReport").DataTable({
+                    searching: false,
+                    scrollX: true,
+                    ordering: false,
+                    autoWidth: false,
+                    bInfo: false,
+                    bLengthChange: true,
+                    fixedHeader: true,
+                    pageLength: 25,
+                    retrieve: true,
+                    language: {
+                        sProcessing: "Procesando...",
+                        sLengthMenu: "Mostrar _MENU_ registros",
+                        sZeroRecords: "No se encontraron resultados",
+                        sEmptyTable: "Ningún dato disponible en esta tabla",
+                        sInfo: "Mostrando registros del _START_ al _END_ ",
+                        sInfoEmpty:
+                            "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        sInfoFiltered:
+                            "(filtrado de un total de _MAX_ registros)",
+                        sInfoPostFix: "",
+                        sSearch: "Buscar:",
+                        sUrl: "",
+                        sInfoThousands: ",",
+                        sLoadingRecords: "Cargando...",
+                        oPaginate: {
+                            sFirst: "Primero",
+                            sLast: "Último",
+                            sNext: ">",
+                            sPrevious: "<",
+                        },
+                        oAria: {
+                            sSortAscending:
+                                ": Activar para ordenar la columna de manera ascendente",
+                            sSortDescending:
+                                ": Activar para ordenar la columna de manera descendente",
+                        },
+                        buttons: {
+                            copy: "Copiar",
+                            colvis: "Visibilidad",
+                        },
+                    },
+
+
+                    initComplete: function () {
+
+                    },
+                });
+                $(window).on("resize", function () {
+                    $("#tablaReport").css("width", "100%");
+                    table.draw(true);
+                });
+
+                if($("#tbodyD").is(':empty')){
+                    $("#tbodyD").append(
+                        '<tr class="odd"><td valign="top" colspan="16" class="text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
+                    );
+                }
+
             }
         },
         error: function () {},
