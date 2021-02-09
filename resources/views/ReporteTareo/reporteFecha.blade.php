@@ -93,7 +93,12 @@
         .flatpickr-calendar.static.open {
             width: 124px !important;
         }
-
+        .scrollable-menu {
+        height: auto;
+        max-height: 142px;
+        overflow: auto;
+        position: absolute;
+    }
         .botonsms {
             background-color: #ffffff;
             border-color: #ffffff;
@@ -317,7 +322,7 @@
                     </div>
 
                     <div class="row justify-content-center">
-                        <div class="col-md-12" id="MostarDetalles" style="display: none">
+                        <div class="col-md-7" id="MostarDetalles" style="display: none">
                             {{-- <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
                                     onclick="javascript:cambiartabla()">
@@ -407,6 +412,27 @@
                                 </div>
                             </div>
                         </div>
+                      {{--   <div class="col-xl-5">
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label">Seleccionar por:</label>
+                                <div class="col-lg-8 ">
+                                    <select id="areaT" data-plugin="customselect" class="form-control" multiple="multiple">
+                                        @foreach ($areas as $area)
+                                        <option value="{{$area->area_id}}">Área :
+                                            {{$area->area_descripcion}}</option>
+                                        @endforeach
+                                        @foreach ($cargos as $cargo)
+                                            <option value="{{ $cargo->idcargo }}">Cargo :
+                                                {{ $cargo->descripcion }}.</option>
+                                        @endforeach
+                                        @foreach ($locales as $local)
+                                            <option value="{{ $local->idlocal }}">Local :
+                                                {{ $local->descripcion }}.</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div> --}}
 
                         {{-- GIF DE ESPERA --}}
                         <div id="espera" class="text-center" style="display: none">
