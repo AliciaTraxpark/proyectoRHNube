@@ -144,8 +144,7 @@
       </div>
       <div class="modal-body" style="font-size:12px!important">
         <input type="hidden" id="e_idCentro">
-        <form action="javascript:actualizarCentroC()">
-          {{ csrf_field() }}
+        <form action="javascript:actualizarCentroC()" id="formActualizarCentroC">
           <div class="row">
             <div class="col-md-6">
               <label for="">Centro de costo</label>

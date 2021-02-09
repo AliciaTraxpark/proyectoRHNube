@@ -1,5 +1,6 @@
 $.fn.select2.defaults.set('language', 'es');
 var table;
+var sent = false;
 function tablaCentroCosto() {
     table = $("#centroC").DataTable({
         scrollX: true,
@@ -99,12 +100,12 @@ $('#e_empleadosCentro').select2({
     tags: "true",
     placeholder: "Empleados"
 });
-
 // * MODAL DE EDITAR
 function editarCentro(id) {
     $('#e_idCentro').val(id);
     $('#e_centrocmodal').modal();
     datosCentro(id);
+    sent = false;
 }
 // * OBTENER DATOS DE CENTRO COSTO
 var e_empleadosS;
@@ -213,6 +214,15 @@ function actualizarCentroC() {
     var id = $('#e_idCentro').val();
     var codigo = $('#e_codigo').val();
     var empleados = $('#e_empleadosCentro').val();
+    var porEmpleado;
+    // : ************************* POR EMPLEADO ****************
+    if ($('#switchPorEmpleado').is(":checked")) {
+        porEmpleado = 1;
+    } else {
+        porEmpleado = 0;
+    }
+    // : ************************* FINALIZACION *****************
+    console.log(porEmpleado);
     $.ajax({
         async: false,
         url: "/actualizarCentroC",
@@ -220,7 +230,8 @@ function actualizarCentroC() {
         data: {
             id: id,
             empleados: empleados,
-            codigo: codigo
+            codigo: codigo,
+            porEmpleado: porEmpleado
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -237,7 +248,29 @@ function actualizarCentroC() {
             if (data.respuesta == undefined) {
                 centroCostoOrganizacion();
                 $('#e_centrocmodal').modal('toggle');
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nCentro de costo modificado.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
             } else {
+                sent = false;
                 if (data.respuesta == 1) {
                     $('#e_codigo').addClass("borderColor");
                     $.notifyClose();
@@ -273,6 +306,46 @@ function actualizarCentroC() {
         error: function () { }
     });
 }
+// * VALIDAR FORMULARIO
+$('#formActualizarCentroC').attr('novalidate', true);
+$('#formActualizarCentroC').submit(function (e) {
+    e.preventDefault();
+    // : SWITCH DE POR EMPLEADO
+    if ($('#switchPorEmpleado').is(":checked")) {
+        if ($("#e_empleadosCentro").val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#e_centrocmodal"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            sent = false;
+            return;
+        }
+    }
+    // : EVITAR EL DOBLE ENVIO DE FORMULARIO
+    if (!sent) {
+        sent = true;
+        this.submit();
+    }
+});
 // * RETIRAR CLASE DE INPUT
 $('#e_codigo').keyup(function () {
     $(this).removeClass("borderColor");

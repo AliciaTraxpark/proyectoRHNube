@@ -85,6 +85,7 @@ class centrocostoController extends Controller
         $id = $request->get('id');
         $empleados = $request->get('empleados');
         $codigo = $request->get('codigo');
+        $porEmpleado = $request->get('porEmpleado');
         // : BUSCAR CENTRO DE COSTO CON EL MISMO CODIGO
         $buscarCodigoCentro = centro_costo::where('codigo', '=', $codigo)
             ->where('centroC_id', '!=', $id)
@@ -96,6 +97,7 @@ class centrocostoController extends Controller
         if (!$buscarCodigoCentro) {
             $centro = centro_costo::findOrFail($id);
             $centro->codigo = $codigo;
+            $centro->porEmpleado = $porEmpleado;
             $centro->save();
             // * EMPLEADOS EN CENTRO DE COSTO
             $empleadoCentro = centrocosto_empleado::where('idCentro', '=', $centro->centroC_id)->where('estado', '=', 1)->get();
