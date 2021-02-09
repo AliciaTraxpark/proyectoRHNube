@@ -429,13 +429,15 @@ function empleadosCC() {
 function registrarCentroC() {
     var descripcion = $('#r_descripcion').val();
     var empleados = $('#r_empleadosCentro').val();
+    var codigo = $('#r_codigo').val();
     $.ajax({
         async: false,
         url: "/registrarCentro",
         method: "POST",
         data: {
             descripcion: descripcion,
-            empleados: empleados
+            empleados: empleados,
+            codigo: codigo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -478,6 +480,8 @@ function registrarCentroC() {
                 if (data.respuesta == 1) {
                     if (data.campo == 1) {
                         $("#r_descripcion").addClass("borderColor");
+                    } else {
+                        $("#r_codigo").addClass("borderColor");
                     }
                     $.notifyClose();
                     $.notify(
@@ -568,9 +572,13 @@ function recuperarCentro(id) {
 $("#r_descripcion").keyup(function () {
     $(this).removeClass("borderColor");
 });
+$('#r_codigo').keyup(function () {
+    $(this).removeClass("borderColor");
+});
 // : FUNCION LIMPIAR
 function limpiarCentro() {
     $('#r_descripcion').val("");
+    $('#r_codigo').val("");
     $('#r_empleadosCentro').empty();
 }
 //: TODOS LOS EMPLEADOS EN EDITAR

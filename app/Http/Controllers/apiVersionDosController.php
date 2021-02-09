@@ -963,17 +963,25 @@ class apiVersionDosController extends Controller
                     }
                     // : HORA FINAL DE HORARIO DE COMPARAR
                     $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                    $horario->tiempoTrabajado = $resultadoData->rango;
+                    $horario->horasTotal = $horasTotal->isoFormat('HH:mm:ss');
                     // : TIEMPO TRABAJADO DEBE SER MENOR A LAS HORAS OBLIGADAS MAS LAS HORAS ADICIONALES
                     if ($tiempoTrabajado->lt($horasTotal)) {
                         if ($resp->fuera_horario == 1) {
-                            $horario->tiempo = $resultadoData->rango;
+                            $horario->laborar = 1;
                             array_push($respuesta, $horario);
                         } else {
                             if (Carbon::parse($horaActual)->lte($horaComparar)) {
-                                $horario->tiempo = $resultadoData->rango;
+                                $horario->laborar = 1;
+                                array_push($respuesta, $horario);
+                            } else {
+                                $horario->laborar = 0;
                                 array_push($respuesta, $horario);
                             }
                         }
+                    } else {
+                        $horario->laborar = 0;
+                        array_push($respuesta, $horario);
                     }
                 } else {
                     // * BUSCAMOS HORARIOS CON FECHA DE AYER QUE ACABEN HOY
@@ -1001,16 +1009,24 @@ class apiVersionDosController extends Controller
                             $horario->horaF = $fechaHoy . " " . $horario->horaF;
                             // : HORA FINAL DE HORARIO DE COMPARAR
                             $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                            $horario->tiempoTrabajado = $resultadoData->rango;
+                            $horario->horasTotal = $horasTotal->isoFormat('HH:mm:ss');
                             if ($tiempoTrabajado->lt($horasTotal)) {
                                 if ($resp->fuera_horario == 1) {
-                                    $horario->tiempo = $resultadoData->rango;
+                                    $horario->laborar = 1;
                                     array_push($respuesta, $horario);
                                 } else {
                                     if (Carbon::parse($horaActual)->lte($horaComparar)) {
-                                        $horario->tiempo = $resultadoData->rango;
+                                        $horario->laborar = 1;
+                                        array_push($respuesta, $horario);
+                                    } else {
+                                        $horario->laborar = 0;
                                         array_push($respuesta, $horario);
                                     }
                                 }
+                            } else {
+                                $horario->laborar = 0;
+                                array_push($respuesta, $horario);
                             }
                         }
                     }
