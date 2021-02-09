@@ -1607,7 +1607,7 @@ class dispositivosController extends Controller
                         // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
                         $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                         // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
-                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addHours($horario->horasA);
+                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                             if ($horario->fueraH == 0) {
                                 if ($horarioIniT->lte($entrada)) {
@@ -1830,7 +1830,7 @@ class dispositivosController extends Controller
                         // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
                         $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                         // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
-                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addHours($horario->horasA);
+                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                             if ($horario->fueraH == 0) {
                                 if ($salida->lte($horarioFinT)) {
@@ -2220,7 +2220,7 @@ class dispositivosController extends Controller
                     // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
                     $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                     // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
-                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addHours($horario->horasA);
+                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                     if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                         if ($horario->fueraH == 0) {
                             // * VALIDAR SIN FUERA DE HORARIO
@@ -2354,12 +2354,12 @@ class dispositivosController extends Controller
                     $horaFParse = Carbon::parse($salida);
                     $totalDuration = $horaFParse->diffInSeconds($horaIParse);
                     $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
-                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addHours($horario->horasA);
+                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                     if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                         if ($horario->fueraH == 0) {
                             // * VALIDAR SIN FUERA DE HORARIO
                             $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                            $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
+                            $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
 
                             if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
                                 $marcacion->marcaMov_fecha = $entrada;
@@ -2475,7 +2475,7 @@ class dispositivosController extends Controller
                 }
                 // * VALIDAR SIN FUERA DE HORARIO
                 $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
+                $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
                 $respuesta = true;
                 foreach ($marcacion as $m) {
                     if (!is_null($m->marcaMov_fecha)) {
@@ -2561,12 +2561,12 @@ class dispositivosController extends Controller
             $entrada = $inicio == null ? NULL : Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $inicio);
             if ($horario->horaF > $horario->horaI) {
                 // : HORA DE FIN DE HORARIO
-                $horarioFin = Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $horario->horaF)->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
+                $horarioFin = Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $horario->horaF)->addMinutes($horario->toleranciaF);
                 // : HORA DE FIN DE MARCACION
                 $salida = $fin == null ? NULL : Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $fin);
             } else {
                 // : HORA DE FIN DE HORARIO
-                $horarioFin = Carbon::parse($fechaNext . " " . $horario->horaF)->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
+                $horarioFin = Carbon::parse($fechaNext . " " . $horario->horaF)->addMinutes($horario->toleranciaF);
                 // : HORA DE FIN DE MARCACION
                 if ($fin  > $inicio) {
                     $salida = $fin == null ? NULL : Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $fin);
@@ -2609,7 +2609,7 @@ class dispositivosController extends Controller
                         $horaFParse = Carbon::parse($salida);
                         $totalDuration = $horaFParse->diffInSeconds($horaIParse);
                         $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
-                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addHours($horario->horasA);
+                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                             // * VALIDACION CON HORARIO
                             if ($horario->fueraH == 1) {

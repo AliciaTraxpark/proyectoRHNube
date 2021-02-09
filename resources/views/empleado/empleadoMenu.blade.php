@@ -1506,7 +1506,7 @@ use App\proyecto_empleado;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Agregar centro costo
+                        Agregar centro de costo
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiar()">
@@ -1519,12 +1519,12 @@ use App\proyecto_empleado;
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label for="">Centro costo</label>
+                                    <label for="">Centro de costo</label>
                                 </div>
                                 <div id="editarCentro" class="col-md-6"></div>
                                 <div class="col-md-3">
                                     <a id="buscarCentro" data-toggle="tooltip" data-placement="right"
-                                        title="editar centro costo" data-original-title="editar centro costo."
+                                        title="editar centro de costo" data-original-title="editar centro de costo."
                                         style="cursor: pointer;">
                                         <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                     </a>
@@ -1774,7 +1774,7 @@ use App\proyecto_empleado;
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="sw-default">
-                                        Condición Pago
+                                        Condición de pago
                                         <a onclick="javascript:ModalAbiertoCondicionReg()" href="#condicionmodal"
                                             data-toggle="modal" data-target="#condicionmodal">
                                             <i class="uil uil-plus"></i>
@@ -1798,7 +1798,7 @@ use App\proyecto_empleado;
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                <label for="" style="font-weight: 600">Fecha inicial</label>
                                 <span id="m_validFechaC" style="color: red;display: none;">
                                     *Fecha incorrecta.
                                 </span>
@@ -1866,8 +1866,8 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha Final</label>
-                                    <label for="">Fecha Indefinida</label>
+                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha final</label>
+                                    <label for="">Fecha indefinida</label>
                                     <input type="checkbox" id="checkboxFechaI" name="checkboxFechaI">
                                 </div>
                                 <div id="ocultarFecha">
@@ -1978,7 +1978,7 @@ use App\proyecto_empleado;
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="sw-default">
-                                        Condición Pago
+                                        Condición de pago
                                         <a onclick="javascript:ModalAbiertoCondicionReg()" href="#condicionmodal"
                                             data-toggle="modal" data-target="#condicionmodal">
                                             <i class="uil uil-plus"></i>
@@ -2017,7 +2017,7 @@ use App\proyecto_empleado;
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                <label for="" style="font-weight: 600">Fecha inicial</label>
                                 <span id="m_validFechaCD" style="color: red;display: none;">
                                     *Fecha incorrecta.
                                 </span>
@@ -2085,8 +2085,8 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha Final</label>
-                                    <label class="ocultarFechaD">Fecha Indefinida</label>
+                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha final</label>
+                                    <label class="ocultarFechaD">Fecha indefinida</label>
                                     <input type="checkbox" class="ocultarFechaD" id="checkboxFechaID"
                                         name="checkboxFechaID">
                                 </div>
@@ -2249,7 +2249,7 @@ use App\proyecto_empleado;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        Centro Costo</h5>
+                        centro de costo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                         <span aria-hidden="true">&times;</span>
@@ -2260,12 +2260,12 @@ use App\proyecto_empleado;
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-md-3">
-                                <label for="">Centro Costo</label>
+                                <label for="">Centro de costo</label>
                             </div>
                             <div id="editarCentroA" class="col-md-6"></div>
                             <div class="col-md-3">
                                 <a id="buscarCentroA" data-toggle="tooltip" data-placement="right"
-                                    title="Editar Centro Costo." data-original-title="Editar Centro Costo."
+                                    title="Editar centro de costo." data-original-title="Editar centro de costo."
                                     style="cursor: pointer;"><img src="{{ asset('landing/images/search.svg') }}"
                                         height="18">
                                 </a>
@@ -2507,7 +2507,7 @@ use App\proyecto_empleado;
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="sw-default">
-                                                Condición Pago
+                                                Condición de pago
                                                 <a onclick="javascript:ModalAbiertoCondicion();" href="#condicionmodalE"
                                                     data-toggle="modal" data-target="#condicionmodalE"><i
                                                         class="uil uil-plus"></i>
@@ -2532,7 +2532,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <label for="" style="font-weight: 600">Fecha inicial</label>
                                         <span id="m_validFechaCIE" style="color: red;display: none;">
                                             *Fecha incorrecta.
                                         </span>
@@ -2607,8 +2607,8 @@ use App\proyecto_empleado;
                                         </div>
                                         <br>
                                         <div class="form-group">
-                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                            <label for="" class="ocultarFechaIE">Fecha Indefinida</label>
+                                            <label for="" style="font-weight: 600">Fecha final</label><br>
+                                            <label for="" class="ocultarFechaIE">Fecha indefinida</label>
                                             <input type="checkbox" id="checkboxFechaIE" name="checkboxFechaIE"
                                                 class="ocultarFechaIE">
                                         </div>
@@ -2724,7 +2724,7 @@ use App\proyecto_empleado;
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="sw-default">Condición Pago <a
+                                            <label for="sw-default">Condición de pago <a
                                                     onclick="javascript:ModalAbiertoCondicion();"
                                                     href="#condicionmodalE" data-toggle="modal"
                                                     data-target="#condicionmodalE"><i
@@ -2748,7 +2748,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <label for="" style="font-weight: 600">Fecha inicial</label>
                                         <span id="m_validFechaCIEN" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
                                         <div class="alert alert-danger" role="alert" style="display: none;"
@@ -2822,8 +2822,8 @@ use App\proyecto_empleado;
                                         </div>
                                         <br>
                                         <div class="form-group">
-                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                            <label for="">Fecha Indefinida</label>
+                                            <label for="" style="font-weight: 600">Fecha final</label><br>
+                                            <label for="">Fecha indefinida</label>
                                             <input type="checkbox" id="checkboxFechaIEN" name="checkboxFechaIEN">
                                         </div>
                                         <div id="ocultarFechaEN">
@@ -2940,7 +2940,7 @@ use App\proyecto_empleado;
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="sw-default">Condición Pago
+                                            <label for="sw-default">Condición de pago
                                                 <a onclick="javascript:ModalAbiertoCondicion();" href="#condicionmodalE"
                                                     data-toggle="modal" data-target="#condicionmodalE">
                                                     <i class="uil uil-plus"></i>
@@ -2966,7 +2966,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <label for="" style="font-weight: 600">Fecha inicial</label>
                                         <span id="m_validFechaCIEND" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
                                         <div class="row">
@@ -3038,8 +3038,8 @@ use App\proyecto_empleado;
                                         </div>
                                         <br>
                                         <div class="form-group">
-                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                            <label for="">Fecha Indefinida</label>
+                                            <label for="" style="font-weight: 600">Fecha final</label><br>
+                                            <label for="">Fecha indefinida</label>
                                             <input type="checkbox" id="checkboxFechaIEND" name="checkboxFechaIEND">
                                         </div>
                                         <div id="ocultarFechaEND">
@@ -3138,7 +3138,7 @@ use App\proyecto_empleado;
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="sw-default">Condición Pago</label>
+                                    <label for="sw-default">Condición de pago</label>
                                     <select class="form-control" name="v_condicionV" id="v_condicionV" required
                                         disabled>
                                         <option value="">Seleccionar</option>
@@ -3159,7 +3159,7 @@ use App\proyecto_empleado;
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                <label for="" style="font-weight: 600">Fecha inicial</label>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fechaIEV" id="m_dia_fechaIEV" disabled>
@@ -3201,8 +3201,8 @@ use App\proyecto_empleado;
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                    <label class="ocultarFechaIV">Fecha Indefinida</label>
+                                    <label for="" style="font-weight: 600">Fecha final</label><br>
+                                    <label class="ocultarFechaIV">Fecha indefinida</label>
                                     <input type="checkbox" class="ocultarFechaIV" id="checkboxFechaIEV"
                                         name="checkboxFechaIEV">
                                 </div>
@@ -3573,7 +3573,7 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Codigo Empleado</label>
+                                            <label for="sw-default">Código Empleado</label>
                                             <input type="text" class="form-control" name="codigoEmpleado"
                                                 id="codigoEmpleado" tabindex="1" data-toggle="tooltip"
                                                 data-placement="right" maxlength="200"
@@ -3611,7 +3611,7 @@ use App\proyecto_empleado;
                                     </div> <!-- end col -->
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label for="sw-default">Centro Costo <a
+                                            <label for="sw-default">Centro de costo<a
                                                     onclick="$('#form-registrar').modal('hide');" href="#centrocmodal"
                                                     data-toggle="modal" data-target="#centrocmodal"><i
                                                         class="uil uil-plus"></i></a></label>
@@ -4722,7 +4722,7 @@ use App\proyecto_empleado;
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <label for="sw-default">Codigo Empleado</label>
+                                            <label for="sw-default">Código Empleado</label>
                                             <input type="text" class="form-control" name="v_codigoEmpleado"
                                                 maxlength="200" id="v_codigoEmpleado" tabindex="1" required>
                                         </div>
@@ -4758,7 +4758,7 @@ use App\proyecto_empleado;
                                 </div> <!-- end col -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Centro Costo <a
+                                        <label for="sw-default">Centro de costo<a
                                                 onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
                                                 data-toggle="modal"><i class="uil uil-plus"
                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
@@ -5823,7 +5823,7 @@ use App\proyecto_empleado;
                                         <input type="text" class="form-control" name="v_cargoV" id="v_cargoV" disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sw-default">Codigo Empleado</label>
+                                        <label for="sw-default">Código Empleado</label>
                                         <input type="text" class="form-control" name="v_codigoEmpleadoV" maxlength="200"
                                             id="v_codigoEmpleadoV" disabled>
                                     </div>
@@ -5842,7 +5842,7 @@ use App\proyecto_empleado;
                                 </div> <!-- end col -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Centro Costo</label>
+                                        <label for="sw-default">Centro de costo</label>
                                         <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
                                             tabindex="4" disabled>
                                     </div>

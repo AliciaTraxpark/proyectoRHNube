@@ -200,12 +200,19 @@ Route::get('/reporteMensual', 'ControlController@reporteM');
 Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');
 Route::get('/empleadosRep', 'ControlController@empledosReporteSemanalMensual');
 Route::get('/mostrarCapturas', 'ControlController@mostrarCapturas');
-// TARDANZAS
+// TARDANZAS CONTROL REMOTO
 Route::get('/reporteTardanzas', 'TardanzasController@mostrarReporteTardanza');
 Route::get('/cargarTablaTardanzas', 'TardanzasController@cargarReporteTardanzas');
 Route::get('/reporteMatrizTardanzas', 'TardanzasController@mostrarMatrizTardanzas');
 Route::get('/cargarMatrizTardanzas', 'TardanzasController@cargarMatrizTardanzas');
 Route::get('/selectMatrizTardanzas', 'TardanzasController@selectMatrizTardanzas');
+// TARDANZAS CONTROL EN RUTA
+Route::get('/reporteTardanzasRuta', 'TardanzasController@mostrarReporteTardanzaRuta');
+Route::get('/cargarTablaTardanzasRuta', 'TardanzasController@cargarReporteTardanzasRuta');
+Route::get('/reporteMatrizTardanzasRuta', 'TardanzasController@mostrarMatrizTardanzasRuta');
+Route::get('/cargarMatrizTardanzasRuta', 'TardanzasController@cargarMatrizTardanzasRuta');
+Route::get('/selectMatrizTardanzasRuta', 'TardanzasController@selectMatrizTardanzasRuta');
+
 
 //FUNCION PARA MOSTRAR CAPTURAS Y MINIATURAS
 Route::get("mostrarMiniatura/{url}", "ControlController@apiMostrarCapturas");

@@ -185,7 +185,7 @@
                         </div>
                     </div>
                     <div class="col-xl-1 col-lg-1 col-sm-1 col-2 btnR" >
-                        <button type="button" id="btnRecargaTabla" class="btn btn-sm" style="background-color: #163552; height: 30px!important" onclick="javascript:cambiarFCR(1)"> 
+                        <button type="button" id="btnRecargaTabla" class="btn btn-sm" style="background-color: #163552; height: 30px!important" onclick="javascript:cambiarFCR(2)"> 
                             <img src="{{asset('landing/images/loupe (1).svg')}}" height="15"></button>
                     </div>
                 </div>

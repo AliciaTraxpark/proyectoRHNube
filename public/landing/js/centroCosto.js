@@ -127,22 +127,23 @@ function datosCentro(id) {
             }*/
         },
         success: function (data) {
-            $('#e_descripcion').val(data[0].centro.descripcion);
-            if (data[0].select.length != 0) {
+            $('#e_descripcion').val(data.centro.descripcion);
+            $('#e_codigo').val(data.centro.codigo);
+            if (data.select.length != 0) {
                 var option = "";
-                data[0].select.forEach(element => {
+                data.select.forEach(element => {
                     option += `<option value="${element.emple_id}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
                 });
                 $('#e_empleadosCentro').append(option);
             }
-            if (data[0].noSelect.length != 0) {
+            if (data.noSelect.length != 0) {
                 var optionN = "";
-                data[0].noSelect.forEach(element => {
+                data.noSelect.forEach(element => {
                     optionN += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
                 });
                 $('#e_empleadosCentro').append(optionN);
             }
-            if (data[0].noSelect.length == 0 && data[0].select.length != 0) {
+            if (data.noSelect.length == 0 && data.select.length != 0) {
                 $('#e_todosEmpleados').prop("checked", true);
             } else {
                 $('#e_todosEmpleados').prop("checked", false);
@@ -172,6 +173,7 @@ $("#e_empleadosCentro").on("change", function (e) {
 // * ACTUALIZAR DATOS CENTRO COSTO
 function actualizarCentroC() {
     var id = $('#e_idCentro').val();
+    var codigo = $('#e_codigo').val();
     var empleados = $('#e_empleadosCentro').val();
     $.ajax({
         async: false,
@@ -179,7 +181,8 @@ function actualizarCentroC() {
         method: "POST",
         data: {
             id: id,
-            empleados: empleados
+            empleados: empleados,
+            codigo: codigo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -193,12 +196,48 @@ function actualizarCentroC() {
             }*/
         },
         success: function (data) {
-            centroCostoOrganizacion();
-            $('#e_centrocmodal').modal('toggle');
+            if (data.respuesta == undefined) {
+                centroCostoOrganizacion();
+                $('#e_centrocmodal').modal('toggle');
+            } else {
+                if (data.respuesta == 1) {
+                    $('#e_codigo').addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#e_centrocmodal'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            }
         },
         error: function () { }
     });
 }
+$('#e_codigo').keyup(function () {
+    $(this).removeClass("borderColor");
+});
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** ASIGNAR CENTRO COSTO **************************************
 $('#a_centro').select2({
@@ -410,40 +449,66 @@ function registrarCentroC() {
             }*/
         },
         success: function (data) {
-            if (data.estado == 1) {
-                $("#r_descripcion").addClass("borderColor");
+            if (data.respuesta == undefined) {
+                centroCostoOrganizacion();
+                $('#r_centrocmodal').modal('toggle');
+                limpiarCentro();
                 $.notifyClose();
                 $.notify(
                     {
-                        message:
-                            "\nYa existe un centro costo con este nombre.",
-                        icon: "admin/images/warning.svg",
+                        message: "\nCentro Costo registrado.",
+                        icon: "admin/images/checked.svg",
                     },
                     {
-                        element: $('#r_centrocmodal'),
                         position: "fixed",
-                        mouse_over: "pause",
-                        placement: {
-                            from: "top",
-                            align: "center",
-                        },
                         icon_type: "image",
                         newest_on_top: true,
-                        delay: 2000,
+                        delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
                             "</div>",
                         spacing: 35,
                     }
                 );
             } else {
-                if (data.estado == 0) {
+                if (data.respuesta == 1) {
+                    if (data.campo == 1) {
+                        $("#r_descripcion").addClass("borderColor");
+                    }
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#r_centrocmodal'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                } else {
                     alertify
-                        .confirm("Ya existe un centro costo inactivo con este nombre. ¿Desea recuperarla si o no?", function (
+                        .confirm(data.mensaje, function (
                             e
                         ) {
                             if (e) {
@@ -451,7 +516,7 @@ function registrarCentroC() {
                             }
                         })
                         .setting({
-                            title: "Modificar Centro Costo",
+                            title: "Modificar centro de costo",
                             labels: {
                                 ok: "Si",
                                 cancel: "No",
@@ -465,31 +530,6 @@ function registrarCentroC() {
                             oncancel: function (closeEvent) {
                             },
                         });
-                } else {
-                    centroCostoOrganizacion();
-                    $('#r_centrocmodal').modal('toggle');
-                    limpiarCentro();
-                    $.notifyClose();
-                    $.notify(
-                        {
-                            message: "\nCentro Costo registrado.",
-                            icon: "admin/images/checked.svg",
-                        },
-                        {
-                            position: "fixed",
-                            icon_type: "image",
-                            newest_on_top: true,
-                            delay: 5000,
-                            template:
-                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                                "</div>",
-                            spacing: 35,
-                        }
-                    );
                 }
             }
         },

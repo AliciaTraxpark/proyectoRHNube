@@ -68,7 +68,7 @@ class BirthdayUsers extends Command
                         $query->where('invitado.gestionHb', '<>', 0)
                               ->orWhereNull('invitado.gestionHb');
                     })
-                    ->select('usuario_organizacion.*')
+                    ->select('usuario_organizacion.user_id', 'usuario_organizacion.rol_id')
                     ->get();
 
             foreach ($admins as $admin) {
@@ -80,9 +80,8 @@ class BirthdayUsers extends Command
                     if ($invitado->verTodosEmps == 1) {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'p.perso_fechaNacimiento')
+                            ->where('e.organi_id', '=', $organizacion->organi_id)
                             ->where('e.emple_estado', '=', 1)
                             ->groupBy('e.emple_id')
                             ->get();
@@ -94,12 +93,11 @@ class BirthdayUsers extends Command
                             ->get()->first();
                         if ($invitado_empleadoIn != null) {
                             $empleados = DB::table('empleado as e')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'p.perso_fechaNacimiento')
+                                ->where('e.organi_id', '=', $organizacion->organi_id)
                                 ->where('e.emple_estado', '=', 1)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
@@ -107,12 +105,11 @@ class BirthdayUsers extends Command
                                 ->get();
                         } else {
                             $empleados = DB::table('empleado as e')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                                 ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'p.perso_fechaNacimiento')
+                                ->where('e.organi_id', '=', $organizacion->organi_id)
                                 ->where('e.emple_estado', '=', 1)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
@@ -123,15 +120,13 @@ class BirthdayUsers extends Command
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'p.perso_fechaNacimiento')
+                        ->where('e.organi_id', '=', $organizacion->organi_id)
                         ->where('e.emple_estado', '=', 1)
                         ->groupBy('e.emple_id')
                         ->get();
                 }
 
-                var_dump($empleados);
 
                 foreach ($empleados as $empleado) {
                     // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
@@ -146,27 +141,21 @@ class BirthdayUsers extends Command
                                             "idOrgani" => $organizacion->organi_id,
                                             "idEmpleado" => $empleado->emple_id,
                                             "empleado" => [
-                                                    $empleado->perso_nombre,
-                                                    $empleado->perso_apPaterno,
-                                                    $empleado->perso_apMaterno
+                                                    $empleado->nombre,
+                                                    $empleado->apPaterno,
+                                                    $empleado->apMaterno
                                                 ],
                                             "mensaje" => "Mañana está de cumpleaños.",
                                             "asunto" => "birthday"
                                         ];
 
-                            if($admins){
-                                $recipient = User::find($admin->user_id);
-                                $recipient->notify(new NuevaNotification($mensaje));
-                            }
+                            $recipient = User::find($admin->user_id);
+                            $recipient->notify(new NuevaNotification($mensaje));
                         }
                     }
                     // FIN DE NOTIFICACIÓN
                 }
             }
-
-            
-
-            
         }
     }
 }

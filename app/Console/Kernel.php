@@ -26,8 +26,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('telescope:prune --hours=12')->hourly();
-       $schedule->command('birthday:users');
        $schedule->command('happyBirth:users');
+       $schedule->command('birthday:users');
        $schedule->command('happyBirthdayMail:users');
        $schedule->command('finContrato:users');
     }

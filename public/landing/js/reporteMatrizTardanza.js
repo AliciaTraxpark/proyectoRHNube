@@ -150,7 +150,7 @@ function reporteMatriz() {
                     html_tr_temp += '<td style="border-left:1px solid #aaaaaa !important; text-align: center;"><div class="badge badge-soft-danger">' + datos[i].horas[j] + '</div></td>';
             }
             
-            html_tr = html_tr + '<td>' + datos[i].cantidadTardanza + '</td>' + html_tr_temp + '</tr>';
+            html_tr = html_tr + '<td style="text-align: center; background-color: #fafafa;">' + datos[i].cantidadTardanza + '</td>' + html_tr_temp + '</tr>';
         }
         html_trD += '<th>TOTAL</th>';
         for (var m = 0; m < datos[0].fechaF.length; m++) {

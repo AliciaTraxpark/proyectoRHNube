@@ -62,12 +62,12 @@ class centrocostoController extends Controller
         return response()->json($centroC, 200);
     }
 
+    // * MOSTRAR CENTRO DE COSTO POR ID
     public function centroCosto(Request $request)
     {
         $id = $request->get('id');
         $empleadoSinCentro = [];
-        $respuesta = [];
-        $centro = centro_costo::select('centroC_descripcion as descripcion', 'centroC_id as id')
+        $centro = centro_costo::select('centroC_descripcion as descripcion', 'centroC_id as id', 'codigo')
             ->where('centroC_id', '=', $id)->get()->first();
         // TODO LOS EMPLEADOS
         $empleados = DB::table('empleado as e')
@@ -99,67 +99,77 @@ class centrocostoController extends Controller
                 array_push($empleadoSinCentro, $empleados[$index]);
             }
         }
-        // * DATOS PARA RESULTADO
-        array_push($respuesta, array("select" => $empleadoCentro, "noSelect" => $empleadoSinCentro, "centro" => $centro));
-
-        return response()->json($respuesta, 200);
+        return response()->json(array("select" => $empleadoCentro, "noSelect" => $empleadoSinCentro, "centro" => $centro), 200);
     }
 
+    // * EDITAR CENTRO COSTO
     public function actualizarCentro(Request $request)
     {
         $id = $request->get('id');
         $empleados = $request->get('empleados');
-
-        $centro = centro_costo::findOrFail($id);
-
-        // * EMPLEADOS EN CENTRO DE COSTO
-        $empleadoCentro = DB::table('centro_costo as c')
-            ->join('empleado as e', 'e.emple_centCosto', '=', 'c.centroC_id')
-            ->select('e.emple_id')
-            ->where('c.centroC_id', '=', $centro->centroC_id)
-            ->where('e.emple_estado', '=', 1)
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->get();
-        // * SI ARRAY EMPLEADOS ESTA VACIO
-        if (is_null($empleados)) {
-            foreach ($empleadoCentro as $ec) {
-                $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
-                $emp->emple_centCosto = NULL;
-                $emp->save();
-            }
-        } else {
-            // * BUSCAR EMPLEADOS CON CENTRO COSTO
-            foreach ($empleados as $e) {
-                $estado = true;
-                for ($index = 0; $index < sizeof($empleadoCentro); $index++) {
-                    if ($empleadoCentro[$index]->emple_id == $e) {
-                        $estado = false;
-                    }
-                }
-                if ($estado) {
-                    $emp = empleado::where('emple_id', '=', $e)->get()->first();
-                    $emp->emple_centCosto = $centro->centroC_id;
-                    $emp->save();
-                }
-            }
-
-            // * COMPARAR EMPLEADOS CENTRO CON LISTA DE EMPLEADOS
-            foreach ($empleadoCentro as $ec) {
-                $estadoB = true;
-                foreach ($empleados as $em) {
-                    if ($ec->emple_id == $em) {
-                        $estadoB = false;
-                    }
-                }
-                if ($estadoB) {
+        $codigo = $request->get('codigo');
+        // : BUSCAR CENTRO DE COSTO CON EL MISMO CODIGO
+        $buscarCodigoCentro = centro_costo::where('codigo', '=', $codigo)
+            ->where('centroC_id', '!=', $id)
+            ->whereNotNull('codigo')
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->where('estado', '=', 1)
+            ->get()
+            ->first();
+        if (!$buscarCodigoCentro) {
+            $centro = centro_costo::findOrFail($id);
+            $centro->codigo = $codigo;
+            $centro->save();
+            // * EMPLEADOS EN CENTRO DE COSTO
+            $empleadoCentro = DB::table('centro_costo as c')
+                ->join('empleado as e', 'e.emple_centCosto', '=', 'c.centroC_id')
+                ->select('e.emple_id')
+                ->where('c.centroC_id', '=', $centro->centroC_id)
+                ->where('e.emple_estado', '=', 1)
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->get();
+            // * SI ARRAY EMPLEADOS ESTA VACIO
+            if (is_null($empleados)) {
+                foreach ($empleadoCentro as $ec) {
                     $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
                     $emp->emple_centCosto = NULL;
                     $emp->save();
                 }
-            }
-        }
+            } else {
+                // * BUSCAR EMPLEADOS CON CENTRO COSTO
+                foreach ($empleados as $e) {
+                    $estado = true;
+                    for ($index = 0; $index < sizeof($empleadoCentro); $index++) {
+                        if ($empleadoCentro[$index]->emple_id == $e) {
+                            $estado = false;
+                        }
+                    }
+                    if ($estado) {
+                        $emp = empleado::where('emple_id', '=', $e)->get()->first();
+                        $emp->emple_centCosto = $centro->centroC_id;
+                        $emp->save();
+                    }
+                }
 
-        return response()->json($id, 200);
+                // * COMPARAR EMPLEADOS CENTRO CON LISTA DE EMPLEADOS
+                foreach ($empleadoCentro as $ec) {
+                    $estadoB = true;
+                    foreach ($empleados as $em) {
+                        if ($ec->emple_id == $em) {
+                            $estadoB = false;
+                        }
+                    }
+                    if ($estadoB) {
+                        $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
+                        $emp->emple_centCosto = NULL;
+                        $emp->save();
+                    }
+                }
+            }
+            return response()->json($id, 200);
+        } else {
+            return response()->json(array("respuesta" => 1, "mensaje" => "Ya existe un centro de costo con este código"), 200);
+        }
     }
 
     public function listaCentroC()
@@ -285,25 +295,32 @@ class centrocostoController extends Controller
         return response()->json($empleados, 200);
     }
 
+    // * AGREGAR CENTROS DE COSTOS
     public function agregarCentroC(Request $request)
     {
-        $buscarCentroA = centro_costo::where('centroC_descripcion', '=', $request->get('descripcion'))
-            ->where('estado', '=', 1)
+        // : BUSCAR COINCIDENCIAS CON NOMBRE DE CENTRO DE COSTOS -> ATRIBUTO DESCRIPCION = 1
+        $buscarCentroDescripcion = centro_costo::where('centroC_descripcion', '=', $request->get('descripcion'))
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()
             ->first();
-        if ($buscarCentroA) {
-            return response()->json(array("estado" => 1), 200);
+        if ($buscarCentroDescripcion) {
+            // : ALERTA DE CENTRO DE COSTO ACTIVO CON MISMO NOMBRE
+            if ($buscarCentroDescripcion->estado == 1) {
+                return response()->json(array(
+                    "respuesta" => 1,
+                    "campo" => 1,
+                    "mensaje" => "Ya existe un centro costo con este nombre."
+                ), 200);
+            } else {
+                // : ALERTA DE CENTRO DE COSTO INACTIVO CON MISMO NOMBRE
+                return response()->json(array(
+                    "respuesta" => 0,
+                    "campo" => 1,
+                    "mensaje" => "Ya existe un centro costo inactivo con este nombre. ¿Desea recuperarla si o no?",
+                    "id" => $buscarCentroDescripcion->centroC_id
+                ), 200);
+            }
         }
-        $buscarCentroS = centro_costo::where('centroC_descripcion', '=', $request->get('descripcion'))
-            ->where('estado', '=', 0)
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->get()
-            ->first();
-        if ($buscarCentroS) {
-            return response()->json(array("estado" => 1, "centro" => $buscarCentroS), 200);
-        }
-
         $centro = new centro_costo();
         $centro->centroC_descripcion = $request->get('descripcion');
         $centro->organi_id = session('sesionidorg');
