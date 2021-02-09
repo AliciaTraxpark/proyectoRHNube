@@ -43,6 +43,7 @@ class centrocostoController extends Controller
         }
     }
 
+    // * LSITAS DE CENTROS DE COSTOS POR ORGANIZACION
     public function listaCentroCosto()
     {
         $centroC = DB::table('centro_costo as c')
@@ -164,10 +165,12 @@ class centrocostoController extends Controller
         }
     }
 
+    // * LISTA DE CENTRO DE COSTOS PARA ASIGNACION
     public function listaCentroC()
     {
         $centroC = centro_costo::select('centroC_id as id', 'centroC_descripcion as descripcion')
             ->where('organi_id', '=', session('sesionidorg'))
+            ->where('porEmpleado', '=', 1)
             ->where('estado', '=', 1)
             ->get();
 
@@ -214,6 +217,7 @@ class centrocostoController extends Controller
         return response()->json(array("select" => $empleadoCentro, "noSelect" => $empleadoSinCentro), 200);
     }
 
+    // * ASIGNAR CENTROS
     public function asignarCentros(Request $request)
     {
         $id = $request->get('id');
@@ -222,18 +226,13 @@ class centrocostoController extends Controller
         $centro = centro_costo::findOrFail($id);
 
         // * EMPLEADOS EN CENTRO DE COSTO
-        $empleadoCentro = DB::table('centro_costo as c')
-            ->join('empleado as e', 'e.emple_centCosto', '=', 'c.centroC_id')
-            ->select('e.emple_id')
-            ->where('c.centroC_id', '=', $centro->centroC_id)
-            ->where('e.emple_estado', '=', 1)
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->get();
+        $empleadoCentro = centrocosto_empleado::where('idCentro', '=', $centro->centroC_id)->where('estado', '=', 1)->get();
         // * SI ARRAY EMPLEADOS ESTA VACIO
         if (is_null($empleados)) {
             foreach ($empleadoCentro as $ec) {
-                $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
-                $emp->emple_centCosto = NULL;
+                $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
+                $emp->estado = 0;
+                $emp->fecha_baja = Carbon::now();
                 $emp->save();
             }
         } else {
@@ -241,14 +240,16 @@ class centrocostoController extends Controller
             foreach ($empleados as $e) {
                 $estado = true;
                 for ($index = 0; $index < sizeof($empleadoCentro); $index++) {
-                    if ($empleadoCentro[$index]->emple_id == $e) {
+                    if ($empleadoCentro[$index]->idEmpleado == $e) {
                         $estado = false;
                     }
                 }
                 if ($estado) {
-                    $emp = empleado::where('emple_id', '=', $e)->get()->first();
-                    $emp->emple_centCosto = $centro->centroC_id;
-                    $emp->save();
+                    $nuevoCentroCosto = new centrocosto_empleado();
+                    $nuevoCentroCosto->idCentro = $centro->centroC_id;
+                    $nuevoCentroCosto->idEmpleado = $e;
+                    $nuevoCentroCosto->fecha_alta = Carbon::now();
+                    $nuevoCentroCosto->save();
                 }
             }
 
@@ -256,13 +257,14 @@ class centrocostoController extends Controller
             foreach ($empleadoCentro as $ec) {
                 $estadoB = true;
                 foreach ($empleados as $em) {
-                    if ($ec->emple_id == $em) {
+                    if ($ec->idEmpleado == $em) {
                         $estadoB = false;
                     }
                 }
                 if ($estadoB) {
-                    $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
-                    $emp->emple_centCosto = NULL;
+                    $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
+                    $emp->estado = 0;
+                    $emp->fecha_baja = Carbon::now();
                     $emp->save();
                 }
             }

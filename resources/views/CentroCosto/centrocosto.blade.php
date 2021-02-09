@@ -236,12 +236,7 @@
           <div class="col-md-12 text-right">
             <div class="form-group mb-0 mt-3">
               <input type="checkbox" id="a_todosEmpleados">
-              <label for="" class="mb-0">Seleccionar todos</label>
-              <div class="float-left mb-0">
-                <span style="font-size: 11px;">
-                  *Se visualizara empleados sin centro de costo
-                </span>
-              </div>
+              <label for="" class="mb-0">Seleccionar todos los empleados</label>
             </div>
           </div>
           <div class="col-md-12 pt-2">
