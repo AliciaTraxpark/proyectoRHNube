@@ -213,6 +213,7 @@ class marcacionTareoController extends Controller
                             'mt.idmarcaciones_tareo as idMarcacion',
 
                             'pc.descripcion as puntoControl',
+                            'pc.codigoControl as idpuntoControl',
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                             DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -267,6 +268,7 @@ class marcacionTareoController extends Controller
                             'mt.idmarcaciones_tareo as idMarcacion',
 
                             'pc.descripcion as puntoControl',
+                            'pc.codigoControl as idpuntoControl',
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                             DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -335,6 +337,7 @@ class marcacionTareoController extends Controller
                                 'mt.idmarcaciones_tareo as idMarcacion',
 
                                 'pc.descripcion as puntoControl',
+                                'pc.codigoControl as idpuntoControl',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -394,6 +397,7 @@ class marcacionTareoController extends Controller
                                 'mt.idmarcaciones_tareo as idMarcacion',
 
                                 'pc.descripcion as puntoControl',
+                                'pc.codigoControl as idpuntoControl',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -457,6 +461,7 @@ class marcacionTareoController extends Controller
                                 'mt.idmarcaciones_tareo as idMarcacion',
 
                                 'pc.descripcion as puntoControl',
+                                'pc.codigoControl as idpuntoControl',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -515,7 +520,8 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                                 DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                                 'mt.idmarcaciones_tareo as idMarcacion',
-
+                                'pc.descripcion as puntoControl',
+                                'pc.codigoControl as idpuntoControl',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -578,6 +584,7 @@ class marcacionTareoController extends Controller
                         DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                         'mt.idmarcaciones_tareo as idMarcacion',
                         'pc.descripcion as puntoControl',
+                        'pc.codigoControl as idpuntoControl',
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                         DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -633,6 +640,7 @@ class marcacionTareoController extends Controller
                         'mt.idmarcaciones_tareo as idMarcacion',
 
                         'pc.descripcion as puntoControl',
+                        'pc.codigoControl as idpuntoControl',
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                         DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),

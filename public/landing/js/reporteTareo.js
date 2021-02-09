@@ -110,7 +110,7 @@ function cargartabla(fecha) {
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
 
-                theadTabla += `
+                theadTabla += `     <th class="puntoHid">Cód. Punto C.</th>
                                    <th class="puntoHid">Punto de control</th>
                                    </tr>`;
 
@@ -804,6 +804,15 @@ function cargartabla(fecha) {
                     tbody += tbodyEntradaySalida;
 
                     /* -----------PUNTO DE CONTRO ------------ */
+
+                    if(marcacionData.idpuntoControl!=null){
+                        tbody += `
+                        <td class="puntoHid" > ${marcacionData.idpuntoControl} </td>`;
+                    }
+                    else{
+                        tbody += `
+                        <td class="puntoHid" > -- </td>`;
+                    }
                     if (marcacionData.puntoControl != null) {
                         tbody += `
                         <td class="puntoHid" > ${marcacionData.puntoControl} </td></tr>`;
@@ -861,6 +870,7 @@ function cargartabla(fecha) {
                                 <td class="controHidSa" ></td>
                                 <td ></td>
                                 <td></td>
+                                <td class="puntoHid" ></td>
                                 <td class="puntoHid" ></td>
                                 </tr>`;
                     $('#tbodyD').append(tbodyTR);
@@ -1429,7 +1439,7 @@ function cargartabla(fecha) {
 
                 if($("#tbodyD").is(':empty')){
                     $("#tbodyD").append(
-                        '<tr class="odd"><td valign="top" colspan="15" class="text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
+                        '<tr class="odd"><td valign="top" colspan="16" class="text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
                     );
                 }
 
