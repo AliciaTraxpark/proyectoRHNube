@@ -2033,14 +2033,17 @@ class EmpleadoController extends Controller
                 ->where('horario_empleado.estado', '=', 1)
                 ->where('horario_empleado.empleado_emple_id', '=', $idempleado)
                 ->get()->first();
+
             if ($tempre) {
                 $startArre = carbon::create($tempre->start);
                 $arrayrep->push($startArre->format('Y-m-d'));
             }
         }
         $datos = Arr::flatten($arrayrep);
+
         //DIFERENCIA ARRAYS
         $datafecha2 = array_values(array_diff($datafecha, $datos));
+
         /////////////////////////////////////COMPARAR SI ESTA DENTRO DE RANGO
         $horarioEmpleado = horario::where('horario_id', $idhorar)->first();
         $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
@@ -2061,20 +2064,24 @@ class EmpleadoController extends Controller
                 foreach ($horarioDentro as $horarioDentros) {
                     $horaIDentro = Carbon::parse($horarioDentros->horaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                    if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
-                        $startArreD = carbon::create($horarioDentros->start);
+
+                    if($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro))
+                    {	$startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-                    } else {
-                        if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
-                            $startArreD = carbon::create($horarioDentros->start);
-                            $arrayHDentro->push($startArreD->format('Y-m-d'));
-                        } else {
-                            if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
-                                $startArreD = carbon::create($horarioDentros->start);
-                                $arrayHDentro->push($startArreD->format('Y-m-d'));
-                            }
-                        }
+
+                    }elseif(($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro)))
+                    {	$startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+
+                    }elseif($horaInicialF==$horaIDentro || $horaFinalF==$horaFDentro)
+                    {	$startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+
+                    }elseif($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF))
+                    {	$startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
                     }
+                   
                 }
             }
         }
@@ -2132,7 +2139,9 @@ class EmpleadoController extends Controller
             /* ------------------------------- */
 
         }
+        dd($datafecha,$datafecha3);
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
+
         /* dd($datafechaValida); */
         if ($datafechaValida != null || $datafechaValida != []) {
             return 'Ya existe un horario asignado en este rango de horas, revise y vuelva a intentar.';
