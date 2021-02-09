@@ -584,6 +584,14 @@ Route::post('/TareoregistrarActiv', 'marcacionTareoController@registrarActiv');
 Route::get('/listControladores', 'marcacionTareoController@listControladores');
 Route::post('/TareoregistrarContE', 'marcacionTareoController@TareoregistrarContE');
 Route::post('/TareoregistrarContS', 'marcacionTareoController@TareoregistrarContS');
+Route::post('/TareoeliminarMarcacion', 'marcacionTareoController@eliminarMarcacion');
+Route::post('/TareohorariosxMarcacion', 'marcacionTareoController@horariosxMarcacion');
+Route::post('/TareoasignacionNew', 'marcacionTareoController@asignacionMarcacion');
+Route::post('/TareoconvertirTiempos', 'marcacionTareoController@convertirTiempos');
+Route::post('/TareolistaMarcacionE', 'marcacionTareoController@listaDeEntradasSinS');
+Route::post('/TareocambiarSM', 'marcacionTareoController@cambiarSalidaMarcacion');
+Route::post('/TareolistaMarcacionS', 'marcacionTareoController@listaDeSalidasSinE');
+Route::post('/TareocambiarEM', 'marcacionTareoController@cambiarEntraMarcacion');
 /* ------------------------------------------------------------------------ */
 
 /*------------------------ SUBACTIVIDADES--------------------------------- */

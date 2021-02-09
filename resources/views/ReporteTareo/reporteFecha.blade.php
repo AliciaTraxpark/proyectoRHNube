@@ -200,8 +200,8 @@
         }
 
         /* .dataTables_scrollHeadInner {
-                                                width: 100% !important;
-                                            } */
+                                                                width: 100% !important;
+                                                            } */
 
         .table th,
         .table td {
@@ -884,7 +884,189 @@
         </div>
     </div>
 
+    {{-- ACTUALIZAR HORARIO --}}
+    <div class="modal fade" id="actualizarH" tabindex="-1" role="dialog" aria-labelledby="actualizarH" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="{{ asset('landing/images/calendarioA.svg') }}" height="50" class="mt-1">
+                    <h6 class="text-danger font-weight-bold mt-3">Actualizar horario</h6>
+                    <span>
+                        <img src="{{ asset('admin/images/warning.svg') }}" height="18">&nbsp;
+                        Horario asignado actualmente fue eliminado.<br>Recomendamos actualizar horario.
+                    </span>
+                    <div class="mt-4">
+                        <a class="btn btn-rounded width-md" data-dismiss="modal"
+                            style="background: #183b5d;color:#ffffff;cursor: pointer;">
+                            Entendido
+                        </a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
+    {{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
+    <div id="asignacionMarcacion" class="modal fade" role="dialog" aria-labelledby="asignacionMarcacion" aria-hidden="true"
+        data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered justify-content-center">
+            <div class="modal-content">
+                <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                    <h6 class="modal-title" style="color:#ffffff;">
+                        Mantenimiento de Marcaciones
+                    </h6>
+                </div>
+                <div class="modal-body" style="font-size:12px!important;">
+                    <div class="col-md-12">
+                        <form action="javascript:guardarAsignacion()" id="formGuardarAsignacion">
+                            <div class="row">
+                                {{-- ID DE MARCACION --}}
+                                <input type="hidden" id="idMarcacionA">
+                                {{-- EL TIPO DE MARCACION SI FUE ENTRADA O SALIDA --}}
+                                <input type="hidden" id="tipoM">
+                                <div class="col-md-12">
+                                    <span style="color:#62778c;font-weight: bold">Hora de marcación</span>
+                                    &nbsp;
+                                    <img src="{{ asset('landing/images/salidaD.svg') }}" height="12" id="img_a" />
+                                    &nbsp;
+                                    <span id="a_hora"></span>
+                                    <span id="a_valid" style="color: #8b3a1e;display:none">
+                                        Seleccionar marcación
+                                    </span>
+                                </div>
+                                <div class="col-xl-8 mt-1">
+                                    <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                        id="horarioM" required></select>
+                                </div>
+                                <div class="col-xl-4 mt-1">
+                                    <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                        id="asignacionM" required>
+                                        <option value="" disabled selected>Seleccionar</option>
+                                        <option value="1">Entrada</option>
+                                        <option value="2">Salida</option>
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                    <div class="col-md-12 text-right" style="padding-right: 0px;">
+                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                            onclick="javascript:limpiarAtributos()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                            Guardar
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
+    <div id="listaEntradasMarcacion" class="modal fade" role="dialog" aria-labelledby="listaEntradasMarcacion"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog  d-flex modal-dialog-centered justify-content-center">
+            <div class="modal-content">
+                <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                    <h6 class="modal-title" style="color:#ffffff;">
+                        Mantenimiento de Marcaciones
+                    </h6>
+                </div>
+                <div class="modal-body" style="font-size:12px!important;">
+                    <div class="col-md-12">
+                        <form action="javascript:cambiarSalidaM()" id="formCambiarSalidaM">
+                            <div class="row">
+                                {{-- ID DE MARCACION --}}
+                                <input type="hidden" id="idMarcacionE">
+                                {{-- EL TIPO SI FUE ENTRADA O SALIDA --}}
+                                <input type="hidden" id="c_tipoE">
+                                <div class="col-md-12">
+                                    <span style="color:#62778c;font-weight: bold">Cambiar a salida</span>
+                                    <img src="{{ asset('landing/images/salidaD.svg') }}" height="12" class="ml-1 mr-1" />
+                                    <span id="c_horaE"></span>
+                                </div>
+                                <div class="col-md-12 pt-1">
+                                    <span id="e_valid" style="color: #8b3a1e;display:none">
+                                        Seleccionar marcación
+                                    </span>
+                                    <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                        id="entradaM" required>
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                    <div class="col-md-12 text-right" style="padding-right: 0px;">
+                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                            onclick="javascript:limpiarAtributos()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                            Guardar
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- FINALIZACION --}}
+
+    {{-- MODAL DE LISTA DE SALIDAS MARCACION --}}
+    <div id="listaSalidasMarcacion" class="modal fade" role="dialog" aria-labelledby="listaSalidasMarcacion"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+            <div class="modal-content">
+                <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                    <h6 class="modal-title" style="color:#ffffff;">
+                        Mantenimiento de Marcaciones
+                    </h6>
+                </div>
+                <div class="modal-body" style="font-size:12px!important;">
+                    <div class="col-md-12">
+                        <form action="javascript:cambiarEntradaM()" id="formCambiarEntradaM">
+                            <div class="row">
+                                {{-- ID DE MARCACION --}}
+                                <input type="hidden" id="idMarcacion">
+                                {{-- EL TIPO SI ENTRADA O SALIDA --}}
+                                <input type="hidden" id="c_tipoS">
+                                <div class="col-md-12">
+                                    <span style="color:#62778c;font-weight: bold">Cambiar a entrada</span>
+                                    <img src="{{ asset('landing/images/entradaD.svg') }}" height="12" class="ml-1 mr-1" />
+                                    <span id="c_horaS"></span>
+                                </div>
+                                <div class="col-md-12 pt-1">
+                                    <span id="s_valid" style="color: #8b3a1e;display:none">
+                                        Seleccionar marcación
+                                    </span>
+                                    <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                        id="salidaM" required>
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                    <div class="col-md-12 text-right" style="padding-right: 0px;">
+                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                            onclick="javascript:limpiarAtributos()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                            Guardar
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- FINALIZACION --}}
     {{-- modificar --}}
     @if (isset($modifReporte))
         @if ($modifReporte == 1)
