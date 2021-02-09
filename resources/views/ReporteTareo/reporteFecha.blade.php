@@ -349,6 +349,7 @@
                     </div>
 
                     <div class="row">
+
                         <div class="col-md-7" id="MostarDetalles" style="display: none">
                             {{-- <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
@@ -358,6 +359,7 @@
                                     detalles</label>
                             </div> --}}
                             <div class="dropdown" id="dropSelector">
+                                <br>
                                 <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     style="cursor: pointer">
                                     <div class="custom-control custom-switch mb-2">

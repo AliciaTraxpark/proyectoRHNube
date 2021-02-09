@@ -1009,7 +1009,7 @@ function cargartabla(fecha) {
                                 var r1 = Addrow(1, [
                                     {
                                         k: "A",
-                                        v: "CONTROL REGISTRO DE ASISTENCIA",
+                                        v: "CONTROL REGISTRO DE TAREO",
                                         s: 2,
                                     },
                                 ]);
@@ -1037,8 +1037,8 @@ function cargartabla(fecha) {
                                     r5 +
                                     sheet.childNodes[0].childNodes[1].innerHTML;
                             },
-                            sheetName: "Asistencia",
-                            title: "Asistencia",
+                            sheetName: "Registro de Tareo",
+                            title: "Registro de Tareo",
                             autoFilter: false,
                             exportOptions: {
                                 columns: ":visible:not(.noExport)",
@@ -1120,7 +1120,7 @@ function cargartabla(fecha) {
                                 "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                             orientation: "landscape",
                             pageSize: "A2",
-                            title: "Asistencia",
+                            title: "Registro de Tareo",
                             exportOptions: {
                                 columns: ":visible:not(.noExport)",
                             },
@@ -1284,12 +1284,12 @@ function cargartabla(fecha) {
                                                 text: [
                                                     {
                                                         text:
-                                                            "\nCONTROL REGISTRO DE ASISTENCIA",
+                                                            "\n REGISTRO DE TAREO",
                                                         bold: true,
                                                     },
                                                     {
                                                         text:
-                                                            "\n\nRazon Social:\t\t\t\t\t\t",
+                                                            "\n\nRazón Social:\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     {
@@ -1298,7 +1298,7 @@ function cargartabla(fecha) {
                                                     },
                                                     {
                                                         text:
-                                                            "\nDireccion:\t\t\t\t\t\t\t",
+                                                            "\nDirección:\t\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     {
@@ -1307,7 +1307,7 @@ function cargartabla(fecha) {
                                                     },
                                                     {
                                                         text:
-                                                            "\nNumero de Ruc:\t\t\t\t\t",
+                                                            "\nNúmero de Ruc:\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     { text: ruc, bold: false },
