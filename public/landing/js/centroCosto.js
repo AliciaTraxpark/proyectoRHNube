@@ -99,7 +99,7 @@ centroCostoOrganizacion();
 $('#e_empleadosCentro').select2({
     placeholder: "Empleados",
     minimumResultsForSearch: 5,
-    allowClear: true,
+    allowClear: false,
 });
 // * MODAL DE EDITAR
 function editarCentro(id) {
@@ -372,7 +372,7 @@ $('#a_centro').select2({
 });
 $('#a_empleadosCentro').select2({
     minimumResultsForSearch: 5,
-    allowClear: true,
+    allowClear: false,
 });
 // ! ABRIR MODAL DE ASIGNACION
 function asignarCentroC() {
@@ -692,6 +692,32 @@ function registrarCentroC() {
 $('#formRegistrarCentroC').attr('novalidate', true);
 $('#formRegistrarCentroC').submit(function (e) {
     e.preventDefault();
+    if ($('#r_descripcion').val() == "" || $('#r_descripcion').val() == null) {
+        $.notifyClose();
+        $.notify({
+            message: '\nIngresar un centro de costo',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#r_centrocmodal"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
     if ($('#r_switchPorEmpleado').is(":checked")) {
         if ($('#r_empleadosCentro').val().length == 0) {
             $.notifyClose();
