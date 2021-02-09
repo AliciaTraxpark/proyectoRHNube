@@ -2081,7 +2081,7 @@ class EmpleadoController extends Controller
                     {	$startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
                     }
-                   
+
                 }
             }
         }
@@ -2139,7 +2139,7 @@ class EmpleadoController extends Controller
             /* ------------------------------- */
 
         }
-        dd($datafecha,$datafecha3);
+       
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
 
         /* dd($datafechaValida); */
