@@ -17,4 +17,5 @@ class centrocosto_empleado extends Model
         'fecha_baja',
         'estado'
     ];
+    public $timestamps = false;
 }

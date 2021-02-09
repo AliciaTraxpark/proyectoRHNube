@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\centro_costo;
+use App\centrocosto_empleado;
 use App\empleado;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class centrocostoController extends Controller
@@ -96,18 +98,13 @@ class centrocostoController extends Controller
             $centro->codigo = $codigo;
             $centro->save();
             // * EMPLEADOS EN CENTRO DE COSTO
-            $empleadoCentro = DB::table('centro_costo as c')
-                ->join('centrocosto_empleado as ce', 'ce.idCentro', '=', 'c.centroC_id')
-                ->select('e.emple_id')
-                ->where('c.centroC_id', '=', $centro->centroC_id)
-                ->where('e.emple_estado', '=', 1)
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->get();
+            $empleadoCentro = centrocosto_empleado::where('idCentro', '=', $centro->centroC_id)->where('estado', '=', 1)->get();
             // * SI ARRAY EMPLEADOS ESTA VACIO
             if (is_null($empleados)) {
                 foreach ($empleadoCentro as $ec) {
-                    $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
-                    $emp->emple_centCosto = NULL;
+                    $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
+                    $emp->estado = 0;
+                    $emp->fecha_baja = Carbon::now();
                     $emp->save();
                 }
             } else {
@@ -115,14 +112,16 @@ class centrocostoController extends Controller
                 foreach ($empleados as $e) {
                     $estado = true;
                     for ($index = 0; $index < sizeof($empleadoCentro); $index++) {
-                        if ($empleadoCentro[$index]->emple_id == $e) {
+                        if ($empleadoCentro[$index]->idEmpleado == $e) {
                             $estado = false;
                         }
                     }
                     if ($estado) {
-                        $emp = empleado::where('emple_id', '=', $e)->get()->first();
-                        $emp->emple_centCosto = $centro->centroC_id;
-                        $emp->save();
+                        $nuevoCentroCosto = new centrocosto_empleado();
+                        $nuevoCentroCosto->idCentro = $centro->centroC_id;
+                        $nuevoCentroCosto->idEmpleado = $e;
+                        $nuevoCentroCosto->fecha_alta = Carbon::now();
+                        $nuevoCentroCosto->save();
                     }
                 }
 
@@ -130,13 +129,14 @@ class centrocostoController extends Controller
                 foreach ($empleadoCentro as $ec) {
                     $estadoB = true;
                     foreach ($empleados as $em) {
-                        if ($ec->emple_id == $em) {
+                        if ($ec->idEmpleado == $em) {
                             $estadoB = false;
                         }
                     }
                     if ($estadoB) {
-                        $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
-                        $emp->emple_centCosto = NULL;
+                        $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
+                        $emp->estado = 0;
+                        $emp->fecha_baja = Carbon::now();
                         $emp->save();
                     }
                 }
@@ -178,7 +178,7 @@ class centrocostoController extends Controller
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('c.centroC_id', '=', $centro->centroC_id)
-            ->where('e.emple_estado', '=', 1)
+            ->where('ce.estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->get();
 
