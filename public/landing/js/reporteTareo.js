@@ -105,7 +105,7 @@ function cargartabla(fecha) {
                                     <th>Subactividad</th>
                                     <th class="controHidEn">Controlador de entrada</th>
                                     <th>Hora de entrada</th>
-                                    <th class="noExport">&nbsp; &nbsp; &nbsp; &nbsp;</th>
+
                                     <th class="controHidSa">Controlador de salida</th>
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
@@ -190,7 +190,7 @@ function cargartabla(fecha) {
                                                     No tiene actividad
                                                 </span>
                                             </a>
-                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                        Opciones
@@ -227,7 +227,7 @@ function cargartabla(fecha) {
                                                     No tiene subactividad
                                                 </span>
                                             </a>
-                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                        Opciones
@@ -249,7 +249,7 @@ function cargartabla(fecha) {
                                     tbodyEntradaySalida += `
                                                 <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
                                 } else {
-                                    //*VERIFICAMOS QUE HAYA MARCACION DE ENTRADA
+                                    //*si no tiene controlador
                                     tbodyEntradaySalida += `<td class="controHidEn">
                                         <div class=" dropdown">
                                             <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
@@ -259,7 +259,7 @@ function cargartabla(fecha) {
                                                     No tiene controlador de Ent.
                                                 </span>
                                             </a>
-                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                        Opciones
@@ -278,13 +278,66 @@ function cargartabla(fecha) {
                                     </td>`;
                                 }
 
-                                tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(
-                                    marcacionData.entrada
-                                ).format("HH:mm:ss")}</td>`;
+                                tbodyEntradaySalida += `<td>
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
+                                                                ${moment(marcacionData.entrada).format("HH:mm:ss")}
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
+                                                                            Cambiar a entrada
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                            Cambiar a salida
+                                                                        </a>
+                                                                    </div>
+                                                                </div>`;
+                                        if (marcacionData.salida != 0) {
+                                            tbodyEntradaySalida += `<div class=" dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
+                                                                                Convertir orden
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                Asignar a nueva marc.
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>`;
+                                        }
+                                        tbodyEntradaySalida += ` <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                            Eliminar marc.
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ul></div></td>`;
 
                                 /* SI  TENGO SALIDA */
                                 if (marcacionData.salida != 0) {
-                                    tbodyEntradaySalida += `<td class="noExport"></td>`;
+
                                     if (marcacionData.controladorSalida != 0) {
                                         tbodyEntradaySalida += `
                                                     <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
@@ -298,7 +351,7 @@ function cargartabla(fecha) {
                                                         No tiene controlador de Sal.
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -316,9 +369,62 @@ function cargartabla(fecha) {
                                             </div>
                                         </td>`;
                                     }
-                                    tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
-                                        marcacionData.salida
-                                    ).format("HH:mm:ss")}</td>`;
+                                    tbodyEntradaySalida += `<td >
+                                                            <div class="dropdown" >
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
+                                                                    ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
+                                                                                Cambiar a entrada
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                                Cambiar a salida
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
+                                                                                Convertir orden
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                Asignar a nueva marc.
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                                Eliminar marc.
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
+                                                        </td>`;
 
                                     var horaFinal = moment(
                                         marcacionData.salida
@@ -370,9 +476,7 @@ function cargartabla(fecha) {
                                         );
                                     }
                                 } else {
-                                    tbodyEntradaySalida += `<td class="noExport">
-                                        <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})"><img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
-                                        </td>`;
+
                                     /* SI NO TENGO SALIDA */
                                     if (marcacionData.controladorSalida != 0) {
                                         tbodyEntradaySalida += `
@@ -387,7 +491,7 @@ function cargartabla(fecha) {
                                                         No tiene controlador de Sal.
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -418,7 +522,7 @@ function cargartabla(fecha) {
                                                 No tiene salida
                                             </span>
                                         </a>
-                                        <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${
+                                        <ul class="dropdown-menu  scrollable-menu noExport"  aria-labelledby="dropSalida${
                                             marcacionData.idMarcacion
                                         }" style="padding: 0rem 0rem;">
                                              <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
@@ -478,7 +582,7 @@ function cargartabla(fecha) {
                                                         No tiene actividad
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -515,7 +619,7 @@ function cargartabla(fecha) {
                                                         No tiene subactividad
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -547,7 +651,7 @@ function cargartabla(fecha) {
                                                         No tiene controlador de Ent.
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -578,7 +682,7 @@ function cargartabla(fecha) {
                                                      No tiene entrada
                                                  </span>
                                              </a>
-                                             <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${
+                                             <ul class="dropdown-menu scrollable-menu noExport" aria-labelledby="dropEntrada${
                                                  marcacionData.idMarcacion
                                              }" style="padding: 0rem 0rem;">
                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
@@ -606,10 +710,7 @@ function cargartabla(fecha) {
                                          </div>
                                      </td>`;
 
-                                    tbodyEntradaySalida += `<td class="noExport">
-                                        <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})">
-                                        <img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
-                                        </td>`;
+
                                     //* COLUMNA DE SALIDA
 
                                     if (marcacionData.controladorSalida != 0) {
@@ -625,7 +726,7 @@ function cargartabla(fecha) {
                                                         No tiene controlador de Sal.
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -644,9 +745,46 @@ function cargartabla(fecha) {
                                         </td>`;
                                     }
 
-                                    tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
-                                        marcacionData.salida
-                                    ).format("HH:mm:ss")}</td>`;
+                                    tbodyEntradaySalida += `<td>
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
+                                                                ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
+                                                                            Cambiar a entrada
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                            Cambiar a salida
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                            Eliminar marc.
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </td>`;
 
                                     tbodyEntradaySalida += `<td >
                                                             <span class="badge badge-soft-secondary">
@@ -679,7 +817,7 @@ function cargartabla(fecha) {
                                     No tiene punto de C.
                                 </span>
                             </a>
-                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                        Opciones
@@ -702,6 +840,31 @@ function cargartabla(fecha) {
                 }
                 $("#tbodyD").html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
+                if (data.length == 1) {
+                    var tbodyTR = '';
+                    tbodyTR += '<tr>';
+
+                    tbodyTR += `<td ><br><br><br><br><br><br><br><br><br><br></td>
+                                <td class="fechaHid"></td>
+                                <td class="codigoHid"></td>
+                                <td class="numdocHid"></td>
+                                <td ></td>
+                                <td class="sexoHid"></td>
+                                <td class="cargoHid"></td>`;
+
+                    tbodyTR += `<td ><br><br></td>
+                                <td ></td>
+                                <td ></td>
+                                <td></td>
+                                <td class="controHidEn"></td>
+                                <td ></td>
+                                <td class="controHidSa" ></td>
+                                <td ></td>
+                                <td></td>
+                                <td class="puntoHid" ></td>
+                                </tr>`;
+                    $('#tbodyD').append(tbodyTR);
+                }
                 /* DATOS PARA EXPORTAR TABLA */
                 var razonSocial = $("#nameOrganizacion").val();
                 var direccion = $("#direccionO").val();
@@ -902,15 +1065,40 @@ function cargartabla(fecha) {
                                         );
 
                                         var cont8 = cont7.replace(
+                                            "Cambiar a entrada",
+                                            ""
+                                        );
+
+                                        var cont9 = cont8.replace(
+                                            "Cambiar a salida",
+                                            ""
+                                        );
+
+                                        var cont10 = cont9.replace(
+                                            "Convertir orden",
+                                            ""
+                                        );
+
+                                        var cont11 = cont10.replace(
+                                            "Asignar a nueva marc.",
+                                            ""
+                                        );
+
+                                        var cont12 = cont11.replace(
+                                            "Eliminar marc.",
+                                            ""
+                                        );
+
+                                        var cont13 = cont12.replace(
                                             "Agregar",
                                             ""
                                         );
-                                        var cont9 = cont8.replace(
+                                        var cont14 = cont13.replace(
                                             "Opciones",
                                             ""
                                         );
 
-                                        return $.trim(cont9);
+                                        return $.trim(cont14);
                                     },
                                 },
                             },
@@ -1012,16 +1200,40 @@ function cargartabla(fecha) {
                                                 "---"
                                             );
                                             var cambiar8 = cambiar7.replace(
+                                                "Cambiar a entrada",
+                                                ""
+                                            );
+
+                                            var cambiar9 = cambiar8.replace(
+                                                "Cambiar a salida",
+                                                ""
+                                            );
+
+                                            var cambiar10 = cambiar9.replace(
+                                                "Convertir orden",
+                                                ""
+                                            );
+
+                                            var cambiar11 = cambiar10.replace(
+                                                "Asignar a nueva marc.",
+                                                ""
+                                            );
+
+                                            var cambiar12 = cambiar11.replace(
+                                                "Eliminar marc.",
+                                                ""
+                                            );
+                                            var cambiar13 = cambiar12.replace(
                                                 "Agregar",
                                                 ""
                                             );
-                                            var cambiar9 = cambiar8.replace(
+                                            var cambiar14 = cambiar13.replace(
                                                 "Opciones",
                                                 ""
                                             );
-                                            var cambiar10 = cambiar9.trim();
+                                            var cambiar15 = cambiar14.trim();
                                             bodyNuevo.push({
-                                                text: cambiar10,
+                                                text: cambiar15,
                                                 style: "defaultStyle",
                                             });
                                         });
@@ -1159,9 +1371,68 @@ function cargartabla(fecha) {
             } else {
                 $("#MostarDetalles").hide();
                 $("#tbodyD").empty();
-                $("#tbodyD").append(
-                    '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
-                );
+
+
+
+                table = $("#tablaReport").DataTable({
+                    searching: false,
+                    scrollX: true,
+                    ordering: false,
+                    autoWidth: false,
+                    bInfo: false,
+                    bLengthChange: true,
+                    fixedHeader: true,
+                    pageLength: 25,
+                    retrieve: true,
+                    language: {
+                        sProcessing: "Procesando...",
+                        sLengthMenu: "Mostrar _MENU_ registros",
+                        sZeroRecords: "No se encontraron resultados",
+                        sEmptyTable: "Ningún dato disponible en esta tabla",
+                        sInfo: "Mostrando registros del _START_ al _END_ ",
+                        sInfoEmpty:
+                            "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        sInfoFiltered:
+                            "(filtrado de un total de _MAX_ registros)",
+                        sInfoPostFix: "",
+                        sSearch: "Buscar:",
+                        sUrl: "",
+                        sInfoThousands: ",",
+                        sLoadingRecords: "Cargando...",
+                        oPaginate: {
+                            sFirst: "Primero",
+                            sLast: "Último",
+                            sNext: ">",
+                            sPrevious: "<",
+                        },
+                        oAria: {
+                            sSortAscending:
+                                ": Activar para ordenar la columna de manera ascendente",
+                            sSortDescending:
+                                ": Activar para ordenar la columna de manera descendente",
+                        },
+                        buttons: {
+                            copy: "Copiar",
+                            colvis: "Visibilidad",
+                        },
+                    },
+
+
+                    initComplete: function () {
+
+                    },
+                });
+                $(window).on("resize", function () {
+                    $("#tablaReport").css("width", "100%");
+                    table.draw(true);
+                });
+
+                if($("#tbodyD").is(':empty')){
+                    $("#tbodyD").append(
+                        '<tr class="odd"><td valign="top" colspan="15" class="text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
+                    );
+                }
+
             }
         },
         error: function () {},
@@ -1332,6 +1603,7 @@ function insertarSalida() {
                 $("#i_validS").append(data.respuesta);
                 $("#i_validS").show();
                 $('button[type="submit"]').attr("disabled", false);
+                sent = false;
             } else {
                 $("#i_validS").empty();
                 $("#i_validS").hide();
@@ -1442,6 +1714,7 @@ function insertarEntrada() {
                 $("#i_validE").append(data.respuesta);
                 $("#i_validE").show();
                 $('button[type="submit"]').attr("disabled", false);
+                sent = false;
             } else {
                 $("#i_validE").empty();
                 $("#i_validE").hide();
@@ -1525,7 +1798,12 @@ function limpiarAtributos() {
     if (horasE.config != undefined) {
         horasE.setDate("00:00:00");
     }
-
+    // ? MODAL DE CAMBIAR HORARIO
+    $('#ch_valid').empty();
+    $('#ch_valid').hide();
+    $('#horarioXE').empty();
+    $('#detalleHorarios').empty();
+    $('#detalleHorarios').hide();
     // ? MODAL DE NUEVA MARCACION
     $("#v_entrada").prop("checked", false);
     $("#v_salida").prop("checked", false);
@@ -2102,10 +2380,9 @@ function agregarControE(idMarcacion, entrada) {
 //**** */
 
 //*INSERTAR A BD CONTROLADOR DE ENTRADA
-function insertarContEntrada(){
-
-    let idMarcacion=$('#idMarcacionContEntrada').val();
-    let  idControl=$('#selectContEntrada').val();
+function insertarContEntrada() {
+    let idMarcacion = $("#idMarcacionContEntrada").val();
+    let idControl = $("#selectContEntrada").val();
     $.ajax({
         async: false,
         type: "POST",
@@ -2151,7 +2428,6 @@ function insertarContEntrada(){
     });
 }
 //************************************************ */
-
 
 //*AGREGAR CONTROLADOR SALIDA**********************************
 function agregarControSa(idMarcacion, salida) {
@@ -2226,10 +2502,9 @@ function agregarControSa(idMarcacion, salida) {
 }
 
 //*INSERTAR A BD CONTROLADOR DE SALIDA
-function insertarContSalida(){
-
-    let idMarcacion=$('#idMarcacionContSalida').val();
-    let  idControl=$('#selectContSalida').val();
+function insertarContSalida() {
+    let idMarcacion = $("#idMarcacionContSalida").val();
+    let idControl = $("#selectContSalida").val();
     $.ajax({
         async: false,
         type: "POST",
@@ -2276,3 +2551,674 @@ function insertarContSalida(){
 }
 
 //*********************************************************** */
+// ! ********************************** ELIMINAR MARCACIÓN *****************************************************
+// * ELIMINAR MARCACION
+function eliminarM(id, tipo, idHE) {
+    $('a').css('pointer-events', 'none');
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
+    alertify
+        .confirm("¿Desea eliminar marcación si o no?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    async: false,
+                    type: "POST",
+                    url: "/TareoeliminarMarcacion",
+                    data: {
+                        id: id,
+                        tipo: tipo
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+                       /*  fechaValue.setDate(fechaGlobal); */
+                        $('#btnRecargaTabla').click();
+                        $.notifyClose();
+                        $.notify({
+                            message: data,
+                            icon: '/landing/images/alert1.svg',
+                        }, {
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    },
+                    error: function () { }
+                });
+            }
+        })
+        .setting({
+            title: "Eliminar Marcación",
+            labels: {
+                ok: "Si",
+                cancel: "No",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
+    $('a').css('pointer-events', 'auto');
+}
+/* ----------------------------------------------------------------- */
+// ! ********************************** ASIGNAR A NUEVA MARCACIÓN *********************************************
+// * ASIGNAR NUEVA MARCACION
+function asignarNuevaM(id, hora, tipo, horario) {
+    $('a').css('pointer-events', 'none');
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == horario) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
+    $('#idMarcacionA').val(id);
+    $('#tipoM').val(tipo);
+    $('#a_hora').text(hora);
+    if (tipo == 1) {
+        $('#img_a').attr("src", "landing/images/entradaD.svg");
+    } else {
+        $('#img_a').attr("src", "landing/images/salidaD.svg");
+    }
+    $('#horarioM').empty();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareohorariosxMarcacion",
+        data: {
+            id: id,
+            tipo: tipo
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            var option = `<option value="0" selected>Sin horario</option>`;
+            for (let index = 0; index < data.length; index++) {
+                option += `<option value="${data[index].id}">Horario: ${data[index].horario_descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
+            }
+            $('#horarioM').append(option);
+            $('#horarioM').val(horario).trigger("change");
+        },
+        error: function () { }
+    });
+    $('#asignacionMarcacion').modal();
+    $('#asignacionM').val(tipo).trigger('change');
+    $('a').css('pointer-events', 'auto');
+    sent = false;
+}
+// * GUARDAR ASIGNACION
+function guardarAsignacion() {
+    var id = $('#idMarcacionA').val();
+    var idHorario = $('#horarioM').val();
+    var tipoM = $('#tipoM').val();
+    var tipo = $('#asignacionM').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoasignacionNew",
+        data: {
+            id: id,
+            idHorario: idHorario,
+            tipoM: tipoM,
+            tipo: tipo
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.respuesta == undefined) {
+                $('#a_valid').empty();
+                $('#a_valid').hide();
+                /* fechaValue.setDate(fechaGlobal); */
+                $('#btnRecargaTabla').click();
+                $('#asignacionMarcacion').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
+                limpiarAtributos();
+            } else {
+                $('#a_valid').empty();
+                $('#a_valid').append(data.respuesta);
+                $('#a_valid').show();
+                sent = false;
+                $('button[type="submit"]').attr("disabled", false);
+            }
+        },
+        error: function () { }
+    });
+}
+$('#formGuardarAsignacion').attr('novalidate', true);
+$('#formGuardarAsignacion').submit(function (e) {
+    e.preventDefault();
+    if ($("#horarioM").val() == "" || $("#horarioM").val() == null) {
+        $('#a_valid').empty();
+        $('#a_valid').append("Seleccionar horario.");
+        $('#a_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
+        sent = false;
+        return;
+    }
+    if ($("#asignacionM").val() == "" || $("#asignacionM").val() == null) {
+        $('#a_valid').empty();
+        $('#a_valid').append("Seleccionar marcación.");
+        $('#a_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
+        sent = false;
+        return;
+    }
+    if (!sent) {
+        sent = true;
+        $('#a_valid').empty();
+        $('#a_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
+});
+/* ---------------------------------------------------------------------------- */
+// ! *********************************** CONVERTIR ORDEN ******************************************************
+// * CONVERTIR ORDEN
+function convertirOrden(id, idHE) {
+    $('a').css('pointer-events', 'none');
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
+    alertify
+        .confirm("¿Desea Convertir orden si o no?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    async: false,
+                    type: "POST",
+                    url: "/TareoconvertirTiempos",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+                        if (data.respuesta == undefined) {
+                          /*   fechaValue.setDate(fechaGlobal); */
+                            $('#btnRecargaTabla').click();
+                            $.notifyClose();
+                            $.notify(
+                                {
+                                    message: "\nMarcación modificada.",
+                                    icon: "admin/images/checked.svg",
+                                },
+                                {
+                                    position: "fixed",
+                                    icon_type: "image",
+                                    newest_on_top: true,
+                                    delay: 5000,
+                                    template:
+                                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                        "</div>",
+                                    spacing: 35,
+                                }
+                            );
+                        } else {
+                            $.notifyClose();
+                            $.notify(
+                                {
+                                    message: data.respuesta,
+                                    icon: "admin/images/warning.svg",
+                                },
+                                {
+                                    position: "fixed",
+                                    mouse_over: "pause",
+                                    placement: {
+                                        from: "top",
+                                        align: "center",
+                                    },
+                                    icon_type: "image",
+                                    newest_on_top: true,
+                                    delay: 2000,
+                                    template:
+                                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                        "</div>",
+                                    spacing: 35,
+                                }
+                            );
+                        }
+                    },
+                    error: function () { }
+                });
+            }
+        })
+        .setting({
+            title: "Modificar Marcación",
+            labels: {
+                ok: "Si",
+                cancel: "No",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
+    $('a').css('pointer-events', 'auto');
+}
+/* -------------------------------------------------------------------------------------- */
+// ! *********************************** CAMBIAR A SALIDA ****************************************************
+// * FUNCION DE LISTA DE ENTRADAS CON SALIDAS NULL
+function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
+    $('a').css('pointer-events', 'none');
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
+    $('#entradaM').empty();
+    $('#c_horaE').text(hora);
+    $('#c_tipoE').val(tipo);
+    $('#listaEntradasMarcacion').modal();
+    $('#idMarcacionE').val(id);
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareolistaMarcacionE",
+        data: {
+            fecha: fecha,
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var container = `<option value="" disabled selected>Seleccionar entrada</option>`;
+                for (let index = 0; index < data.length; index++) {
+                    container += `<optgroup label="Horario ${data[index].horario}">`;
+                    data[index].data.forEach(element => {
+                        if (element.id == id) {
+                            container += `<option value="${element.id}" selected="selected">
+                                    ${moment(element.entrada).format("HH:mm:ss")}
+                                </option>`;
+                        } else {
+                            container += `<option value="${element.id}">
+                                    ${moment(element.entrada).format("HH:mm:ss")}
+                                </option>`;
+                        }
+                    });
+                    container += `</optgroup>`;
+                }
+            } else {
+                var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
+            }
+            console.log(container);
+            $('#entradaM').append(container);
+            imagenesEntrada();
+        },
+        error: function () { }
+    });
+    sent = false;
+    $('a').css('pointer-events', 'auto');
+}
+// * FUNCION DE CAMBIAR SALIDA
+function cambiarSalidaM() {
+    var idCambiar = $('#idMarcacionE').val();
+    var idMarcacion = $('#entradaM').val();
+    var tipo = $('#c_tipoE').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareocambiarSM",
+        data: {
+            idCambiar: idCambiar,
+            idMarcacion: idMarcacion,
+            tipo: tipo
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.respuesta == undefined) {
+                $('#e_valid').hide();
+                $('#listaEntradasMarcacion').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
+               /*  fechaValue.setDate(fechaGlobal); */
+                $('#btnRecargaTabla').click();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                $('#e_valid').empty();
+                $('#e_valid').append(data.respuesta);
+                $('#e_valid').show();
+                $('button[type="submit"]').attr("disabled", false);
+                sent = false;
+            }
+        },
+        error: function () {
+        }
+    });
+}
+// * COMBOX DE ENTRADA
+function imagenesEntrada() {
+    function formatState(state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "landing/images/entradaD.svg";
+        var $state = $(
+            `<span>Entrada : <img src="${baseUrl}" height="12" class="ml-1 mr-1" /> ${state.text} </span>`
+        );
+        return $state;
+    };
+    $("#entradaM").select2({
+        templateResult: formatState
+    });
+}
+// * VALIDACION
+$('#formCambiarSalidaM').attr('novalidate', true);
+$('#formCambiarSalidaM').submit(function (e) {
+    e.preventDefault();
+    if ($("#entradaM").val() == "" || $("#entradaM").val() == null) {
+        $('#e_valid').empty();
+        $('#e_valid').append("Seleccionar marcación.");
+        $('#e_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
+        sent = false;
+        return;
+    }
+    if (!sent) {
+        sent = true;
+        $('#e_valid').empty();
+        $('#e_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
+});
+
+/* ----------------------------------------------------------------------------------------- */
+// ! *********************************** CAMBIAR A ENTRADA ********************************************
+// * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
+function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
+    $('a').css('pointer-events', 'none');
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
+    $('#salidaM').empty();
+    $('#c_horaS').text(hora);
+    $('#c_tipoS').val(tipo);
+    $('#listaSalidasMarcacion').modal();
+    $('#idMarcacion').val(id);
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareolistaMarcacionS",
+        data: {
+            fecha: fecha,
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var container = `<option value="" disabled selected>Seleccionar salida</option>`;
+                for (let index = 0; index < data.length; index++) {
+                    container += `<optgroup label="Horario ${data[index].horario}">`;
+                    data[index].data.forEach(element => {
+                        if (element.id == id) {
+                            container += `<option value="${element.id}" selected="selected">
+                                    ${moment(element.salida).format("HH:mm:ss")}
+                                </option>`;
+                        } else {
+                            container += `<option value="${element.id}">
+                                    ${moment(element.salida).format("HH:mm:ss")}
+                                </option>`;
+                        }
+                    });
+                    container += `</optgroup>`;
+                }
+            } else {
+                var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
+            }
+            $('#salidaM').append(container);
+            imagenesSalida();
+        },
+        error: function () { }
+    });
+    sent = false;
+    $('a').css('pointer-events', 'auto');
+}
+// * FUNCION DE CAMBIAR ENTRADA
+function cambiarEntradaM() {
+    var idCambiar = $('#idMarcacion').val();
+    var idMarcacion = $('#salidaM').val();
+    var tipo = $('#c_tipoS').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareocambiarEM",
+        data: {
+            idCambiar: idCambiar,
+            idMarcacion: idMarcacion,
+            tipo: tipo
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.respuesta == undefined) {
+                $('#s_valid').hide();
+                $('#listaSalidasMarcacion').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
+              /*   fechaValue.setDate(fechaGlobal); */
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                sent = false;
+                $('button[type="submit"]').attr("disabled", false);
+                $('#s_valid').append(data.respuesta);
+                $('#s_valid').show();
+            }
+        },
+        error: function () {
+        }
+    });
+}
+// * COMBOX DE SALIDA
+function imagenesSalida() {
+    function formatState(state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "landing/images/salidaD.svg";
+        var $state = $(
+            `<span>Salida : <img src="${baseUrl}" height="12" class="ml-1 mr-1" /> ${state.text} </span>`
+        );
+        return $state;
+    };
+    $("#salidaM").select2({
+        templateResult: formatState
+    });
+}
+// * VALIDACION
+$('#formCambiarEntradaM').attr('novalidate', true);
+$('#formCambiarEntradaM').submit(function (e) {
+    e.preventDefault();
+    if ($("#salidaM").val() == "" || $("#salidaM").val() == null) {
+        $('#s_valid').empty();
+        $('#s_valid').append("Seleccionar marcación.");
+        $('#s_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
+        sent = false;
+        return;
+    }
+    if (!sent) {
+        sent = true;
+        $('#s_valid').empty();
+        $('#s_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
+});
+/* ---------------------------------------------------------------------------------- */
