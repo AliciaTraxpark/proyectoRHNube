@@ -145,8 +145,9 @@ async function datosCentro(id) {
         error: function () { }
     });
 }
-function empleadosCentroCosto(id) {
+async function empleadosCentroCosto(id) {
     $.ajax({
+        async: false,
         url: "/empleadoCentro",
         method: "POST",
         data: {
@@ -270,8 +271,22 @@ function actualizarCentroC() {
         error: function () { }
     });
 }
+// * RETIRAR CLASE DE INPUT
 $('#e_codigo').keyup(function () {
     $(this).removeClass("borderColor");
+});
+// * SWITCH POR EMPLEADO
+$('#switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#r_rowEmpleado').show();
+        $('#e_empleadosCentro').empty();
+        var id = $('#e_idCentro').val();
+        empleadosCentroCosto(id);
+    } else {
+        $('#r_rowEmpleado').hide();
+        $('#e_todosEmpleados').prop("checked", false);
+        $('#e_empleadosCentro').empty();
+    }
 });
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** ASIGNAR CENTRO COSTO **************************************
