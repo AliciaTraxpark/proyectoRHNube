@@ -1715,19 +1715,21 @@ class EmpleadoController extends Controller
                 foreach ($horarioDentro as $horarioDentros) {
                     $horaIDentro = Carbon::parse($horarioDentros->horaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                    if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
-                        $startArreD = carbon::create($horarioDentros->start);
+                    if($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro) )
+                    {	$startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-                    } else {
-                        if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
-                            $startArreD = carbon::create($horarioDentros->start);
-                            $arrayHDentro->push($startArreD->format('Y-m-d'));
-                        } else {
-                            if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
-                                $startArreD = carbon::create($horarioDentros->start);
-                                $arrayHDentro->push($startArreD->format('Y-m-d'));
-                            }
-                        }
+
+                    }elseif(($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro)))
+                    {	$startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+
+                    }elseif($horaInicialF==$horaIDentro || $horaFinalF==$horaFDentro)
+                    {	$startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+
+                    }elseif($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF))
+                    {	$startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
                     }
                 }
             }
@@ -2065,7 +2067,7 @@ class EmpleadoController extends Controller
                     $horaIDentro = Carbon::parse($horarioDentros->horaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF);
 
-                    if($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro))
+                    if($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro) )
                     {	$startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
 
@@ -2139,7 +2141,7 @@ class EmpleadoController extends Controller
             /* ------------------------------- */
 
         }
-       
+
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
 
         /* dd($datafechaValida); */
