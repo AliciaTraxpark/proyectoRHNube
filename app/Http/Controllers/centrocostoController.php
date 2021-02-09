@@ -169,12 +169,12 @@ class centrocostoController extends Controller
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
-            ->whereNull('e.emple_centCosto')
             ->get();
 
         // * EMPLEADOS EN CENTRO DE COSTO
         $empleadoCentro = DB::table('centro_costo as c')
-            ->join('empleado as e', 'e.emple_centCosto', '=', 'c.centroC_id')
+            ->join('centrocosto_empleado as ce', 'ce.idCentro', '=', 'c.centroC_id')
+            ->join('empleado as e', 'e.emple_id', '=', 'ce.idEmpleado')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('c.centroC_id', '=', $centro->centroC_id)
