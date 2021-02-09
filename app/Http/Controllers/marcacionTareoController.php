@@ -165,6 +165,18 @@ class marcacionTareoController extends Controller
                 'dist.dispoT_descripUbicacion as descripcion'
             );
 
+            /*  --------------------*/
+            function agregarDetalle($array){
+
+                foreach($array as $marcacionesD){
+                    $detalllesP= DB::table('punto_control_detalle as pcde')
+                    ->where('pcde.idPuntoControl', '=',$marcacionesD->idPC)
+                    ->get();
+                    $marcacionesD->detalleNombres=$detalllesP;
+                }
+                return $array;
+            }
+            /* -------------------- */
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
             ->where('organi_id', '=', session('sesionidorg'))
@@ -214,6 +226,7 @@ class marcacionTareoController extends Controller
 
                             'pc.descripcion as puntoControl',
                             'pc.codigoControl as idpuntoControl',
+                            'pc.id as idPC',
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                             DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -224,6 +237,7 @@ class marcacionTareoController extends Controller
                         ->where('mt.organi_id', '=', session('sesionidorg'))
                         ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                         ->get();
+                        $marcaciones=agregarDetalle($marcaciones);
                         $arrayeve->push($marcaciones);
 
                 } else {
@@ -269,6 +283,7 @@ class marcacionTareoController extends Controller
 
                             'pc.descripcion as puntoControl',
                             'pc.codigoControl as idpuntoControl',
+                            'pc.id as idPC',
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                             DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -281,6 +296,7 @@ class marcacionTareoController extends Controller
                         ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                         ->where('e.emple_id', $idemps)
                         ->get();
+                        $marcaciones=agregarDetalle($marcaciones);
                         $arrayeve->push($marcaciones);
 
 
@@ -338,6 +354,7 @@ class marcacionTareoController extends Controller
 
                                 'pc.descripcion as puntoControl',
                                 'pc.codigoControl as idpuntoControl',
+                                'pc.id as idPC',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -351,6 +368,7 @@ class marcacionTareoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
+                            $marcaciones=agregarDetalle($marcaciones);
                             $arrayeve->push($marcaciones);
 
                     } else {
@@ -398,6 +416,7 @@ class marcacionTareoController extends Controller
 
                                 'pc.descripcion as puntoControl',
                                 'pc.codigoControl as idpuntoControl',
+                                'pc.id as idPC',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -412,6 +431,7 @@ class marcacionTareoController extends Controller
                             ->where('e.emple_id', $idemps)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
+                            $marcaciones=agregarDetalle($marcaciones);
                             $arrayeve->push($marcaciones);
                         }
 
@@ -462,6 +482,7 @@ class marcacionTareoController extends Controller
 
                                 'pc.descripcion as puntoControl',
                                 'pc.codigoControl as idpuntoControl',
+                                'pc.id as idPC',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -475,6 +496,7 @@ class marcacionTareoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
+                            $marcaciones=agregarDetalle($marcaciones);
                             $arrayeve->push($marcaciones);
 
                     } else {
@@ -522,6 +544,7 @@ class marcacionTareoController extends Controller
                                 'mt.idmarcaciones_tareo as idMarcacion',
                                 'pc.descripcion as puntoControl',
                                 'pc.codigoControl as idpuntoControl',
+                                'pc.id as idPC',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -536,6 +559,7 @@ class marcacionTareoController extends Controller
                             ->where('e.emple_id', $idemps)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
+                            $marcaciones=agregarDetalle($marcaciones);
                             $arrayeve->push($marcaciones);
                         }
 
@@ -585,6 +609,7 @@ class marcacionTareoController extends Controller
                         'mt.idmarcaciones_tareo as idMarcacion',
                         'pc.descripcion as puntoControl',
                         'pc.codigoControl as idpuntoControl',
+                        'pc.id as idPC',
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                         DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -596,6 +621,8 @@ class marcacionTareoController extends Controller
                     ->where('mt.organi_id', '=', session('sesionidorg'))
                     ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                     ->get();
+
+                    $marcaciones=agregarDetalle($marcaciones);
                     $arrayeve->push($marcaciones);
 
             } else {
@@ -641,6 +668,7 @@ class marcacionTareoController extends Controller
 
                         'pc.descripcion as puntoControl',
                         'pc.codigoControl as idpuntoControl',
+                        'pc.id as idPC',
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                         DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -653,6 +681,7 @@ class marcacionTareoController extends Controller
                     ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                     ->where('e.emple_id', $idemps)
                     ->get();
+                    $marcaciones=agregarDetalle($marcaciones);
                     $arrayeve->push($marcaciones);
                 }
 
@@ -747,7 +776,8 @@ class marcacionTareoController extends Controller
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
-                    'he.nHoraAdic as horasA'
+                    DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                    'h.horasObliga as horasO'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
                 ->get()
