@@ -97,7 +97,7 @@ function centroCostoOrganizacion() {
 centroCostoOrganizacion();
 // ? ************************************* FORMULARIO EDITAR **************************************
 $('#e_empleadosCentro').select2({
-    tags: "true",
+    tags: true,
     placeholder: "Empleados"
 });
 // * MODAL DE EDITAR
@@ -515,13 +515,14 @@ $("#a_empleadosCentro").on("change", function (e) {
 // ? *********************************** FORMULARIO REGISTRAR **************************************
 function modalRegistrar() {
     $('#r_centrocmodal').modal();
-    empleadosCC();
+    $('#r_rowEmpleado').hide();
 }
 $('#r_empleadosCentro').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    allowClear: false,
 });
 // : SWITCH DE POR EMPLEADO
-$('#switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
+$('#r_switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         $('#r_rowEmpleado').show();
         $('#r_empleadosCentro').empty();

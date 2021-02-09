@@ -158,7 +158,7 @@
           </div>
           <div class="row mt-2">
             <div class="col-md-12 text-left">
-              <div class="custom-control custom-switch mb-2">
+              <div class="custom-control custom-switch mb-1">
                 <input type="checkbox" class="custom-control-input" id="switchPorEmpleado">
                 <label class="custom-control-label" for="switchPorEmpleado" style="font-weight: bold">
                   Por empleado
@@ -168,14 +168,9 @@
           </div>
           <div class="row" id="e_rowEmpleado">
             <div class="col-md-12 text-right">
-              <div class="form-group mb-0 mt-3">
+              <div class="form-group mb-0 mt-1">
                 <input type="checkbox" id="e_todosEmpleados">
-                <label for="" class="mb-0">Seleccionar todos</label>
-                <div class="float-left mb-0">
-                  <span style="font-size: 11px;">
-                    *Se visualizara empleados sin centro de costo
-                  </span>
-                </div>
+                <label for="" class="mb-0">Seleccionar todos los empleados</label>
               </div>
             </div>
             <div class="col-md-12">
@@ -272,7 +267,7 @@
           </div>
           <div class="row mt-2">
             <div class="col-md-12 text-left">
-              <div class="custom-control custom-switch mb-2">
+              <div class="custom-control custom-switch mb-1">
                 <input type="checkbox" class="custom-control-input" id="r_switchPorEmpleado">
                 <label class="custom-control-label" for="r_switchPorEmpleado" style="font-weight: bold">
                   Por empleado
@@ -280,16 +275,11 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" id="r_rowEmpleado">
             <div class="col-md-12 text-right">
-              <div class="form-group mb-0 mt-3">
+              <div class="form-group mb-0 mt-1">
                 <input type="checkbox" id="r_todosEmpleados">
-                <label for="" class="mb-0">Seleccionar todos</label>
-                <div class="float-left mb-0">
-                  <span style="font-size: 11px;">
-                    *Se visualizara empleados sin centro de costo
-                  </span>
-                </div>
+                <label for="" class="mb-0">Seleccionar todos los empleados</label>
               </div>
             </div>
             <div class="col-md-12 pt-2">
