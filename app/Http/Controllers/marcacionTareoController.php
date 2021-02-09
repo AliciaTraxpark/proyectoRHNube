@@ -916,7 +916,8 @@ class marcacionTareoController extends Controller
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
-                    'he.nHoraAdic as horasA'
+                    DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                    'h.horasObliga as horasO'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
                 ->get()
