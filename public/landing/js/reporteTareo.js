@@ -105,7 +105,7 @@ function cargartabla(fecha) {
                                     <th>Subactividad</th>
                                     <th class="controHidEn">Controlador de entrada</th>
                                     <th>Hora de entrada</th>
-                                    <th class="noExport">&nbsp; &nbsp; &nbsp; &nbsp;</th>
+
                                     <th class="controHidSa">Controlador de salida</th>
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
@@ -337,7 +337,7 @@ function cargartabla(fecha) {
 
                                 /* SI  TENGO SALIDA */
                                 if (marcacionData.salida != 0) {
-                                    tbodyEntradaySalida += `<td class="noExport"></td>`;
+
                                     if (marcacionData.controladorSalida != 0) {
                                         tbodyEntradaySalida += `
                                                     <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
@@ -476,9 +476,7 @@ function cargartabla(fecha) {
                                         );
                                     }
                                 } else {
-                                    tbodyEntradaySalida += `<td class="noExport">
-                                        <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})"><img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
-                                        </td>`;
+
                                     /* SI NO TENGO SALIDA */
                                     if (marcacionData.controladorSalida != 0) {
                                         tbodyEntradaySalida += `
@@ -712,10 +710,7 @@ function cargartabla(fecha) {
                                          </div>
                                      </td>`;
 
-                                    tbodyEntradaySalida += `<td class="noExport">
-                                        <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})">
-                                        <img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
-                                        </td>`;
+
                                     //* COLUMNA DE SALIDA
 
                                     if (marcacionData.controladorSalida != 0) {
@@ -845,6 +840,31 @@ function cargartabla(fecha) {
                 }
                 $("#tbodyD").html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
+                if (data.length == 1) {
+                    var tbodyTR = '';
+                    tbodyTR += '<tr>';
+
+                    tbodyTR += `<td ><br><br><br><br><br><br><br><br><br><br></td>
+                                <td class="fechaHid"></td>
+                                <td class="codigoHid"></td>
+                                <td class="numdocHid"></td>
+                                <td ></td>
+                                <td class="sexoHid"></td>
+                                <td class="cargoHid"></td>`;
+
+                    tbodyTR += `<td ><br><br></td>
+                                <td ></td>
+                                <td ></td>
+                                <td></td>
+                                <td class="controHidEn"></td>
+                                <td ></td>
+                                <td class="controHidSa" ></td>
+                                <td ></td>
+                                <td></td>
+                                <td class="puntoHid" ></td>
+                                </tr>`;
+                    $('#tbodyD').append(tbodyTR);
+                }
                 /* DATOS PARA EXPORTAR TABLA */
                 var razonSocial = $("#nameOrganizacion").val();
                 var direccion = $("#direccionO").val();
@@ -1409,7 +1429,7 @@ function cargartabla(fecha) {
 
                 if($("#tbodyD").is(':empty')){
                     $("#tbodyD").append(
-                        '<tr class="odd"><td valign="top" colspan="16" class="text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
+                        '<tr class="odd"><td valign="top" colspan="15" class="text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
                     );
                 }
 
