@@ -77,7 +77,7 @@ class NotificacionController extends Controller
                 foreach ($notificacion as $notifi) {
                     $aux = $notifi->data;
                     foreach ($aux as $ax) {
-                        if ($ax["idOrgani"] == session('sesionidorg') && $ax["idEmpleado"] == $emple->emple_id && $ax["asunto"]!="birthday" && $ax["asunto"]!="contract" /* && $ax["mensaje"]=="Empleado no tiene registrado un correo electrónico." */ ) {
+                        if ($ax["idOrgani"] == session('sesionidorg') && $ax["idEmpleado"] == $emple->emple_id  /* && $ax["mensaje"]=="Empleado no tiene registrado un correo electrónico." */ ) {
                             $respuestaEmpleado = true;
                             if ($emple->emple_Correo != '') {
                                 $notifi->read_at = Carbon::now();
@@ -165,7 +165,7 @@ class NotificacionController extends Controller
     public function checkNotification(Request $request){
        $affected = DB::table('notifications')
                   ->where('id', $request->id)
-                  ->update(['read_at' => Carbon::now()]);            
+                  ->update(['read_at' => Carbon::now()]);
 
     }
 }
