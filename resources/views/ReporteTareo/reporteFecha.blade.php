@@ -321,7 +321,7 @@
                         </div> --}}
                     </div>
 
-                    <div class="row justify-content-center">
+                    <div class="row">
                         <div class="col-md-7" id="MostarDetalles" style="display: none">
                             {{-- <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="customSwitDetalles"

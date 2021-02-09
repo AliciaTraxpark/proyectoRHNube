@@ -190,7 +190,7 @@ function cargartabla(fecha) {
                                                     No tiene actividad
                                                 </span>
                                             </a>
-                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                        Opciones
@@ -227,7 +227,7 @@ function cargartabla(fecha) {
                                                     No tiene subactividad
                                                 </span>
                                             </a>
-                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                        Opciones
@@ -259,7 +259,7 @@ function cargartabla(fecha) {
                                                     No tiene controlador de Ent.
                                                 </span>
                                             </a>
-                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                        Opciones
@@ -351,7 +351,7 @@ function cargartabla(fecha) {
                                                         No tiene controlador de Sal.
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -491,7 +491,7 @@ function cargartabla(fecha) {
                                                         No tiene controlador de Sal.
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -522,7 +522,7 @@ function cargartabla(fecha) {
                                                 No tiene salida
                                             </span>
                                         </a>
-                                        <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${
+                                        <ul class="dropdown-menu  scrollable-menu noExport"  aria-labelledby="dropSalida${
                                             marcacionData.idMarcacion
                                         }" style="padding: 0rem 0rem;">
                                              <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
@@ -582,7 +582,7 @@ function cargartabla(fecha) {
                                                         No tiene actividad
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -619,7 +619,7 @@ function cargartabla(fecha) {
                                                         No tiene subactividad
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -651,7 +651,7 @@ function cargartabla(fecha) {
                                                         No tiene controlador de Ent.
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -682,7 +682,7 @@ function cargartabla(fecha) {
                                                      No tiene entrada
                                                  </span>
                                              </a>
-                                             <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${
+                                             <ul class="dropdown-menu scrollable-menu noExport" aria-labelledby="dropEntrada${
                                                  marcacionData.idMarcacion
                                              }" style="padding: 0rem 0rem;">
                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
@@ -726,7 +726,7 @@ function cargartabla(fecha) {
                                                         No tiene controlador de Sal.
                                                     </span>
                                                 </a>
-                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                            Opciones
@@ -817,7 +817,7 @@ function cargartabla(fecha) {
                                     No tiene punto de C.
                                 </span>
                             </a>
-                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                        Opciones
