@@ -321,15 +321,40 @@ class centrocostoController extends Controller
                 ), 200);
             }
         }
+        // : BUSCAR COINCIDENCIAS CON CODIGO DE CENTRO DE COSTOS -> ATRIBUTO CODIGO = 2
+        $buscarCentroCodigo = centro_costo::where('codigo', '=', $request->get('codigo'))
+            ->whereNotNull('codigo')
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        if ($buscarCentroCodigo) {
+            // : ALERTA DE CENTRO DE COSTO ACTIVO CON MISMO CODIGO
+            if ($buscarCentroCodigo->estado == 1) {
+                return response()->json(array(
+                    "respuesta" => 1,
+                    "campo" => 2,
+                    "mensaje" => "Ya existe un centro costo con este código."
+                ), 200);
+            } else {
+                // : ALERTA DE CENTRO DE COSTO INACTIVO CON MISMO CÓDIGO
+                return response()->json(array(
+                    "respuesta" => 0,
+                    "campo" => 2,
+                    "mensaje" => "Ya existe un centro costo inactivo con este código. ¿Desea recuperarla si o no?",
+                    "id" => $buscarCentroCodigo->centroC_id
+                ), 200);
+            }
+        }
+        // : AGREGAMOS NUEVO CENTRO COSTO
         $centro = new centro_costo();
         $centro->centroC_descripcion = $request->get('descripcion');
+        $centro->codigo = $request->get('codigo');
         $centro->organi_id = session('sesionidorg');
         $centro->save();
-
+        // : ID DE CENTRO COSTO
         $idCentro = $centro->centroC_id;
-
+        // : EMPLEADOS
         $empleados = $request->get('empleados');
-
         if (!is_null($empleados)) {
             foreach ($empleados as $e) {
                 $emp = empleado::findOrFail($e);
