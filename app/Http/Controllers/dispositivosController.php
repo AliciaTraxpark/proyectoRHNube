@@ -871,17 +871,31 @@ class dispositivosController extends Controller
         $dispositivos->dispo_tSincro = $request->tSincron_ed;
         $dispositivos->dispo_tMarca = $request->tMarca_ed;
         $dispositivos->dispo_Data = $request->tData_ed;
-        foreach ($request->lectura_ed as $lectura) {
-            if ($lectura == 1) {
-                $dispositivos->dispo_Manu = 1;
-            }
-            if ($lectura == 2) {
-                $dispositivos->dispo_Scan = 1;
-            }
+        $lectura=$request->lectura_ed;
+      
+        //*ASIGNANDO
+        if(in_array("1", $lectura)){
+            $dispositivos->dispo_Manu = 1;
 
-            if ($lectura == 3) {
+        }
+        else{
+            $dispositivos->dispo_Manu = 0;
+        }
+
+        if(in_array("2", $lectura)){
+
+            $dispositivos->dispo_Scan = 1;
+        }
+        else{
+            $dispositivos->dispo_Scan = 0;
+        }
+
+        if(in_array("3", $lectura)){
+
                 $dispositivos->dispo_Cam = 1;
-            }
+        }
+        else{
+            $dispositivos->dispo_Cam = 0;
         }
         $dispositivos->save();
 
