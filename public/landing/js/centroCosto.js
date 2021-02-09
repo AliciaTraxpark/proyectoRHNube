@@ -106,7 +106,7 @@ function editarCentro(id) {
 }
 // * OBTENER DATOS DE CENTRO COSTO
 var e_empleadosS;
-function datosCentro(id) {
+async function datosCentro(id) {
     $('#e_empleadosCentro').empty();
     $.ajax({
         async: false,
@@ -127,8 +127,43 @@ function datosCentro(id) {
             }*/
         },
         success: function (data) {
-            $('#e_descripcion').val(data.centro.descripcion);
-            $('#e_codigo').val(data.centro.codigo);
+            $('#e_descripcion').val(data.descripcion);
+            $('#e_codigo').val(data.codigo);
+            // : ASIGNACION POR EMPLEADO
+            if (data.porEmpleado == 1) {
+                $('#switchPorEmpleado').prop("checked", true);
+                $('#r_rowEmpleado').show();
+                $('#e_empleadosCentro').empty();
+                empleadosCentroCosto(data.id);
+            } else {
+                $('#r_rowEmpleado').hide();
+                $('#e_empleadosCentro').empty();
+                $('#e_todosEmpleados').prop("checked", false);
+                $('#switchPorEmpleado').prop("checked", false);
+            }
+        },
+        error: function () { }
+    });
+}
+function empleadosCentroCosto(id) {
+    $.ajax({
+        url: "/empleadoCentro",
+        method: "POST",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
             if (data.select.length != 0) {
                 var option = "";
                 data.select.forEach(element => {
@@ -307,23 +342,22 @@ $('#a_centro').on("change", function () {
             }*/
         },
         success: function (data) {
-            console.log(data);
-            if (data[0].select.length != 0) {
+            if (data.select.length != 0) {
                 var option = "";
-                data[0].select.forEach(element => {
+                data.select.forEach(element => {
                     option += `<option value="${element.emple_id}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
                 });
                 $('#a_empleadosCentro').append(option);
             }
-            if (data[0].noSelect.length != 0) {
+            if (data.noSelect.length != 0) {
                 var optionN = "";
-                data[0].noSelect.forEach(element => {
+                data.noSelect.forEach(element => {
                     optionN += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
                 });
                 $('#a_empleadosCentro').append(optionN);
             }
             a_empleadosS = $('#a_empleadosCentro').val();
-            if (data[0].noSelect.length == 0 && data[0].select.length != 0) {
+            if (data.noSelect.length == 0 && data[0].select.length != 0) {
                 $('#a_todosEmpleados').prop("checked", true);
             } else {
                 $('#a_todosEmpleados').prop("checked", false);
@@ -331,7 +365,6 @@ $('#a_centro').on("change", function () {
         },
         error: function () { }
     });
-
 });
 // ! LIMPIAR INPUTS DE ASIGNACION
 function limpiarAsignacion() {
