@@ -443,6 +443,7 @@ class dispositivosController extends Controller
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->select(
                             'e.emple_id',
                             'e.emple_nDoc',

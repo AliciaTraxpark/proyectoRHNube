@@ -178,10 +178,10 @@ function actividadEmpVer() {
 }
 //* INICIALIZAR PLUGIN DE MILTI SELECT EN GUARDAR
 $('#regEmpleadoActiv').select2({
-    tags: "true",
     placeholder: "Seleccionar",
     closeOnSelect: false,
-    allowClear: true
+    minimumResultsForSearch: 5,
+    allowClear: false
 });
 $('#regEmpleadoActiv').on("select2:opening", function () {
     var idE = $("#idEmpleado").val();
@@ -242,10 +242,10 @@ $('#formActvidadesReg').submit(function (e) {
 });
 //* INICIALIZAR PLUGIN DE MULTI SELECT EN EDITAR
 $('#empleadoActiv').select2({
-    tags: "true",
     placeholder: "Seleccionar",
     closeOnSelect: false,
-    allowClear: true
+    minimumResultsForSearch: 5,
+    allowClear: false
 });
 //* SELECT EN MODAL EDITAR
 $('#empleadoActiv').on("select2:opening", function () {

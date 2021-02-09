@@ -159,10 +159,14 @@ puntosControlOrganizacion();
 var empleadosSelectEdit;
 var areasSelectEdit;
 $('#e_empleadosPunto').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 $('#e_areasPunto').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 $("#e_codigoPunto").keyup(function () {
     $(this).removeClass("borderColor");
@@ -1336,10 +1340,14 @@ $('#a_punto').select2({
     matcher: matchStart
 });
 $('#a_empleadosPunto').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 $('#a_areasPunto').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 function listaPuntos() {
     $('#a_punto').empty();
@@ -1750,10 +1758,14 @@ $('#a_areasPunto').on("change", function (e) {
 // ! *********************************************************** FINALIZACION *************************************************
 // ! *********************************************************** FORMULARIO REGISTRAR *****************************************
 $('#r_empleadosPunto').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 $('#r_areasPunto').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 var r_layerGroup = new L.layerGroup();
 var r_circle = {};

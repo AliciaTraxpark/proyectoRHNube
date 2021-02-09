@@ -8,5 +8,13 @@ class centro_costo extends Model
 {
     protected $table = 'centro_costo';
     protected $primaryKey = 'centroC_id';
-    protected $fillable = ['centroC_id', 'centroC_descripcion', 'organi_id', 'estado'];
+    protected $fillable = [
+        'centroC_id',
+        'centroC_descripcion',
+        'organi_id',
+        'estado',
+        'porEmpleado',
+        'asistenciaPuerta',
+        'modoTareo'
+    ];
 }

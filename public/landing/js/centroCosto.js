@@ -1,5 +1,6 @@
 $.fn.select2.defaults.set('language', 'es');
 var table;
+var sent = false;
 function tablaCentroCosto() {
     table = $("#centroC").DataTable({
         scrollX: true,
@@ -70,7 +71,21 @@ function centroCostoOrganizacion() {
                 tr += `<tr>
                         <td>${(index + 1)}</td>
                         <td>${data[index].descripcion}</td>`;
-                tr += `<td><a class="badge badge-soft-primary"><i class="uil-users-alt"></i>&nbsp;${data[index].contar} emp.</a></td>`;
+                if (data[index].porEmpleado == 1) {
+                    tr += `<td>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchPorEmpleado${data[index].id}" checked>
+                                    <label class="custom-control-label" for="switchPorEmpleado${data[index].id}" style="font-weight: bold"></label>
+                                </div>
+                            </td>`;
+                } else {
+                    tr += `<td>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchPorEmpleado${data[index].id}">
+                                    <label class="custom-control-label" for="switchPorEmpleado${data[index].id}" style="font-weight: bold"></label>
+                                </div>
+                            </td>`;
+                }
                 if (data[index].respuesta == "Si") {
                     tr += `<td><img src="/admin/images/checkH.svg" height="13" class="mr-2">${data[index].respuesta}</td>`;
                 } else {
@@ -96,17 +111,21 @@ function centroCostoOrganizacion() {
 centroCostoOrganizacion();
 // ? ************************************* FORMULARIO EDITAR **************************************
 $('#e_empleadosCentro').select2({
-    tags: "true"
+    placeholder: "Empleados",
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 // * MODAL DE EDITAR
 function editarCentro(id) {
     $('#e_idCentro').val(id);
     $('#e_centrocmodal').modal();
     datosCentro(id);
+    sent = false;
 }
 // * OBTENER DATOS DE CENTRO COSTO
 var e_empleadosS;
-function datosCentro(id) {
+async function datosCentro(id) {
     $('#e_empleadosCentro').empty();
     $.ajax({
         async: false,
@@ -127,8 +146,55 @@ function datosCentro(id) {
             }*/
         },
         success: function (data) {
-            $('#e_descripcion').val(data.centro.descripcion);
-            $('#e_codigo').val(data.centro.codigo);
+            $('#e_descripcion').val(data.descripcion);
+            $('#e_codigo').val(data.codigo);
+            // : ASISTENCIA EN PUERTA
+            if (data.asistenciaPuerta == 1) {
+                $('#e_switchAP').prop("checked", true);
+            } else {
+                $('#e_switchAP').prop("checked", false);
+            }
+            // : MODO TAREO
+            if (data.modoTareo == 1) {
+                $('#e_switchMT').prop("checked", true);
+            } else {
+                $('#e_switchMT').prop("checked", false);
+            }
+            // : ASIGNACION POR EMPLEADO
+            if (data.porEmpleado == 1) {
+                $('#switchPorEmpleado').prop("checked", true);
+                $('#e_rowEmpleado').show();
+                $('#e_empleadosCentro').empty();
+                empleadosCentroCosto(data.id);
+            } else {
+                $('#e_rowEmpleado').hide();
+                $('#e_empleadosCentro').empty();
+                $('#e_todosEmpleados').prop("checked", false);
+                $('#switchPorEmpleado').prop("checked", false);
+            }
+        },
+        error: function () { }
+    });
+}
+function empleadosCentroCosto(id) {
+    $.ajax({
+        url: "/empleadoCentro",
+        method: "POST",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
             if (data.select.length != 0) {
                 var option = "";
                 data.select.forEach(element => {
@@ -175,6 +241,28 @@ function actualizarCentroC() {
     var id = $('#e_idCentro').val();
     var codigo = $('#e_codigo').val();
     var empleados = $('#e_empleadosCentro').val();
+    var porEmpleado;
+    var asistenciaPuerta;
+    var modoTareo;
+    // : ************************* POR EMPLEADO ****************
+    if ($('#switchPorEmpleado').is(":checked")) {
+        porEmpleado = 1;
+    } else {
+        porEmpleado = 0;
+    }
+    // : ************************* ASISTENCIA EN PUERTA *********
+    if ($('#e_switchAP').is(":checked")) {
+        asistenciaPuerta = 1;
+    } else {
+        asistenciaPuerta = 0;
+    }
+    // : ************************* MODO DE TAREO ****************
+    if ($('#e_switchMT').is(":checked")) {
+        modoTareo = 1;
+    } else {
+        modoTareo = 0;
+    }
+    // : ************************* FINALIZACION *****************
     $.ajax({
         async: false,
         url: "/actualizarCentroC",
@@ -182,7 +270,10 @@ function actualizarCentroC() {
         data: {
             id: id,
             empleados: empleados,
-            codigo: codigo
+            codigo: codigo,
+            porEmpleado: porEmpleado,
+            asistenciaPuerta: asistenciaPuerta,
+            modoTareo: modoTareo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -199,7 +290,29 @@ function actualizarCentroC() {
             if (data.respuesta == undefined) {
                 centroCostoOrganizacion();
                 $('#e_centrocmodal').modal('toggle');
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nCentro de costo modificado.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
             } else {
+                sent = false;
                 if (data.respuesta == 1) {
                     $('#e_codigo').addClass("borderColor");
                     $.notifyClose();
@@ -235,8 +348,64 @@ function actualizarCentroC() {
         error: function () { }
     });
 }
+// * VALIDAR FORMULARIO
+$('#formActualizarCentroC').attr('novalidate', true);
+$('#formActualizarCentroC').submit(function (e) {
+    e.preventDefault();
+    // : SWITCH DE POR EMPLEADO
+    if ($('#switchPorEmpleado').is(":checked")) {
+        if ($("#e_empleadosCentro").val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#e_centrocmodal"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            sent = false;
+            return;
+        }
+    }
+    // : EVITAR EL DOBLE ENVIO DE FORMULARIO
+    if (!sent) {
+        sent = true;
+        this.submit();
+    }
+});
+// * RETIRAR CLASE DE INPUT
 $('#e_codigo').keyup(function () {
     $(this).removeClass("borderColor");
+});
+// * SWITCH POR EMPLEADO
+$('#switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
+    $(this).prop("disabled", true);
+    if (event.target.checked) {
+        $('#e_rowEmpleado').show();
+        $('#e_empleadosCentro').empty();
+        var id = $('#e_idCentro').val();
+        empleadosCentroCosto(id);
+    } else {
+        $('#e_rowEmpleado').hide();
+        $('#e_todosEmpleados').prop("checked", false);
+        $('#e_empleadosCentro').empty();
+    }
+    $(this).prop("disabled", false);
 });
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** ASIGNAR CENTRO COSTO **************************************
@@ -244,7 +413,9 @@ $('#a_centro').select2({
     matcher: matchStart
 });
 $('#a_empleadosCentro').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 // ! ABRIR MODAL DE ASIGNACION
 function asignarCentroC() {
@@ -307,23 +478,22 @@ $('#a_centro').on("change", function () {
             }*/
         },
         success: function (data) {
-            console.log(data);
-            if (data[0].select.length != 0) {
+            if (data.select.length != 0) {
                 var option = "";
-                data[0].select.forEach(element => {
+                data.select.forEach(element => {
                     option += `<option value="${element.emple_id}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
                 });
                 $('#a_empleadosCentro').append(option);
             }
-            if (data[0].noSelect.length != 0) {
+            if (data.noSelect.length != 0) {
                 var optionN = "";
-                data[0].noSelect.forEach(element => {
+                data.noSelect.forEach(element => {
                     optionN += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
                 });
                 $('#a_empleadosCentro').append(optionN);
             }
             a_empleadosS = $('#a_empleadosCentro').val();
-            if (data[0].noSelect.length == 0 && data[0].select.length != 0) {
+            if (data.noSelect.length == 0 && data[0].select.length != 0) {
                 $('#a_todosEmpleados').prop("checked", true);
             } else {
                 $('#a_todosEmpleados').prop("checked", false);
@@ -331,7 +501,6 @@ $('#a_centro').on("change", function () {
         },
         error: function () { }
     });
-
 });
 // ! LIMPIAR INPUTS DE ASIGNACION
 function limpiarAsignacion() {
@@ -390,11 +559,26 @@ $("#a_empleadosCentro").on("change", function (e) {
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** FORMULARIO REGISTRAR **************************************
 function modalRegistrar() {
+    sent = false;
     $('#r_centrocmodal').modal();
-    empleadosCC();
+    $('#r_rowEmpleado').hide();
 }
 $('#r_empleadosCentro').select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    allowClear: false,
+    closeOnSelect: false
+});
+// : SWITCH DE POR EMPLEADO
+$('#r_switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#r_rowEmpleado').show();
+        $('#r_empleadosCentro').empty();
+        empleadosCC();
+    } else {
+        $('#r_rowEmpleado').hide();
+        $('#r_todosEmpleados').prop("checked", false);
+        $('#r_empleadosCentro').empty();
+    }
 });
 // : LISTA DE EMPLEADOS
 function empleadosCC() {
@@ -430,6 +614,28 @@ function registrarCentroC() {
     var descripcion = $('#r_descripcion').val();
     var empleados = $('#r_empleadosCentro').val();
     var codigo = $('#r_codigo').val();
+    var porEmpleado;
+    var asistenciaPuerta;
+    var modoTareo;
+    // : ******************** POR EMPLEADO *********************
+    if ($('#r_switchPorEmpleado').is(":checked")) {
+        porEmpleado = 1;
+    } else {
+        porEmpleado = 0;
+    }
+    // : ******************** ASISTENCIA EN PUERTA **************
+    if ($('#r_switchAP').is(":checked")) {
+        asistenciaPuerta = 1;
+    } else {
+        asistenciaPuerta = 0;
+    }
+    // : ******************** MODO TAREO ************************
+    if ($('#r_switchMT').is(":checked")) {
+        modoTareo = 1;
+    } else {
+        modoTareo = 0;
+    }
+    // : ******************** FINALIZACION **********************
     $.ajax({
         async: false,
         url: "/registrarCentro",
@@ -437,7 +643,10 @@ function registrarCentroC() {
         data: {
             descripcion: descripcion,
             empleados: empleados,
-            codigo: codigo
+            codigo: codigo,
+            porEmpleado: porEmpleado,
+            asistenciaPuerta: asistenciaPuerta,
+            modoTareo: modoTareo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -477,6 +686,7 @@ function registrarCentroC() {
                     }
                 );
             } else {
+                sent = false;
                 if (data.respuesta == 1) {
                     if (data.campo == 1) {
                         $("#r_descripcion").addClass("borderColor");
@@ -540,6 +750,69 @@ function registrarCentroC() {
         error: function () { }
     });
 }
+// : VALIDACION DE FORMULARIO
+$('#formRegistrarCentroC').attr('novalidate', true);
+$('#formRegistrarCentroC').submit(function (e) {
+    e.preventDefault();
+    if ($('#r_descripcion').val() == "" || $('#r_descripcion').val() == null) {
+        $.notifyClose();
+        $.notify({
+            message: '\nIngresar un centro de costo',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#r_centrocmodal"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
+    if ($('#r_switchPorEmpleado').is(":checked")) {
+        if ($('#r_empleadosCentro').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#r_centrocmodal"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if (!sent) {
+        sent = true;
+        this.submit();
+    }
+});
 // : FUNCTION DE RECUPERAR CENTRO
 function recuperarCentro(id) {
     $.ajax({
@@ -580,6 +853,8 @@ function limpiarCentro() {
     $('#r_descripcion').val("");
     $('#r_codigo').val("");
     $('#r_empleadosCentro').empty();
+    $('#r_switchPorEmpleado').prop("checked", false);
+    $('#r_rowEmpleado').hide();
 }
 //: TODOS LOS EMPLEADOS EN EDITAR
 $('#r_todosEmpleados').click(function () {

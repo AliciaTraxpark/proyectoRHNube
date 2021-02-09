@@ -456,9 +456,6 @@ $("#e_codigoTarea").keyup(function () {
 $('#e_nombreTarea').keyup(function () {
     $(this).removeClass("borderColor");
 });
-$("#areaAsignarEditar").select2({
-    tags: "true"
-});
 // * BUSCAR PERSONALIZADO
 function filterGlobal() {
     $("#actividades").DataTable().search(
@@ -469,18 +466,18 @@ function filterGlobal() {
 $('input.global_filter').on('keyup click change clear', function () {
     filterGlobal();
 });
-// * INICIALIZAR PLUGIN
-$("#areaAsignar").select2({
-    tags: "true"
-});
-$("#empleAsignar").select2({
-    tags: "true"
-});
 // ! ********************************************************** FORMULARIO EDITAR ***************************************
 // :INICIALIZAR PLUGIN DE EMPLEADOS
 $("#empleados").select2({
     placeholder: 'Seleccionar Empleados',
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
+});
+$("#areaAsignarEditar").select2({
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 //: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
 $('#e_customCR').on("change.bootstrapSwitch", function (event) {
@@ -1160,11 +1157,15 @@ $('#checkboxEmpleadosEditarTodos').on("change.bootstrapSwitch", function (event)
 //! ****************************************** FORMULARIO REGISTRAR ***********************************
 // * INICIALIZAR PLUGIN
 $("#areaAsignarReg").select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 $("#reg_empleados").select2({
     placeholder: 'Seleccionar Empleados',
-    tags: "true"
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 // * MODAL DE REGISTRAR NUEVA ACTIVIDAD
 function modalRegistrar() {
@@ -1623,6 +1624,7 @@ $('#FormRegistrarActividadTarea').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
@@ -1651,6 +1653,7 @@ $('#FormRegistrarActividadTarea').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
@@ -1740,6 +1743,16 @@ $('#checkboxEmpleadosTodosReg').on("change.bootstrapSwitch", function (event) {
 $("#actividadesAsignar").select2({
     placeholder: 'Seleccionar actividad',
     matcher: matchStart
+});
+$("#areaAsignar").select2({
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
+});
+$("#empleAsignar").select2({
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 //? FUNCIONN PARA LISTAR ACTIVIDADES
 function listaActividades() {
@@ -2115,6 +2128,7 @@ $('#FormAsignarActividadEmpleado').submit(function (e) {
                 '</div>',
             spacing: 35
         });
+        sent = false;
         return;
     }
     if ($('#a_customAA').is(":checked")) {
@@ -2142,6 +2156,7 @@ $('#FormAsignarActividadEmpleado').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
@@ -2170,6 +2185,7 @@ $('#FormAsignarActividadEmpleado').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }

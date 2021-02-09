@@ -117,7 +117,7 @@
             <tr>
               <th>#</th>
               <th>Centro de costo</th>
-              <th>N° empleados</th>
+              <th>Por Empleado</th>
               <th>En uso</th>
               <th class="text-center"></th>
             </tr>
@@ -144,8 +144,7 @@
       </div>
       <div class="modal-body" style="font-size:12px!important">
         <input type="hidden" id="e_idCentro">
-        <form action="javascript:actualizarCentroC()">
-          {{ csrf_field() }}
+        <form action="javascript:actualizarCentroC()" id="formActualizarCentroC">
           <div class="row">
             <div class="col-md-6">
               <label for="">Centro de costo</label>
@@ -157,21 +156,48 @@
                 oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
             </div>
           </div>
-          <div class="row">
+          <div class="row mt-2">
+            <div class="col-md-12 text-left">
+              <div class="custom-control custom-switch mb-2">
+                <input type="checkbox" class="custom-control-input" id="e_switchAP">
+                <label class="custom-control-label" for="e_switchAP" style="font-weight: bold">
+                  <i data-feather="check-circle"
+                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                  &nbsp;&nbsp;
+                  Asistencia en Puerta
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12 text-left">
+              <div class="custom-control custom-switch mb-2">
+                <input type="checkbox" class="custom-control-input" id="e_switchMT">
+                <label class="custom-control-label" for="e_switchMT" style="font-weight: bold">
+                  <i data-feather="pocket"
+                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                  &nbsp;&nbsp;
+                  Modo tareo
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12 text-left border-top pt-1">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="switchPorEmpleado">
+                <label class="custom-control-label" for="switchPorEmpleado" style="font-weight: bold">
+                  Por empleado
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="e_rowEmpleado">
             <div class="col-md-12 text-right">
-              <div class="form-group mb-0 mt-3">
+              <div class="form-group mb-0 mt-1">
                 <input type="checkbox" id="e_todosEmpleados">
-                <label for="" class="mb-0">Seleccionar todos</label>
-                <div class="float-left mb-0">
-                  <span style="font-size: 11px;">
-                    *Se visualizara empleados sin centro de costo
-                  </span>
-                </div>
+                <label for="" class="mb-0">Seleccionar todos los empleados</label>
               </div>
             </div>
             <div class="col-md-12">
-              <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
-                data-placeholder="Empleados"></select>
+              <select id="e_empleadosCentro" data-plugin="customselect" class="form-control"
+                data-placeholder="Empleados" multiple="multiple"></select>
             </div>
           </div>
       </div>
@@ -210,12 +236,7 @@
           <div class="col-md-12 text-right">
             <div class="form-group mb-0 mt-3">
               <input type="checkbox" id="a_todosEmpleados">
-              <label for="" class="mb-0">Seleccionar todos</label>
-              <div class="float-left mb-0">
-                <span style="font-size: 11px;">
-                  *Se visualizara empleados sin centro de costo
-                </span>
-              </div>
+              <label for="" class="mb-0">Seleccionar todos los empleados</label>
             </div>
           </div>
           <div class="col-md-12 pt-2">
@@ -248,8 +269,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size:12px!important">
-        <form action="javascript:registrarCentroC()">
-          {{ csrf_field() }}
+        <form action="javascript:registrarCentroC()" id="formRegistrarCentroC">
           <div class="row">
             <div class="col-md-6">
               <label for="">Centro de costo</label>
@@ -261,16 +281,43 @@
                 oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
             </div>
           </div>
-          <div class="row">
+          <div class="row mt-2">
+            <div class="col-md-12 text-left">
+              <div class="custom-control custom-switch mb-2">
+                <input type="checkbox" class="custom-control-input" id="r_switchAP">
+                <label class="custom-control-label" for="r_switchAP" style="font-weight: bold">
+                  <i data-feather="check-circle"
+                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                  &nbsp;&nbsp;
+                  Asistencia en Puerta
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12 text-left">
+              <div class="custom-control custom-switch mb-2">
+                <input type="checkbox" class="custom-control-input" id="r_switchMT">
+                <label class="custom-control-label" for="r_switchMT" style="font-weight: bold">
+                  <i data-feather="pocket"
+                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                  &nbsp;&nbsp;
+                  Modo tareo
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12 text-left border-top pt-1">
+              <div class="custom-control custom-switch mb-1">
+                <input type="checkbox" class="custom-control-input" id="r_switchPorEmpleado">
+                <label class="custom-control-label" for="r_switchPorEmpleado" style="font-weight: bold">
+                  Por empleado
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="r_rowEmpleado">
             <div class="col-md-12 text-right">
-              <div class="form-group mb-0 mt-3">
+              <div class="form-group mb-0 mt-1">
                 <input type="checkbox" id="r_todosEmpleados">
-                <label for="" class="mb-0">Seleccionar todos</label>
-                <div class="float-left mb-0">
-                  <span style="font-size: 11px;">
-                    *Se visualizara empleados sin centro de costo
-                  </span>
-                </div>
+                <label for="" class="mb-0">Seleccionar todos los empleados</label>
               </div>
             </div>
             <div class="col-md-12 pt-2">
@@ -334,6 +381,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.multi-checkboxes.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
