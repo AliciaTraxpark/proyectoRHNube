@@ -180,8 +180,8 @@
               </div>
             </div>
             <div class="col-md-12">
-              <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
-                data-placeholder="Empleados"></select>
+              <select id="e_empleadosCentro" data-plugin="customselect" class="form-control"
+                data-placeholder="Empleados" multiple="multiple"></select>
             </div>
           </div>
       </div>

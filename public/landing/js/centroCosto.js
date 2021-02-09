@@ -96,8 +96,10 @@ function centroCostoOrganizacion() {
 centroCostoOrganizacion();
 // ? ************************************* FORMULARIO EDITAR **************************************
 $('#e_empleadosCentro').select2({
-    tags: "true"
+    tags: "true",
+    placeholder: "Empleados"
 });
+
 // * MODAL DE EDITAR
 function editarCentro(id) {
     $('#e_idCentro').val(id);
