@@ -457,7 +457,8 @@ $('#e_nombreTarea').keyup(function () {
     $(this).removeClass("borderColor");
 });
 $("#areaAsignarEditar").select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    allowClear: false
 });
 // * BUSCAR PERSONALIZADO
 function filterGlobal() {
@@ -471,16 +472,19 @@ $('input.global_filter').on('keyup click change clear', function () {
 });
 // * INICIALIZAR PLUGIN
 $("#areaAsignar").select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    allowClear: false,
 });
 $("#empleAsignar").select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    allowClear: false
 });
 // ! ********************************************************** FORMULARIO EDITAR ***************************************
 // :INICIALIZAR PLUGIN DE EMPLEADOS
 $("#empleados").select2({
     placeholder: 'Seleccionar Empleados',
-    tags: "true"
+    minimumResultsForSearch: 5,
+    allowClear: false
 });
 //: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
 $('#e_customCR').on("change.bootstrapSwitch", function (event) {
@@ -1160,11 +1164,13 @@ $('#checkboxEmpleadosEditarTodos').on("change.bootstrapSwitch", function (event)
 //! ****************************************** FORMULARIO REGISTRAR ***********************************
 // * INICIALIZAR PLUGIN
 $("#areaAsignarReg").select2({
-    tags: "true"
+    minimumResultsForSearch: 5,
+    allowClear: false
 });
 $("#reg_empleados").select2({
     placeholder: 'Seleccionar Empleados',
-    tags: "true"
+    minimumResultsForSearch: 5,
+    allowClear: false
 });
 // * MODAL DE REGISTRAR NUEVA ACTIVIDAD
 function modalRegistrar() {

@@ -29,7 +29,6 @@ $(function () {
 });
 $('#empresa').select2({
     placeholder: 'Seleccionar empresa',
-    tags: true,
     maximumSelectionLength: 1
 });
 $('#empleado').select2({

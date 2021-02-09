@@ -58,7 +58,6 @@ var horaFinal = $('#horaF').flatpickr({
 });
 $('#empresa').select2({
     placeholder: 'Seleccionar empresa',
-    tags: true,
     maximumSelectionLength: 1
 });
 $('#empresa').on("change", function () {
