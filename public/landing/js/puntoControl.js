@@ -160,10 +160,12 @@ var empleadosSelectEdit;
 var areasSelectEdit;
 $('#e_empleadosPunto').select2({
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 $('#e_areasPunto').select2({
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 $("#e_codigoPunto").keyup(function () {
@@ -1339,10 +1341,12 @@ $('#a_punto').select2({
 });
 $('#a_empleadosPunto').select2({
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 $('#a_areasPunto').select2({
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 function listaPuntos() {
@@ -1755,10 +1759,12 @@ $('#a_areasPunto').on("change", function (e) {
 // ! *********************************************************** FORMULARIO REGISTRAR *****************************************
 $('#r_empleadosPunto').select2({
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 $('#r_areasPunto').select2({
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 var r_layerGroup = new L.layerGroup();
