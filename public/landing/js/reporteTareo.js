@@ -369,9 +369,62 @@ function cargartabla(fecha) {
                                             </div>
                                         </td>`;
                                     }
-                                    tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
-                                        marcacionData.salida
-                                    ).format("HH:mm:ss")}</td>`;
+                                    tbodyEntradaySalida += `<td >
+                                                            <div class="dropdown" >
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
+                                                                    ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
+                                                                                Cambiar a entrada
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                                Cambiar a salida
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
+                                                                                Convertir orden
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                Asignar a nueva marc.
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                                Eliminar marc.
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
+                                                        </td>`;
 
                                     var horaFinal = moment(
                                         marcacionData.salida
@@ -697,9 +750,46 @@ function cargartabla(fecha) {
                                         </td>`;
                                     }
 
-                                    tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
-                                        marcacionData.salida
-                                    ).format("HH:mm:ss")}</td>`;
+                                    tbodyEntradaySalida += `<td>
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
+                                                                ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
+                                                                            Cambiar a entrada
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                            Cambiar a salida
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                            Eliminar marc.
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </td>`;
 
                                     tbodyEntradaySalida += `<td >
                                                             <span class="badge badge-soft-secondary">
