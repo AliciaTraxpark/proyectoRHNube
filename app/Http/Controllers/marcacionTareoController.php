@@ -765,28 +765,57 @@ class marcacionTareoController extends Controller
             if ($respuesta) {
                 // * VALIDAR CON EL HORARIO
                 if ($idhorarioE != 0) {
-                    if ($horario->fueraH == 0) {
-                        // * VALIDAR SIN FUERA DE HORARIO
-                        $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
-
-                        if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                    // : SUMAR TIEMPOS DE MARCACIONES
+                    $sumaTotalDeHoras = DB::table('marcacion_tareo as m')
+                        ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaTareo_salida,m.marcaTareo_entrada)))) as totalT'))
+                        ->where('m.marcaTareo_idempleado', '=', $marcacion->marcaTareo_idempleado)
+                        ->whereNotNull('m.marcaTareo_entrada')
+                        ->whereNotNull('m.marcaTareo_salida')
+                        ->where(DB::raw('DATE(marcaTareo_entrada)'), '=', $entrada->copy()->isoFormat('YYYY-MM-DD'))
+                        ->where('m.horarioEmp_id', '=', $idhorarioE)
+                        ->get();
+                    // : CALCULAR TIEMPO
+                    $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                    // : TIEMPO DE ENTRADA Y SALIDA
+                    $horaIParse = Carbon::parse($entrada);
+                    $horaFParse = Carbon::parse($salida);
+                    // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                    $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                    // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                    $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                    // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
+                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                    if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                        if ($horario->fueraH == 0) {
+                            // * VALIDAR SIN FUERA DE HORARIO
+                            $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                            $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+                            if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                                $marcacion->marcaTareo_salida = $salida;
+                                $marcacion->iddispositivos_salida = null;
+                                $marcacion->save();
+                                return response()->json($marcacion->idmarcaciones_tareo, 200);
+                            } else {
+                                return response()->json(
+                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                    200
+                                );
+                            }
+                        } else {
                             $marcacion->marcaTareo_salida = $salida;
+                            $marcacion->iddispositivos_salida = null;
                             $marcacion->save();
                             return response()->json($marcacion->idmarcaciones_tareo, 200);
-                        } else {
-                            return response()->json(
-                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
-                                200
-                            );
                         }
                     } else {
-                        $marcacion->marcaTareo_salida = $salida;
-                        $marcacion->save();
-                        return response()->json($marcacion->idmarcaciones_tareo, 200);
+                        return response()->json(
+                            array("respuesta" => "Sobretiempo en la marcación."),
+                            200
+                        );
                     }
                 } else {
                     $marcacion->marcaTareo_salida = $salida;
+                    $marcacion->iddispositivos_salida = null;
                     $marcacion->save();
                     return response()->json($marcacion->idmarcaciones_tareo, 200);
                 }
@@ -875,28 +904,53 @@ class marcacionTareoController extends Controller
             if ($respuesta) {
                 // * VALIDAR CON EL HORARIO
                 if ($idhorarioE != 0) {
-                    if ($horario->fueraH == 0) {
-                        // * VALIDAR SIN FUERA DE HORARIO
-                        $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
+                    $sumaTotalDeHoras = DB::table('marcacion_tareo as m')
+                        ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaTareo_salida,m.marcaTareo_entrada)))) as totalT'))
+                        ->where('m.marcaTareo_idempleado', '=', $marcacion->marcaTareo_idempleado)
+                        ->whereNotNull('m.marcaTareo_entrada')
+                        ->whereNotNull('m.marcaTareo_salida')
+                        ->where(DB::raw('DATE(marcaTareo_entrada)'), '=', $entrada->copy()->isoFormat('YYYY-MM-DD'))
+                        ->where('m.horarioEmp_id', '=', $idhorarioE)
+                        ->get();
+                    // * CALCULAR TIEMPO
+                    $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                    $horaIParse = Carbon::parse($entrada);
+                    $horaFParse = Carbon::parse($salida);
+                    $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                    $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                    if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                        if ($horario->fueraH == 0) {
+                            // * VALIDAR SIN FUERA DE HORARIO
+                            $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                            $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
 
-                        if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                            if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                                $marcacion->marcaTareo_entrada = $entrada;
+                                $marcacion->iddispositivos_entrada = null;
+                                $marcacion->save();
+                                return response()->json($marcacion->idmarcaciones_tareo, 200);
+                            } else {
+                                return response()->json(
+                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                    200
+                                );
+                            }
+                        } else {
                             $marcacion->marcaTareo_entrada = $entrada;
+                            $marcacion->iddispositivos_entrada = null;
                             $marcacion->save();
                             return response()->json($marcacion->idmarcaciones_tareo, 200);
-                        } else {
-                            return response()->json(
-                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
-                                200
-                            );
                         }
                     } else {
-                        $marcacion->marcaTareo_entrada = $entrada;
-                        $marcacion->save();
-                        return response()->json($marcacion->idmarcaciones_tareo, 200);
+                        return response()->json(
+                            array("respuesta" => "Sobretiempo en la marcación."),
+                            200
+                        );
                     }
                 } else {
                     $marcacion->marcaTareo_entrada = $entrada;
+                    $marcacion->iddispositivos_entrada = null;
                     $marcacion->save();
                     return response()->json($marcacion->idmarcaciones_tareo, 200);
                 }
@@ -1351,7 +1405,7 @@ class marcacionTareoController extends Controller
                         // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
                         $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                         // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
-                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addHours($horario->horasA);
+                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                             if ($horario->fueraH == 0) {
                                 if ($salida->lte($horarioFinT)) {
@@ -1459,4 +1513,234 @@ class marcacionTareoController extends Controller
         }
     }
 
+    // * LISTA DE SALIDAS CON ENTRADA NULL
+    function listaDeSalidasSinE(Request $request)
+    {
+        $fecha = $request->get('fecha');
+        $idEmpleado = $request->get('idEmpleado');
+
+        $salidas = DB::table('marcacion_tareo as mt')
+            ->leftJoin('horario_empleado as he', 'mt.horarioEmp_id', '=', 'he.horarioEmp_id')
+            ->leftJoin('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->select(
+                'mt.idmarcaciones_tareo as id',
+                'mt.marcaTareo_salida as salida',
+                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id ) as idH'),
+                DB::raw('IF(h.horario_descripcion is null , "Sin horario",h.horario_descripcion) as horario')
+            )
+            ->whereNotNull('mt.marcaTareo_salida')
+            ->whereNull('mt.marcaTareo_entrada')
+            ->whereRaw("DATE(marcaTareo_salida) = '$fecha'")
+            ->where('mt.marcaTareo_idempleado', '=', $idEmpleado)
+            ->get();
+
+        $salidas = agruparMarcacionesHorario($salidas);
+
+        return response()->json($salidas, 200);
+    }
+
+     // * CAMBIAR ENTRDA
+     public function cambiarEntraMarcacion(Request $request)
+     {
+         $idEntradaCambiar = $request->get('idCambiar');
+         $idMarcacion = $request->get('idMarcacion');
+         $tipo = $request->get('tipo');
+         if ($idEntradaCambiar != $idMarcacion) {
+             $marcacionCambiar = marcacion_tareo::findOrFail($idEntradaCambiar);     // ? MARCACION A CAMBIAR
+             $marcacion = marcacion_tareo::findOrFail($idMarcacion);                 // ? MARCACION A RECIBIR ENTRADA
+             // **************************************** VALIDACION DE NUEVO RANGOS **************************************
+             $nuevaEntrada = $tipo  == 2 ? $marcacionCambiar->marcaTareo_salida : $marcacionCambiar->marcaTareo_entrada;
+             $nuevaSalida = $marcacion->marcaTareo_salida;
+             if ($tipo == 1) {
+                 $fecha = Carbon::parse($marcacionCambiar->marcaTareo_entrada)->isoFormat('YYYY-MM-DD');
+             } else {
+                 $fecha = Carbon::parse($marcacionCambiar->marcaTareo_salida)->isoFormat('YYYY-MM-DD');
+             }
+             if (Carbon::parse($nuevaSalida)->gt(Carbon::parse($nuevaEntrada))) {
+                 // DB::enableQueryLog();
+                 $marcacionesValidar = DB::table('marcacion_tareo as m')
+                     ->select(
+                         'm.idmarcaciones_tareo',
+                         DB::raw('IF(m.marcaTareo_entrada is null,0,m.marcaTareo_entrada) AS entrada'),
+                         DB::raw('IF(m.marcaTareo_salida is null,0,m.marcaTareo_salida) AS salida')
+                     )
+                     ->where('m.marcaTareo_idempleado', '=', $marcacion->marcaTareo_idempleado)
+                     ->where(DB::raw('IF(m.marcaTareo_entrada is null,DATE(m.marcaTareo_salida),DATE(m.marcaTareo_entrada))'), "=", $fecha)
+                     ->whereNotIn('m.idmarcaciones_tareo', [$marcacion->idmarcaciones_tareo])
+                     ->get();
+                 // dd(DB::getQueryLog());
+                 $respuesta = true;
+                 foreach ($marcacionesValidar as $mv) {
+                     if (!($mv->idmarcaciones_tareo == $marcacionCambiar->idmarcaciones_tareo)) {
+                         if ($mv->entrada != 0) {
+                             $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->entrada);
+                             if ($respuestaCheck) {
+                                 $respuesta = false;
+                             }
+                         } else {
+                             if ($mv->salida != 0) {
+                                 $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->salida);
+                                 if ($respuestaCheck) {
+                                     $respuesta = false;
+                                 }
+                             }
+                         }
+                     } else {
+                         if ($tipo  == 2 ?  !empty($marcacionCambiar->marcaTareo_entrada) : !empty($marcacionCambiar->marcaTareo_salida)) {
+                             $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $tipo  == 2 ?  $mv->entrada : $mv->salida);
+                             if ($respuestaCheck) {
+                                 $respuesta = false;
+                             }
+                         }
+                     }
+                 }
+                 if ($respuesta) {
+                     if (!empty($marcacion->horarioEmp_id)) {
+                         $entrada = Carbon::parse($nuevaEntrada);
+                         $salida = Carbon::parse($nuevaSalida);
+                         $horario = DB::table('horario_empleado as he')
+                             ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                             ->select(
+                                 'h.horario_descripcion as descripcion',
+                                 'h.horaI',
+                                 'h.horaF',
+                                 'h.horario_tolerancia as toleranciaI',
+                                 'h.horario_toleranciaF as toleranciaF',
+                                 'he.fuera_horario as fueraH',
+                                 DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                                 'h.horasObliga as horasO'
+                             )
+                             ->where('he.horarioEmp_id', '=', $marcacion->horarioEmp_id)
+                             ->get()
+                             ->first();
+                         $horarioInicio = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaI);
+                         $horarioIniT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                         // : SUMAR TIEMPOS DE MARCACIONES
+                         $sumaTotalDeHoras = DB::table('marcacion_tareo as m')
+                             ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaTareo_salida,m.marcaTareo_entrada)))) as totalT'))
+                             ->where('m.marcaTareo_idempleado', '=', $marcacion->marcaTareo_idempleado)
+                             ->whereNotNull('m.marcaTareo_entrada')
+                             ->whereNotNull('m.marcaTareo_salida')
+                             ->where(DB::raw('DATE(marcaTareo_entrada)'), '=', $entrada->copy()->isoFormat('YYYY-MM-DD'))
+                             ->where('m.horarioEmp_id', '=', $marcacion->horarioEmp_id)
+                             ->where('m.idmarcaciones_tareo', '!=', $marcacionCambiar->idmarcaciones_tareo)
+                             ->get();
+                         // : CALCULAR TIEMPO
+                         $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                         // : TIEMPO DE ENTRADA Y SALIDA
+                         $horaIParse = Carbon::parse($entrada);
+                         $horaFParse = Carbon::parse($salida);
+                         // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                         $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                         // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                         $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                         // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
+                         $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                             if ($horario->fueraH == 0) {
+                                 if ($horarioIniT->lte($entrada)) {
+                                     // ! MARCACION A REGISTRAR ENTRADA
+                                     $marcacion->marcaTareo_entrada = $nuevaEntrada;
+                                     if ($tipo == 2) {
+                                         $marcacion->idcontroladores_entrada = $marcacionCambiar->idcontroladores_salida;
+                                         $marcacion->iddispositivos_entrada = $marcacionCambiar->iddispositivos_salida;
+                                     } else {
+                                         $marcacion->idcontroladores_entrada  = $marcacionCambiar->idcontroladores_entrada;
+                                         $marcacion->iddispositivos_entrada = $marcacionCambiar->iddispositivos_entrada;
+                                     }
+                                     $marcacion->save();
+                                     // ! MARCACION A CAMBIAR
+                                     if ($tipo == 2) {
+                                         $marcacionCambiar->marcaTareo_salida = NULL;
+                                         $marcacionCambiar->idcontroladores_salida = NULL;
+                                         $marcacionCambiar->iddispositivos_salida = NULL;
+                                     } else {
+                                         $marcacionCambiar->marcaTareo_entrada = NULL;
+                                         $marcacionCambiar->idcontroladores_entrada  = NULL;
+                                         $marcacionCambiar->iddispositivos_entrada = NULL;
+                                     }
+                                     $marcacionCambiar->save();
+                                 } else {
+                                     return response()->json(
+                                         array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                         200
+                                     );
+                                 }
+                             } else {
+                                 // ! MARCACION A REGISTRAR ENTRADA
+                                 $marcacion->marcaTareo_entrada = $nuevaEntrada;
+                                 if ($tipo == 2) {
+                                     $marcacion->idcontroladores_entrada = $marcacionCambiar->idcontroladores_salida;
+                                     $marcacion->iddispositivos_entrada = $marcacionCambiar->iddispositivos_salida;
+                                 } else {
+                                     $marcacion->idcontroladores_entrada  = $marcacionCambiar->idcontroladores_entrada;
+                                     $marcacion->iddispositivos_entrada = $marcacionCambiar->iddispositivos_entrada;
+                                 }
+                                 $marcacion->save();
+                                 // ! MARCACION A CAMBIAR
+                                 if ($tipo == 2) {
+                                     $marcacionCambiar->marcaTareo_salida = NULL;
+                                     $marcacionCambiar->idcontroladores_salida = NULL;
+                                     $marcacionCambiar->iddispositivos_salida = NULL;
+                                 } else {
+                                     $marcacionCambiar->marcaTareo_entrada = NULL;
+                                     $marcacionCambiar->idcontroladores_entrada  = NULL;
+                                     $marcacionCambiar->iddispositivos_entrada = NULL;
+                                 }
+                                 $marcacionCambiar->save();
+                             }
+                         } else {
+                             return response()->json(
+                                 array("respuesta" => "Sobretiempo en la marcación."),
+                                 200
+                             );
+                         }
+                     } else {
+                         // ! MARCACION A REGISTRAR ENTRADA
+                         $marcacion->marcaTareo_entrada = $nuevaEntrada;
+                         if ($tipo == 2) {
+                             $marcacion->idcontroladores_entrada = $marcacionCambiar->idcontroladores_salida;
+                             $marcacion->iddispositivos_entrada = $marcacionCambiar->iddispositivos_salida;
+                         } else {
+                             $marcacion->idcontroladores_entrada  = $marcacionCambiar->idcontroladores_entrada;
+                             $marcacion->iddispositivos_entrada = $marcacionCambiar->iddispositivos_entrada;
+                         }
+                         $marcacion->save();
+                         // ! MARCACION A CAMBIAR
+                         if ($tipo == 2) {
+                             $marcacionCambiar->marcaTareo_salida = NULL;
+                             $marcacionCambiar->idcontroladores_salida = NULL;
+                             $marcacionCambiar->iddispositivos_salida = NULL;
+                         } else {
+                             $marcacionCambiar->marcaTareo_entrada = NULL;
+                             $marcacionCambiar->idcontroladores_entrada  = NULL;
+                             $marcacionCambiar->iddispositivos_entrada = NULL;
+                         }
+                         $marcacionCambiar->save();
+                     }
+                     // ! BUSCAR SI LA MARCACION A CAMBIAR TIENE LOS CAMPOS VACIOS DE ENTRADA Y SALIDA
+                     if (is_null($marcacionCambiar->marcaTareo_entrada) && is_null($marcacionCambiar->marcaTareo_salida)) {
+                         $marcacionCambiar->delete();  // ? ELIMINAR MARCACION
+                     }
+                     return response()->json($marcacion->idmarcaciones_tareo, 200);
+                 } else {
+                     return response()->json(array("respuesta" => "Posibilidad de cruze de marcación."), 200);
+                 }
+             } else {
+                 return response()->json(array("respuesta" => "Entrada debe ser menor a salida."), 200);
+             }
+             // *************************************** FINALIZACION ******************************************************
+         } else {
+             $marcacion = marcacion_tareo::findOrFail($idEntradaCambiar);
+             $marcacion->marcaTareo_entrada = $marcacion->marcaTareo_salida;
+             $marcacion->idcontroladores_entrada = $marcacion->idcontroladores_salida;
+             $marcacion->iddispositivos_entrada = $marcacion->iddispositivos_salida;
+             $marcacion->marcaTareo_salida = NULL;
+             $marcacion->idcontroladores_salida= NULL;
+             $marcacion->iddispositivos_salida= NULL;
+             $marcacion->save();
+
+             return response()->json($marcacion->idmarcaciones_tareo, 200);
+         }
+     }
 }

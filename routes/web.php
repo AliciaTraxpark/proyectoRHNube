@@ -590,6 +590,8 @@ Route::post('/TareoasignacionNew', 'marcacionTareoController@asignacionMarcacion
 Route::post('/TareoconvertirTiempos', 'marcacionTareoController@convertirTiempos');
 Route::post('/TareolistaMarcacionE', 'marcacionTareoController@listaDeEntradasSinS');
 Route::post('/TareocambiarSM', 'marcacionTareoController@cambiarSalidaMarcacion');
+Route::post('/TareolistaMarcacionS', 'marcacionTareoController@listaDeSalidasSinE');
+Route::post('/TareocambiarEM', 'marcacionTareoController@cambiarEntraMarcacion');
 /* ------------------------------------------------------------------------ */
 
 /*------------------------ SUBACTIVIDADES--------------------------------- */

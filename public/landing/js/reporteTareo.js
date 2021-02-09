@@ -2834,3 +2834,173 @@ $('#formCambiarSalidaM').submit(function (e) {
 });
 
 /* ----------------------------------------------------------------------------------------- */
+// ! *********************************** CAMBIAR A ENTRADA ********************************************
+// * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
+function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
+    $('a').css('pointer-events', 'none');
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
+    $('#salidaM').empty();
+    $('#c_horaS').text(hora);
+    $('#c_tipoS').val(tipo);
+    $('#listaSalidasMarcacion').modal();
+    $('#idMarcacion').val(id);
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareolistaMarcacionS",
+        data: {
+            fecha: fecha,
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var container = `<option value="" disabled selected>Seleccionar salida</option>`;
+                for (let index = 0; index < data.length; index++) {
+                    container += `<optgroup label="Horario ${data[index].horario}">`;
+                    data[index].data.forEach(element => {
+                        if (element.id == id) {
+                            container += `<option value="${element.id}" selected="selected">
+                                    ${moment(element.salida).format("HH:mm:ss")}
+                                </option>`;
+                        } else {
+                            container += `<option value="${element.id}">
+                                    ${moment(element.salida).format("HH:mm:ss")}
+                                </option>`;
+                        }
+                    });
+                    container += `</optgroup>`;
+                }
+            } else {
+                var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
+            }
+            $('#salidaM').append(container);
+            imagenesSalida();
+        },
+        error: function () { }
+    });
+    sent = false;
+    $('a').css('pointer-events', 'auto');
+}
+// * FUNCION DE CAMBIAR ENTRADA
+function cambiarEntradaM() {
+    var idCambiar = $('#idMarcacion').val();
+    var idMarcacion = $('#salidaM').val();
+    var tipo = $('#c_tipoS').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareocambiarEM",
+        data: {
+            idCambiar: idCambiar,
+            idMarcacion: idMarcacion,
+            tipo: tipo
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.respuesta == undefined) {
+                $('#s_valid').hide();
+                $('#listaSalidasMarcacion').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
+              /*   fechaValue.setDate(fechaGlobal); */
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                sent = false;
+                $('button[type="submit"]').attr("disabled", false);
+                $('#s_valid').append(data.respuesta);
+                $('#s_valid').show();
+            }
+        },
+        error: function () {
+        }
+    });
+}
+// * COMBOX DE SALIDA
+function imagenesSalida() {
+    function formatState(state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "landing/images/salidaD.svg";
+        var $state = $(
+            `<span>Salida : <img src="${baseUrl}" height="12" class="ml-1 mr-1" /> ${state.text} </span>`
+        );
+        return $state;
+    };
+    $("#salidaM").select2({
+        templateResult: formatState
+    });
+}
+// * VALIDACION
+$('#formCambiarEntradaM').attr('novalidate', true);
+$('#formCambiarEntradaM').submit(function (e) {
+    e.preventDefault();
+    if ($("#salidaM").val() == "" || $("#salidaM").val() == null) {
+        $('#s_valid').empty();
+        $('#s_valid').append("Seleccionar marcación.");
+        $('#s_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
+        sent = false;
+        return;
+    }
+    if (!sent) {
+        sent = true;
+        $('#s_valid').empty();
+        $('#s_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
+});
+/* ---------------------------------------------------------------------------------- */
