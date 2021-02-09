@@ -55,7 +55,7 @@ class centrocostoController extends Controller
                 'c.centroC_id as id',
                 'c.centroC_descripcion as descripcion',
                 DB::raw("CASE WHEN(e.emple_id) IS NULL THEN 'No' ELSE 'Si' END AS respuesta"),
-                DB::raw("COUNT(e.emple_id) as contar")
+                'c.porEmpleado'
             )
             ->where('c.organi_id', '=', session('sesionidorg'))
             ->where('estado', '=', 1)

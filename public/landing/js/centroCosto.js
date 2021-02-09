@@ -71,7 +71,21 @@ function centroCostoOrganizacion() {
                 tr += `<tr>
                         <td>${(index + 1)}</td>
                         <td>${data[index].descripcion}</td>`;
-                tr += `<td><a class="badge badge-soft-primary"><i class="uil-users-alt"></i>&nbsp;${data[index].contar} emp.</a></td>`;
+                if (data[index].porEmpleado == 1) {
+                    tr += `<td>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchPorEmpleado${data[index].id}" checked>
+                                    <label class="custom-control-label" for="switchPorEmpleado${data[index].id}" style="font-weight: bold"></label>
+                                </div>
+                            </td>`;
+                } else {
+                    tr += `<td>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchPorEmpleado${data[index].id}">
+                                    <label class="custom-control-label" for="switchPorEmpleado${data[index].id}" style="font-weight: bold"></label>
+                                </div>
+                            </td>`;
+                }
                 if (data[index].respuesta == "Si") {
                     tr += `<td><img src="/admin/images/checkH.svg" height="13" class="mr-2">${data[index].respuesta}</td>`;
                 } else {
