@@ -3222,3 +3222,57 @@ $('#formCambiarEntradaM').submit(function (e) {
     }
 });
 /* ---------------------------------------------------------------------------------- */
+$('#areaT').on("change", function (e) {
+    /* fechaDefectoT(); */
+    var area = $(this).val();
+    if(area.length==0){
+        $("#idempleado > option").prop("selected", false);
+        $("#idempleado").trigger("change");
+        return false;
+    }
+    let textSelec = $('select[id="areaT"] option:selected:last').text();
+    let selector = textSelec.split(' ')[0];
+    console.log(area);
+/*     $('#idempleado').empty(); */
+    $.ajax({
+        async: false,
+        url: "/TareoselectEmp",
+        method: "GET",
+        data: {
+            area: area,
+            selector: selector
+
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            /* var select = "";
+            for (let i = 0; i < data.length; i++) {
+                select += `<option value="${data[i].emple_id}">${data[i].nombre} ${data[i].apPaterno} ${data[i].apMaterno}</option>`
+            }
+            $('#idempleado').append(select); */
+            $("#idempleado > option").prop("selected", false);
+                $("#idempleado").trigger("change");
+
+                    $.each(data, function (index, value1) {
+                        $(
+                            "#idempleado > option[value='" +
+                                value1.emple_id +
+                                "']"
+                        ).prop("selected", "selected");
+                        $("#idempleado").trigger("change");
+                    });
+
+        },
+        error: function () { }
+    });
+});
