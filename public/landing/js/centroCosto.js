@@ -516,12 +516,13 @@ $("#a_empleadosCentro").on("change", function (e) {
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** FORMULARIO REGISTRAR **************************************
 function modalRegistrar() {
+    sent = false;
     $('#r_centrocmodal').modal();
     $('#r_rowEmpleado').hide();
 }
 $('#r_empleadosCentro').select2({
     minimumResultsForSearch: 5,
-    allowClear: true,
+    allowClear: false,
 });
 // : SWITCH DE POR EMPLEADO
 $('#r_switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
@@ -569,6 +570,12 @@ function registrarCentroC() {
     var descripcion = $('#r_descripcion').val();
     var empleados = $('#r_empleadosCentro').val();
     var codigo = $('#r_codigo').val();
+    var porEmpleado;
+    if ($('#r_switchPorEmpleado').is(":checked")) {
+        porEmpleado = 1;
+    } else {
+        porEmpleado = 0;
+    }
     $.ajax({
         async: false,
         url: "/registrarCentro",
@@ -576,7 +583,8 @@ function registrarCentroC() {
         data: {
             descripcion: descripcion,
             empleados: empleados,
-            codigo: codigo
+            codigo: codigo,
+            porEmpleado: porEmpleado
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -616,6 +624,7 @@ function registrarCentroC() {
                     }
                 );
             } else {
+                sent = false;
                 if (data.respuesta == 1) {
                     if (data.campo == 1) {
                         $("#r_descripcion").addClass("borderColor");
@@ -679,6 +688,43 @@ function registrarCentroC() {
         error: function () { }
     });
 }
+// : VALIDACION DE FORMULARIO
+$('#formRegistrarCentroC').attr('novalidate', true);
+$('#formRegistrarCentroC').submit(function (e) {
+    e.preventDefault();
+    if ($('#r_switchPorEmpleado').is(":checked")) {
+        if ($('#r_empleadosCentro').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#r_centrocmodal"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if (!sent) {
+        sent = true;
+        this.submit();
+    }
+});
 // : FUNCTION DE RECUPERAR CENTRO
 function recuperarCentro(id) {
     $.ajax({

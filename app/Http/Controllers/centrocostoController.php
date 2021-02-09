@@ -329,6 +329,7 @@ class centrocostoController extends Controller
         $centro = new centro_costo();
         $centro->centroC_descripcion = $request->get('descripcion');
         $centro->codigo = $request->get('codigo');
+        $centro->porEmpleado = $request->get('porEmpleado');
         $centro->organi_id = session('sesionidorg');
         $centro->save();
         // : ID DE CENTRO COSTO
@@ -337,9 +338,11 @@ class centrocostoController extends Controller
         $empleados = $request->get('empleados');
         if (!is_null($empleados)) {
             foreach ($empleados as $e) {
-                $emp = empleado::findOrFail($e);
-                $emp->emple_centCosto = $idCentro;
-                $emp->save();
+                $centroEmpleado = new centrocosto_empleado();
+                $centroEmpleado->idCentro = $idCentro;
+                $centroEmpleado->idEmpleado = $e;
+                $centroEmpleado->fecha_alta = Carbon::now();
+                $centroEmpleado->save();
             }
         }
 

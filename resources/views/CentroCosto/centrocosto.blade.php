@@ -252,8 +252,7 @@
         </button>
       </div>
       <div class="modal-body" style="font-size:12px!important">
-        <form action="javascript:registrarCentroC()">
-          {{ csrf_field() }}
+        <form action="javascript:registrarCentroC()" id="formRegistrarCentroC">
           <div class="row">
             <div class="col-md-6">
               <label for="">Centro de costo</label>

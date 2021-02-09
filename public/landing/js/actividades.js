@@ -1629,6 +1629,7 @@ $('#FormRegistrarActividadTarea').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
@@ -1657,6 +1658,7 @@ $('#FormRegistrarActividadTarea').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
@@ -2121,6 +2123,7 @@ $('#FormAsignarActividadEmpleado').submit(function (e) {
                 '</div>',
             spacing: 35
         });
+        sent = false;
         return;
     }
     if ($('#a_customAA').is(":checked")) {
@@ -2148,6 +2151,7 @@ $('#FormAsignarActividadEmpleado').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
@@ -2176,6 +2180,7 @@ $('#FormAsignarActividadEmpleado').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
