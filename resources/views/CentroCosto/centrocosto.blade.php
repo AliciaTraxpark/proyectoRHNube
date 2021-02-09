@@ -166,7 +166,7 @@
               </div>
             </div>
           </div>
-          <div class="row" id="r_rowEmpleado">
+          <div class="row" id="e_rowEmpleado">
             <div class="col-md-12 text-right">
               <div class="form-group mb-0 mt-3">
                 <input type="checkbox" id="e_todosEmpleados">
@@ -268,6 +268,16 @@
               <label for="">código</label>
               <input type="text" class="form-control" id="r_codigo" maxlength="20"
                 oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12 text-left">
+              <div class="custom-control custom-switch mb-2">
+                <input type="checkbox" class="custom-control-input" id="r_switchPorEmpleado">
+                <label class="custom-control-label" for="r_switchPorEmpleado" style="font-weight: bold">
+                  Por empleado
+                </label>
+              </div>
             </div>
           </div>
           <div class="row">

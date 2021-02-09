@@ -135,11 +135,11 @@ async function datosCentro(id) {
             // : ASIGNACION POR EMPLEADO
             if (data.porEmpleado == 1) {
                 $('#switchPorEmpleado').prop("checked", true);
-                $('#r_rowEmpleado').show();
+                $('#e_rowEmpleado').show();
                 $('#e_empleadosCentro').empty();
                 empleadosCentroCosto(data.id);
             } else {
-                $('#r_rowEmpleado').hide();
+                $('#e_rowEmpleado').hide();
                 $('#e_empleadosCentro').empty();
                 $('#e_todosEmpleados').prop("checked", false);
                 $('#switchPorEmpleado').prop("checked", false);
@@ -148,9 +148,8 @@ async function datosCentro(id) {
         error: function () { }
     });
 }
-async function empleadosCentroCosto(id) {
+function empleadosCentroCosto(id) {
     $.ajax({
-        async: false,
         url: "/empleadoCentro",
         method: "POST",
         data: {
@@ -352,16 +351,18 @@ $('#e_codigo').keyup(function () {
 });
 // * SWITCH POR EMPLEADO
 $('#switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
+    $(this).prop("disabled", true);
     if (event.target.checked) {
-        $('#r_rowEmpleado').show();
+        $('#e_rowEmpleado').show();
         $('#e_empleadosCentro').empty();
         var id = $('#e_idCentro').val();
         empleadosCentroCosto(id);
     } else {
-        $('#r_rowEmpleado').hide();
+        $('#e_rowEmpleado').hide();
         $('#e_todosEmpleados').prop("checked", false);
         $('#e_empleadosCentro').empty();
     }
+    $(this).prop("disabled", false);
 });
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** ASIGNAR CENTRO COSTO **************************************
@@ -518,6 +519,18 @@ function modalRegistrar() {
 }
 $('#r_empleadosCentro').select2({
     tags: "true"
+});
+// : SWITCH DE POR EMPLEADO
+$('#switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#r_rowEmpleado').show();
+        $('#r_empleadosCentro').empty();
+        empleadosCC();
+    } else {
+        $('#r_rowEmpleado').hide();
+        $('#r_todosEmpleados').prop("checked", false);
+        $('#r_empleadosCentro').empty();
+    }
 });
 // : LISTA DE EMPLEADOS
 function empleadosCC() {

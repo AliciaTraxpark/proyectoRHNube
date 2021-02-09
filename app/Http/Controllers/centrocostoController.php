@@ -256,15 +256,20 @@ class centrocostoController extends Controller
         return response()->json($id, 200);
     }
 
+    // * LISTA DE EMPLEADOS EN REGISTAR
     public function listaEmpleados()
     {
         // TODO LOS EMPLEADOS
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->select(
+                'e.emple_id',
+                'p.perso_nombre as nombre',
+                'p.perso_apPaterno as apPaterno',
+                'p.perso_apMaterno as apMaterno'
+            )
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
-            ->whereNull('e.emple_centCosto')
             ->get();
 
         return response()->json($empleados, 200);
