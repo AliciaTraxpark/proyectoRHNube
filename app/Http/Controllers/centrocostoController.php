@@ -97,7 +97,7 @@ class centrocostoController extends Controller
             $centro->save();
             // * EMPLEADOS EN CENTRO DE COSTO
             $empleadoCentro = DB::table('centro_costo as c')
-                ->join('empleado as e', 'e.emple_centCosto', '=', 'c.centroC_id')
+                ->join('centrocosto_empleado as ce', 'ce.idCentro', '=', 'c.centroC_id')
                 ->select('e.emple_id')
                 ->where('c.centroC_id', '=', $centro->centroC_id)
                 ->where('e.emple_estado', '=', 1)
