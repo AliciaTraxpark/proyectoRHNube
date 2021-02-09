@@ -53,9 +53,11 @@ class centrocostoController extends Controller
             })
             ->select(
                 'c.centroC_id as id',
+                DB::raw("CASE WHEN (c.codigo) is null THEN 'No definido' ELSE c.codigo END as codigo"),
                 'c.centroC_descripcion as descripcion',
                 DB::raw("CASE WHEN(e.emple_id) IS NULL THEN 'No' ELSE 'Si' END AS respuesta"),
-                'c.porEmpleado'
+                'c.asistenciaPuerta',
+                'c.modoTareo'
             )
             ->where('c.organi_id', '=', session('sesionidorg'))
             ->where('estado', '=', 1)

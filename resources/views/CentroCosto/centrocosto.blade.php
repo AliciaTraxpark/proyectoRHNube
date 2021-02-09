@@ -117,7 +117,9 @@
             <tr>
               <th>#</th>
               <th>Centro de costo</th>
-              <th>Por Empleado</th>
+              <th>Código</th>
+              <th class="text-center">Asistencia Puerta</th>
+              <th class="text-center">Modo tareo</th>
               <th>En uso</th>
               <th class="text-center"></th>
             </tr>
@@ -381,7 +383,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/select2/select2.multi-checkboxes.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
