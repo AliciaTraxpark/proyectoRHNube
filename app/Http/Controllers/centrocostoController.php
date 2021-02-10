@@ -7,6 +7,8 @@ use App\centro_costo;
 use App\centrocosto_empleado;
 use App\empleado;
 use App\historial_centro_costo;
+use App\marcacion_puerta;
+use App\marcacion_tareo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -48,22 +50,41 @@ class centrocostoController extends Controller
     public function listaCentroCosto()
     {
         $centroC = DB::table('centro_costo as c')
-            ->leftJoin('empleado as e', function ($left) {
-                $left->on('e.emple_centCosto', '=', 'c.centroC_id')
-                    ->where('e.emple_estado', '=', 1);
-            })
             ->select(
                 'c.centroC_id as id',
                 DB::raw("CASE WHEN (c.codigo) is null THEN 'No definido' ELSE c.codigo END as codigo"),
                 'c.centroC_descripcion as descripcion',
-                DB::raw("CASE WHEN(e.emple_id) IS NULL THEN 'No' ELSE 'Si' END AS respuesta"),
                 'c.asistenciaPuerta',
                 'c.modoTareo'
             )
             ->where('c.organi_id', '=', session('sesionidorg'))
             ->where('estado', '=', 1)
             ->groupBy('c.centroC_id')
+            ->orderBy('c.centroC_descripcion', 'ASC')
             ->get();
+
+        // : ************************ BUSCAR USO DE CENTRO COSTO ***********************
+        foreach ($centroC as $c) {
+            // : BUSCAR SI CONTIENE EMPLEADOS
+            $centroEmpleado = centrocosto_empleado::where('idCentro', '=', $c->id)->get()->first();
+            if ($centroEmpleado) {
+                $c->respuesta = 1;
+            } else {
+                // : BUSCAR EN REPORTE DE ASISTENCIA EN PUERTA
+                $marcacion = marcacion_puerta::where('centC_id', '=', $c->id)->get()->first();
+                if ($marcacion) {
+                    $c->respuesta = 1;
+                } else {
+                    // : BUSCAR EN REPORTE TAREO
+                    $tareo = marcacion_tareo::where('centroC_id', '=', $c->id)->get()->first();
+                    if ($tareo) {
+                        $c->respuesta = 1;
+                    } else {
+                        $c->respuesta = 0;
+                    }
+                }
+            }
+        }
 
         return response()->json($centroC, 200);
     }
@@ -374,7 +395,7 @@ class centrocostoController extends Controller
         $historialCentroCosto->idCentro = $idCentro;
         $historialCentroCosto->fechaAlta = Carbon::now();
         $historialCentroCosto->save();
-        
+
         return response()->json($idCentro, 200);
     }
 

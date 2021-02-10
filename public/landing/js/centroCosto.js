@@ -11,9 +11,10 @@ function tablaCentroCosto() {
         scrollCollapse: false,
         "bAutoWidth": true,
         columnDefs: [
-            { targets: 2, sortable: false },
             { targets: 3, sortable: false },
-            { targets: 4, sortable: false }
+            { targets: 4, sortable: false },
+            { targets: 5, sortable: false },
+            { targets: 6, sortable: false }
         ],
         language: {
             "sProcessing": "Procesando...",
@@ -104,10 +105,10 @@ function centroCostoOrganizacion() {
                                 </div>
                             </td>`;
                 }
-                if (data[index].respuesta == "Si") {
-                    tr += `<td><img src="/admin/images/checkH.svg" height="13" class="mr-2">${data[index].respuesta}</td>`;
+                if (data[index].respuesta == 1) {
+                    tr += `<td><img src="/admin/images/checkH.svg" height="13" class="mr-2">Si</td>`;
                 } else {
-                    tr += `<td><img src="/admin/images/borrarH.svg" height="11" class="mr-2">${data[index].respuesta}</td>`;
+                    tr += `<td><img src="/admin/images/borrarH.svg" height="11" class="mr-2">No</td>`;
                 }
                 tr += `<td>
                         <a onclick="javascript:editarCentro(${data[index].id})" style="cursor: pointer">
