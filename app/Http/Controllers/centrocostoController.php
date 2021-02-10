@@ -168,6 +168,7 @@ class centrocostoController extends Controller
         }
         $centro = centro_costo::findOrFail($id);
         $centro->codigo = $codigo;
+        $centro->centroC_descripcion = $descripcion;
         $centro->porEmpleado = $porEmpleado;
         $centro->asistenciaPuerta = $asistenciaPuerta;
         $centro->modoTareo = $modoTareo;
