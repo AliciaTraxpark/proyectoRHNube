@@ -4803,7 +4803,8 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sw-default">Local
+                                        <label for="sw-default">
+                                            Local
                                             <a onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
                                                 data-toggle="modal">
                                                 <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>

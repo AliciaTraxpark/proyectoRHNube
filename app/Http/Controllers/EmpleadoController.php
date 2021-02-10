@@ -12,6 +12,7 @@ use App\empleado;
 use App\area;
 use App\cargo;
 use App\centro_costo;
+use App\centrocosto_empleado;
 use App\condicion_pago;
 use App\contrato;
 use App\doc_empleado;
@@ -1217,9 +1218,47 @@ class EmpleadoController extends Controller
         if ($objEmpleado['area_v'] != '') {
             $empleado->emple_area = $objEmpleado['area_v'];
         }
-        if ($objEmpleado['centroc_v'] != '') {
-            $empleado->emple_centCosto = $objEmpleado['centroc_v'];
+        // : CENTRO DE COSTOS
+        $centroE = centrocosto_empleado::where('idEmpleado', '=', $idE)->where('estado', '=', 1)->get();
+        if (is_null($objEmpleado['centroc_v'])) {
+            foreach ($centroE as $ce) {
+                $ce->fecha_baja = Carbon::now();
+                $ce->estado = 0;
+                $ce->save();
+            }
+        } else {
+            // * OBJECTO CENTRO DE COSTOS -> TABLA DE CENTRO COSTOS EMPLEADOS
+            foreach ($objEmpleado['centroc_v'] as $centro) {
+                $estado = true;
+                foreach ($centroE as $c) {
+                    if ($centro == $c->idCentro) {
+                        $estado = false;
+                    }
+                }
+                if ($estado) {
+                    $newCentroEmpleado = new centrocosto_empleado();
+                    $newCentroEmpleado->idCentro = $centro;
+                    $newCentroEmpleado->idEmpleado = $idE;
+                    $newCentroEmpleado->fecha_alta = Carbon::now();
+                    $newCentroEmpleado->save();
+                }
+            }
+            // * TABLA DE CENTRO COSTOS EMPLEADOS -> OBJECTO CENTRO COSTOS
+            foreach ($centroE as $c) {
+                $estado = true;
+                foreach ($objEmpleado['centroc_v'] as $centro) {
+                    if ($c->idCentro == $centro) {
+                        $estado = false;
+                    }
+                }
+                if ($estado) {
+                    $c->fecha_baja = Carbon::now();
+                    $c->estado = 0;
+                    $c->save();
+                }
+            }
         }
+        // : FINALIZACION
         if ($objEmpleado['nivel_v'] != '') {
             $empleado->emple_nivel = $objEmpleado['nivel_v'];
         }
