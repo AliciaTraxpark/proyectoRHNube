@@ -270,6 +270,7 @@ $("#e_empleadosCentro").on("change", function (e) {
 function actualizarCentroC() {
     var id = $('#e_idCentro').val();
     var codigo = $('#e_codigo').val();
+    var descripcion = $('#e_descripcion').val();
     var empleados = $('#e_empleadosCentro').val();
     var porEmpleado;
     var asistenciaPuerta;
@@ -303,7 +304,8 @@ function actualizarCentroC() {
             codigo: codigo,
             porEmpleado: porEmpleado,
             asistenciaPuerta: asistenciaPuerta,
-            modoTareo: modoTareo
+            modoTareo: modoTareo,
+            descripcion: descripcion
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -345,34 +347,36 @@ function actualizarCentroC() {
                 sent = false;
                 if (data.respuesta == 1) {
                     $('#e_codigo').addClass("borderColor");
-                    $.notifyClose();
-                    $.notify(
-                        {
-                            message: data.mensaje,
-                            icon: "admin/images/warning.svg",
-                        },
-                        {
-                            element: $('#e_centrocmodal'),
-                            position: "fixed",
-                            mouse_over: "pause",
-                            placement: {
-                                from: "top",
-                                align: "center",
-                            },
-                            icon_type: "image",
-                            newest_on_top: true,
-                            delay: 2000,
-                            template:
-                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                "</div>",
-                            spacing: 35,
-                        }
-                    );
+                } else {
+                    $('#e_descripcion').addClass("borderColor");
                 }
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: data.mensaje,
+                        icon: "admin/images/warning.svg",
+                    },
+                    {
+                        element: $('#e_centrocmodal'),
+                        position: "fixed",
+                        mouse_over: "pause",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 2000,
+                        template:
+                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
             }
         },
         error: function () { }
@@ -420,6 +424,9 @@ $('#formActualizarCentroC').submit(function (e) {
 });
 // * RETIRAR CLASE DE INPUT
 $('#e_codigo').keyup(function () {
+    $(this).removeClass("borderColor");
+});
+$('#e_descripcion').keyup(function () {
     $(this).removeClass("borderColor");
 });
 // * SWITCH POR EMPLEADO
@@ -772,6 +779,7 @@ function registrarCentroC() {
                             closable: false,
                             transition: "zoom",
                             oncancel: function (closeEvent) {
+                                sent = false;
                             },
                         });
                 }
