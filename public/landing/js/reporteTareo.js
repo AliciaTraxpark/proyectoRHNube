@@ -892,7 +892,7 @@ function cargartabla(fecha) {
                                 <td class="puntoHid" ></td>
                                 `;
                     for(cc=0;  cc < cantidadColumnasDetalle; cc++){
-                        tbodyTR +='<td class="puntoDescripHid">--</td>';
+                        tbodyTR +='<td class="puntoDescripHid"></td>';
                     }
                     tbodyTR +=`</tr>`;
                     $('#tbodyD').append(tbodyTR);
