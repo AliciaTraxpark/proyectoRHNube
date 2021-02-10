@@ -23,7 +23,7 @@ use DateTime;
 
 class TardanzasController extends Controller
 {
-
+///////////////////////////////////////////// CONTROL REMOTO //////////////////////////////////////////////////
     public function mostrarReporteTardanza()
     {
         if(session('sesionidorg')==NULL){
@@ -105,7 +105,7 @@ class TardanzasController extends Controller
                 ->get();
         }
 
-        return view('tareas.reporteTardanzas', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
+        return view('tardanzas.reporteTardanzas', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
     }
     // CORREGIDO
     public function cargarReporteTardanzas(Request $request)
@@ -132,7 +132,7 @@ class TardanzasController extends Controller
                 if ($invitado->verTodosEmps == 1) {
                     $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -175,7 +175,7 @@ class TardanzasController extends Controller
                     if ($invitado_empleadoIn != null) {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -213,7 +213,7 @@ class TardanzasController extends Controller
                     } else {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -254,7 +254,7 @@ class TardanzasController extends Controller
                 // INVITADO QUE NO ES INVITADO (ES ADMINISTRADOR)
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -299,7 +299,7 @@ class TardanzasController extends Controller
                 if ($invitado->verTodosEmps == 1) {
                     $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -328,6 +328,7 @@ class TardanzasController extends Controller
                     ->where('e.emple_id', '=', $empleadoL)
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
+                    ->orderBy('e.emple_id')
                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                     ->get();
 
@@ -342,7 +343,7 @@ class TardanzasController extends Controller
                     if ($invitado_empleadoIn != null) {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -375,12 +376,13 @@ class TardanzasController extends Controller
                             ->where('e.emple_estado', '=', 1)
                             ->where('invi.estado', '=', 1)
                             ->where('inve.idinvitado', '=', $invitado->idinvitado)
+                            ->orderBy('e.emple_id')
                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                     } else {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -413,6 +415,7 @@ class TardanzasController extends Controller
                             ->where('e.emple_estado', '=', 1)
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->orderBy('e.emple_id')
                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                     }
@@ -421,7 +424,7 @@ class TardanzasController extends Controller
                 // INVITADO QUE NO ES INVITADO (ES ADMINISTRADOR)
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -450,11 +453,11 @@ class TardanzasController extends Controller
                     ->where('e.emple_id', '=', $empleadoL)
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
+                    ->orderBy('e.emple_id')
                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                     ->get();
             }
         }
-
         /*      FIN DE OBETENER EMPLEADOS    */
 
         /* RANGO DE FECHA */
@@ -498,25 +501,17 @@ class TardanzasController extends Controller
                     //$datos->push("-------------3-------------");
                     $diffS = $marcacion->DiffInSeconds($horario);
                     $tiempoTardanza += $diffS;
-                    $cantTardanzas += 1;
-                    $area = strlen($empleado->area) > 0 ? $empleado->area : "--";
-                    $cargo = strlen($empleado->cargo) > 0 ? $empleado->cargo : "--";
-                    $codigo = strlen($empleado->codigo) > 0 ? $empleado->codigo : $empleado->documento;
-                    $documento = $empleado->documento;
-                    $marcacion = $empleado->marcacion;
-                    $horario_descripcion = $empleado->horario_descripcion;
-                    $horario_id = $empleado->horario_id;
-                    $emple_id = $empleado->emple_id;
+                    $cantTardanzas += 1;              
 
                     $obj = (object) array(
-                        'area_descripcion' => $area,
-                        'cargo_descripcion' => $cargo,
-                        'emple_id' => $emple_id,
-                        'emple_code' => $codigo,
-                        'emple_nDoc' => $documento,
-                        'entradaModif' => $marcacion,
-                        'horario' => $horario_descripcion,
-                        'idhorario' => $horario_id,
+                        'area_descripcion' => strlen($empleado->area) > 0 ? $empleado->area : "--",
+                        'cargo_descripcion' => strlen($empleado->cargo) > 0 ? $empleado->cargo : "--",
+                        'emple_id' => $empleado->emple_id,
+                        'emple_code' => strlen($empleado->codigo) > 0 ? $empleado->codigo : $empleado->documento,
+                        'emple_nDoc' => $empleado->documento,
+                        'entradaModif' => $empleado->marcacion,
+                        'horario' => $empleado->horario_descripcion,
+                        'idhorario' => $empleado->horario_id,
                         'cantTardanzas' => $cantTardanzas,
                         'tiempoTardanzas' => gmdate('H:i:s', $tiempoTardanza),
                         'organi_id' => session('sesionidorg'),
@@ -546,6 +541,7 @@ class TardanzasController extends Controller
         return response()->json($datos, 200);
     }
 
+    // MATRIZ
     public function mostrarMatrizTardanzas()
     {
         if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
@@ -787,16 +783,16 @@ class TardanzasController extends Controller
                 if ($invitadod->rol_id != 1) {
                     if ($invitadod->modoCR == 1) {
 
-                        return view('tareas.reporteMatrizTardanzas', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
+                        return view('tardanzas.reporteMatrizTardanzas', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
                     } else {
                         return redirect('/dashboard');
                     }
                     /*   */
                 } else {
-                    return view('tareas.reporteMatrizTardanzas', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
+                    return view('tardanzas.reporteMatrizTardanzas', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
                 }
             } else {
-                return view('tareas.reporteMatrizTardanzas', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
+                return view('tardanzas.reporteMatrizTardanzas', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
             }
         }
     }
@@ -827,55 +823,161 @@ class TardanzasController extends Controller
 
                 if ($invitado->verTodosEmps == 1) {
                     $empleados = DB::table('empleado as e')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                        ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
+                        ->join('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
+                        ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                        ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_codigo as codigo',
+                            'e.emple_nDoc as documento',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion as cargo',
+                            'a.area_descripcion as area',
+                            'ho.horario_tolerancia',
+                            'ho.horario_descripcion',
+                            'ho.horario_id',
+                            'u.hora_ini as marcacion',
+                            DB::raw('TIME(u.hora_ini) as horaM'),
+                            DB::raw('DATE(u.hora_ini) as diaM'),
+                            DB::raw('DATE(hd.start) as diaH'),
+                            DB::raw('TIME(ho.horaI) as horaH'),
+                            DB::raw('MIN(TIME(u.hora_ini)) as minMarcacion'),
+                            DB::raw('0 as ver')
+                        )
+                        ->where('he.estado', '=', 1)
                         ->where('e.emple_estado', '=', 1)
-                        ->groupBy('e.emple_id')
+                        ->orderBy('e.emple_id')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
+
                 } else {
                     $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                         ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                         ->where('invem.area_id', '=', null)
                         ->where('invem.emple_id', '!=', null)
                         ->get()->first();
+
                     if ($invitado_empleadoIn != null) {
                         $empleados = DB::table('empleado as e')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                            ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                            ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_codigo as codigo',
+                                'e.emple_nDoc as documento',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion as cargo',
+                                'a.area_descripcion as area',
+                                'ho.horario_tolerancia',
+                                'ho.horario_descripcion',
+                                'ho.horario_id',
+                                'cp.hora_ini as marcacion',
+                                DB::raw('TIME(cp.hora_ini) as horaM'),
+                                DB::raw('DATE(cp.hora_ini) as diaM'),
+                                DB::raw('DATE(hd.start) as diaH'),
+                                DB::raw('TIME(ho.horaI) as horaH'),
+                                DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                DB::raw('0 as ver')
+                            )
+                            ->where('he.estado', '=', 1)
                             ->where('e.emple_estado', '=', 1)
+                            ->orderBy('e.emple_id')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                            ->groupBy('e.emple_id')
+                            ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                     } else {
                         $empleados = DB::table('empleado as e')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                            ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                            ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_codigo as codigo',
+                                'e.emple_nDoc as documento',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion as cargo',
+                                'a.area_descripcion as area',
+                                'ho.horario_tolerancia',
+                                'ho.horario_descripcion',
+                                'ho.horario_id',
+                                'cp.hora_ini as marcacion',
+                                DB::raw('TIME(cp.hora_ini) as horaM'),
+                                DB::raw('DATE(cp.hora_ini) as diaM'),
+                                DB::raw('DATE(hd.start) as diaH'),
+                                DB::raw('TIME(ho.horaI) as horaH'),
+                                DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                DB::raw('0 as ver')
+                            )
+                            ->where('he.estado', '=', 1)
                             ->where('e.emple_estado', '=', 1)
+                            ->orderBy('e.emple_id')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                            ->groupBy('e.emple_id')
+                            ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                     }
                 }
             } else {
                 $empleados = DB::table('empleado as e')
-                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                    ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                    ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                    ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                    ->select(
+                        'e.emple_id',
+                        'e.emple_codigo as codigo',
+                        'e.emple_nDoc as documento',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion as cargo',
+                        'a.area_descripcion as area',
+                        'ho.horario_tolerancia',
+                        'ho.horario_descripcion',
+                        'ho.horario_id',
+                        'cp.hora_ini as marcacion',
+                        DB::raw('TIME(cp.hora_ini) as horaM'),
+                        DB::raw('DATE(cp.hora_ini) as diaM'),
+                        DB::raw('DATE(hd.start) as diaH'),
+                        DB::raw('TIME(ho.horaI) as horaH'),
+                        DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                        DB::raw('0 as ver')
+                    )
+                    ->where('he.estado', '=', 1)
                     ->where('e.emple_estado', '=', 1)
-                    ->groupBy('e.emple_id')
+                    ->orderBy('e.emple_id')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                     ->get();
             }
         } else {
@@ -890,36 +992,114 @@ class TardanzasController extends Controller
                     if ($invitado->verTodosEmps == 1) {
                         if($selector == "Área"){
                             $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.emple_estado', '=', 1)
-                            ->whereIn('e.emple_area', $area)
-                            ->groupBy('e.emple_id')
-                            ->get();
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
+                                ->where('e.emple_estado', '=', 1)
+                                ->whereIn('e.emple_area', $area)
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
+                                ->get();
                         } else {
                             if($selector == "Cargo"){
-                                $empleados = DB::table('empleado as e')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                            $empleados = DB::table('empleado as e')
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_cargo', $area)
-                                ->groupBy('e.emple_id')
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             } else {
                                 if($selector == "Local"){
                                     $empleados = DB::table('empleado as e')
-                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                    ->where('e.organi_id', '=', session('sesionidorg'))
-                                    ->where('e.emple_estado', '=', 1)
-                                    ->whereIn('e.emple_local', $area)
-                                    ->groupBy('e.emple_id')
-                                    ->get();
+                                        ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                        ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                        ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                        ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                        ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                        ->select(
+                                            'e.emple_id',
+                                            'e.emple_codigo as codigo',
+                                            'e.emple_nDoc as documento',
+                                            'p.perso_nombre',
+                                            'p.perso_apPaterno',
+                                            'p.perso_apMaterno',
+                                            'c.cargo_descripcion as cargo',
+                                            'a.area_descripcion as area',
+                                            'ho.horario_tolerancia',
+                                            'ho.horario_descripcion',
+                                            'ho.horario_id',
+                                            'cp.hora_ini as marcacion',
+                                            DB::raw('TIME(cp.hora_ini) as horaM'),
+                                            DB::raw('DATE(cp.hora_ini) as diaM'),
+                                            DB::raw('DATE(hd.start) as diaH'),
+                                            DB::raw('TIME(ho.horaI) as horaH'),
+                                            DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                            DB::raw('0 as ver')
+                                        )
+                                        ->where('he.estado', '=', 1)
+                                        ->where('e.emple_estado', '=', 1)
+                                        ->whereIn('e.emple_local', $area)
+                                        ->orderBy('e.emple_id')
+                                        ->where('e.organi_id', '=', session('sesionidorg'))
+                                        ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
+                                        ->get();
                                 }
                             }
                         }
@@ -932,95 +1112,252 @@ class TardanzasController extends Controller
                         if ($invitado_empleadoIn != null) {
                             if($selector == "Área"){
                                 $empleados = DB::table('empleado as e')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.emple_estado', '=', 1)
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                ->whereIn('e.emple_area', $area)
-                                ->groupBy('e.emple_id')
-                                ->get();
-                            } else {
-                                if($selector == "Cargo"){
-                                    $empleados = DB::table('empleado as e')
-                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                    ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                    ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                    ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                    ->select(
+                                        'e.emple_id',
+                                        'e.emple_codigo as codigo',
+                                        'e.emple_nDoc as documento',
+                                        'p.perso_nombre',
+                                        'p.perso_apPaterno',
+                                        'p.perso_apMaterno',
+                                        'c.cargo_descripcion as cargo',
+                                        'a.area_descripcion as area',
+                                        'ho.horario_tolerancia',
+                                        'ho.horario_descripcion',
+                                        'ho.horario_id',
+                                        'cp.hora_ini as marcacion',
+                                        DB::raw('TIME(cp.hora_ini) as horaM'),
+                                        DB::raw('DATE(cp.hora_ini) as diaM'),
+                                        DB::raw('DATE(hd.start) as diaH'),
+                                        DB::raw('TIME(ho.horaI) as horaH'),
+                                        DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                        DB::raw('0 as ver')
+                                    )
+                                    ->where('he.estado', '=', 1)
+                                    ->where('e.emple_estado', '=', 1)
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                    ->whereIn('e.emple_area', $area)
+                                    ->orderBy('e.emple_id')
                                     ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
+                                    ->get();
+                            } else {
+                                if($selector == "Cargo"){
+                                $empleados = DB::table('empleado as e')
+                                    ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                    ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                    ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                    ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->select(
+                                        'e.emple_id',
+                                        'e.emple_codigo as codigo',
+                                        'e.emple_nDoc as documento',
+                                        'p.perso_nombre',
+                                        'p.perso_apPaterno',
+                                        'p.perso_apMaterno',
+                                        'c.cargo_descripcion as cargo',
+                                        'a.area_descripcion as area',
+                                        'ho.horario_tolerancia',
+                                        'ho.horario_descripcion',
+                                        'ho.horario_id',
+                                        'cp.hora_ini as marcacion',
+                                        DB::raw('TIME(cp.hora_ini) as horaM'),
+                                        DB::raw('DATE(cp.hora_ini) as diaM'),
+                                        DB::raw('DATE(hd.start) as diaH'),
+                                        DB::raw('TIME(ho.horaI) as horaH'),
+                                        DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                        DB::raw('0 as ver')
+                                    )
+                                    ->where('he.estado', '=', 1)
                                     ->where('e.emple_estado', '=', 1)
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                     ->whereIn('e.emple_cargo', $area)
-                                    ->groupBy('e.emple_id')
+                                    ->orderBy('e.emple_id')
+                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
                                 } else {
                                     if($selector == "Local"){
                                         $empleados = DB::table('empleado as e')
-                                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                        ->where('e.organi_id', '=', session('sesionidorg'))
-                                        ->where('e.emple_estado', '=', 1)
-                                        ->where('invi.estado', '=', 1)
-                                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                        ->whereIn('e.emple_local', $area)
-                                        ->groupBy('e.emple_id')
-                                        ->get();
+                                            ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                            ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                            ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                            ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                            ->select(
+                                                'e.emple_id',
+                                                'e.emple_codigo as codigo',
+                                                'e.emple_nDoc as documento',
+                                                'p.perso_nombre',
+                                                'p.perso_apPaterno',
+                                                'p.perso_apMaterno',
+                                                'c.cargo_descripcion as cargo',
+                                                'a.area_descripcion as area',
+                                                'ho.horario_tolerancia',
+                                                'ho.horario_descripcion',
+                                                'ho.horario_id',
+                                                'cp.hora_ini as marcacion',
+                                                DB::raw('TIME(cp.hora_ini) as horaM'),
+                                                DB::raw('DATE(cp.hora_ini) as diaM'),
+                                                DB::raw('DATE(hd.start) as diaH'),
+                                                DB::raw('TIME(ho.horaI) as horaH'),
+                                                DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                                DB::raw('0 as ver')
+                                            )
+                                            ->where('he.estado', '=', 1)
+                                            ->where('e.emple_estado', '=', 1)
+                                            ->where('invi.estado', '=', 1)
+                                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                            ->whereIn('e.emple_local', $area)
+                                            ->orderBy('e.emple_id')
+                                            ->where('e.organi_id', '=', session('sesionidorg'))
+                                            ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
+                                            ->get();
                                     }
                                 }
                             }
                         } else {
                             if($selector == "Área"){
                                 $empleados = DB::table('empleado as e')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                 ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
                                 ->where('e.emple_estado', '=', 1)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->whereIn('e.emple_area', $area)
-                                ->groupBy('e.emple_id')
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
+
                             } else {
                                 if($selector == "Cargo"){
                                     $empleados = DB::table('empleado as e')
-                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                    ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                    ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                    ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                     ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->select(
+                                        'e.emple_id',
+                                        'e.emple_codigo as codigo',
+                                        'e.emple_nDoc as documento',
+                                        'p.perso_nombre',
+                                        'p.perso_apPaterno',
+                                        'p.perso_apMaterno',
+                                        'c.cargo_descripcion as cargo',
+                                        'a.area_descripcion as area',
+                                        'ho.horario_tolerancia',
+                                        'ho.horario_descripcion',
+                                        'ho.horario_id',
+                                        'cp.hora_ini as marcacion',
+                                        DB::raw('TIME(cp.hora_ini) as horaM'),
+                                        DB::raw('DATE(cp.hora_ini) as diaM'),
+                                        DB::raw('DATE(hd.start) as diaH'),
+                                        DB::raw('TIME(ho.horaI) as horaH'),
+                                        DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                        DB::raw('0 as ver')
+                                    )
+                                    ->where('he.estado', '=', 1)
                                     ->where('e.emple_estado', '=', 1)
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                     ->whereIn('e.emple_cargo', $area)
-                                    ->groupBy('e.emple_id')
+                                    ->orderBy('e.emple_id')
+                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
                                 } else {
                                     if($selector == "Local"){
                                         $empleados = DB::table('empleado as e')
-                                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                        ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                        ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                        ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                        ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                        ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                         ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                        ->where('e.organi_id', '=', session('sesionidorg'))
+                                        ->select(
+                                            'e.emple_id',
+                                            'e.emple_codigo as codigo',
+                                            'e.emple_nDoc as documento',
+                                            'p.perso_nombre',
+                                            'p.perso_apPaterno',
+                                            'p.perso_apMaterno',
+                                            'c.cargo_descripcion as cargo',
+                                            'a.area_descripcion as area',
+                                            'ho.horario_tolerancia',
+                                            'ho.horario_descripcion',
+                                            'ho.horario_id',
+                                            'cp.hora_ini as marcacion',
+                                            DB::raw('TIME(cp.hora_ini) as horaM'),
+                                            DB::raw('DATE(cp.hora_ini) as diaM'),
+                                            DB::raw('DATE(hd.start) as diaH'),
+                                            DB::raw('TIME(ho.horaI) as horaH'),
+                                            DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                            DB::raw('0 as ver')
+                                        )
+                                        ->where('he.estado', '=', 1)
                                         ->where('e.emple_estado', '=', 1)
                                         ->where('invi.estado', '=', 1)
                                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                         ->whereIn('e.emple_local', $area)
-                                        ->groupBy('e.emple_id')
+                                        ->orderBy('e.emple_id')
+                                        ->where('e.organi_id', '=', session('sesionidorg'))
+                                        ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                         ->get();
                                     }
                                 }
@@ -1029,37 +1366,115 @@ class TardanzasController extends Controller
                     }
                 } else {
                     if ($selector == "Cargo") {
-                       $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
+                        $empleados = DB::table('empleado as e')
+                            ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                            ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                            ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_codigo as codigo',
+                                'e.emple_nDoc as documento',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion as cargo',
+                                'a.area_descripcion as area',
+                                'ho.horario_tolerancia',
+                                'ho.horario_descripcion',
+                                'ho.horario_id',
+                                'cp.hora_ini as marcacion',
+                                DB::raw('TIME(cp.hora_ini) as horaM'),
+                                DB::raw('DATE(cp.hora_ini) as diaM'),
+                                DB::raw('DATE(hd.start) as diaH'),
+                                DB::raw('TIME(ho.horaI) as horaH'),
+                                DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                DB::raw('0 as ver')
+                            )
+                            ->where('he.estado', '=', 1)
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_cargo', $area)
-                            ->groupBy('e.emple_id')
+                            ->orderBy('e.emple_id')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                     } else {
                         if ($selector == "Área") {
                             $empleados = DB::table('empleado as e')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.emple_estado', '=', 1)
-                                ->whereIn('e.emple_area', $area)
-                                ->groupBy('e.emple_id')
-                                ->get();
+                            ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                            ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                            ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_codigo as codigo',
+                                'e.emple_nDoc as documento',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion as cargo',
+                                'a.area_descripcion as area',
+                                'ho.horario_tolerancia',
+                                'ho.horario_descripcion',
+                                'ho.horario_id',
+                                'cp.hora_ini as marcacion',
+                                DB::raw('TIME(cp.hora_ini) as horaM'),
+                                DB::raw('DATE(cp.hora_ini) as diaM'),
+                                DB::raw('DATE(hd.start) as diaH'),
+                                DB::raw('TIME(ho.horaI) as horaH'),
+                                DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                DB::raw('0 as ver')
+                            )
+                            ->where('he.estado', '=', 1)
+                            ->where('e.emple_estado', '=', 1)
+                            ->whereIn('e.emple_area', $area)
+                            ->orderBy('e.emple_id')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
+                            ->get();
                         } else {
                             if ($selector == "Local") {
                                 $empleados = DB::table('empleado as e')
-                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                    ->where('e.organi_id', '=', session('sesionidorg'))
-                                    ->where('e.emple_estado', '=', 1)
-                                    ->whereIn('e.emple_local', $area)
-                                    ->groupBy('e.emple_id')
-                                    ->get();
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
+                                ->where('e.emple_estado', '=', 1)
+                                ->whereIn('e.emple_local', $area)
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
+                                ->get();
                             }
                         }
                     }
@@ -1075,13 +1490,39 @@ class TardanzasController extends Controller
 
                     if ($invitado->verTodosEmps == 1) {
                         $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                            ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                            ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_codigo as codigo',
+                                'e.emple_nDoc as documento',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion as cargo',
+                                'a.area_descripcion as area',
+                                'ho.horario_tolerancia',
+                                'ho.horario_descripcion',
+                                'ho.horario_id',
+                                'cp.hora_ini as marcacion',
+                                DB::raw('TIME(cp.hora_ini) as horaM'),
+                                DB::raw('DATE(cp.hora_ini) as diaM'),
+                                DB::raw('DATE(hd.start) as diaH'),
+                                DB::raw('TIME(ho.horaI) as horaH'),
+                                DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                DB::raw('0 as ver')
+                            )
+                            ->where('he.estado', '=', 1)
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_id', $empleadoL)
-                            ->groupBy('e.emple_id')
+                            ->orderBy('e.emple_id')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                     } else {
                         $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -1091,43 +1532,121 @@ class TardanzasController extends Controller
                             ->get()->first();
                         if ($invitado_empleadoIn != null) {
                             $empleados = DB::table('empleado as e')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
                                 ->where('e.emple_estado', '=', 1)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->whereIn('e.emple_id', $empleadoL)
-                                ->groupBy('e.emple_id')
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                         } else {
                             $empleados = DB::table('empleado as e')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                 ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
                                 ->where('e.emple_estado', '=', 1)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->whereIn('e.emple_id', $empleadoL)
-                                ->groupBy('e.emple_id')
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                         }
                     }
                 } else {
                     $empleados = DB::table('empleado as e')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                        ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                        ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                        ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                        ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_codigo as codigo',
+                            'e.emple_nDoc as documento',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion as cargo',
+                            'a.area_descripcion as area',
+                            'ho.horario_tolerancia',
+                            'ho.horario_descripcion',
+                            'ho.horario_id',
+                            'cp.hora_ini as marcacion',
+                            DB::raw('TIME(cp.hora_ini) as horaM'),
+                            DB::raw('DATE(cp.hora_ini) as diaM'),
+                            DB::raw('DATE(hd.start) as diaH'),
+                            DB::raw('TIME(ho.horaI) as horaH'),
+                            DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                            DB::raw('0 as ver')
+                        )
+                        ->where('he.estado', '=', 1)
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_id', $empleadoL)
-                        ->groupBy('e.emple_id')
+                        ->orderBy('e.emple_id')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
                 }
             }
@@ -1142,38 +1661,116 @@ class TardanzasController extends Controller
                     if ($invitado->verTodosEmps == 1) {
                         if($selector == "Área"){
                             $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                            ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                            ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_codigo as codigo',
+                                'e.emple_nDoc as documento',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion as cargo',
+                                'a.area_descripcion as area',
+                                'ho.horario_tolerancia',
+                                'ho.horario_descripcion',
+                                'ho.horario_id',
+                                'cp.hora_ini as marcacion',
+                                DB::raw('TIME(cp.hora_ini) as horaM'),
+                                DB::raw('DATE(cp.hora_ini) as diaM'),
+                                DB::raw('DATE(hd.start) as diaH'),
+                                DB::raw('TIME(ho.horaI) as horaH'),
+                                DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                DB::raw('0 as ver')
+                            )
+                            ->where('he.estado', '=', 1)
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_area', $area)
                             ->whereIn('e.emple_id', $empleadoL)
-                            ->groupBy('e.emple_id')
+                            ->orderBy('e.emple_id')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                         } else {
                             if($selector == "Cargo"){
                                 $empleados = DB::table('empleado as e')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_cargo', $area)
                                 ->whereIn('e.emple_id', $empleadoL)
-                                ->groupBy('e.emple_id')
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             } else {
                                 if($selector == "Local"){
                                     $empleados = DB::table('empleado as e')
-                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                    ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                    ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                    ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                    ->select(
+                                        'e.emple_id',
+                                        'e.emple_codigo as codigo',
+                                        'e.emple_nDoc as documento',
+                                        'p.perso_nombre',
+                                        'p.perso_apPaterno',
+                                        'p.perso_apMaterno',
+                                        'c.cargo_descripcion as cargo',
+                                        'a.area_descripcion as area',
+                                        'ho.horario_tolerancia',
+                                        'ho.horario_descripcion',
+                                        'ho.horario_id',
+                                        'cp.hora_ini as marcacion',
+                                        DB::raw('TIME(cp.hora_ini) as horaM'),
+                                        DB::raw('DATE(cp.hora_ini) as diaM'),
+                                        DB::raw('DATE(hd.start) as diaH'),
+                                        DB::raw('TIME(ho.horaI) as horaH'),
+                                        DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                        DB::raw('0 as ver')
+                                    )
+                                    ->where('he.estado', '=', 1)
                                     ->where('e.emple_estado', '=', 1)
                                     ->whereIn('e.emple_local', $area)
                                     ->whereIn('e.emple_id', $empleadoL)
-                                    ->groupBy('e.emple_id')
+                                    ->orderBy('e.emple_id')
+                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
                                 }
                             }
@@ -1188,50 +1785,128 @@ class TardanzasController extends Controller
                         if ($invitado_empleadoIn != null) {
                             if($selector == "Área"){
                                 $empleados = DB::table('empleado as e')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_area', $area)
                                 ->whereIn('e.emple_id', $empleadoL)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                ->groupBy('e.emple_id')
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             } else {
                                 if($selector == "Cargo"){
                                     $empleados = DB::table('empleado as e')
-                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                    ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                    ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                    ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->select(
+                                        'e.emple_id',
+                                        'e.emple_codigo as codigo',
+                                        'e.emple_nDoc as documento',
+                                        'p.perso_nombre',
+                                        'p.perso_apPaterno',
+                                        'p.perso_apMaterno',
+                                        'c.cargo_descripcion as cargo',
+                                        'a.area_descripcion as area',
+                                        'ho.horario_tolerancia',
+                                        'ho.horario_descripcion',
+                                        'ho.horario_id',
+                                        'cp.hora_ini as marcacion',
+                                        DB::raw('TIME(cp.hora_ini) as horaM'),
+                                        DB::raw('DATE(cp.hora_ini) as diaM'),
+                                        DB::raw('DATE(hd.start) as diaH'),
+                                        DB::raw('TIME(ho.horaI) as horaH'),
+                                        DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                        DB::raw('0 as ver')
+                                    )
+                                    ->where('he.estado', '=', 1)
                                     ->where('e.emple_estado', '=', 1)
                                     ->whereIn('e.emple_cargo', $area)
                                     ->whereIn('e.emple_id', $empleadoL)
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                    ->groupBy('e.emple_id')
+                                    ->orderBy('e.emple_id')
+                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
                                 } else {
                                     if($selector == "Local"){
                                         $empleados = DB::table('empleado as e')
-                                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                        ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                        ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                        ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                        ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                        ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                         ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                        ->where('e.organi_id', '=', session('sesionidorg'))
+                                        ->select(
+                                            'e.emple_id',
+                                            'e.emple_codigo as codigo',
+                                            'e.emple_nDoc as documento',
+                                            'p.perso_nombre',
+                                            'p.perso_apPaterno',
+                                            'p.perso_apMaterno',
+                                            'c.cargo_descripcion as cargo',
+                                            'a.area_descripcion as area',
+                                            'ho.horario_tolerancia',
+                                            'ho.horario_descripcion',
+                                            'ho.horario_id',
+                                            'cp.hora_ini as marcacion',
+                                            DB::raw('TIME(cp.hora_ini) as horaM'),
+                                            DB::raw('DATE(cp.hora_ini) as diaM'),
+                                            DB::raw('DATE(hd.start) as diaH'),
+                                            DB::raw('TIME(ho.horaI) as horaH'),
+                                            DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                            DB::raw('0 as ver')
+                                        )
+                                        ->where('he.estado', '=', 1)
                                         ->where('e.emple_estado', '=', 1)
                                         ->whereIn('e.emple_local', $area)
                                         ->whereIn('e.emple_id', $empleadoL)
                                         ->where('invi.estado', '=', 1)
                                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                        ->groupBy('e.emple_id')
+                                        ->orderBy('e.emple_id')
+                                        ->where('e.organi_id', '=', session('sesionidorg'))
+                                        ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                         ->get();
                                     }
                                 }
@@ -1239,50 +1914,128 @@ class TardanzasController extends Controller
                         } else {
                             if($selector == "Área"){
                                 $empleados = DB::table('empleado as e')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                 ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_area', $area)
                                 ->whereIn('e.emple_id', $empleadoL)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                ->groupBy('e.emple_id')
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             } else {
                                 if($selector == "Cargo"){
                                     $empleados = DB::table('empleado as e')
-                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                    ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                    ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                    ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                     ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->select(
+                                        'e.emple_id',
+                                        'e.emple_codigo as codigo',
+                                        'e.emple_nDoc as documento',
+                                        'p.perso_nombre',
+                                        'p.perso_apPaterno',
+                                        'p.perso_apMaterno',
+                                        'c.cargo_descripcion as cargo',
+                                        'a.area_descripcion as area',
+                                        'ho.horario_tolerancia',
+                                        'ho.horario_descripcion',
+                                        'ho.horario_id',
+                                        'cp.hora_ini as marcacion',
+                                        DB::raw('TIME(cp.hora_ini) as horaM'),
+                                        DB::raw('DATE(cp.hora_ini) as diaM'),
+                                        DB::raw('DATE(hd.start) as diaH'),
+                                        DB::raw('TIME(ho.horaI) as horaH'),
+                                        DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                        DB::raw('0 as ver')
+                                    )
+                                    ->where('he.estado', '=', 1)
                                     ->where('e.emple_estado', '=', 1)
                                     ->whereIn('e.emple_cargo', $area)
                                     ->whereIn('e.emple_id', $empleadoL)
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                    ->groupBy('e.emple_id')
+                                    ->orderBy('e.emple_id')
+                                    ->where('e.organi_id', '=', session('sesionidorg'))
+                                    ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
                                 } else {
                                     if($selector == "Local"){
                                         $empleados = DB::table('empleado as e')
-                                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                        ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                        ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                        ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                        ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                        ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
                                         ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                        ->where('e.organi_id', '=', session('sesionidorg'))
+                                        ->select(
+                                            'e.emple_id',
+                                            'e.emple_codigo as codigo',
+                                            'e.emple_nDoc as documento',
+                                            'p.perso_nombre',
+                                            'p.perso_apPaterno',
+                                            'p.perso_apMaterno',
+                                            'c.cargo_descripcion as cargo',
+                                            'a.area_descripcion as area',
+                                            'ho.horario_tolerancia',
+                                            'ho.horario_descripcion',
+                                            'ho.horario_id',
+                                            'cp.hora_ini as marcacion',
+                                            DB::raw('TIME(cp.hora_ini) as horaM'),
+                                            DB::raw('DATE(cp.hora_ini) as diaM'),
+                                            DB::raw('DATE(hd.start) as diaH'),
+                                            DB::raw('TIME(ho.horaI) as horaH'),
+                                            DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                            DB::raw('0 as ver')
+                                        )
+                                        ->where('he.estado', '=', 1)
                                         ->where('e.emple_estado', '=', 1)
                                         ->whereIn('e.emple_local', $area)
                                         ->whereIn('e.emple_id', $empleadoL)
                                         ->where('invi.estado', '=', 1)
                                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                        ->groupBy('e.emple_id')
+                                        ->orderBy('e.emple_id')
+                                        ->where('e.organi_id', '=', session('sesionidorg'))
+                                        ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                         ->get();
                                     }
                                 }
@@ -1292,38 +2045,117 @@ class TardanzasController extends Controller
                 } else {
                     if($selector == "Área"){
                         $empleados = DB::table('empleado as e')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                        ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                        ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                        ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                        ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_codigo as codigo',
+                            'e.emple_nDoc as documento',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion as cargo',
+                            'a.area_descripcion as area',
+                            'ho.horario_tolerancia',
+                            'ho.horario_descripcion',
+                            'ho.horario_id',
+                            'cp.hora_ini as marcacion',
+                            DB::raw('TIME(cp.hora_ini) as horaM'),
+                            DB::raw('DATE(cp.hora_ini) as diaM'),
+                            DB::raw('DATE(hd.start) as diaH'),
+                            DB::raw('TIME(ho.horaI) as horaH'),
+                            DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                            DB::raw('0 as ver')
+                        )
+                        ->where('he.estado', '=', 1)
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_area', $area)
                         ->whereIn('e.emple_id', $empleadoL)
-                        ->groupBy('e.emple_id')
+                        ->orderBy('e.emple_id')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
+
                     } else {
                         if($selector == "Cargo"){
                             $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                            ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                            ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_codigo as codigo',
+                                'e.emple_nDoc as documento',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion as cargo',
+                                'a.area_descripcion as area',
+                                'ho.horario_tolerancia',
+                                'ho.horario_descripcion',
+                                'ho.horario_id',
+                                'cp.hora_ini as marcacion',
+                                DB::raw('TIME(cp.hora_ini) as horaM'),
+                                DB::raw('DATE(cp.hora_ini) as diaM'),
+                                DB::raw('DATE(hd.start) as diaH'),
+                                DB::raw('TIME(ho.horaI) as horaH'),
+                                DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                DB::raw('0 as ver')
+                            )
+                            ->where('he.estado', '=', 1)
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_cargo', $area)
                             ->whereIn('e.emple_id', $empleadoL)
-                            ->groupBy('e.emple_id')
+                            ->orderBy('e.emple_id')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                         } else {
                             if($selector == "Local"){
                                 $empleados = DB::table('empleado as e')
-                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
+                                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
+                                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
+                                ->select(
+                                    'e.emple_id',
+                                    'e.emple_codigo as codigo',
+                                    'e.emple_nDoc as documento',
+                                    'p.perso_nombre',
+                                    'p.perso_apPaterno',
+                                    'p.perso_apMaterno',
+                                    'c.cargo_descripcion as cargo',
+                                    'a.area_descripcion as area',
+                                    'ho.horario_tolerancia',
+                                    'ho.horario_descripcion',
+                                    'ho.horario_id',
+                                    'cp.hora_ini as marcacion',
+                                    DB::raw('TIME(cp.hora_ini) as horaM'),
+                                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                                    DB::raw('DATE(hd.start) as diaH'),
+                                    DB::raw('TIME(ho.horaI) as horaH'),
+                                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion'),
+                                    DB::raw('0 as ver')
+                                )
+                                ->where('he.estado', '=', 1)
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_local', $area)
                                 ->whereIn('e.emple_id', $empleadoL)
-                                ->groupBy('e.emple_id')
+                                ->orderBy('e.emple_id')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             }
                         }
@@ -1332,46 +2164,12 @@ class TardanzasController extends Controller
                 }
             }
         }
-
-        $respuesta = [];
+        
         $datos = new Collection();
 
         if (isset($empleados)) {
             $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ), if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
             // DB::enableQueryLog();
-
-            $capturas = DB::table('empleado as e')
-                ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
-                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
-                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-                ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
-                ->leftjoin('horario_empleado as he', 'he.horario_dias_id', '=', 'hd.id')
-                ->leftjoin('horario as ho', 'he.horario_horario_id', '=', 'ho.horario_id')
-                ->select(
-                    'e.emple_id',
-                    'e.emple_codigo as codigo',
-                    'e.emple_nDoc as documento',
-                    'p.perso_nombre',
-                    'p.perso_apPaterno',
-                    'p.perso_apMaterno',
-                    'c.cargo_descripcion as cargo',
-                    'a.area_descripcion as area',
-                    'ho.horario_tolerancia',
-                    'ho.horario_descripcion',
-                    'ho.horario_id',
-                    'cp.hora_ini as marcacion',
-                    DB::raw('TIME(cp.hora_ini) as horaM'),
-                    DB::raw('DATE(cp.hora_ini) as diaM'),
-                    DB::raw('DATE(hd.start) as diaH'),
-                    DB::raw('TIME(ho.horaI) as horaH'),
-                    DB::raw('MIN(TIME(cp.hora_ini)) as minMarcacion')
-                )
-                ->where('he.estado', '=', 1)
-                ->orderBy('e.emple_id')
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
-                ->get();
 
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
@@ -1385,45 +2183,48 @@ class TardanzasController extends Controller
                 $dia = strtotime('+' . $i . 'day', strtotime($fechaF[0]));
                 array_push($dias, date('Y-m-j', $dia));
             }
-
+            $contEmpleados = 0;
             $sumTardanza = 0;
             $tiempoTardanza = 0;
             $employee = "";
-            $len = count($capturas);
-            $lenEmple = count($empleados);
+            $len = $empleados->count();
             $i = 0;
             $fechaF1 = Carbon::parse($date2);
             $fechaR2 = Carbon::parse($date1);
 
+            foreach ($empleados as $empleado) {
+                $marcacion = Carbon::parse($empleado->marcacion);
+                $diaHorario = Carbon::create($empleado->diaH);
+                $horaHorario = Carbon::parse($empleado->horaH);
+                $horario = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second);
+                $horario_tolerancia = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second)->addMinutes($empleado->horario_tolerancia);
+                if($fechaF1->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR2)){
+                    if ($i == 0) {
+                        $employee = $empleado->emple_id;
+                    }
 
-            foreach ($empleados as $keyE => $empleado) {
-                foreach ($capturas as $key => $captura) {
-                    if ($captura->emple_id == $empleado->emple_id) {
-                        $marcacion = Carbon::parse($captura->marcacion);
-                        $diaHorario = Carbon::create($captura->diaH);
-                        $horaHorario = Carbon::parse($captura->horaH);
-                        $horario = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second);
-                        $horario_tolerancia = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second)->addMinutes($captura->horario_tolerancia);
-                        /*  CAPTURA DENTRO DEL RANGO DE FECHAS  */
-                        if($fechaF1->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR2)){ 
-                            if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
-                                $diffS = $marcacion->DiffInSeconds($horario);
-                                $tiempoTardanza += $diffS;
-                                $sumTardanza += 1;
-                                $horas[$diaHorario->day-1] += 1;
-                                $codigo = strlen($captura->codigo) > 0 ? $captura->codigo : $captura->documento;
-                                $documento = $captura->documento;
-                            }
+                    if($employee != $empleado->emple_id && $sumTardanza > 0){
+                        $employee = $empleado->emple_id;
+                        $datos->push($obj);
+                        $sumTardanza = 0;
+                        $tiempoTardanza = 0;
+                        for ($i = 0; $i <= $diff->days; $i++) {
+                            $horas[$i] = 0;
                         }
                     }
-                }
 
-                if($sumTardanza > 0){
+                    if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
+                        $diffS = $marcacion->DiffInSeconds($horario);
+                        $tiempoTardanza += $diffS;
+                        $sumTardanza += 1;
+                        $horas[$diaHorario->day-1] += 1;
+                    }
+
                     $obj = (object) array(
                         "emple_id" => $empleado->emple_id, 
-                        "nombre" => $empleado->nombre, 
-                        "apPaterno" => $empleado->apPaterno,
-                        "apMaterno" => $empleado->apMaterno, 
+                        "nombre" => $empleado->perso_nombre, 
+                        "apPaterno" => $empleado->perso_apPaterno,
+                        "apMaterno" => $empleado->perso_apMaterno, 
                         "horas" => $horas, 
                         "fechaF" => $dias, 
                         "totalTardanza" => gmdate('H:i:s', $tiempoTardanza),
@@ -1431,12 +2232,15 @@ class TardanzasController extends Controller
                         "ruc" => $usuario_organizacion->ruc, 
                         "razonSocial" => $usuario_organizacion->razonSocial, 
                         "direccion" => $usuario_organizacion->direccion,
-                        "codigo" => $codigo, 
-                        "documento" => $documento , 
+                        "codigo" => strlen($empleado->codigo) > 0 ? $empleado->codigo : $empleado->documento, 
+                        "documento" => $empleado->documento, 
                         "fecha" => now()->format('d-m-Y H:i:s'), 
                         "fechaD" => $fechaF[0], 
                         "fechaH" => $fechaF[1]
                     );
+                    $i++;
+                }
+                if($contEmpleados == $len - 1 && $sumTardanza > 0){
                     $datos->push($obj);
                     $sumTardanza = 0;
                     $tiempoTardanza = 0;
@@ -1444,6 +2248,7 @@ class TardanzasController extends Controller
                         $horas[$i] = 0;
                     }
                 }
+                $contEmpleados++;
             }
         }
 
@@ -1710,6 +2515,7 @@ class TardanzasController extends Controller
         }
     }
 
+    ///////////////////////////////////////////// CONTROL EN RUTA //////////////////////////////////////////////////
     public function mostrarReporteTardanzaRuta()
     {
         if(session('sesionidorg')==NULL){
@@ -1791,7 +2597,7 @@ class TardanzasController extends Controller
                 ->get();
         }
 
-        return view('tareas.reporteTardanzasRuta', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
+        return view('tardanzas.reporteTardanzasRuta', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
     }
 
     public function cargarReporteTardanzasRuta(Request $request)
@@ -1818,7 +2624,7 @@ class TardanzasController extends Controller
                 if ($invitado->verTodosEmps == 1) {
                     $empleados_ubi = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
@@ -1853,7 +2659,7 @@ class TardanzasController extends Controller
 
                     $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -1897,7 +2703,7 @@ class TardanzasController extends Controller
                     if ($invitado_empleadoIn != null) {
                         $empleados_ubi = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
@@ -1936,7 +2742,7 @@ class TardanzasController extends Controller
 
                         $empleados_cap = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -1975,7 +2781,7 @@ class TardanzasController extends Controller
                     } else {
                         $empleados_ubi = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
@@ -2014,7 +2820,7 @@ class TardanzasController extends Controller
 
                         $empleados_cap = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -2056,7 +2862,7 @@ class TardanzasController extends Controller
                 // INVITADO QUE NO ES INVITADO (ES ADMINISTRADOR)
                 $empleados_ubi = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
@@ -2091,7 +2897,7 @@ class TardanzasController extends Controller
 
                 $empleados_cap = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -2138,7 +2944,7 @@ class TardanzasController extends Controller
                 if ($invitado->verTodosEmps == 1) {
                     $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -2181,7 +2987,7 @@ class TardanzasController extends Controller
                     if ($invitado_empleadoIn != null) {
                         $empleados_ubi = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
@@ -2220,7 +3026,7 @@ class TardanzasController extends Controller
 
                         $empleados_cap = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -2259,7 +3065,7 @@ class TardanzasController extends Controller
                     } else {
                         $empleados_ubi = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
@@ -2298,7 +3104,7 @@ class TardanzasController extends Controller
 
                         $empleados_cap = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                             ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                             ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -2340,7 +3146,7 @@ class TardanzasController extends Controller
                 // INVITADO QUE NO ES INVITADO (ES ADMINISTRADOR)
                 $empleados_ubi = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
@@ -2375,7 +3181,7 @@ class TardanzasController extends Controller
 
                 $empleados_cap = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_id')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->join('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
@@ -2532,7 +3338,7 @@ class TardanzasController extends Controller
 
         return response()->json($datos, 200);
     }
-
+    // MATRIZ
     public function mostrarMatrizTardanzasRuta()
     {
         if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
@@ -2774,16 +3580,16 @@ class TardanzasController extends Controller
                 if ($invitadod->rol_id != 1) {
                     if ($invitadod->modoCR == 1) {
 
-                        return view('tareas.reporteMatrizTardanzasRuta', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
+                        return view('tardanzas.reporteMatrizTardanzasRuta', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
                     } else {
                         return redirect('/dashboard');
                     }
                     /*   */
                 } else {
-                    return view('tareas.reporteMatrizTardanzasRuta', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
+                    return view('tardanzas.reporteMatrizTardanzasRuta', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
                 }
             } else {
-                return view('tareas.reporteMatrizTardanzasRuta', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
+                return view('tardanzas.reporteMatrizTardanzasRuta', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos, 'locales' => $locales]);
             }
         }
     }
