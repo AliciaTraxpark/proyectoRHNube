@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Arr;
 class marcacionTareoController extends Controller
 {
     /**
@@ -78,7 +78,17 @@ class marcacionTareoController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->get();
         }
-
+        $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
+        ->select('area_id as idarea', 'area_descripcion as descripcion')
+        ->get();
+        $cargo = DB::table('cargo')
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
+            ->get();
+        $local = DB::table('local')
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->select('local_id as idlocal', 'local_descripcion as descripcion')
+            ->get();
         if ($invitadod) {
             if ($invitadod->rol_id != 1) {
                 /*  if ($invitadod->reporteAsisten == 1) {
@@ -92,10 +102,12 @@ class marcacionTareoController extends Controller
                 } */
                 /*   */
             } else {
-                return view('ReporteTareo.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
+                return view('ReporteTareo.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion,
+                'areas' => $area, 'cargos' => $cargo, 'locales' => $local]);
             }
         } else {
-            return view('ReporteTareo.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
+            return view('ReporteTareo.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion,
+            'areas' => $area, 'cargos' => $cargo, 'locales' => $local]);
         }
     }
 
@@ -136,6 +148,7 @@ class marcacionTareoController extends Controller
         $mes = $fecha->month;
         $dia = $fecha->day;
         $ndia = $dia + 1;
+        $arrayeve = collect();
 
         //*RELACION CON CONTROLADORES
         $ControladorEoS = DB::table('controladores_tareo as cont')
@@ -152,6 +165,18 @@ class marcacionTareoController extends Controller
                 'dist.dispoT_descripUbicacion as descripcion'
             );
 
+            /*  --------------------*/
+            function agregarDetalle($array){
+
+                foreach($array as $marcacionesD){
+                    $detalllesP= DB::table('punto_control_detalle as pcde')
+                    ->where('pcde.idPuntoControl', '=',$marcacionesD->idPC)
+                    ->get();
+                    $marcacionesD->detalleNombres=$detalllesP;
+                }
+                return $array;
+            }
+            /* -------------------- */
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
             ->where('organi_id', '=', session('sesionidorg'))
@@ -200,6 +225,8 @@ class marcacionTareoController extends Controller
                             'mt.idmarcaciones_tareo as idMarcacion',
 
                             'pc.descripcion as puntoControl',
+                            'pc.codigoControl as idpuntoControl',
+                            'pc.id as idPC',
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                             DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -210,9 +237,12 @@ class marcacionTareoController extends Controller
                         ->where('mt.organi_id', '=', session('sesionidorg'))
                         ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                         ->get();
+                        $marcaciones=agregarDetalle($marcaciones);
+                        $arrayeve->push($marcaciones);
 
                 } else {
-                    $marcaciones = DB::table('marcacion_tareo as mt')
+                    foreach($idemp as $idemps){
+                        $marcaciones = DB::table('marcacion_tareo as mt')
                         ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -252,6 +282,8 @@ class marcacionTareoController extends Controller
                             'mt.idmarcaciones_tareo as idMarcacion',
 
                             'pc.descripcion as puntoControl',
+                            'pc.codigoControl as idpuntoControl',
+                            'pc.id as idPC',
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                             DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -262,10 +294,14 @@ class marcacionTareoController extends Controller
                         ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
                         ->where('mt.organi_id', '=', session('sesionidorg'))
                         ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
-                        ->where('e.emple_id', $idemp)
+                        ->where('e.emple_id', $idemps)
                         ->get();
+                        $marcaciones=agregarDetalle($marcaciones);
+                        $arrayeve->push($marcaciones);
 
-                }
+
+                    }
+                  }
             } else {
                 /* CUANDO ES POR EMPLEADOS PERSONALIZADOS */
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -317,6 +353,8 @@ class marcacionTareoController extends Controller
                                 'mt.idmarcaciones_tareo as idMarcacion',
 
                                 'pc.descripcion as puntoControl',
+                                'pc.codigoControl as idpuntoControl',
+                                'pc.id as idPC',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -330,8 +368,11 @@ class marcacionTareoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
+                            $marcaciones=agregarDetalle($marcaciones);
+                            $arrayeve->push($marcaciones);
 
                     } else {
+                        foreach($idemp as $idemps){
                         $marcaciones = DB::table('marcacion_tareo as mt')
                             ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
@@ -374,6 +415,8 @@ class marcacionTareoController extends Controller
                                 'mt.idmarcaciones_tareo as idMarcacion',
 
                                 'pc.descripcion as puntoControl',
+                                'pc.codigoControl as idpuntoControl',
+                                'pc.id as idPC',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -385,9 +428,12 @@ class marcacionTareoController extends Controller
                             ->where('mt.organi_id', '=', session('sesionidorg'))
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.emple_id', $idemp)
+                            ->where('e.emple_id', $idemps)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
+                            $marcaciones=agregarDetalle($marcaciones);
+                            $arrayeve->push($marcaciones);
+                        }
 
                     }
                 } else {
@@ -435,6 +481,8 @@ class marcacionTareoController extends Controller
                                 'mt.idmarcaciones_tareo as idMarcacion',
 
                                 'pc.descripcion as puntoControl',
+                                'pc.codigoControl as idpuntoControl',
+                                'pc.id as idPC',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -448,8 +496,11 @@ class marcacionTareoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
+                            $marcaciones=agregarDetalle($marcaciones);
+                            $arrayeve->push($marcaciones);
 
                     } else {
+                        foreach($idemp as $idemps){
                         $marcaciones = DB::table('marcacion_tareo as mt')
                             ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
@@ -491,7 +542,9 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                                 DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                                 'mt.idmarcaciones_tareo as idMarcacion',
-
+                                'pc.descripcion as puntoControl',
+                                'pc.codigoControl as idpuntoControl',
+                                'pc.id as idPC',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -503,9 +556,12 @@ class marcacionTareoController extends Controller
                             ->where('mt.organi_id', '=', session('sesionidorg'))
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.emple_id', $idemp)
+                            ->where('e.emple_id', $idemps)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
+                            $marcaciones=agregarDetalle($marcaciones);
+                            $arrayeve->push($marcaciones);
+                        }
 
                     }
                 }
@@ -552,6 +608,8 @@ class marcacionTareoController extends Controller
                         DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                         'mt.idmarcaciones_tareo as idMarcacion',
                         'pc.descripcion as puntoControl',
+                        'pc.codigoControl as idpuntoControl',
+                        'pc.id as idPC',
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                         DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -564,7 +622,11 @@ class marcacionTareoController extends Controller
                     ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                     ->get();
 
+                    $marcaciones=agregarDetalle($marcaciones);
+                    $arrayeve->push($marcaciones);
+
             } else {
+                foreach($idemp as $idemps){
                 $marcaciones = DB::table('marcacion_tareo as mt')
                     ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -605,6 +667,8 @@ class marcacionTareoController extends Controller
                         'mt.idmarcaciones_tareo as idMarcacion',
 
                         'pc.descripcion as puntoControl',
+                        'pc.codigoControl as idpuntoControl',
+                        'pc.id as idPC',
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                         DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
@@ -615,12 +679,16 @@ class marcacionTareoController extends Controller
                     ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
                     ->where('mt.organi_id', '=', session('sesionidorg'))
                     ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
-                    ->where('e.emple_id', $idemp)
+                    ->where('e.emple_id', $idemps)
                     ->get();
+                    $marcaciones=agregarDetalle($marcaciones);
+                    $arrayeve->push($marcaciones);
+                }
 
             }
         }
-        return response()->json($marcaciones, 200);
+
+        return response()->json(Arr::flatten($arrayeve), 200);
 
     }
 
@@ -708,7 +776,8 @@ class marcacionTareoController extends Controller
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
-                    'he.nHoraAdic as horasA'
+                    DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                    'h.horasObliga as horasO'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
                 ->get()
@@ -847,7 +916,8 @@ class marcacionTareoController extends Controller
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
-                    'he.nHoraAdic as horasA'
+                    DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                    'h.horasObliga as horasO'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
                 ->get()
@@ -1743,4 +1813,266 @@ class marcacionTareoController extends Controller
              return response()->json($marcacion->idmarcaciones_tareo, 200);
          }
      }
+
+     //*CAMBIAR SELECT
+     public function selectFiltro(Request $request)
+    {
+        $area = $request->get('area');
+        $selector = $request->selector;
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->where('uso.organi_id', '=', session('sesionidorg'))
+            ->where('uso.user_id', '=', Auth::user()->id)
+            ->get()->first();
+        if (is_null($area) === true) {
+            if ($usuario_organizacion->rol_id == 3) {
+                $invitado = DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                    ->where('rol_id', '=', 3)
+                    ->where('in.user_Invitado', '=', Auth::user()->id)
+                    ->get()->first();
+
+                if ($invitado->verTodosEmps == 1) {
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+
+                        ->groupBy('e.emple_id')
+                        ->get();
+                } else {
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()->first();
+                    if ($invitado_empleadoIn != null) {
+                        $empleados = DB::table('empleado as e')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                    } else {
+                        $empleados = DB::table('empleado as e')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                    }
+                }
+            } else {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+
+                    ->groupBy('e.emple_id')
+                    ->get();
+            }
+            return response()->json($empleados, 200);
+        } else {
+            if ($usuario_organizacion->rol_id == 3) {
+                $invitado = DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                    ->where('rol_id', '=', 3)
+                    ->where('in.user_Invitado', '=', Auth::user()->id)
+                    ->get()->first();
+
+                if ($invitado->verTodosEmps == 1) {
+                    if($selector == "Área"){
+                        $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+
+                        ->whereIn('e.emple_area', $area)
+                        ->groupBy('e.emple_id')
+                        ->get();
+                    } else {
+                        if($selector == "Cargo"){
+                            $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+
+                            ->whereIn('e.emple_cargo', $area)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                        } else {
+                            if ($selector == "Local") {
+                                $empleados = DB::table('empleado as e')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+
+                                ->whereIn('e.emple_local', $area)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                            }
+                        }
+                    }
+                } else {
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()->first();
+                    if ($invitado_empleadoIn != null) {
+                        if($selector == "Área"){
+                            $empleados = DB::table('empleado as e')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->whereIn('e.emple_area', $area)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                        } else {
+                            if($selector == "Cargo"){
+                                $empleados = DB::table('empleado as e')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->whereIn('e.emple_cargo', $area)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                            } else {
+                                if($selector == "Local"){
+                                    $empleados = DB::table('empleado as e')
+                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                    ->where('e.organi_id', '=', session('sesionidorg'))
+
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                    ->whereIn('e.emple_local', $area)
+                                    ->groupBy('e.emple_id')
+                                    ->get();
+                                }
+                            }
+                        }
+                    } else {
+                        if($selector == "Área"){
+                            $empleados = DB::table('empleado as e')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->whereIn('e.emple_area', $area)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                        } else {
+                            if($selector == "Cargo"){
+                                $empleados = DB::table('empleado as e')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->whereIn('e.emple_cargo', $area)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                            } else {
+                                if($selector == "Local"){
+                                    $empleados = DB::table('empleado as e')
+                                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                    ->where('e.organi_id', '=', session('sesionidorg'))
+
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                    ->whereIn('e.emple_local', $area)
+                                    ->groupBy('e.emple_id')
+                                    ->get();
+                                }
+                            }
+                        }
+
+                    }
+                }
+            } else {
+                if($selector == "Área"){
+                    $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+
+                    ->whereIn('e.emple_area', $area)
+                    ->groupBy('e.emple_id')
+                    ->get();
+                } else {
+                    if($selector == "Cargo"){
+                        $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+
+                        ->whereIn('e.emple_cargo', $area)
+                        ->groupBy('e.emple_id')
+                        ->get();
+                    } else {
+                        if($selector == "Local"){
+                            $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+
+                            ->whereIn('e.emple_local', $area)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                        }
+                    }
+                }
+            }
+            return response()->json($empleados, 200);
+        }
+    }
+
 }

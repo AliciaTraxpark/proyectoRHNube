@@ -197,6 +197,11 @@
         .dt-button {
             padding: 0.15rem 0.15rem !important;
         }
+       .select2-container .select2-selection {
+        max-height: 40px;
+        font-size: 12.2px;
+        overflow-y: scroll;
+    }
 
     </style>
     <style>
@@ -264,10 +269,10 @@
                     <div class="row justify-content-center">
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-xl-4">
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label">Fecha:</label>
-                                <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
+                        <div class="col-xl-3">
+                            <label class="col-lg-12 col-form-label" style="padding-left: 0px;">Fecha:</label>
+
+                                <div class="input-group col-md-12" style="padding-left: 0px;padding-right: 0px;"
                                     id="fechaSelec">
                                     <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
                                         data-input>
@@ -279,15 +284,36 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
                         </div>
-                        <div class="col-xl-7 col-sm-6">
-                            <div class="form-group   row">
-                                <label class="col-lg-3 col-form-label">Empleado</label>
-                                <div class="col-lg-9">
-                                    <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
+                        <div class="col-xl-4">
+                            <label class="col-lg-12 col-form-label">Seleccionar por:</label>
+
+                                <div class="col-lg-12 ">
+                                    <select id="areaT" data-plugin="customselect" class="form-control" multiple="multiple">
+                                        @foreach ($areas as $area)
+                                        <option value="{{$area->idarea}}">Área :
+                                            {{$area->descripcion}}</option>
+                                        @endforeach
+                                        @foreach ($cargos as $cargo)
+                                            <option value="{{ $cargo->idcargo }}">Cargo :
+                                                {{ $cargo->descripcion }}.</option>
+                                        @endforeach
+                                        @foreach ($locales as $local)
+                                            <option value="{{ $local->idlocal }}">Local :
+                                                {{ $local->descripcion }}.</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                        </div>
+                        <div class="col-xl-4 col-sm-4">
+                            <label class="col-lg-12 col-form-label">Empleado</label>
+
+                                <div class="col-lg-12">
+                                    <select id="idempleado" style="height: 50px!important" data-plugin="customselect" multiple
                                         class="form-control form-control-sm" data-placeholder="Seleccione empleado">
-                                        <option value="0" selected>Todos los empleados</option>
+
                                         @foreach ($empleado as $empleados)
                                             <option value="{{ $empleados->emple_id }}">{{ $empleados->perso_nombre }}
                                                 {{ $empleados->perso_apPaterno }} {{ $empleados->perso_apMaterno }}
@@ -296,9 +322,10 @@
                                     </select>
                                 </div>
 
-                            </div>
+
                         </div>
-                        <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
+                        <div class="col-xl-1 text-center btnR" style="padding-left: 0%">
+                            <label for=""><br><br><br></label>
                             <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
                                 style="background-color: #163552;" onclick="javascript:cambiarF()"> <img
                                     src="{{ asset('landing/images/loupe (1).svg') }}" height="15"></button>
@@ -322,6 +349,7 @@
                     </div>
 
                     <div class="row">
+
                         <div class="col-md-7" id="MostarDetalles" style="display: none">
                             {{-- <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
@@ -331,6 +359,7 @@
                                     detalles</label>
                             </div> --}}
                             <div class="dropdown" id="dropSelector">
+                                <br>
                                 <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     style="cursor: pointer">
                                     <div class="custom-control custom-switch mb-2">
@@ -412,27 +441,7 @@
                                 </div>
                             </div>
                         </div>
-                      {{--   <div class="col-xl-5">
-                            <div class="form-group row">
-                                <label class="col-lg-4 col-form-label">Seleccionar por:</label>
-                                <div class="col-lg-8 ">
-                                    <select id="areaT" data-plugin="customselect" class="form-control" multiple="multiple">
-                                        @foreach ($areas as $area)
-                                        <option value="{{$area->area_id}}">Área :
-                                            {{$area->area_descripcion}}</option>
-                                        @endforeach
-                                        @foreach ($cargos as $cargo)
-                                            <option value="{{ $cargo->idcargo }}">Cargo :
-                                                {{ $cargo->descripcion }}.</option>
-                                        @endforeach
-                                        @foreach ($locales as $local)
-                                            <option value="{{ $local->idlocal }}">Local :
-                                                {{ $local->descripcion }}.</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div> --}}
+
 
                         {{-- GIF DE ESPERA --}}
                         <div id="espera" class="text-center" style="display: none">

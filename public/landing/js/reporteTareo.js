@@ -110,7 +110,7 @@ function cargartabla(fecha) {
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
 
-                theadTabla += `
+                theadTabla += `     <th class="puntoHid">Cód. Punto C.</th>
                                    <th class="puntoHid">Punto de control</th>
                                    </tr>`;
 
@@ -804,6 +804,15 @@ function cargartabla(fecha) {
                     tbody += tbodyEntradaySalida;
 
                     /* -----------PUNTO DE CONTRO ------------ */
+
+                    if(marcacionData.idpuntoControl!=null){
+                        tbody += `
+                        <td class="puntoHid" > ${marcacionData.idpuntoControl} </td>`;
+                    }
+                    else{
+                        tbody += `
+                        <td class="puntoHid" > -- </td>`;
+                    }
                     if (marcacionData.puntoControl != null) {
                         tbody += `
                         <td class="puntoHid" > ${marcacionData.puntoControl} </td></tr>`;
@@ -861,6 +870,7 @@ function cargartabla(fecha) {
                                 <td class="controHidSa" ></td>
                                 <td ></td>
                                 <td></td>
+                                <td class="puntoHid" ></td>
                                 <td class="puntoHid" ></td>
                                 </tr>`;
                     $('#tbodyD').append(tbodyTR);
@@ -999,7 +1009,7 @@ function cargartabla(fecha) {
                                 var r1 = Addrow(1, [
                                     {
                                         k: "A",
-                                        v: "CONTROL REGISTRO DE ASISTENCIA",
+                                        v: "CONTROL REGISTRO DE TAREO",
                                         s: 2,
                                     },
                                 ]);
@@ -1027,8 +1037,8 @@ function cargartabla(fecha) {
                                     r5 +
                                     sheet.childNodes[0].childNodes[1].innerHTML;
                             },
-                            sheetName: "Asistencia",
-                            title: "Asistencia",
+                            sheetName: "Registro de Tareo",
+                            title: "Registro de Tareo",
                             autoFilter: false,
                             exportOptions: {
                                 columns: ":visible:not(.noExport)",
@@ -1110,7 +1120,7 @@ function cargartabla(fecha) {
                                 "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                             orientation: "landscape",
                             pageSize: "A2",
-                            title: "Asistencia",
+                            title: "Registro de Tareo",
                             exportOptions: {
                                 columns: ":visible:not(.noExport)",
                             },
@@ -1274,12 +1284,12 @@ function cargartabla(fecha) {
                                                 text: [
                                                     {
                                                         text:
-                                                            "\nCONTROL REGISTRO DE ASISTENCIA",
+                                                            "\n REGISTRO DE TAREO",
                                                         bold: true,
                                                     },
                                                     {
                                                         text:
-                                                            "\n\nRazon Social:\t\t\t\t\t\t",
+                                                            "\n\nRazón Social:\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     {
@@ -1288,7 +1298,7 @@ function cargartabla(fecha) {
                                                     },
                                                     {
                                                         text:
-                                                            "\nDireccion:\t\t\t\t\t\t\t",
+                                                            "\nDirección:\t\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     {
@@ -1297,7 +1307,7 @@ function cargartabla(fecha) {
                                                     },
                                                     {
                                                         text:
-                                                            "\nNumero de Ruc:\t\t\t\t\t",
+                                                            "\nNúmero de Ruc:\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     { text: ruc, bold: false },
@@ -1429,7 +1439,7 @@ function cargartabla(fecha) {
 
                 if($("#tbodyD").is(':empty')){
                     $("#tbodyD").append(
-                        '<tr class="odd"><td valign="top" colspan="15" class="text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
+                        '<tr class="odd"><td valign="top" colspan="16" class="text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
                     );
                 }
 
@@ -3222,3 +3232,57 @@ $('#formCambiarEntradaM').submit(function (e) {
     }
 });
 /* ---------------------------------------------------------------------------------- */
+$('#areaT').on("change", function (e) {
+    /* fechaDefectoT(); */
+    var area = $(this).val();
+    if(area.length==0){
+        $("#idempleado > option").prop("selected", false);
+        $("#idempleado").trigger("change");
+        return false;
+    }
+    let textSelec = $('select[id="areaT"] option:selected:last').text();
+    let selector = textSelec.split(' ')[0];
+    console.log(area);
+/*     $('#idempleado').empty(); */
+    $.ajax({
+        async: false,
+        url: "/TareoselectEmp",
+        method: "GET",
+        data: {
+            area: area,
+            selector: selector
+
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            /* var select = "";
+            for (let i = 0; i < data.length; i++) {
+                select += `<option value="${data[i].emple_id}">${data[i].nombre} ${data[i].apPaterno} ${data[i].apMaterno}</option>`
+            }
+            $('#idempleado').append(select); */
+            $("#idempleado > option").prop("selected", false);
+                $("#idempleado").trigger("change");
+
+                    $.each(data, function (index, value1) {
+                        $(
+                            "#idempleado > option[value='" +
+                                value1.emple_id +
+                                "']"
+                        ).prop("selected", "selected");
+                        $("#idempleado").trigger("change");
+                    });
+
+        },
+        error: function () { }
+    });
+});
