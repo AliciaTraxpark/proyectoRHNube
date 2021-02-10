@@ -339,7 +339,7 @@ function conActividadesDiarias() {
                     var now = new Date();
                     var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
                     //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'REPORTE SEMANAL', s: 2 }]);
+                    var r1 = Addrow(1, [{ k: 'A', v: 'MODO CONTROL EN RUTA - REPORTE SEMANAL', s: 2 }]);
                     var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
                     var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
                     var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
@@ -347,7 +347,7 @@ function conActividadesDiarias() {
                     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
                 sheetName: 'REPORTE SEMANAL',
-                title: 'REPORTE SEMANAL',
+                title: 'MODO CONTROL EN RUTA - REPORTE SEMANAL',
                 autoFilter: false,
                 exportOptions: {
                     format: {
@@ -364,7 +364,7 @@ function conActividadesDiarias() {
                 orientation: 'landscape',
                 pageSize: 'A3',
                 alignment: 'center',
-                title: 'REPORTE SEMANAL',
+                title: 'MODO CONTROL EN RUTA - REPORTE SEMANAL',
                 customize: function (doc) {
                     var bodyCompleto = [];
                     doc.content[1].table.body.forEach(function (line, i) {
@@ -415,10 +415,10 @@ function conActividadesDiarias() {
                                     alignment: 'left',
                                     italics: false,
                                     text: [
-                                        { text: '\nREPORTE SEMANAL', bold: true },
-                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nMODO CONTROL EN RUTA - REPORTE SEMANAL', bold: true },
+                                        { text: '\n\nRazón Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDirección:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNúmero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
                                         { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
                                     ],
 
@@ -697,7 +697,7 @@ function sinActividadesDiarias() {
                     var now = new Date();
                     var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
                     //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'REPORTE SEMANAL', s: 2 }]);
+                    var r1 = Addrow(1, [{ k: 'A', v: 'MODO CONTROL EN RUTA - REPORTE SEMANAL', s: 2 }]);
                     var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
                     var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
                     var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
@@ -705,7 +705,7 @@ function sinActividadesDiarias() {
                     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
                 sheetName: 'REPORTE SEMANAL',
-                title: 'REPORTE SEMANAL',
+                title: 'MODO CONTROL EN RUTA - REPORTE SEMANAL',
                 autoFilter: false,
                 exportOptions: {
                     format: {
@@ -773,10 +773,10 @@ function sinActividadesDiarias() {
                                     alignment: 'left',
                                     italics: false,
                                     text: [
-                                        { text: '\nREPORTE SEMANAL', bold: true },
-                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nMODO CONTROL EN RUTA - REPORTE SEMANAL', bold: true },
+                                        { text: '\n\nRazón Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDirección:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNúmero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
                                         { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
                                     ],
 
