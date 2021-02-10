@@ -652,7 +652,7 @@ function editarActividad(id) {
         error: function () { },
     });
     $.notifyClose();
-    $('#editactividadTarea').modal();
+    $('#editactividadTarea').modal({ backdrop: 'static', keyboard: false });
     $('[name="aedit"]').css('pointer-events', 'auto');
     sent = false;
 }
@@ -1169,7 +1169,7 @@ $("#reg_empleados").select2({
 });
 // * MODAL DE REGISTRAR NUEVA ACTIVIDAD
 function modalRegistrar() {
-    $('#regactividadTarea').modal()
+    $('#regactividadTarea').modal({ backdrop: 'static', keyboard: false })
     sent = false;
 }
 //* FUNCIONALIDAD DEL SWITCH EN CONTROL REMOTO
@@ -1785,7 +1785,7 @@ function listaActividades() {
 }
 // ? ABRIR MODAL DE ASIGNACION
 function asignarActividadMasiso() {
-    $('#asignarPorArea').modal();
+    $('#asignarPorArea').modal({ backdrop: 'static', keyboard: false });
     $("#empleAsignar").empty();
     $("#areaAsignar").empty();
     listaActividades();

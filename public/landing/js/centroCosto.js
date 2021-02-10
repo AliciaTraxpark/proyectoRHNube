@@ -138,7 +138,7 @@ $('#e_empleadosCentro').select2({
 // * MODAL DE EDITAR
 function editarCentro(id, estado) {
     $('#e_idCentro').val(id);
-    $('#e_centrocmodal').modal();
+    $('#e_centrocmodal').modal({ backdrop: 'static', keyboard: false });
     datosCentro(id, estado);
     sent = false;
 }
@@ -456,7 +456,7 @@ $('#a_empleadosCentro').select2({
 });
 // ! ABRIR MODAL DE ASIGNACION
 function asignarCentroC() {
-    $('#a_centrocmodal').modal();
+    $('#a_centrocmodal').modal({ backdrop: 'static', keyboard: false });
     $('#a_empleadosCentro').prop("disabled", true);
     $('#a_todosEmpleados').prop("disabled", true);
     listasDeCentro();
@@ -597,7 +597,7 @@ $("#a_empleadosCentro").on("change", function (e) {
 // ? *********************************** FORMULARIO REGISTRAR **************************************
 function modalRegistrar() {
     sent = false;
-    $('#r_centrocmodal').modal();
+    $('#r_centrocmodal').modal({ backdrop: 'static', keyboard: false });
     $('#r_rowEmpleado').hide();
 }
 $('#r_empleadosCentro').select2({
