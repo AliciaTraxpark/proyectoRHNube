@@ -68,21 +68,39 @@ function centroCostoOrganizacion() {
         success: function (data) {
             var tr = "";
             for (let index = 0; index < data.length; index++) {
-                tr += `<tr>
+                tr += `<tr onclick="return cambiarEstadoCentros(${data[index].id})">
                         <td>${(index + 1)}</td>
-                        <td>${data[index].descripcion}</td>`;
-                if (data[index].porEmpleado == 1) {
-                    tr += `<td>
+                        <td>${data[index].descripcion}</td>
+                        <td>${data[index].codigo}</td>`;
+                // : ASISTENCIA EN PUERTA
+                if (data[index].asistenciaPuerta == 1) {
+                    tr += `<td class="text-center">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="switchPorEmpleado${data[index].id}" checked>
-                                    <label class="custom-control-label" for="switchPorEmpleado${data[index].id}" style="font-weight: bold"></label>
+                                    <input type="checkbox" class="custom-control-input" id="switchAP${data[index].id}" checked>
+                                    <label class="custom-control-label" for="switchAP${data[index].id}" style="font-weight: bold"></label>
                                 </div>
                             </td>`;
                 } else {
-                    tr += `<td>
+                    tr += `<td class="text-center">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="switchPorEmpleado${data[index].id}">
-                                    <label class="custom-control-label" for="switchPorEmpleado${data[index].id}" style="font-weight: bold"></label>
+                                    <input type="checkbox" class="custom-control-input" id="switchAP${data[index].id}">
+                                    <label class="custom-control-label" for="switchAP${data[index].id}" style="font-weight: bold"></label>
+                                </div>
+                            </td>`;
+                }
+                // : MODO TAREO
+                if (data[index].modoTareo == 1) {
+                    tr += `<td class="text-center">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchMT${data[index].id}" checked>
+                                    <label class="custom-control-label" for="switchMT${data[index].id}" style="font-weight: bold"></label>
+                                </div>
+                            </td>`;
+                } else {
+                    tr += `<td class="text-center">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchMT${data[index].id}">
+                                    <label class="custom-control-label" for="switchMT${data[index].id}" style="font-weight: bold"></label>
                                 </div>
                             </td>`;
                 }
@@ -103,6 +121,9 @@ function centroCostoOrganizacion() {
                 </tr>`;
             }
             $('#centroOrg').html(tr);
+            $('#mySelect2').select2({
+                dropdownParent: $('#myModal')
+            });
             tablaCentroCosto();
         },
         error: function () { }
@@ -958,6 +979,42 @@ function eliminarCentro(id) {
                 centroCostoOrganizacion();
             },
         });
+}
+// ? *********************************** FINALIZACION **********************************************
+// ? *********************************** FUNCION DE TABLA ******************************************
+function cambiarEstadoCentros(id) {
+    $("#switchAP" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "AP";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado del centro de costo?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControlesCC(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar centro de costos",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    centroCostoOrganizacion();
+                },
+            });
+    });
 }
 // ? *********************************** FINALIZACION **********************************************
 $(function () {

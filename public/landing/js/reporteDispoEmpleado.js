@@ -140,19 +140,19 @@ function inicializarTabla() {
                 }
                 var fechas = 'Desde ' + $('#ID_START').val() + ' Hasta ' + $('#ID_END').val();
                 //insert
-                var r1 = Addrow(1, [{ k: 'A', v: 'Registro Permanente de Control de Asistencia', s: 51 }]);
+                var r1 = Addrow(1, [{ k: 'A', v: 'REGISTRO PERMANENTE DE CONTROL DE ASISTENCIA', s: 51 }]);
                 var r2 = Addrow(2, [{ k: 'A', v: fechas, s: 2 }]);
                 var r3 = Addrow(3, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
                 var r4 = Addrow(4, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
                 var r5 = Addrow(5, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
                 var r6 = Addrow(7, [{ k: 'A', v: 'DNI:', s: 2 }, { k: 'C', v: dni, s: 0 }]);
                 var r7 = Addrow(8, [{ k: 'A', v: 'Apellidos y Nombres:', s: 2 }, { k: 'C', v: nombre, s: 0 }]);
-                var r8 = Addrow(9, [{ k: 'A', v: 'Area:', s: 2 }, { k: 'C', v: area, s: 0 }]);
+                var r8 = Addrow(9, [{ k: 'A', v: 'Área:', s: 2 }, { k: 'C', v: area, s: 0 }]);
                 var r9 = Addrow(10, [{ k: 'A', v: 'Cargo:', s: 2 }, { k: 'C', v: cargo, s: 0 }]);
                 sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + r9 + sheet.childNodes[0].childNodes[1].innerHTML;
             },
-            sheetName: 'Asistencia',
-            title: 'Asistencia',
+            sheetName: 'REGISTRO PERMANENTE DE CONTROL DE ASISTENCIA',
+            title: 'REGISTRO PERMANENTE DE CONTROL DE ASISTENCIA',
             autoFilter: false,
             exportOptions: {
                 columns: ":visible:not(.noExport)",
@@ -182,7 +182,7 @@ function inicializarTabla() {
             text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
             orientation: 'landscape',
             pageSize: 'A1',
-            title: 'Asistencia',
+            title: 'REGISTRO PERMANENTE DE CONTROL DE ASISTENCIA',
             exportOptions: {
                 columns: ":visible:not(.noExport)",
             },
@@ -264,13 +264,13 @@ function inicializarTabla() {
                                 alignment: 'left',
                                 italics: false,
                                 text: [
-                                    { text: '\nRegistro Permanente de Control de Asistencia\n', bold: true },
-                                    { text: '\nRazon Social:\t\t\t\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                    { text: '\nDireccion:\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: direccion, bold: false },
-                                    { text: '\nNumero de Ruc:\t\t\t\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                    { text: '\nREGISTRO PERMANENTE DE CONTROL DE ASISTENCIA\n', bold: true },
+                                    { text: '\nRazón Social:\t\t\t\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                    { text: '\nDirección:\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: direccion, bold: false },
+                                    { text: '\nNúmero de Ruc:\t\t\t\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
                                     { text: '\nDNI:\t\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: dni, bold: false },
                                     { text: '\nApellidos y Nombres:\t\t\t\t\t\t', bold: false }, { text: nombre, bold: false },
-                                    { text: '\nArea:\t\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: area, bold: false },
+                                    { text: '\nÁrea:\t\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: area, bold: false },
                                     { text: '\nCargo:\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: cargo, bold: false }
                                 ],
                                 fontSize: 10,
