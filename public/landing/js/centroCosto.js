@@ -705,8 +705,8 @@ function registrarCentroC() {
                     }
                 );
             } else {
-                sent = false;
                 if (data.respuesta == 1) {
+                    sent = false;
                     if (data.campo == 1) {
                         $("#r_descripcion").addClass("borderColor");
                     } else {
@@ -745,7 +745,7 @@ function registrarCentroC() {
                             e
                         ) {
                             if (e) {
-                                recuperarCentro(data.centro.centroC_id);
+                                recuperarCentro(data.id);
                             }
                         })
                         .setting({
@@ -835,7 +835,7 @@ $('#formRegistrarCentroC').submit(function (e) {
 // : FUNCTION DE RECUPERAR CENTRO
 function recuperarCentro(id) {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/recuperarCentro",
         data: {
             id: id
@@ -853,9 +853,9 @@ function recuperarCentro(id) {
         },
         success: function (data) {
             limpiarCentro();
-            actividadesOrganizacion();
             $('#r_centrocmodal').modal('toggle');
-            editarCentro(data.centroC_id);
+            centroCostoOrganizacion();
+            editarCentro(data);
         },
         error: function () { },
     });

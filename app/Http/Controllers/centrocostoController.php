@@ -438,6 +438,18 @@ class centrocostoController extends Controller
         $historial->save();
         // : TABLA DE CENTRO DE COSTO EMPLEADO
         $centroEmpleado = centrocosto_empleado::where('idCentro', '=', $id)->get();
+        foreach ($centroEmpleado as $ce) {
+            // : EMPLEADO 
+            $empleado = empleado::select('emple_estado')->where('emple_id', '=', $ce->idEmpleado)->get()->first();
+            if ($empleado->emple_estado == 1) {
+                // : NUEVA CENTRO DE COSTO EMPLEADO
+                $newCentroE = new centrocosto_empleado();
+                $newCentroE->idCentro = $id;
+                $newCentroE->idEmpleado =  $ce->idEmpleado;
+                $newCentroE->fecha_alta = Carbon::now();
+                $newCentroE->save();
+            }
+        }
 
         return response()->json($centro->centroC_id, 200);
     }
