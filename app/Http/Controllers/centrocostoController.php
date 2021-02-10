@@ -454,7 +454,7 @@ class centrocostoController extends Controller
         $historial->fechaAlta = Carbon::now();
         $historial->save();
         // : TABLA DE CENTRO DE COSTO EMPLEADO
-        $centroEmpleado = centrocosto_empleado::where('idCentro', '=', $id)->get();
+        $centroEmpleado = centrocosto_empleado::where('idCentro', '=', $id)->groupBy('idEmpleado')->get();
         foreach ($centroEmpleado as $ce) {
             // : EMPLEADO 
             $empleado = empleado::select('emple_estado')->where('emple_id', '=', $ce->idEmpleado)->get()->first();

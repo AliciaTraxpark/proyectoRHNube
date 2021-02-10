@@ -702,7 +702,7 @@ use App\proyecto_empleado;
         font-size: 12.2px !important;
         margin: 2px 2px;
         cursor: url("../landing/images/cruz1.svg"), auto !important;
-       /*  cursor: url("../landing/images/configs-m.svg"), auto !important; */
+        /*  cursor: url("../landing/images/configs-m.svg"), auto !important; */
 
     }
 
@@ -1914,9 +1914,11 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato1</strong></label>
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de
+                                    contrato1</strong></label>
                             <div class="row w-100 alertVencimiento">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
                                 <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -2134,9 +2136,11 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de
+                                    contrato</strong></label>
                             <div class="row w-100 alertVencimiento">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
                                 <select class="form-control col-3" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -2660,10 +2664,13 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de
+                                    contrato</strong></label>
                             <div class="row w-100 alertVencimiento">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-3" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_editar"
+                                    id="noti_dia_fecha_editar">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
                                         @endfor
@@ -2875,9 +2882,11 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de
+                                    contrato</strong></label>
                             <div class="row w-100 alertVencimiento">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
                                 <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -3248,9 +3257,11 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de
+                                    contrato</strong></label>
                             <div class="row w-100 alertVencimiento">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
                                 <select class="form-control col-3" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -3919,10 +3930,12 @@ use App\proyecto_empleado;
                                     style="max-width: 400px;margin-top: 150px;">
                                     <div class="modal-content">
                                         <div class="modal-header" style="background-color: #163552;">
-                                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Seleccionar horario
+                                            <h5 class="modal-title" id="myModalLabel"
+                                                style="color:#ffffff;font-size:15px">Seleccionar horario
                                             </h5>
-                                            <button type="button" class="close"  aria-label="Close">
-                                                <span aria-hidden="true"  onclick="$('#horarioAsignar').modal('hide')">&times;</span>
+                                            <button type="button" class="close" aria-label="Close">
+                                                <span aria-hidden="true"
+                                                    onclick="$('#horarioAsignar').modal('hide')">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
@@ -4707,13 +4720,15 @@ use App\proyecto_empleado;
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Cargo <a
-                                                onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
-                                        <select class="form-control" name="v_cargo" id="v_cargo" tabindex="2" required>
+                                        <label for="sw-default">
+                                            Cargo
+                                            <a onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
+                                                data-toggle="modal">
+                                                <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
+                                            </a>
+                                        </label>
+                                        <select class="form-control" name="v_cargo" id="v_cargo" tabindex="2">
                                             <option value="">Seleccionar</option>
-
                                             @foreach ($cargo as $cargos)
                                             <option class="" value="{{ $cargos->cargo_id }}">
                                                 {{ $cargos->cargo_descripcion }}</option>
@@ -4724,16 +4739,19 @@ use App\proyecto_empleado;
                                         <div class="form-group">
                                             <label for="sw-default">Código Empleado</label>
                                             <input type="text" class="form-control" name="v_codigoEmpleado"
-                                                maxlength="200" id="v_codigoEmpleado" tabindex="1" required>
+                                                maxlength="200" id="v_codigoEmpleado" tabindex="1">
                                         </div>
                                     </div>
                                 </div> <!-- end col -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Área <a
-                                                onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
+                                        <label for="sw-default">
+                                            Área
+                                            <a onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
+                                                data-toggle="modal">
+                                                <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
+                                            </a>
+                                        </label>
                                         <select class="form-control" name="v_area" id="v_area" tabindex="3" required>
                                             <option value="">Seleccionar</option>
                                             @foreach ($area as $areas)
@@ -4743,10 +4761,13 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sw-default" class="labelNivel">Nivel del Colaborador<a
-                                                onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
+                                        <label for="sw-default" class="labelNivel">
+                                            Nivel del Colaborador
+                                            <a onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
+                                                data-toggle="modal">
+                                                <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
+                                            </a>
+                                        </label>
                                         <select class="form-control" name="v_nivel" id="v_nivel" tabindex="6">
                                             <option value="">Seleccionar</option>
                                             @foreach ($nivel as $niveles)
@@ -4758,12 +4779,16 @@ use App\proyecto_empleado;
                                 </div> <!-- end col -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Centro de costo<a
-                                                onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
+                                        <label for="sw-default">
+                                            Centro de costo
+                                            <a onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
+                                                data-toggle="modal">
+                                                <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
+                                            </a>
+                                        </label>
                                         <select class="form-control" name="v_centroc" id="v_centroc" tabindex="4"
-                                            required>
+                                            data-plugin="customselect" class="form-control"
+                                            data-placeholder="Centro de costo" multiple="multiple">
                                             <option value="">Seleccionar</option>
                                             @foreach ($centro_costo as $centro_costos)
                                             <option class="" value="{{ $centro_costos->centroC_id }}">
@@ -5077,10 +5102,12 @@ use App\proyecto_empleado;
 
                                     <div class="modal-content">
                                         <div class="modal-header" style="background-color: #163552;">
-                                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Seleccionar horario
+                                            <h5 class="modal-title" id="myModalLabel"
+                                                style="color:#ffffff;font-size:15px">Seleccionar horario
                                             </h5>
-                                            <button type="button" class="close"  aria-label="Close">
-                                                <span aria-hidden="true"  onclick="$('#horarioAsignar_ed').modal('hide')">&times;</span>
+                                            <button type="button" class="close" aria-label="Close">
+                                                <span aria-hidden="true"
+                                                    onclick="$('#horarioAsignar_ed').modal('hide')">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
@@ -6202,62 +6229,60 @@ use App\proyecto_empleado;
 </div><!-- /.modal -->
 
 {{-- MODAL CONFIGIRACION HORARIO  EN EDITAR EMPLEADO--}}
-<div id="editarConfigHorario" class="modal fade"  role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
+<div id="editarConfigHorario" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 400px; margin-top: 150px;">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar configuración o eliminar horario
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar configuración o
+                    eliminar horario
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-               <div class="row">
-                 <input type="hidden" id="idHoraEmpleado">
+                <div class="row">
+                    <input type="hidden" id="idHoraEmpleado">
                     <div class="col-md-12">
-                        <form  action="javascript:actualizarConfigHorario()">
+                        <form action="javascript:actualizarConfigHorario()">
                             <div class="row">
                                 <div class="col-md-12"><br>
-                                <div class="custom-control custom-switch mb-2">
-                                    <input type="checkbox" class="custom-control-input"
-                                        id="fueraHSwitch_Actualizar">
-                                    <label class="custom-control-label"
-                                        for="fueraHSwitch_Actualizar">Trabajar fuera de horario</label>
-                                </div>
-
-                                <div class="row">
-                                    <div class="custom-control custom-switch mb-2"
-                                        style="left: 12px;">
+                                    <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input"
-                                            id="horAdicSwitch_Actualizar">
-                                        <label class="custom-control-label"
-                                            for="horAdicSwitch_Actualizar">Permite marcar horas
-                                            adicionales.</label>
+                                            id="fueraHSwitch_Actualizar">
+                                        <label class="custom-control-label" for="fueraHSwitch_Actualizar">Trabajar fuera
+                                            de horario</label>
+                                    </div>
 
-                                    </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <select id="nHorasAdic_Actualizar"
-                                        style="display: none;bottom: 3px;"
-                                        class="form-control form-control-sm col-md-3">
-                                        <option value="0.5">0.5 hora </option>
-                                        <option value="1">1 hora </option>
-                                        <option value="2">2 horas </option>
-                                        <option value="3">3 horas </option>
-                                        <option value="4">4 horas </option>
-                                        <option value="5">5 horas </option>
-                                        <option value="6">6 horas </option>
-                                        <option value="7">7 horas </option>
-                                        <option value="8">8 horas </option>
-                                        <option value="9">9 horas </option>
-                                        <option value="10">10 horas </option>
-                                        <option value="11">11 horas </option>
-                                        <option value="12">12 horas </option>
-                                    </select>
+                                    <div class="row">
+                                        <div class="custom-control custom-switch mb-2" style="left: 12px;">
+                                            <input type="checkbox" class="custom-control-input"
+                                                id="horAdicSwitch_Actualizar">
+                                            <label class="custom-control-label" for="horAdicSwitch_Actualizar">Permite
+                                                marcar horas
+                                                adicionales.</label>
+
+                                        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <select id="nHorasAdic_Actualizar" style="display: none;bottom: 3px;"
+                                            class="form-control form-control-sm col-md-3">
+                                            <option value="0.5">0.5 hora </option>
+                                            <option value="1">1 hora </option>
+                                            <option value="2">2 horas </option>
+                                            <option value="3">3 horas </option>
+                                            <option value="4">4 horas </option>
+                                            <option value="5">5 horas </option>
+                                            <option value="6">6 horas </option>
+                                            <option value="7">7 horas </option>
+                                            <option value="8">8 horas </option>
+                                            <option value="9">9 horas </option>
+                                            <option value="10">10 horas </option>
+                                            <option value="11">11 horas </option>
+                                            <option value="12">12 horas </option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                         </div>
+                            </div>
                     </div>
 
                 </div>
@@ -6267,8 +6292,10 @@ use App\proyecto_empleado;
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6 text-left">
-                            <button type="button" class="btn btn-sm" style="background-color: #ad4145; color:white" id="eliminaHorarioDia">
-                                <i style="height: 15px !important;width: 15px !important;color:#ffffff !important;margin-bottom: 2px;" data-feather="trash-2"></i></button>
+                            <button type="button" class="btn btn-sm" style="background-color: #ad4145; color:white"
+                                id="eliminaHorarioDia">
+                                <i style="height: 15px !important;width: 15px !important;color:#ffffff !important;margin-bottom: 2px;"
+                                    data-feather="trash-2"></i></button>
 
                         </div>
                         <div class="col-md-6 text-right">
@@ -6285,62 +6312,60 @@ use App\proyecto_empleado;
 </div><!-- /.modal -->
 
 {{-- MODAL CONFIGIRACION HORARIO  EN REGISTRAR EMPLEADO--}}
-<div id="editarConfigHorario_re" class="modal fade"  role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
+<div id="editarConfigHorario_re" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 400px; margin-top: 150px;">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar configuración o eliminar horario
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar configuración o
+                    eliminar horario
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-               <div class="row">
-                 <input type="hidden" id="idHoraEmpleado_re">
+                <div class="row">
+                    <input type="hidden" id="idHoraEmpleado_re">
                     <div class="col-md-12">
-                        <form  action="javascript:actualizarConfigHorario_re()">
+                        <form action="javascript:actualizarConfigHorario_re()">
                             <div class="row">
                                 <div class="col-md-12"><br>
-                                <div class="custom-control custom-switch mb-2">
-                                    <input type="checkbox" class="custom-control-input"
-                                        id="fueraHSwitch_Actualizar_re">
-                                    <label class="custom-control-label"
-                                        for="fueraHSwitch_Actualizar_re">Trabajar fuera de horario</label>
-                                </div>
-
-                                <div class="row">
-                                    <div class="custom-control custom-switch mb-2"
-                                        style="left: 12px;">
+                                    <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input"
-                                            id="horAdicSwitch_Actualizar_re">
-                                        <label class="custom-control-label"
-                                            for="horAdicSwitch_Actualizar_re">Permite marcar horas
-                                            adicionales.</label>
+                                            id="fueraHSwitch_Actualizar_re">
+                                        <label class="custom-control-label" for="fueraHSwitch_Actualizar_re">Trabajar
+                                            fuera de horario</label>
+                                    </div>
 
-                                    </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <select id="nHorasAdic_Actualizar_re"
-                                        style="display: none;bottom: 3px;"
-                                        class="form-control form-control-sm col-md-3">
-                                        <option value="0.5">0.5 hora </option>
-                                        <option value="1">1 hora </option>
-                                        <option value="2">2 horas </option>
-                                        <option value="3">3 horas </option>
-                                        <option value="4">4 horas </option>
-                                        <option value="5">5 horas </option>
-                                        <option value="6">6 horas </option>
-                                        <option value="7">7 horas </option>
-                                        <option value="8">8 horas </option>
-                                        <option value="9">9 horas </option>
-                                        <option value="10">10 horas </option>
-                                        <option value="11">11 horas </option>
-                                        <option value="12">12 horas </option>
-                                    </select>
+                                    <div class="row">
+                                        <div class="custom-control custom-switch mb-2" style="left: 12px;">
+                                            <input type="checkbox" class="custom-control-input"
+                                                id="horAdicSwitch_Actualizar_re">
+                                            <label class="custom-control-label"
+                                                for="horAdicSwitch_Actualizar_re">Permite marcar horas
+                                                adicionales.</label>
+
+                                        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <select id="nHorasAdic_Actualizar_re" style="display: none;bottom: 3px;"
+                                            class="form-control form-control-sm col-md-3">
+                                            <option value="0.5">0.5 hora </option>
+                                            <option value="1">1 hora </option>
+                                            <option value="2">2 horas </option>
+                                            <option value="3">3 horas </option>
+                                            <option value="4">4 horas </option>
+                                            <option value="5">5 horas </option>
+                                            <option value="6">6 horas </option>
+                                            <option value="7">7 horas </option>
+                                            <option value="8">8 horas </option>
+                                            <option value="9">9 horas </option>
+                                            <option value="10">10 horas </option>
+                                            <option value="11">11 horas </option>
+                                            <option value="12">12 horas </option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                         </div>
+                            </div>
                     </div>
 
                 </div>
@@ -6350,8 +6375,10 @@ use App\proyecto_empleado;
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6 text-left">
-                            <button type="button" class="btn btn-sm" style="background-color: #ad4145; color:white" id="eliminaHorarioDia_re">
-                                <i style="height: 15px !important;width: 15px !important;color:#ffffff !important;margin-bottom: 2px;" data-feather="trash-2"></i></button>
+                            <button type="button" class="btn btn-sm" style="background-color: #ad4145; color:white"
+                                id="eliminaHorarioDia_re">
+                                <i style="height: 15px !important;width: 15px !important;color:#ffffff !important;margin-bottom: 2px;"
+                                    data-feather="trash-2"></i></button>
 
                         </div>
                         <div class="col-md-6 text-right">
