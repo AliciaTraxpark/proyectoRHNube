@@ -68,7 +68,7 @@ function centroCostoOrganizacion() {
         success: function (data) {
             var tr = "";
             for (let index = 0; index < data.length; index++) {
-                tr += `<tr>
+                tr += `<tr onclick="return cambiarEstadoCentros(${data[index].id})">
                         <td>${(index + 1)}</td>
                         <td>${data[index].descripcion}</td>
                         <td>${data[index].codigo}</td>`;
@@ -979,6 +979,42 @@ function eliminarCentro(id) {
                 centroCostoOrganizacion();
             },
         });
+}
+// ? *********************************** FINALIZACION **********************************************
+// ? *********************************** FUNCION DE TABLA ******************************************
+function cambiarEstadoCentros(id) {
+    $("#switchAP" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "AP";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado del centro de costo?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControlesCC(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar centro de costos",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    centroCostoOrganizacion();
+                },
+            });
+    });
 }
 // ? *********************************** FINALIZACION **********************************************
 $(function () {

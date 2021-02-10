@@ -337,15 +337,15 @@ function conActividadesDiarias() {
                     var now = new Date();
                     var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
                     //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'TIEMPO POR SEMANA', s: 2 }]);
+                    var r1 = Addrow(1, [{ k: 'A', v: 'MODO CONTROL REMOTO - TIEMPO POR SEMANA', s: 2 }]);
                     var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
                     var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
                     var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
                     var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
                     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'TIEMPO POR SEMANA',
-                title: 'TIEMPO POR SEMANA',
+                sheetName: 'MODO CONTROL REMOTO - TIEMPO POR SEMANA',
+                title: 'MODO CONTROL REMOTO - TIEMPO POR SEMANA',
                 autoFilter: false,
                 exportOptions: {
                     format: {

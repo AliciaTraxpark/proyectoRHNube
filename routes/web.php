@@ -543,7 +543,7 @@ Route::get('/listaEmpleadoCC', 'centrocostoController@listaEmpleados');
 Route::post('/registrarCentro', 'centrocostoController@agregarCentroC');
 Route::post('/recuperarCentro', 'centrocostoController@recuperarCentro');
 Route::post('/eliminarCentro', 'centrocostoController@eliminarCentro');
-
+Route::post('/estadosControlesCC', 'centrocostoController@cambiarEstadosControlesCC');
 
 /* REPORTE PARA VER MARCACIONES DE BIOMETRICOS */
 Route::get('/reporteBiometrico', 'biometricoController@vistaReporte');

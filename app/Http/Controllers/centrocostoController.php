@@ -396,4 +396,23 @@ class centrocostoController extends Controller
             return response()->json($id, 200);
         }
     }
+
+    // * CAMBIAR ESTADOS DE MODOS
+    public function cambiarEstadosControlesCC(Request $request)
+    {
+        $idCentro = $request->get('id');
+        $control = $request->get('control');
+        // BUSCAMOS ACTIVIDAD
+        $centro = centro_costo::findOrFail($idCentro);
+        if ($centro) {
+            if ($control == "AP") {
+                $centro->asistenciaPuerta = $request->get('valor');
+            }
+            if ($control == "MT") {
+                $centro->modoTareo = $request->get('valor');
+            }
+            $centro->save();
+        }
+        return response()->json($idCentro, 200);
+    }
 }

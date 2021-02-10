@@ -322,15 +322,15 @@ function sinActividadD() {
                     var now = new Date();
                     var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
                     //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'TIEMPO POR MES', s: 2 }]);
+                    var r1 = Addrow(1, [{ k: 'A', v: 'MODO CONTROL REMOTO - TIEMPO POR MES', s: 2 }]);
                     var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
                     var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
                     var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
                     var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
                     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'TIEMPO POR MES',
-                title: 'TIEMPO POR MES',
+                sheetName: 'MODO CONTROL REMOTO - TIEMPO POR MES',
+                title: 'MODO CONTROL REMOTO - TIEMPO POR MES',
                 autoFilter: false,
                 exportOptions: {
                     format: {
@@ -350,7 +350,7 @@ function sinActividadD() {
                     columns: ":visible",
                     orthogonal: 'export'
                 },
-                title: 'TIEMPO POR MES',
+                title: 'MODO CONTROL REMOTO - TIEMPO POR MES',
                 customize: function (doc) {
                     var bodyCompleto = [];
                     doc.content[1].table.body.forEach(function (line, i) {
@@ -419,10 +419,10 @@ function sinActividadD() {
                                     alignment: 'left',
                                     italics: false,
                                     text: [
-                                        { text: '\nTIEMPO POR MES', bold: true },
-                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nMODO CONTROL REMOTO - TIEMPO POR MES', bold: true },
+                                        { text: '\n\nRazón Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDirección:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNúmero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
                                         { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
                                     ],
 
@@ -702,15 +702,15 @@ function conActividadD() {
                     var now = new Date();
                     var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
                     //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'TIEMPO POR MES', s: 2 }]);
+                    var r1 = Addrow(1, [{ k: 'A', v: 'MODO CONTROL REMOTO - TIEMPO POR MES', s: 2 }]);
                     var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
                     var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
                     var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
                     var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
                     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'TIEMPO POR MES',
-                title: 'TIEMPO POR MES',
+                sheetName: 'MODO CONTROL REMOTO - TIEMPO POR MES',
+                title: 'MODO CONTROL REMOTO - TIEMPO POR MES',
                 autoFilter: false,
                 exportOptions: {
                     format: {
@@ -730,7 +730,7 @@ function conActividadD() {
                     columns: ":visible",
                     orthogonal: 'export'
                 },
-                title: 'TIEMPO POR MES',
+                title: 'MODO CONTROL REMOTO - TIEMPO POR MES',
                 customize: function (doc) {
                     var bodyCompleto = [];
                     doc.content[1].table.body.forEach(function (line, i) {
@@ -799,10 +799,10 @@ function conActividadD() {
                                     alignment: 'left',
                                     italics: false,
                                     text: [
-                                        { text: '\nTIEMPO POR MES', bold: true },
-                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nMODO CONTROL REMOTO - TIEMPO POR MES', bold: true },
+                                        { text: '\n\nRazón Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDirección:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNúmero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
                                         { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
                                     ],
 
