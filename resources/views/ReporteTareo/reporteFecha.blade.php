@@ -197,7 +197,7 @@
         .dt-button {
             padding: 0.15rem 0.15rem !important;
         }
-       .select2-container .select2-selection {
+        .col-xl-4 .select2-container .select2-selection {
         max-height: 40px;
         font-size: 12.2px;
         overflow-y: scroll;
@@ -421,6 +421,13 @@
                                         <li class="liContenido">
                                             <input type="checkbox" id="checPuntoc">
                                             <label class="form-check-label" for="checPuntoc">Punto de control
+                                        </li>
+                                    </ul>
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checPuntocDescrip">
+                                            <label class="form-check-label" for="checPuntocDescrip">Descripcion(es) de punto de
+                                                control
                                         </li>
                                     </ul>
 
