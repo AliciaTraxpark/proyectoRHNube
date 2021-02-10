@@ -1083,7 +1083,7 @@ class EmpleadoController extends Controller
             ->get();
 
         // : ****************************** CENTRO DE COSTO **********************************
-        DB::enableQueryLog();
+        // DB::enableQueryLog();
         $centroCosto = DB::table('centro_costo as cc')
             ->join('centrocosto_empleado as ce', 'ce.idCentro', '=', 'cc.centroC_id')
             ->select('cc.centroC_id as id')
@@ -1092,7 +1092,7 @@ class EmpleadoController extends Controller
             ->where('ce.idEmpleado', '=', $idempleado)
             ->groupBy('cc.centroC_id')
             ->get();
-        dd(DB::getQueryLog());
+        // dd(DB::getQueryLog());
         $empleados[0]->centroCosto = $centroCosto;
         // : ****************************** FINALIZACION **********************************
         $empleado = agruparEmpleadosShow($empleados);

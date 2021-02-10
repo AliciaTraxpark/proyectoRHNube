@@ -818,6 +818,12 @@ use App\proyecto_empleado;
         text-transform: none;
     }
 
+    /* FINALIZACION DE ALERTIFY */
+
+    .select2-container .select2-selection--multiple {
+        overflow-y: scroll;
+    }
+
     /* RESPONSIVE */
 
     @media (max-width: 767.98px) {
@@ -4720,6 +4726,33 @@ use App\proyecto_empleado;
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="sw-default">Código Empleado</label>
+                                            <input type="text" class="form-control" name="v_codigoEmpleado"
+                                                maxlength="200" id="v_codigoEmpleado" tabindex="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sw-default">
+                                            Centro de costo
+                                            <a onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
+                                                data-toggle="modal">
+                                                <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
+                                            </a>
+                                        </label>
+                                        <select class="form-control" name="v_centroc" id="v_centroc" tabindex="4"
+                                            data-plugin="customselect" class="form-control"
+                                            data-placeholder="Centro de costo" multiple="multiple">
+                                            <option value="">Seleccionar</option>
+                                            @foreach ($centro_costo as $centro_costos)
+                                            <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                {{ $centro_costos->centroC_descripcion }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> <!-- end col -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
                                         <label for="sw-default">
                                             Cargo
                                             <a onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
@@ -4732,31 +4765,6 @@ use App\proyecto_empleado;
                                             @foreach ($cargo as $cargos)
                                             <option class="" value="{{ $cargos->cargo_id }}">
                                                 {{ $cargos->cargo_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <label for="sw-default">Código Empleado</label>
-                                            <input type="text" class="form-control" name="v_codigoEmpleado"
-                                                maxlength="200" id="v_codigoEmpleado" tabindex="1">
-                                        </div>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">
-                                            Área
-                                            <a onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
-                                                data-toggle="modal">
-                                                <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
-                                            </a>
-                                        </label>
-                                        <select class="form-control" name="v_area" id="v_area" tabindex="3" required>
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($area as $areas)
-                                            <option class="" value="{{ $areas->area_id }}">
-                                                {{ $areas->area_descripcion }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -4780,27 +4788,27 @@ use App\proyecto_empleado;
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="sw-default">
-                                            Centro de costo
-                                            <a onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
+                                            Área
+                                            <a onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
                                                 data-toggle="modal">
                                                 <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
                                             </a>
                                         </label>
-                                        <select class="form-control" name="v_centroc" id="v_centroc" tabindex="4"
-                                            data-plugin="customselect" class="form-control"
-                                            data-placeholder="Centro de costo" multiple="multiple">
+                                        <select class="form-control" name="v_area" id="v_area" tabindex="3" required>
                                             <option value="">Seleccionar</option>
-                                            @foreach ($centro_costo as $centro_costos)
-                                            <option class="" value="{{ $centro_costos->centroC_id }}">
-                                                {{ $centro_costos->centroC_descripcion }}</option>
+                                            @foreach ($area as $areas)
+                                            <option class="" value="{{ $areas->area_id }}">
+                                                {{ $areas->area_descripcion }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sw-default">Local <a
-                                                onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
+                                        <label for="sw-default">Local
+                                            <a onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
+                                                data-toggle="modal">
+                                                <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
+                                            </a>
+                                        </label>
                                         <select class="form-control" name="v_local" id="v_local" tabindex="7">
                                             <option value="">Seleccionar</option>
                                             @foreach ($local as $locales)

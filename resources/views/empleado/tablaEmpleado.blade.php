@@ -617,10 +617,11 @@
                 $('#v_cargo').val(data[0].cargo_id);
                 $('#v_area').val(data[0].area_id);
                 // : CENTRO DE COSTOS
-                console.log(data[0].centroCosto);
+                var arrayCC = [];
                 data[0].centroCosto.forEach(element => {
-                    $('#v_centroc').val(element.id).trigger("change");
+                    arrayCC.push(element.id);
                 });
+                $('#v_centroc').val(arrayCC).trigger("change");
                 // $('#v_centroc').val(data[0].centroC_id);
                 // : FINALIZACION
                 id_empleado = data[0].emple_id;
