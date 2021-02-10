@@ -985,11 +985,13 @@ function eliminarCentro(id) {
 function cambiarEstadoCentros(id) {
     $("#switchAP" + id).on("change.bootstrapSwitch", function (event) {
         var control = "AP";
+        // : ************************** OBTENER VALOR DE SWITCH *********************
         if (event.target.checked == true) {
             var valor = 1;
         } else {
             var valor = 0;
         }
+        // : ************************* FINALIZACION *********************************
         alertify
             .confirm("¿Desea modificar el estado del centro de costo?", function (
                 e
@@ -1014,6 +1016,53 @@ function cambiarEstadoCentros(id) {
                     centroCostoOrganizacion();
                 },
             });
+    });
+}
+function cambiarEstadoParaControlesCC(id, valor, control) {
+    $.ajax({
+        type: "POST",
+        url: "/estadosControlesCC",
+        data: {
+            id: id,
+            valor: valor,
+            control: control
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            centroCostoOrganizacion();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nCentro de costo modificado.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { },
     });
 }
 // ? *********************************** FINALIZACION **********************************************
