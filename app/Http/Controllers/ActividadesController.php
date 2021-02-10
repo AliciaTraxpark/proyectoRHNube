@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\actividad;
 use App\actividad_area;
 use App\actividad_empleado;
-use App\captura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
