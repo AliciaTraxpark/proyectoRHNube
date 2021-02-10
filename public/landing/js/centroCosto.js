@@ -111,7 +111,7 @@ function centroCostoOrganizacion() {
                     tr += `<td><img src="/admin/images/borrarH.svg" height="11" class="mr-2">No</td>`;
                 }
                 tr += `<td>
-                        <a onclick="javascript:editarCentro(${data[index].id})" style="cursor: pointer">
+                        <a onclick="javascript:editarCentro(${data[index].id},${data[index].respuesta})" style="cursor: pointer">
                             <img src="/admin/images/edit.svg" height="15">
                         </a>
                         &nbsp;&nbsp;&nbsp;
@@ -136,15 +136,15 @@ $('#e_empleadosCentro').select2({
     allowClear: false
 });
 // * MODAL DE EDITAR
-function editarCentro(id) {
+function editarCentro(id, estado) {
     $('#e_idCentro').val(id);
     $('#e_centrocmodal').modal();
-    datosCentro(id);
+    datosCentro(id, estado);
     sent = false;
 }
 // * OBTENER DATOS DE CENTRO COSTO
 var e_empleadosS;
-async function datosCentro(id) {
+async function datosCentro(id, estado) {
     $('#e_empleadosCentro').empty();
     $.ajax({
         async: false,
@@ -165,6 +165,17 @@ async function datosCentro(id) {
             }*/
         },
         success: function (data) {
+            // : ESTADO DE USO
+            if (estado == 1) {
+                $('#e_descripcion').prop("disabled", true);
+                $('#e_codigo').prop("disabled", true);
+                if (data.codigo == null) {
+                    $('#e_codigo').prop("disabled", false);
+                }
+            } else {
+                $('#e_descripcion').prop("disabled", false);
+                $('#e_codigo').prop("disabled", false);
+            }
             $('#e_descripcion').val(data.descripcion);
             $('#e_codigo').val(data.codigo);
             // : ASISTENCIA EN PUERTA
