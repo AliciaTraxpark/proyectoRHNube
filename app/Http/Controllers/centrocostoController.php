@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\centro_costo;
 use App\centrocosto_empleado;
 use App\empleado;
+use App\historial_centro_costo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -368,6 +369,12 @@ class centrocostoController extends Controller
                 }
             }
         }
+        // : HISTORIAL DE CENTRO COSTO
+        $historialCentroCosto = new historial_centro_costo();
+        $historialCentroCosto->idCentro = $idCentro;
+        $historialCentroCosto->fechaAlta = Carbon::now();
+        $historialCentroCosto->save();
+        
         return response()->json($idCentro, 200);
     }
 
