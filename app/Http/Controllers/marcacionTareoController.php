@@ -230,8 +230,8 @@ class marcacionTareoController extends Controller
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                             DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
-                            DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
-                            DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
+                            DB::raw("IF(entradaD.descripcion is null,'MANUAL' , CONCAT('ANDROID: ', entradaD.descripcion)) as dispositivoEntrada"),
+                            DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,CONCAT('ANDROID: ',salidaD.descripcion)) as dispositivoSalida")
                         )
                         ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
                         ->where('mt.organi_id', '=', session('sesionidorg'))
@@ -287,8 +287,8 @@ class marcacionTareoController extends Controller
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                             DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
-                            DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
-                            DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
+                            DB::raw("IF(entradaD.descripcion is null,'MANUAL' , CONCAT('ANDROID: ', entradaD.descripcion)) as dispositivoEntrada"),
+                            DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,CONCAT('ANDROID: ',salidaD.descripcion)) as dispositivoSalida")
 
                         )
                         ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -358,8 +358,8 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
-                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
-                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , CONCAT('ANDROID: ', entradaD.descripcion)) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,CONCAT('ANDROID: ',salidaD.descripcion)) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -420,8 +420,8 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
-                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
-                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , CONCAT('ANDROID: ', entradaD.descripcion)) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,CONCAT('ANDROID: ',salidaD.descripcion)) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -486,8 +486,8 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
-                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
-                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , CONCAT('ANDROID: ', entradaD.descripcion)) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,CONCAT('ANDROID: ',salidaD.descripcion)) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -548,8 +548,8 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                                 DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
-                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
-                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , CONCAT('ANDROID: ', entradaD.descripcion)) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,CONCAT('ANDROID: ',salidaD.descripcion)) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -613,8 +613,8 @@ class marcacionTareoController extends Controller
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                         DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
-                        DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
-                        DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
+                        DB::raw("IF(entradaD.descripcion is null,'MANUAL' , CONCAT('ANDROID: ', entradaD.descripcion)) as dispositivoEntrada"),
+                        DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,CONCAT('ANDROID: ',salidaD.descripcion)) as dispositivoSalida")
 
                     )
                     ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -672,8 +672,8 @@ class marcacionTareoController extends Controller
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
                         DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
-                        DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
-                        DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
+                        DB::raw("IF(entradaD.descripcion is null,'MANUAL' , CONCAT('ANDROID: ', entradaD.descripcion)) as dispositivoEntrada"),
+                        DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,CONCAT('ANDROID: ',salidaD.descripcion)) as dispositivoSalida")
 
                     )
                     ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)

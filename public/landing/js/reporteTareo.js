@@ -48,6 +48,7 @@ function cargartabla(fecha) {
     $("#checSexo").prop("checked", false);
     $("#checCargo").prop("checked", false);
     $("#checPuntoc").prop("checked", true);
+    $("#checPuntocDescrip").prop("checked", false);
     $("#checControl").prop("checked", true);
     /* ************************************** */
     var idemp = $("#idempleado").val();
@@ -81,12 +82,13 @@ function cargartabla(fecha) {
                 $("#MostarDetalles").show();
                 $("#theadD").empty();
 
-                //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
-                var cantidadColumnasHoras = 0;
-                for (let i = 0; i < data.length; i++) {
+
+                 //*CANTIDAD DE NOMBRES DE DETALLE
+                 var cantidadColumnasDetalle=0
+                 for (let i = 0; i < data.length; i++) {
                     //* OBTENER CANTIDAD TOTAL DE COLUMNAS
-                    if (cantidadColumnasHoras < data.length) {
-                        cantidadColumnasHoras = data.length;
+                    if (cantidadColumnasDetalle < data[i].detalleNombres.length) {
+                        cantidadColumnasDetalle = data[i].detalleNombres.length;
                     }
                 }
                 //*---------------------------- ARMAR CABEZERA-----------------------------------------
@@ -112,7 +114,12 @@ function cargartabla(fecha) {
 
                 theadTabla += `     <th class="puntoHid">Cód. Punto C.</th>
                                    <th class="puntoHid">Punto de control</th>
-                                   </tr>`;
+                                   `;
+
+                for (let j = 0; j < cantidadColumnasDetalle; j++) {
+                theadTabla += `<th class="puntoDescripHid">Descripcion ${j + 1} </th>`;
+                }
+                theadTabla += `</tr>`;
 
                 //* DIBUJAMOS CABEZERA
                 $("#theadD").html(theadTabla);
@@ -159,6 +166,7 @@ function cargartabla(fecha) {
 
                     //* ARMAR Y ORDENAR MARCACIONES
                     var tbodyEntradaySalida = "";
+                    var tbodyDetalle = "";
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");
                     /* -------------------------------------------- */
                     //: HORA
@@ -278,7 +286,7 @@ function cargartabla(fecha) {
                                     </td>`;
                                 }
 
-                                tbodyEntradaySalida += `<td>
+                                tbodyEntradaySalida += `<td data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -369,7 +377,7 @@ function cargartabla(fecha) {
                                             </div>
                                         </td>`;
                                     }
-                                    tbodyEntradaySalida += `<td >
+                                    tbodyEntradaySalida += `<td data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}" >
                                                             <div class="dropdown" >
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -745,7 +753,7 @@ function cargartabla(fecha) {
                                         </td>`;
                                     }
 
-                                    tbodyEntradaySalida += `<td>
+                                    tbodyEntradaySalida += `<td data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -815,7 +823,7 @@ function cargartabla(fecha) {
                     }
                     if (marcacionData.puntoControl != null) {
                         tbody += `
-                        <td class="puntoHid" > ${marcacionData.puntoControl} </td></tr>`;
+                        <td class="puntoHid" > ${marcacionData.puntoControl} </td>`;
                     } else {
                         tbody += `<td class="puntoHid" >
                         <div class=" dropdown">
@@ -842,8 +850,18 @@ function cargartabla(fecha) {
                                 </div>
                             </ul>
                         </div>
-                    </td></tr>`;
+                    </td>`;
                     }
+                    for (let j = 0; j < data[index].detalleNombres.length; j++) {
+                        var detalleData = data[index].detalleNombres[j];
+                        tbodyDetalle += `<td class="puntoDescripHid" >${detalleData.descripcion}</td>`;
+                    }
+                    for (let m = data[index].detalleNombres.length; m < cantidadColumnasDetalle; m++) {
+                        tbodyDetalle += `<td class="puntoDescripHid" >---</td>`;
+                    }
+                    tbody += tbodyDetalle;
+                    tbody += `
+                    </tr>`;
 
                     /* ----------------------------------------- ------------------*/
                 }
@@ -872,7 +890,11 @@ function cargartabla(fecha) {
                                 <td></td>
                                 <td class="puntoHid" ></td>
                                 <td class="puntoHid" ></td>
-                                </tr>`;
+                                `;
+                    for(cc=0;  cc < cantidadColumnasDetalle; cc++){
+                        tbodyTR +='<td class="puntoDescripHid"></td>';
+                    }
+                    tbodyTR +=`</tr>`;
                     $('#tbodyD').append(tbodyTR);
                 }
                 /* DATOS PARA EXPORTAR TABLA */
@@ -1369,6 +1391,16 @@ function cargartabla(fecha) {
                         } else {
                             dataT.api().columns(".controHidSa").visible(false);
                         }
+
+                          //*DESCRIPCIONES DE PUNTO C
+
+                        if ($("#checPuntocDescrip").prop("checked")) {
+                            dataT.api().columns(".puntoDescripHid").visible(true);
+                        } else {
+                            dataT.api().columns(".puntoDescripHid").visible(false);
+                        }
+
+
                         setTimeout(function () {
                             $("#tablaReport").DataTable().draw();
                         }, 200);
@@ -1902,6 +1934,19 @@ $("#checPuntoc").change(function (event) {
         dataT.api().columns(".puntoHid").visible(true);
     } else {
         dataT.api().columns(".puntoHid").visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
+//*DESCRIPCIONES DE PUNTO C
+$("#checPuntocDescrip").change(function (event) {
+    if ($("#checPuntocDescrip").prop("checked")) {
+        dataT.api().columns(".puntoDescripHid").visible(true);
+    } else {
+        dataT.api().columns(".puntoDescripHid").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
