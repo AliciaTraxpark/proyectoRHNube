@@ -409,20 +409,27 @@ class centrocostoController extends Controller
         return response()->json($centro->centroC_id, 200);
     }
 
+    // * CAMBIAR ESTADO CENTRO DE COSTO
     public function eliminarCentro(Request $request)
     {
         $id = $request->get('id');
-        $empleado = empleado::where('emple_centCosto', '=', $id)->where('emple_estado', '=', 1)->get()->first();
 
-        if ($empleado) {
-            return 0;
-        } else {
-            $centro = centro_costo::findOrFail($id);
-            $centro->estado = 0;
-            $centro->save();
+        // : TABLA DE CENTRO DE COSTO
+        $centro = centro_costo::findOrFail($id);
+        $centro->estado = 0;
+        $centro->save();
+        // : TABLA DE HISTORIAL DE CENTRO DE COSTO
+        $historial = historial_centro_costo::where('idCentro', '=', $id)->whereNull('fechaBaja')->get()->first();
+        $historial->fechaBaja = Carbon::now();
 
-            return response()->json($id, 200);
+        // : TABLA DE CENTRO DE COSTO EMPLEADO
+        $centroEmpleado = centrocosto_empleado::where('idCentro', '=', $id)->where('estado', '=', 1)->get();
+        foreach ($centroEmpleado as $ce) {
+            $ce->estado = 0;
+            $ce->fecha_baja = Carbon::now();
+            $ce->save();
         }
+        return response()->json($id, 200);
     }
 
     // * CAMBIAR ESTADOS DE MODOS

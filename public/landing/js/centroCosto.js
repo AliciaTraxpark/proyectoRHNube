@@ -115,7 +115,7 @@ function centroCostoOrganizacion() {
                             <img src="/admin/images/edit.svg" height="15">
                         </a>
                         &nbsp;&nbsp;&nbsp;
-                        <a onclick="javascript:eliminarCentro(${data[index].id})" style="cursor: pointer">
+                        <a onclick="javascript:eliminarCentro(${data[index].id},${data[index].respuesta})" style="cursor: pointer">
                             <img src="/admin/images/delete.svg" height="15">
                         </a>
                     </td>
@@ -894,9 +894,13 @@ $("#r_empleadosCentro").on("change", function (e) {
 });
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** FORMULARIO DE ELIMINAR ************************************
-function eliminarCentro(id) {
+function eliminarCentro(id, estado) {
+    var mensaje = {};
+    if (estado == 1) {
+        mensaje = "<img src=\"/landing/images/alert1.svg\" height=\"20\" class=\"mr-1 mt-0\">Centro de costo en uso <br>¿Desea eliminar centro costo?";
+    } else mensaje = "¿Desea eliminar centro costo?";
     alertify
-        .confirm("¿Desea eliminar centro costo?", function (
+        .confirm(mensaje, function (
             e
         ) {
             if (e) {
