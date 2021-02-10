@@ -70,169 +70,191 @@ function actividadesOrganizacion() {
         success: function (data) {
             var tr = "";
             for (let index = 0; index < data.length; index++) {
-                tr += "<tr onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
-                tr += "<td>" + data[index].Activi_Nombre + "</td>";
-                tr += "<td>" + data[index].codigoA + "</td>";
+                tr += `<tr onclick="return cambiarEstadoActividad(${data[index].Activi_id})"><td>${(index + 1)}</td>`;
+                tr += `<td>${data[index].Activi_Nombre}</td>`;
+                tr += `<td>${data[index].codigoA}</td>`;
                 if (data[index].eliminacion == 0) {
                     if (data[index].controlRemoto == 1) {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                        <input type=\"checkbox\" class=\"custom-control-input\"\
-                            id=\"switchActvCR"+ data[index].Activi_id + "\" checked disabled>\
-                        <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
-                            style=\"font-weight: bold\"></label>\
-                        </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvCR${data[index].Activi_id}" checked disabled>
+                                        <label class="custom-control-label" for="switchActvCR${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                        <input type=\"checkbox\" class=\"custom-control-input\"\
-                            id=\"switchActvCR"+ data[index].Activi_id + "\" disabled>\
-                        <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
-                            style=\"font-weight: bold\"></label>\
-                        </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvCR${data[index].Activi_id}" disabled>
+                                        <label class="custom-control-label" for="switchActvCR${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     }
                     if (data[index].controlRuta == 1) {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvCRT"+ data[index].Activi_id + "\" checked disabled>\
-                            <label class=\"custom-control-label\" for=\"switchActvCRT"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvCRT${data[index].Activi_id}" checked disabled>
+                                        <label class="custom-control-label" for="switchActvCRT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvCRT"+ data[index].Activi_id + "\" disabled>\
-                            <label class=\"custom-control-label\" for=\"switchActvCRT"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvCRT${data[index].Activi_id}" disabled>
+                                        <label class="custom-control-label" for="switchActvCRT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     }
                     if (data[index].asistenciaPuerta == 1) {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvAP"+ data[index].Activi_id + "\" checked disabled>\
-                            <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvAP${data[index].Activi_id}" checked disabled>
+                                        <label class="custom-control-label" for="switchActvAP${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvAP"+ data[index].Activi_id + "\" disabled>\
-                            <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvAP${data[index].Activi_id}" disabled>
+                                        <label class="custom-control-label" for="switchActvAP${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     }
                     if (data[index].modoTareo == 1) {
-                        tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvMT"+ data[index].Activi_id + "\" checked disabled>\
-                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td>
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvMT${data[index].Activi_id}" checked disabled>
+                                        <label class="custom-control-label" for="switchActvMT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     } else {
-                        tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvMT"+ data[index].Activi_id + "\" disabled>\
-                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td>
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvMT${data[index].Activi_id}" disabled>
+                                        <label class="custom-control-label" for="switchActvMT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     }
-                    if (data[index].respuesta === 'Si') {
-                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                    if (data[index].respuesta === 1) {
+                        tr += `<td class="text-center" style="font-size:12px">
+                                    <img src="/admin/images/checkH.svg" height="13" class="mr-2">
+                                    Si
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += `<td class="text-center" style="font-size:12px">
+                                    <img src="/admin/images/borrarH.svg" height="11" class="mr-2">
+                                    No
+                                </td>`;
                     }
-                    tr += "<td class=\"text-center\"><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
+                    tr += `<td class="text-center">
+                                <a class="badge badge-soft-primary mr-2">Predeterminado</a>
+                            </td>`;
                 } else {
                     if (data[index].controlRemoto == 1) {
-                        tr += "<td class=\"text-center\" ><div class=\"custom-control custom-switch mb-2\">\
-                        <input type=\"checkbox\" class=\"custom-control-input\"\
-                            id=\"switchActvCR"+ data[index].Activi_id + "\" checked>\
-                        <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
-                            style=\"font-weight: bold\"></label>\
-                        </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvCR${data[index].Activi_id}" checked>
+                                        <label class="custom-control-label" for="switchActvCR${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                        <input type=\"checkbox\" class=\"custom-control-input\"\
-                            id=\"switchActvCR"+ data[index].Activi_id + "\">\
-                        <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
-                            style=\"font-weight: bold\"></label>\
-                        </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvCR${data[index].Activi_id}">
+                                        <label class="custom-control-label" for="switchActvCR${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     }
                     if (data[index].controlRuta == 1) {
-                        tr += "<td class=\"text-center\" ><div class=\"custom-control custom-switch mb-2\">\
-                        <input type=\"checkbox\" class=\"custom-control-input\"\
-                            id=\"switchActvCRT"+ data[index].Activi_id + "\" checked>\
-                        <label class=\"custom-control-label\" for=\"switchActvCRT"+ data[index].Activi_id + "\"\
-                            style=\"font-weight: bold\"></label>\
-                        </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvCRT${data[index].Activi_id}" checked>
+                                        <label class="custom-control-label" for="switchActvCRT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                        <input type=\"checkbox\" class=\"custom-control-input\"\
-                            id=\"switchActvCRT"+ data[index].Activi_id + "\">\
-                        <label class=\"custom-control-label\" for=\"switchActvCRT"+ data[index].Activi_id + "\"\
-                            style=\"font-weight: bold\"></label>\
-                        </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvCRT${data[index].Activi_id}">
+                                        <label class="custom-control-label" for="switchActvCRT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     }
                     if (data[index].asistenciaPuerta == 1) {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvAP"+ data[index].Activi_id + "\" checked>\
-                            <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvAP${data[index].Activi_id}" checked>
+                                        <label class="custom-control-label" for="switchActvAP${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvAP"+ data[index].Activi_id + "\">\
-                            <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvAP${data[index].Activi_id}">
+                                        <label class="custom-control-label" for="switchActvAP${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     }
                     if (data[index].modoTareo == 1) {
 
                         if (data[index].padreSubactividad == 1) {
-                            tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvMT"+ data[index].Activi_id + "\" checked disabled>\
-                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                                <img  data-toggle='tooltip' data-original-title='Tiene asignado subactividades' data-placement='right'" + "\"\
-                                title='Tiene asignado subactividades' style=\"cursor: pointer\" src='landing/images/info.svg' height='14'></div> </td>";
+                            tr += `<td>
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="switchActvMT${data[index].Activi_id}" checked disabled>
+                                            <label class="custom-control-label" for="switchActvMT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                            <img  data-toggle='tooltip' data-original-title='Tiene asignado subactividades' data-placement='right'
+                                                title='Tiene asignado subactividades' style="cursor: pointer" src='landing/images/info.svg' height='14'>
+                                        </div> 
+                                    </td>`;
                         }
                         else {
-                            tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvMT"+ data[index].Activi_id + "\" checked >\
-                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                            tr += `<td>
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="switchActvMT${data[index].Activi_id}" checked>
+                                            <label class="custom-control-label" for="switchActvMT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                        </div>
+                                    </td>`;
                         }
 
                     } else {
-                        tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
-                            <input type=\"checkbox\" class=\"custom-control-input\"\
-                                id=\"switchActvMT"+ data[index].Activi_id + "\" >\
-                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
-                                style=\"font-weight: bold\"></label>\
-                            </div></td>";
+                        tr += `<td>
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchActvMT${data[index].Activi_id}">
+                                        <label class="custom-control-label" for="switchActvMT${data[index].Activi_id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
                     }
-                    if (data[index].respuesta === 'Si') {
-                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                    if (data[index].respuesta === 1) {
+                        tr += `<td class="text-center" style="font-size:12px">
+                                    <img src="/admin/images/checkH.svg" height="13" class="mr-2">
+                                    Si
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += `<td class="text-center" style="font-size:12px">
+                                    <img src="/admin/images/borrarH.svg" height="11" class="mr-2">
+                                    No
+                                </td>`;
                     }
                     if (data[index].padreSubactividad == 1) {
-                        tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
-                                 <img src=\"/admin/images/edit.svg\" height=\"15\">\
-                                </a>&nbsp;&nbsp;&nbsp;</td>";
+                        tr += `<td class="text-center">
+                                    <a name="aedit" onclick="javascript:editarActividad(${data[index].Activi_id},${data[index].respuesta})" style="cursor: pointer">
+                                        <img src="/admin/images/edit.svg" height="15">
+                                    </a>
+                                    &nbsp;&nbsp;&nbsp;
+                                </td>`;
                     } else {
-                        tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
-                                 <img src=\"/admin/images/edit.svg\" height=\"15\">\
-                                </a>&nbsp;&nbsp;&nbsp;<a name=\"deletePermiso\" onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
-                                    <img src=\"/admin/images/delete.svg\" height=\"15\">\
-                                 </a></td>";
+                        tr += `<td class="text-center">
+                                <a name="aedit" onclick="javascript:editarActividad(${data[index].Activi_id},${data[index].respuesta})" style="cursor: pointer">
+                                    <img src="/admin/images/edit.svg" height="15">
+                                </a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a name="deletePermiso" onclick="javascript:eliminarActividad(${data[index].Activi_id})" style="cursor: pointer">
+                                    <img src="/admin/images/delete.svg" height="15">
+                                </a>
+                            </td>`;
                     }
 
                 }
-                tr += "</tr>";
+                tr += `</tr>`;
             }
             $('#actividOrga').html(tr);
             tablaActividades();
@@ -558,7 +580,7 @@ $('#e_customMT').on("change.bootstrapSwitch", function (event) {
 // : MODAL DE EDITAR
 var EmpleadosDeActividadEditar;
 var ActividadDeActividadEditar;
-function editarActividad(id) {
+function editarActividad(id, estado) {
     $('[name="aedit"]').css('pointer-events', 'none');
     $.ajax({
         async: false,
@@ -582,14 +604,14 @@ function editarActividad(id) {
             $('#idActiv').val(data.Activi_id);
             $('#e_nombreTarea').val(data.Activi_Nombre);
             // ****************** ESTADO DE USO *********
-            if (data.respuesta == 1) {
+            if (estado == 1) {
                 $('#e_nombreTarea').attr("disabled", true);
             } else {
                 $('#e_nombreTarea').attr("disabled", false);
             }
             // * *****************************************
             $('#e_codigoTarea').val(data.codigoActividad);
-            if (data.codigoActividad === null || data.respuesta == 0) {
+            if (data.codigoActividad === null || estado == 0) {
                 $('#e_codigoTarea').attr("disabled", false);
             } else {
                 $('#e_codigoTarea').attr("disabled", true);
@@ -1020,7 +1042,6 @@ function datosAsignacionPorEmpleado() {
     $("#empleados").empty();
     var container = $("#empleados");
     $.ajax({
-        async: false,
         url: "/datosPorAsignacionE",
         method: "GET",
         data: {
@@ -1071,7 +1092,6 @@ function datosAsignacionPorArea() {
     $('#areaAsignarEditar').empty();
     var container = $('#areaAsignarEditar');
     $.ajax({
-        async: false,
         url: "/datosPorAsignacionA",
         method: "GET",
         data: {
