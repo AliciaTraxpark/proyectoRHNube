@@ -142,8 +142,8 @@ function inicializarTabla() {
                     var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
                     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'Asistencia',
-                title: 'Asistencia',
+                sheetName: 'MODO ASISTENCIA EN PUERTA - CONTROL REGISTRO DE ASISTENCIA',
+                title: 'MODO ASISTENCIA EN PUERTA - CONTROL REGISTRO DE ASISTENCIA',
                 autoFilter: false,
                 exportOptions: {
                     columns: ":visible:not(.noExport)",
@@ -173,7 +173,7 @@ function inicializarTabla() {
                 text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                 orientation: 'landscape',
                 pageSize: 'A1',
-                title: 'Asistencia',
+                title: 'MODO ASISTENCIA EN PUERTA - CONTROL REGISTRO DE ASISTENCIA',
                 exportOptions: {
                     columns: ":visible:not(.noExport)"
                 },
@@ -257,9 +257,9 @@ function inicializarTabla() {
                                     italics: false,
                                     text: [
                                         { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
-                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\n\nRazón Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDirección:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNúmero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
                                         { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
                                     ],
 
@@ -402,9 +402,9 @@ function cargartabla(fecha) {
                                     </th>
                                     <th name="toleranciaIHorario" class="toleranciaIHorario">Tolerancia en el ingreso</th>
                                     <th name="toleranciaFHorario" class="toleranciaFHorario">Tolerancia en la salida</th>
-                                    <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo Total</th>
+                                    <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo total</th>
                                     <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobretiempo</th>
-                                    <th name="colFaltaJornada" class="text-center colFaltaJornada">Falta Jornada</th>
+                                    <th name="colFaltaJornada" class="text-center colFaltaJornada">Jornada incompleta</th>
                                     <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
                                     <th name="faltaHorario" class="faltaHorario">Falta</th>`;
                     // ! MARCACION
@@ -443,11 +443,11 @@ function cargartabla(fecha) {
                                         </th>`;
                     }
                 }
-                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Falta Jornada Total</th>  
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta Total</th>
+                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Jornada incompleta total</th>  
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia" class="incidencia">Incidencias</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
@@ -1455,7 +1455,7 @@ function cargartabla(fecha) {
                                 } else {
                                     tbodyPausas += `<td name="tiempoPausa" class="text-center">
                                                         <a class="badge badge-soft-warning mr-2" rel="tooltip" data-toggle="tooltip" data-placement="left" 
-                                                            title="El colaborador márco tarde su ${pausaData.descripcion}.\nSalida:${pausaData.inicio}\n
+                                                            title="El colaborador marcó tarde su ${pausaData.descripcion}.\nSalida:${pausaData.inicio}\n
                                                             Tolerancia ${pausaData.tolerancia_inicio} min.\nRegreso:${pausaData.fin}\nTolerancia ${pausaData.tolerancia_fin} min." 
                                                             data-html="true">
                                                             <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>

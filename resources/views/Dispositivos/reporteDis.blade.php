@@ -352,11 +352,11 @@
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colFaltaJornada">
-                                            <label for="">Falta jornada entre horario</label>
+                                            <label for="">Jornada incompleta entre horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colFaltaJornadaTotal">
-                                            <label for="">Falta jornada total</label>
+                                            <label for="">Jornada incompleta total</label>
                                         </li>
                                     </ul>
                                 </ul>
