@@ -121,9 +121,6 @@ function centroCostoOrganizacion() {
                 </tr>`;
             }
             $('#centroOrg').html(tr);
-            $('#mySelect2').select2({
-                dropdownParent: $('#myModal')
-            });
             tablaCentroCosto();
         },
         error: function () { }
@@ -1040,6 +1037,7 @@ function cambiarEstadoParaControlesCC(id, valor, control) {
         },
         success: function (data) {
             centroCostoOrganizacion();
+            $("#centroC").css('width', '100%'); $("#centroC").DataTable().draw(false);
             $.notifyClose();
             $.notify(
                 {
@@ -1069,6 +1067,6 @@ function cambiarEstadoParaControlesCC(id, valor, control) {
 $(function () {
     $(window).on('resize', function () {
         $("#centroC").css('width', '100%');
-        table.draw(true);
+        table.draw(false);
     });
 });
