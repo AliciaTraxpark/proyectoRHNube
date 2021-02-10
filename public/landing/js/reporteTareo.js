@@ -286,7 +286,7 @@ function cargartabla(fecha) {
                                     </td>`;
                                 }
 
-                                tbodyEntradaySalida += `<td>
+                                tbodyEntradaySalida += `<td data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -377,7 +377,7 @@ function cargartabla(fecha) {
                                             </div>
                                         </td>`;
                                     }
-                                    tbodyEntradaySalida += `<td >
+                                    tbodyEntradaySalida += `<td data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}" >
                                                             <div class="dropdown" >
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -753,7 +753,7 @@ function cargartabla(fecha) {
                                         </td>`;
                                     }
 
-                                    tbodyEntradaySalida += `<td>
+                                    tbodyEntradaySalida += `<td data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
