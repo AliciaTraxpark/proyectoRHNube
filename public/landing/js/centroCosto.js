@@ -980,8 +980,44 @@ function eliminarCentro(id) {
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** FUNCION DE TABLA ******************************************
 function cambiarEstadoCentros(id) {
+    // : SWITCH DE ASISTENCIA PUERTA
     $("#switchAP" + id).on("change.bootstrapSwitch", function (event) {
         var control = "AP";
+        // : ************************** OBTENER VALOR DE SWITCH *********************
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        // : ************************* FINALIZACION *********************************
+        alertify
+            .confirm("¿Desea modificar el estado del centro de costo?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControlesCC(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar centro de costos",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    centroCostoOrganizacion();
+                },
+            });
+    });
+    // : SWITCH DE MODO TAREO
+    $("#switchMT" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "MT";
         // : ************************** OBTENER VALOR DE SWITCH *********************
         if (event.target.checked == true) {
             var valor = 1;
