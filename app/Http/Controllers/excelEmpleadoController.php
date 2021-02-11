@@ -67,9 +67,9 @@ class excelEmpleadoController extends Controller
         $fileName =$file->getClientOriginalName();
         $file->move($path, $fileName); */
         $fileGuardar = $file;
-                $path = public_path() . '/datosExcel';
-                $fileName = uniqid() . $fileGuardar->getClientOriginalName();
-                $fileGuardar->move($path, $fileName);
+        $path = public_path() . '/datosExcel';
+        $fileName = uniqid() . $fileGuardar->getClientOriginalName();
+        $fileGuardar->move($path, $fileName);
 
         return back()->with(['filas' => $filas, 'empleados' => $empleados]);
     }
@@ -374,11 +374,13 @@ class excelEmpleadoController extends Controller
                 ]);
 
                 // * CENTRO DE COSTOS 
-                $centroCosto = new centrocosto_empleado();
-                $centroCosto->idCentro = $row['idcentro_costo'];
-                $centroCosto->idEmpleado = $empleadoId->emple_id;
-                $centroCosto->fecha_alta = Carbon::now();
-                $centroCosto->save();
+                if (!empty($row['idcentro_costo'])) {
+                    $centroCosto = new centrocosto_empleado();
+                    $centroCosto->idCentro = $row['idcentro_costo'];
+                    $centroCosto->idEmpleado = $empleadoId->emple_id;
+                    $centroCosto->fecha_alta = Carbon::now();
+                    $centroCosto->save();
+                }
                 //* BUSCAR ACTIVIDAD DE CONTROL REMOTO EN ORGANIZACION
                 $actividad = actividad::where('organi_id', '=', session('sesionidorg'))->where('controlRemoto', '=', 1)->where('controlRuta', '=', 1)->where('eliminacion', '=', 0)->get()->first();
 
