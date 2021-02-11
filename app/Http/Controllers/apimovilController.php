@@ -578,9 +578,9 @@ class apimovilController extends Controller
                     else {
                         $idHorarioE = unirMarcacionConHorarioEmpleado($horarioEmpleado, $fecha, $dataMarcacion->fechaMarcacion);
                     }
-                    if ($dataMarcacion->tipoMarcacion == 1) {
+                    // if ($dataMarcacion->tipoMarcacion == 1) {
                         
-                    }
+                    // }
                 }
             }
         }
