@@ -465,129 +465,6 @@ class apimovilController extends Controller
     }
 
 
-    // * MARCACION PUERTA
-    public function registroMarcaciones(Request $request)
-    {
-        // : VALIDACIONES DE MARCACIONES EN BACKEND
-        foreach ($request->all() as $key => $atributo) {
-            $errores = [];
-            $validacion = Validator::make($atributo, [
-                'tipoMarcacion' => 'required',
-                'fechaMarcacion' => 'required',
-                'idEmpleado' => 'required',
-                'idControlador' => 'required',
-                'idDisposi' => 'required',
-                'organi_id' => 'required'
-            ], [
-                'required' => ':attribute es obligatorio'
-            ]);
-            if ($validacion->fails()) {
-                //: ARRAY DE ERRORES
-                if (isset($validacion->failed()["tipoMarcacion"])) {
-                    array_push($errores, array("campo" => "tipoMarcacion", "mensaje" => "Es obligatorio"));
-                }
-                if (isset($validacion->failed()["fechaMarcacion"])) {
-                    array_push($errores, array("campo" => "fechaMarcacion", "mensaje" => "Es obligatorio"));
-                }
-                if (isset($validacion->failed()["idEmpleado"])) {
-                    array_push($errores, array("campo" => "idEmpleado", "mensaje" => "Es obligatorio"));
-                }
-                if (isset($validacion->failed()["idControlador"])) {
-                    array_push($errores, array("campo" => "idControlador", "mensaje" => "Es obligatorio"));
-                }
-                if (isset($validacion->failed()["idDisposi"])) {
-                    array_push($errores, array("campo" => "idDisposi", "mensaje" => "Es obligatorio"));
-                }
-                if (isset($validacion->failed()["organi_id"])) {
-                    array_push($errores, array("campo" => "organi_id", "mensaje" => "Es obligatorio"));
-                }
-                return response()->json(array("errores" => $errores), 400);
-            }
-        }
-        // : OBTENIENDO DATA
-        $arrayDatos = [];
-        foreach ($request->all() as $dato) {
-            // : OBTENEMOS PARAMETROS
-            $tipoMarcacion = $dato['tipoMarcacion'];
-            $fechaMarcacion = $dato['fechaMarcacion'];
-            $idEmpleado = $dato['idEmpleado'];
-            $idControlador = $dato['idControlador'];
-            $idDispositivo = $dato['idDisposi'];
-            $organi_id = $dato['organi_id'];
-            $idActividad = empty($dato['activ_id']) == true ? null : $dato['activ_id'];
-            $latitud = empty($dato['latitud']) == true ? null : $dato['latitud'];
-            $longitud = empty($dato['longitud']) == true ? null : $dato['longitud'];
-            $idPuntoControl = empty($dato['puntoC_id']) == true ? null : $dato['puntoC_id'];
-            $idCentroCosto = empty($dato['centC_id']) == true ? null : $dato['centC_id'];
-            $datos = (object) array(
-                "tipoMarcacion" => $tipoMarcacion,
-                "fechaMarcacion" => $fechaMarcacion,
-                "idEmpleado" => $idEmpleado,
-                "idControlador" => $idControlador,
-                "idDispositivo" => $idDispositivo,
-                "organi_id" => $organi_id,
-                "idActividad" => $idActividad,
-                "latitud" => $latitud,
-                "longitud" => $longitud,
-                "idPuntoControl" => $idPuntoControl,
-                "idCentroCosto" => $idCentroCosto
-            );
-            // : ID EMPLEADO
-            if (!isset($arrayDatos[$idEmpleado])) {
-                $arrayDatos[$idEmpleado] = (object) array("idEmpleado" => $idEmpleado, "datos" => array());
-            }
-            // : OBTENER FECHA
-            $grupoFecha = Carbon::parse($fechaMarcacion)->isoFormat("YYYY-MM-DD");
-            if (!isset($arrayDatos[$idEmpleado]->datos[$grupoFecha])) {
-                $arrayDatos[$idEmpleado]->datos[$grupoFecha] = (object) array("fecha" => $grupoFecha, "marcaciones" => array());
-            }
-            array_push($arrayDatos[$idEmpleado]->datos[$grupoFecha]->marcaciones, $datos);
-        }
-        $arrayDatos = array_values($arrayDatos);
-        // *: RECORREMOS ARRAY
-        foreach ($arrayDatos as $key => $data) {
-            $arrayDatos[$key]->datos = array_values($arrayDatos[$key]->datos);
-            foreach ($data->datos as $item => $dataPorFecha) {
-                usort($data->datos[$item]->marcaciones, object_sorter('fechaMarcacion'));
-                // : DATOS PARA OBTENER HORARIO EMPLEADO
-                $idEmpleado = $data->idEmpleado;
-                $fecha = $dataPorFecha->fecha;
-                // : HORARIOS EMPLEADOS
-                $horarioEmpleado = DB::table('horario_empleado as he')
-                    ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
-                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                    ->select(
-                        'he.horarioEmp_id as idHorarioEmpleado',
-                        'he.fuera_horario as fueraHorario',
-                        'he.nHoraAdic as horasAdicionales',
-                        'h.horaI as horaInicio',
-                        'h.horaF as horaFin',
-                        'h.horario_tolerancia as toleranciaInicio',
-                        'h.horario_toleranciaF as toleranciaFin',
-                        'h.horasObliga as horasObligadas'
-                    )
-                    ->where('he.empleado_emple_id', '=', $idEmpleado)
-                    ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
-                    ->where('he.estado', '=', 1)
-                    ->orderBy('h.horaI', 'ASC')
-                    ->get();
-                // : RECORRER MARCACIONES
-                for ($index = 0; $index < sizeof($dataPorFecha->marcaciones); $index++) {
-                    $dataMarcacion = $dataPorFecha->marcaciones[$index];
-                    if (sizeof($horarioEmpleado) == 0) $idHorarioE = 0;
-                    else {
-                        $idHorarioE = unirMarcacionConHorarioEmpleado($horarioEmpleado, $fecha, $dataMarcacion->fechaMarcacion);
-                    }
-                    // if ($dataMarcacion->tipoMarcacion == 1) {
-                        
-                    // }
-                }
-            }
-        }
-        dd($arrayDatos);
-    }
-
-
     public function empleadoHorario(Request $request)
     {
 
@@ -757,5 +634,127 @@ class apimovilController extends Controller
                 'detail' => 'No se encontro puntos de control en esta organizacion'
             ), 400);
         }
+    }
+
+    // * MARCACION PUERTA
+    public function registroMarcaciones(Request $request)
+    {
+        // : VALIDACIONES DE MARCACIONES EN BACKEND
+        foreach ($request->all() as $key => $atributo) {
+            $errores = [];
+            $validacion = Validator::make($atributo, [
+                'tipoMarcacion' => 'required',
+                'fechaMarcacion' => 'required',
+                'idEmpleado' => 'required',
+                'idControlador' => 'required',
+                'idDisposi' => 'required',
+                'organi_id' => 'required'
+            ], [
+                'required' => ':attribute es obligatorio'
+            ]);
+            if ($validacion->fails()) {
+                //: ARRAY DE ERRORES
+                if (isset($validacion->failed()["tipoMarcacion"])) {
+                    array_push($errores, array("campo" => "tipoMarcacion", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["fechaMarcacion"])) {
+                    array_push($errores, array("campo" => "fechaMarcacion", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idEmpleado"])) {
+                    array_push($errores, array("campo" => "idEmpleado", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idControlador"])) {
+                    array_push($errores, array("campo" => "idControlador", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idDisposi"])) {
+                    array_push($errores, array("campo" => "idDisposi", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["organi_id"])) {
+                    array_push($errores, array("campo" => "organi_id", "mensaje" => "Es obligatorio"));
+                }
+                return response()->json(array("errores" => $errores), 400);
+            }
+        }
+        // : OBTENIENDO DATA
+        $arrayDatos = [];
+        foreach ($request->all() as $dato) {
+            // : OBTENEMOS PARAMETROS
+            $tipoMarcacion = $dato['tipoMarcacion'];
+            $fechaMarcacion = $dato['fechaMarcacion'];
+            $idEmpleado = $dato['idEmpleado'];
+            $idControlador = $dato['idControlador'];
+            $idDispositivo = $dato['idDisposi'];
+            $organi_id = $dato['organi_id'];
+            $idActividad = empty($dato['activ_id']) == true ? null : $dato['activ_id'];
+            $latitud = empty($dato['latitud']) == true ? null : $dato['latitud'];
+            $longitud = empty($dato['longitud']) == true ? null : $dato['longitud'];
+            $idPuntoControl = empty($dato['puntoC_id']) == true ? null : $dato['puntoC_id'];
+            $idCentroCosto = empty($dato['centC_id']) == true ? null : $dato['centC_id'];
+            $datos = (object) array(
+                "tipoMarcacion" => $tipoMarcacion,
+                "fechaMarcacion" => $fechaMarcacion,
+                "idEmpleado" => $idEmpleado,
+                "idControlador" => $idControlador,
+                "idDispositivo" => $idDispositivo,
+                "organi_id" => $organi_id,
+                "idActividad" => $idActividad,
+                "latitud" => $latitud,
+                "longitud" => $longitud,
+                "idPuntoControl" => $idPuntoControl,
+                "idCentroCosto" => $idCentroCosto
+            );
+            // : ID EMPLEADO
+            if (!isset($arrayDatos[$idEmpleado])) {
+                $arrayDatos[$idEmpleado] = (object) array("idEmpleado" => $idEmpleado, "datos" => array());
+            }
+            // : OBTENER FECHA
+            $grupoFecha = Carbon::parse($fechaMarcacion)->isoFormat("YYYY-MM-DD");
+            if (!isset($arrayDatos[$idEmpleado]->datos[$grupoFecha])) {
+                $arrayDatos[$idEmpleado]->datos[$grupoFecha] = (object) array("fecha" => $grupoFecha, "marcaciones" => array());
+            }
+            array_push($arrayDatos[$idEmpleado]->datos[$grupoFecha]->marcaciones, $datos);
+        }
+        $arrayDatos = array_values($arrayDatos);
+        // *: RECORREMOS ARRAY
+        foreach ($arrayDatos as $key => $data) {
+            $arrayDatos[$key]->datos = array_values($arrayDatos[$key]->datos);
+            foreach ($data->datos as $item => $dataPorFecha) {
+                usort($data->datos[$item]->marcaciones, object_sorter('fechaMarcacion'));
+                // : DATOS PARA OBTENER HORARIO EMPLEADO
+                $idEmpleado = $data->idEmpleado;
+                $fecha = $dataPorFecha->fecha;
+                // : HORARIOS EMPLEADOS
+                $horarioEmpleado = DB::table('horario_empleado as he')
+                    ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->select(
+                        'he.horarioEmp_id as idHorarioEmpleado',
+                        'he.fuera_horario as fueraHorario',
+                        'he.nHoraAdic as horasAdicionales',
+                        'h.horaI as horaInicio',
+                        'h.horaF as horaFin',
+                        'h.horario_tolerancia as toleranciaInicio',
+                        'h.horario_toleranciaF as toleranciaFin',
+                        'h.horasObliga as horasObligadas'
+                    )
+                    ->where('he.empleado_emple_id', '=', $idEmpleado)
+                    ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+                    ->where('he.estado', '=', 1)
+                    ->orderBy('h.horaI', 'ASC')
+                    ->get();
+                // : RECORRER MARCACIONES
+                for ($index = 0; $index < sizeof($dataPorFecha->marcaciones); $index++) {
+                    $dataMarcacion = $dataPorFecha->marcaciones[$index];
+                    if (sizeof($horarioEmpleado) == 0) $idHorarioE = 0;
+                    else {
+                        $idHorarioE = unirMarcacionConHorarioEmpleado($horarioEmpleado, $fecha, $dataMarcacion->fechaMarcacion);
+                    }
+                    // if ($dataMarcacion->tipoMarcacion == 1) {
+
+                    // }
+                }
+            }
+        }
+        dd($arrayDatos);
     }
 }
