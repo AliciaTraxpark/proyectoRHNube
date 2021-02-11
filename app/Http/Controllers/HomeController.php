@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
+use App\calendario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use App\eventos;
-use App\calendario;
-use App\usuario_organizacion;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -50,12 +47,11 @@ class HomeController extends Controller
 
             if ($invitadod) {
                 if ($invitadod->dashboard == 0) {
-                    if($invitadod->gestCalendario == 1){
+                    if ($invitadod->gestCalendario == 1) {
 
                         return redirect('/calendarios');
-                    }
-                    else{
-                       
+                    } else {
+
                         if ($invitadod->permiso_Emp == 1) {
                             return redirect('/empleados');
                         } else {
@@ -65,17 +61,22 @@ class HomeController extends Controller
                                 if ($invitadod->modoCR == 1) {
                                     return redirect('/controlRemoto');
                                 } else {
-                                    if($invitadod->ControlRuta == 1){
+                                    if ($invitadod->ControlRuta == 1) {
                                         return redirect('/ruta');
-                                    }
-                                    else{
-                                       if ($invitadod->asistePuerta == 1) {
-                                        if ($invitadod->reporteAsisten == 1) {
-                                            return redirect('/reporteAsistencia');
-                                        } else {
-                                            return redirect('/dispositivos');
+                                    } else {
+                                        if ($invitadod->asistePuerta == 1) {
+                                            if ($invitadod->reporteAsisten == 1) {
+                                                return redirect('/reporteAsistencia');
+                                            } else {
+                                                return redirect('/dispositivos');
+                                            }
                                         }
-                                    }
+                                        else{
+                                            if ($invitadod->modoTareo == 1) {
+                                                return redirect('/dispositivosTareo');
+                                            }
+
+                                        }
                                     }
 
                                 }

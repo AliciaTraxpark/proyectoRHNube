@@ -1502,6 +1502,15 @@ function cargartabla(fecha) {
         /*  inline:true, */
         static: true,
     });
+
+    var permisoMo=$('#modifReporte').val();
+    if(permisoMo==0){
+        $('.noExport').hide();
+
+    }
+    else{
+
+    }
 }
 
 function cambiarF() {

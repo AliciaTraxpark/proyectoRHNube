@@ -446,7 +446,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/controladoresTareo">Controladores</a>
                 @endif
 
-                @if ($invitadod->modifModoTareo==1)
+                @if ($permiso_invitado->modifModoTareo==1)
                 <a href="/reporteTareo">Detalle de tareo</a>
                 @endif
             </li>
