@@ -19,7 +19,6 @@ class empleado extends Model
         'emple_distrito',
         'emple_cargo',
         'emple_area',
-        'emple_centCosto',
         'emple_departamentoN',
         'emple_provinciaN',
         'emple_distritoN',

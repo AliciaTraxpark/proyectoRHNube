@@ -11,9 +11,10 @@ function tablaCentroCosto() {
         scrollCollapse: false,
         "bAutoWidth": true,
         columnDefs: [
-            { targets: 2, sortable: false },
             { targets: 3, sortable: false },
-            { targets: 4, sortable: false }
+            { targets: 4, sortable: false },
+            { targets: 5, sortable: false },
+            { targets: 6, sortable: false }
         ],
         language: {
             "sProcessing": "Procesando...",
@@ -104,26 +105,23 @@ function centroCostoOrganizacion() {
                                 </div>
                             </td>`;
                 }
-                if (data[index].respuesta == "Si") {
-                    tr += `<td><img src="/admin/images/checkH.svg" height="13" class="mr-2">${data[index].respuesta}</td>`;
+                if (data[index].respuesta == 1) {
+                    tr += `<td><img src="/admin/images/checkH.svg" height="13" class="mr-2">Si</td>`;
                 } else {
-                    tr += `<td><img src="/admin/images/borrarH.svg" height="11" class="mr-2">${data[index].respuesta}</td>`;
+                    tr += `<td><img src="/admin/images/borrarH.svg" height="11" class="mr-2">No</td>`;
                 }
                 tr += `<td>
-                        <a onclick="javascript:editarCentro(${data[index].id})" style="cursor: pointer">
+                        <a onclick="javascript:editarCentro(${data[index].id},${data[index].respuesta})" style="cursor: pointer">
                             <img src="/admin/images/edit.svg" height="15">
                         </a>
                         &nbsp;&nbsp;&nbsp;
-                        <a onclick="javascript:eliminarCentro(${data[index].id})" style="cursor: pointer">
+                        <a onclick="javascript:eliminarCentro(${data[index].id},${data[index].respuesta})" style="cursor: pointer">
                             <img src="/admin/images/delete.svg" height="15">
                         </a>
                     </td>
                 </tr>`;
             }
             $('#centroOrg').html(tr);
-            $('#mySelect2').select2({
-                dropdownParent: $('#myModal')
-            });
             tablaCentroCosto();
         },
         error: function () { }
@@ -138,15 +136,15 @@ $('#e_empleadosCentro').select2({
     allowClear: false
 });
 // * MODAL DE EDITAR
-function editarCentro(id) {
+function editarCentro(id, estado) {
     $('#e_idCentro').val(id);
-    $('#e_centrocmodal').modal();
-    datosCentro(id);
+    $('#e_centrocmodal').modal({ backdrop: 'static', keyboard: false });
+    datosCentro(id, estado);
     sent = false;
 }
 // * OBTENER DATOS DE CENTRO COSTO
 var e_empleadosS;
-async function datosCentro(id) {
+async function datosCentro(id, estado) {
     $('#e_empleadosCentro').empty();
     $.ajax({
         async: false,
@@ -167,6 +165,17 @@ async function datosCentro(id) {
             }*/
         },
         success: function (data) {
+            // : ESTADO DE USO
+            if (estado == 1) {
+                $('#e_descripcion').prop("disabled", true);
+                $('#e_codigo').prop("disabled", true);
+                if (data.codigo == null) {
+                    $('#e_codigo').prop("disabled", false);
+                }
+            } else {
+                $('#e_descripcion').prop("disabled", false);
+                $('#e_codigo').prop("disabled", false);
+            }
             $('#e_descripcion').val(data.descripcion);
             $('#e_codigo').val(data.codigo);
             // : ASISTENCIA EN PUERTA
@@ -261,6 +270,7 @@ $("#e_empleadosCentro").on("change", function (e) {
 function actualizarCentroC() {
     var id = $('#e_idCentro').val();
     var codigo = $('#e_codigo').val();
+    var descripcion = $('#e_descripcion').val();
     var empleados = $('#e_empleadosCentro').val();
     var porEmpleado;
     var asistenciaPuerta;
@@ -294,7 +304,8 @@ function actualizarCentroC() {
             codigo: codigo,
             porEmpleado: porEmpleado,
             asistenciaPuerta: asistenciaPuerta,
-            modoTareo: modoTareo
+            modoTareo: modoTareo,
+            descripcion: descripcion
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -336,34 +347,36 @@ function actualizarCentroC() {
                 sent = false;
                 if (data.respuesta == 1) {
                     $('#e_codigo').addClass("borderColor");
-                    $.notifyClose();
-                    $.notify(
-                        {
-                            message: data.mensaje,
-                            icon: "admin/images/warning.svg",
-                        },
-                        {
-                            element: $('#e_centrocmodal'),
-                            position: "fixed",
-                            mouse_over: "pause",
-                            placement: {
-                                from: "top",
-                                align: "center",
-                            },
-                            icon_type: "image",
-                            newest_on_top: true,
-                            delay: 2000,
-                            template:
-                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                "</div>",
-                            spacing: 35,
-                        }
-                    );
+                } else {
+                    $('#e_descripcion').addClass("borderColor");
                 }
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: data.mensaje,
+                        icon: "admin/images/warning.svg",
+                    },
+                    {
+                        element: $('#e_centrocmodal'),
+                        position: "fixed",
+                        mouse_over: "pause",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 2000,
+                        template:
+                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
             }
         },
         error: function () { }
@@ -413,6 +426,9 @@ $('#formActualizarCentroC').submit(function (e) {
 $('#e_codigo').keyup(function () {
     $(this).removeClass("borderColor");
 });
+$('#e_descripcion').keyup(function () {
+    $(this).removeClass("borderColor");
+});
 // * SWITCH POR EMPLEADO
 $('#switchPorEmpleado').on("change.bootstrapSwitch", function (event) {
     $(this).prop("disabled", true);
@@ -440,7 +456,7 @@ $('#a_empleadosCentro').select2({
 });
 // ! ABRIR MODAL DE ASIGNACION
 function asignarCentroC() {
-    $('#a_centrocmodal').modal();
+    $('#a_centrocmodal').modal({ backdrop: 'static', keyboard: false });
     $('#a_empleadosCentro').prop("disabled", true);
     $('#a_todosEmpleados').prop("disabled", true);
     listasDeCentro();
@@ -581,7 +597,7 @@ $("#a_empleadosCentro").on("change", function (e) {
 // ? *********************************** FORMULARIO REGISTRAR **************************************
 function modalRegistrar() {
     sent = false;
-    $('#r_centrocmodal').modal();
+    $('#r_centrocmodal').modal({ backdrop: 'static', keyboard: false });
     $('#r_rowEmpleado').hide();
 }
 $('#r_empleadosCentro').select2({
@@ -707,8 +723,8 @@ function registrarCentroC() {
                     }
                 );
             } else {
-                sent = false;
                 if (data.respuesta == 1) {
+                    sent = false;
                     if (data.campo == 1) {
                         $("#r_descripcion").addClass("borderColor");
                     } else {
@@ -747,7 +763,7 @@ function registrarCentroC() {
                             e
                         ) {
                             if (e) {
-                                recuperarCentro(data.centro.centroC_id);
+                                recuperarCentro(data.id);
                             }
                         })
                         .setting({
@@ -763,6 +779,7 @@ function registrarCentroC() {
                             closable: false,
                             transition: "zoom",
                             oncancel: function (closeEvent) {
+                                sent = false;
                             },
                         });
                 }
@@ -837,7 +854,7 @@ $('#formRegistrarCentroC').submit(function (e) {
 // : FUNCTION DE RECUPERAR CENTRO
 function recuperarCentro(id) {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/recuperarCentro",
         data: {
             id: id
@@ -855,9 +872,9 @@ function recuperarCentro(id) {
         },
         success: function (data) {
             limpiarCentro();
-            actividadesOrganizacion();
             $('#r_centrocmodal').modal('toggle');
-            editarCentro(data.centroC_id);
+            centroCostoOrganizacion();
+            editarCentro(data);
         },
         error: function () { },
     });
@@ -896,9 +913,13 @@ $("#r_empleadosCentro").on("change", function (e) {
 });
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** FORMULARIO DE ELIMINAR ************************************
-function eliminarCentro(id) {
+function eliminarCentro(id, estado) {
+    var mensaje = {};
+    if (estado == 1) {
+        mensaje = "<img src=\"/landing/images/alert1.svg\" height=\"20\" class=\"mr-1 mt-0\">Centro de costo en uso <br>¿Desea eliminar centro costo?";
+    } else mensaje = "¿Desea eliminar centro costo?";
     alertify
-        .confirm("¿Desea eliminar centro costo?", function (
+        .confirm(mensaje, function (
             e
         ) {
             if (e) {
@@ -920,44 +941,24 @@ function eliminarCentro(id) {
                         }*/
                     },
                     success: function (data) {
-                        if (data == 0) {
-                            $.notifyClose();
-                            $.notify({
-                                message: '\nCentro Costo en uso, no se puede eliminar.',
-                                icon: '/landing/images/alert1.svg',
-                            }, {
-                                icon_type: 'image',
-                                allow_dismiss: true,
-                                newest_on_top: true,
-                                delay: 6000,
-                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                                    '</div>',
-                                spacing: 35
-                            });
-                        } else {
-                            centroCostoOrganizacion();
-                            $.notifyClose();
-                            $.notify({
-                                message: '\nCentro Costo eliminado',
-                                icon: 'landing/images/bell.svg',
-                            }, {
-                                icon_type: 'image',
-                                allow_dismiss: true,
-                                newest_on_top: true,
-                                delay: 6000,
-                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                                    '</div>',
-                                spacing: 35
-                            });
-                        }
+                        centroCostoOrganizacion();
+                        $.notifyClose();
+                        $.notify({
+                            message: '\nCentro Costo eliminado',
+                            icon: 'landing/images/bell.svg',
+                        }, {
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
                     },
                     error: function () { },
                 });
@@ -983,13 +984,51 @@ function eliminarCentro(id) {
 // ? *********************************** FINALIZACION **********************************************
 // ? *********************************** FUNCION DE TABLA ******************************************
 function cambiarEstadoCentros(id) {
+    // : SWITCH DE ASISTENCIA PUERTA
     $("#switchAP" + id).on("change.bootstrapSwitch", function (event) {
         var control = "AP";
+        // : ************************** OBTENER VALOR DE SWITCH *********************
         if (event.target.checked == true) {
             var valor = 1;
         } else {
             var valor = 0;
         }
+        // : ************************* FINALIZACION *********************************
+        alertify
+            .confirm("¿Desea modificar el estado del centro de costo?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControlesCC(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar centro de costos",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    centroCostoOrganizacion();
+                },
+            });
+    });
+    // : SWITCH DE MODO TAREO
+    $("#switchMT" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "MT";
+        // : ************************** OBTENER VALOR DE SWITCH *********************
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        // : ************************* FINALIZACION *********************************
         alertify
             .confirm("¿Desea modificar el estado del centro de costo?", function (
                 e
@@ -1016,10 +1055,58 @@ function cambiarEstadoCentros(id) {
             });
     });
 }
+function cambiarEstadoParaControlesCC(id, valor, control) {
+    $.ajax({
+        type: "POST",
+        url: "/estadosControlesCC",
+        data: {
+            id: id,
+            valor: valor,
+            control: control
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            centroCostoOrganizacion();
+            $("#centroC").css('width', '100%'); $("#centroC").DataTable().draw(false);
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nCentro de costo modificado.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { },
+    });
+}
 // ? *********************************** FINALIZACION **********************************************
 $(function () {
     $(window).on('resize', function () {
         $("#centroC").css('width', '100%');
-        table.draw(true);
+        table.draw(false);
     });
 });

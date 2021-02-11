@@ -12,6 +12,7 @@ use App\empleado;
 use App\area;
 use App\cargo;
 use App\centro_costo;
+use App\centrocosto_empleado;
 use App\condicion_pago;
 use App\contrato;
 use App\doc_empleado;
@@ -27,7 +28,6 @@ use App\persona;
 use App\tipo_dispositivo;
 use App\horario_empleado;
 use App\incidencias;
-use App\licencia_empleado;
 use App\eventos_usuario;
 use App\eventos_empleado_temp;
 use App\horario;
@@ -41,7 +41,6 @@ use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use App\invitado_empleado;
 use App\historial_horarioempleado;
-use App\Notifications\NuevaNotification;
 
 class EmpleadoController extends Controller
 {
@@ -88,14 +87,12 @@ class EmpleadoController extends Controller
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->select(
                     'p.perso_nombre',
                     'p.perso_apPaterno',
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -150,9 +147,6 @@ class EmpleadoController extends Controller
                 ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
                 ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-
-
                 ->select(
                     'e.emple_id',
                     'p.perso_id',
@@ -172,7 +166,6 @@ class EmpleadoController extends Controller
                     'dist.name as distNo',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'para.id as iddepaN',
                     'para.name as depaN',
                     'proviN.id as idproviN',
@@ -182,8 +175,6 @@ class EmpleadoController extends Controller
                     'e.emple_id',
                     'c.cargo_id',
                     'a.area_id',
-                    'cc.centroC_id',
-
                     'e.emple_local',
                     'e.emple_nivel',
                     'e.emple_departamento',
@@ -192,8 +183,6 @@ class EmpleadoController extends Controller
                     'e.emple_foto as foto',
                     'e.emple_celular',
                     'e.emple_telefono',
-
-
                     'e.emple_Correo'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -236,12 +225,11 @@ class EmpleadoController extends Controller
             ->get()->first();
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
-               /*  DB::enableQueryLog(); */
+                /*  DB::enableQueryLog(); */
                 $tabla_empleado1 = DB::table('empleado as e')
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('modo as md', function ($join) {
@@ -249,7 +237,6 @@ class EmpleadoController extends Controller
                         $join->orOn('md.id', '=', 'vr.idModo');
                     })
                     ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
-
                     ->select(
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -257,7 +244,6 @@ class EmpleadoController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'a.area_descripcion',
-                        'cc.centroC_descripcion',
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
@@ -281,7 +267,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', function ($join) {
@@ -297,7 +282,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -314,7 +298,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', function ($join) {
@@ -330,7 +313,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -347,7 +329,6 @@ class EmpleadoController extends Controller
                 ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                 ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                 ->leftJoin('modo as md', function ($join) {
@@ -361,7 +342,6 @@ class EmpleadoController extends Controller
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id',
                     'md.idTipoModo as dispositivo',
                     'e.emple_foto',
@@ -465,14 +445,12 @@ class EmpleadoController extends Controller
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('modo as md', function ($join) {
                         $join->on('md.id', '=', 'v.idModo');
                         $join->orOn('md.id', '=', 'vr.idModo');
                     })
-
                     ->select(
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -480,7 +458,6 @@ class EmpleadoController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'a.area_descripcion',
-                        'cc.centroC_descripcion',
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
@@ -503,7 +480,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', function ($join) {
@@ -519,7 +495,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -536,7 +511,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', function ($join) {
@@ -552,7 +526,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -569,7 +542,6 @@ class EmpleadoController extends Controller
                 ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                 ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                 ->leftJoin('modo as md', function ($join) {
@@ -584,7 +556,6 @@ class EmpleadoController extends Controller
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id',
                     'md.idTipoModo as dispositivo',
                     'e.emple_foto',
@@ -721,7 +692,7 @@ class EmpleadoController extends Controller
             ->where('uso.organi_id', '=', session('sesionidorg'))
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
-         if ($usuario_organizacion->rol_id == 3) {
+        if ($usuario_organizacion->rol_id == 3) {
             $invitado = DB::table('invitado as in')
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
@@ -730,7 +701,7 @@ class EmpleadoController extends Controller
             $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                 ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                 ->get()->first();
-            if ($invitado->empleado==1) {
+            if ($invitado->empleado == 1) {
                 $invitado_empleado = new invitado_empleado();
                 $invitado_empleado->idinvitado = $invitado->idinvitado;
                 $invitado_empleado->emple_id = $empleado->emple_id;
@@ -858,8 +829,14 @@ class EmpleadoController extends Controller
         if ($objEmpleado['area'] != '') {
             $empleado->emple_area = $objEmpleado['area'];
         }
-        if ($objEmpleado['centroc'] != '') {
-            $empleado->emple_centCosto = $objEmpleado['centroc'];
+        if (!is_null($objEmpleado['centroc'])) {
+            foreach ($objEmpleado['centroc_v'] as $centro) {
+                $newCentroEmpleado = new centrocosto_empleado();
+                $newCentroEmpleado->idCentro = $centro;
+                $newCentroEmpleado->idEmpleado = $idE;
+                $newCentroEmpleado->fecha_alta = Carbon::now();
+                $newCentroEmpleado->save();
+            }
         }
         if ($objEmpleado['nivel'] != '') {
             $empleado->emple_nivel = $objEmpleado['nivel'];
@@ -965,8 +942,8 @@ class EmpleadoController extends Controller
         //HORARIO
 
         $horario_empleadoBor = DB::table('horario_empleado')
-        ->where('empleado_emple_id', $idempleado)
-        ->update(['estado' => 0]);
+            ->where('empleado_emple_id', $idempleado)
+            ->update(['estado' => 0]);
         $eventos_empleado_tempHor = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
             ->where('organi_id', '=', session('sesionidorg'))->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
@@ -1026,18 +1003,14 @@ class EmpleadoController extends Controller
             ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
             ->leftJoin('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
             ->leftJoin('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
-
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
             ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
             ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
             ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
-
-
             ->select(
                 'e.emple_id',
                 'p.perso_id',
@@ -1057,7 +1030,6 @@ class EmpleadoController extends Controller
                 'dist.name as distNo',
                 'c.cargo_descripcion',
                 'a.area_descripcion',
-                'cc.centroC_descripcion',
                 'para.id as iddepaN',
                 'para.name as depaN',
                 'proviN.id as idproviN',
@@ -1067,7 +1039,6 @@ class EmpleadoController extends Controller
                 'e.emple_id',
                 'c.cargo_id',
                 'a.area_id',
-                'cc.centroC_id',
                 'e.emple_local',
                 'e.emple_nivel',
                 'e.emple_departamento',
@@ -1083,22 +1054,25 @@ class EmpleadoController extends Controller
                 'eve.id_calendario as idcalendar'
             )
             ->where('e.emple_id', '=', $idempleado)
-            /*  ->where('e.emple_estado', '=', 1) */
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->groupBy('e.organi_id')
             ->get();
-        $contrato = DB::table('contrato as c')
-            ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
-            ->leftJoin('condicion_pago as cp', 'cp.id', '=', 'c.id_condicionPago')
-            ->select('c.id as idC', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'tc.contrato_id as idTipoC', 'tc.contrato_descripcion', 'cp.id as idCond', 'cp.condicion')
-            ->where('c.idEmpleado', '=', $idempleado)
-            ->where('c.estado', '=', 1)
+
+        // : ****************************** CENTRO DE COSTO **********************************
+        // DB::enableQueryLog();
+        $centroCosto = DB::table('centro_costo as cc')
+            ->join('centrocosto_empleado as ce', 'ce.idCentro', '=', 'cc.centroC_id')
+            ->select('cc.centroC_id as id')
+            ->where('cc.estado', '=', 1)
+            ->where('ce.estado', '=', 1)
+            ->where('ce.idEmpleado', '=', $idempleado)
+            ->groupBy('cc.centroC_id')
             ->get();
-        $empleados[0]->contrato = $contrato;
+        // dd(DB::getQueryLog());
+        $empleados[0]->centroCosto = $centroCosto;
+        // : ****************************** FINALIZACION **********************************
         $empleado = agruparEmpleadosShow($empleados);
         return array_values($empleado);
-        //
-
     }
 
     /**
@@ -1219,9 +1193,47 @@ class EmpleadoController extends Controller
         if ($objEmpleado['area_v'] != '') {
             $empleado->emple_area = $objEmpleado['area_v'];
         }
-        if ($objEmpleado['centroc_v'] != '') {
-            $empleado->emple_centCosto = $objEmpleado['centroc_v'];
+        // : CENTRO DE COSTOS
+        $centroE = centrocosto_empleado::where('idEmpleado', '=', $idE)->where('estado', '=', 1)->get();
+        if (is_null($objEmpleado['centroc_v'])) {
+            foreach ($centroE as $ce) {
+                $ce->fecha_baja = Carbon::now();
+                $ce->estado = 0;
+                $ce->save();
+            }
+        } else {
+            // * OBJECTO CENTRO DE COSTOS -> TABLA DE CENTRO COSTOS EMPLEADOS
+            foreach ($objEmpleado['centroc_v'] as $centro) {
+                $estado = true;
+                foreach ($centroE as $c) {
+                    if ($centro == $c->idCentro) {
+                        $estado = false;
+                    }
+                }
+                if ($estado) {
+                    $newCentroEmpleado = new centrocosto_empleado();
+                    $newCentroEmpleado->idCentro = $centro;
+                    $newCentroEmpleado->idEmpleado = $idE;
+                    $newCentroEmpleado->fecha_alta = Carbon::now();
+                    $newCentroEmpleado->save();
+                }
+            }
+            // * TABLA DE CENTRO COSTOS EMPLEADOS -> OBJECTO CENTRO COSTOS
+            foreach ($centroE as $c) {
+                $estado = true;
+                foreach ($objEmpleado['centroc_v'] as $centro) {
+                    if ($c->idCentro == $centro) {
+                        $estado = false;
+                    }
+                }
+                if ($estado) {
+                    $c->fecha_baja = Carbon::now();
+                    $c->estado = 0;
+                    $c->save();
+                }
+            }
         }
+        // : FINALIZACION
         if ($objEmpleado['nivel_v'] != '') {
             $empleado->emple_nivel = $objEmpleado['nivel_v'];
         }
@@ -1256,14 +1268,8 @@ class EmpleadoController extends Controller
      */
     public function destroy(Request $request)
     {
-
-
-
         $empleado = empleado::find($request->get('id'));
-
-
         $empleado->delete();
-
         $persona = persona::where('perso_id', '=', $empleado->emple_persona)->delete();
     }
 
@@ -1340,7 +1346,7 @@ class EmpleadoController extends Controller
             $tipo_cont = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
             $area = area::where('organi_id', '=', session('sesionidorg'))->get();
             $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
-            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)->get();
+            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)->where('porEmpleado', '=', 1)->get();
             $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
             $local = local::where('organi_id', '=', session('sesionidorg'))->get();
             $empleado = empleado::all();
@@ -1349,14 +1355,12 @@ class EmpleadoController extends Controller
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->select(
                     'p.perso_nombre',
                     'p.perso_apPaterno',
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -1522,58 +1526,57 @@ class EmpleadoController extends Controller
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id',
-             'horaI', 'horaF', 'borderColor', 'horaAdic','nHoraAdic','h.horasObliga','evt.id_horario'])
+            ->select([
+                'evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id',
+                'horaI', 'horaF', 'borderColor', 'horaAdic', 'nHoraAdic', 'h.horasObliga', 'evt.id_horario'
+            ])
             ->leftJoin('horario as h', 'evt.id_horario', '=', 'h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
             ->where('evt.organi_id', '=', session('sesionidorg'))
             ->get();
 
-            //*INSERTAMOS PAUSAS
-            foreach ($eventos_empleado_temp as $tab) {
-                $pausas_horario = DB::table('pausas_horario as pauh')
-                    ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
-                    ->where('pauh.horario_id', '=', $tab->id_horario)
-                    ->distinct('pauh.idpausas_horario')
-                    ->get();
+        //*INSERTAMOS PAUSAS
+        foreach ($eventos_empleado_temp as $tab) {
+            $pausas_horario = DB::table('pausas_horario as pauh')
+                ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
+                ->where('pauh.horario_id', '=', $tab->id_horario)
+                ->distinct('pauh.idpausas_horario')
+                ->get();
 
-                $tab->pausas = $pausas_horario;
-
-            }
+            $tab->pausas = $pausas_horario;
+        }
 
         return $eventos_empleado_temp;
     }
     public function storeCalendarioTem(Request $request)
     {
-        $fechaRecibida= Carbon::create($request->get('start'))->toDateString();
+        $fechaRecibida = Carbon::create($request->get('start'))->toDateString();
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-        ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
-        ->where('evt.users_id', '=', Auth::user()->id)
-        ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
-        ->where('evt.organi_id', '=', session('sesionidorg'))
-        ->whereDate('evt.start', '=', $fechaRecibida)
-        ->where('tipo_ev','!=',5 )
-        ->get();
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
+            ->where('evt.users_id', '=', Auth::user()->id)
+            ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
+            ->where('evt.organi_id', '=', session('sesionidorg'))
+            ->whereDate('evt.start', '=', $fechaRecibida)
+            ->where('tipo_ev', '!=', 5)
+            ->get();
 
-        if($eventos_empleado_temp->isNotEmpty()){
-            return "Ya existe ".$eventos_empleado_temp[0]->title;
+        if ($eventos_empleado_temp->isNotEmpty()) {
+            return "Ya existe " . $eventos_empleado_temp[0]->title;
+        } else {
+            $eventos_empleado_tempSave = new eventos_empleado_temp();
+            $eventos_empleado_tempSave->users_id = Auth::user()->id;
+            $eventos_empleado_tempSave->title = $request->get('title');
+            $eventos_empleado_tempSave->color = $request->get('color');
+            $eventos_empleado_tempSave->textColor = $request->get('textColor');
+            $eventos_empleado_tempSave->start = $request->get('start');
+            $eventos_empleado_tempSave->end = $request->get('end');
+            $eventos_empleado_tempSave->tipo_ev = $request->get('tipo');
+            $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
+            $eventos_empleado_tempSave->organi_id = session('sesionidorg');
+            $eventos_empleado_tempSave->save();
+            return 1;
         }
-        else{
-        $eventos_empleado_tempSave = new eventos_empleado_temp();
-        $eventos_empleado_tempSave->users_id = Auth::user()->id;
-        $eventos_empleado_tempSave->title = $request->get('title');
-        $eventos_empleado_tempSave->color = $request->get('color');
-        $eventos_empleado_tempSave->textColor = $request->get('textColor');
-        $eventos_empleado_tempSave->start = $request->get('start');
-        $eventos_empleado_tempSave->end = $request->get('end');
-        $eventos_empleado_tempSave->tipo_ev = $request->get('tipo');
-        $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
-        $eventos_empleado_tempSave->organi_id = session('sesionidorg');
-        $eventos_empleado_tempSave->save();
-        return 1;
-        }
-
     }
 
     public function storeIncidTem(Request $request)
@@ -1706,29 +1709,26 @@ class EmpleadoController extends Controller
         $arrayHDentro = collect();
         //*
         foreach ($datafecha as $datafechas) {
-            $horarioDentro = eventos_empleado_temp::select([ 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+            $horarioDentro = eventos_empleado_temp::select(['title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
                 ->join('horario as h', 'eventos_empleado_temp.id_horario', '=', 'h.horario_id')
                 ->where('start', '=', $datafechas)
-                 ->where('users_id', '=', Auth::user()->id)
+                ->where('users_id', '=', Auth::user()->id)
                 ->get();
             if ($horarioDentro) {
                 foreach ($horarioDentro as $horarioDentros) {
                     $horaIDentro = Carbon::parse($horarioDentros->horaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                    if($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro) )
-                    {	$startArreD = carbon::create($horarioDentros->start);
+                    if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    }elseif(($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro)))
-                    {	$startArreD = carbon::create($horarioDentros->start);
+                    } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    }elseif($horaInicialF==$horaIDentro || $horaFinalF==$horaFDentro)
-                    {	$startArreD = carbon::create($horarioDentros->start);
+                    } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    }elseif($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF))
-                    {	$startArreD = carbon::create($horarioDentros->start);
+                    } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
                     }
                 }
@@ -1777,7 +1777,7 @@ class EmpleadoController extends Controller
             ->select([
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario','i.inciden_descripcion as horasObliga','i.inciden_descripcion as nHoraAdic'
+                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic'
             ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
@@ -1785,14 +1785,15 @@ class EmpleadoController extends Controller
         $eventos_empleado = DB::table('eventos_empleado')
             ->select([
                 'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
-                'title as horaAdic', 'start as idhorario','start as horasObliga','start as nHoraAdic'
+                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic'
             ])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias);
 
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario'
-            ,'horasObliga','nHoraAdic'])
+            ->select([
+                'he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'
+            ])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempleado)
@@ -1809,7 +1810,6 @@ class EmpleadoController extends Controller
                 ->get();
 
             $tab->pausas = $pausas_horario;
-
         }
         return $horario_empleado;
     }
@@ -1888,7 +1888,7 @@ class EmpleadoController extends Controller
             ->select([
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario','i.inciden_descripcion as horasObliga','i.inciden_descripcion as nHoraAdic'
+                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic'
             ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
@@ -1898,7 +1898,7 @@ class EmpleadoController extends Controller
         $eventos_empleado = DB::table('eventos_empleado')
             ->select([
                 'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
-                'title as horaAdic', 'start as idhorario','start as horasObliga','start as nHoraAdic'
+                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic'
             ])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias);
@@ -1907,7 +1907,7 @@ class EmpleadoController extends Controller
 
 
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario','horasObliga','nHoraAdic'])
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.estado', '=', 1)
@@ -1926,7 +1926,6 @@ class EmpleadoController extends Controller
 
 
             $tab->pausas = $pausas_horario;
-
         }
         return $horario_empleado;
     }
@@ -1943,22 +1942,21 @@ class EmpleadoController extends Controller
             ->first();
 
         /* BUSCAR SI YA ESTA REGISTRADO EL EVENTO  */
-        $fechaRecibida= Carbon::create($request->get('start'))->toDateString();
-       $buscarEvento=DB::table('eventos_empleado as eve')
-       ->where('id_empleado','=',$request->get('idempleado'))
-       ->whereDate('start','=',$fechaRecibida)
-       ->where('id_calendario','=',$ev1->id_calendario)
-       ->get();
+        $fechaRecibida = Carbon::create($request->get('start'))->toDateString();
+        $buscarEvento = DB::table('eventos_empleado as eve')
+            ->where('id_empleado', '=', $request->get('idempleado'))
+            ->whereDate('start', '=', $fechaRecibida)
+            ->where('id_calendario', '=', $ev1->id_calendario)
+            ->get();
 
 
         /* --------------------------------------- */
 
 
         /* VERIFICAR SI EXISTE */
-        if($buscarEvento->isNotEmpty()){
-            return "Ya existe ".$buscarEvento[0]->title;
-        }
-        else{
+        if ($buscarEvento->isNotEmpty()) {
+            return "Ya existe " . $buscarEvento[0]->title;
+        } else {
             //*REGISTRAMOS
             $eventos_empleado = new eventos_empleado();
             $eventos_empleado->title = $request->get('title');
@@ -1973,25 +1971,23 @@ class EmpleadoController extends Controller
             $eventos_empleado->save();
             return 1;
         }
-
     }
     public function storeIncidempleado(Request $request)
     {
         /* BUSCAR SI YA ESTA REGISTRADO EL EVENTO  */
-        $fechaRecibida= Carbon::create($request->get('start'))->toDateString();
-       $buscarEvento=DB::table('eventos_empleado as eve')
-       ->where('id_empleado','=',$request->get('idempleado'))
-       ->whereDate('start','=',$fechaRecibida)
-       ->get();
+        $fechaRecibida = Carbon::create($request->get('start'))->toDateString();
+        $buscarEvento = DB::table('eventos_empleado as eve')
+            ->where('id_empleado', '=', $request->get('idempleado'))
+            ->whereDate('start', '=', $fechaRecibida)
+            ->get();
 
 
         /* --------------------------------------- */
 
         /* VERIFICAR SI EXISTE */
-        if($buscarEvento->isNotEmpty()){
-            return "Ya existe ".$buscarEvento[0]->title;
-        }
-        else{
+        if ($buscarEvento->isNotEmpty()) {
+            return "Ya existe " . $buscarEvento[0]->title;
+        } else {
             $incidencia = new incidencias();
             $incidencia->inciden_descripcion =  $request->get('title');
             $incidencia->inciden_descuento = $request->get('descuentoI');
@@ -2009,8 +2005,6 @@ class EmpleadoController extends Controller
             $incidencia_dias->save();
             return 1;
         }
-
-
     }
 
     public function guardarhorarioempleado(Request $request)
@@ -2067,23 +2061,19 @@ class EmpleadoController extends Controller
                     $horaIDentro = Carbon::parse($horarioDentros->horaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF);
 
-                    if($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro) )
-                    {	$startArreD = carbon::create($horarioDentros->start);
+                    if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    }elseif(($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro)))
-                    {	$startArreD = carbon::create($horarioDentros->start);
+                    } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    }elseif($horaInicialF==$horaIDentro || $horaFinalF==$horaFDentro)
-                    {	$startArreD = carbon::create($horarioDentros->start);
+                    } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    }elseif($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF))
-                    {	$startArreD = carbon::create($horarioDentros->start);
+                    } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
                     }
-
                 }
             }
         }
@@ -2126,20 +2116,17 @@ class EmpleadoController extends Controller
             $fechaHoy1 = Carbon::create($datafechas);
             $diaHorario = $fechaHoy1->isoFormat('YYYY-MM-DD');
             /* --------------------------------------------- */
-            if($diaHorario==$diaActual){
-               /* SI LAS FECHAS SON IGUALES */
-               $historial_horarioE = new historial_horarioempleado();
-               $historial_horarioE->horarioEmp_id =$horario_empleados->horarioEmp_id;
-               $historial_horarioE->fechaCambio = $fechaHoy;
-               $historial_horarioE->estadohorarioEmp=1;
-               $historial_horarioE->save();
-            }
-            else{
-
+            if ($diaHorario == $diaActual) {
+                /* SI LAS FECHAS SON IGUALES */
+                $historial_horarioE = new historial_horarioempleado();
+                $historial_horarioE->horarioEmp_id = $horario_empleados->horarioEmp_id;
+                $historial_horarioE->fechaCambio = $fechaHoy;
+                $historial_horarioE->estadohorarioEmp = 1;
+                $historial_horarioE->save();
+            } else {
             }
 
             /* ------------------------------- */
-
         }
 
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
@@ -2205,40 +2192,37 @@ class EmpleadoController extends Controller
     {
         $ideve = $request->ideve;
         $horario_empleado1 = DB::table('horario_empleado')
-        ->where('horarioEmp_id', '=', $ideve)
-        ->update(['estado' => 0]);
+            ->where('horarioEmp_id', '=', $ideve)
+            ->update(['estado' => 0]);
         /*---- REGISTRAR HISTORIAL DE CAMBIO -------------------*/
-            /*------ SE REGISTRA SI la eliminacion EN EL HORARIO ES EL DIA ACTUAL--- */
-            /* OBTENEMOS DIA ACTUAL */
-            $fechaHoy = Carbon::now('America/Lima');
-            $diaActual = $fechaHoy->isoFormat('YYYY-MM-DD');
-            /* --------------------------------------------- */
-            /* OBTENEMOS DIA DE HORARIO */
-            $horario_empleadoEl = DB::table('horario_empleado as he')
+        /*------ SE REGISTRA SI la eliminacion EN EL HORARIO ES EL DIA ACTUAL--- */
+        /* OBTENEMOS DIA ACTUAL */
+        $fechaHoy = Carbon::now('America/Lima');
+        $diaActual = $fechaHoy->isoFormat('YYYY-MM-DD');
+        /* --------------------------------------------- */
+        /* OBTENEMOS DIA DE HORARIO */
+        $horario_empleadoEl = DB::table('horario_empleado as he')
             ->select(['he.horarioEmp_id as id', 'hd.start as fechaEli'])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('horarioEmp_id', '=', $ideve)
             ->get()->first();
-            $fechaHorario= $horario_empleadoEl->fechaEli;
-            $fechaHoy1 = Carbon::create($fechaHorario);
-            $diaHorario = $fechaHoy1->isoFormat('YYYY-MM-DD');
-            /* --------------------------------------------- */
-            if($diaHorario==$diaActual){
-               /* SI LAS FECHAS SON IGUALES */
-               $historial_horarioE = new historial_horarioempleado();
-               $historial_horarioE->horarioEmp_id =$ideve;
-               $historial_horarioE->fechaCambio = $fechaHoy;
-               $historial_horarioE->estadohorarioEmp=0;
-               $historial_horarioE->save();
-            }
-            else{
+        $fechaHorario = $horario_empleadoEl->fechaEli;
+        $fechaHoy1 = Carbon::create($fechaHorario);
+        $diaHorario = $fechaHoy1->isoFormat('YYYY-MM-DD');
+        /* --------------------------------------------- */
+        if ($diaHorario == $diaActual) {
+            /* SI LAS FECHAS SON IGUALES */
+            $historial_horarioE = new historial_horarioempleado();
+            $historial_horarioE->horarioEmp_id = $ideve;
+            $historial_horarioE->fechaCambio = $fechaHoy;
+            $historial_horarioE->estadohorarioEmp = 0;
+            $historial_horarioE->save();
+        } else {
+        }
 
-            }
-
-            /* ------------------------------- */
+        /* ------------------------------- */
         return response()->json($horario_empleado1);
-
     }
     public function eliminarInciEdit(Request $request)
     {
@@ -2417,7 +2401,6 @@ class EmpleadoController extends Controller
                             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
                             ->where('invi.estado', '=', 1)
@@ -2429,7 +2412,6 @@ class EmpleadoController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'a.area_descripcion',
-                                'cc.centroC_descripcion',
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
@@ -2447,7 +2429,6 @@ class EmpleadoController extends Controller
                             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
                             ->where('invi.estado', '=', 1)
@@ -2459,7 +2440,6 @@ class EmpleadoController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'a.area_descripcion',
-                                'cc.centroC_descripcion',
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
@@ -2476,7 +2456,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
 
@@ -2487,7 +2466,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -2542,7 +2520,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
 
@@ -2553,7 +2530,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -2576,7 +2552,6 @@ class EmpleadoController extends Controller
                             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
                             ->where('invi.estado', '=', 1)
@@ -2588,7 +2563,6 @@ class EmpleadoController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'a.area_descripcion',
-                                'cc.centroC_descripcion',
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
@@ -2605,7 +2579,6 @@ class EmpleadoController extends Controller
                             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
                             ->where('invi.estado', '=', 1)
@@ -2617,7 +2590,6 @@ class EmpleadoController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'a.area_descripcion',
-                                'cc.centroC_descripcion',
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
@@ -2634,7 +2606,6 @@ class EmpleadoController extends Controller
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
 
@@ -2645,7 +2616,6 @@ class EmpleadoController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'a.area_descripcion',
-                        'cc.centroC_descripcion',
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
@@ -2720,14 +2690,12 @@ class EmpleadoController extends Controller
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->select(
                     'p.perso_nombre',
                     'p.perso_apPaterno',
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -2773,9 +2741,6 @@ class EmpleadoController extends Controller
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-
-
             ->select(
                 'e.emple_nDoc',
                 'p.perso_nombre',
@@ -2783,7 +2748,6 @@ class EmpleadoController extends Controller
                 'p.perso_apMaterno',
                 'c.cargo_descripcion',
                 'a.area_descripcion',
-                'cc.centroC_descripcion',
                 'e.emple_id'
 
             )
@@ -2807,9 +2771,6 @@ class EmpleadoController extends Controller
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-
-
                     ->select(
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -2817,7 +2778,6 @@ class EmpleadoController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'a.area_descripcion',
-                        'cc.centroC_descripcion',
                         'e.emple_id'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
@@ -2834,9 +2794,6 @@ class EmpleadoController extends Controller
                 ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-
-
                 ->select(
                     'e.emple_nDoc',
                     'p.perso_nombre',
@@ -2844,7 +2801,6 @@ class EmpleadoController extends Controller
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -2911,48 +2867,48 @@ class EmpleadoController extends Controller
     }
 
     //*ACTUALIZAR CONFIGURACION DE HORARIO EN EDITAR EMPLEADO
-    public function actualizarConfigHorario(Request $request){
+    public function actualizarConfigHorario(Request $request)
+    {
 
         //*VALOR DE PARAMETROS
-        $idHoraEmp=$request->idHoraEmp;
-        $fueraHorario=$request->fueraHorario;
-        $permiteHadicional=$request->permiteHadicional;
-        $nHorasAdic=$request->nHorasAdic;
+        $idHoraEmp = $request->idHoraEmp;
+        $fueraHorario = $request->fueraHorario;
+        $permiteHadicional = $request->permiteHadicional;
+        $nHorasAdic = $request->nHorasAdic;
 
         //*ACTUALIZANDO
-        $horario_empleado=horario_empleado::findOrfail($idHoraEmp);
-        if($fueraHorario==1){
-            $horario_empleado->borderColor='#5369f8';
-        } else{
-            $horario_empleado->borderColor=null;
+        $horario_empleado = horario_empleado::findOrfail($idHoraEmp);
+        if ($fueraHorario == 1) {
+            $horario_empleado->borderColor = '#5369f8';
+        } else {
+            $horario_empleado->borderColor = null;
         }
-        $horario_empleado->fuera_horario=$fueraHorario;
-        $horario_empleado->horaAdic=$permiteHadicional;
-        $horario_empleado->nHoraAdic=$nHorasAdic;
+        $horario_empleado->fuera_horario = $fueraHorario;
+        $horario_empleado->horaAdic = $permiteHadicional;
+        $horario_empleado->nHoraAdic = $nHorasAdic;
         $horario_empleado->save();
-
     }
 
     //*ACTUALIZAR CONFIGURACION DE HORARIO EN REGISTRAR EMPLEADO
-    public function actualizarConfigHorario_re(Request $request){
+    public function actualizarConfigHorario_re(Request $request)
+    {
 
         //*VALOR DE PARAMETROS
-        $idHoraEmp=$request->idHoraEmp;
-        $fueraHorario=$request->fueraHorario;
-        $permiteHadicional=$request->permiteHadicional;
-        $nHorasAdic=$request->nHorasAdic;
+        $idHoraEmp = $request->idHoraEmp;
+        $fueraHorario = $request->fueraHorario;
+        $permiteHadicional = $request->permiteHadicional;
+        $nHorasAdic = $request->nHorasAdic;
 
         //*ACTUALIZANDO
-        $horario_empleado=eventos_empleado_temp::findOrfail($idHoraEmp);
-        if($fueraHorario==1){
-            $horario_empleado->borderColor='#5369f8';
-        } else{
-            $horario_empleado->borderColor=null;
+        $horario_empleado = eventos_empleado_temp::findOrfail($idHoraEmp);
+        if ($fueraHorario == 1) {
+            $horario_empleado->borderColor = '#5369f8';
+        } else {
+            $horario_empleado->borderColor = null;
         }
-        $horario_empleado->fuera_horario=$fueraHorario;
-        $horario_empleado->horaAdic=$permiteHadicional;
-        $horario_empleado->nHoraAdic=$nHorasAdic;
+        $horario_empleado->fuera_horario = $fueraHorario;
+        $horario_empleado->horaAdic = $permiteHadicional;
+        $horario_empleado->nHoraAdic = $nHorasAdic;
         $horario_empleado->save();
-
     }
 }

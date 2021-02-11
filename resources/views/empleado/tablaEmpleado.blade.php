@@ -196,13 +196,13 @@
                 Nombres
             </th>
             <th>
-               Apellidos
+                Apellidos
             </th>
-            <th >
+            <th>
                 Cont. Remoto
             </th>
-            <th >
-               Cont. Ruta
+            <th>
+                Cont. Ruta
             </th>
             <th>
                 Asist. en puerta
@@ -214,7 +214,7 @@
                 Cargo
             </th>
             <th>
-               Área
+                Área
             </th>
         </tr>
     </thead>
@@ -255,7 +255,7 @@
             {{-- APELLIDOS --}}
             <td>
                 {{$tabla_empleados->perso_apPaterno}}
-                    {{$tabla_empleados->perso_apMaterno}}
+                {{$tabla_empleados->perso_apMaterno}}
 
             </td>
             {{-- CONTROL REMOTO --}}
@@ -441,32 +441,32 @@
                 </div>
             </td>
             @endif
-             {{-- CONTROL MODO TAREO --}}
-             @if($tabla_empleados->modoTareo==1)
-             <td class="text-center">
-                 <div class="custom-control custom-switch mb-2">
-                     <input type="checkbox" class="custom-control-input"
-                         id="customSwitchMT{{$tabla_empleados->emple_id}}"
-                         onclick="modoTareo({{$tabla_empleados->emple_id}})" checked>
-                     <label class="custom-control-label" for="customSwitchMT{{$tabla_empleados->emple_id}}"
-                         style="font-weight: bold"></label>
-                 </div>
-             </td>
-             @else
-             <td class="text-center">
-                 <div class="custom-control custom-switch mb-2">
-                     <input type="checkbox" class="custom-control-input"
-                         id="customSwitchMT{{$tabla_empleados->emple_id}}"
-                         onclick="modoTareo({{$tabla_empleados->emple_id}})">
-                     <label class="custom-control-label" for="customSwitchMT{{$tabla_empleados->emple_id}}"
-                         style="font-weight: bold"></label>
-                 </div>
-             </td>
-             @endif
-             {{-- FIN MODO TAREO --}}
+            {{-- CONTROL MODO TAREO --}}
+            @if($tabla_empleados->modoTareo==1)
+            <td class="text-center">
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input"
+                        id="customSwitchMT{{$tabla_empleados->emple_id}}"
+                        onclick="modoTareo({{$tabla_empleados->emple_id}})" checked>
+                    <label class="custom-control-label" for="customSwitchMT{{$tabla_empleados->emple_id}}"
+                        style="font-weight: bold"></label>
+                </div>
+            </td>
+            @else
+            <td class="text-center">
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input"
+                        id="customSwitchMT{{$tabla_empleados->emple_id}}"
+                        onclick="modoTareo({{$tabla_empleados->emple_id}})">
+                    <label class="custom-control-label" for="customSwitchMT{{$tabla_empleados->emple_id}}"
+                        style="font-weight: bold"></label>
+                </div>
+            </td>
+            @endif
+            {{-- FIN MODO TAREO --}}
 
             <td>
-               {{$tabla_empleados->cargo_descripcion}}
+                {{$tabla_empleados->cargo_descripcion}}
             </td>
             <td>
                 {{$tabla_empleados->area_descripcion}}
@@ -538,7 +538,6 @@
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
                 $('#v_apPaterno').val(data[0].perso_apPaterno);
                 $('#v_departamento').val(data[0].iddepaN);
-
                 if(data[0].iddepaN != null){
                     onSelectVDepartamento('#v_departamento').then(function () {
                         $('#v_provincia').val(data[0].idproviN);
@@ -581,11 +580,6 @@
                         $('#divescond1').show();
                         $('#divescond2').show();
                        $('#detallehorario_ed2').empty();
-                       /*  $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'> </label>" +
-                "<div class='col-md-3'></div>"+
-                "<div class='col-md-3' style='' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosBD()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
-                "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
-                " Borrar </button> </div></div></div>"); */
                     }
                 },
                 error: function () {}
@@ -622,7 +616,13 @@
                 $('#v_direccion').val(data[0].perso_direccion);
                 $('#v_cargo').val(data[0].cargo_id);
                 $('#v_area').val(data[0].area_id);
-                $('#v_centroc').val(data[0].centroC_id);
+                // : CENTRO DE COSTOS
+                var arrayCC = [];
+                data[0].centroCosto.forEach(element => {
+                    arrayCC.push(element.id);
+                });
+                $('#v_centroc').val(arrayCC).trigger("change");
+                // : FINALIZACION
                 id_empleado = data[0].emple_id;
                 $('#v_id').val(data[0].emple_id);
                 $('#v_nivel').val(data[0].emple_nivel);
@@ -766,7 +766,13 @@ function verDEmpleado(idempleadoVer){
                 $('#v_distritoV').val(data[0].distN)
                 $('#v_cargoV').val(data[0].cargo_descripcion);
                 $('#v_areaV').val(data[0].area_descripcion);
-                $('#v_centrocV').val(data[0].centroC_descripcion);
+                // : CENTRO DE COSTOS
+                var arrayCC = [];
+                data[0].centroCosto.forEach(element => {
+                    arrayCC.push(element.id);
+                });
+                $('#v_centrocV').val(arrayCC).trigger("change");
+                // : FINALIZACION
                 $('#v_nivelV').val(data[0].nivel_descripcion);
                 $('#v_localV').val(data[0].local_descripcion);
                 $('#v_codigoEmpleadoV').val(data[0].emple_codigo);

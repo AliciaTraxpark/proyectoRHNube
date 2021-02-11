@@ -1,4 +1,4 @@
-//AREA
+// : ******************************************** AGREGAR ÁREA EN EDITAR **************************************
 function agregarAreaA() {
     objArea = datosAreaA("POST");
     enviarAreaA('', objArea);
@@ -133,8 +133,7 @@ function enviarAreaA(accion, objArea) {
         });
     }
 }
-
-///CARGO
+// : ******************************************** AGREGAR CARGO EN EDITAR **************************************
 function agregarcargoA() {
     objCargo = datosCargoA("POST");
     enviarCargoA('', objCargo);
@@ -271,7 +270,7 @@ function enviarCargoA(accion, objCargo) {
     }
 }
 
-//centro costo
+// : ******************************************** AGREGAR CENTRO DE COSTO EN EDITAR **************************************
 function agregarcentroA() {
     objCentroC = datosCentroA("POST");
     enviarCentroA('', objCentroC);
@@ -304,38 +303,72 @@ function enviarCentroA(accion, objCentroC) {
                 }
             },
             success: function (data) {
-                $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                    value: data.centroC_id,
-                    text: data.centroC_descripcion
-                }));
-                $('#v_centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                    value: data.centroC_id,
-                    text: data.centroC_descripcion,
-                    selected: true
-                }));
-                $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
-                $('#textCentroE').val('');
-                $('#editarCentroA').hide();
-                limpiarEditar();
-                $('#centrocmodalE').modal('toggle');
-                $('#form-ver').modal('show');
-                $.notify({
-                    message: "\nCentro Costo Registrado\n",
-                    icon: 'admin/images/checked.svg'
-                }, {
-                    element: $('#form-ver'),
-                    position: 'fixed',
-                    icon_type: 'image',
-                    newest_on_top: true,
-                    delay: 5000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
+                if (data.respuesta == undefined) {
+                    $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                        value: data.centroC_id,
+                        text: data.centroC_descripcion
+                    }));
+                    $('#v_centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                        value: data.centroC_id,
+                        text: data.centroC_descripcion,
+                        selected: true
+                    }));
+                    var idCC = [];
+                    idCC = $('#v_centroc').val();
+                    idCC.push(data.centroC_id);
+                    $('#v_centroc').val(idCC).trigger("change"); //lo selecciona
+                    $('#textCentroE').val('');
+                    $('#editarCentroA').hide();
+                    limpiarEditar();
+                    $('#centrocmodalE').modal('toggle');
+                    $('#form-ver').modal('show');
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nCentro Costo Registrado\n",
+                        icon: 'admin/images/checked.svg'
+                    }, {
+                        element: $('#form-ver'),
+                        position: 'fixed',
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                } else {
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#centrocmodalE'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
             },
             error: function () { }
         });
@@ -359,54 +392,90 @@ function enviarCentroA(accion, objCentroC) {
                 }
             },
             success: function (data) {
-                $('#centroc').empty();
-                $('#v_centroc').empty();
-                var select = "";
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "/centro",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                        select += `<option value="">Seleccionar</option>`;
-                        for (var i = 0; i < data.length; i++) {
-                            select += `<option class="" value="${data[i].centroC_id}">${data[i].centroC_descripcion}</option>`;
+                if (data.respuesta == undefined) {
+                    var idCC = [];
+                    idCC = $('#v_centroc').val();
+                    if (!idCC.includes(data.centroC_id)) {
+                        idCC.push(data.centroC_id);
+                    }
+                    $('#centroc').empty();
+                    $('#v_centroc').empty();
+                    var select = "";
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "/centro",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            select += `<option value="">Seleccionar</option>`;
+                            for (var i = 0; i < data.length; i++) {
+                                select += `<option class="" value="${data[i].centroC_id}">${data[i].centroC_descripcion}</option>`;
+                            }
+                            $('#centroc').append(select);
+                            $('#v_centroc').append(select);
+                        },
+                        error: function () { }
+                    });
+                    $('#v_centroc').val(idCC).trigger("change"); //lo selecciona
+                    $('#textCentroE').val('');
+                    $('#editarCentroA').hide();
+                    limpiarEditar();
+                    $('#centrocmodalE').modal('toggle');
+                    $('#form-ver').modal('show');
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nCentro Costo Modificado\n",
+                        icon: 'admin/images/checked.svg'
+                    }, {
+                        element: $('#form-ver'),
+                        position: 'fixed',
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                } else {
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#centrocmodalE'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
                         }
-                        $('#centroc').append(select);
-                        $('#v_centroc').append(select);
-                    },
-                    error: function () { }
-                });
-                $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
-                $('#textCentroE').val('');
-                $('#editarCentroA').hide();
-                limpiarEditar();
-                $('#centrocmodalE').modal('toggle');
-                $('#form-ver').modal('show');
-                $.notify({
-                    message: "\nCentro Costo Modificado\n",
-                    icon: 'admin/images/checked.svg'
-                }, {
-                    element: $('#form-ver'),
-                    position: 'fixed',
-                    icon_type: 'image',
-                    newest_on_top: true,
-                    delay: 5000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
+                    );
+                }
             }
         });
     }
 }
-//LOCAL
+// : ******************************************** AGREGAR LOCAL EN EDITAR **************************************
 function agregarlocalA() {
     objLocal = datosLocalA("POST");
     enviarLocalA('', objLocal);
@@ -542,7 +611,7 @@ function enviarLocalA(accion, objLocal) {
         });
     }
 }
-//NIVEL
+// : ******************************************** AGREGAR NIVEL EN EDITAR **************************************
 function agregarnivelA() {
     objNivel = datosNivelA("POST");
     enviarNivelA('', objNivel);
@@ -678,13 +747,11 @@ function enviarNivelA(accion, objNivel) {
         });
     }
 }
-
-//CONTRATO
+// : ******************************************** AGREGAR CONTRATO EN EDITAR **************************************
 function agregarContratoA() {
     objContrato = datosContratoA("POST");
     enviarContratoA('', objContrato);
-};
-
+}
 function datosContratoA(method) {
     nuevoContrato = {
         contrato_descripcion: $('#textContratoE').val(),
@@ -692,7 +759,6 @@ function datosContratoA(method) {
     }
     return (nuevoContrato);
 }
-
 function enviarContratoA(accion, objContrato) {
     var id = $('#editarCO').val();
     if (id == '' || id == undefined) {
@@ -823,7 +889,7 @@ function enviarContratoA(accion, objContrato) {
         });
     }
 }
-//CONDICION PAGO
+// : ******************************************** AGREGAR CONDICION DE PAGO EN EDITAR **************************************
 function agregarCondicionA() {
     objCondicion = datosCondicionA("POST");
     enviarCondicionA('', objCondicion);
@@ -836,7 +902,6 @@ function datosCondicionA(method) {
     }
     return (nuevoCondicion);
 }
-
 function enviarCondicionA(accion, objCondicion) {
     var id = $('#editarCO').val();
     if (id == '' || id == undefined) {
@@ -979,8 +1044,8 @@ function enviarCondicionA(accion, objCondicion) {
 $('#btnCerrar').on("click", function () {
     $('#form-ver').modal('show');
 });
-//************************Editar en los modal de agregar */
-//*******AREA***/
+// : ******************************************** BOTON DE BUSCAR EN EDITAR **************************************
+// ? ÁREA
 $('#buscarAreaA').on("click", function () {
     $('#editarArea').empty();
     var container = $('#editarAreaA');
@@ -1023,7 +1088,7 @@ $('#buscarAreaA').on("click", function () {
     });
     $('#editarAreaA').show();
 });
-//******CARGO*****/
+// ? CARGO
 $('#buscarCargoA').on("click", function () {
     $('#editarCargoA').empty();
     var container = $('#editarCargoA');
@@ -1066,14 +1131,14 @@ $('#buscarCargoA').on("click", function () {
     });
     $('#editarCargoA').show();
 });
-//******CENTRO***/
+// ? CENTRO DE COSTO
 $('#buscarCentroA').on("click", function () {
     $('#editarCentroA').empty();
     var container = $('#editarCentroA');
     var select = "";
     $.ajax({
         type: "GET",
-        url: "/centro",
+        url: "/centroPEditar",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -1109,7 +1174,7 @@ $('#buscarCentroA').on("click", function () {
     });
     $('#editarCentroA').show();
 });
-//******LOCAL***/
+// ? LOCAL
 $('#buscarLocalA').on("click", function () {
     $('#editarLocalA').empty();
     var container = $('#editarLocalA');
@@ -1152,7 +1217,7 @@ $('#buscarLocalA').on("click", function () {
     });
     $('#editarLocalA').show();
 });
-//******NIVEL***/
+// ? NIVEL
 $('#buscarNivelA').on("click", function () {
     $('#editarNivelA').empty();
     var container = $('#editarNivelA');
@@ -1195,7 +1260,7 @@ $('#buscarNivelA').on("click", function () {
     });
     $('#editarNivelA').show();
 });
-//******CONTRATO***/
+// ? CONTRATO
 $('#buscarContratoA').on("click", function () {
     $('#editarContratoA').empty();
     var container = $('#editarContratoA');
@@ -1238,7 +1303,7 @@ $('#buscarContratoA').on("click", function () {
     });
     $('#editarContratoA').show();
 });
-//******CONDICION***/
+// ? CONDICIÓN
 $('#buscarCondicionA').on("click", function () {
     $('#editarCondicionA').empty();
     var container = $('#editarCondicionA');
@@ -1281,7 +1346,7 @@ $('#buscarCondicionA').on("click", function () {
     });
     $('#editarContratoC').show();
 });
-//*****LIMPIAR***/
+// ? LIMPIAR
 function limpiarEditar() {
     $('#editarAreaA').hide();
     $('#editarCargoA').hide();

@@ -331,7 +331,7 @@ use Carbon\Carbon;
     </div>
     {{-- FINAL DE MODAL --}}
     <div id="windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowsEmpleado"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -370,7 +370,7 @@ use Carbon\Carbon;
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <div id="v_windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_windowsEmpleado"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -410,7 +410,7 @@ use Carbon\Carbon;
     </div><!-- /.modal -->
     <!------------CAMBIAR ESTADO LICENCIA-->
     <div id="estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaW"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <br><br><br><br>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -460,7 +460,7 @@ use Carbon\Carbon;
     </div><!-- /.modal -->
     <!------------CAMBIAR ESTADO LICENCIA-->
     <div id="v_estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaW"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <br><br><br><br>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -510,7 +510,7 @@ use Carbon\Carbon;
     </div><!-- /.modal -->
     {{-- MODAL CORREO ELECTRONICO --}}
     <div id="modalCorreoElectronico" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="modalCorreoElectronico" aria-hidden="true" data-backdrop="static">
+        aria-labelledby="modalCorreoElectronico" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -559,7 +559,7 @@ use Carbon\Carbon;
     </div><!-- /.modal -->
     {{-- MODAL DE REGISTRAR CELULAR --}}
     <div id="modalCelular" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCelular"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -611,7 +611,7 @@ use Carbon\Carbon;
     {{-- FINALIZACION MODAL --}}
     {{-- MODAL DE AGREGAR ACTIVIDADES EN FORMULARIO EDITAR --}}
     <div id="RegActividadTareaGE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="RegActividadTareaGE"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -689,7 +689,7 @@ use Carbon\Carbon;
     {{-- FINALIZACIÓN DE MODAL --}}
     {{-- MODAL DE AGREGAR ACTIVIDADES EN FORMULARIO AGREGAR --}}
     <div id="ActividadTareaGE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ActividadTareaGE"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1129,7 +1129,7 @@ use Carbon\Carbon;
                     </div> <!-- end card -->
                 </div>
                 <div id="modalInformacionF" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="modalInformacionF" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="modalInformacionF" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1184,7 +1184,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <div id="modalMasivaFoto" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="modalMasivaFoto" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="modalMasivaFoto" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1223,7 +1223,7 @@ use Carbon\Carbon;
                 </div><!-- /.modal -->
                 {{-- MODAL DE ELIMINAR --}}
                 <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1300,7 +1300,8 @@ use Carbon\Carbon;
                 {{-- FINALIZACION DE MODAL --}}
                 {{-- MODAL DE BAJA --}}
                 <div id="modalBajaHistorial" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="modalBajaHistorial" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="modalBajaHistorial" aria-hidden="true" data-backdrop="static"
+                    data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1381,7 +1382,8 @@ use Carbon\Carbon;
                 {{-- FINALIZACION DE MODAL --}}
                 {{-- MODAL DE BAJA EN REGISTRAR --}}
                 <div id="modalBajaHistorialReg" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="modalBajaHistorialReg" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="modalBajaHistorialReg" aria-hidden="true" data-backdrop="static"
+                    data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1461,7 +1463,7 @@ use Carbon\Carbon;
                 </div>
                 {{-- FINALIZACION DE MODAL --}}
                 <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1507,7 +1509,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodal"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1552,14 +1554,15 @@ use Carbon\Carbon;
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
+                {{-- CRUD DE CENTRO COSTO EN REGISTRAR --}}
                 <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodal"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
                                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                    Agregar
-                                    centro de costo</h5>
+                                    Agregar centro de costo
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
@@ -1570,23 +1573,34 @@ use Carbon\Carbon;
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <label for="">Centro de costo</label>
                                             </div>
-                                            <div id="editarCentro" class="col-md-6"></div>
+                                            <div id="editarCentro" class="col-md-5"></div>
                                             <div class="col-md-3">
                                                 <a id="buscarCentro" data-toggle="tooltip" data-placement="right"
-                                                    title="Editar Centro de costo."
-                                                    data-original-title="Editar Centro de costo."
-                                                    style="cursor: pointer;"><img
-                                                        src="{{ asset('landing/images/search.svg') }}" height="18">
+                                                    title="editar centro de costo"
+                                                    data-original-title="editar centro de costo."
+                                                    style="cursor: pointer;">
+                                                    <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control" id="textCentro" required>
+                                    <div class="row mt-2">
+                                        <div class="col-md-12 pt-2">
+                                            <input type="text" class="form-control" id="textCentro" required>
+                                        </div>
+                                        <div class="col-md-12 mt-1">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="e_switchCCPE"
+                                                    checked disabled>
+                                                <label class="custom-control-label" for="e_switchCCPE"
+                                                    style="font-weight: bold;font-size:12px">
+                                                    Por empleado
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -1598,9 +1612,10 @@ use Carbon\Carbon;
                             </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                </div>
+                {{-- FINALIZACION DE MODAL --}}
                 <div id="localmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1645,7 +1660,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <div id="nivelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1691,7 +1706,7 @@ use Carbon\Carbon;
                 </div>
                 {{-- CRUD DE CONTRATO EN REGISTRAR --}}
                 <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodal"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1741,7 +1756,7 @@ use Carbon\Carbon;
                 </div>
                 {{-- CRUD DE CONDICION DE PAGO EN REGISTRAR --}}
                 <div id="condicionmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="condicionmodal"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2263,7 +2278,7 @@ use Carbon\Carbon;
                 {{-- FINALIZACION DE MODAL --}}
                 {{-- MODALES DE EDITAR --}}
                 <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodalE"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2308,7 +2323,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <div id="cargomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodalE"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2351,13 +2366,13 @@ use Carbon\Carbon;
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
+                {{-- CRUD DE CENTRO DE COSTO --}}
                 <div id="centrocmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodalE"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                    Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
                                     centro de costo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
@@ -2368,22 +2383,32 @@ use Carbon\Carbon;
                                 <form action="javascript:agregarcentroA()">
                                     {{ csrf_field() }}
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <label for="">Centro de costo</label>
                                         </div>
-                                        <div id="editarCentroA" class="col-md-6"></div>
+                                        <div id="editarCentroA" class="col-md-5"></div>
                                         <div class="col-md-3">
                                             <a id="buscarCentroA" data-toggle="tooltip" data-placement="right"
                                                 title="Editar centro de costo."
-                                                data-original-title="Editar centro de costo."
-                                                style="cursor: pointer;"><img
-                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
+                                                data-original-title="Editar centro de costo." style="cursor: pointer;">
+                                                <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
-                                    <br>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control" id="textCentroE" required>
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" id="textCentroE" required>
+                                        </div>
+                                        <div class="col-md-12 mt-1">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="e_switchCCPE"
+                                                    checked disabled>
+                                                <label class="custom-control-label" for="e_switchCCPE"
+                                                    style="font-weight: bold;font-size:12px">
+                                                    Por empleado
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -2395,9 +2420,10 @@ use Carbon\Carbon;
                             </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                </div>
+                {{-- FINALIZACION --}}
                 <div id="localmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodalE"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2442,7 +2468,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <div id="nivelmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodalE"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2487,7 +2513,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div>
                 <div id="contratomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodalE"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2533,7 +2559,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div>
                 <div id="condicionmodalE" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="condicionmodalE" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="condicionmodalE" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2581,7 +2607,8 @@ use Carbon\Carbon;
                 </div>
                 {{-- DETALLES DE CONTRATO --}}
                 <div id="contratoDetallesmodalE" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="contratoDetallesmodalE" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="contratoDetallesmodalE" aria-hidden="true" data-backdrop="static"
+                    data-keyboard="false">
                     <div class="modal-dialog modal-lg d-flex justify-content-center">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2830,7 +2857,8 @@ use Carbon\Carbon;
                 {{-- FINALIZACION --}}
                 {{-- NUEVA ALTA --}}
                 <div id="contratoDetallesmodalEN" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="contratoDetallesmodalEN" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="contratoDetallesmodalEN" aria-hidden="true" data-backdrop="static"
+                    data-keyboard="false">
                     <div class="modal-dialog modal-lg d-flex justify-content-center">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -3062,7 +3090,8 @@ use Carbon\Carbon;
                 {{-- FINALIZACION --}}
                 {{-- NUEVO DETALLE --}}
                 <div id="NuevoContratoDetallesmodalE" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="NuevoContratoDetallesmodalE" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="NuevoContratoDetallesmodalE" aria-hidden="true" data-backdrop="static"
+                    data-keyboard="false">
                     <div class="modal-dialog modal-lg d-flex justify-content-center">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -3459,7 +3488,7 @@ use Carbon\Carbon;
                 </div>
                 {{-- FINALIZACION --}}
                 <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog"
-                    aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
@@ -3751,8 +3780,7 @@ use Carbon\Carbon;
                                                         <a onclick="javascript:mostrarContenidoE()"
                                                             data-toggle="tooltip" data-placement="left"
                                                             title="ver vídeo" data-original-title="ver vídeo">
-                                                            <img src="{{ asset('landing/images/play.svg') }}"
-                                                                height="40">
+                                                            <img src="{{asset('landing/images/play.svg')}}" height="40">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -3760,11 +3788,43 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        <label for="sw-default">Cargo <a
-                                                                onclick="$('#form-registrar').modal('hide');"
+                                                        <label for="sw-default">Código Empleado</label>
+                                                        <input type="text" class="form-control" name="codigoEmpleado"
+                                                            id="codigoEmpleado" tabindex="1" data-toggle="tooltip"
+                                                            data-placement="right" maxlength="200"
+                                                            title="Número de documento por defecto o Ingrese un código interno"
+                                                            data-original-title="Número de documento por defecto o Ingrese un código interno">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">
+                                                            Centro de costo
+                                                            <a onclick="$('#form-registrar').modal('hide');"
+                                                                href="#centrocmodal" data-toggle="modal"
+                                                                data-target="#centrocmodal">
+                                                                <i class="uil uil-plus"></i>
+                                                            </a>
+                                                        </label>
+                                                        <select class="form-control" name="centroc" id="centroc"
+                                                            tabindex="4" data-plugin="customselect"
+                                                            data-placeholder="Centro de costo" multiple="multiple">
+                                                            <option value="">Seleccionar</option>
+                                                            @foreach ($centro_costo as $centro_costos)
+                                                            <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                                {{ $centro_costos->centroC_descripcion }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">
+                                                            Cargo
+                                                            <a onclick="$('#form-registrar').modal('hide');"
                                                                 href="#cargomodal" data-toggle="modal"
-                                                                data-target="#cargomodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
+                                                                data-target="#cargomodal">
+                                                                <i class="uil uil-plus"></i>
+                                                            </a>
+                                                        </label>
                                                         <select class="form-control" name="cargo" id="cargo"
                                                             tabindex="2">
                                                             <option value="">Seleccionar</option>
@@ -3775,35 +3835,14 @@ use Carbon\Carbon;
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Código Empleado</label>
-                                                        <input type="text" class="form-control" name="codigoEmpleado"
-                                                            id="codigoEmpleado" tabindex="1" data-toggle="tooltip"
-                                                            data-placement="right" maxlength="200"
-                                                            title="Número de documento por defecto o Ingrese un código interno"
-                                                            data-original-title="Número de documento por defecto o Ingrese un código interno">
-                                                    </div>
-                                                </div> <!-- end col -->
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Área <a
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#areamodal" data-toggle="modal"
-                                                                data-target="#areamodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
-                                                        <select class="form-control" name="area" id="area" tabindex="3">
-                                                            <option value="">Seleccionar</option>
-                                                            @foreach ($area as $areas)
-                                                            <option class="" value="{{ $areas->area_id }}">
-                                                                {{ $areas->area_descripcion }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default" class="labelNivel">Nivel del
-                                                            Colaborador<a onclick="$('#form-registrar').modal('hide');"
+                                                        <label for="sw-default" class="labelNivel">
+                                                            Nivel del Colaborador
+                                                            <a onclick="$('#form-registrar').modal('hide');"
                                                                 href="#nivelmodal" data-toggle="modal"
-                                                                data-target="#nivelmodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
+                                                                data-target="#nivelmodal">
+                                                                <i class="uil uil-plus"></i>
+                                                            </a>
+                                                        </label>
                                                         <select class="form-control" name="nivel" id="nivel"
                                                             tabindex="6">
                                                             <option value="">Seleccionar</option>
@@ -3816,27 +3855,31 @@ use Carbon\Carbon;
                                                 </div> <!-- end col -->
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        <label for="sw-default">Centro de costo <a
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#centrocmodal" data-toggle="modal"
-                                                                data-target="#centrocmodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
-                                                        <select class="form-control" name="centroc" id="centroc"
-                                                            tabindex="4">
+                                                        <label for="sw-default">
+                                                            Área
+                                                            <a onclick="$('#form-registrar').modal('hide');"
+                                                                href="#areamodal" data-toggle="modal"
+                                                                data-target="#areamodal">
+                                                                <i class="uil uil-plus"></i>
+                                                            </a>
+                                                        </label>
+                                                        <select class="form-control" name="area" id="area" tabindex="3">
                                                             <option value="">Seleccionar</option>
-                                                            @foreach ($centro_costo as $centro_costos)
-                                                            <option class="" value="{{ $centro_costos->centroC_id }}">
-                                                                {{ $centro_costos->centroC_descripcion }}
-                                                            </option>
+                                                            @foreach ($area as $areas)
+                                                            <option class="" value="{{ $areas->area_id }}">
+                                                                {{ $areas->area_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Local <a
-                                                                onclick="$('#form-registrar').modal('hide');"
+                                                        <label for="sw-default">
+                                                            Local
+                                                            <a onclick="$('#form-registrar').modal('hide');"
                                                                 href="#localmodal" data-toggle="modal"
-                                                                data-target="#localmodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
+                                                                data-target="#localmodal">
+                                                                <i class="uil uil-plus"></i>
+                                                            </a>
+                                                        </label>
                                                         <select class="form-control" name="local" id="local"
                                                             tabindex="7">
                                                             <option value="">Seleccionar</option>
@@ -3848,7 +3891,6 @@ use Carbon\Carbon;
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
-
                                         </div>
                                         <div id="sw-default-step-3" class="setup-content"
                                             style="font-size: 12px!important">
@@ -4717,7 +4759,7 @@ use Carbon\Carbon;
                 </div>
             </div>
             <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog"
-                aria-labelledby="form-ver" aria-hidden="true" data-backdrop="static">
+                aria-labelledby="form-ver" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
                     <div class="modal-content">
                         <div class="modal-header" style="background: #163552;">
@@ -5013,22 +5055,53 @@ use Carbon\Carbon;
                                                     <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
                                                         data-placement="left" title="ver vídeo"
                                                         data-original-title="ver vídeo">
-                                                        <img src="{{ asset('landing/images/play.svg') }}" height="40">
+                                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-4">
+                                            <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Cargo <a
-                                                            onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
-                                                    <select class="form-control" name="v_cargo" id="v_cargo"
-                                                        tabindex="2" required>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Código Empleado</label>
+                                                        <input type="text" class="form-control" name="v_codigoEmpleado"
+                                                            maxlength="200" id="v_codigoEmpleado" tabindex="1">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default">
+                                                        Centro de costo
+                                                        <a onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
+                                                            data-toggle="modal">
+                                                            <i class="uil uil-plus"
+                                                                style="color: darkblue;cursor: pointer;"></i>
+                                                        </a>
+                                                    </label>
+                                                    <select class="form-control" name="v_centroc" id="v_centroc"
+                                                        tabindex="4" data-plugin="customselect"
+                                                        data-placeholder="Centro de costo" multiple="multiple">
                                                         <option value="">Seleccionar</option>
-
+                                                        @foreach ($centro_costo as $centro_costos)
+                                                        <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                            {{ $centro_costos->centroC_descripcion }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div> <!-- end col -->
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="sw-default">
+                                                        Cargo
+                                                        <a onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
+                                                            data-toggle="modal">
+                                                            <i class="uil uil-plus"
+                                                                style="color: darkblue;cursor: pointer;"></i>
+                                                        </a>
+                                                    </label>
+                                                    <select class="form-control" name="v_cargo" id="v_cargo"
+                                                        tabindex="2">
+                                                        <option value="">Seleccionar</option>
                                                         @foreach ($cargo as $cargos)
                                                         <option class="" value="{{ $cargos->cargo_id }}">
                                                             {{ $cargos->cargo_descripcion }}</option>
@@ -5036,34 +5109,14 @@ use Carbon\Carbon;
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Código Empleado</label>
-                                                        <input type="text" class="form-control" name="v_codigoEmpleado"
-                                                            maxlength="200" id="v_codigoEmpleado" tabindex="1" required>
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Área <a
-                                                            onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
-                                                    <select class="form-control" name="v_area" id="v_area" tabindex="3"
-                                                        required>
-                                                        <option value="">Seleccionar</option>
-                                                        @foreach ($area as $areas)
-                                                        <option class="" value="{{ $areas->area_id }}">
-                                                            {{ $areas->area_descripcion }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default" class="labelNivel">Nivel del
-                                                        Colaborador<a
-                                                            onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
+                                                    <label for="sw-default" class="labelNivel">
+                                                        Nivel del Colaborador
+                                                        <a onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
+                                                            data-toggle="modal">
+                                                            <i class="uil uil-plus"
+                                                                style="color: darkblue;cursor: pointer;"></i>
+                                                        </a>
+                                                    </label>
                                                     <select class="form-control" name="v_nivel" id="v_nivel"
                                                         tabindex="6">
                                                         <option value="">Seleccionar</option>
@@ -5074,26 +5127,34 @@ use Carbon\Carbon;
                                                     </select>
                                                 </div>
                                             </div> <!-- end col -->
-                                            <div class="col-4">
+                                            <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Centro de costo <a
-                                                            onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
-                                                    <select class="form-control" name="v_centroc" id="v_centroc"
-                                                        tabindex="4" required>
+                                                    <label for="sw-default">
+                                                        Área
+                                                        <a onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
+                                                            data-toggle="modal">
+                                                            <i class="uil uil-plus"
+                                                                style="color: darkblue;cursor: pointer;"></i>
+                                                        </a>
+                                                    </label>
+                                                    <select class="form-control" name="v_area" id="v_area" tabindex="3"
+                                                        required>
                                                         <option value="">Seleccionar</option>
-                                                        @foreach ($centro_costo as $centro_costos)
-                                                        <option class="" value="{{ $centro_costos->centroC_id }}">
-                                                            {{ $centro_costos->centroC_descripcion }}</option>
+                                                        @foreach ($area as $areas)
+                                                        <option class="" value="{{ $areas->area_id }}">
+                                                            {{ $areas->area_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Local <a
-                                                            onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
+                                                    <label for="sw-default">
+                                                        Local
+                                                        <a onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
+                                                            data-toggle="modal">
+                                                            <i class="uil uil-plus"
+                                                                style="color: darkblue;cursor: pointer;"></i>
+                                                        </a>
+                                                    </label>
                                                     <select class="form-control" name="v_local" id="v_local"
                                                         tabindex="7">
                                                         <option value="">Seleccionar</option>
@@ -5806,7 +5867,8 @@ use Carbon\Carbon;
                                         </div>
                                         {{-- MODAL DE ASIGNAR ACTIVIDADES --}}
                                         <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
-                                            aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
+                                            aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static"
+                                            data-keyboard="false">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                 style="width: 550px;">
                                                 <div class="modal-content">
@@ -6003,7 +6065,7 @@ use Carbon\Carbon;
         </div>
         {{-- VER EMPLEADO --}}
         <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog"
-            aria-labelledby="verEmpleadoDetalles" aria-hidden="true" data-backdrop="static">
+            aria-labelledby="verEmpleadoDetalles" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #163552;">
@@ -6219,23 +6281,30 @@ use Carbon\Carbon;
                                 </div>
                                 <div id="sw-default-step-2" style="font-size: 12px!important">
                                     <div class="row">
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <label for="sw-default">Cargo</label>
-                                                <input type="text" class="form-control" name="v_cargoV" id="v_cargoV"
-                                                    disabled>
-                                            </div>
+                                        <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="sw-default">Código Empleado</label>
                                                 <input type="text" class="form-control" name="v_codigoEmpleadoV"
                                                     maxlength="200" id="v_codigoEmpleadoV" disabled>
                                             </div>
-                                        </div> <!-- end col -->
-                                        <div class="col-4">
                                             <div class="form-group">
-                                                <label for="sw-default">Área</label>
-                                                <input type="text" class="form-control" name="v_areaV" id="v_areaV"
-                                                    tabindex="3" disabled>
+                                                <label for="sw-default">Centro de costo</label>
+                                                <select class="form-control" name="v_centrocV" id="v_centrocV"
+                                                    tabindex="4" data-plugin="customselect"
+                                                    data-placeholder="Centro de costo" multiple="multiple" disabled>
+                                                    <option value="">Seleccionar</option>
+                                                    @foreach ($centro_costo as $centro_costos)
+                                                    <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                        {{ $centro_costos->centroC_descripcion }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="sw-default">Cargo</label>
+                                                <input type="text" class="form-control" name="v_cargoV" id="v_cargoV"
+                                                    disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="sw-default">Nivel del Colaborador</label>
@@ -6243,11 +6312,11 @@ use Carbon\Carbon;
                                                     tabindex="6" disabled>
                                             </div>
                                         </div> <!-- end col -->
-                                        <div class="col-4">
+                                        <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="sw-default">Centro de costo</label>
-                                                <input type="text" class="form-control" name="v_centrocV"
-                                                    id="v_centrocV" tabindex="4" disabled>
+                                                <label for="sw-default">Área</label>
+                                                <input type="text" class="form-control" name="v_areaV" id="v_areaV"
+                                                    tabindex="3" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="sw-default">Local</label>

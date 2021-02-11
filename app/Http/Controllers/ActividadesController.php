@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\actividad;
 use App\actividad_area;
 use App\actividad_empleado;
-use App\captura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -135,7 +134,7 @@ class ActividadesController extends Controller
                 ->get()
                 ->first();
             if ($captura) {
-                $actividadesT->respuesta = 'Si';
+                $actividadesT->respuesta = 1;
             } else {
                 // ? MODO EN RUTA
                 $ruta = DB::table('ubicacion as u')
@@ -144,7 +143,7 @@ class ActividadesController extends Controller
                     ->get()
                     ->first();
                 if ($ruta) {
-                    $actividadesT->respuesta = 'Si';
+                    $actividadesT->respuesta = 1;
                 } else {
                     // ? MODO MARCACION EN PUERTA
                     $puerta = DB::table('marcacion_puerta as mp')
@@ -153,7 +152,7 @@ class ActividadesController extends Controller
                         ->get()
                         ->first();
                     if ($puerta) {
-                        $actividadesT->respuesta = 'Si';
+                        $actividadesT->respuesta = 1;
                     } else {
                         // ? MODO TAREO
                         $tareo = DB::table('marcacion_tareo as mt')
@@ -162,9 +161,9 @@ class ActividadesController extends Controller
                             ->get()
                             ->first();
                         if ($tareo) {
-                            $actividadesT->respuesta = 'Si';
+                            $actividadesT->respuesta = 1;
                         } else {
-                            $actividadesT->respuesta = 'No';
+                            $actividadesT->respuesta = 0;
                         }
                     }
                 }
@@ -280,48 +279,6 @@ class ActividadesController extends Controller
             }
             /* SI NO ESTA EN USO */ else {
                 $actividadesT->padreSubactividad = 0;
-            }
-            // ************************************* BUSCAR EN REPORTES ESTA EN USO ********************************
-            // ? MODO CONTORL REMOTO
-            $captura = DB::table('captura as cp')
-                ->select('cp.idCaptura')
-                ->where('cp.idActividad', '=', $actividadesT->Activi_id)
-                ->get()
-                ->first();
-            if ($captura) {
-                $actividadesT->respuesta = 1;
-            } else {
-                // ? MODO EN RUTA
-                $ruta = DB::table('ubicacion as u')
-                    ->select('u.id')
-                    ->where('u.idActividad', '=', $actividadesT->Activi_id)
-                    ->get()
-                    ->first();
-                if ($ruta) {
-                    $actividadesT->respuesta = 1;
-                } else {
-                    // ? MODO MARCACION EN PUERTA
-                    $puerta = DB::table('marcacion_puerta as mp')
-                        ->select('mp.marcaMov_id')
-                        ->where('mp.marcaIdActivi', '=', $actividadesT->Activi_id)
-                        ->get()
-                        ->first();
-                    if ($puerta) {
-                        $actividadesT->respuesta = 1;
-                    } else {
-                        // ? MODO TAREO
-                        $tareo = DB::table('marcacion_tareo as mt')
-                            ->select('mt.idmarcaciones_tareo')
-                            ->where('mt.Activi_id', '=', $actividadesT->Activi_id)
-                            ->get()
-                            ->first();
-                        if ($tareo) {
-                            $actividadesT->respuesta = 1;
-                        } else {
-                            $actividadesT->respuesta = 0;
-                        }
-                    }
-                }
             }
         }
 

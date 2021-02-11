@@ -314,9 +314,12 @@ class horarioController extends Controller
             ->leftJoin('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('centrocosto_empleado as ce', 'e.emple_id', '=', 'ce.idEmpleado')
+            ->leftJoin('centro_costo as cc', 'cc.centroC_id', '=', 'ce.idCentro')
             ->leftJoin('local as lo', 'e.emple_local', '=', 'lo.local_id')
             ->where('e.emple_estado', '=', 1)
+            ->where('cc.estado', '=', 1)
+            ->where('ce.estado', '=', 1)
             ->distinct('e.emple_id')
             ->where('he.estado', '=', 1)
             ->where('emple_id', '=', $idsEm)->get();

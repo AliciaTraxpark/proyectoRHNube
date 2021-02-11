@@ -82,8 +82,8 @@ $("#smartwizardVer").on("showStep", function (
     }
 });
 
-function validate(e){
-    if(e.isTrusted == true){
+function validate(e) {
+    if (e.isTrusted == true) {
         $('#noti_dia_fecha_alta').prop('disabled', true);
     }
 }
@@ -916,10 +916,10 @@ function calendario3() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title:'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    $(info.el).tooltip({ title: 'Horario' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                 }
                 else {
-                    $(info.el).tooltip({ title:'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    $(info.el).tooltip({ title: 'Horario' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
                 }
             }
         },
@@ -989,11 +989,11 @@ function calendario4() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: 'Horario'+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    $(info.el).tooltip({ title: 'Horario' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
 
                 }
                 else {
-                    $(info.el).tooltip({ title:'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    $(info.el).tooltip({ title: 'Horario' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
                 }
             }
         },
@@ -1126,7 +1126,13 @@ function verDEmpleado(idempleadoVer) {
             $('#v_distritoV').val(data[0].distN)
             $('#v_cargoV').val(data[0].cargo_descripcion);
             $('#v_areaV').val(data[0].area_descripcion);
-            $('#v_centrocV').val(data[0].centroC_descripcion);
+            // : CENTRO DE COSTOS
+            var arrayCC = [];
+            data[0].centroCosto.forEach(element => {
+                arrayCC.push(element.id);
+            });
+            $('#v_centrocV').val(arrayCC).trigger("change");
+            // : FINALIZACION
             $('#v_nivelV').val(data[0].nivel_descripcion);
             $('#v_localV').val(data[0].local_descripcion);
             $('#v_codigoEmpleadoV').val(data[0].emple_codigo);

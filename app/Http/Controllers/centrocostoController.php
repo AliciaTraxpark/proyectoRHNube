@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\centro_costo;
 use App\centrocosto_empleado;
 use App\empleado;
+use App\historial_centro_costo;
+use App\historial_empleado;
+use App\marcacion_puerta;
+use App\marcacion_tareo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -25,11 +29,28 @@ class centrocostoController extends Controller
 
     public function store(Request $request)
     {
+        // : BUSCAR COINCIDENCIAS CON NOMBRE DE CENTRO DE COSTOS -> ATRIBUTO DESCRIPCION = 1
+        $buscarCentroDescripcion = centro_costo::where('centroC_descripcion', '=', $request->get('centroC_descripcion'))
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        if ($buscarCentroDescripcion) {
+            return response()->json(array(
+                "respuesta" => 1,
+                "mensaje" => "Ya existe un centro de costo con este nombre."
+            ), 200);
+        }
+        // : REGISTRAR NUEVO CENTRO DE COSTO
         $centro_costo = new centro_costo();
         $centro_costo->centroC_descripcion = $request->get('centroC_descripcion');
+        $centro_costo->porEmpleado = 1;
+        $centro_costo->asistenciaPuerta = 0;
+        $centro_costo->modoTareo = 0;
+        $centro_costo->estado = 1;
         $centro_costo->organi_id = session('sesionidorg');
         $centro_costo->save();
-        return $centro_costo;
+
+        return response()->json($centro_costo, 200);
     }
 
     // * ************************ MANTENEDOR DE CENTRO COSTO ******************
@@ -47,22 +68,63 @@ class centrocostoController extends Controller
     public function listaCentroCosto()
     {
         $centroC = DB::table('centro_costo as c')
-            ->leftJoin('empleado as e', function ($left) {
-                $left->on('e.emple_centCosto', '=', 'c.centroC_id')
-                    ->where('e.emple_estado', '=', 1);
-            })
             ->select(
                 'c.centroC_id as id',
                 DB::raw("CASE WHEN (c.codigo) is null THEN 'No definido' ELSE c.codigo END as codigo"),
                 'c.centroC_descripcion as descripcion',
-                DB::raw("CASE WHEN(e.emple_id) IS NULL THEN 'No' ELSE 'Si' END AS respuesta"),
                 'c.asistenciaPuerta',
                 'c.modoTareo'
             )
             ->where('c.organi_id', '=', session('sesionidorg'))
             ->where('estado', '=', 1)
             ->groupBy('c.centroC_id')
+            ->orderBy('c.centroC_descripcion', 'ASC')
             ->get();
+
+        // : ************************ BUSCAR USO DE CENTRO COSTO ***********************
+        foreach ($centroC as $c) {
+            // : BUSCAR SI CONTIENE EMPLEADOS
+            $centroEmpleado = DB::table('centrocosto_empleado as ce')
+                ->join('empleado as e', 'e.emple_id', 'ce.idEmpleado')
+                ->select('e.emple_estado', 'e.emple_id')
+                ->where('ce.idCentro', '=', $c->id)
+                ->where('e.emple_estado', '=', 1)
+                ->where('ce.estado', '=', 1)
+                ->get();
+            if (sizeof($centroEmpleado) != 0) {
+                foreach ($centroEmpleado as $ce) {
+                    if ($ce->emple_estado == 1) {
+                        $c->respuesta = 1;
+                    } else {
+                        // : HISTORIAL EMPLEADO
+                        $historialEmpleado = historial_empleado::select('fecha_baja')
+                            ->latest('idhistorial_empleado')
+                            ->where('emple_id', '=', $ce->emple_id)
+                            ->get()
+                            ->first();
+                        // : CENTRO DE COSTO EMPLEADO
+                        $centroE = centrocosto_empleado::findOrFail($c->id);
+                        $centroE->fecha_baja = $historialEmpleado->fecha_baja;
+                        $centroE->estado = 0;
+                        $centroE->save();
+                    }
+                }
+            } else {
+                // : BUSCAR EN REPORTE DE ASISTENCIA EN PUERTA
+                $marcacion = marcacion_puerta::where('centC_id', '=', $c->id)->get()->first();
+                if ($marcacion) {
+                    $c->respuesta = 1;
+                } else {
+                    // : BUSCAR EN REPORTE TAREO
+                    $tareo = marcacion_tareo::where('centroC_id', '=', $c->id)->get()->first();
+                    if ($tareo) {
+                        $c->respuesta = 1;
+                    } else {
+                        $c->respuesta = 0;
+                    }
+                }
+            }
+        }
 
         return response()->json($centroC, 200);
     }
@@ -88,12 +150,13 @@ class centrocostoController extends Controller
     public function actualizarCentro(Request $request)
     {
         $id = $request->get('id');
+        $descripcion = $request->get('descripcion');
         $empleados = $request->get('empleados');
         $codigo = $request->get('codigo');
         $porEmpleado = $request->get('porEmpleado');
         $asistenciaPuerta = $request->get('asistenciaPuerta');
         $modoTareo = $request->get('modoTareo');
-        // : BUSCAR CENTRO DE COSTO CON EL MISMO CODIGO
+        // : BUSCAR CENTRO DE COSTO CON EL MISMO CODIGO - ATRIBUTO CODIGO -> 1
         $buscarCodigoCentro = centro_costo::where('codigo', '=', $codigo)
             ->where('centroC_id', '!=', $id)
             ->whereNotNull('codigo')
@@ -101,70 +164,86 @@ class centrocostoController extends Controller
             ->where('estado', '=', 1)
             ->get()
             ->first();
-        if (!$buscarCodigoCentro) {
-            $centro = centro_costo::findOrFail($id);
-            $centro->codigo = $codigo;
-            $centro->porEmpleado = $porEmpleado;
-            $centro->asistenciaPuerta = $asistenciaPuerta;
-            $centro->modoTareo = $modoTareo;
-            $centro->save();
-            // * EMPLEADOS EN CENTRO DE COSTO
-            $empleadoCentro = centrocosto_empleado::where('idCentro', '=', $centro->centroC_id)->where('estado', '=', 1)->get();
-            if ($centro->porEmpleado == 1) {
-                // * SI ARRAY EMPLEADOS ESTA VACIO
-                if (is_null($empleados)) {
-                    foreach ($empleadoCentro as $ec) {
-                        $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
-                        $emp->estado = 0;
-                        $emp->fecha_baja = Carbon::now();
-                        $emp->save();
-                    }
-                } else {
-                    // * BUSCAR EMPLEADOS CON CENTRO COSTO
-                    foreach ($empleados as $e) {
-                        $estado = true;
-                        for ($index = 0; $index < sizeof($empleadoCentro); $index++) {
-                            if ($empleadoCentro[$index]->idEmpleado == $e) {
-                                $estado = false;
-                            }
-                        }
-                        if ($estado) {
-                            $nuevoCentroCosto = new centrocosto_empleado();
-                            $nuevoCentroCosto->idCentro = $centro->centroC_id;
-                            $nuevoCentroCosto->idEmpleado = $e;
-                            $nuevoCentroCosto->fecha_alta = Carbon::now();
-                            $nuevoCentroCosto->save();
-                        }
-                    }
-
-                    // * COMPARAR EMPLEADOS CENTRO CON LISTA DE EMPLEADOS
-                    foreach ($empleadoCentro as $ec) {
-                        $estadoB = true;
-                        foreach ($empleados as $em) {
-                            if ($ec->idEmpleado == $em) {
-                                $estadoB = false;
-                            }
-                        }
-                        if ($estadoB) {
-                            $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
-                            $emp->estado = 0;
-                            $emp->fecha_baja = Carbon::now();
-                            $emp->save();
-                        }
-                    }
-                }
-            } else {
+        if ($buscarCodigoCentro) {
+            return response()->json(array(
+                "respuesta" => 1,
+                "mensaje" => "Ya existe un centro de costo con este código."
+            ), 200);
+        }
+        // : BUSCAR CENTRO DE COSTO CON EL MISMO NOMBRE - ATRIBUTO NOMBRE -> 2
+        $buscarNombreCentro = centro_costo::where('centroC_descripcion', '=', $descripcion)
+            ->where('centroC_id', '!=', $id)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->where('estado', '=', 1)
+            ->get()
+            ->first();
+        if ($buscarNombreCentro) {
+            return response()->json(array(
+                "respuesta" => 2,
+                "mensaje" => "Ya existe un centro de costo con este nombre."
+            ), 200);
+        }
+        $centro = centro_costo::findOrFail($id);
+        $centro->codigo = $codigo;
+        $centro->centroC_descripcion = $descripcion;
+        $centro->porEmpleado = $porEmpleado;
+        $centro->asistenciaPuerta = $asistenciaPuerta;
+        $centro->modoTareo = $modoTareo;
+        $centro->save();
+        // * EMPLEADOS EN CENTRO DE COSTO
+        $empleadoCentro = centrocosto_empleado::where('idCentro', '=', $centro->centroC_id)->where('estado', '=', 1)->get();
+        if ($centro->porEmpleado == 1) {
+            // * SI ARRAY EMPLEADOS ESTA VACIO
+            if (is_null($empleados)) {
                 foreach ($empleadoCentro as $ec) {
                     $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
                     $emp->estado = 0;
                     $emp->fecha_baja = Carbon::now();
                     $emp->save();
                 }
+            } else {
+                // * BUSCAR EMPLEADOS CON CENTRO COSTO
+                foreach ($empleados as $e) {
+                    $estado = true;
+                    for ($index = 0; $index < sizeof($empleadoCentro); $index++) {
+                        if ($empleadoCentro[$index]->idEmpleado == $e) {
+                            $estado = false;
+                        }
+                    }
+                    if ($estado) {
+                        $nuevoCentroCosto = new centrocosto_empleado();
+                        $nuevoCentroCosto->idCentro = $centro->centroC_id;
+                        $nuevoCentroCosto->idEmpleado = $e;
+                        $nuevoCentroCosto->fecha_alta = Carbon::now();
+                        $nuevoCentroCosto->save();
+                    }
+                }
+
+                // * COMPARAR EMPLEADOS CENTRO CON LISTA DE EMPLEADOS
+                foreach ($empleadoCentro as $ec) {
+                    $estadoB = true;
+                    foreach ($empleados as $em) {
+                        if ($ec->idEmpleado == $em) {
+                            $estadoB = false;
+                        }
+                    }
+                    if ($estadoB) {
+                        $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
+                        $emp->estado = 0;
+                        $emp->fecha_baja = Carbon::now();
+                        $emp->save();
+                    }
+                }
             }
-            return response()->json($id, 200);
         } else {
-            return response()->json(array("respuesta" => 1, "mensaje" => "Ya existe un centro de costo con este código"), 200);
+            foreach ($empleadoCentro as $ec) {
+                $emp = centrocosto_empleado::where('id', '=', $ec->id)->get()->first();
+                $emp->estado = 0;
+                $emp->fecha_baja = Carbon::now();
+                $emp->save();
+            }
         }
+        return response()->json($id, 200);
     }
 
     // * LISTA DE CENTRO DE COSTOS PARA ASIGNACION
@@ -202,6 +281,7 @@ class centrocostoController extends Controller
             ->where('c.centroC_id', '=', $centro->centroC_id)
             ->where('ce.estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
             ->get();
 
         for ($index = 0; $index < sizeof($empleados); $index++) {
@@ -368,33 +448,66 @@ class centrocostoController extends Controller
                 }
             }
         }
+        // : HISTORIAL DE CENTRO COSTO
+        $historialCentroCosto = new historial_centro_costo();
+        $historialCentroCosto->idCentro = $idCentro;
+        $historialCentroCosto->fechaAlta = Carbon::now();
+        $historialCentroCosto->save();
+
         return response()->json($idCentro, 200);
     }
 
+    // * RECUPERAR CENTRO DE COSTO
     public function recuperarCentro(Request $request)
     {
         $id = $request->get('id');
+        // : TABLA DE CENTRO DE COSTO
         $centro = centro_costo::findOrFail($id);
         $centro->estado = 1;
         $centro->save();
+        // : TABLA DE HISTORIAL DE CENTRO DE COSTO
+        $historial = new historial_centro_costo();
+        $historial->idCentro = $id;
+        $historial->fechaAlta = Carbon::now();
+        $historial->save();
+        // : TABLA DE CENTRO DE COSTO EMPLEADO
+        $centroEmpleado = centrocosto_empleado::where('idCentro', '=', $id)->groupBy('idEmpleado')->get();
+        foreach ($centroEmpleado as $ce) {
+            // : EMPLEADO 
+            $empleado = empleado::select('emple_estado')->where('emple_id', '=', $ce->idEmpleado)->get()->first();
+            if ($empleado->emple_estado == 1) {
+                // : NUEVA CENTRO DE COSTO EMPLEADO
+                $newCentroE = new centrocosto_empleado();
+                $newCentroE->idCentro = $id;
+                $newCentroE->idEmpleado =  $ce->idEmpleado;
+                $newCentroE->fecha_alta = Carbon::now();
+                $newCentroE->save();
+            }
+        }
 
         return response()->json($centro->centroC_id, 200);
     }
 
+    // * CAMBIAR ESTADO CENTRO DE COSTO
     public function eliminarCentro(Request $request)
     {
         $id = $request->get('id');
-        $empleado = empleado::where('emple_centCosto', '=', $id)->where('emple_estado', '=', 1)->get()->first();
 
-        if ($empleado) {
-            return 0;
-        } else {
-            $centro = centro_costo::findOrFail($id);
-            $centro->estado = 0;
-            $centro->save();
-
-            return response()->json($id, 200);
+        // : TABLA DE CENTRO DE COSTO
+        $centro = centro_costo::findOrFail($id);
+        $centro->estado = 0;
+        $centro->save();
+        // : TABLA DE HISTORIAL DE CENTRO DE COSTO
+        $historial = historial_centro_costo::where('idCentro', '=', $id)->whereNull('fechaBaja')->get()->first();
+        $historial->fechaBaja = Carbon::now();
+        // : TABLA DE CENTRO DE COSTO EMPLEADO
+        $centroEmpleado = centrocosto_empleado::where('idCentro', '=', $id)->where('estado', '=', 1)->get();
+        foreach ($centroEmpleado as $ce) {
+            $ce->estado = 0;
+            $ce->fecha_baja = Carbon::now();
+            $ce->save();
         }
+        return response()->json($id, 200);
     }
 
     // * CAMBIAR ESTADOS DE MODOS
@@ -402,7 +515,7 @@ class centrocostoController extends Controller
     {
         $idCentro = $request->get('id');
         $control = $request->get('control');
-        // BUSCAMOS ACTIVIDAD
+        // : BUSCAMOS CENTRO COSTO
         $centro = centro_costo::findOrFail($idCentro);
         if ($centro) {
             if ($control == "AP") {

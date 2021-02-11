@@ -555,7 +555,7 @@ class apiSeguimientoRutaContoller extends Controller
             ->get()
             ->first();
         if ($horario_empleado) {
-            $fecha = Carbon::now();
+            $fecha = Carbon::now('America/Lima');
             $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
             $horarioG = DB::table('horario_empleado as he')
                 ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')

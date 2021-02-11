@@ -25,9 +25,11 @@ use App\actividad;
 use App\actividad_area;
 use App\actividad_empleado;
 use App\calendario;
+use App\centrocosto_empleado;
 use App\eventos_usuario;
 use App\eventos_empleado;
 use App\historial_empleado;
+use Carbon\Carbon;
 
 class excelEmpleadoController extends Controller
 {
@@ -350,7 +352,6 @@ class excelEmpleadoController extends Controller
                     'emple_distrito'   =>  $row['id'],
                     'emple_cargo'      =>  $row['idcargo'],
                     'emple_area'       => $row['idarea'],
-                    'emple_centCosto'  => $row['idcentro_costo'],
 
                     'emple_departamentoN' => $row['iddepartamento_nacimiento'],
 
@@ -372,7 +373,12 @@ class excelEmpleadoController extends Controller
                     //
                 ]);
 
-
+                // * CENTRO DE COSTOS 
+                $centroCosto = new centrocosto_empleado();
+                $centroCosto->idCentro = $row['idcentro_costo'];
+                $centroCosto->idEmpleado = $empleadoId->emple_id;
+                $centroCosto->fecha_alta = Carbon::now();
+                $centroCosto->save();
                 //* BUSCAR ACTIVIDAD DE CONTROL REMOTO EN ORGANIZACION
                 $actividad = actividad::where('organi_id', '=', session('sesionidorg'))->where('controlRemoto', '=', 1)->where('controlRuta', '=', 1)->where('eliminacion', '=', 0)->get()->first();
 

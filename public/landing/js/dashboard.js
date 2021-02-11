@@ -558,15 +558,18 @@ $.ajax({
         if (data[0].centro.length != 0) {
             $('#divcentro').show();
             for (var i = 0; i < data[0].centro.length; i++) {
-                if (data[0].centro[i].centroC_descripcion == null) {
-                    nombre.push("No definido");
-                } else {
-                    nombre.push(data[0].centro[i].centroC_descripcion);
-                }
+                nombre.push(data[0].centro[i].centroC_descripcion);
                 total.push(data[0].centro[i].Total);
                 suma += data[0].centro[i].Total;
             }
-            for (var j = 3; j < data[0].centro.length; j++) {
+            // : NO DEFINIDO
+            var noDefinido = (data[0].empleado[0].totalE - suma);
+            if (noDefinido != 0) {
+                nombre.push("No definido");
+                total.push(noDefinido);
+                suma += noDefinido;
+            }
+            for (var j = 3; j < (data[0].centro.length + 1); j++) {
                 color.push(getRandomColor());
             }
             // CARD

@@ -124,8 +124,8 @@ function calendario() {
             if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
-                 /* HORARIO  CUANDO TIENE PAUSAS*/
-                 if (info.event.extendedProps.pausas != '') {
+                /* HORARIO  CUANDO TIENE PAUSAS*/
+                if (info.event.extendedProps.pausas != '') {
                     var cadenaPausas = [];
                     $.each(info.event.extendedProps.pausas, function (index, value2) {
 
@@ -526,8 +526,6 @@ function calendario_edit() {
     calendarioedit.render();
 }
 /* ------------------------------------ */
-
-
 /* FUNCIONES PARA AGREGAR EVENTOS EN CALENDARIO EDITAR EMPLEADO */
 
 //* REGISTRAR DESCANSO
@@ -815,10 +813,7 @@ function modalIncidencia_ed() {
         },
     });
 }
-
 /* ------------------------------------------------------------------------- */
-
-
 /* ASIGNACION DE HORARIO A DIA EN EDITAR EMPLEADO */
 function agregarHorarioSe() {
     var H1 = $("#pruebaStar_ed").val();
@@ -947,10 +942,7 @@ function agregarHorarioSe() {
     });
 };
 /* ---------------------------------------------------------- */
-
-
 /* FUNCIONES PARA AGREGAR EVENTOS EN CALENDARIO REGISTRAR EMPLEADO */
-
 //*DESCANSO
 function laborableTem() {
     $("#calendarioAsignar").modal("hide");
@@ -1025,7 +1017,6 @@ function laborableTem() {
         error: function () { },
     });
 }
-
 //*FERIADO
 function diaferiadoTem() {
     $("#calendarioAsignar").modal("hide");
@@ -1095,7 +1086,6 @@ function diaferiadoTem() {
         error: function () { },
     });
 }
-
 //*NO LABORABLE
 function nolaborableTem() {
     $("#calendarioAsignar").modal("hide");
@@ -1168,14 +1158,12 @@ function nolaborableTem() {
         error: function () { },
     });
 }
-
 //*ABRIR MODAL INCIDENCIA
 function agregarinciden() {
     $("#calendarioAsignar").modal("hide");
     $("#frmIncidenciaCa")[0].reset();
     $("#modalIncidencia").modal("show");
 }
-
 //*REGISTRAR INCIDENCIA
 function modalIncidencia() {
     var id_calendario = $("#selectCalendario").val();
@@ -1215,7 +1203,6 @@ function modalIncidencia() {
     });
 }
 /* ------------------------------------------------------ */
-
 /* EVENTO CUANDO CAMBIO CALENDARIO EN REGISTRAR EMPLEADO */
 $("#selectCalendario").change(function () {
     var idempleado = $("#idEmpleado").val();
@@ -1282,7 +1269,6 @@ $("#selectCalendario").change(function () {
     }, 1400);
 });
 /* --------------------------------------------------- */
-
 /* EVENTO CUANDO CAMBIO CALENDARIO EN EDITAR EMPLEADO */
 $("#selectCalendario_ed").change(function () {
     $("#detallehorario_ed").empty();
@@ -1329,8 +1315,6 @@ $("#selectCalendario_ed").change(function () {
     }, 1400);
 });
 /* --------------------------------------------------- */
-
-
 /* ----------ELIMINAR HORARIOS EN CALENDARIO HORARIO REGISTRAR EMPLEADO ---------------------------*/
 function eliminarhorariosTem() {
     fmes = calendar2.getDate();
@@ -1381,7 +1365,6 @@ function eliminarhorariosTem() {
     });
 }
 /* --------------------------- */
-
 /* CALENDARIO HORARIO EN REGISTRAR EMPLEADO */
 function calendario2() {
     var calendarEl = document.getElementById("calendar2");
@@ -1423,11 +1406,11 @@ function calendario2() {
             var event = calendar2.getEventById(id);
 
             if (info.event.textColor == "111111" ||
-            info.event.textColor == "1" ||
-            info.event.textColor == "0"
-            ){
-                 /* UNBIND SOLO UNA VEZ */
-                 $('#eliminaHorarioDia_re').unbind().click(function() {
+                info.event.textColor == "1" ||
+                info.event.textColor == "0"
+            ) {
+                /* UNBIND SOLO UNA VEZ */
+                $('#eliminaHorarioDia_re').unbind().click(function () {
                     $('#editarConfigHorario_re').modal('hide');
                     bootbox.confirm({
                         title: "Eliminar horario",
@@ -1474,33 +1457,33 @@ function calendario2() {
                             }
                         },
                     });
-                 });
+                });
 
-                 //*seteando datos amodal
-                 $('#idHoraEmpleado_re').val(info.event.id);
-                 if(info.event.borderColor == '#5369f8'){
-                    $('#fueraHSwitch_Actualizar_re').prop("checked",true);
+                //*seteando datos amodal
+                $('#idHoraEmpleado_re').val(info.event.id);
+                if (info.event.borderColor == '#5369f8') {
+                    $('#fueraHSwitch_Actualizar_re').prop("checked", true);
                 }
-                else{
-                    $('#fueraHSwitch_Actualizar_re').prop("checked",false);
+                else {
+                    $('#fueraHSwitch_Actualizar_re').prop("checked", false);
                 }
                 if (info.event.extendedProps.horaAdic == 1) {
-                    $('#horAdicSwitch_Actualizar_re').prop("checked",true);
+                    $('#horAdicSwitch_Actualizar_re').prop("checked", true);
                     $('#nHorasAdic_Actualizar_re').show();
 
                     $("#nHorasAdic_Actualizar_re").val(info.event.extendedProps.nHoraAdic);
 
 
                 }
-                else{
-                    $('#horAdicSwitch_Actualizar_re').prop("checked",false);
+                else {
+                    $('#horAdicSwitch_Actualizar_re').prop("checked", false);
                     $('#nHorasAdic_Actualizar_re').hide();
                 }
 
-                 $('#editarConfigHorario_re').modal('show');
+                $('#editarConfigHorario_re').modal('show');
 
             }
-            else{
+            else {
                 bootbox.confirm({
                     title: "Eliminar evento del calendario",
                     message:
@@ -1559,8 +1542,8 @@ function calendario2() {
             if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
-                  /* HORARIO  CUANDO TIENE PAUSAS*/
-                  if (info.event.extendedProps.pausas != '') {
+                /* HORARIO  CUANDO TIENE PAUSAS*/
+                if (info.event.extendedProps.pausas != '') {
                     var cadenaPausas = [];
                     $.each(info.event.extendedProps.pausas, function (index, value2) {
 
@@ -1659,8 +1642,6 @@ function calendario2() {
 }
 document.addEventListener("DOMContentLoaded", calendario2);
 /* ----------------------------------------------------------- */
-
-
 /* ASIGNACION DE HORARIO A DIA EN REGISTRAR EMPLEADO */
 function agregarHorarioSe_regis() {
     var H1 = $("#pruebaStar").val();
@@ -1789,8 +1770,6 @@ function agregarHorarioSe_regis() {
     });
 };
 /* ----------------------------------------------- */
-
-
 /* CALENDARIO DE EVENTOS EN VER EMPLEADO */
 function calendario3() {
     var calendarEl = document.getElementById("calendar3");
@@ -1933,7 +1912,6 @@ function calendario3() {
 }
 /* document.addEventListener("DOMContentLoaded", calendario3); */
 /* ---------------------------------------------------------- */
-
 /* CALENDARIO DE HORARIOS EN VER EMPLEADO */
 function calendario4() {
     var calendarEl = document.getElementById("calendar4");
@@ -2076,7 +2054,6 @@ function calendario4() {
 }
 /* document.addEventListener("DOMContentLoaded", calendario4); */
 /* ---------------------------------------------------------------- */
-
 /* CALENDARIO DISABLED EN EDITAR EMPELADO */
 function calendarioInv_ed() {
     var calendarElInv_ed = document.getElementById("calendarInv_ed");
@@ -2114,7 +2091,6 @@ function calendarioInv_ed() {
 }
 /* document.addEventListener("DOMContentLoaded", calendarioInv_ed); */
 /* ------------------------------------------------------------------------ */
-
 /* CALENDARIO HORARIO EN EDITAR EMPLEADO */
 function calendario2_ed() {
     var calendarEl = document.getElementById("calendar2_ed");
@@ -2161,7 +2137,7 @@ function calendario2_ed() {
                 info.event.textColor == "0"
             ) {
                 /* UNBIND SOLO UNA VEZ */
-                $('#eliminaHorarioDia').unbind().click(function() {
+                $('#eliminaHorarioDia').unbind().click(function () {
                     $('#editarConfigHorario').modal('hide');
                     bootbox.confirm({
                         title: "Eliminar horario",
@@ -2210,30 +2186,30 @@ function calendario2_ed() {
                             }
                         },
                     });
-                 });
-                 /* SI ES HORARIO */
+                });
+                /* SI ES HORARIO */
                 if (info.event.textColor == "111111") {
                     $('#idHoraEmpleado').val(info.event.id);
-                    if(info.event.borderColor == '#5369f8'){
-                        $('#fueraHSwitch_Actualizar').prop("checked",true);
+                    if (info.event.borderColor == '#5369f8') {
+                        $('#fueraHSwitch_Actualizar').prop("checked", true);
                     }
-                    else{
-                        $('#fueraHSwitch_Actualizar').prop("checked",false);
+                    else {
+                        $('#fueraHSwitch_Actualizar').prop("checked", false);
                     }
                     if (info.event.extendedProps.horaAdic == 1) {
-                        $('#horAdicSwitch_Actualizar').prop("checked",true);
+                        $('#horAdicSwitch_Actualizar').prop("checked", true);
                         $('#nHorasAdic_Actualizar').show();
 
                         $("#nHorasAdic_Actualizar").val(info.event.extendedProps.nHoraAdic);
 
 
                     }
-                    else{
-                        $('#horAdicSwitch_Actualizar').prop("checked",false);
+                    else {
+                        $('#horAdicSwitch_Actualizar').prop("checked", false);
                         $('#nHorasAdic_Actualizar').hide();
                     }
 
-                     $('#editarConfigHorario').modal('show');
+                    $('#editarConfigHorario').modal('show');
 
 
 
@@ -2504,7 +2480,6 @@ function calendario2_ed() {
 }
 /* document.addEventListener("DOMContentLoaded", calendario2_ed); */
 /* --------------------------------------------- */
-
 $("#file").fileinput({
     allowedFileExtensions: ["jpg", "jpeg", "png"],
     uploadAsync: false,
@@ -2518,13 +2493,11 @@ $("#file").fileinput({
     showUpload: false,
     showBrowse: false,
 });
-
-//AREA
+// : ***************************************** AREA EN REGISTRAR **************************************
 function agregarArea() {
     objArea = datosArea("POST");
     enviarArea("", objArea);
 }
-
 function datosArea(method) {
     nuevoArea = {
         area_descripcion: $("#textArea").val(),
@@ -2532,7 +2505,6 @@ function datosArea(method) {
     };
     return nuevoArea;
 }
-
 function enviarArea(accion, objArea) {
     var id = $("#editarA").val();
     if (id == "" || id == undefined) {
@@ -2670,12 +2642,11 @@ function enviarArea(accion, objArea) {
         });
     }
 }
-///CARGO
+// : ***************************************** CARGO EN REGISTRAR **************************************
 function agregarcargo() {
     objCargo = datosCargo("POST");
     enviarCargo("", objCargo);
 }
-
 function datosCargo(method) {
     nuevoCargo = {
         cargo_descripcion: $("#textCargo").val(),
@@ -2683,7 +2654,6 @@ function datosCargo(method) {
     };
     return nuevoCargo;
 }
-
 function enviarCargo(accion, objCargo) {
     var id = $("#editarC").val();
     if (id == "" || id == undefined) {
@@ -2822,12 +2792,11 @@ function enviarCargo(accion, objCargo) {
         });
     }
 }
-//centro costo
+// : ***************************************** CENTRO DE COSTO EN REGISTRAR **************************************
 function agregarcentro() {
     objCentroC = datosCentro("POST");
     enviarCentro("", objCentroC);
 }
-
 function datosCentro(method) {
     nuevoCentro = {
         centroC_descripcion: $("#textCentro").val(),
@@ -2835,7 +2804,6 @@ function datosCentro(method) {
     };
     return nuevoCentro;
 }
-
 function enviarCentro(accion, objCentroC) {
     var id = $("#editarCC").val();
     if (id == "" || id == undefined) {
@@ -2855,48 +2823,82 @@ function enviarCentro(accion, objCentroC) {
                 },
             },
             success: function (data) {
-                $("#centroc").append(
-                    $("<option>", {
-                        //agrego los valores que obtengo de una base de datos
-                        value: data.centroC_id,
-                        text: data.centroC_descripcion,
-                        selected: true,
-                    })
-                );
-                $("#v_centroc").append(
-                    $("<option>", {
-                        //agrego los valores que obtengo de una base de datos
-                        value: data.centroC_id,
-                        text: data.centroC_descripcion
-                    })
-                );
-                $("#centroc").val(data.centroC_id).trigger("change"); //lo selecciona
-                $("#textCentro").val("");
-                $("#editarCentro").hide();
-                limpiar();
-                $("#centrocmodal").modal("toggle");
-                $("#form-registrar").modal("show");
-                $.notify(
-                    {
-                        message: "\nCentro Costo Registrado\n",
-                        icon: "admin/images/checked.svg",
-                    },
-                    {
-                        element: $("#form-registrar"),
-                        position: "fixed",
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 5000,
-                        template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
+                if (data.respuesta == undefined) {
+                    $("#centroc").append(
+                        $("<option>", {
+                            //agrego los valores que obtengo de una base de datos
+                            value: data.centroC_id,
+                            text: data.centroC_descripcion,
+                            selected: true,
+                        })
+                    );
+                    $("#v_centroc").append(
+                        $("<option>", {
+                            //agrego los valores que obtengo de una base de datos
+                            value: data.centroC_id,
+                            text: data.centroC_descripcion
+                        })
+                    );
+                    var idCC = [];
+                    idCC = $("#centroc").val();
+                    idCC.push(data.centroC_id);
+                    $("#centroc").val(idCC).trigger("change"); //lo selecciona
+                    $("#textCentro").val("");
+                    $("#editarCentro").hide();
+                    limpiar();
+                    $("#centrocmodal").modal("toggle");
+                    $("#form-registrar").modal("show");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nCentro Costo Registrado\n",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            element: $("#form-registrar"),
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                } else {
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $("#centrocmodal"),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
             },
             error: function () { },
         });
@@ -2920,65 +2922,100 @@ function enviarCentro(accion, objCentroC) {
                 },
             },
             success: function (data) {
-                $("#centroc").empty();
-                $("#v_centroc").empty();
-                var select = "";
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "/centro",
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                            "content"
-                        ),
-                    },
-                    success: function (data) {
-                        select += `<option value="">Seleccionar</option>`;
-                        for (var i = 0; i < data.length; i++) {
-                            select += `<option class="" value="${data[i].centroC_id}">${data[i].centroC_descripcion}</option>`;
-                        }
-                        $("#centroc").append(select);
-                        $("#v_centroc").append(select);
-                    },
-                    error: function () { },
-                });
-                $("#centroc").val(data.centroC_id).trigger("change"); //lo selecciona
-                $("#textCentro").val("");
-                $("#editarCentro").hide();
-                limpiar();
-                $("#centrocmodal").modal("toggle");
-                $("#form-registrar").modal("show");
-                $.notify(
-                    {
-                        message: "\nCentro Costo Modificado\n",
-                        icon: "admin/images/checked.svg",
-                    },
-                    {
-                        element: $("#form-registrar"),
-                        position: "fixed",
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 5000,
-                        template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
+                if (data.respuesta == undefined) {
+                    var idCC = [];
+                    idCC = $('#centroc').val();
+                    if (!idCC.includes(data.centroC_id)) {
+                        idCC.push(data.centroC_id);
                     }
-                );
+                    $("#centroc").empty();
+                    $("#v_centroc").empty();
+                    var select = "";
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "/centro",
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                        success: function (data) {
+                            select += `<option value="">Seleccionar</option>`;
+                            for (var i = 0; i < data.length; i++) {
+                                select += `<option class="" value="${data[i].centroC_id}">${data[i].centroC_descripcion}</option>`;
+                            }
+                            $("#centroc").append(select);
+                            $("#v_centroc").append(select);
+                        },
+                        error: function () { },
+                    });
+                    $("#centroc").val(idCC).trigger("change"); //lo selecciona
+                    $("#textCentro").val("");
+                    $("#editarCentro").hide();
+                    limpiar();
+                    $("#centrocmodal").modal("toggle");
+                    $("#form-registrar").modal("show");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nCentro Costo Modificado\n",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            element: $("#form-registrar"),
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                } else {
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $("#centrocmodal"),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
             },
         });
     }
 }
-//LOCAL
+// : ***************************************** LOCAL EN REGISTRAR **************************************
 function agregarlocal() {
     objLocal = datosLocal("POST");
     enviarLocal("", objLocal);
 }
-
 function datosLocal(method) {
     nuevoLocal = {
         local_descripcion: $("#textLocal").val(),
@@ -2986,7 +3023,6 @@ function datosLocal(method) {
     };
     return nuevoLocal;
 }
-
 function enviarLocal(accion, objLocal) {
     var id = $("#editarL").val();
     if (id == "" || id == undefined) {
@@ -3124,12 +3160,11 @@ function enviarLocal(accion, objLocal) {
         });
     }
 }
-//NIVEL
+// : ***************************************** NIVEL EN REGISTRAR **************************************
 function agregarnivel() {
     objNivel = datosNivel("POST");
     enviarNivel("", objNivel);
 }
-
 function datosNivel(method) {
     nuevoNivel = {
         nivel_descripcion: $("#textNivel").val(),
@@ -3137,7 +3172,6 @@ function datosNivel(method) {
     };
     return nuevoNivel;
 }
-
 function enviarNivel(accion, objNivel) {
     var id = $("#editarN").val();
     if (id == "" || id == undefined) {
@@ -3275,13 +3309,11 @@ function enviarNivel(accion, objNivel) {
         });
     }
 }
-
-//CONTRATO
+// : ***************************************** CONTRATO EN REGISTRAR **************************************
 function agregarContrato() {
     objContrato = datosContrato("POST");
     enviarContrato("", objContrato);
 }
-
 function datosContrato(method) {
     nuevoContrato = {
         contrato_descripcion: $("#textContrato").val(),
@@ -3289,7 +3321,6 @@ function datosContrato(method) {
     };
     return nuevoContrato;
 }
-
 function enviarContrato(accion, objContrato) {
     var id = $("#editarCO").val();
     if (id == "" || id == undefined) {
@@ -3427,12 +3458,11 @@ function enviarContrato(accion, objContrato) {
         });
     }
 }
-//CONDICION DE PAGO
+// : ***************************************** CONDICION DE PAGO EN REGISTRAR **************************************
 function agregarCondicion() {
     objCondicion = datosCondicion("POST");
     enviarCondicion("", objCondicion);
 }
-
 function datosCondicion(method) {
     nuevoCondicion = {
         condicion: $("#textCondicion").val(),
@@ -3440,7 +3470,6 @@ function datosCondicion(method) {
     };
     return nuevoCondicion;
 }
-
 function enviarCondicion(accion, objCondicion) {
     var id = $("#editarCP").val();
     if (id == "" || id == undefined) {
@@ -3637,7 +3666,6 @@ function datosPersona(method) {
     };
     return nuevoEmpleado;
 }
-
 function enviarEmpleado(accion, objEmpleado) {
     var formData = new FormData();
     formData.append("objEmpleado", JSON.stringify(objEmpleado));
@@ -3751,7 +3779,6 @@ function datosEmpresaEmpleado(method) {
     };
     return nuevoEmpresa;
 }
-
 function enviarEmpresarialEmpleado(accion, objEmpleado) {
     var formData = new FormData();
     formData.append("objEmpleado", JSON.stringify(objEmpleado));
@@ -3803,9 +3830,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
         error: function (data, errorThrown) { },
     });
 }
-
 //GUARDAR FOTO EN GUARDAR EMPLEADO
-
 function enviarFotoEmpleado(accion) {
     var formData = new FormData();
     formData.append("file", $("#file").prop("files")[0]);
@@ -3862,7 +3887,6 @@ function datosCalendarioEmpleado(method) {
     };
     return nuevoCalendario;
 }
-
 function enviarCalendarioEmpleado(accion, objEmpleado) {
     var formData = new FormData();
     formData.append("objEmpleado", JSON.stringify(objEmpleado));
@@ -3919,7 +3943,6 @@ function datosHorarioEmpleado(method) {
     };
     return nuevoHorario;
 }
-
 function enviarHorarioEmpleado(accion, objEmpleado) {
     var formData = new FormData();
     formData.append("objEmpleado", JSON.stringify(objEmpleado));
@@ -4050,7 +4073,6 @@ function datosPersonaA(method) {
     };
     return nuevoEmpleadoA;
 }
-
 function actualizarEmpleado(accion, objEmpleadoA) {
     var formDataA = new FormData();
     formDataA.append("file", $("#file2").prop("files")[0]);
@@ -4198,8 +4220,6 @@ function actualizarEmpleadoFoto(accion) {
         },
     });
 }
-///ELIMINAR EMPLEADO
-
 //abrir nuevo form
 function abrirnuevo() {
     $("#form-ver").hide();
@@ -4215,7 +4235,6 @@ function abrirnuevo() {
     $("#selectHorario").val("Seleccionar horario");
     $("#selectHorario").trigger("change");
 }
-
 //eliminar foto
 function cargarFile2() {
     $("#file2").fileinput({
@@ -4336,7 +4355,6 @@ $("#formNuevoEd").click(function () {
         $("#form-ver").modal();
     });
 });
-
 $("#formNuevoEd").hide();
 $("#formNuevoEl").hide();
 $("#cerrarE").click(function () {
@@ -4464,7 +4482,6 @@ $("#cerrarModalEmpleado").click(function () {
     $("#estadoPC").val("false");
     $("#estadoPH").val("false");
 });
-
 function cerrarVer() {
     $("#smartwizardVer").smartWizard("reset");
     $('#smartwizardVer :input[type="text"]').val("");
@@ -4507,7 +4524,6 @@ $("#editarCondicionA").hide();
 $("#validCel").hide();
 $("#v_validCel").hide();
 $("#v_validGenero").hide();
-
 function FinalizarEmpleado() {
     RefreshTablaEmpleado();
     $('input[type="text"]').val("");
@@ -4611,8 +4627,8 @@ $("#sw-default-step-6").on("keyup change", function () {
     $("#estadoPH").val("true");
 
 });
-//************************Editar en los modal de agregar */
-//*******AREA***/
+// : ******************************************** BOTON DE BUSCAR EN REGISTRAR  **************************************
+// ? ÁREA
 $("#buscarArea").on("click", function () {
     $("#editarArea").empty();
     var container = $("#editarArea");
@@ -4657,7 +4673,7 @@ $("#buscarArea").on("click", function () {
     });
     $("#editarArea").show();
 });
-//******CARGO*****/
+// ? CARGO
 $("#buscarCargo").on("click", function () {
     $("#editarCargo").empty();
     var container = $("#editarCargo");
@@ -4702,14 +4718,14 @@ $("#buscarCargo").on("click", function () {
     });
     $("#editarCargo").show();
 });
-//******CENTRO***/
+// ? CENTRO DE COSTO
 $("#buscarCentro").on("click", function () {
     $("#editarCentro").empty();
     var container = $("#editarCentro");
     var select = "";
     $.ajax({
         type: "GET",
-        url: "/centro",
+        url: "/centroPEditar",
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
@@ -4747,7 +4763,7 @@ $("#buscarCentro").on("click", function () {
     });
     $("#editarCentro").show();
 });
-//******LOCAL***/
+// ? LOCAL
 $("#buscarLocal").on("click", function () {
     $("#editarLocal").empty();
     var container = $("#editarLocal");
@@ -4792,7 +4808,7 @@ $("#buscarLocal").on("click", function () {
     });
     $("#editarLocal").show();
 });
-//******NIVEL***/
+// ? NIVEL
 $("#buscarNivel").on("click", function () {
     $("#editarNivel").empty();
     var container = $("#editarNivel");
@@ -4837,7 +4853,7 @@ $("#buscarNivel").on("click", function () {
     });
     $("#editarNivel").show();
 });
-//******CONTRATO***/
+// ? CONTRATO
 $("#buscarContrato").on("click", function () {
     $("#editarContrato").empty();
     var container = $("#editarContrato");
@@ -4882,7 +4898,7 @@ $("#buscarContrato").on("click", function () {
     });
     $("#editarContrato").show();
 });
-//******CONDICION DE PAGO***/
+// ? CONDICIÓN
 $("#buscarCondicion").on("click", function () {
     $("#editarCondicion").empty();
     var container = $("#editarCondicion");
@@ -5887,15 +5903,15 @@ $(".soloLetras").bind('keypress', function (event) {
 });
 /*  -----------------------------FIN VALIDACION----------------------------------*/
 
- /* ---------ACTUALIZAR CONFIGURACION DE HORARIO EN EDITAR EMPLEADO------------- */
- function actualizarConfigHorario(){
-     let idHoraEmp=$('#idHoraEmpleado').val();
-     let fueraHorario;
-     let permiteHadicional;
-     let nHorasAdic;
+/* ---------ACTUALIZAR CONFIGURACION DE HORARIO EN EDITAR EMPLEADO------------- */
+function actualizarConfigHorario() {
+    let idHoraEmp = $('#idHoraEmpleado').val();
+    let fueraHorario;
+    let permiteHadicional;
+    let nHorasAdic;
 
-     //* Fuera de horario
-     if ($("#fueraHSwitch_Actualizar").is(":checked")) {
+    //* Fuera de horario
+    if ($("#fueraHSwitch_Actualizar").is(":checked")) {
         fueraHorario = 1;
     } else {
         fueraHorario = 0;
@@ -5904,17 +5920,17 @@ $(".soloLetras").bind('keypress', function (event) {
     //* permitir horas adicionales
     if ($("#horAdicSwitch_Actualizar").is(":checked")) {
         permiteHadicional = 1;
-        nHorasAdic=$('#nHorasAdic_Actualizar').val()
+        nHorasAdic = $('#nHorasAdic_Actualizar').val()
     } else {
         permiteHadicional = 0;
-        nHorasAdic=null;
+        nHorasAdic = null;
     }
 
-     $.ajax({
+    $.ajax({
         type: "post",
         url: "/empleado/actualizarConfigHorario",
         data: {
-            idHoraEmp, fueraHorario, permiteHadicional,nHorasAdic
+            idHoraEmp, fueraHorario, permiteHadicional, nHorasAdic
         },
         statusCode: {
             419: function () {
@@ -5935,56 +5951,56 @@ $(".soloLetras").bind('keypress', function (event) {
             alert("Ocurrio un error");
         },
     });
- }
- /* ---------------------------------------------------------------------------- */
+}
+/* ---------------------------------------------------------------------------- */
 
-  /* ---------ACTUALIZAR CONFIGURACION DE HORARIO EN REGISTRAR EMPLEADO------------- */
-  function actualizarConfigHorario_re(){
-    let idHoraEmp=$('#idHoraEmpleado_re').val();
+/* ---------ACTUALIZAR CONFIGURACION DE HORARIO EN REGISTRAR EMPLEADO------------- */
+function actualizarConfigHorario_re() {
+    let idHoraEmp = $('#idHoraEmpleado_re').val();
     let fueraHorario;
     let permiteHadicional;
     let nHorasAdic;
 
     //* Fuera de horario
     if ($("#fueraHSwitch_Actualizar_re").is(":checked")) {
-       fueraHorario = 1;
-   } else {
-       fueraHorario = 0;
-   }
+        fueraHorario = 1;
+    } else {
+        fueraHorario = 0;
+    }
 
-   //* permitir horas adicionales
-   if ($("#horAdicSwitch_Actualizar_re").is(":checked")) {
-       permiteHadicional = 1;
-       nHorasAdic=$('#nHorasAdic_Actualizar_re').val()
-   } else {
-       permiteHadicional = 0;
-       nHorasAdic=null;
-   }
+    //* permitir horas adicionales
+    if ($("#horAdicSwitch_Actualizar_re").is(":checked")) {
+        permiteHadicional = 1;
+        nHorasAdic = $('#nHorasAdic_Actualizar_re').val()
+    } else {
+        permiteHadicional = 0;
+        nHorasAdic = null;
+    }
 
     $.ajax({
-       type: "post",
-       url: "/empleado/actualizarConfigHorario_re",
-       data: {
-           idHoraEmp, fueraHorario, permiteHadicional,nHorasAdic
-       },
-       statusCode: {
-           419: function () {
-               location.reload();
-           },
-       },
-       headers: {
-           "X-CSRF-TOKEN": $(
-               'meta[name="csrf-token"]'
-           ).attr("content"),
-       },
-       success: function (data) {
-           calendar2.refetchEvents();
-           calendar.refetchEvents();
-           $('#editarConfigHorario_re').modal('hide');
-       },
-       error: function (data) {
-           alert("Ocurrio un error");
-       },
-   });
+        type: "post",
+        url: "/empleado/actualizarConfigHorario_re",
+        data: {
+            idHoraEmp, fueraHorario, permiteHadicional, nHorasAdic
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $(
+                'meta[name="csrf-token"]'
+            ).attr("content"),
+        },
+        success: function (data) {
+            calendar2.refetchEvents();
+            calendar.refetchEvents();
+            $('#editarConfigHorario_re').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
 }
 /* ---------------------------------------------------------------------------- */
