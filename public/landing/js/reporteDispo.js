@@ -1637,7 +1637,6 @@ function cargartabla(fecha) {
 function cambiarF() {
     f1 = $("#fechaInput").val();
     f2 = moment(f1).format("YYYY-MM-DD");
-    $('#pasandoV').val(f2);
     cargartabla(f2);
     setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
 }
