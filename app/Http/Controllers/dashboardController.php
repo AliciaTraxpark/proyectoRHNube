@@ -384,6 +384,7 @@ class dashboardController extends Controller
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->where('cc.estado', '=', 1)
+                    ->where('ce.estado', '=', 1)
                     ->groupBy('ce.idCentro')
                     ->get();
             } else {
@@ -413,6 +414,7 @@ class dashboardController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->where('cc.estado', '=', 1)
+                        ->where('ce.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('ce.idCentro')
                         ->get();
@@ -437,6 +439,7 @@ class dashboardController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->where('cc.estado', '=', 1)
+                        ->where('ce.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('ce.idCentro')
                         ->get();
@@ -456,6 +459,7 @@ class dashboardController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('cc.estado', '=', 1)
+                ->where('ce.estado', '=', 1)
                 ->groupBy('ce.idCentro')
                 ->get();
         }

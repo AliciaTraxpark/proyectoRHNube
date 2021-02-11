@@ -87,14 +87,12 @@ class EmpleadoController extends Controller
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->select(
                     'p.perso_nombre',
                     'p.perso_apPaterno',
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -149,9 +147,6 @@ class EmpleadoController extends Controller
                 ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
                 ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-
-
                 ->select(
                     'e.emple_id',
                     'p.perso_id',
@@ -171,7 +166,6 @@ class EmpleadoController extends Controller
                     'dist.name as distNo',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'para.id as iddepaN',
                     'para.name as depaN',
                     'proviN.id as idproviN',
@@ -181,8 +175,6 @@ class EmpleadoController extends Controller
                     'e.emple_id',
                     'c.cargo_id',
                     'a.area_id',
-                    'cc.centroC_id',
-
                     'e.emple_local',
                     'e.emple_nivel',
                     'e.emple_departamento',
@@ -191,8 +183,6 @@ class EmpleadoController extends Controller
                     'e.emple_foto as foto',
                     'e.emple_celular',
                     'e.emple_telefono',
-
-
                     'e.emple_Correo'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -240,7 +230,6 @@ class EmpleadoController extends Controller
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('modo as md', function ($join) {
@@ -248,7 +237,6 @@ class EmpleadoController extends Controller
                         $join->orOn('md.id', '=', 'vr.idModo');
                     })
                     ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
-
                     ->select(
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -256,7 +244,6 @@ class EmpleadoController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'a.area_descripcion',
-                        'cc.centroC_descripcion',
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
@@ -280,7 +267,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', function ($join) {
@@ -296,7 +282,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -313,7 +298,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', function ($join) {
@@ -329,7 +313,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -346,7 +329,6 @@ class EmpleadoController extends Controller
                 ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                 ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                 ->leftJoin('modo as md', function ($join) {
@@ -360,7 +342,6 @@ class EmpleadoController extends Controller
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id',
                     'md.idTipoModo as dispositivo',
                     'e.emple_foto',
@@ -464,14 +445,12 @@ class EmpleadoController extends Controller
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('modo as md', function ($join) {
                         $join->on('md.id', '=', 'v.idModo');
                         $join->orOn('md.id', '=', 'vr.idModo');
                     })
-
                     ->select(
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -479,7 +458,6 @@ class EmpleadoController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'a.area_descripcion',
-                        'cc.centroC_descripcion',
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
@@ -502,7 +480,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', function ($join) {
@@ -518,7 +495,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -535,7 +511,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', function ($join) {
@@ -551,7 +526,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -568,7 +542,6 @@ class EmpleadoController extends Controller
                 ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                 ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
                 ->leftJoin('modo as md', function ($join) {
@@ -583,7 +556,6 @@ class EmpleadoController extends Controller
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id',
                     'md.idTipoModo as dispositivo',
                     'e.emple_foto',
@@ -1036,7 +1008,6 @@ class EmpleadoController extends Controller
             ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
             ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
             ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
@@ -1059,7 +1030,6 @@ class EmpleadoController extends Controller
                 'dist.name as distNo',
                 'c.cargo_descripcion',
                 'a.area_descripcion',
-                'cc.centroC_descripcion',
                 'para.id as iddepaN',
                 'para.name as depaN',
                 'proviN.id as idproviN',
@@ -1069,7 +1039,6 @@ class EmpleadoController extends Controller
                 'e.emple_id',
                 'c.cargo_id',
                 'a.area_id',
-                'cc.centroC_id',
                 'e.emple_local',
                 'e.emple_nivel',
                 'e.emple_departamento',
@@ -1386,14 +1355,12 @@ class EmpleadoController extends Controller
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->select(
                     'p.perso_nombre',
                     'p.perso_apPaterno',
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -2434,7 +2401,6 @@ class EmpleadoController extends Controller
                             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
                             ->where('invi.estado', '=', 1)
@@ -2446,7 +2412,6 @@ class EmpleadoController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'a.area_descripcion',
-                                'cc.centroC_descripcion',
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
@@ -2464,7 +2429,6 @@ class EmpleadoController extends Controller
                             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
                             ->where('invi.estado', '=', 1)
@@ -2476,7 +2440,6 @@ class EmpleadoController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'a.area_descripcion',
-                                'cc.centroC_descripcion',
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
@@ -2493,7 +2456,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
 
@@ -2504,7 +2466,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -2559,7 +2520,6 @@ class EmpleadoController extends Controller
                         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                         ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
 
@@ -2570,7 +2530,6 @@ class EmpleadoController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'a.area_descripcion',
-                            'cc.centroC_descripcion',
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
@@ -2593,7 +2552,6 @@ class EmpleadoController extends Controller
                             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
                             ->where('invi.estado', '=', 1)
@@ -2605,7 +2563,6 @@ class EmpleadoController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'a.area_descripcion',
-                                'cc.centroC_descripcion',
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
@@ -2622,7 +2579,6 @@ class EmpleadoController extends Controller
                             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
                             ->where('invi.estado', '=', 1)
@@ -2634,7 +2590,6 @@ class EmpleadoController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'a.area_descripcion',
-                                'cc.centroC_descripcion',
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
@@ -2651,7 +2606,6 @@ class EmpleadoController extends Controller
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
 
@@ -2662,7 +2616,6 @@ class EmpleadoController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'a.area_descripcion',
-                        'cc.centroC_descripcion',
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
@@ -2737,14 +2690,12 @@ class EmpleadoController extends Controller
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->select(
                     'p.perso_nombre',
                     'p.perso_apPaterno',
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -2790,9 +2741,6 @@ class EmpleadoController extends Controller
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-
-
             ->select(
                 'e.emple_nDoc',
                 'p.perso_nombre',
@@ -2824,9 +2772,6 @@ class EmpleadoController extends Controller
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-
-
                     ->select(
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -2834,7 +2779,6 @@ class EmpleadoController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'a.area_descripcion',
-                        'cc.centroC_descripcion',
                         'e.emple_id'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
@@ -2851,9 +2795,6 @@ class EmpleadoController extends Controller
                 ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-
-
                 ->select(
                     'e.emple_nDoc',
                     'p.perso_nombre',
@@ -2861,7 +2802,6 @@ class EmpleadoController extends Controller
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'a.area_descripcion',
-                    'cc.centroC_descripcion',
                     'e.emple_id'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))

@@ -91,7 +91,7 @@ class horarioController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id', 'he.empleado_emple_id')
             ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-        // ->whereNull('he.empleado_emple_id')
+            // ->whereNull('he.empleado_emple_id')
             ->distinct('e.emple_id')
             ->where('he.estado', '=', 1)
             ->where('e.emple_estado', '=', 1)
@@ -147,16 +147,17 @@ class horarioController extends Controller
                 foreach ($horarioDentro as $horarioDentros) {
                     $horaIDentro = Carbon::parse($horarioDentros->horaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                    if ($horaInicialF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {$startArreD = carbon::create($horarioDentros->start);
+                    if ($horaInicialF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {$startArreD = carbon::create($horarioDentros->start);
+                    } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {$startArreD = carbon::create($horarioDentros->start);
+                    } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                    } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {$startArreD = carbon::create($horarioDentros->start);
+                    } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {
+                        $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
                     }
                 }
@@ -305,9 +306,12 @@ class horarioController extends Controller
             ->leftJoin('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('centrocosto_empleado as ce', 'e.emple_id', '=', 'ce.idEmpleado')
+            ->leftJoin('centro_costo as cc', 'cc.centroC_id', '=', 'ce.idCentro')
             ->leftJoin('local as lo', 'e.emple_local', '=', 'lo.local_id')
             ->where('e.emple_estado', '=', 1)
+            ->where('cc.estado', '=', 1)
+            ->where('ce.estado', '=', 1)
             ->distinct('e.emple_id')
             ->where('he.estado', '=', 1)
             ->where('emple_id', '=', $idsEm)->get();
@@ -320,7 +324,7 @@ class horarioController extends Controller
                 ->where('id_empleado', '=', $idsEm);
 
             $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-            /*  ->where('users_id', '=', Auth::user()->id) */
+                /*  ->where('users_id', '=', Auth::user()->id) */
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                 ->where('he.empleado_emple_id', '=', $idsEm)
                 ->where('he.estado', '=', 1)
@@ -586,7 +590,7 @@ class horarioController extends Controller
                         ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
                         ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
                         ->where('start', '=', $temporal_eventosH->start)
-                    /* ->where('h.horaI', '=', $idhorar)
+                        /* ->where('h.horaI', '=', $idhorar)
                     ->where('h.horaF', '=', $idhorar) */
                         ->where('horario_empleado.empleado_emple_id', '=', $idempsva)
                         ->where('horario_empleado.estado', '=', 1)
@@ -595,16 +599,17 @@ class horarioController extends Controller
                         foreach ($horarioDentro as $horarioDentros) {
                             $horaIDentro = Carbon::parse($horarioDentros->horaI);
                             $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                            if ($horaInicialF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {$startArreD = carbon::create($horarioDentros->start);
+                            if ($horaInicialF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
+                                $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                            } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {$startArreD = carbon::create($horarioDentros->start);
+                            } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
+                                $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                            } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {$startArreD = carbon::create($horarioDentros->start);
+                            } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {
+                                $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($startArreD->format('Y-m-d'));
-
-                            } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {$startArreD = carbon::create($horarioDentros->start);
+                            } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {
+                                $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($startArreD->format('Y-m-d'));
                             }
                         }
@@ -1105,7 +1110,7 @@ class horarioController extends Controller
             ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
             ->where('h.organi_id', '=', session('sesionidorg'))
             ->where('h.horario_id', '=', $idhorario)
-        /*  ->where('he.estado', '=', 1) */
+            /*  ->where('he.estado', '=', 1) */
             ->get();
         if ($horarion[0]->horario_horario_id != null) {
             return 1;
