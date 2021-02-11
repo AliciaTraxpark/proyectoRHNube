@@ -137,7 +137,7 @@ use App\proyecto_empleado;
 @section('breadcrumb')
 {{-- MODAL DE REGISTRAR CORREO --}}
 <div id="modalCorreoElectronico" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreoElectronico"
-    aria-hidden="true" data-backdrop="static">
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
@@ -187,7 +187,7 @@ use App\proyecto_empleado;
 {{-- FINALIZACION MODAL --}}
 {{-- MODAL DE REGISTRAR CELULAR --}}
 <div id="modalCelular" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCelular" aria-hidden="true"
-    data-backdrop="static">
+    data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
@@ -241,7 +241,7 @@ use App\proyecto_empleado;
 {{-- FINALIZACION MODAL --}}
 {{-- MODAL DE AGREGAR ACTIVIDADES EN FORMULARIO EDITAR--}}
 <div id="RegActividadTareaGE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="RegActividadTareaGE"
-    aria-hidden="true" data-backdrop="static">
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
@@ -317,7 +317,7 @@ use App\proyecto_empleado;
 {{-- FINALIZACIÓN DE MODAL --}}
 {{-- MODAL DE AGREGAR ACTIVIDADES EN FORMULARIO AGREGAR--}}
 <div id="ActividadTareaGE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ActividadTareaGE"
-    aria-hidden="true" data-backdrop="static">
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
@@ -393,7 +393,7 @@ use App\proyecto_empleado;
 {{-- FINALIZACIÓN DE MODAL --}}
 {{-- MODAL DE VIDEO DATOS PERSONALES --}}
 <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video" aria-hidden="true"
-    data-backdrop="static" data-keyboard="false">
+    data-backdrop="static" data-keyboard="false" data-keyboard="false">
     <div class="modal-dialog  modal-lg d-flex justify-content-center">
         <div class="modal-content" style="width: 800px">
             <div class="modal-header" style="background-color:#163552;padding:0.5rem">
@@ -1092,7 +1092,7 @@ use App\proyecto_empleado;
     </div>
     {{-- MODAL DE INFORMACION DE CARGA MASIVA DE FOTOS --}}
     <div id="modalInformacionF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalInformacionF"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1151,7 +1151,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- MODAL DE CARGA MASIVA DE FOTOS --}}
     <div id="modalMasivaFoto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalMasivaFoto"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1189,7 +1189,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- MODAL DE ELIMINAR --}}
     <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1262,7 +1262,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- MODAL DE BAJA --}}
     <div id="modalBajaHistorial" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalBajaHistorial"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1337,8 +1337,8 @@ use App\proyecto_empleado;
     </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- MODAL DE BAJA EN REGISTRAR --}}
-    <div id="modalBajaHistorialReg" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="modalBajaHistorialReg" aria-hidden="true" data-backdrop="static">
+    <div id="modalBajaHistorialReg" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+        aria-labelledby="modalBajaHistorialReg" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1415,7 +1415,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE AREA EN REGISTRAR --}}
     <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true"
-        data-backdrop="static">
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1461,7 +1461,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE CARGO EN REGISTRAR --}}
     <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodal" aria-hidden="true"
-        data-backdrop="static">
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1507,7 +1507,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE CENTRO COSTO EN REGISTRAR --}}
     <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodal"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1566,7 +1566,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE LOCAL EN REGISTRAR --}}
     <div id="localmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal" aria-hidden="true"
-        data-backdrop="static">
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1610,7 +1610,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE NIVEL EN REGISTRAR --}}
     <div id="nivelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal" aria-hidden="true"
-        data-backdrop="static">
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1702,7 +1702,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE CONDICION DE PAGO EN REGISTRAR --}}
     <div id="condicionmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="condicionmodal"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1749,8 +1749,8 @@ use App\proyecto_empleado;
     </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE DE CONTRATO EN REGISTRAR --}}
-    <div id="contratoDetallesmodal" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="contratoDetallesmodal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div id="contratoDetallesmodal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+        aria-labelledby="contratoDetallesmodal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2184,7 +2184,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION DE MODAL --}}
     {{-- MODALES DE EDITAR --}}
     <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodalE" aria-hidden="true"
-        data-backdrop="static">
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2225,7 +2225,7 @@ use App\proyecto_empleado;
         </div><!-- /.modal-dialog -->
     </div>
     <div id="cargomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodalE"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2321,7 +2321,7 @@ use App\proyecto_empleado;
     </div>
     {{-- FINALIZACION --}}
     <div id="localmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodalE"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2362,7 +2362,7 @@ use App\proyecto_empleado;
         </div><!-- /.modal-dialog -->
     </div>
     <div id="nivelmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodalE"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2402,7 +2402,7 @@ use App\proyecto_empleado;
         </div><!-- /.modal-dialog -->
     </div>
     <div id="contratomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodalE"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2444,7 +2444,7 @@ use App\proyecto_empleado;
         </div><!-- /.modal-dialog -->
     </div>
     <div id="condicionmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="condicionmodalE"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2488,7 +2488,7 @@ use App\proyecto_empleado;
     </div>
     {{-- DETALLES DE CONTRATO --}}
     <div id="contratoDetallesmodalE" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="contratoDetallesmodalE" aria-hidden="true" data-backdrop="static">
+        aria-labelledby="contratoDetallesmodalE" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg d-flex justify-content-center">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2722,7 +2722,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION --}}
     {{-- NUEVA ALTA --}}
     <div id="contratoDetallesmodalEN" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="contratoDetallesmodalEN" aria-hidden="true" data-backdrop="static">
+        aria-labelledby="contratoDetallesmodalEN" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg d-flex justify-content-center">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2939,7 +2939,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION --}}
     {{-- NUEVO DETALLE --}}
     <div id="NuevoContratoDetallesmodalE" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="NuevoContratoDetallesmodalE" aria-hidden="true" data-backdrop="static">
+        aria-labelledby="NuevoContratoDetallesmodalE" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg d-flex justify-content-center">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -4302,7 +4302,8 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                             <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="regactividadTarea" aria-hidden="true" data-backdrop="static">
+                                aria-labelledby="regactividadTarea" aria-hidden="true" data-backdrop="static"
+                                data-keyboard="false">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                     style="max-width: 550px;">
                                     <div class="modal-content">
@@ -5505,7 +5506,8 @@ use App\proyecto_empleado;
                             </div>
                             {{-- MODAL DE ASIGNAR ACTIVIDADES --}}
                             <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
+                                aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static"
+                                data-keyboard="false">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                     style="max-width: 550px;">
                                     <div class="modal-content">
@@ -5695,7 +5697,7 @@ use App\proyecto_empleado;
 </div>
 {{-- VER EMPLEADO --}}
 <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
-    aria-hidden="true" data-backdrop="static">
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
         <div class="modal-content">
             <div class="modal-header" style="background: #163552;">
