@@ -6281,23 +6281,30 @@ use Carbon\Carbon;
                                 </div>
                                 <div id="sw-default-step-2" style="font-size: 12px!important">
                                     <div class="row">
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <label for="sw-default">Cargo</label>
-                                                <input type="text" class="form-control" name="v_cargoV" id="v_cargoV"
-                                                    disabled>
-                                            </div>
+                                        <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="sw-default">Código Empleado</label>
                                                 <input type="text" class="form-control" name="v_codigoEmpleadoV"
                                                     maxlength="200" id="v_codigoEmpleadoV" disabled>
                                             </div>
-                                        </div> <!-- end col -->
-                                        <div class="col-4">
                                             <div class="form-group">
-                                                <label for="sw-default">Área</label>
-                                                <input type="text" class="form-control" name="v_areaV" id="v_areaV"
-                                                    tabindex="3" disabled>
+                                                <label for="sw-default">Centro de costo</label>
+                                                <select class="form-control" name="v_centrocV" id="v_centrocV"
+                                                    tabindex="4" data-plugin="customselect"
+                                                    data-placeholder="Centro de costo" multiple="multiple" disabled>
+                                                    <option value="">Seleccionar</option>
+                                                    @foreach ($centro_costo as $centro_costos)
+                                                    <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                        {{ $centro_costos->centroC_descripcion }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="sw-default">Cargo</label>
+                                                <input type="text" class="form-control" name="v_cargoV" id="v_cargoV"
+                                                    disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="sw-default">Nivel del Colaborador</label>
@@ -6305,11 +6312,11 @@ use Carbon\Carbon;
                                                     tabindex="6" disabled>
                                             </div>
                                         </div> <!-- end col -->
-                                        <div class="col-4">
+                                        <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="sw-default">Centro de costo</label>
-                                                <input type="text" class="form-control" name="v_centrocV"
-                                                    id="v_centrocV" tabindex="4" disabled>
+                                                <label for="sw-default">Área</label>
+                                                <input type="text" class="form-control" name="v_areaV" id="v_areaV"
+                                                    tabindex="3" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="sw-default">Local</label>
