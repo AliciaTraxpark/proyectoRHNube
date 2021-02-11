@@ -434,3 +434,15 @@ function unirMarcacionConHorarioEmpleado($arrayHorarioE, $fechaHorario, $fechaMa
         }
     }
 }
+// * TIEMPO ENTRE MARCACIONES
+function tiempoMarcacionesPorHorarioEmpleado($idEmpleado, $fecha, $idHorarioEmpleado)
+{
+    $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
+        ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
+        ->where('m.marcaMov_emple_id', '=', $idEmpleado)
+        ->whereNotNull('m.marcaMov_fecha')
+        ->whereNotNull('m.marcaMov_salida')
+        ->where(DB::raw('DATE(marcaMov_fecha)'), '=', $fecha)
+        ->where('m.horarioEmp_id', '=', $idHorarioEmpleado)
+        ->get();
+}
