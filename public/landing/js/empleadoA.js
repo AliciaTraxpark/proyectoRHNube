@@ -1,4 +1,4 @@
-//AREA
+// : ******************************************** AGREGAR ÁREA EN EDITAR **************************************
 function agregarAreaA() {
     objArea = datosAreaA("POST");
     enviarAreaA('', objArea);
@@ -133,8 +133,7 @@ function enviarAreaA(accion, objArea) {
         });
     }
 }
-
-///CARGO
+// : ******************************************** AGREGAR CARGO EN EDITAR **************************************
 function agregarcargoA() {
     objCargo = datosCargoA("POST");
     enviarCargoA('', objCargo);
@@ -477,7 +476,7 @@ function enviarCentroA(accion, objCentroC) {
         });
     }
 }
-//LOCAL
+// : ******************************************** AGREGAR LOCAL EN EDITAR **************************************
 function agregarlocalA() {
     objLocal = datosLocalA("POST");
     enviarLocalA('', objLocal);
@@ -613,7 +612,7 @@ function enviarLocalA(accion, objLocal) {
         });
     }
 }
-//NIVEL
+// : ******************************************** AGREGAR NIVEL EN EDITAR **************************************
 function agregarnivelA() {
     objNivel = datosNivelA("POST");
     enviarNivelA('', objNivel);
@@ -749,13 +748,11 @@ function enviarNivelA(accion, objNivel) {
         });
     }
 }
-
-//CONTRATO
+// : ******************************************** AGREGAR CONTRATO EN EDITAR **************************************
 function agregarContratoA() {
     objContrato = datosContratoA("POST");
     enviarContratoA('', objContrato);
-};
-
+}
 function datosContratoA(method) {
     nuevoContrato = {
         contrato_descripcion: $('#textContratoE').val(),
@@ -763,7 +760,6 @@ function datosContratoA(method) {
     }
     return (nuevoContrato);
 }
-
 function enviarContratoA(accion, objContrato) {
     var id = $('#editarCO').val();
     if (id == '' || id == undefined) {
@@ -894,7 +890,7 @@ function enviarContratoA(accion, objContrato) {
         });
     }
 }
-//CONDICION PAGO
+// : ******************************************** AGREGAR CONDICION DE PAGO EN EDITAR **************************************
 function agregarCondicionA() {
     objCondicion = datosCondicionA("POST");
     enviarCondicionA('', objCondicion);
@@ -907,7 +903,6 @@ function datosCondicionA(method) {
     }
     return (nuevoCondicion);
 }
-
 function enviarCondicionA(accion, objCondicion) {
     var id = $('#editarCO').val();
     if (id == '' || id == undefined) {
@@ -1050,8 +1045,8 @@ function enviarCondicionA(accion, objCondicion) {
 $('#btnCerrar').on("click", function () {
     $('#form-ver').modal('show');
 });
-//************************Editar en los modal de agregar */
-//*******AREA***/
+// : ******************************************** BOTON DE BUSCAR EN EDITAR **************************************
+// ? ÁREA
 $('#buscarAreaA').on("click", function () {
     $('#editarArea').empty();
     var container = $('#editarAreaA');
@@ -1094,7 +1089,7 @@ $('#buscarAreaA').on("click", function () {
     });
     $('#editarAreaA').show();
 });
-//******CARGO*****/
+// ? CARGO
 $('#buscarCargoA').on("click", function () {
     $('#editarCargoA').empty();
     var container = $('#editarCargoA');
@@ -1137,7 +1132,7 @@ $('#buscarCargoA').on("click", function () {
     });
     $('#editarCargoA').show();
 });
-// : ******************************* CENTRO DE COSTO ***************************
+// ? CENTRO DE COSTO
 $('#buscarCentroA').on("click", function () {
     $('#editarCentroA').empty();
     var container = $('#editarCentroA');
@@ -1180,7 +1175,7 @@ $('#buscarCentroA').on("click", function () {
     });
     $('#editarCentroA').show();
 });
-// : ******************************* LOCAL *************************************
+// ? LOCAL
 $('#buscarLocalA').on("click", function () {
     $('#editarLocalA').empty();
     var container = $('#editarLocalA');
@@ -1223,7 +1218,7 @@ $('#buscarLocalA').on("click", function () {
     });
     $('#editarLocalA').show();
 });
-//******NIVEL***/
+// ? NIVEL
 $('#buscarNivelA').on("click", function () {
     $('#editarNivelA').empty();
     var container = $('#editarNivelA');
@@ -1266,7 +1261,7 @@ $('#buscarNivelA').on("click", function () {
     });
     $('#editarNivelA').show();
 });
-//******CONTRATO***/
+// ? CONTRATO
 $('#buscarContratoA').on("click", function () {
     $('#editarContratoA').empty();
     var container = $('#editarContratoA');
@@ -1309,7 +1304,7 @@ $('#buscarContratoA').on("click", function () {
     });
     $('#editarContratoA').show();
 });
-//******CONDICION***/
+// ? CONDICIÓN
 $('#buscarCondicionA').on("click", function () {
     $('#editarCondicionA').empty();
     var container = $('#editarCondicionA');
@@ -1352,7 +1347,7 @@ $('#buscarCondicionA').on("click", function () {
     });
     $('#editarContratoC').show();
 });
-//*****LIMPIAR***/
+// ? LIMPIAR
 function limpiarEditar() {
     $('#editarAreaA').hide();
     $('#editarCargoA').hide();

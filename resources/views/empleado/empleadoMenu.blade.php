@@ -2288,9 +2288,10 @@ use App\proyecto_empleado;
                             </div>
                             <div class="col-md-12 mt-1">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="switchCCPE" checked
+                                    <input type="checkbox" class="custom-control-input" id="e_switchCCPE" checked
                                         disabled>
-                                    <label class="custom-control-label" for="switchCCPE" style="font-weight: bold">
+                                    <label class="custom-control-label" for="e_switchCCPE"
+                                        style="font-weight: bold;font-size:12px">
                                         Por empleado
                                     </label>
                                 </div>
