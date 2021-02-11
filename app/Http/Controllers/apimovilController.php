@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Size;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
@@ -467,7 +468,7 @@ class apimovilController extends Controller
     // * MARCACION PUERTA
     public function registroMarcaciones(Request $request)
     {
-        // * VALIDACIONES DE MARCACIONES EN BACKEND
+        // : VALIDACIONES DE MARCACIONES EN BACKEND
         foreach ($request->all() as $key => $atributo) {
             $errores = [];
             $validacion = Validator::make($atributo, [
@@ -503,7 +504,7 @@ class apimovilController extends Controller
                 return response()->json(array("errores" => $errores), 400);
             }
         }
-        // * OBTENIENDO DATA
+        // : OBTENIENDO DATA
         $arrayDatos = [];
         foreach ($request->all() as $dato) {
             // : OBTENEMOS PARAMETROS
@@ -518,7 +519,6 @@ class apimovilController extends Controller
             $longitud = empty($dato['longitud']) == true ? null : $dato['longitud'];
             $idPuntoControl = empty($dato['puntoC_id']) == true ? null : $dato['puntoC_id'];
             $idCentroCosto = empty($dato['centC_id']) == true ? null : $dato['centC_id'];
-
             $datos = (object) array(
                 "tipoMarcacion" => $tipoMarcacion,
                 "fechaMarcacion" => $fechaMarcacion,
@@ -532,9 +532,57 @@ class apimovilController extends Controller
                 "idPuntoControl" => $idPuntoControl,
                 "idCentroCosto" => $idCentroCosto
             );
-            array_push($arrayDatos, $datos);
+            // : ID EMPLEADO
+            if (!isset($arrayDatos[$idEmpleado])) {
+                $arrayDatos[$idEmpleado] = (object) array("idEmpleado" => $idEmpleado, "datos" => array());
+            }
+            // : OBTENER FECHA
+            $grupoFecha = Carbon::parse($fechaMarcacion)->isoFormat("YYYY-MM-DD");
+            if (!isset($arrayDatos[$idEmpleado]->datos[$grupoFecha])) {
+                $arrayDatos[$idEmpleado]->datos[$grupoFecha] = (object) array("fecha" => $grupoFecha, "marcaciones" => array());
+            }
+            array_push($arrayDatos[$idEmpleado]->datos[$grupoFecha]->marcaciones, $datos);
         }
-        usort($arrayDatos, object_sorter('fechaMarcacion'));
+        $arrayDatos = array_values($arrayDatos);
+        // *: RECORREMOS ARRAY
+        foreach ($arrayDatos as $key => $data) {
+            $arrayDatos[$key]->datos = array_values($arrayDatos[$key]->datos);
+            foreach ($data->datos as $item => $dataPorFecha) {
+                usort($data->datos[$item]->marcaciones, object_sorter('fechaMarcacion'));
+                // : DATOS PARA OBTENER HORARIO EMPLEADO
+                $idEmpleado = $data->idEmpleado;
+                $fecha = $dataPorFecha->fecha;
+                // : HORARIOS EMPLEADOS
+                $horarioEmpleado = DB::table('horario_empleado as he')
+                    ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->select(
+                        'he.horarioEmp_id as idHorarioEmpleado',
+                        'he.fuera_horario as fueraHorario',
+                        'he.nHoraAdic as horasAdicionales',
+                        'h.horaI as horaInicio',
+                        'h.horaF as horaFin',
+                        'h.horario_tolerancia as toleranciaInicio',
+                        'h.horario_toleranciaF as toleranciaFin',
+                        'h.horasObliga as horasObligadas'
+                    )
+                    ->where('he.empleado_emple_id', '=', $idEmpleado)
+                    ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+                    ->where('he.estado', '=', 1)
+                    ->orderBy('h.horaI', 'ASC')
+                    ->get();
+                // : RECORRER MARCACIONES
+                for ($index = 0; $index < sizeof($dataPorFecha->marcaciones); $index++) {
+                    $dataMarcacion = $dataPorFecha->marcaciones[$index];
+                    if (sizeof($horarioEmpleado) == 0) $idHorarioE = 0;
+                    else {
+                        $idHorarioE = unirMarcacionConHorarioEmpleado($horarioEmpleado, $fecha, $dataMarcacion->fechaMarcacion);
+                    }
+                    dd($idHorarioE);
+                }
+            }
+        }
+        dd($arrayDatos);
     }
 
 
