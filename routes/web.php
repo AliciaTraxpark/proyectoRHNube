@@ -365,7 +365,8 @@ Route::get('cargo', 'editarAtributosController@cargo');
 Route::get('buscarCargo', 'editarAtributosController@buscarCargo');
 Route::post('editarCargo', 'editarAtributosController@editarCargo');
 //******CENTRO***/
-Route::get('centro', 'editarAtributosController@centro');
+Route::get('/centro', 'editarAtributosController@centro');
+Route::get('/centroPEditar', 'editarAtributosController@centrosParaEditar');
 Route::get('buscarCentro', 'editarAtributosController@buscarCentro');
 Route::post('editarCentro', 'editarAtributosController@editarCentro');
 //******LOCAL***/

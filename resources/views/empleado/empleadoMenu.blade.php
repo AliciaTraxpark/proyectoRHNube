@@ -2255,7 +2255,7 @@ use App\proyecto_empleado;
     </div>
     {{-- CRUD DE CENTRO DE COSTO --}}
     <div id="centrocmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodalE"
-        aria-hidden="true" data-backdrop="static">
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -2282,9 +2282,19 @@ use App\proyecto_empleado;
                                 </a>
                             </div>
                         </div>
-                        <br>
-                        <div class="col-md-12">
-                            <input type="text" class="form-control" id="textCentroE" required>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="textCentroE" required>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchCCPE" checked
+                                        disabled>
+                                    <label class="custom-control-label" for="switchCCPE" style="font-weight: bold">
+                                        Por empleado
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -3288,7 +3298,7 @@ use App\proyecto_empleado;
     </div>
     {{-- FINALIZACION --}}
     <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog"
-        aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static">
+        aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
             <div class="modal-content">
                 <div class="modal-header" style="background: #163552;">
@@ -4450,7 +4460,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION --}}
 </div>
 <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog" aria-labelledby="form-ver"
-    aria-hidden="true" data-backdrop="static">
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
         <div class="modal-content">
             <div class="modal-header" style="background: #163552;">

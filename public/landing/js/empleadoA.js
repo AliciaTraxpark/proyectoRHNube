@@ -271,7 +271,7 @@ function enviarCargoA(accion, objCargo) {
     }
 }
 
-//centro costo
+// : ******************************************** AGREGAR CENTRO DE COSTO EN EDITAR **************************************
 function agregarcentroA() {
     objCentroC = datosCentroA("POST");
     enviarCentroA('', objCentroC);
@@ -304,38 +304,72 @@ function enviarCentroA(accion, objCentroC) {
                 }
             },
             success: function (data) {
-                $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                    value: data.centroC_id,
-                    text: data.centroC_descripcion
-                }));
-                $('#v_centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                    value: data.centroC_id,
-                    text: data.centroC_descripcion,
-                    selected: true
-                }));
-                $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
-                $('#textCentroE').val('');
-                $('#editarCentroA').hide();
-                limpiarEditar();
-                $('#centrocmodalE').modal('toggle');
-                $('#form-ver').modal('show');
-                $.notify({
-                    message: "\nCentro Costo Registrado\n",
-                    icon: 'admin/images/checked.svg'
-                }, {
-                    element: $('#form-ver'),
-                    position: 'fixed',
-                    icon_type: 'image',
-                    newest_on_top: true,
-                    delay: 5000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
+                if (data.respuesta == undefined) {
+                    $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                        value: data.centroC_id,
+                        text: data.centroC_descripcion
+                    }));
+                    $('#v_centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                        value: data.centroC_id,
+                        text: data.centroC_descripcion,
+                        selected: true
+                    }));
+                    var idCC = [];
+                    idCC = $('#v_centroc').val();
+                    idCC.push(data.centroC_id);
+                    $('#v_centroc').val(idCC).trigger("change"); //lo selecciona
+                    $('#textCentroE').val('');
+                    $('#editarCentroA').hide();
+                    limpiarEditar();
+                    $('#centrocmodalE').modal('toggle');
+                    $('#form-ver').modal('show');
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nCentro Costo Registrado\n",
+                        icon: 'admin/images/checked.svg'
+                    }, {
+                        element: $('#form-ver'),
+                        position: 'fixed',
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                } else {
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#centrocmodalE'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
             },
             error: function () { }
         });
@@ -359,49 +393,86 @@ function enviarCentroA(accion, objCentroC) {
                 }
             },
             success: function (data) {
-                $('#centroc').empty();
-                $('#v_centroc').empty();
-                var select = "";
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "/centro",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                        select += `<option value="">Seleccionar</option>`;
-                        for (var i = 0; i < data.length; i++) {
-                            select += `<option class="" value="${data[i].centroC_id}">${data[i].centroC_descripcion}</option>`;
+                if (data.respuesta == undefined) {
+                    var idCC = [];
+                    idCC = $('#v_centroc').val();
+                    $('#centroc').empty();
+                    $('#v_centroc').empty();
+                    var select = "";
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "/centro",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            select += `<option value="">Seleccionar</option>`;
+                            for (var i = 0; i < data.length; i++) {
+                                select += `<option class="" value="${data[i].centroC_id}">${data[i].centroC_descripcion}</option>`;
+                            }
+                            $('#centroc').append(select);
+                            $('#v_centroc').append(select);
+                        },
+                        error: function () { }
+                    });
+                    if (!idCC.includes(data.centroC_id)) {
+                        idCC.push(data.centroC_id);
+                    }
+                    console.log(idCC);
+                    $('#v_centroc').val(idCC).trigger("change"); //lo selecciona
+                    $('#textCentroE').val('');
+                    $('#editarCentroA').hide();
+                    limpiarEditar();
+                    $('#centrocmodalE').modal('toggle');
+                    $('#form-ver').modal('show');
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nCentro Costo Modificado\n",
+                        icon: 'admin/images/checked.svg'
+                    }, {
+                        element: $('#form-ver'),
+                        position: 'fixed',
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                } else {
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#centrocmodalE'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
                         }
-                        $('#centroc').append(select);
-                        $('#v_centroc').append(select);
-                    },
-                    error: function () { }
-                });
-                $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
-                $('#textCentroE').val('');
-                $('#editarCentroA').hide();
-                limpiarEditar();
-                $('#centrocmodalE').modal('toggle');
-                $('#form-ver').modal('show');
-                $.notify({
-                    message: "\nCentro Costo Modificado\n",
-                    icon: 'admin/images/checked.svg'
-                }, {
-                    element: $('#form-ver'),
-                    position: 'fixed',
-                    icon_type: 'image',
-                    newest_on_top: true,
-                    delay: 5000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
+                    );
+                }
             }
         });
     }
@@ -1073,7 +1144,7 @@ $('#buscarCentroA').on("click", function () {
     var select = "";
     $.ajax({
         type: "GET",
-        url: "/centro",
+        url: "/centroPEditar",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

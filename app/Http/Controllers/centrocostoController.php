@@ -29,11 +29,28 @@ class centrocostoController extends Controller
 
     public function store(Request $request)
     {
+        // : BUSCAR COINCIDENCIAS CON NOMBRE DE CENTRO DE COSTOS -> ATRIBUTO DESCRIPCION = 1
+        $buscarCentroDescripcion = centro_costo::where('centroC_descripcion', '=', $request->get('centroC_descripcion'))
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        if ($buscarCentroDescripcion) {
+            return response()->json(array(
+                "respuesta" => 1,
+                "mensaje" => "Ya existe un centro de costo con este nombre."
+            ), 200);
+        }
+        // : REGISTRAR NUEVO CENTRO DE COSTO
         $centro_costo = new centro_costo();
         $centro_costo->centroC_descripcion = $request->get('centroC_descripcion');
+        $centro_costo->porEmpleado = 1;
+        $centro_costo->asistenciaPuerta = 0;
+        $centro_costo->modoTareo = 0;
+        $centro_costo->estado = 1;
         $centro_costo->organi_id = session('sesionidorg');
         $centro_costo->save();
-        return $centro_costo;
+
+        return response()->json($centro_costo, 200);
     }
 
     // * ************************ MANTENEDOR DE CENTRO COSTO ******************

@@ -71,8 +71,15 @@ class editarAtributosController extends Controller
         }
     }
     // * *************************************** CENTRO DE COSTOS ************************************
-    // : LISTAR CENTRO
+    // : LISTA CENTRO
     public function centro()
+    {
+        $centro = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('porEmpleado', '=', 1)->where('estado', '=', 1)->get();
+
+        return response()->json($centro, 200);
+    }
+    // : LISTAR CENTRO PARA EDITAR EN GESTIOS
+    public function centrosParaEditar()
     {
         $respuesta = [];
         $centro = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('porEmpleado', '=', 1)->where('estado', '=', 1)->get();
@@ -109,6 +116,18 @@ class editarAtributosController extends Controller
     // : EDITAR CENTRO
     public function editarCentro(Request $request)
     {
+        // : BUSCAR COINCIDENCIAS CON NOMBRE DE CENTRO DE COSTOS -> ATRIBUTO DESCRIPCION = 1
+        $buscarCentroDescripcion = centro_costo::where('centroC_descripcion', '=', $request->get('objCentroC')['centroC_descripcion'])
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->where('centroC_id', '!=', $request->get('id'))
+            ->get()
+            ->first();
+        if ($buscarCentroDescripcion) {
+            return response()->json(array(
+                "respuesta" => 1,
+                "mensaje" => "Ya existe un centro de costo con este nombre."
+            ), 200);
+        }
         $centro = centro_costo::where('centroC_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($centro) {
             $centro->centroC_descripcion = $request->get('objCentroC')['centroC_descripcion'];
