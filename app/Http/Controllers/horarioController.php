@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use App\empleado;
+use App\eventos_usuario;
 use App\eventos;
-use App\eventos_empleado;
-use App\historial_horarioempleado;
-use App\horario;
+use App\paises;
+use App\ubigeo_peru_departments;
+use Illuminate\Support\Facades\DB;
+use App\temporal_eventos;
 use App\horario_dias;
+use App\horario;
 use App\horario_empleado;
 use App\incidencias;
 use App\incidencia_dias;
-use App\paises;
-use App\pausas_horario;
-use App\temporal_eventos;
-use App\ubigeo_peru_departments;
 use App\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use App\eventos_empleado;
+use App\historial_horarioempleado;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
+use App\pausas_horario;
+use Carbon\Carbon;
 
 class horarioController extends Controller
 {
@@ -74,13 +76,13 @@ class horarioController extends Controller
                 } else {
                     return view('horarios.horarios', [
                         'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                        'area' => $area, 'cargo' => $cargo, 'local' => $local,
+                        'area' => $area, 'cargo' => $cargo, 'local' => $local
                     ]);
                 }
             } else {
                 return view('horarios.horarios', [
                     'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                    'area' => $area, 'cargo' => $cargo, 'local' => $local,
+                    'area' => $area, 'cargo' => $cargo, 'local' => $local
                 ]);
             }
         }
@@ -101,6 +103,7 @@ class horarioController extends Controller
     }
     public function guardarEventos(Request $request)
     {
+
 
         $datafecha = $request->fechasArray;
         $horas = $request->hora;
@@ -127,6 +130,7 @@ class horarioController extends Controller
 
         $datos = Arr::flatten($arrayrep);
 
+
         //DIFERENCIA ARRAYS
         $datafecha2 = array_values(array_diff($datafecha, $datos));
 
@@ -147,18 +151,19 @@ class horarioController extends Controller
                 foreach ($horarioDentro as $horarioDentros) {
                     $horaIDentro = Carbon::parse($horarioDentros->horaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                    if ($horaInicialF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
+                    if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
                         $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-                    } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
-                        $startArreD = carbon::create($horarioDentros->start);
-                        $arrayHDentro->push($startArreD->format('Y-m-d'));
-                    } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {
-                        $startArreD = carbon::create($horarioDentros->start);
-                        $arrayHDentro->push($startArreD->format('Y-m-d'));
-                    } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {
-                        $startArreD = carbon::create($horarioDentros->start);
-                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+                    } else {
+                        if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                            $startArreD = carbon::create($horarioDentros->start);
+                            $arrayHDentro->push($startArreD->format('Y-m-d'));
+                        } else {
+                            if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($startArreD->format('Y-m-d'));
+                            }
+                        }
                     }
                 }
             }
@@ -169,7 +174,9 @@ class horarioController extends Controller
         $datafecha3 = array_values(array_diff($datafecha2, $datosDentroN));
         //
 
+
         foreach ($datafecha3 as $datafechas) {
+
 
             $temporal_eventos = new temporal_eventos();
             $temporal_eventos->title = $horas;
@@ -177,6 +184,7 @@ class horarioController extends Controller
             $temporal_eventos->color = '#ffffff';
             $temporal_eventos->textColor = '111111';
             $temporal_eventos->users_id = Auth::user()->id;
+
 
             $temporal_eventos->temp_horaI = $inicio;
             $temporal_eventos->temp_horaF = $fin;
@@ -202,7 +210,7 @@ class horarioController extends Controller
     {
         $temporal_eventos = DB::table('temporal_eventos')->select([
             'id', 'title', 'textColor', 'start', 'end', 'color', 'horaI',
-            'horaF', 'borderColor', 'horaAdic', 'id_horario', 'horasObliga', 'nHoraAdic',
+            'horaF', 'borderColor', 'horaAdic', 'id_horario', 'horasObliga', 'nHoraAdic'
         ])
             ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
             ->where('users_id', '=', Auth::user()->id)
@@ -330,12 +338,15 @@ class horarioController extends Controller
                 ->where('he.estado', '=', 1)
                 ->union($eventos_empleado);
 
+
             $incidencias = DB::table('incidencias as i')
                 ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
                 ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
                 ->where('i.emple_id', '=', $idsEm)
                 ->union($horario_empleado)
                 ->get();
+
+
 
             $horarioEmpleado = DB::table('horario_empleado as he')
                 ->select('hd.title', 'h.horaI', 'h.horaF', 'h.horaF', 'he.empleado_emple_id')
@@ -352,22 +363,23 @@ class horarioController extends Controller
                 return [$empleado, $incidencias, 0];
             }
         } /* else {
-    $eventos1 = DB::table('eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end']);
+            $eventos1 = DB::table('eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end']);
 
-    $eventos_usuario1 = DB::table('eventos_usuario')
-    ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-    ->where('Users_id', '=', Auth::user()->id)
-    ->where('evento_departamento', '=', null)
-    ->where('evento_pais', '=', 173)
-    ->union($eventos1)
-    ->get();
-    return [$eventos_usuario1, $eventos_usuario1];
-    } */
+            $eventos_usuario1 = DB::table('eventos_usuario')
+                ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+                ->where('Users_id', '=', Auth::user()->id)
+                ->where('evento_departamento', '=', null)
+                ->where('evento_pais', '=', 173)
+                ->union($eventos1)
+                ->get();
+            return [$eventos_usuario1, $eventos_usuario1];
+        } */
     }
     public function vaciartemporal()
     {
         DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)->delete();
     }
+
 
     public function empleadosIncidencia(Request $request)
     {
@@ -447,13 +459,13 @@ class horarioController extends Controller
                 } else {
                     return view('horarios.horarioMenu', [
                         'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                        'area' => $area, 'cargo' => $cargo, 'local' => $local,
+                        'area' => $area, 'cargo' => $cargo, 'local' => $local
                     ]);
                 }
             } else {
                 return view('horarios.horarioMenu', [
                     'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                    'area' => $area, 'cargo' => $cargo, 'local' => $local,
+                    'area' => $area, 'cargo' => $cargo, 'local' => $local
                 ]);
             }
         }
@@ -491,7 +503,7 @@ class horarioController extends Controller
             ->where('users_id', '=', Auth::user()->id)
             ->get();
         /*  return  response()->json($arrayeve); */
-        return response()->json($temp);
+        return  response()->json($temp);
     }
     public function storeLabor(Request $request)
     {
@@ -512,7 +524,7 @@ class horarioController extends Controller
             ->where('users_id', '=', Auth::user()->id)
             ->get();
         /*  return  response()->json($arrayeve); */
-        return response()->json($temp);
+        return  response()->json($temp);
     }
     public function storeNoLabor(Request $request)
     {
@@ -533,7 +545,7 @@ class horarioController extends Controller
             ->where('users_id', '=', Auth::user()->id)
             ->get();
         /*  return  response()->json($arrayeve); */
-        return response()->json($temp);
+        return  response()->json($temp);
     }
 
     public function storeIncidencia(Request $request)
@@ -556,13 +568,13 @@ class horarioController extends Controller
             ->where('users_id', '=', Auth::user()->id)
             ->get();
         /*  return  response()->json($arrayeve); */
-        return response()->json($temp);
+        return  response()->json($temp);
     }
 
     public function guardarHorarioC(Request $request)
     {
         $idemps = $request->idemps;
-        $temporal_eventoH = temporal_eventos::where('users_id', '=', Auth::user()->id)
+        $temporal_eventoH =  temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)->get();
         $idasignar = collect();
         $idhors = collect();
@@ -599,18 +611,19 @@ class horarioController extends Controller
                         foreach ($horarioDentro as $horarioDentros) {
                             $horaIDentro = Carbon::parse($horarioDentros->horaI);
                             $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                            if ($horaInicialF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
+                            if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
                                 $startArreD = carbon::create($horarioDentros->start);
-                                $arrayHDentro->push($startArreD->format('Y-m-d'));
-                            } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
-                                $startArreD = carbon::create($horarioDentros->start);
-                                $arrayHDentro->push($startArreD->format('Y-m-d'));
-                            } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {
-                                $startArreD = carbon::create($horarioDentros->start);
-                                $arrayHDentro->push($startArreD->format('Y-m-d'));
-                            } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {
-                                $startArreD = carbon::create($horarioDentros->start);
-                                $arrayHDentro->push($startArreD->format('Y-m-d'));
+                                $arrayHDentro->push($idempsva);
+                            } else {
+                                if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                                    $startArreD = carbon::create($horarioDentros->start);
+                                    $arrayHDentro->push($idempsva);
+                                } else {
+                                    if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                                        $startArreD = carbon::create($horarioDentros->start);
+                                        $arrayHDentro->push($idempsva);
+                                    }
+                                }
                             }
                         }
                     }
@@ -620,7 +633,7 @@ class horarioController extends Controller
                 /////////////////////////////////////
                 foreach ($idemps3 as $idempleados) {
                     $horario_empleado = new horario_empleado();
-                    $horario_empleado->horario_horario_id = $temporal_eventosH->id_horario;
+                    $horario_empleado->horario_horario_id =  $temporal_eventosH->id_horario;
                     $horario_empleado->empleado_emple_id = $idempleados;
                     $horario_empleado->horario_dias_id = $horario_dias->id;
                     $horario_empleado->fuera_horario = $temporal_eventosH->fuera_horario;
@@ -652,6 +665,7 @@ class horarioController extends Controller
                         $historial_horarioE->save();
                     }
 
+
                     /* ------------------------------- */
                 }
             }
@@ -675,9 +689,11 @@ class horarioController extends Controller
             $nuev = Arr::flatten($filtro);
             //dd($nu,$integerIDs,$nuev);
 
+
             foreach ($nuev as $nuevs) {
 
                 foreach ($temporal_evento as $temporal_eventos) {
+
 
                     $eventos_empleado = new eventos_empleado();
                     $eventos_empleado->title = $temporal_eventos->title;
@@ -688,19 +704,19 @@ class horarioController extends Controller
 
                     $eventos_empleado->id_empleado = $nuevs;
                     /* if($temporal_eventos->color='#a34141'){
-                    $eventos_empleado->tipo_ev=0;
-                    } else{ $eventos_empleado->tipo_ev=1;} */
+                        $eventos_empleado->tipo_ev=0;
+                        } else{ $eventos_empleado->tipo_ev=1;} */
                     /* if($temporal_eventos->color='#4673a0'){
-                    $eventos_empleado->tipo_ev=1;
-                    }
+                            $eventos_empleado->tipo_ev=1;
+                        }
 
-                    if($temporal_eventos->color='#e6bdbd'){
-                    $eventos_empleado->tipo_ev=2;
-                    }
+                        if($temporal_eventos->color='#e6bdbd'){
+                            $eventos_empleado->tipo_ev=2;
+                        }
 
-                    if($temporal_eventos->color='#dfe6f2'){
-                    $eventos_empleado->tipo_ev=3;
-                    } */
+                        if($temporal_eventos->color='#dfe6f2'){
+                            $eventos_empleado->tipo_ev=3;
+                        } */
                     $eventos_empleado->laborable = 0;
                     $eventos_empleado->save();
                 }
@@ -727,7 +743,7 @@ class horarioController extends Controller
             }
         }
 
-        $temporal_eventoInc = temporal_eventos::where('users_id', '=', Auth::user()->id)
+        $temporal_eventoInc =  temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->where('temp_horaF', '!=', null)->get();
         if ($temporal_eventoInc) {
             foreach ($temporal_eventoInc as $temporal_eventoIncs) {
@@ -739,7 +755,7 @@ class horarioController extends Controller
 
                 foreach ($idemps as $idempleados) {
                     $incidencia = new incidencias();
-                    $incidencia->inciden_descripcion = $temporal_eventoIncs->title;
+                    $incidencia->inciden_descripcion =  $temporal_eventoIncs->title;
                     $incidencia->inciden_descuento = $temporal_eventoIncs->temp_horaF;
                     $incidencia->inciden_dias_id = $inc_dias->inciden_dias_id;
                     $incidencia->emple_id = $idempleados;
@@ -785,6 +801,7 @@ class horarioController extends Controller
         $temporal_evento = temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
         return $temporal_evento;
     }
+
 
     public function eliminareventosHorario(Request $request)
     {
@@ -838,7 +855,7 @@ class horarioController extends Controller
         $inc_dias->save();
 
         $incidencia = new incidencias();
-        $incidencia->inciden_descripcion = $title;
+        $incidencia->inciden_descripcion =  $title;
         $incidencia->inciden_descuento = $descuentoI;
         $incidencia->inciden_dias_id = $inc_dias->inciden_dias_id;
         $incidencia->emple_id = $idempl;
@@ -854,6 +871,7 @@ class horarioController extends Controller
             ->where('he.empleado_emple_id', '=', $idempl)
             ->where('he.estado', '=', 1)
             ->union($eventos_empleado);
+
 
         $incidencias = DB::table('incidencias as i')
             ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
@@ -878,11 +896,11 @@ class horarioController extends Controller
             $horario_dias->color = '#ffffff';
             $horario_dias->textColor = '111111';
             $horario_dias->users_id = Auth::user()->id;
-            $horario_dias->organi_id = session('sesionidorg');
+            $horario_dias->organi_id =  session('sesionidorg');
 
             $horario_dias->save();
             $horario_empleado = new horario_empleado();
-            $horario_empleado->horario_horario_id = $idhorar;
+            $horario_empleado->horario_horario_id =  $idhorar;
             $horario_empleado->empleado_emple_id = $idempl;
             $horario_empleado->horario_dias_id = $horario_dias->id;
             $horario_empleado->save();
@@ -898,6 +916,7 @@ class horarioController extends Controller
             ->where('he.empleado_emple_id', '=', $idempl)
             ->where('he.estado', '=', 1)
             ->union($eventos_empleado);
+
 
         $incidencias = DB::table('incidencias as i')
             ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
@@ -938,6 +957,7 @@ class horarioController extends Controller
             ->where('he.estado', '=', 1)
             ->union($eventos_empleado1);
 
+
         $incidencias = DB::table('incidencias as i')
             ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
@@ -977,6 +997,7 @@ class horarioController extends Controller
             ->where('he.estado', '=', 1)
             ->union($eventos_empleado1);
 
+
         $incidencias = DB::table('incidencias as i')
             ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
@@ -988,7 +1009,7 @@ class horarioController extends Controller
 
     public function incidenciatemporal()
     {
-        $incidencias = temporal_eventos::where('users_id', '=', Auth::user()->id)
+        $incidencias =  temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->where('temp_horaF', '!=', null)->get();
         return ($incidencias);
     }
@@ -997,7 +1018,7 @@ class horarioController extends Controller
         $idinc = $request->idinc;
 
         $temporal_evento = temporal_eventos::where('id', '=', $idinc)->delete();
-        $temporal = temporal_eventos::where('users_id', '=', Auth::user()->id)
+        $temporal =  temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->get();
         return ($temporal);
     }
@@ -1029,8 +1050,9 @@ class horarioController extends Controller
         $horario = horario::where('horario_id', '=', $idhorario)
             ->update([
                 'horario_descripcion' => $descried, 'horario_tolerancia' => $toleed, 'horaI' => $horaIed,
-                'horaF' => $horaFed, 'horario_toleranciaF' => $toleranciaFed, 'horasObliga' => $horaObed,
+                'horaF' => $horaFed, 'horario_toleranciaF' => $toleranciaFed, 'horasObliga' => $horaObed
             ]);
+
 
         $horarion = horario::where('organi_id', '=', session('sesionidorg'))->get();
 
@@ -1099,6 +1121,7 @@ class horarioController extends Controller
                 }
             }
         }
+
 
         return ($horarion);
     }
@@ -1179,7 +1202,7 @@ class horarioController extends Controller
     }
     public function borrarferiados(Request $request)
     {
-        $temporal_eventoH = temporal_eventos::where('users_id', '=', Auth::user()->id)
+        $temporal_eventoH =  temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->where('color', '=', '#e6bdbd')->delete();
     }
 

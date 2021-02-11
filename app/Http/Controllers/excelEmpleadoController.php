@@ -48,6 +48,14 @@ class excelEmpleadoController extends Controller
         }
 
 
+
+
+
+
+
+
+
+
         $import = new  EmpleadoImport(); //del userimpor
         Excel::import($import, request()->file('file'));
         $filas = $import->getRowCount();
@@ -58,6 +66,10 @@ class excelEmpleadoController extends Controller
         /*  $path = public_path() . '/files';
         $fileName =$file->getClientOriginalName();
         $file->move($path, $fileName); */
+        $fileGuardar = $file;
+                $path = public_path() . '/datosExcel';
+                $fileName = uniqid() . $fileGuardar->getClientOriginalName();
+                $fileGuardar->move($path, $fileName);
 
         return back()->with(['filas' => $filas, 'empleados' => $empleados]);
     }
