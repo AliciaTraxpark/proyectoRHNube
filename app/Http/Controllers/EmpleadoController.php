@@ -2748,7 +2748,6 @@ class EmpleadoController extends Controller
                 'p.perso_apMaterno',
                 'c.cargo_descripcion',
                 'a.area_descripcion',
-                'cc.centroC_descripcion',
                 'e.emple_id'
 
             )
