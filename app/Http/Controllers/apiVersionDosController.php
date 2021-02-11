@@ -893,6 +893,7 @@ class apiVersionDosController extends Controller
                     'he.estado'
                 )
                 ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
+                ->where('he.estado', '=', 1)
                 ->get();
             foreach ($horario_empleado as $resp) {
                 // * HORARIO DIAS
