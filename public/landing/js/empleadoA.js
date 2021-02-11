@@ -1066,7 +1066,7 @@ $('#buscarCargoA').on("click", function () {
     });
     $('#editarCargoA').show();
 });
-//******CENTRO***/
+// : ******************************* CENTRO DE COSTO ***************************
 $('#buscarCentroA').on("click", function () {
     $('#editarCentroA').empty();
     var container = $('#editarCentroA');
@@ -1109,7 +1109,7 @@ $('#buscarCentroA').on("click", function () {
     });
     $('#editarCentroA').show();
 });
-//******LOCAL***/
+// : ******************************* LOCAL *************************************
 $('#buscarLocalA').on("click", function () {
     $('#editarLocalA').empty();
     var container = $('#editarLocalA');

@@ -1524,10 +1524,10 @@ use App\proyecto_empleado;
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="">Centro de costo</label>
                                 </div>
-                                <div id="editarCentro" class="col-md-6"></div>
+                                <div id="editarCentro" class="col-md-5"></div>
                                 <div class="col-md-3">
                                     <a id="buscarCentro" data-toggle="tooltip" data-placement="right"
                                         title="editar centro de costo" data-original-title="editar centro de costo."
@@ -2253,6 +2253,7 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+    {{-- CRUD DE CENTRO DE COSTO --}}
     <div id="centrocmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -2269,15 +2270,15 @@ use App\proyecto_empleado;
                     <form action="javascript:agregarcentroA()">
                         {{ csrf_field() }}
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label for="">Centro de costo</label>
                             </div>
-                            <div id="editarCentroA" class="col-md-6"></div>
+                            <div id="editarCentroA" class="col-md-5"></div>
                             <div class="col-md-3">
                                 <a id="buscarCentroA" data-toggle="tooltip" data-placement="right"
                                     title="Editar centro de costo." data-original-title="Editar centro de costo."
-                                    style="cursor: pointer;"><img src="{{ asset('landing/images/search.svg') }}"
-                                        height="18">
+                                    style="cursor: pointer;">
+                                    <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                 </a>
                             </div>
                         </div>
@@ -2295,6 +2296,7 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+    {{-- FINALIZACION --}}
     <div id="localmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">

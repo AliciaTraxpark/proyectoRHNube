@@ -5,21 +5,26 @@ namespace App\Http\Controllers;
 use App\area;
 use App\cargo;
 use App\centro_costo;
+use App\centrocosto_empleado;
 use App\condicion_pago;
 use App\local;
+use App\marcacion_puerta;
+use App\marcacion_tareo;
 use App\nivel;
 use App\tipo_contrato;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class editarAtributosController extends Controller
 {
+    // * ************************************** AREA *******************************************
+    // : LISTAR AREAS
     public function area()
     {
         $area = area::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($area, 200);
     }
+    // : BUSCAR AREA
     public function buscarArea(Request $request)
     {
         $area = area::where('area_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -28,7 +33,7 @@ class editarAtributosController extends Controller
         }
         return response()->json(null, 400);
     }
-
+    // : EDITAR AREA
     public function editarArea(Request $request)
     {
         $area = area::where('area_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -38,13 +43,14 @@ class editarAtributosController extends Controller
             return response()->json($area, 200);
         }
     }
-
+    // * *************************************** CARGO *******************************************
+    // : LISTAR CARGO
     public function cargo()
     {
         $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($cargo, 200);
     }
-
+    // : BUSCAR CARGO
     public function buscarCargo(Request $request)
     {
         $cargo = cargo::where('cargo_id', '=', $request->get('id'))
@@ -54,7 +60,7 @@ class editarAtributosController extends Controller
         }
         return response()->json(null, 400);
     }
-
+    // : EDITAR CARGO
     public function editarCargo(Request $request)
     {
         $cargo = cargo::where('cargo_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -64,32 +70,34 @@ class editarAtributosController extends Controller
             return response()->json($cargo, 200);
         }
     }
-
+    // * *************************************** CENTRO DE COSTOS ************************************
+    // : LISTAR CENTRO
     public function centro()
     {
         $respuesta = [];
-        $centro = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)->get();
-        $centroE = DB::table('empleado as e')
-            ->join('centro_costo as c', 'c.centroC_id', '=', 'e.emple_centCosto')
-            ->select('c.centroC_id')
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.emple_estado', '=', 1)
-            ->get();
-        for ($index = 0; $index < sizeof($centro); $index++) {
+        $centro = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('porEmpleado', '=', 1)->where('estado', '=', 1)->get();
+        // : HISTORIAL EMPLEADO
+        foreach ($centro as $c) {
             $estado = true;
-            foreach ($centroE as $c) {
-                if ($centro[$index]->centroC_id == $c->centroC_id) {
-                    $estado = false;
+            $historialEmpleado = centrocosto_empleado::where('idCentro', '=', $c->centroC_id)->where('estado', '=', 1)->get()->first();
+            if ($historialEmpleado) $estado = false;
+            else {
+                // : BUSCAR EN REPORTE DE ASISTENCIA EN PUERTA
+                $marcacion = marcacion_puerta::where('centC_id', '=', $c->centroC_id)->get()->first();
+                if ($marcacion) $estado = false;
+                else {
+                    // : BUSCAR EN REPORTE TAREO
+                    $tareo = marcacion_tareo::where('centroC_id', '=', $c->centroC_id)->get()->first();
+                    if ($tareo) $estado = false;
                 }
             }
             if ($estado) {
-                array_push($respuesta, $centro[$index]);
+                array_push($respuesta, $c);
             }
         }
-
         return response()->json($respuesta, 200);
     }
-
+    // : BUSCAR CENTRO 
     public function buscarCentro(Request $request)
     {
         $centro = centro_costo::where('centroC_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -98,7 +106,7 @@ class editarAtributosController extends Controller
         }
         return response()->json(null, 400);
     }
-
+    // : EDITAR CENTRO
     public function editarCentro(Request $request)
     {
         $centro = centro_costo::where('centroC_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -108,13 +116,14 @@ class editarAtributosController extends Controller
             return response()->json($centro, 200);
         }
     }
-
+    // * **************************************** LOCAL *******************************************************************
+    // : LISTA DE LOCAL
     public function local()
     {
         $local = local::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($local, 200);
     }
-
+    // : BUSCAR LOCAL
     public function buscarLocal(Request $request)
     {
         $local = local::where('local_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -123,7 +132,7 @@ class editarAtributosController extends Controller
         }
         return response()->json(null, 400);
     }
-
+    // : EDITAR LOCAL
     public function editarLocal(Request $request)
     {
         $local = local::where('local_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -133,13 +142,14 @@ class editarAtributosController extends Controller
             return response()->json($local, 200);
         }
     }
-
+    // * **********************************************  NIVEL ***********************************************************************
+    // : LISTA DE NIVEL
     public function nivel()
     {
         $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($nivel, 200);
     }
-
+    // : BUSCAR NIVEL
     public function buscarNivel(Request $request)
     {
         $nivel = nivel::where('nivel_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -148,7 +158,7 @@ class editarAtributosController extends Controller
         }
         return response()->json(null, 400);
     }
-
+    // : EDITAR NIVEL
     public function editarNivel(Request $request)
     {
         $nivel = nivel::where('nivel_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
@@ -158,13 +168,14 @@ class editarAtributosController extends Controller
             return response()->json($nivel, 200);
         }
     }
-
+    // * ***************************************** CONTRATO *******************************************
+    // : LISTA DE CONTRATO
     public function contrato()
     {
         $contrato = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($contrato, 200);
     }
-
+    // : BUSCAR CONTRATO
     public function buscarContrato(Request $request)
     {
         $contrato = tipo_contrato::where('contrato_id', '=', $request->get('id'))->get()->first();
@@ -173,7 +184,7 @@ class editarAtributosController extends Controller
         }
         return response()->json(null, 400);
     }
-
+    // : EDITAR CONTRATO
     public function editarContrato(Request $request)
     {
         $contrato = tipo_contrato::where('contrato_id', '=', $request->get('id'))->get()->first();
@@ -183,13 +194,14 @@ class editarAtributosController extends Controller
             return response()->json($contrato, 200);
         }
     }
-
+    // * ********************************************** CONDICION ****************************************
+    // : LISTA DE CONDICION
     public function condicion()
     {
         $condicion = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($condicion, 200);
     }
-
+    // : BUSCAR CONDICION
     public function buscarCondicion(Request $request)
     {
         $condicion = condicion_pago::where('id', '=', $request->get('id'))->get()->first();
@@ -198,7 +210,7 @@ class editarAtributosController extends Controller
         }
         return response()->json(null, 400);
     }
-
+    // : EDITAR CONDICION
     public function editarCondicion(Request $request)
     {
         $condicion = condicion_pago::where('id', '=', $request->get('id'))->get()->first();
