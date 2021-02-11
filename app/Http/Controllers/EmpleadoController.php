@@ -857,8 +857,14 @@ class EmpleadoController extends Controller
         if ($objEmpleado['area'] != '') {
             $empleado->emple_area = $objEmpleado['area'];
         }
-        if ($objEmpleado['centroc'] != '') {
-            $empleado->emple_centCosto = $objEmpleado['centroc'];
+        if (!is_null($objEmpleado['centroc'])) {
+            foreach ($objEmpleado['centroc_v'] as $centro) {
+                $newCentroEmpleado = new centrocosto_empleado();
+                $newCentroEmpleado->idCentro = $centro;
+                $newCentroEmpleado->idEmpleado = $idE;
+                $newCentroEmpleado->fecha_alta = Carbon::now();
+                $newCentroEmpleado->save();
+            }
         }
         if ($objEmpleado['nivel'] != '') {
             $empleado->emple_nivel = $objEmpleado['nivel'];

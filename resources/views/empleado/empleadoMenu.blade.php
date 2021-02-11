@@ -1537,8 +1537,20 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 pt-2">
-                            <input type="text" class="form-control" id="textCentro" required>
+                        <div class="row mt-2">
+                            <div class="col-md-12 pt-2">
+                                <input type="text" class="form-control" id="textCentro" required>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="e_switchCCPE" checked
+                                        disabled>
+                                    <label class="custom-control-label" for="e_switchCCPE"
+                                        style="font-weight: bold;font-size:12px">
+                                        Por empleado
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -3590,10 +3602,41 @@ use App\proyecto_empleado;
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label for="sw-default">Cargo <a
-                                                    onclick="$('#form-registrar').modal('hide');" href="#cargomodal"
-                                                    data-toggle="modal" data-target="#cargomodal"><i
-                                                        class="uil uil-plus"></i></a></label>
+                                            <label for="sw-default">Código Empleado</label>
+                                            <input type="text" class="form-control" name="codigoEmpleado"
+                                                id="codigoEmpleado" tabindex="1" data-toggle="tooltip"
+                                                data-placement="right" maxlength="200"
+                                                title="Número de documento por defecto o Ingrese un código interno"
+                                                data-original-title="Número de documento por defecto o Ingrese un código interno">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">
+                                                Centro de costo
+                                                <a onclick="$('#form-registrar').modal('hide');" href="#centrocmodal"
+                                                    data-toggle="modal" data-target="#centrocmodal">
+                                                    <i class="uil uil-plus"></i>
+                                                </a>
+                                            </label>
+                                            <select class="form-control" name="centroc" id="centroc" tabindex="4"
+                                                data-plugin="customselect" data-placeholder="Centro de costo"
+                                                multiple="multiple">
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($centro_costo as $centro_costos)
+                                                <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                    {{ $centro_costos->centroC_descripcion }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">
+                                                Cargo
+                                                <a onclick="$('#form-registrar').modal('hide');" href="#cargomodal"
+                                                    data-toggle="modal" data-target="#cargomodal">
+                                                    <i class="uil uil-plus"></i>
+                                                </a>
+                                            </label>
                                             <select class="form-control" name="cargo" id="cargo" tabindex="2">
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($cargo as $cargos)
@@ -3603,33 +3646,13 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Código Empleado</label>
-                                            <input type="text" class="form-control" name="codigoEmpleado"
-                                                id="codigoEmpleado" tabindex="1" data-toggle="tooltip"
-                                                data-placement="right" maxlength="200"
-                                                title="Número de documento por defecto o Ingrese un código interno"
-                                                data-original-title="Número de documento por defecto o Ingrese un código interno">
-                                        </div>
-                                    </div> <!-- end col -->
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="sw-default">Área <a
-                                                    onclick="$('#form-registrar').modal('hide');" href="#areamodal"
-                                                    data-toggle="modal" data-target="#areamodal"><i
-                                                        class="uil uil-plus"></i></a></label>
-                                            <select class="form-control" name="area" id="area" tabindex="3">
-                                                <option value="">Seleccionar</option>
-                                                @foreach ($area as $areas)
-                                                <option class="" value="{{ $areas->area_id }}">
-                                                    {{ $areas->area_descripcion }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default" class="labelNivel">Nivel del Colaborador<a
-                                                    onclick="$('#form-registrar').modal('hide');" href="#nivelmodal"
-                                                    data-toggle="modal" data-target="#nivelmodal"><i
-                                                        class="uil uil-plus"></i></a></label>
+                                            <label for="sw-default" class="labelNivel">
+                                                Nivel del Colaborador
+                                                <a onclick="$('#form-registrar').modal('hide');" href="#nivelmodal"
+                                                    data-toggle="modal" data-target="#nivelmodal">
+                                                    <i class="uil uil-plus"></i>
+                                                </a>
+                                            </label>
                                             <select class="form-control" name="nivel" id="nivel" tabindex="6">
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($nivel as $niveles)
@@ -3641,23 +3664,29 @@ use App\proyecto_empleado;
                                     </div> <!-- end col -->
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label for="sw-default">Centro de costo<a
-                                                    onclick="$('#form-registrar').modal('hide');" href="#centrocmodal"
-                                                    data-toggle="modal" data-target="#centrocmodal"><i
-                                                        class="uil uil-plus"></i></a></label>
-                                            <select class="form-control" name="centroc" id="centroc" tabindex="4">
+                                            <label for="sw-default">
+                                                Área
+                                                <a onclick="$('#form-registrar').modal('hide');" href="#areamodal"
+                                                    data-toggle="modal" data-target="#areamodal">
+                                                    <i class="uil uil-plus"></i>
+                                                </a>
+                                            </label>
+                                            <select class="form-control" name="area" id="area" tabindex="3">
                                                 <option value="">Seleccionar</option>
-                                                @foreach ($centro_costo as $centro_costos)
-                                                <option class="" value="{{ $centro_costos->centroC_id }}">
-                                                    {{ $centro_costos->centroC_descripcion }}</option>
+                                                @foreach ($area as $areas)
+                                                <option class="" value="{{ $areas->area_id }}">
+                                                    {{ $areas->area_descripcion }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Local <a
-                                                    onclick="$('#form-registrar').modal('hide');" href="#localmodal"
-                                                    data-toggle="modal" data-target="#localmodal"><i
-                                                        class="uil uil-plus"></i></a></label>
+                                            <label for="sw-default">
+                                                Local
+                                                <a onclick="$('#form-registrar').modal('hide');" href="#localmodal"
+                                                    data-toggle="modal" data-target="#localmodal">
+                                                    <i class="uil uil-plus"></i>
+                                                </a>
+                                            </label>
                                             <select class="form-control" name="local" id="local" tabindex="7">
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($local as $locales)
@@ -4754,8 +4783,8 @@ use App\proyecto_empleado;
                                             </a>
                                         </label>
                                         <select class="form-control" name="v_centroc" id="v_centroc" tabindex="4"
-                                            data-plugin="customselect" class="form-control"
-                                            data-placeholder="Centro de costo" multiple="multiple">
+                                            data-plugin="customselect" data-placeholder="Centro de costo"
+                                            multiple="multiple">
                                             <option value="">Seleccionar</option>
                                             @foreach ($centro_costo as $centro_costos)
                                             <option class="" value="{{ $centro_costos->centroC_id }}">

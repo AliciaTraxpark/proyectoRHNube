@@ -395,6 +395,9 @@ function enviarCentroA(accion, objCentroC) {
                 if (data.respuesta == undefined) {
                     var idCC = [];
                     idCC = $('#v_centroc').val();
+                    if (!idCC.includes(data.centroC_id)) {
+                        idCC.push(data.centroC_id);
+                    }
                     $('#centroc').empty();
                     $('#v_centroc').empty();
                     var select = "";
@@ -415,10 +418,6 @@ function enviarCentroA(accion, objCentroC) {
                         },
                         error: function () { }
                     });
-                    if (!idCC.includes(data.centroC_id)) {
-                        idCC.push(data.centroC_id);
-                    }
-                    console.log(idCC);
                     $('#v_centroc').val(idCC).trigger("change"); //lo selecciona
                     $('#textCentroE').val('');
                     $('#editarCentroA').hide();
