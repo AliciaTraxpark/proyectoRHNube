@@ -91,19 +91,20 @@ class marcacionTareoController extends Controller
             ->get();
         if ($invitadod) {
             if ($invitadod->rol_id != 1) {
-                /*  if ($invitadod->reporteAsisten == 1) {
+                  if ($invitadod->modoTareo == 1) {
+                    $permiso_invitado = DB::table('permiso_invitado')
+                    ->where('idinvitado', '=', $invitadod->idinvitado)
+                    ->get()->first();
 
-                return view('Dispositivos.reporteDis', [
-                'organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
-                'ruc' => $ruc, 'direccion' => $direccion,
-                ]);
+                    return view('ReporteTareo.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion,
+                    'areas' => $area, 'cargos' => $cargo, 'locales' => $local, 'modifModoTareo' => $permiso_invitado->modifModoTareo]);
                 } else {
                 return redirect('/dashboard');
-                } */
+                }
                 /*   */
             } else {
                 return view('ReporteTareo.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion,
-                'areas' => $area, 'cargos' => $cargo, 'locales' => $local]);
+                'areas' => $area, 'cargos' => $cargo, 'locales' => $local ]);
             }
         } else {
             return view('ReporteTareo.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion,

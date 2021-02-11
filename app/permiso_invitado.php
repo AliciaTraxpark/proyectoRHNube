@@ -11,6 +11,6 @@ class permiso_invitado extends Model
     protected $primaryKey = 'idpermiso_invitado';
     protected $fillable = ['idpermiso_invitado', 'idinvitado',	'agregarEmp', 'modifEmp',
         'bajaEmp', 'GestActEmp', 'agregarActi',	'modifActi', 'agregarContract',	'modifContract', 'agregarHb',	'modifHb', 'bajaActi', 'verPuerta',
-        'agregarPuerta', 'modifPuerta'];
+        'agregarPuerta', 'modifPuerta','verModoTareo','agregarModoTareo','modifModoTareo'];
     public $timestamps = false;
 }

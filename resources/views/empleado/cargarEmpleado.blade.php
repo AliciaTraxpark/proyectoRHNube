@@ -260,6 +260,8 @@ use App\User;
                                 <th>Distrito</th>
                                 <th>Contrato</th>
                                 <th>Inicio contrato</th>
+                                <th>Fin de contrato</th>
+                                <th>Dias de notificación</th>
                                 <th>Local</th>
                                 <th>Nivel</th>
                                 <th>Cargo</th>
@@ -292,6 +294,8 @@ use App\User;
                                         <td>{{$item[15]}}</td>
                                         <td>{{$item[16]}}</td>
                                         <td>{{$item[24]}}</td>
+                                        <td>{{$item[26]}}</td>
+                                        <td>{{$item[27]}}</td>
                                         <td>{{$item[17]}}</td>
                                         <td>{{$item[18]}}</td>
                                         <td>{{$item[19]}}</td>

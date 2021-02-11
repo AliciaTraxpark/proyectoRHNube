@@ -1110,8 +1110,8 @@
     </div>
     {{-- FINALIZACION --}}
     {{-- modificar --}}
-    @if (isset($modifReporte))
-        @if ($modifReporte == 1)
+    @if (isset($modifModoTareo))
+        @if ($modifModoTareo == 1)
             <input type="hidden" id="modifReporte" value="1">
         @else
             <input type="hidden" id="modifReporte" value="0">

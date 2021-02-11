@@ -373,7 +373,7 @@ class excelEmpleadoController extends Controller
                     //
                 ]);
 
-                // * CENTRO DE COSTOS 
+                // * CENTRO DE COSTOS
                 if (!empty($row['idcentro_costo'])) {
                     $centroCosto = new centrocosto_empleado();
                     $centroCosto->idCentro = $row['idcentro_costo'];
@@ -460,11 +460,21 @@ class excelEmpleadoController extends Controller
                 //* CONTRATO
                 if ($row['idtipo_contrato'] != '' || $row['idtipo_contrato'] != null) {
 
+                    //* FECHA FIN
+                    if($emp[26]==null){
+                        $fechaFinC=0000-00-00;
+                    }
+                    else{
+                        $fechaFinC=$emp[26];
+                    }
+
                     $contradoId = contrato::create([
                         'id_tipoContrato' => $row['idtipo_contrato'],
                         'id_condicionPago' => $row['idcondicion_pago'],
                         'monto' => $emp[23],
                         'fechaInicio' => $emp[24],
+                        'fechaFinal' =>  $fechaFinC,
+                        'notiTiempo' =>  $emp[27],
                         'idEmpleado'    => $empleadoId->emple_id,
                         'estado'    => 1,
                     ]);

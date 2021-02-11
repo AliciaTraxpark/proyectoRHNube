@@ -41,17 +41,17 @@ class DispositivoTareoController extends Controller
             /*  */
             if ($invitadod->rol_id != 1) {
                 /* AQUI VALIDAREMOS PERMISOS PARA INVITADO */
-                /*  if ($invitadod->asistePuerta == 1) {
+               if ($invitadod->modoTareo == 1) {
                 $permiso_invitado = DB::table('permiso_invitado')
                 ->where('idinvitado', '=', $invitadod->idinvitado)
                 ->get()->first();
-                return view('Dispositivos.dispositivos', [
-                'verPuerta' => $permiso_invitado->verPuerta, 'agregarPuerta' => $permiso_invitado->agregarPuerta,
-                'modifPuerta' => $permiso_invitado->modifPuerta, 'controladores' => $controladores
+                return view('DispositivoTareo.dispositivosT', ['controladores' => $controladoresTareo,
+                'verModoTareo' => $permiso_invitado->verModoTareo, 'agregarModoTareo' => $permiso_invitado->agregarModoTareo,
+                'modifModoTareo' => $permiso_invitado->modifModoTareo
                 ]);
                 } else {
                 return redirect('/dashboard');
-                } */
+                }
                 /*   */
             } else {
                 return view('DispositivoTareo.dispositivosT', ['controladores' => $controladoresTareo]);
@@ -228,7 +228,7 @@ class DispositivoTareoController extends Controller
         $dispositivos->dispoT_tMarca = $request->tMarca_ed;
         $dispositivos->dispoT_Data = $request->tData_ed;
         $lectura=$request->lectura_ed;
-        
+
 
         //*ASIGNANDO
         if(in_array("1", $lectura)){

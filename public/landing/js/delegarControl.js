@@ -27,8 +27,11 @@ function abrirRegist() {
     $("#opcionesGE").hide();
     $("#opcionesActiv").hide();
     $("#opcionesAPuerta").hide();
+    $("#opcionesTareo").hide();
     $("#verCheckPuerta").prop("required", false);
+    $("#verCheckTareo").prop("required", false);
     $("#divAsisPu").show();
+    $("#divModoTareo").show();
     $("#divControlRe").show();
     $("#divControlRuta").show();
     $("#divCalendario").show();
@@ -36,6 +39,7 @@ function abrirRegist() {
     $("#divReporteAsis").show();
     $("#divGestActivi").show();
     $("#verCheckPuerta").prop("disabled", false);
+    $("#verCheckTareo").prop("disabled", false);
     $("#spanBooCk").hide();
     $("#spanChEmple").hide();
     $("#agregarInvitado").modal("show");
@@ -71,6 +75,7 @@ function registrarInvit() {
     DE ASISENCIA EN PUERTA ENTONCES DEBEMOS SELLECCIONAR
     AL MENOS UNA DE SUS SUPOPCIONES */
     var booCheck;
+    var spanTareo;
 
     /* SI SELECCIONAMOS OPCION ASISTENCIA EN PUERTA Y
     NO ES ADMINISTRADOR */
@@ -91,6 +96,26 @@ function registrarInvit() {
             booCheck = 1;
         }
     }
+
+    /* ------------VALIDACION PARA TAREO---------------------- */
+     /* SI SELECCIONAMOS OPCION ASISTENCIA EN PUERTA Y
+    NO ES ADMINISTRADOR */
+    if (
+        $("#modoTareoCheck").is(":checked") &&
+        !$("#adminCheck").is(":checked")
+    ) {
+        /* SI NINGUNA DE LAS SUBOPCIONES ESTA CHECK */
+        if (
+            !$("#verCheckTareo").is(":checked") &&
+            !$("#AgregarCheckTareo").is(":checked") &&
+            !$("#ModifCheckTareo").is(":checked")
+        ) {
+            spanTareo = 0;
+        } else {
+            spanTareo = 1;
+        }
+    }
+    /* ------------------------------------------------------- */
     /* SI NINGUNA ESTA CHECK ENTONCES MOSTRAMOS MENSAJE
     Y DETEMOS LA FUNCION */
     if (booCheck == 0) {
@@ -100,6 +125,19 @@ function registrarInvit() {
     } else {
         /* SINO ESCONDEMOS MENSAJE */
         $("#spanBooCk").hide();
+    }
+    /* ---------------------------------------------------- */
+
+     /* ---------TAREO------------------------------- */
+    /* SI NINGUNA ESTA CHECK ENTONCES MOSTRAMOS MENSAJE
+    Y DETEMOS LA FUNCION */
+    if (spanTareo == 0) {
+        console.log("se detiene todo");
+        $("#spanTareo").show();
+        return false;
+    } else {
+        /* SINO ESCONDEMOS MENSAJE */
+        $("#spanTareo").hide();
     }
     /* ---------------------------------------------------- */
 
@@ -132,6 +170,7 @@ function registrarInvit() {
         !$("#ControlRutaCheck").is(":checked") &&
         !$("#ExtractorCheck").is(":checked") &&
         !$("#asistPuertaCheck").is(":checked") &&
+        !$("#modoTareoCheck").is(":checked") &&
         !$("#calendarCheck").is(":checked")
     ) {
         /* SE MOSTRARA MENSAJE DE ALERTA Y SE
@@ -285,6 +324,15 @@ function registrarInvit() {
                         switchasisPuerta = 0;
                     }
 
+                    /* PERMISO MODO TAREO */
+
+                    var switchmodoTareo;
+                    if ($("#modoTareoCheck").is(":checked")) {
+                        switchmodoTareo = 1;
+                    } else {
+                        switchmodoTareo = 0;
+                    }
+
                     /* PERMISO A CONTROL REMOTO */
                     var switchCRemo;
                     if ($("#ControlReCheck").is(":checked")) {
@@ -434,6 +482,32 @@ function registrarInvit() {
                     } else {
                         ModifPuerta = 0;
                     }
+                    /* --------------------------------------------- */
+
+                    //***PERMISO DE MODO TAREO */
+                     //VER
+                     var verModoTareo;
+                     if ($("#verCheckTareo").is(":checked")) {
+                        verModoTareo = 1;
+                    } else {
+                        verModoTareo = 0;
+                    }
+
+                    //AGREGAR
+                    var agregarModoTareo;
+                    if ($("#AgregarCheckTareo").is(":checked")) {
+                        agregarModoTareo = 1;
+                    } else {
+                        agregarModoTareo = 0;
+                    }
+
+                    //MODIFICAR
+                    var modifModoTareo;
+                    if ($("#ModifCheckTareo").is(":checked")) {
+                        modifModoTareo = 1;
+                    } else {
+                        modifModoTareo = 0;
+                    }
                     /* ---------------------------------------------- */
                     /////////////////////////////////////
                     /* SI LA SELECCION DE EMPLEADOS ES POR EMPLEADOS */
@@ -466,7 +540,12 @@ function registrarInvit() {
                                 checkTodoEmp,
                                 swReporteAsis,
                                 swMoReporteAsis,
-                                switchCalend
+                                switchCalend,
+                                switchmodoTareo,
+                                verModoTareo,
+                                agregarModoTareo,
+                                modifModoTareo
+
                             },
                             statusCode: {
                                 419: function () {
@@ -527,7 +606,11 @@ function registrarInvit() {
                                 checkTodoEmp,
                                 swReporteAsis,
                                 swMoReporteAsis,
-                                switchCalend
+                                switchCalend,
+                                switchmodoTareo,
+                                verModoTareo,
+                                agregarModoTareo,
+                                modifModoTareo
                             },
                             statusCode: {
                                 419: function () {
@@ -581,13 +664,17 @@ $("#adminCheck").click(function () {
         $("#divGestActivi").hide();
         $("#opcionesActiv").hide();
         $("#divAsisPu").hide();
+        $("#divModoTareo").hide();
+        $("#divModoTareo").hide();
         $("#divControlRe").hide();
         $("#divControlRuta").hide();
         $("#divCalendario").hide();
         $("#divExtractor").hide();
         $("#divReporteAsis").hide();
         $("#opcionesAPuerta").hide();
+        $("#opcionesTareo").hide();
         $("#verCheckPuerta").prop("required", false);
+        $("#verCheckTareo").prop("required", false);
         $("#divParaSelec").hide();
         $("#spanChEmple").hide();
     } else {
@@ -602,9 +689,11 @@ $("#adminCheck").click(function () {
         $("#gestHbCheck").prop("checked", false);
         $("#gestContractCheck").prop("checked", false);
         $("#asistPuertaCheck").prop("checked", false);
+        $("#modoTareoCheck").prop("checked", false);
         $("#divAdminPersona").show();
 
         $("#divAsisPu").show();
+        $("#divModoTareo").show();
         $("#divControlRe").show();
         $("#divControlRuta").show();
         $("#divCalendario").show();
@@ -619,6 +708,8 @@ function editarInv(idi) {
     $("#btnGu_edit").prop("disabled", false);
     $("#verCheckPuerta_edit").attr("required", false);
     $("#verCheckPuerta_edit").prop("disabled", false);
+    $("#verCheckTareo_edit").attr("required", false);
+    $("#verCheckTareo_edit").prop("disabled", false);
     $("#divParaSelec_edit").hide();
 
     /* OBTENEMOS DATOS DE INVITADO */
@@ -661,14 +752,16 @@ function editarInv(idi) {
                 $("#divGestActivi_edit").hide();
                 $("#opcionesActiv_edit").hide();
                 $("#divAsisPu_edit").hide();
+                $("#divModoTareo_edit").hide();
                 $("#opcionesAPuerta_edit").hide();
+                $("#opcionesTareo_edit").hide();
                 $("#divControlRe_edit").hide();
                 $("#divControlRuta_edit").hide();
                 $("#divCalendario_edit").hide();
                 $("#divExtractor_edit").hide();
                 $("#divReporteAsis_edit").hide();
                 $("#opcionesGE_edit").hide();
-                $("#opcionesAPuerta_edit").hide();
+                $("#opcionesTareo_edit").hide();
             } else {
 
                 /* CUADNO ES INVITADO CON OPCINOES */
@@ -684,6 +777,7 @@ function editarInv(idi) {
                 $("#divCalendario_edit").show();
                 $("#divExtractor_edit").show();
                 $("#divAsisPu_edit").show();
+                $("#divModoTareo_edit").show();
                 $("#divReporteAsis_edit").show();
 
                 $("#divAdminPersona_edit").show();
@@ -881,7 +975,41 @@ function editarInv(idi) {
                 $("#asistPuertaCheck_edit").prop("checked", false);
             }
             //////////////////////////////
+            /* TAREO */
+            if (data[0].modoTareo == 1) {
+                $("#modoTareoCheck_edit").prop("checked", true);
 
+                $("#opcionesTareo_edit").show();
+
+
+                //ver permiso mod tareo
+                if (data[0].verModoTareo == 1) {
+                    $("#verCheckTareo_edit").prop("checked", true);
+                } else {
+                    $("#verCheckTareo_edit").prop("checked", false);
+                }
+
+                //agregar  permiso mod tareo
+                if (data[0].agregarModoTareo == 1) {
+                    $("#AgregarCheckTareo_edit").prop("checked", true);
+                    $("#verCheckTareo_edit").prop("disabled", true);
+                } else {
+                    $("#AgregarCheckTareo_edit").prop("checked", false);
+                }
+
+                //modificar permiso mod tareo
+                if (data[0].modifModoTareo == 1) {
+                    $("#ModifCheckTareo_edit").prop("checked", true);
+                    $("#verCheckTareo_edit").prop("disabled", true);
+                } else {
+                    $("#ModifCheckTareo_edit").prop("checked", false);
+                }
+            } else {
+                $("#opcionesTareo_edit").hide();
+                $("#verCheckTareo_edit").attr("required", false);
+                $("#modoTareoCheck_edit").prop("checked", false);
+            }
+            /*  */
             //////////////////////////////
             //reporte asistencia
             if (data[0].reporteAsisten == 1) {
@@ -926,6 +1054,7 @@ function editarInv(idi) {
             $("#agregarInvitado_edit").modal("show");
             if (data[0].rol_id != 3) {
                 $("#opcionesAPuerta_edit").hide();
+                $("#opcionesTareo_edit").hide();
                 $("#opcionesActiv_edit").hide();
             }
         },
@@ -946,7 +1075,9 @@ $("#adminCheck_edit").click(function () {
         $("#divGestActivi_edit").hide();
         $("#opcionesActiv_edit").hide();
         $("#divAsisPu_edit").hide();
+        $("#divModoTareo_edit").hide();
         $("#opcionesAPuerta_edit").hide();
+        $("#opcionesTareo_edit").hide();
         $("#divControlRe_edit").hide();
         $("#divControlRuta_edit").hide();
         $("#divCalendario_edit").hide();
@@ -972,6 +1103,13 @@ $("#adminCheck_edit").click(function () {
         } else {
             $("#opcionesAPuerta_edit").hide();
             $("#divReporteAsis_edit").hide();
+        }
+
+        //*TAREO
+        if ($("#modoTareoCheck_edit").is(":checked")) {
+            $("#opcionesTareo_edit").show();
+        } else {
+            $("#opcionesTareo_edit").hide();
         }
 
         if ($("#switchAreaS_edit").is(":checked")) {
@@ -1002,6 +1140,7 @@ $("#adminCheck_edit").click(function () {
         $("#divCalendario_edit").show();
         $("#divExtractor_edit").show();
         $("#divAsisPu_edit").show();
+        $("#divModoTareo_edit").show();
         $("#divReporteAsis_edit").show();
 
         $("#divAdminPersona_edit").show();
@@ -1039,7 +1178,7 @@ $("#selectAreaCheck_edit").click(function () {
 
 function registrarInvit_edit() {
     var booCheck_edit;
-
+    var spanTareo_edit;
     if (
         $("#asistPuertaCheck_edit").is(":checked") &&
         !$("#adminCheck_edit").is(":checked")
@@ -1056,6 +1195,26 @@ function registrarInvit_edit() {
             booCheck_edit = 1;
         }
     }
+
+    /* ------------VALIDACION PARA TAREO---------------------- */
+     /* SI SELECCIONAMOS OPCION ASISTENCIA EN PUERTA Y
+    NO ES ADMINISTRADOR */
+    if (
+        $("#modoTareoCheck_edit").is(":checked") &&
+        !$("#adminCheck_edit").is(":checked")
+    ) {
+        /* SI NINGUNA DE LAS SUBOPCIONES ESTA CHECK */
+        if (
+            !$("#verCheckTareo_edit").is(":checked") &&
+            !$("#AgregarCheckTareo_edit").is(":checked") &&
+            !$("#ModifCheckTareo_edit").is(":checked")
+        ) {
+            spanTareo_edit = 0;
+        } else {
+            spanTareo_edit = 1;
+        }
+    }
+    /* ------------------------------------------------------- */
     if (booCheck_edit == 0) {
         console.log("se detiene todo");
         $("#spanBooCk_edit").show();
@@ -1063,6 +1222,20 @@ function registrarInvit_edit() {
     } else {
         $("#spanBooCk_edit").hide();
     }
+
+     /* ---------TAREO------------------------------- */
+    /* SI NINGUNA ESTA CHECK ENTONCES MOSTRAMOS MENSAJE
+    Y DETEMOS LA FUNCION */
+    if (spanTareo_edit == 0) {
+        console.log("se detiene todo");
+        $("#spanTareo_edit").show();
+        return false;
+    } else {
+        /* SINO ESCONDEMOS MENSAJE */
+        $("#spanTareo_edit").hide();
+    }
+    /* ---------------------------------------------------- */
+
     if (
         !$("#switchEmpS_edit").is(":checked") &&
         !$("#switchAreaS_edit").is(":checked") &&
@@ -1084,7 +1257,8 @@ function registrarInvit_edit() {
         !$("#ControlRutaCheck_edit").is(":checked") &&
         !$("#calendarCheck_edit").is(":checked") &&
         !$("#ExtractorCheck_edit").is(":checked") &&
-        !$("#asistPuertaCheck_edit").is(":checked")
+        !$("#asistPuertaCheck_edit").is(":checked") &&
+        !$("#modoTareoCheck_edit").is(":checked")
     ) {
         $("#divParaSelec_edit").show();
         return false;
@@ -1184,6 +1358,14 @@ function registrarInvit_edit() {
             switchasisPuerta_ed = 0;
         }
 
+        //*MODO TAREO
+        var switchmodoTareo_ed;
+        if ($("#modoTareoCheck_edit").is(":checked")) {
+            switchmodoTareo_ed = 1;
+        } else {
+            switchmodoTareo_ed = 0;
+        }
+
         var switchCRemo_ed;
         if ($("#ControlReCheck_edit").is(":checked")) {
             switchCRemo_ed = 1;
@@ -1242,6 +1424,9 @@ function registrarInvit_edit() {
         var verPuerta_ed;
         var agregPuerta_ed;
         var ModifPuerta_ed;
+        var verModoTareo_ed;
+        var agregarModoTareo_ed;
+        var modifModoTareo_ed;
 
         if ($("#AgregarCheckG_edit").is(":checked")) {
             agregarEmp_ed = 1;
@@ -1302,6 +1487,25 @@ function registrarInvit_edit() {
         } else {
             ModifPuerta_ed = 0;
         }
+
+        //*TAREO
+        if ($("#verCheckTareo_edit").is(":checked")) {
+            verModoTareo_ed = 1;
+        } else {
+            verModoTareo_ed = 0;
+        }
+
+        if ($("#AgregarCheckTareo_edit").is(":checked")) {
+            agregarModoTareo_ed = 1;
+        } else {
+            agregarModoTareo_ed = 0;
+        }
+
+        if ($("#ModifCheckTareo_edit").is(":checked")) {
+            modifModoTareo_ed = 1;
+        } else {
+            modifModoTareo_ed = 0;
+        }
         /////////////////////////////////////
 
         if ($("#switchEmpS_edit").prop("checked")) {
@@ -1333,7 +1537,11 @@ function registrarInvit_edit() {
                     verPuerta_ed,
                     agregPuerta_ed,
                     ModifPuerta_ed,
-                    switchCalend_ed
+                    switchCalend_ed,
+                    switchmodoTareo_ed,
+                    verModoTareo_ed,
+                    agregarModoTareo_ed,
+                    modifModoTareo_ed
                 },
                 statusCode: {
                     419: function () {
@@ -1390,7 +1598,11 @@ function registrarInvit_edit() {
                         verPuerta_ed,
                         agregPuerta_ed,
                         ModifPuerta_ed,
-                        switchCalend_ed
+                        switchCalend_ed,
+                        switchmodoTareo_ed,
+                        verModoTareo_ed,
+                        agregarModoTareo_ed,
+                        modifModoTareo_ed
                     },
                     statusCode: {
                         419: function () {
@@ -1625,6 +1837,19 @@ $("#asistPuertaCheck").change(function (event) {
         /*    $("#verCheckPuerta").prop("required", false); */
     }
 });
+
+//*TAREO
+$("#modoTareoCheck").change(function (event) {
+    if ($("#modoTareoCheck").prop("checked")) {
+        $("#opcionesTareo").show();
+
+
+    } else {
+        $("#opcionesTareo").hide();
+        $("#spanTareo").hide();
+
+    }
+});
 ////////////////////////////////////////////
 $("#TodoECheck").click(function () {
     if ($("#TodoECheck").is(":checked")) {
@@ -1665,6 +1890,18 @@ $("#asistPuertaCheck_edit").change(function (event) {
         $("#spanBooCk_edit").hide();
         $("#divReporteAsis_edit").hide();
         /*   $("#verCheckPuerta_edit").prop("required", false); */
+    }
+});
+
+//*TAREO
+$("#modoTareoCheck_edit").change(function (event) {
+    if ($("#modoTareoCheck_edit").prop("checked")) {
+        $("#opcionesTareo_edit").show();
+
+    } else {
+        $("#opcionesTareo_edit").hide();
+        $("#spanTareo_edit").hide();
+
     }
 });
 ////////////////////////////////////////////
@@ -1732,6 +1969,60 @@ $("#ModifCheckPuerta_edit").change(function (event) {
     }
 });
 
+//**************TAREO*******************************
+
+//AGREGAR
+$("#AgregarCheckTareo").change(function (event) {
+    if ($("#AgregarCheckTareo").prop("checked")) {
+        $("#verCheckTareo").prop("checked", true);
+        $("#verCheckTareo").prop("disabled", true);
+    } else {
+        if ($("#ModifCheckTareo").prop("checked")) {
+            $("#verCheckTareo").prop("disabled", true);
+        } else {
+            $("#verCheckTareo").prop("disabled", false);
+        }
+    }
+});
+$("#ModifCheckTareo").change(function (event) {
+    if ($("#ModifCheckTareo").prop("checked")) {
+        $("#verCheckTareo").prop("checked", true);
+        $("#verCheckTareo").prop("disabled", true);
+    } else {
+        if ($("#AgregarCheckTareo").prop("checked")) {
+            $("#verCheckTareo").prop("disabled", true);
+        } else {
+            $("#verCheckTareo").prop("disabled", false);
+        }
+    }
+});
+//EDITAR
+$("#AgregarCheckTareo_edit").change(function (event) {
+    if ($("#AgregarCheckTareo_edit").prop("checked")) {
+        $("#verCheckTareo_edit").prop("checked", true);
+        $("#verCheckTareo_edit").prop("disabled", true);
+    } else {
+        if ($("#ModifCheckTareo_edit").prop("checked")) {
+            $("#verCheckTareo_edit").prop("disabled", true);
+        } else {
+            $("#verCheckTareo_edit").prop("disabled", false);
+        }
+    }
+});
+
+$("#ModifCheckTareo_edit").change(function (event) {
+    if ($("#ModifCheckTareo_edit").prop("checked")) {
+        $("#verCheckTareo_edit").prop("checked", true);
+        $("#verCheckTareo_edit").prop("disabled", true);
+    } else {
+        if ($("#AgregarCheckTareo_edit").prop("checked")) {
+            $("#verCheckTareo_edit").prop("disabled", true);
+        } else {
+            $("#verCheckTareo_edit").prop("disabled", false);
+        }
+    }
+});
+//*********************** */
 /* VALIDACION CHECK MODIFICACAR REPORTE */
 $("#MoReporteAsistCheck").change(function (event) {
     if ($("#MoReporteAsistCheck").prop("checked")) {
@@ -1809,6 +2100,15 @@ function verificarSIEdito() {
                  /* ABRIMOS FUNCION DE EDITAR INVITADO CON EL ID DE INVITADO */
                 editarInv(data[1]);
             } else {
+                if(data[0]==2){
+                    $('#emailInvi').val('');
+                    var dialog = bootbox.dialog({
+                        message: "Usuario es administrador del sistema",
+                        closeButton: true,
+                    });
+                    return false;
+
+                }
                 console.log(data[0]);
             }
         },

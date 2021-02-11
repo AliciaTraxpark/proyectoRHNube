@@ -55,21 +55,20 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
             return $d && $d->format($format) == $date;
         }
 
-
         foreach ($rows as $row) {
 
             /* VALIDARMEOS DATOS DE CABECERA */
-            if(isset($row['tipo_documento']) && isset($row['numero_documento']) && isset($row['codigo'])
-            && isset($row['nombres']) && isset($row['apellido_paterno']) && isset($row['apellido_materno'])
-            && isset($row['correo']) && isset($row['prefijo']) && isset($row['celular'])
-            && isset($row['genero']) && isset($row['fecha_nacimiento']) && isset($row['distrito_nacimiento'])
-            && isset($row['direccion']) && isset($row['distrito']) && isset($row['tipo_contrato'])
-            && isset($row['inicio_contrato']) && isset($row['local']) && isset($row['nivel'])
-            && isset($row['cargo']) && isset($row['area']) && isset($row['centro_costo'])
-            && isset($row['condicion_pago']) && isset($row['monto_pago'])){
+            if (isset($row['tipo_documento']) && isset($row['numero_documento']) && isset($row['codigo'])
+                && isset($row['nombres']) && isset($row['apellido_paterno']) && isset($row['apellido_materno'])
+                && isset($row['correo']) && isset($row['prefijo']) && isset($row['celular'])
+                && isset($row['genero']) && isset($row['fecha_nacimiento']) && isset($row['distrito_nacimiento'])
+                && isset($row['direccion']) && isset($row['distrito']) && isset($row['tipo_contrato'])
+                && isset($row['inicio_contrato']) && isset($row['fin_contrato']) && isset($row['dias_notificacion'])
+                && isset($row['local']) && isset($row['nivel'])
+                && isset($row['cargo']) && isset($row['area']) && isset($row['centro_costo'])
+                && isset($row['condicion_pago']) && isset($row['monto_pago'])) {
 
-            }
-            else{
+            } else {
                 return redirect()->back()->with('alert', 'Formato incorrecto, Porfavor descargue la plantilla y actualize sus datos');
             }
             /* ----------------------------- */
@@ -91,7 +90,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 $empleadoAntiguo = DB::table('empleado')->where('emple_nDoc', '=', $row['numero_documento'])->where('empleado.organi_id', '=', session('sesionidorg'))
                     ->where('empleado.emple_estado', '=', 1)->first();
                 if ($empleadoAntiguo != null) {
-                    return redirect()->back()->with('alert', 'numero de documento ya registrado en otro empleado: ' . $row['numero_documento'] . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
+                    return redirect()->back()->with('alert', 'Número de documento ya esta  registrado: ' . $row['numero_documento'] . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                 };
                 $capturaD = [$row['numero_documento']];
                 array_push($this->Ndoc, $capturaD);
@@ -135,34 +134,31 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                 } else {
                     if ($row['celular'] != null || $row['celular'] != '') {
-                    return redirect()->back()->with('alert', 'Debe especificar prefijo de numero celular' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
+                        return redirect()->back()->with('alert', 'Debe especificar prefijo de numero celular' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                     }
                 }
 
                 //celular
                 if ($row['celular'] != null || $row['celular'] != '') {
-                    if( is_numeric($row['celular'])==true){
+                    if (is_numeric($row['celular']) == true) {
                         $lengthCelu = Str::length($row['celular']);
-                    if ($lengthCelu> 16) {
-                        return redirect()->back()->with('alert', 'el numero de celular: ' . $row['celular'] . ' debe tenr como maximo 15 digitos' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
-                    } else {
-                       /*  $qwert = Str::substr($row['celular'], 0, 1);
-                        if ($qwert != 9) {
+                        if ($lengthCelu > 16) {
+                            return redirect()->back()->with('alert', 'el numero de celular: ' . $row['celular'] . ' debe tenr como maximo 15 digitos' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
+                        } else {
+                            /*  $qwert = Str::substr($row['celular'], 0, 1);
+                            if ($qwert != 9) {
                             return redirect()->back()->with('alert', 'el numero de celular: ' . $row['celular'] . ' es invalido' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
-                        } */
+                            } */
 
-                        $seteo=Str::studly($row['celular']);
-                        $numeroCelular='+' .$row['prefijo'] .$seteo;
-                    }
-                    }
-                    else{
+                            $seteo = Str::studly($row['celular']);
+                            $numeroCelular = '+' . $row['prefijo'] . $seteo;
+                        }
+                    } else {
                         return redirect()->back()->with('alert', 'Numero de celular invalido.  El proceso se interrumpio en la fila:' . $filas);
                     }
 
-
-                }
-                else{
-                    $numeroCelular=null;
+                } else {
+                    $numeroCelular = null;
                 }
 
                 //dd($arraysimple);
@@ -213,11 +209,16 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                 //distrito
                 $cadDist = $row['distrito'];
-                if (strlen($cadDist) > 3) {
+                if (strlen($cadDist) > 5) {
                     $cadDist = substr($cadDist, 0, -1);
                 }
                 if ($row['distrito'] != null) {
-                    $idD = ubigeo_peru_districts::where("name", "like", "%" . escape_like($cadDist) . "%")->get();
+                    if (strlen($cadDist) > 5) {
+                        $idD = ubigeo_peru_districts::where("name", "like", "%" . escape_like($cadDist) . "%")->get();}
+                        else{
+                            $idD = ubigeo_peru_districts::where("name", '=',$cadDist)->get();
+                        }
+
 
                     if ($idD->isNotEmpty()) {
 
@@ -304,11 +305,15 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                 //distritoNac
                 $cadDistN = $row['distrito_nacimiento'];
-                if (strlen($cadDistN) > 3) {
+                if (strlen($cadDistN) > 5) {
                     $cadDistN = substr($cadDistN, 0, -1);
                 }
                 if ($row['distrito_nacimiento'] != null) {
-                    $idDN = ubigeo_peru_districts::where("name", "like", "%" . escape_like($cadDistN) . "%")->get();
+                    if (strlen($cadDistN) > 5) {
+                    $idDN = ubigeo_peru_districts::where("name", "like", "%" . escape_like($cadDistN) . "%")->get();}
+                    else{
+                        $idDN = ubigeo_peru_districts::where("name", '=',$cadDistN)->get();
+                    }
                     if ($idDN->isNotEmpty()) {
                         if ($idDN->count() > 1) {
                             $row['iddistrito_nacimiento'] = $idDN[0]->id;
@@ -382,20 +387,18 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 ///
 
                 if ($row['fecha_nacimiento'] != null || $row['fecha_nacimiento'] != '') {
-                    if( is_numeric($row['fecha_nacimiento'])==true){
+                    if (is_numeric($row['fecha_nacimiento']) == true) {
                         $fechaNacimieB = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']), 'Y-m-d');
-                    }
-                    else{
-                        $sincomilla=str_replace("'","",$row['fecha_nacimiento']);
-                        $crearformat= DateTime::createFromFormat('d/m/Y',$sincomilla)->format('Y/m/d');
-                        $validacion=validateDate($crearformat, 'Y/m/d');
-                        if($validacion==true){
-                            $formatoFN= Carbon::create($crearformat);
-                            $fechaNacimieB= date_format($formatoFN, 'Y-m-d');
-                         }
-                         else{
+                    } else {
+                        $sincomilla = str_replace("'", "", $row['fecha_nacimiento']);
+                        $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
+                        $validacion = validateDate($crearformat, 'Y/m/d');
+                        if ($validacion == true) {
+                            $formatoFN = Carbon::create($crearformat);
+                            $fechaNacimieB = date_format($formatoFN, 'Y-m-d');
+                        } else {
                             return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
-                         }
+                        }
 
                     }
 
@@ -428,40 +431,66 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 //fechaIContrato
 
                 if ($row['inicio_contrato'] != null || $row['inicio_contrato'] != '') {
-                    if( is_numeric($row['inicio_contrato'])==true){
+                    if (is_numeric($row['inicio_contrato']) == true) {
                         $fechaInicioC = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
-                    }
-                    else{
-                        $sincomilla=str_replace("'","",$row['inicio_contrato']);
-                        $crearformat= DateTime::createFromFormat('d/m/Y',$sincomilla)->format('Y/m/d');
+                    } else {
+                        $sincomilla = str_replace("'", "", $row['inicio_contrato']);
+                        $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
 
-                            $validacion=validateDate($crearformat, 'Y/m/d');
+                        $validacion = validateDate($crearformat, 'Y/m/d');
 
-
-                         if($validacion==true){
-                            $formatoFc= Carbon::create($crearformat);
+                        if ($validacion == true) {
+                            $formatoFc = Carbon::create($crearformat);
                             $fechaInicioC = date_format($formatoFc, 'Y-m-d');
-                         }
-                         else{
+                        } else {
                             return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
-                         }
-
-
+                        }
 
                     }
-
-
-
-
-                    /*  if($formatoFc == false){
-                        return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
-                    } */
-
-
                 } else {
                     return redirect()->back()->with('alert', 'Debe especificar inicio de contrato' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
 
                 }
+
+                //*VALIDACION FIN DE CONTRATO////////////////////////
+                if ($row['fin_contrato'] != null || $row['fin_contrato'] != '') {
+
+                    //*OBTENEMOS FECHA INICIAL
+                    $fechaICarbon=Carbon::create($fechaInicioC);
+
+                    if (is_numeric($row['fin_contrato']) == true) {
+                        $fechaFinC = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fin_contrato']), 'Y-m-d');
+                        $fechaFCarbon1=Carbon::create($fechaFinC);
+
+                        if($fechaFCarbon1->lt($fechaICarbon)){
+                            return redirect()->back()->with('alert', 'Fecha de fin de contrato debe ser mayor a la fecha inicial de contrato.  El proceso se interrumpio en la fila:' . $filas);
+                        }
+
+                    } else {
+                        $sincomilla = str_replace("'", "", $row['fin_contrato']);
+                        $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
+
+                        $validacion = validateDate($crearformat, 'Y/m/d');
+
+                        if ($validacion == true) {
+                            $formatoFc = Carbon::create($crearformat);
+                            $fechaFinC = date_format($formatoFc, 'Y-m-d');
+                            $fechaFCarbon2=Carbon::create($fechaFinC);
+
+                            if($fechaFCarbon2->lt($fechaICarbon)){
+                                return redirect()->back()->with('alert', 'Fecha de fin de contrato debe ser mayor a la fecha inicial de contrato.  El proceso se interrumpio en la fila:' . $filas);
+                            }
+                        } else {
+                            return redirect()->back()->with('alert', 'Formato de fecha de fin de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                        }
+
+                    }
+                }
+                else{
+                    $fechaFinC =null;
+                }
+
+                /* ********************************************** */
                 //VALIDACION GENERO
                 if ($row['genero'] != null || $row['genero'] != '') {
 
@@ -470,13 +499,20 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                 }
 
+                //*VALIDACION DIAS NOTIFICACION
+                if ($row['dias_notificacion'] != null || $row['dias_notificacion'] != '') {
+                    $diasNotificacion=$row['dias_notificacion'];
+                } else {
 
+                    $diasNotificacion=0;
+                }
                 /*   dd(date_format( $fechaNacimieB, 'Y-m-d')); */
                 //////////MANDA DATOS A VISTA
-                $din = [$row['tipo_docArray'], $row['numero_documento'], $row['nombres'], $row['apellido_paterno'], $row['apellido_materno'], $row['correo'], $numeroCelular,
-                    $row['genero'], $fechaNacimieB, $row['name_depNArray'], $row['provNArray'],
-                    $row['distNArray'], $row['direccion'], $row['name_depArray'], $row['provArray'], $row['distArray'], $row['tipo_contratoArray'], $row['localArray'], $row['nivelArray'],
-                    $row['cargoArray'], $row['areaArray'], $row['centro_costoArray'], $row['condicionArray'], $row['monto_pago'], $fechaInicioC, $row['codigo']];
+                $din = [$row['tipo_docArray'], $row['numero_documento'], $row['nombres'], $row['apellido_paterno'], $row['apellido_materno'],
+                        $row['correo'], $numeroCelular, $row['genero'], $fechaNacimieB, $row['name_depNArray'], $row['provNArray'],
+                        $row['distNArray'], $row['direccion'], $row['name_depArray'], $row['provArray'], $row['distArray'],
+                        $row['tipo_contratoArray'], $row['localArray'], $row['nivelArray'], $row['cargoArray'], $row['areaArray'],
+                        $row['centro_costoArray'], $row['condicionArray'], $row['monto_pago'], $fechaInicioC, $row['codigo'], $fechaFinC,$diasNotificacion];
                 array_push($this->dnias, $din);
 
                 ++$this->numRows;

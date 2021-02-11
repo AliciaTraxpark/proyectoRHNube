@@ -50,6 +50,8 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
             'distrito',
             'tipo_contrato',
             'inicio_contrato',
+            'fin_contrato',
+            'dias_notificacion',
             'local',
             'nivel',
             'cargo',
@@ -88,7 +90,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $spreadsheet = new Spreadsheet();
 
                 // * CAMPOS OBLIGATORIOS
-                $event->sheet->getStyle('A1:W1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:Y1')->applyFromArray($styleArray);
                 $event->sheet->getStyle('A1:B1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
@@ -103,7 +105,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                     ->getStartColor()->setRGB('C00000');
                 // * ***************************************************************
                 $event->sheet->getDelegate()->setTitle("Empleado");
-                foreach (range('A', 'W') as $columnID) {
+                foreach (range('A', 'Y') as $columnID) {
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
                     $event->sheet->getColumnDimension($columnID)
                         ->setWidth(25);
@@ -123,20 +125,22 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
 
                 $drop_columnD = 'A';
                 $drop_columnC = 'O';
-                $drop_columnCargo = 'S';
-                $drop_columnArea = 'T';
-                $drop_columnCentro = 'U';
-                $drop_columnLocal = 'Q';
-                $drop_columnNivel = 'R';
+                $drop_columnCargo = 'U';
+                $drop_columnArea = 'V';
+                $drop_columnCentro = 'W';
+                $drop_columnLocal = 'S';
+                $drop_columnNivel = 'T';
                 $drop_columnGenero = 'J';
 
                 $drop_columnFecha = 'K';
-                $drop_columnCondicionP = 'V';
+                $drop_columnCondicionP = 'X';
 
                 $drop_columnDisritoN = 'L';
                 $drop_columnDisritoVive = 'N';
                 $drop_columnFechaInicioC = 'P';
+                $drop_columnFechaFinC = 'Q';
                 $drop_columnPrefijo = 'H';
+                $drop_dias_notifi='R';
 
                 $rowD = 1;
                 $rowC = 1;
@@ -362,9 +366,11 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                     $event->sheet->getCell("{$drop_columnGenero}{$i}")->setDataValidation(clone $validationGenero);
                     $event->sheet->getStyle("{$drop_columnFecha}{$i}")->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD);
                     $event->sheet->getStyle("{$drop_columnFechaInicioC}{$i}")->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD);
+                    $event->sheet->getStyle("{$drop_columnFechaFinC}{$i}")->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD);
                     $event->sheet->getCell("{$drop_columnCondicionP}{$i}")->setDataValidation(clone $validationCondiP);
                     $event->sheet->getCell("{$drop_columnPrefijo}{$i}")->setDataValidation(clone $validationPre);
                     $event->sheet->setCellValue("{$drop_columnPrefijo}{$i}", "+51");
+                    $event->sheet->setCellValue("{$drop_dias_notifi}{$i}", "30");
                 }
                 $event->sheet->getColumnDimension('BC')->setVisible(false);
                 $event->sheet->getColumnDimension('BA')->setVisible(false);

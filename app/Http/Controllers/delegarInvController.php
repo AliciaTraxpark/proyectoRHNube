@@ -136,6 +136,12 @@ class delegarInvController extends Controller
         $agregPuerta=$request->agregPuerta;
         $ModifPuerta=$request->ModifPuerta;
 
+        $switchmodoTareo=$request->switchmodoTareo;
+        $verModoTareo=$request->verModoTareo;
+        $agregarModoTareo=$request->agregarModoTareo;
+        $modifModoTareo=$request->modifModoTareo;
+
+
         $organi = organizacion::find(session('sesionidorg'));
         $invitado = new invitado();
         $invitado->organi_id =  session('sesionidorg');
@@ -159,6 +165,7 @@ class delegarInvController extends Controller
         $invitado->ModificarReportePuerta=$swMoReporteAsis;
         $invitado->empleado=1;
         $invitado->area=0;
+        $invitado->modoTareo=$switchmodoTareo;
         $invitado->save();
         if($checkTodoEmp!=1){
         foreach($idEmpleado as $idEmpleados){
@@ -200,6 +207,17 @@ class delegarInvController extends Controller
             $permiso_invitado->verPuerta=0;
             $permiso_invitado->agregarPuerta=0;
             $permiso_invitado->modifPuerta=0;
+        }
+
+        //*TAREO
+        if($switchmodoTareo==1){
+            $permiso_invitado->verModoTareo=$verModoTareo;
+            $permiso_invitado->agregarModoTareo=$agregarModoTareo;
+            $permiso_invitado->modifModoTareo=$modifModoTareo;
+        } else{
+            $permiso_invitado->verModoTareo=0;
+            $permiso_invitado->agregarModoTareo=0;
+            $permiso_invitado->modifModoTareo=0;
         }
 
         $permiso_invitado->save();
@@ -500,6 +518,11 @@ class delegarInvController extends Controller
     $verPuerta_ed=$request->verPuerta_ed;
     $agregPuerta_ed=$request->agregPuerta_ed;
     $ModifPuerta_ed=$request->ModifPuerta_ed;
+
+    $switchmodoTareo_ed=$request->switchmodoTareo_ed;
+    $verModoTareo_ed=$request->verModoTareo_ed;
+    $agregarModoTareo_ed=$request->agregarModoTareo_ed;
+    $modifModoTareo_ed=$request->modifModoTareo_ed;
     /* ------------------------------------------------------------------------- */
 
     /* BUSCAMOS INVITADOS */
@@ -533,7 +556,7 @@ class delegarInvController extends Controller
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed, 'gestCalendario'=> $switchCalend_ed,
            'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed, 'gestionHb'=>$switchHb_ed, 'gestionContract'=>$switchContract_ed, 'asistePuerta'=> $switchasisPuerta_ed,
-           'verTodosEmps'=>$checkTodoEmp_ed, 'empleado'=>1, 'area'=>0,
+           'verTodosEmps'=>$checkTodoEmp_ed, 'empleado'=>1, 'area'=>0,'modoTareo'=> $switchmodoTareo_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed ]);
         /* ------------------------------------------------------------------------------------------------------- */
 
@@ -543,7 +566,8 @@ class delegarInvController extends Controller
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['agregarEmp'=>$agregarEmp_ed,'modifEmp'=> $modifEmp_ed,'bajaEmp'=>$bajaEmp_ed,
            'GestActEmp'=>$gActiEmp_ed,'agregarActi'=>$agregarActi_ed,'modifActi'=> $modifActi_ed,
-           'bajaActi'=>$bajaActi_ed, 'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed ]);
+           'bajaActi'=>$bajaActi_ed, 'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed,
+           'verModoTareo'=> $verModoTareo_ed, 'agregarModoTareo'=> $agregarModoTareo_ed, 'modifModoTareo'=> $modifModoTareo_ed]);
            /* ------------------------------------------------------------------------------------------------------ */
     }
     else{
@@ -569,7 +593,7 @@ class delegarInvController extends Controller
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed,'gestCalendario'=> $switchCalend_ed,
             'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'gestionHb'=>$switchHb_ed, 'gestionContract'=>$switchContract_ed, 'asistePuerta'=> $switchasisPuerta_ed,
-           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>1, 'area'=>0,
+           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>1, 'area'=>0,'modoTareo'=> $switchmodoTareo_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed]);
         /* --------------------------------------------------------------------------------------------------- */
 
@@ -613,6 +637,17 @@ class delegarInvController extends Controller
             $permiso_invitado->verPuerta=0;
             $permiso_invitado->agregarPuerta=0;
             $permiso_invitado->modifPuerta=0;
+        }
+
+        //*TAREO
+        if($switchmodoTareo_ed==1){
+            $permiso_invitado->verModoTareo=$verModoTareo_ed;
+            $permiso_invitado->agregarModoTareo=$agregarModoTareo_ed;
+            $permiso_invitado->modifModoTareo=$modifModoTareo_ed;
+        } else{
+            $permiso_invitado->verModoTareo=0;
+            $permiso_invitado->agregarModoTareo=0;
+            $permiso_invitado->modifModoTareo=0;
         }
 
         $permiso_invitado->save();
@@ -676,6 +711,11 @@ class delegarInvController extends Controller
     $verPuerta=$request->verPuerta;
     $agregPuerta=$request->agregPuerta;
     $ModifPuerta=$request->ModifPuerta;
+
+    $switchmodoTareo=$request->switchmodoTareo;
+    $verModoTareo=$request->verModoTareo;
+    $agregarModoTareo=$request->agregarModoTareo;
+    $modifModoTareo=$request->modifModoTareo;
     /* ---------------------------------------------------------- */
 
     /* REGISTRAMOS AL INVITADO CON TODO Y PERMISOS GENERALES */
@@ -700,6 +740,7 @@ class delegarInvController extends Controller
     $invitado->verTodosEmps=$checkTodoEmp;
     $invitado->reporteAsisten=$swReporteAsis;
     $invitado->ModificarReportePuerta=$swMoReporteAsis;
+    $invitado->modoTareo=$switchmodoTareo;
     $invitado->save();
     /* ---------------------------------------------------- */
 
@@ -748,6 +789,16 @@ class delegarInvController extends Controller
                     $permiso_invitado->agregarPuerta=0;
                     $permiso_invitado->modifPuerta=0;
                 }
+          //*TAREO
+          if($switchmodoTareo==1){
+            $permiso_invitado->verModoTareo=$verModoTareo;
+            $permiso_invitado->agregarModoTareo=$agregarModoTareo;
+            $permiso_invitado->modifModoTareo=$modifModoTareo;
+        } else{
+            $permiso_invitado->verModoTareo=0;
+            $permiso_invitado->agregarModoTareo=0;
+            $permiso_invitado->modifModoTareo=0;
+        }
         $permiso_invitado->save();
         /* ----------------------------------------------------------- */
 
@@ -783,6 +834,11 @@ public function editarInviArea(Request $request){
     $verPuerta_ed=$request->verPuerta_ed;
     $agregPuerta_ed=$request->agregPuerta_ed;
     $ModifPuerta_ed=$request->ModifPuerta_ed;
+
+    $switchmodoTareo_ed=$request->switchmodoTareo_ed;
+    $verModoTareo_ed=$request->verModoTareo_ed;
+    $agregarModoTareo_ed=$request->agregarModoTareo_ed;
+    $modifModoTareo_ed=$request->modifModoTareo_ed;
     /* ----------------------------------------------- */
 
     /* BUSCAMOS INVITADOS */
@@ -819,7 +875,7 @@ public function editarInviArea(Request $request){
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed, 'ControlRuta'=>$switchCRuta_ed,'extractorRH'=>$switchExtractor_ed,
            'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
-           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>0, 'area'=>1,
+           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>0, 'area'=>1, 'modoTareo'=> $switchmodoTareo_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed ]);
         /* ----------------------------------------------------------------------------------------- */
 
@@ -829,7 +885,8 @@ public function editarInviArea(Request $request){
            ->update(['agregarEmp'=>$agregarEmp_ed,'modifEmp'=> $modifEmp_ed,'bajaEmp'=>$bajaEmp_ed,
            'GestActEmp'=>$gActiEmp_ed,'agregarActi'=>$agregarActi_ed,'modifActi'=> $modifActi_ed,
            'bajaActi'=>$bajaActi_ed,
-           'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed ]);
+           'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed,
+           'verModoTareo'=> $verModoTareo_ed, 'agregarModoTareo'=> $agregarModoTareo_ed, 'modifModoTareo'=> $modifModoTareo_ed ]);
            /* -------------------------------------------------------------------------------------------------- */
 
     }
@@ -854,7 +911,7 @@ public function editarInviArea(Request $request){
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed, 'ControlRuta'=>$switchCRuta_ed, 'extractorRH'=>$switchExtractor_ed,
            'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
-           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>0, 'area'=>1,
+           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>0, 'area'=>1, 'modoTareo'=> $switchmodoTareo_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed]);
         /* ----------------------------------------------------------------------------------------------------------- */
 
@@ -902,6 +959,17 @@ public function editarInviArea(Request $request){
             $permiso_invitado->modifPuerta=0;
         }
 
+         //*TAREO
+         if($switchmodoTareo_ed==1){
+            $permiso_invitado->verModoTareo=$verModoTareo_ed;
+            $permiso_invitado->agregarModoTareo=$agregarModoTareo_ed;
+            $permiso_invitado->modifModoTareo=$modifModoTareo_ed;
+        } else{
+            $permiso_invitado->verModoTareo=0;
+            $permiso_invitado->agregarModoTareo=0;
+            $permiso_invitado->modifModoTareo=0;
+        }
+
         $permiso_invitado->save();
         /*--------------------------------------------------- */
            ////////////////////////////////////////////////////////////////
@@ -918,6 +986,7 @@ public function verificarEmaDSiEdi(Request $request){
     ->where('email_inv','=',  $email)
     ->get();
 
+    
     $usuario_organizacion=DB::table('usuario_organizacion')
     ->join('users','usuario_organizacion.user_id','=','users.id')
     ->where('organi_id','=',session('sesionidorg'))
@@ -925,7 +994,15 @@ public function verificarEmaDSiEdi(Request $request){
     ->get();
     /* ---------------------------------------------------- */
     if(count($invitado) || count($usuario_organizacion)){
-        return [1, $invitado[0]->idinvitado];
+        if(count($invitado)){
+            return [1, $invitado[0]->idinvitado];
+        }
+        else{
+            if(count($usuario_organizacion)){
+                return [2];
+            }
+        }
+
     } else{
         return 0;
     }
