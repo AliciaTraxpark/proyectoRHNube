@@ -90,7 +90,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 $empleadoAntiguo = DB::table('empleado')->where('emple_nDoc', '=', $row['numero_documento'])->where('empleado.organi_id', '=', session('sesionidorg'))
                     ->where('empleado.emple_estado', '=', 1)->first();
                 if ($empleadoAntiguo != null) {
-                    return redirect()->back()->with('alert', 'numero de documento ya registrado en otro empleado: ' . $row['numero_documento'] . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
+                    return redirect()->back()->with('alert', 'Número de documento ya esta  registrado: ' . $row['numero_documento'] . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                 };
                 $capturaD = [$row['numero_documento']];
                 array_push($this->Ndoc, $capturaD);
@@ -218,7 +218,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         else{
                             $idD = ubigeo_peru_districts::where("name", '=',$cadDist)->get();
                         }
-                    
+
 
                     if ($idD->isNotEmpty()) {
 
