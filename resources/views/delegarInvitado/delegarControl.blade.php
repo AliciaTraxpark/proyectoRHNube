@@ -409,6 +409,49 @@
 
                                     </div>
                                 </div>
+
+                                {{-- MODO TAREO --}}
+                                <div class="col-md-8 " id="divModoTareo"  style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="modoTareoCheck">
+                                        <label class="custom-control-label" for="modoTareoCheck"
+                                            style="margin-top: 2px;"> <i data-feather="pocket" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;">
+                                            </i> &nbsp; Modo: Tareo &nbsp; &nbsp; <span id="spanTareo"
+                                            style="display: none;color:#911818">Seleccione al menos una opcion.</span></label>  <br>
+                                    </div>
+                                </div>
+
+                                  {{-- OPCIONES --}}
+                                  <div class="col-md-12" id="opcionesTareo" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="">Dispositivos y controladores:</label>
+                                        </div>
+                                        <div class="col-md-1 col-xl-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox"  class="form-check-input" id="verCheckTareo">
+                                                <label class="form-check-label" for="verCheckTareo"
+                                                    style="margin-top: 2px;">Ver</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox"  class="form-check-input" id="AgregarCheckTareo">
+                                                <label class="form-check-label" for="AgregarCheckTareo"
+                                                    style="margin-top: 2px;">Agregar</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ModifCheckTareo">
+                                                <label class="form-check-label" for="ModifCheckTareo"
+                                                    style="margin-top: 2px;">Modificar</label>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                    </div>
+                                </div>
+                                {{-- ---------- --}}
                                 <div class="col-md-12 " id="divExtractor"  style="padding-bottom: 10px; margin-top: 20px; border-bottom: 1.5px solid #dedede;bottom: 10px;">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ExtractorCheck">
@@ -761,6 +804,48 @@
                                         </div>
                                     </div>
                                 </div>
+                                  {{-- MODO TAREO --}}
+                                  <div class="col-md-8 " id="divModoTareo_edit"  style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="modoTareoCheck_edit">
+                                        <label class="custom-control-label" for="modoTareoCheck_edit"
+                                            style="margin-top: 2px;"> <i data-feather="pocket" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;">
+                                            </i> &nbsp; Modo: Tareo &nbsp; &nbsp; <span id="spanTareo_edit"
+                                            style="display: none;color:#911818">Seleccione al menos una opcion.</span></label>  <br>
+                                    </div>
+                                </div>
+
+                                  {{-- OPCIONES --}}
+                                  <div class="col-md-12" id="opcionesTareo_edit" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="">Dispositivos y controladores:</label>
+                                        </div>
+                                        <div class="col-md-1 col-xl-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox"  class="form-check-input" id="verCheckTareo_edit">
+                                                <label class="form-check-label" for="verCheckTareo_edit"
+                                                    style="margin-top: 2px;">Ver</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox"  class="form-check-input" id="AgregarCheckTareo_edit">
+                                                <label class="form-check-label" for="AgregarCheckTareo_edit"
+                                                    style="margin-top: 2px;">Agregar</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ModifCheckTareo_edit">
+                                                <label class="form-check-label" for="ModifCheckTareo_edit"
+                                                    style="margin-top: 2px;">Modificar</label>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                    </div>
+                                </div>
+                                {{-- ---------- --}}
                                 <div class="col-md-12 " id="divExtractor_edit"  style="padding-bottom: 10px; margin-top: 20px; border-bottom: 1.5px solid #dedede;bottom: 10px;">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ExtractorCheck_edit">

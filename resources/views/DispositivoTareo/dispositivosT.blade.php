@@ -165,8 +165,8 @@
                             color: #222222;   padding-left:0px; padding-right: 20px; ">
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                     <div class="row">
-                        @if (isset($agregarPuerta))
-                            @if ($agregarPuerta == 1)
+                        @if (isset($agregarModoTareo))
+                            @if ($agregarModoTareo == 1)
                                 <div id="btnNDis" class=" col-md-6 col-12 text-left">
                                     <button class="btn btn-sm btn-primary" onclick="NuevoDispo()"
                                         style="background-color: #183b5d;border-color:#62778c">+ Nuevo Dispositivo</button>
@@ -455,8 +455,8 @@
 
 
     {{-- modificar --}}
-    @if (isset($modifPuerta))
-        @if ($modifPuerta == 1)
+    @if (isset($modifModoTareo))
+        @if ($modifModoTareo == 1)
             <input type="hidden" id="modifDisPer" value="1">
         @else
             <input type="hidden" id="modifDisPer" value="0">

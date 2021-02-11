@@ -33,7 +33,8 @@ class invitado extends Model
         'puntoControl',
         'centroCosto',
         'empleado',
-        'area'
+        'area',
+        'modoTareo'
 
     ];
 

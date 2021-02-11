@@ -101,8 +101,8 @@
                 color: #222222;   padding-left:0px; padding-right: 20px; ">
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                     <div class="row">
-                        @if (isset($agregarPuerta))
-                         @if ($agregarPuerta==1)
+                        @if (isset($agregarModoTareo))
+                         @if ($agregarModoTareo==1)
                          <div class=" col-md-6 col-xl-6 text-left">
                             <button class="btn btn-sm btn-primary" onclick="NuevoContr()"
                                 style="background-color: #183b5d;border-color:#62778c">+ Nuevo Controlador</button>
@@ -328,8 +328,8 @@
         </div>
     </div>
     {{-- modificar --}}
-@if (isset($modifPuerta))
-@if ($modifPuerta==1)
+@if (isset($modifModoTareo))
+@if ($modifModoTareo==1)
 <input type="hidden" id="modifContPer" value="1">
 @else
 <input type="hidden" id="modifContPer" value="0">

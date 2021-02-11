@@ -430,6 +430,30 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </li>
 
     @endif
+
+    @if ($invitadod->modoTareo==1)
+    <li>
+        <a href="javascript: void(0);">
+            <i data-feather="pocket"></i>
+            <span>Modo: Tareo</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                @if ($permiso_invitado->verModoTareo==1)
+                <a href="/dispositivosTareo">Dispositivos</a>
+                <a href="/controladoresTareo">Controladores</a>
+                @endif
+
+                @if ($invitadod->modifModoTareo==1)
+                <a href="/reporteTareo">Detalle de tareo</a>
+                @endif
+            </li>
+        </ul>
+    </li>
+    @endif
+
     <li>
         <a href="/biblioteca">
             <i data-feather="play-circle"></i>
@@ -437,4 +461,5 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </a>
     </li>
 </ul>
+
 @endif
