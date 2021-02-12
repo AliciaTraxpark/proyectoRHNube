@@ -576,6 +576,7 @@ class apimovilController extends Controller
             )
             ->where('cc.organi_id', '=', $organi_id)
             ->where('cc.estado', '=', 1)
+            ->where('cc.asistenciaPuerta', '=', 1)
             ->get();
         /* ------------------------------------------------ */
 
