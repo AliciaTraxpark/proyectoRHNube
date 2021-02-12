@@ -2958,19 +2958,16 @@ class dispositivosController extends Controller
                 }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha][$empleado->idHorarioE]["dataHorario"])) {
                     $resultado[$empleado->emple_id]->data[$empleado->fecha][$empleado->idHorarioE]["dataHorario"] =  (object) array(
-                        "horario" => $empleado->detalleHorario,
                         "horarioIni" => $empleado->horarioIni,
-                        "horarioFin" => $empleado->horarioFin,
                         "idHorario" => $empleado->idHorario,
                         "toleranciaI" => $empleado->toleranciaI,
-                        "toleranciaF" => $empleado->toleranciaF,
                         "idHorarioE" => $empleado->idHorarioE,
                         "estado" => $empleado->estado,
                         "horasObligadas" => $empleado->horasObligadas,
-                        "horasAdicionales" => $empleado->horasAdicionales,
+                        "horasAdicionales" => $empleado->horasAdicionales == null ? 0 : $empleado->horasAdicionales,
                         "entrada" => $empleado->entrada,
                         "salida" => $empleado->salida,
-                        "totalT" => $empleado->totalT
+                        "totalT" => $empleado->totalT == null ? "00:00:00" : $empleado->totalT
                     );
                 }
             }
@@ -3172,14 +3169,11 @@ class dispositivosController extends Controller
                 DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start)) as fecha'),
                 DB::raw('IF(hor.horario_id is null, 0 , horario_id) as idHorario'),
                 DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
-                DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
-                DB::raw("IF(hor.horaI is null , null , horario_descripcion) as detalleHorario"),
                 DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(mp.marcaMov_salida,mp.marcaMov_fecha)))) as totalT'),
                 DB::raw('MIN(IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha)) as entrada'),
                 DB::raw('MAX(mp.marcaMov_salida) as salida'),
                 DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
                 'hor.horario_tolerancia as toleranciaI',
-                'hor.horario_toleranciaF as toleranciaF',
                 'mp.marcaMov_id as idMarcacion',
                 'hor.horasObliga as horasObligadas',
                 'hoe.nHoraAdic as horasAdicionales',
@@ -3247,12 +3241,9 @@ class dispositivosController extends Controller
                         ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                         ->select(
                             'h.horario_id as idHorario',
-                            'h.horario_descripcion as horario',
                             'h.horario_tolerancia as toleranciaI',
-                            'h.horario_toleranciaF as toleranciaF',
                             'he.horarioEmp_id as idHorarioE',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
-                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
                             'he.estado',
                             'h.horasObliga as horasObligadas',
                             'he.nHoraAdic as horasAdicionales'
@@ -3265,6 +3256,7 @@ class dispositivosController extends Controller
                     foreach ($horarioEmpleado as $he) {
                         // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
                         $he->totalT = "00:00:00";
+                        $he->horasAdicionales = $he->horasAdicionales == null ? 0 : $he->horasAdicionales;
                         $he->entrada = NULL;
                         $he->salida = NULL;
                         $marcaciones[$key]->data[$d][$he->idHorario]["dataHorario"] = $he;
@@ -3275,12 +3267,9 @@ class dispositivosController extends Controller
                         ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                         ->select(
                             'h.horario_id as idHorario',
-                            'h.horario_descripcion as horario',
                             'h.horario_tolerancia as toleranciaI',
-                            'h.horario_toleranciaF as toleranciaF',
                             'he.horarioEmp_id as idHorarioE',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
-                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
                             'he.estado',
                             'h.horasObliga as horasObligadas',
                             'he.nHoraAdic as horasAdicionales'
@@ -3293,6 +3282,7 @@ class dispositivosController extends Controller
                         $marcaciones[$key]->data[$d] = array();
                         foreach ($horarioEmpleado as $he) {
                             // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
+                            $he->horasAdicionales = $he->horasAdicionales == null ? 0 : $he->horasAdicionales;
                             $he->totalT = "00:00:00";
                             $he->entrada = NULL;
                             $he->salida = NULL;
@@ -3338,6 +3328,9 @@ class dispositivosController extends Controller
                     }
                 }
             }
+        }
+        foreach ($marcaciones as $key => $m) {
+            $m->data = array_values($m->data);
         }
         return response()->json($marcaciones, 200);
     }
