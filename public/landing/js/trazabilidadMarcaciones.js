@@ -66,6 +66,11 @@ function cargarDatos() {
             }*/
         },
         success: function (data) {
+            for (let index = 0; index < data.length; index++) {
+                
+                // : RECORRER DATA PARA CALCULAR DATOS
+
+            }
         },
         error: function (data) { }
     })
