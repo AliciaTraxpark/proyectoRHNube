@@ -30,7 +30,7 @@ function checkHora($hora_ini, $hora_fin, $hora_now)
     $horaI = Carbon::parse($hora_ini);
     $horaF = Carbon::parse($hora_fin);
     $horaN = Carbon::parse($hora_now);
-
+    // : CONDICIONAL DE MAYOR IGUAL && MENOR
     if ($horaN->gte($horaI) && $horaN->lt($horaF)) {
         return true;
     } else return false;
@@ -360,4 +360,89 @@ function unionDeDataRHbox($horasRHbox, $horasRuta)
     }
 
     return (object)array("productividad" => $productividad, "rango" => gmdate('H:i:s', $rango));
+}
+
+// * FUNCION DE CHECK DE HORARIO EN DATOS
+function checkHorario($hora_ini, $hora_fin, $hora_now)
+{
+    $horaI = Carbon::parse($hora_ini);
+    $horaF = Carbon::parse($hora_fin);
+    $horaN = Carbon::parse($hora_now);
+    // : CONDICIONAL DE MAYOR IGUAL && MENOR IGUAL
+    if ($horaN->gte($horaI) && $horaN->lte($horaF)) {
+        return true;
+    } else return false;
+}
+
+// * Returns the key at the end of the array
+function endKey($array)
+{
+    // *Aquí utilizamos end() para poner el puntero
+    // *en el último elemento, no para devolver su valor
+    end($array);
+
+    return key($array);
+}
+
+// * FUNCION PARA DEVOLVER EL ID HORARIO DE ESA MARCACIÓN
+function unirMarcacionConHorarioEmpleado($arrayHorarioE, $fechaHorario, $fechaMarcacion)
+{
+    // : ARRAY DE HORARIOS QUE TIENEN PERMITIDO TRABAJAR FUERA DE HORARIO
+    $arrayHorarioFH = [];
+    $fechaParseMarcacion = Carbon::parse($fechaMarcacion);
+    // : RECORREMOS HORARIOS PARA OBTENER SUS RANGOS Y COMPARAR FECHA DE MARCACION
+    foreach ($arrayHorarioE as $he) {
+        $he->toleranciaInicio = $he->toleranciaInicio == null ? 0 : $he->toleranciaInicio;
+        $he->toleranciaFin = $he->toleranciaFin == null ? 0 : $he->toleranciaFin;
+        $horarioInicio = Carbon::parse($fechaHorario . " " . $he->horaInicio)->subMinutes($he->toleranciaInicio);
+        // : CONDICIONAL DE HORAS DE HORARIO
+        if (Carbon::parse($he->horaInicio)->lt(Carbon::parse($he->horaFin))) {
+            $horarioFin = Carbon::parse($fechaHorario . " " . $he->horaFin)->addMinutes($he->toleranciaFin);
+        } else {
+            $fechaSiguiente = Carbon::parse($fechaHorario)->addDays(1);
+            $horarioFin = Carbon::parse($fechaSiguiente . " " . $he->horaFin)->addMinutes($he->toleranciaFin);
+        }
+        $resultadoComparacion = checkHorario($horarioInicio, $horarioFin, $fechaParseMarcacion);
+        if ($resultadoComparacion) {
+            return $he->idHorarioEmpleado;
+        } else {
+            if ($he->fueraHorario == 1) {
+                array_push($arrayHorarioFH, $he);
+            }
+        }
+    }
+    // : ARRAY VACIO
+    if (sizeof($arrayHorarioFH) == 0) {
+        return 0;
+    } else {
+        // : CON SOLO UN HORARIO
+        if (sizeof($arrayHorarioFH) == 1) {
+            return $arrayHorarioFH[0]->idHorarioEmpleado;
+        } else {
+            for ($index = 0; $index < sizeof($arrayHorarioFH); $index++) {
+                if ($index != endKey($arrayHorarioFH)) {
+                    $inicio = Carbon::parse($fechaHorario . " " . $arrayHorarioFH[$index]->horaFin);
+                    $fin = Carbon::parse($fechaHorario . " " . $arrayHorarioFH[$index + 1]->horaInicio);
+                    $respuesta = checkHora($inicio, $fin, $fechaMarcacion);
+                    if ($respuesta) {
+                        return $arrayHorarioFH[$index]->idHorarioEmpleado;
+                    }
+                } else {
+                    return $arrayHorarioFH[$index]->idHorarioEmpleado;
+                }
+            }
+        }
+    }
+}
+// * TIEMPO ENTRE MARCACIONES
+function tiempoMarcacionesPorHorarioEmpleado($idEmpleado, $fecha, $idHorarioEmpleado)
+{
+    $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
+        ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
+        ->where('m.marcaMov_emple_id', '=', $idEmpleado)
+        ->whereNotNull('m.marcaMov_fecha')
+        ->whereNotNull('m.marcaMov_salida')
+        ->where(DB::raw('DATE(marcaMov_fecha)'), '=', $fecha)
+        ->where('m.horarioEmp_id', '=', $idHorarioEmpleado)
+        ->get();
 }

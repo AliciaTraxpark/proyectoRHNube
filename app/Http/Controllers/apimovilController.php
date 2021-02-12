@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Size;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
@@ -64,20 +66,23 @@ class apimovilController extends Controller
                         $dispo_nombre->dispo_CodigoNombre = $nombreDisp;
                         $dispo_nombre->idDispositivos = $dispositivo->idDispositivos;
                         $dispo_nombre->save();
-                        return response()->json(array('status' => 200, "dispositivo" => $dispositivo,
-                            "disponombre" => $dispo_nombre, "token" => $token->get()));
-
+                        return response()->json(array(
+                            'status' => 200, "dispositivo" => $dispositivo,
+                            "disponombre" => $dispo_nombre, "token" => $token->get()
+                        ));
                     } else {
-                        return response()->json(array('status' => 200, "dispositivo" => $dispositivo,
-                            "disponombre" => $nombreDs, "token" => $token->get()));
+                        return response()->json(array(
+                            'status' => 200, "dispositivo" => $dispositivo,
+                            "disponombre" => $nombreDs, "token" => $token->get()
+                        ));
                     }
-
                 } else {
                     /* SI LA CLAVE ES INCORRECTA */
-                    return response()->json(array('status' => 400, 'title' => 'Clave incorrecta',
-                        'detail' => 'Asegúrate de escribir la clave correcta'), 400);
+                    return response()->json(array(
+                        'status' => 400, 'title' => 'Clave incorrecta',
+                        'detail' => 'Asegúrate de escribir la clave correcta'
+                    ), 400);
                 }
-
             } else {
                 /* SI NO ESTA CONFIRMADO Y SOLO ENVIADO SMS */
                 if ($dispositivo->dispo_estado == 1) {
@@ -103,9 +108,10 @@ class apimovilController extends Controller
                     $token = JWTAuth::encode($payload);
                     /* --------------------- */
 
-                    return response()->json(array('status' => 200, "dispositivo" => $dispositivosAc,
-                        "disponombre" => $dispo_nombre, "token" => $token->get()));
-
+                    return response()->json(array(
+                        'status' => 200, "dispositivo" => $dispositivosAc,
+                        "disponombre" => $dispo_nombre, "token" => $token->get()
+                    ));
                 }
             }
         } else {
@@ -116,14 +122,16 @@ class apimovilController extends Controller
 
             /* SI LO TENEMOS REGISTRADO  */
             if ($dispositivo1 != null) {
-                return response()->json(array('status' => 400, 'title' => 'Clave incorrecta o dispositivo no activo',
-                    'detail' => 'Asegúrate de escribir la clave correcta'), 400);
-
+                return response()->json(array(
+                    'status' => 400, 'title' => 'Clave incorrecta o dispositivo no activo',
+                    'detail' => 'Asegúrate de escribir la clave correcta'
+                ), 400);
             } else {
                 /* SI NO LO TENEMOS REGISTRADO */
-                return response()->json(array('status' => 400, 'title' => 'Dispositivo no existe',
-                    'detail' => 'Asegúrate de registrar el dispositivo desde la plataforma web'), 400);
-
+                return response()->json(array(
+                    'status' => 400, 'title' => 'Dispositivo no existe',
+                    'detail' => 'Asegúrate de registrar el dispositivo desde la plataforma web'
+                ), 400);
             }
         }
     }
@@ -150,10 +158,11 @@ class apimovilController extends Controller
         if ($empleado != null) {
             return response()->json(array('status' => 200, "empleados" => $empleado));
         } else {
-            return response()->json(array('status' => 400, 'title' => 'Empleados no encontrados',
-                'detail' => 'No se encontro empleados relacionados con este dispositivo'), 400);
+            return response()->json(array(
+                'status' => 400, 'title' => 'Empleados no encontrados',
+                'detail' => 'No se encontro empleados relacionados con este dispositivo'
+            ), 400);
         }
-
     }
     //ACTIVIDADES
     public function ActivMovil(Request $request)
@@ -182,10 +191,11 @@ class apimovilController extends Controller
         if ($actividades != null) {
             return response()->json(array('status' => 200, "actividades" => $actividades));
         } else {
-            return response()->json(array('status' => 400, 'title' => 'Actividades no encontradas',
-                'detail' => 'No se encontro actividades en esta organizacion'), 400);
+            return response()->json(array(
+                'status' => 400, 'title' => 'Actividades no encontradas',
+                'detail' => 'No se encontro actividades en esta organizacion'
+            ), 400);
         }
-
     }
     public function controladoresAct(Request $request)
     {
@@ -199,8 +209,14 @@ class apimovilController extends Controller
         $dispositivo_Controlador = DB::table('dispositivo_controlador as dc')
             ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
             ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
-            ->select('con.idControladores', 'con.cont_codigo', 'con.cont_nombres', 'con.cont_ApPaterno', 'con.cont_ApMaterno',
-                'con.cont_estado')
+            ->select(
+                'con.idControladores',
+                'con.cont_codigo',
+                'con.cont_nombres',
+                'con.cont_ApPaterno',
+                'con.cont_ApMaterno',
+                'con.cont_estado'
+            )
             ->where('dis.idDispositivos', '=', $idDispo)
             ->where('dis.organi_id', '=', $organi_id)
             ->where('con.cont_estado', '=', 1)
@@ -211,10 +227,11 @@ class apimovilController extends Controller
         if ($dispositivo_Controlador != null) {
             return response()->json(array('status' => 200, "controladores" => $dispositivo_Controlador));
         } else {
-            return response()->json(array('status' => 400, 'title' => 'Controladores no encontrados',
-                'detail' => 'No se encontro controladores relacionados con este dispositivo'), 400);
+            return response()->json(array(
+                'status' => 400, 'title' => 'Controladores no encontrados',
+                'detail' => 'No se encontro controladores relacionados con este dispositivo'
+            ), 400);
         }
-
     }
 
     /* MARCACIONES EN PUERTA  */
@@ -273,7 +290,8 @@ class apimovilController extends Controller
             }
 
             /* INSERTAMOS EN COLLECTION */
-            $datos = ['tipoMarcacion' => $tipoMarcacion, 'fechaMarcacion' => $fechaMarcacion,
+            $datos = [
+                'tipoMarcacion' => $tipoMarcacion, 'fechaMarcacion' => $fechaMarcacion,
                 'idEmpleado' => $idEmpleado, 'idControlador' => $idControlador,
                 'idDisposi' => $idDisposi, 'organi_id' => $organi_id, 'activ_id' => $activ_id,
                 'idHoraEmp' => $idHoraEmp, 'latitud' => $latitud, 'longitud' => $longitud,
@@ -299,24 +317,30 @@ class apimovilController extends Controller
                 $marcacion_puerta->controladores_idControladores = $req['idControlador'];
                 $marcacion_puerta->dispositivoEntrada = $req['idDisposi'];
                 $marcacion_puerta->organi_id = $req['organi_id'];
-                if (empty($req['activ_id'])) {} else {
+                if (empty($req['activ_id'])) {
+                } else {
                     $marcacion_puerta->marcaIdActivi = $req['activ_id'];
                 }
 
-                if (empty($req['idHoraEmp'])) {} else {
+                if (empty($req['idHoraEmp'])) {
+                } else {
                     $marcacion_puerta->horarioEmp_id = $req['idHoraEmp'];
                 }
-                if (empty($req['latitud'])) {} else {
+                if (empty($req['latitud'])) {
+                } else {
                     $marcacion_puerta->marca_latitud = $req['latitud'];
                 }
-                if (empty($req['longitud'])) {} else {
+                if (empty($req['longitud'])) {
+                } else {
                     $marcacion_puerta->marca_longitud = $req['longitud'];
                 }
 
-                if (empty($req['puntoC_id'])) {} else {
+                if (empty($req['puntoC_id'])) {
+                } else {
                     $marcacion_puerta->puntoC_id = $req['puntoC_id'];
                 }
-                if (empty($req['centC_id'])) {} else {
+                if (empty($req['centC_id'])) {
+                } else {
                     $marcacion_puerta->centC_id = $req['centC_id'];
                 }
                 $marcacion_puerta->save();
@@ -329,10 +353,9 @@ class apimovilController extends Controller
                 $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
                     ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
-                /*  ->where('mv.marcaMov_salida', '!=',null )
+                    /*  ->where('mv.marcaMov_salida', '!=',null )
                 ->where('mv.marcaMov_fecha', '!=',null ) */
                     ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
-
                     ->where('dis.tipoDispositivo', '=', 2)
                     ->orderby('marcaMov_fecha', 'ASC')
                     ->get()->last();
@@ -359,7 +382,6 @@ class apimovilController extends Controller
                             $marcacion_puerta1 = [];
                             $marcacion_puerta1 == null;
                         }
-
                     } else {
                         $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
                             ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
@@ -372,7 +394,6 @@ class apimovilController extends Controller
                             ->orderby('marcaMov_fecha', 'ASC')
                             ->get()->last();
                     }
-
                 } else {
                     $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
                         ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
@@ -395,28 +416,31 @@ class apimovilController extends Controller
                     $marcacion_puerta->controladores_salida = $req['idControlador'];
                     $marcacion_puerta->dispositivoSalida = $req['idDisposi'];
                     $marcacion_puerta->organi_id = $req['organi_id'];
-                    if (empty($req['activ_id'])) {} else {
+                    if (empty($req['activ_id'])) {
+                    } else {
                         /*  $marcacion_puerta->marcaIdActivi=$req['activ_id']; */
                     }
 
-                    if (empty($req['idHoraEmp'])) {} else {
+                    if (empty($req['idHoraEmp'])) {
+                    } else {
                         $marcacion_puerta->horarioEmp_id = $req['idHoraEmp'];
                     }
-                    if (empty($req['latitud'])) {} else {
+                    if (empty($req['latitud'])) {
+                    } else {
                         $marcacion_puerta->marca_latitud = $req['latitud'];
                     }
-                    if (empty($req['longitud'])) {} else {
+                    if (empty($req['longitud'])) {
+                    } else {
                         $marcacion_puerta->marca_longitud = $req['longitud'];
                     }
-                    if (empty($req['puntoC_id'])) {} else {
-
+                    if (empty($req['puntoC_id'])) {
+                    } else {
                     }
-                    if (empty($req['centC_id'])) {} else {
-
+                    if (empty($req['centC_id'])) {
+                    } else {
                     }
                     $marcacion_puerta->save();
                 } else {
-
                     /* EMPAREJAMOS CON LA MARCACION SIN SALIDA QUE ENCONTRAMOS */
                     $marcacion_puerta = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
                     $marcacion_puerta->marcaMov_salida = $req['fechaMarcacion'];
@@ -425,18 +449,21 @@ class apimovilController extends Controller
                     $marcacion_puerta->save();
                 }
             }
-
         }
 
         if ($marcacion_puerta) {
-            return response()->json(array('status' => 200, 'title' => 'Marcacion registrada correctamente',
-                'detail' => 'Marcacion registrada correctamente en la base de datos'), 200);
+            return response()->json(array(
+                'status' => 200, 'title' => 'Marcacion registrada correctamente',
+                'detail' => 'Marcacion registrada correctamente en la base de datos'
+            ), 200);
         } else {
-            return response()->json(array('status' => 400, 'title' => 'No se pudo registrar marcacion',
-                'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 400);
+            return response()->json(array(
+                'status' => 400, 'title' => 'No se pudo registrar marcacion',
+                'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'
+            ), 400);
         }
-
     }
+
 
     public function empleadoHorario(Request $request)
     {
@@ -456,10 +483,22 @@ class apimovilController extends Controller
         /* BUSCAMOS EMPLEADOS CON HORARIOS DE ESTA FECHA ACTUAL */
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc as dni',
-                'e.emple_id as idempleado', 'h.horaI', 'h.horaF', 'h.horario_tolerancia as toleranciaIni',
-                'h.horario_toleranciaF as toleranciaFin', 'he.horarioEmp_id', 'hd.start as diaActual',
-                'he.fuera_horario as trabajafueraHor', 'he.horarioComp as horarioCompensable', 'he.horaAdic as horasAdicionales')
+            ->select(
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'e.emple_nDoc as dni',
+                'e.emple_id as idempleado',
+                'h.horaI',
+                'h.horaF',
+                'h.horario_tolerancia as toleranciaIni',
+                'h.horario_toleranciaF as toleranciaFin',
+                'he.horarioEmp_id',
+                'hd.start as diaActual',
+                'he.fuera_horario as trabajafueraHor',
+                'he.horarioComp as horarioCompensable',
+                'he.horaAdic as horasAdicionales'
+            )
             ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
@@ -475,10 +514,11 @@ class apimovilController extends Controller
         if ($empleado != null) {
             return response()->json(array('status' => 200, "empleados" => $empleado));
         } else {
-            return response()->json(array('status' => 400, 'title' => 'Empleados no encontrados',
-                'detail' => 'No se encontro empleados relacionados con este dispositivo'), 400);
+            return response()->json(array(
+                'status' => 400, 'title' => 'Empleados no encontrados',
+                'detail' => 'No se encontro empleados relacionados con este dispositivo'
+            ), 400);
         }
-
     }
 
     public function ticketSoporte(Request $request)
@@ -543,8 +583,10 @@ class apimovilController extends Controller
         if ($centroCosto != null) {
             return response()->json(array('status' => 200, "centroCosto" => $centroCosto));
         } else {
-            return response()->json(array('status' => 400, 'title' => 'Centros de costos no encontrados',
-                'detail' => 'No se encontro centro de costos en esta organizacion'), 400);
+            return response()->json(array(
+                'status' => 400, 'title' => 'Centros de costos no encontrados',
+                'detail' => 'No se encontro centro de costos en esta organizacion'
+            ), 400);
         }
     }
 
@@ -581,16 +623,138 @@ class apimovilController extends Controller
 
             /* INSERTAMOS PUNTOS GEO */
             $tab->puntosGeo = $punto_control_geo;
-
         }
 
         /* VERIFICAMOS DI EXISTE */
         if ($punto_control != null) {
             return response()->json(array('status' => 200, "puntosControl" => $punto_control));
         } else {
-            return response()->json(array('status' => 400, 'title' => 'puntos de control no encontrados',
-                'detail' => 'No se encontro puntos de control en esta organizacion'), 400);
+            return response()->json(array(
+                'status' => 400, 'title' => 'puntos de control no encontrados',
+                'detail' => 'No se encontro puntos de control en esta organizacion'
+            ), 400);
         }
+    }
 
+    // * MARCACION PUERTA
+    public function registroMarcaciones(Request $request)
+    {
+        // : VALIDACIONES DE MARCACIONES EN BACKEND
+        foreach ($request->all() as $key => $atributo) {
+            $errores = [];
+            $validacion = Validator::make($atributo, [
+                'tipoMarcacion' => 'required',
+                'fechaMarcacion' => 'required',
+                'idEmpleado' => 'required',
+                'idControlador' => 'required',
+                'idDisposi' => 'required',
+                'organi_id' => 'required'
+            ], [
+                'required' => ':attribute es obligatorio'
+            ]);
+            if ($validacion->fails()) {
+                //: ARRAY DE ERRORES
+                if (isset($validacion->failed()["tipoMarcacion"])) {
+                    array_push($errores, array("campo" => "tipoMarcacion", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["fechaMarcacion"])) {
+                    array_push($errores, array("campo" => "fechaMarcacion", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idEmpleado"])) {
+                    array_push($errores, array("campo" => "idEmpleado", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idControlador"])) {
+                    array_push($errores, array("campo" => "idControlador", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idDisposi"])) {
+                    array_push($errores, array("campo" => "idDisposi", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["organi_id"])) {
+                    array_push($errores, array("campo" => "organi_id", "mensaje" => "Es obligatorio"));
+                }
+                return response()->json(array("errores" => $errores), 400);
+            }
+        }
+        // : OBTENIENDO DATA
+        $arrayDatos = [];
+        foreach ($request->all() as $dato) {
+            // : OBTENEMOS PARAMETROS
+            $tipoMarcacion = $dato['tipoMarcacion'];
+            $fechaMarcacion = $dato['fechaMarcacion'];
+            $idEmpleado = $dato['idEmpleado'];
+            $idControlador = $dato['idControlador'];
+            $idDispositivo = $dato['idDisposi'];
+            $organi_id = $dato['organi_id'];
+            $idActividad = empty($dato['activ_id']) == true ? null : $dato['activ_id'];
+            $latitud = empty($dato['latitud']) == true ? null : $dato['latitud'];
+            $longitud = empty($dato['longitud']) == true ? null : $dato['longitud'];
+            $idPuntoControl = empty($dato['puntoC_id']) == true ? null : $dato['puntoC_id'];
+            $idCentroCosto = empty($dato['centC_id']) == true ? null : $dato['centC_id'];
+            $datos = (object) array(
+                "tipoMarcacion" => $tipoMarcacion,
+                "fechaMarcacion" => $fechaMarcacion,
+                "idEmpleado" => $idEmpleado,
+                "idControlador" => $idControlador,
+                "idDispositivo" => $idDispositivo,
+                "organi_id" => $organi_id,
+                "idActividad" => $idActividad,
+                "latitud" => $latitud,
+                "longitud" => $longitud,
+                "idPuntoControl" => $idPuntoControl,
+                "idCentroCosto" => $idCentroCosto
+            );
+            // : ID EMPLEADO
+            if (!isset($arrayDatos[$idEmpleado])) {
+                $arrayDatos[$idEmpleado] = (object) array("idEmpleado" => $idEmpleado, "datos" => array());
+            }
+            // : OBTENER FECHA
+            $grupoFecha = Carbon::parse($fechaMarcacion)->isoFormat("YYYY-MM-DD");
+            if (!isset($arrayDatos[$idEmpleado]->datos[$grupoFecha])) {
+                $arrayDatos[$idEmpleado]->datos[$grupoFecha] = (object) array("fecha" => $grupoFecha, "marcaciones" => array());
+            }
+            array_push($arrayDatos[$idEmpleado]->datos[$grupoFecha]->marcaciones, $datos);
+        }
+        $arrayDatos = array_values($arrayDatos);
+        // *: RECORREMOS ARRAY
+        foreach ($arrayDatos as $key => $data) {
+            $arrayDatos[$key]->datos = array_values($arrayDatos[$key]->datos);
+            foreach ($data->datos as $item => $dataPorFecha) {
+                usort($data->datos[$item]->marcaciones, object_sorter('fechaMarcacion'));
+                // : DATOS PARA OBTENER HORARIO EMPLEADO
+                $idEmpleado = $data->idEmpleado;
+                $fecha = $dataPorFecha->fecha;
+                // : HORARIOS EMPLEADOS
+                $horarioEmpleado = DB::table('horario_empleado as he')
+                    ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->select(
+                        'he.horarioEmp_id as idHorarioEmpleado',
+                        'he.fuera_horario as fueraHorario',
+                        'he.nHoraAdic as horasAdicionales',
+                        'h.horaI as horaInicio',
+                        'h.horaF as horaFin',
+                        'h.horario_tolerancia as toleranciaInicio',
+                        'h.horario_toleranciaF as toleranciaFin',
+                        'h.horasObliga as horasObligadas'
+                    )
+                    ->where('he.empleado_emple_id', '=', $idEmpleado)
+                    ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+                    ->where('he.estado', '=', 1)
+                    ->orderBy('h.horaI', 'ASC')
+                    ->get();
+                // : RECORRER MARCACIONES
+                for ($index = 0; $index < sizeof($dataPorFecha->marcaciones); $index++) {
+                    $dataMarcacion = $dataPorFecha->marcaciones[$index];
+                    if (sizeof($horarioEmpleado) == 0) $idHorarioE = 0;
+                    else {
+                        $idHorarioE = unirMarcacionConHorarioEmpleado($horarioEmpleado, $fecha, $dataMarcacion->fechaMarcacion);
+                    }
+                    // if ($dataMarcacion->tipoMarcacion == 1) {
+
+                    // }
+                }
+            }
+        }
+        dd($arrayDatos);
     }
 }

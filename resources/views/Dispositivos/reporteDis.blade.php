@@ -248,10 +248,7 @@
                     <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
                 </div>
             </div>
-            <input type="hidden" id="pasandoV">
             <div class="card-body border">
-                <div class="row justify-content-center">
-                </div>
                 <div class="row justify-content-center">
                     <div class="col-xl-4">
                         <div class="form-group row">
