@@ -1,4 +1,4 @@
-$.fn.select2.defaults.set("language", "es");
+$.fn.select2.defaults.set('language', 'es');
 var table;
 
 /*----------------- DATATABLE ---------------------------- */

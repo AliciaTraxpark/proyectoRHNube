@@ -469,23 +469,7 @@
     @else
         <input type="hidden" id="bajaActI" value="1">
     @endif
-    @if (Auth::user())
-        <script>
-            $(function() {
-                setInterval(function checkSession() {
-                    $.get('/check-session', function(data) {
-                        // if session was expired
-                        if (data.guest == false) {
-                            $('.modal').modal('hide');
-                            $('#modal-error').modal('show');
 
-                        }
-                    });
-                }, 7202000);
-            });
-
-        </script>
-    @endif
 @endsection
 @section('script')
     <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
@@ -504,4 +488,22 @@
     <script src="{{ asset('js/select2search.js') }}"></script>
     <script src="{{ asset('landing/js/subActividades.js') }}"></script>
     <script src="{{ asset('landing/js/notificacionesUser.js') }}"></script>
+    @if (Auth::user())
+<script>
+    $(function() {
+        setInterval(function checkSession() {
+            $.get('/check-session', function(data) {
+                // if session was expired
+                if (data.guest == false) {
+                    $('.modal').modal('hide');
+                    $('#modal-error').modal('show');
+
+                }
+            });
+        }, 7202000);
+    });
+
+</script>
+@endif
 @endsection
+
