@@ -1102,18 +1102,7 @@ class dispositivosController extends Controller
             foreach ($array as $empleado) {
                 if (!isset($resultado[$empleado->emple_id])) {
                     $resultado[$empleado->emple_id] = (object) array(
-                        "organi_id" => $empleado->organi_id,
-                        "organi_razonSocial" => $empleado->organi_razonSocial,
-                        "organi_direccion" => $empleado->organi_direccion,
-                        "organi_ruc" => $empleado->organi_ruc,
-                        "emple_id" => $empleado->emple_id,
-                        "area" => $empleado->area_descripcion,
-                        "nDoc" => $empleado->emple_nDoc,
-                        "nombre" => $empleado->perso_nombre,
-                        "apPaterno" => $empleado->perso_apPaterno,
-                        "apMaterno" => $empleado->perso_apMaterno,
-                        "cargo_descripcion" => $empleado->cargo_descripcion,
-                        "area_descripcion" => $empleado->area_descripcion
+                        "emple_id" => $empleado->emple_id
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->datos)) {
@@ -1154,30 +1143,34 @@ class dispositivosController extends Controller
             ->get()->first();
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
-
-                $marcaciones = DB::table('empleado as e')
+                $empleado = DB::table('empleado as e')
                     ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                    ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                    ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
-                    ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                    ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
-                    ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
                     ->select(
                         'e.emple_id',
                         'o.organi_razonSocial',
                         'o.organi_direccion',
                         'o.organi_ruc',
-                        DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
-                        DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                         'ar.area_descripcion',
                         'e.emple_nDoc',
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
-                        'c.cargo_descripcion',
+                        'c.cargo_descripcion'
+                    )
+                    ->where('e.emple_id', $idemp)
+                    ->get();
+                $marcaciones = DB::table('empleado as e')
+                    ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                    ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                    ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                    ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+                    ->select(
+                        'e.emple_id',
+                        DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
+                        DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                         'mp.organi_id',
                         DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario'),
                         DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
@@ -1200,16 +1193,29 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-                    $marcaciones = DB::table('empleado as e')
+                    $empleado = DB::table('empleado as e')
                         ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                        ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
+                        ->select(
+                            'e.emple_id',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
+                            'ar.area_descripcion',
+                            'e.emple_nDoc',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion'
+                        )
+                        ->where('e.emple_id', $idemp)
+                        ->get();
+                    $marcaciones = DB::table('empleado as e')
+                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
@@ -1244,32 +1250,36 @@ class dispositivosController extends Controller
                         ->get();
                     $marcaciones = agruparPorFechayHorario($marcaciones);
                 } else {
-
-                    $marcaciones = DB::table('empleado as e')
+                    $empleado = DB::table('empleado as e')
                         ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                        ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
-                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
-                        ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                         ->select(
                             'e.emple_id',
                             'o.organi_razonSocial',
                             'o.organi_direccion',
                             'o.organi_ruc',
-                            DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
-                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                             'ar.area_descripcion',
                             'e.emple_nDoc',
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
-                            'c.cargo_descripcion',
+                            'c.cargo_descripcion'
+                        )
+                        ->where('e.emple_id', $idemp)
+                        ->get();
+                    $marcaciones = DB::table('empleado as e')
+                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+                        ->select(
+                            'e.emple_id',
+                            DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
+                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                             'mp.organi_id',
                             DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario'),
                             DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
@@ -1290,29 +1300,34 @@ class dispositivosController extends Controller
                 }
             }
         } else {
-            $marcaciones = DB::table('empleado as e')
+            $empleado = DB::table('empleado as e')
                 ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                 ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
-                ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
-                ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
                 ->select(
                     'e.emple_id',
                     'o.organi_razonSocial',
                     'o.organi_direccion',
                     'o.organi_ruc',
-                    DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
-                    DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                     'ar.area_descripcion',
                     'e.emple_nDoc',
                     'p.perso_nombre',
                     'p.perso_apPaterno',
                     'p.perso_apMaterno',
-                    'c.cargo_descripcion',
+                    'c.cargo_descripcion'
+                )
+                ->where('e.emple_id', $idemp)
+                ->get();
+            $marcaciones = DB::table('empleado as e')
+                ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+                ->select(
+                    'e.emple_id',
+                    DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
+                    DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                     'mp.organi_id',
                     DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario'),
                     DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
@@ -1329,6 +1344,16 @@ class dispositivosController extends Controller
                 ->get();
             $marcaciones = agruparPorFechayHorario($marcaciones);
         }
+        if (sizeof($marcaciones) != 0) {
+            foreach ($marcaciones as $m) {
+                if ($m->emple_id == $empleado[0]->emple_id) {
+                    $empleado[0]->datos = $m->datos;
+                }
+            }
+        } else {
+            $empleado[0]->datos = array();
+        }
+        $marcaciones = $empleado;
         // * ***************** TODAS LAS FECHAS **********************
         $period = Carbon::parse($fecha)->toPeriod($fechaF);
         $dates = [];
@@ -1392,9 +1417,6 @@ class dispositivosController extends Controller
                         }
                     }
                 }
-            }
-            // : RECORREMOS PARA INCIDENCIA
-            foreach ($marcaciones as $key => $m) {
                 // * *********************** INCIDENCIAS ***********************
                 $idEmpleado = $m->emple_id;
                 // * TABLA EVENTOS EMPLEADO
@@ -1451,21 +1473,23 @@ class dispositivosController extends Controller
                 $m->datos[$key] = array_values($m->datos[$key]);
                 foreach ($m->datos[$key] as $item => $valor) {
                     $idHorario = $valor->idHorario;
-                    // * PAUSAS
-                    $pausas = pausas_horario::select(
-                        'idpausas_horario  as id',
-                        'pausH_descripcion as descripcion',
-                        'pausH_Inicio as inicio',
-                        'pausH_Fin as fin',
-                        'tolerancia_inicio as toleranciaI',
-                        'tolerancia_fin as toleranciaF',
-                        'horario_id as idH'
-                    )
-                        ->where('horario_id', '=', $idHorario)
-                        ->get();
                     $arrayP = [];
-                    foreach ($pausas as $p) {
-                        array_push($arrayP, $p);
+                    // * PAUSAS
+                    if ($idHorario != 0) {
+                        $pausas = pausas_horario::select(
+                            'idpausas_horario  as id',
+                            'pausH_descripcion as descripcion',
+                            'pausH_Inicio as inicio',
+                            'pausH_Fin as fin',
+                            'tolerancia_inicio as toleranciaI',
+                            'tolerancia_fin as toleranciaF',
+                            'horario_id as idH'
+                        )
+                            ->where('horario_id', '=', $idHorario)
+                            ->get();
+                        foreach ($pausas as $p) {
+                            array_push($arrayP, $p);
+                        }
                     }
                     $m->datos[$key][$item]->pausas = $arrayP;
                 }
@@ -3167,7 +3191,154 @@ class dispositivosController extends Controller
             ->groupBy(DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start))'), 'hoe.horarioEmp_id', 'e.emple_id')
             ->get();
         $data = agruparEmpleadosMData($data);  //: CONVERTIR UN SOLO EMPLEADO CON VARIOS MARCACIONES
-        dd($data);
+
+        // * UNIR EMPLEADOS CON DATA DE MARCACIONES
+        for ($index = 0; $index < sizeof($empleados); $index++) {
+            $ingreso = true;
+            for ($element = 0; $element < sizeof($data); $element++) {
+                if ($empleados[$index]->emple_id == $data[$element]->emple_id) {    //: BUSCAMOS EL ID EMPLEADO IGUAL
+                    $ingreso = false;
+                    $arrayNuevo = (object) array(
+                        "emple_id" => $empleados[$index]->emple_id,
+                        "emple_nDoc" => $empleados[$index]->emple_nDoc,
+                        "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
+                        "nombres_apellidos" => $empleados[$index]->perso_nombre . " " . $empleados[$index]->perso_apPaterno . " " . $empleados[$index]->perso_apMaterno,
+                        "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
+                        "emple_estado" => $empleados[$index]->emple_estado,
+                        "data" => $data[$element]->data
+                    );
+                    array_push($marcaciones, $arrayNuevo);
+                }
+            }
+            if ($ingreso && $empleados[$index]->emple_estado == 1) {         //: VALIDAMOS PARA EMPLEADOS QUE NO TIENEN DATA DE ESA FECHA
+                $arrayNuevo = (object) array(
+                    "emple_id" => $empleados[$index]->emple_id,
+                    "emple_nDoc" => $empleados[$index]->emple_nDoc,
+                    "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
+                    "nombres_apellidos" => $empleados[$index]->perso_nombre . " " . $empleados[$index]->perso_apPaterno . " " . $empleados[$index]->perso_apMaterno,
+                    "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
+                    "emple_estado" => $empleados[$index]->emple_estado,
+                    "data" => array()
+                );
+                array_push($marcaciones, $arrayNuevo);
+            }
+        }
+        // * COMPLETAR DATA DE DIAS
+        $period = Carbon::parse($fechaInicio)->toPeriod($fechaFin);
+        $dates = [];
+        // : OBTENER TODAS LAS FECHAS
+        foreach ($period as $key => $date) {
+            array_push($dates, $date->format('Y-m-d'));
+        }
+        // : RECORREMOS FECHAS
+        foreach ($dates as $d) {
+            // : RECORREMOS MARCACIONES PARA COMPLETAR HORARIOS
+            foreach ($marcaciones as $key => $m) {
+                $idEmpleado = $m->emple_id;
+                // : BUSCAMOS SI YA EXISTE LA FECHA EN EL ARRAY
+                if (array_key_exists($d, $m->data)) {
+                    $horarios = array_keys($m->data[$d]);   // : OBTENEMOS TODOS LOS HORARIOS DE ESA FECHA
+                    $clave = array_search(0, $horarios);     // : BUSCAMOS HORARIOS CON ID 0
+                    if (!is_bool($clave)) {
+                        unset($horarios[$clave]);            // : DESCARTAMOS LOS HORARIOS CON ID 0
+                    }
+                    $horarioEmpleado = DB::table('horario_empleado as he')
+                        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                        ->select(
+                            'h.horario_id as idHorario',
+                            'h.horario_descripcion as horario',
+                            'h.horario_tolerancia as toleranciaI',
+                            'h.horario_toleranciaF as toleranciaF',
+                            'he.horarioEmp_id as idHorarioE',
+                            DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
+                            'he.estado',
+                            'h.horasObliga as horasObligadas',
+                            'he.nHoraAdic as horasAdicionales'
+                        )
+                        ->where(DB::raw('DATE(hd.start)'), '=', $d)
+                        ->where('he.empleado_emple_id', '=', $idEmpleado)
+                        ->whereNotIn('he.horarioEmp_id', $horarios)
+                        ->where('he.estado', '=', 1)
+                        ->get();
+                    foreach ($horarioEmpleado as $he) {
+                        // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
+                        $he->totalT = "00:00:00";
+                        $he->entrada = NULL;
+                        $he->salida = NULL;
+                        $marcaciones[$key]->data[$d][$he->idHorario]["dataHorario"] = $he;
+                    }
+                } else {
+                    $horarioEmpleado = DB::table('horario_empleado as he')
+                        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                        ->select(
+                            'h.horario_id as idHorario',
+                            'h.horario_descripcion as horario',
+                            'h.horario_tolerancia as toleranciaI',
+                            'h.horario_toleranciaF as toleranciaF',
+                            'he.horarioEmp_id as idHorarioE',
+                            DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
+                            'he.estado',
+                            'h.horasObliga as horasObligadas',
+                            'he.nHoraAdic as horasAdicionales'
+                        )
+                        ->where(DB::raw('DATE(hd.start)'), '=', $d)
+                        ->where('he.empleado_emple_id', '=', $idEmpleado)
+                        ->where('he.estado', '=', 1)
+                        ->get();
+                    if (sizeof($horarioEmpleado) != 0) {
+                        $marcaciones[$key]->data[$d] = array();
+                        foreach ($horarioEmpleado as $he) {
+                            // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
+                            $he->totalT = "00:00:00";
+                            $he->entrada = NULL;
+                            $he->salida = NULL;
+                            $marcaciones[$key]->data[$d][$he->idHorario]["dataHorario"] = $he;
+                        }
+                    }
+                }
+                ksort($m->data);
+                // * *********************** INCIDENCIAS ***********************
+                // : TABLA EVENTOS EMPLEADO
+                $eventos = eventos_empleado::select('title as descripcion')
+                    ->where(DB::raw('DATE(start)'), '=', $d)
+                    ->where('id_empleado', '=', $idEmpleado)
+                    ->get();
+                // : TABLA INCIDENCIAS DIA
+                $incidencias = DB::table('incidencia_dias as id')
+                    ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                    ->select('i.inciden_descripcion as descripcion')
+                    ->where(DB::raw('DATE(id.inciden_dias_fechaI)'), '=', $d)
+                    ->where('id.id_empleado', '=', $idEmpleado)
+                    ->get();
+                if (array_key_exists($d, $m->data)) {
+                    $nuevoDato = Arr::flatten($m->data[$d]);
+                    $m->data[$d] = array();
+                    $m->data[$d]["dataHorario"] = $nuevoDato;
+                    $marcaciones[$key]->data[$d]["incidencias"] = array();
+                    foreach ($eventos as $e) {
+                        array_push($marcaciones[$key]->data[$d]["incidencias"], $e);
+                    }
+                    foreach ($incidencias as $i) {
+                        array_push($marcaciones[$key]->data[$d]["incidencias"], $i);
+                    }
+                } else {
+                    // : REGISTRAMOS LA FECHA SI SOLO TIENE EVENTOS O INCIDENCIAS
+                    if (sizeof($eventos) != 0 || sizeof($incidencias) != 0) {
+                        $marcaciones[$key]->data[$d] = array("dataHorario" => array(), "incidencias" => array());
+                        foreach ($eventos as $e) {
+                            array_push($marcaciones[$key]->data[$d]["incidencias"], $e);
+                        }
+                        foreach ($incidencias as $i) {
+                            array_push($marcaciones[$key]->data[$d]["incidencias"], $i);
+                        }
+                    }
+                }
+            }
+        }
         return response()->json($marcaciones, 200);
     }
 }
