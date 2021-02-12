@@ -472,6 +472,10 @@ Route::post('/eliminarMarcacion', 'dispositivosController@eliminarMarcacion');
 Route::post('/horariosxEmpleado', 'dispositivosController@horarioEmpleado');
 Route::post('/cambiarHorarioM', 'dispositivosController@cambiarHorario');
 Route::post('/agregarM', 'dispositivosController@nuevaMarcacion');
+// : *********************** REPORTE DE TRAZABILIDAD ****************************
+Route::get('/indexTrazabilidad', 'dispositivosController@indexTrazabilidadM');
+Route::get('/dataTrazabilidad', 'dispositivosController@dataTrazabilidad');
+// : *********************** FINALIZACION ***************************************
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');

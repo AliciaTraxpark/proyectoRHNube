@@ -180,7 +180,6 @@ function inicializarTabla() {
                 customize: function (doc) {
                     var bodyCompleto = [];
                     doc.content[1].table.body.forEach(function (line, i) {
-                        console.log(line, i);
                         var bodyNuevo = [];
                         if (i >= 1) {
                             line.forEach(element => {
@@ -552,27 +551,31 @@ function cargartabla(fecha) {
                                 }
                             }
                             // * DATA PARA ENTRE HORARIO
-                            for (let res = 0; res < data[index].data[m].marcaciones.length; res++) {
-                                var dataM = data[index].data[m].marcaciones[res];
-                                // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
-                                var horaFinalData = moment(dataM.salida);
-                                var horaInicialData = moment(dataM.entrada);
-                                if (horaFinalData.isSameOrAfter(horaInicialData)) {
-                                    // * TIEMPO TOTAL TRABAJADA
-                                    var tiempoRestanteD = horaFinalData - horaInicialData;
-                                    var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
-                                    var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
-                                    var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
-                                    if (horasTiempoD < 10) {
-                                        horasTiempoD = '0' + horasTiempoD;
+                            if (horarioData.horario != null || horarioData.horario != 0) {
+                                for (let res = 0; res < data[index].data[m].marcaciones.length; res++) {
+                                    var dataM = data[index].data[m].marcaciones[res];
+                                    // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
+                                    if (dataM.entrada != 0 && dataM.salida != 0) {
+                                        var horaFinalData = moment(dataM.salida);
+                                        var horaInicialData = moment(dataM.entrada);
+                                        if (horaFinalData.isSameOrAfter(horaInicialData)) {
+                                            // * TIEMPO TOTAL TRABAJADA
+                                            var tiempoRestanteD = horaFinalData - horaInicialData;
+                                            var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
+                                            var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
+                                            var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
+                                            if (horasTiempoD < 10) {
+                                                horasTiempoD = '0' + horasTiempoD;
+                                            }
+                                            if (minutosTiempo < 10) {
+                                                minutosTiempoD = '0' + minutosTiempoD;
+                                            }
+                                            if (segundosTiempoD < 10) {
+                                                segundosTiempoD = '0' + segundosTiempoD;
+                                            }
+                                            sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
+                                        }
                                     }
-                                    if (minutosTiempo < 10) {
-                                        minutosTiempoD = '0' + minutosTiempoD;
-                                    }
-                                    if (segundosTiempoD < 10) {
-                                        segundosTiempoD = '0' + segundosTiempoD;
-                                    }
-                                    sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                 }
                             }
                             // * SOBRETIEMPO ENTRE HORARIO Y FALTA DE JORNADA
@@ -1319,7 +1322,6 @@ function cargartabla(fecha) {
                                 for (let mp = 0; mp < data[index].data[m].marcaciones.length; mp++) {
                                     var dataMarcacionP = data[index].data[m].marcaciones[mp];
                                     if (dataMarcacionP.idH != 0 && pausaData.horario_id == dataMarcacionP.idH) {
-                                        console.log(idPausas, !idPausas.includes(pausaData.id));
                                         if (!idPausas.includes(pausaData.id)) {
                                             var horaInicialM = moment(dataMarcacionP.entrada);
                                             var horaFinalM = moment(dataMarcacionP.salida);
@@ -1410,7 +1412,6 @@ function cargartabla(fecha) {
                                                             if (tiempoSegundoPausa < 10) {
                                                                 tiempoSegundoPausa = '0' + tiempoSegundoPausa;
                                                             }
-                                                            console.log(horaEntradaDespues, horaFinalM);
                                                             // * VERIFICAR TIEMPO DE EXCESO
                                                             var clonarPausaI = pausaI.clone();
                                                             var clonarPausaF = pausaF.clone();
@@ -1569,7 +1570,6 @@ function cargartabla(fecha) {
                     }
                     tbody += `</tr>`;
                 }
-                // console.log(tbody);
                 $('#tbodyD').html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
                 $('.dropdown-toggle').dropdown();
@@ -2176,7 +2176,6 @@ function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
             } else {
                 var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
             }
-            console.log(container);
             $('#entradaM').append(container);
             imagenesEntrada();
         },
