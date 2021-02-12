@@ -67,9 +67,61 @@ function cargarDatos() {
         },
         success: function (data) {
             for (let index = 0; index < data.length; index++) {
-                
+                var tardanza = 0;
+                var diasTrabajdos = 0;
+                // : HORAS NORMALES
+                var horasNormales = moment("00:00:00", "HH:mm:ss");
+                var diurnas25 = 0;
+                var diurnas35 = 0;
+                var diurnas100 = 0;
+                // : FINALIZACION
+                var descansoM = 0;
+                var faltas = 0;
+                var fi = 0;
+                var fj = 0;
+                var per = 0;
+                var sme = 0;
+                var suspension = 0;
+                var vacaciones = 0;
+                // : HORAS NOCTURNAS
+                var horasNocturnas = moment("00:00:00", "HH:mm:ss");
+                var nocturnas25 = 0;
+                var nocturnas35 = 0;
+                var nocturnas100 = 0;
                 // : RECORRER DATA PARA CALCULAR DATOS
-
+                for (let item = 0; item < data[index].data.length; item++) {
+                    var dataCompleta = data[index].data[item];
+                    if (dataCompleta["normal"] != undefined) {
+                        dataCompleta["normal"].forEach(element => {
+                            if (element.idHorario != 0) {
+                                // : FALTAS
+                                if (element.totalT == "00:00:00" && element.entrada == null) {
+                                    faltas++;
+                                } else {
+                                    diasTrabajdos++;
+                                    // : TARDANZA
+                                    if (element.entrada != 0) {
+                                        var horarioInicio = moment(element.horarioIni).add({ "minutes": element.toleranciaI });
+                                        var entrada = moment(element.entrada);
+                                        if (!entrada.isSameOrBefore(horarioInicio)) {
+                                            tardanza++;
+                                        }
+                                    }
+                                    console.log(horasNormales);
+                                    // : HORAS TRABAJADOS
+                                    var horaT = moment(element.totalT, "HH:mm:ss");
+                                    var sumaDeTiempos = horasNormales + horaT;
+                                    var horasTotal = Math.trunc(moment.duration(sumaDeTiempos).asHours());
+                                    var minutosTotal = moment.duration(sumaDeTiempos).minutes();
+                                    var segundosTotal = moment.duration(sumaDeTiempos).seconds();
+                                    console.log(horasTotal, minutosTotal, segundosTotal);
+                                    horasNormales = horasNormales.add({ "hours": horasTotal, "minutes": minutosTotal, "seconds": segundosTotal });
+                                    console.log(horasNormales.format("HH:mm:ss"));
+                                }
+                            }
+                        });
+                    }
+                }
             }
         },
         error: function (data) { }

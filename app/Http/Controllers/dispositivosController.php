@@ -3382,7 +3382,6 @@ class dispositivosController extends Controller
                 }
             }
         }
-        dd($marcaciones);
         return response()->json($marcaciones, 200);
     }
 }
