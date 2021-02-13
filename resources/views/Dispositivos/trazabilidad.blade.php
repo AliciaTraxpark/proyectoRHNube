@@ -111,24 +111,24 @@
                                     <th>DNI</th>
                                     <th>Empleado</th>
                                     <th>Departamento</th>
-                                    <th>Tardanzas</th>
-                                    <th>Días Trabajados</th>
-                                    <th>Hora normal</th>
-                                    <th>Hora nocturno</th>
-                                    <th>Descanso Medico</th>
-                                    <th>Faltas</th>
-                                    <th>FI</th>
-                                    <th>FJ</th>
-                                    <th>PER</th>
-                                    <th>SME</th>
-                                    <th>Suspensión</th>
-                                    <th>Vacaciones</th>
-                                    <th>H.E. 25% Diurnas</th>
-                                    <th>H.E. 35% Diurnas</th>
-                                    <th>H.E. 100% Diurnas</th>
-                                    <th>H.E. 25% Nocturnas</th>
-                                    <th>H.E. 35% Nocturnas </th>
-                                    <th>H.E. 100% Nocturnas</th>
+                                    <th class="text-center">Tardanzas</th>
+                                    <th class="text-center">Días Trabajados</th>
+                                    <th class="text-center">Hora normal</th>
+                                    <th class="text-center">Hora nocturno</th>
+                                    <th class="text-center">Descanso Medico</th>
+                                    <th class="text-center">Faltas</th>
+                                    <th class="text-center">FI</th>
+                                    <th class="text-center">FJ</th>
+                                    <th class="text-center">PER</th>
+                                    <th class="text-center">SME</th>
+                                    <th class="text-center">Suspensión</th>
+                                    <th class="text-center">Vacaciones</th>
+                                    <th class="text-center">H.E. 25% Diurnas</th>
+                                    <th class="text-center">H.E. 35% Diurnas</th>
+                                    <th class="text-center">H.E. 100% Diurnas</th>
+                                    <th class="text-center">H.E. 25% Nocturnas</th>
+                                    <th class="text-center">H.E. 35% Nocturnas </th>
+                                    <th class="text-center">H.E. 100% Nocturnas</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyT"></tbody>

@@ -284,6 +284,7 @@ $(function () {
     $('#fechaInicio').val(fechaAyer);
     $('#fechaFin').val(f);
     cargarDatos();
+    inicializarTabla();
 });
 // * OBTENER DATA
 function cargarDatos() {
@@ -312,9 +313,6 @@ function cargarDatos() {
             }*/
         },
         success: function (data) {
-            if ($.fn.DataTable.isDataTable("#tablaTrazabilidad")) {
-                $("#tablaTrazabilidad").DataTable().destroy();
-            }
             $('#tbodyT').empty();
             var tbody = "";
             for (let index = 0; index < data.length; index++) {
@@ -532,28 +530,31 @@ function cargarDatos() {
                             <td>${data[index].emple_nDoc}</td>
                             <td>${data[index].nombres_apellidos}</td>
                             <td>${data[index].area_descripcion}</td>
-                            <td>${tardanza}</td>
-                            <td>${diasTrabajdos}</td>
-                            <td>${horasNormales.format("HH:mm:ss")}</td>
-                            <td>${horasNocturnas.format("HH:mm:ss")}</td>
-                            <td>${descansoM}</td>
-                            <td>${faltas}</td>
-                            <td>${fi}</td>
-                            <td>${fj}</td>
-                            <td>${per}</td>
-                            <td>${sme}</td>
-                            <td>${suspension}</td>
-                            <td>${vacaciones}</td>
-                            <td>${diurnas25}</td>
-                            <td>${diurnas35}</td>
-                            <td>${diurnas100}</td>
-                            <td>${nocturnas25}</td>
-                            <td>${nocturnas35}</td>
-                            <td>${nocturnas100}</td>
+                            <td class="text-center">${tardanza}</td>
+                            <td class="text-center">${diasTrabajdos}</td>
+                            <td class="text-center">${horasNormales.format("HH:mm:ss")}</td>
+                            <td class="text-center">${horasNocturnas.format("HH:mm:ss")}</td>
+                            <td class="text-center">${descansoM}</td>
+                            <td class="text-center">${faltas}</td>
+                            <td class="text-center">${fi}</td>
+                            <td class="text-center">${fj}</td>
+                            <td class="text-center">${per}</td>
+                            <td class="text-center">${sme}</td>
+                            <td class="text-center">${suspension}</td>
+                            <td class="text-center">${vacaciones}</td>
+                            <td class="text-center">${diurnas25}</td>
+                            <td class="text-center">${diurnas35}</td>
+                            <td class="text-center">${diurnas100}</td>
+                            <td class="text-center">${nocturnas25}</td>
+                            <td class="text-center">${nocturnas35}</td>
+                            <td class="text-center">${nocturnas100}</td>
                 </tr>`;
             }
             $('#tbodyT').append(tbody);
-            inicializarTabla();
+            $(window).on('resize', function () {
+                $("#tablaTrazabilidad").css('width', '100%');
+                table.draw(false);
+            });
         },
         error: function (data) { }
     })
