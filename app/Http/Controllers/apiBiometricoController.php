@@ -3513,7 +3513,7 @@ class apiBiometricoController extends Controller
                                 /* -------------------- */
 
                                 $marcacion_biometrico->marcaMov_emple_id = $marcacion_puertaVerifMayor->marcaMov_emple_id;
-                                $marcacion_biometrico->dispositivoEntrada = $marcacion_puertaVerifMayor->dispositivoEntrada;
+                                $marcacion_biometrico->dispositivoEntrada = $marcacion_puertaVerifMayor->dispositivoSalida;
 
                                 $marcacion_biometrico->organi_id = $marcacion_puertaVerifMayor->organi_id;
 
@@ -3559,7 +3559,7 @@ class apiBiometricoController extends Controller
 
                                 $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerifMayor2->marcaMov_id);
                                 $marcacion_biometrico2->marcaMov_fecha = $req['fechaMarcacion'];
-                                $marcacion_biometrico2->dispositivoSalida = $req['idDisposi'];
+                                $marcacion_biometrico2->dispositivoEntrada = $req['idDisposi'];
                                 $marcacion_biometrico2->save();
 
                                 $respuestaMarcacion = array(
