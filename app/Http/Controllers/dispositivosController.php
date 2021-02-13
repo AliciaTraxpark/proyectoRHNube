@@ -2987,7 +2987,7 @@ class dispositivosController extends Controller
                 if (empty($idsEmpleado)) {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->select(
                             'e.emple_id',
                             'e.emple_nDoc',
@@ -2995,7 +2995,7 @@ class dispositivosController extends Controller
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
-                            'c.cargo_descripcion',
+                            'a.area_descripcion',
                             'e.emple_estado',
                             'e.organi_id'
                         )
@@ -3005,7 +3005,7 @@ class dispositivosController extends Controller
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->select(
                             'e.emple_id',
                             'e.emple_nDoc',
@@ -3013,7 +3013,7 @@ class dispositivosController extends Controller
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
-                            'c.cargo_descripcion',
+                            'a.area_descripcion',
                             'e.emple_estado',
                             'e.organi_id'
                         )
@@ -3033,7 +3033,7 @@ class dispositivosController extends Controller
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->select(
                                 'e.emple_id',
                                 'e.emple_nDoc',
@@ -3041,7 +3041,7 @@ class dispositivosController extends Controller
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
-                                'c.cargo_descripcion',
+                                'a.area_descripcion',
                                 'e.emple_estado',
                                 'e.organi_id'
                             )
@@ -3055,7 +3055,7 @@ class dispositivosController extends Controller
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->select(
                                 'e.emple_id',
                                 'e.emple_nDoc',
@@ -3063,7 +3063,7 @@ class dispositivosController extends Controller
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
-                                'c.cargo_descripcion',
+                                'a.area_descripcion',
                                 'e.emple_estado',
                                 'e.organi_id'
                             )
@@ -3081,7 +3081,6 @@ class dispositivosController extends Controller
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->select(
                                 'e.emple_id',
                                 'e.emple_nDoc',
@@ -3089,7 +3088,7 @@ class dispositivosController extends Controller
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
-                                'c.cargo_descripcion',
+                                'a.area_descripcion',
                                 'e.emple_estado',
                                 'e.organi_id'
                             )
@@ -3104,7 +3103,6 @@ class dispositivosController extends Controller
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->select(
                                 'e.emple_id',
                                 'e.emple_nDoc',
@@ -3112,7 +3110,7 @@ class dispositivosController extends Controller
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
-                                'c.cargo_descripcion',
+                                'a.area_descripcion',
                                 'e.emple_estado',
                                 'e.organi_id'
                             )
@@ -3129,7 +3127,7 @@ class dispositivosController extends Controller
             if (empty($idsEmpleado)) {
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                     ->select(
                         'e.emple_id',
                         'e.emple_nDoc',
@@ -3137,7 +3135,7 @@ class dispositivosController extends Controller
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
-                        'c.cargo_descripcion',
+                        'a.area_descripcion',
                         'e.emple_estado',
                         'e.organi_id'
                     )
@@ -3147,7 +3145,7 @@ class dispositivosController extends Controller
             } else {
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                     ->select(
                         'e.emple_id',
                         'e.emple_nDoc',
@@ -3155,7 +3153,7 @@ class dispositivosController extends Controller
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
-                        'c.cargo_descripcion',
+                        'a.area_descripcion',
                         'e.emple_estado',
                         'e.organi_id'
                     )
@@ -3209,7 +3207,7 @@ class dispositivosController extends Controller
                         "emple_nDoc" => $empleados[$index]->emple_nDoc,
                         "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
                         "nombres_apellidos" => $empleados[$index]->perso_nombre . " " . $empleados[$index]->perso_apPaterno . " " . $empleados[$index]->perso_apMaterno,
-                        "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
+                        "area_descripcion" => empty($empleados[$index]->area_descripcionn) == true ? "---" : $empleados[$index]->area_descripcion,
                         "emple_estado" => $empleados[$index]->emple_estado,
                         "data" => $data[$element]->data
                     );
@@ -3222,7 +3220,7 @@ class dispositivosController extends Controller
                     "emple_nDoc" => $empleados[$index]->emple_nDoc,
                     "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
                     "nombres_apellidos" => $empleados[$index]->perso_nombre . " " . $empleados[$index]->perso_apPaterno . " " . $empleados[$index]->perso_apMaterno,
-                    "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
+                    "area_descripcion" => empty($empleados[$index]->area_descripcion) == true ? "---" : $empleados[$index]->area_descripcion,
                     "emple_estado" => $empleados[$index]->emple_estado,
                     "data" => array()
                 );

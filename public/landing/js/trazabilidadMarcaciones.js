@@ -23,6 +23,241 @@ var fechaValue = $("#fechaTrazabilidad").flatpickr({
         }
     }
 });
+// * INICIALIZAR TABLA
+var table;
+function inicializarTabla() {
+    table = $("#tablaTrazabilidad").DataTable({
+        "searching": false,
+        "scrollX": true,
+        scrollCollapse: true,
+        "ordering": false,
+        "autoWidth": false,
+        "bInfo": false,
+        "bLengthChange": false,
+        stateSave: true,
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ ",
+            sInfoEmpty:
+                "Mostrando registros del 0 al 0 de un total de 0 registros",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: ">",
+                sPrevious: "<",
+            },
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+            buttons: {
+                copy: "Copiar",
+                colvis: "Visibilidad",
+            },
+
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                className: 'btn btn-sm mt-1',
+                text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var downrows = 5;
+                    var clRow = $('row', sheet);
+                    clRow[0].children[0].remove();
+                    //update Row
+                    clRow.each(function () {
+                        var attr = $(this).attr('r');
+                        var ind = parseInt(attr);
+                        ind = ind + downrows;
+                        $(this).attr("r", ind);
+                    });
+
+                    // Update  row > c
+                    $('row c ', sheet).each(function () {
+                        var attr = $(this).attr('r');
+                        var pre = attr.substring(0, 1);
+                        var ind = parseInt(attr.substring(1, attr.length));
+                        ind = ind + downrows;
+                        $(this).attr("r", pre + ind);
+                    });
+
+                    function Addrow(index, data) {
+                        msg = '<row r="' + index + '">'
+                        for (i = 0; i < data.length; i++) {
+                            var key = data[i].k;
+                            var value = data[i].v;
+                            var bold = data[i].s;
+                            msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                            msg += '<is>';
+                            msg += '<t>' + value + '</t>';
+                            msg += '</is>';
+                            msg += '</c>';
+                        }
+                        msg += '</row>';
+                        return msg;
+                    }
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    //insert
+                    var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
+                    var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                    var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                    var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
+                },
+                sheetName: 'CONTROL REGISTRO DE ASISTENCIA',
+                title: 'MODO ASISTENCIA EN PUERTA - CONTROL REGISTRO DE ASISTENCIA',
+                autoFilter: false,
+                exportOptions: {
+                    columns: ":visible:not(.noExport)",
+                    format: {
+                        body: function (data, row, column, node) {
+                            var cont = $.trim($(node).text());
+                            var cambiar = cont.replace('Cambiar a entrada', '');
+                            cambiar = cambiar.replace('Cambiar a salida', '');
+                            cambiar = cambiar.replace('No tiene entrada', '---');
+                            cambiar = cambiar.replace('No tiene salida', '---');
+                            cambiar = cambiar.replace('Opciones', '');
+                            cambiar = cambiar.replace('Convertir orden', '');
+                            cambiar = cambiar.replace('Asignar a nueva marc.', '');
+                            cambiar = cambiar.replace('Eliminar marc.', '');
+                            cambiar = cambiar.replace('Actualizar horario', '');
+                            cambiar = cambiar.replace('Insertar salida', '');
+                            cambiar = cambiar.replace('Insertar entrada', '');
+                            cambiar = cambiar.split("/");
+                            cambiar = cambiar.map(s => s.trim()).join("/")
+                            return $.trim(cambiar);
+                        }
+                    }
+                },
+            }, {
+                extend: "pdfHtml5",
+                className: 'btn btn-sm mt-1',
+                text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                orientation: 'landscape',
+                pageSize: 'A1',
+                title: 'MODO ASISTENCIA EN PUERTA - CONTROL REGISTRO DE ASISTENCIA',
+                exportOptions: {
+                    columns: ":visible:not(.noExport)"
+                },
+                customize: function (doc) {
+                    var bodyCompleto = [];
+                    doc.content[1].table.body.forEach(function (line, i) {
+                        var bodyNuevo = [];
+                        if (i >= 1) {
+                            line.forEach(element => {
+                                var textOriginal = element.text;
+                                var cambiar = textOriginal.replace('Cambiar a entrada', '');
+                                cambiar = cambiar.replace('Cambiar a salida', '');
+                                cambiar = cambiar.replace('No tiene entrada', '---');
+                                cambiar = cambiar.replace('No tiene salida', '---');
+                                cambiar = cambiar.replace('Opciones', '');
+                                cambiar = cambiar.replace('Convertir orden', '');
+                                cambiar = cambiar.replace('Asignar a nueva marc.', '');
+                                cambiar = cambiar.replace('Eliminar marc.', '');
+                                cambiar = cambiar.replace('Actualizar horario', '');
+                                cambiar = cambiar.replace('Insertar salida', '');
+                                cambiar = cambiar.replace('Insertar entrada', '');
+                                cambiar = $.trim(cambiar);
+                                cambiar = cambiar.split("/");
+                                cambiar = cambiar.map(s => s.trim()).join("/")
+                                bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
+                            });
+                            bodyCompleto.push(bodyNuevo);
+                        } else {
+                            bodyCompleto.push(line);
+                        }
+                    });
+                    doc['styles'] = {
+                        table: {
+                            width: '100%'
+                        },
+                        tableHeader: {
+                            bold: true,
+                            fontSize: 11,
+                            color: '#ffffff',
+                            fillColor: '#14274e',
+                            alignment: 'left'
+                        },
+                        defaultStyle: {
+                            fontSize: 10,
+                            alignment: 'left'
+                        }
+                    };
+                    doc.pageMargins = [20, 120, 20, 30];
+                    doc.content[1].margin = [30, 0, 30, 0];
+                    var colCount = new Array();
+                    var tr = $('#tablaTrazabilidad tbody tr:first-child');
+                    var trWidth = $(tr).width();
+                    $('#tablaTrazabilidad').find('tbody tr:first-child td').each(function () {
+                        var tdWidth = $(this).width();
+                        var widthFinal = parseFloat(tdWidth * 130);
+                        widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
+                        if ($(this).attr('colspan')) {
+                            for (var i = 1; i <= $(this).attr('colspan'); $i++) {
+                                colCount.push('*');
+                            }
+                        } else {
+                            colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
+                        }
+                    });
+                    doc.content.splice(0, 1);
+                    doc.content[0].table.body = bodyCompleto;
+                    var objLayout = {};
+                    objLayout['hLineWidth'] = function (i) { return .2; };
+                    objLayout['vLineWidth'] = function (i) { return .2; };
+                    objLayout['hLineColor'] = function (i) { return '#aaa'; };
+                    objLayout['vLineColor'] = function (i) { return '#aaa'; };
+                    doc.content[0].layout = objLayout;
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    doc["header"] = function () {
+                        return {
+                            columns: [
+                                {
+                                    alignment: 'left',
+                                    italics: false,
+                                    text: [
+                                        { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
+                                        { text: '\n\nRazón Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDirección:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNúmero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                    ],
+
+                                    fontSize: 10,
+                                    margin: [30, 0]
+                                },
+                            ],
+                            margin: 20
+                        };
+                    };
+                }
+            }],
+        paging: true,
+        initComplete: function () {
+            dataT = this;
+            setTimeout(function () {
+                $("#tablaTrazabilidad").DataTable().draw();
+            }, 1);
+        }
+    }).draw();
+}
 // * INICIALIZAR PLUGIN
 $(function () {
     $('#idempleado').select2({
@@ -39,12 +274,14 @@ $(function () {
     fechaAyer = moment().add("day", -1).format("YYYY-MM-DD");
     fechaValue.setDate([fechaAyer, f]);
     $("#fechaInput").change();
+    cargarDatos();
 });
 // * OBTENER DATA
 function cargarDatos() {
     var fechaI = $('#fechaInicio').val();
     var fechaF = $('#fechaFin').val();
     var idsEmpleado = $('#idsEmpleado').val();
+    console.log(idsEmpleado);
     $.ajax({
         async: false,
         url: "/dataTrazabilidad",
@@ -66,6 +303,11 @@ function cargarDatos() {
             }*/
         },
         success: function (data) {
+            if ($.fn.DataTable.isDataTable("#tablaTrazabilidad")) {
+                $("#tablaTrazabilidad").DataTable().destroy();
+            }
+            $('#tbodyT').empty();
+            var tbody = "";
             for (let index = 0; index < data.length; index++) {
                 var tardanza = 0;
                 var diasTrabajdos = 0;
@@ -107,22 +349,84 @@ function cargarDatos() {
                                             tardanza++;
                                         }
                                     }
-                                    console.log(horasNormales);
-                                    // : HORAS TRABAJADOS
+                                    // : HORAS TRABAJADOS NORMALES
                                     var horaT = moment(element.totalT, "HH:mm:ss");
                                     var sumaDeTiempos = horasNormales + horaT;
                                     var horasTotal = Math.trunc(moment.duration(sumaDeTiempos).asHours());
                                     var minutosTotal = moment.duration(sumaDeTiempos).minutes();
                                     var segundosTotal = moment.duration(sumaDeTiempos).seconds();
-                                    console.log(horasTotal, minutosTotal, segundosTotal);
                                     horasNormales = horasNormales.add({ "hours": horasTotal, "minutes": minutosTotal, "seconds": segundosTotal });
-                                    console.log(horasNormales.format("HH:mm:ss"));
+                                    // : SOBRE TIEMPO NORMAL
+                                    var tiempoTrabajado = moment(element.totalT, "HH:mm:ss");
+                                    var horasObligadas = moment(element.horasObligadas, "HH:mm:ss");
+                                    if (tiempoTrabajado.isAfter(horasObligadas)) {
+                                        var sobreTiempo = tiempoTrabajado - horasObligadas;
+                                        var horasSobreTiempo = Math.trunc(moment.duration(sobreTiempo).asHours());
+                                        var minutosSobreTiempo = moment.duration(sobreTiempo).minutes();
+                                        var segundosSobreTiempo = moment.duration(sobreTiempo).seconds();
+                                        var tiempoSobreT = moment({ "hours": horasSobreTiempo, "minutes": minutosSobreTiempo, "seconds": segundosSobreTiempo }).format("HH:mm:ss");
+                                        var tiempoSobreMoment = moment(tiempoSobreT, "HH:mm:ss");
+                                        var tiempoSobrante = {};
+                                        // : TIEMPO EXTRAS EL 25%
+                                        if (tiempoSobreMoment.isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                            diurnas25++;
+                                            var restaDe25 = moment("02:00:00", "HH:mm:ss") - tiempoSobreMoment;
+                                            var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
+                                            var minutosDe25 = moment.duration(restaDe25).minutes();
+                                            var segundosDe25 = moment.duration(restaDe25).seconds();
+                                            tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
+                                            if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                diurnas35++;
+                                                var restaDe35 = moment("02:00:00", "HH:mm:ss") - tiempoSobrante;
+                                                var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
+                                                var minutosDe35 = moment.duration(restaDe35).minutes();
+                                                var segundosDe35 = moment.duration(restaDe35).seconds();
+                                                tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
+                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                    diurnas100++;
+                                                }
+                                            } else {
+                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                    diurnas35++;
+                                                }
+                                            }
+                                        } else {
+                                            diurnas25++;
+                                        }
+                                    }
                                 }
                             }
                         });
                     }
+
                 }
+                tbody += `<tr>
+                            <td>${index + 1}</td>
+                            <td>${data[index].emple_nDoc}</td>
+                            <td>${data[index].nombres_apellidos}</td>
+                            <td>${data[index].area_descripcion}</td>
+                            <td>${tardanza}</td>
+                            <td>${diasTrabajdos}</td>
+                            <td>${horasNormales.format("HH:mm:ss")}</td>
+                            <td>${horasNocturnas.format("HH:mm:ss")}</td>
+                            <td>${descansoM}</td>
+                            <td>${faltas}</td>
+                            <td>${fi}</td>
+                            <td>${fj}</td>
+                            <td>${per}</td>
+                            <td>${sme}</td>
+                            <td>${suspension}</td>
+                            <td>${vacaciones}</td>
+                            <td>${diurnas25}</td>
+                            <td>${diurnas35}</td>
+                            <td>${diurnas100}</td>
+                            <td>${nocturnas25}</td>
+                            <td>${nocturnas35}</td>
+                            <td>${nocturnas100}</td>
+                </tr>`;
             }
+            $('#tbodyT').append(tbody);
+            inicializarTabla();
         },
         error: function (data) { }
     })

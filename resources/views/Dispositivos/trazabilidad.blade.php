@@ -113,6 +113,7 @@
                                     <th>Tardanzas</th>
                                     <th>Días Trabajados</th>
                                     <th>Hora normal</th>
+                                    <th>Hora nocturno</th>
                                     <th>Descanso Medico</th>
                                     <th>Faltas</th>
                                     <th>FI</th>
@@ -120,6 +121,13 @@
                                     <th>PER</th>
                                     <th>SME</th>
                                     <th>Suspensión</th>
+                                    <th>Vacaciones</th>
+                                    <th>H.E. 25% Diurnas</th>
+                                    <th>H.E. 35% Diurnas</th>
+                                    <th>H.E. 100% Diurnas</th>
+                                    <th>H.E. 25% Nocturnas</th>
+                                    <th>H.E. 35% Nocturnas </th>
+                                    <th>H.E. 100% Nocturnas</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyT"></tbody>
