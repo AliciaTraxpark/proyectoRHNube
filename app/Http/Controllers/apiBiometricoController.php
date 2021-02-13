@@ -3283,7 +3283,7 @@ class apiBiometricoController extends Controller
 
             //*FECHA DE MARCACION
             $fecha1V = Carbon::create($req['fechaMarcacion'])->toDateString();
-            
+
             /* --------------------------------------------------------------- */
 
             /*-------------- VERIFICAMOS SI TIENE HORARIO--------------------------- */
@@ -3303,14 +3303,14 @@ class apiBiometricoController extends Controller
                     ->where('he.estado', '=', 1)
                     ->orderBy('h.horaI', 'ASC')
                     ->get();
-                   
+
             //* SI NO TIENE HORARIO
             if($horarioEmpleado->isEmpty()){
                 $conhorario=0;
             }
             else{
-                //*SI TIENE HORARIO 
-               
+                //*SI TIENE HORARIO
+
                 foreach($horarioEmpleado as $horarioEmpleados){
 
                     //*verificamos si hora fin de horario pertenece a hoy
@@ -3326,25 +3326,25 @@ class apiBiometricoController extends Controller
                     } else {
                         $horarioEmpleados->horaI =Carbon::parse($fechaHorario . " " . $horarioEmpleados->horaI)->subMinutes($horarioEmpleados->toleranciaI);
                         $horarioEmpleados->horaF = Carbon::parse($fechaHorario . " " . $horarioEmpleados->horaF)->addMinutes($horarioEmpleados->toleranciaF);
-                    } 
+                    }
                 }
-              
+
                 //*verificamos si esta dentro de horario
-               
+
                 foreach($horarioEmpleado as $horarioDentro){
-                   
+
                     $fechaHorahoy=Carbon::create($req['fechaMarcacion']);
                     if ($fechaHorahoy->gte($horarioDentro->horaI) && $fechaHorahoy->lte($horarioDentro->horaF)) {
                          //*se encontro 1 horario y se detiene foreach
                          $conhorario=$horarioDentro->idHorarioEmpleado;
-                         break;  
+                         break;
                     } else {
                         //*NO SE ENCONTRO HORARIO
-                      
+
                         $conhorario=0;
                     }
-                     
-                }             
+
+                }
             }
             /* --------------------CALCULAMOS EL TIPO DE MARCACION----------------------- */
             /* ----------------------SI RECIBO SIN HORARIO----------------------------- */
@@ -3413,8 +3413,8 @@ class apiBiometricoController extends Controller
                 }
             }
             /* ------------------------------------------------------------------ */
-            else { 
-               
+            else {
+
 
                 /* ------CON HORARIO-------------- */
                 //************ARRAY GENERALES**************************************
@@ -3478,12 +3478,12 @@ class apiBiometricoController extends Controller
                             }
                         }
                 }
-               
-                
-               
+
+
+
                 /* ---------------FIN DE FUNCION-------------------------- */
             }
-           
+
             /* --------------------------------------------------------------- */
 
             /* PRIMERO VALIDAMOS FECHA */
@@ -3497,10 +3497,20 @@ class apiBiometricoController extends Controller
                 $empleados = DB::table('empleado as e')
                     ->join('organizacion as or', 'e.organi_id', '=', 'or.organi_id')
                     ->where('e.emple_id', '=', $req['idEmpleado'])
+                    ->where('e.emple_estado', '=', 1)
                     ->get()->first();
 
                 if ($empleados) {
-                    /*CUADNO ES MARCACION DE ENTRADA */
+
+                    //*VALIDANDO QUE MARCACION NO SE REPITA
+                    $marcacion_puertaVerifrepeticion = DB::table('marcacion_puerta as mv')
+                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                    ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                    ->orWhere('mv.marcaMov_salida','=',$req['fechaMarcacion'])
+                    ->get()->first();
+                   
+                    if(!$marcacion_puertaVerifrepeticion){
+                         /*CUADNO ES MARCACION DE ENTRADA */
                     if ($tipoMarcacion == 1) {
                         $marcacion_biometrico = new marcacion_puerta();
 
@@ -3518,7 +3528,7 @@ class apiBiometricoController extends Controller
                         else{
                         $marcacion_biometrico->horarioEmp_id = $conhorario;
                         }
-                        
+
                         $marcacion_biometrico->tipoMarcacionB = 1;
 
                         $marcacion_biometrico->save();
@@ -3565,7 +3575,7 @@ class apiBiometricoController extends Controller
                                 ->orderby('marcaMov_fecha', 'ASC')
                                 ->get()->last();
                             }
-                            
+
 
                             if ($marcacion_puerta1) {
                                 $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
@@ -3578,11 +3588,19 @@ class apiBiometricoController extends Controller
                                     'estado' => true);
 
                             }
-                            
 
-                        } 
+
+                        }
 
                     }
+                    }
+                    else{
+                        $respuestaMarcacion = array(
+                            'id' => $req['id'],
+                            'error' => 'Fecha de marcacion de empleado ya registrada',
+                            'estado' => false);
+                    }
+
 
                 } else {
                     $respuestaMarcacion = array(
