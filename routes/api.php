@@ -78,7 +78,7 @@ Route::post("elegirOrganizacionBio", "apiBiometricoController@elegirOrganizacion
 Route::post("editarDispositivo", "apiBiometricoController@editarDispositivo")->middleware('token')->middleware('apilogger');
 Route::post("empleadosBiometrico", "apiBiometricoController@empleadosBiometrico")->middleware('token')->middleware('apilogger');
 Route::post("empleadosHorarioBi", "apiBiometricoController@empleadosHorarioBi")->middleware('token')->middleware('apilogger');
-Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico2")->middleware('token')->middleware('apilogger');
+Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico3")->middleware('token')->middleware('apilogger');
 Route::post("historialHorario", "apiBiometricoController@historialHorario")->middleware('token')->middleware('apilogger');
 Route::get("descargarExtractor", "apiBiometricoController@descargarExtractor")->middleware('apilogger');
 /* ------------- REGISTRO DE HUELLAS */

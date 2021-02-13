@@ -518,14 +518,14 @@ function cargartabla(fecha) {
                                         </td>`;
                                     }
                                     tbodyEntradaySalida += `<td>
-                                        <div class="dropdown noExport">
+                                        <div class="dropdown">
                                         <a type="button" class="btn dropdown-toggle" id="dropSalida${
                                             marcacionData.idMarcacion
                                         }" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false" data-open-dropdown="dropSalida${
                                                 marcacionData.idMarcacion
                                             }" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                            <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                            <span  class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                 No tiene salida
                                             </span>
@@ -1120,17 +1120,26 @@ function cargartabla(fecha) {
                                             "Eliminar marc.",
                                             ""
                                         );
-
-                                        var cont13 = cont12.replace(
+                                        
+                                        var cont13=cont12.replace(
+                                            "No tiene controlador de Ent.",
+                                            "---"
+                                        )
+                                        var cont14=cont13.replace(
+                                            "No tiene controlador de Sal.",
+                                            "---"
+                                        )
+                                        
+                                        var cont15 = cont14.replace(
                                             "Agregar",
                                             ""
                                         );
-                                        var cont14 = cont13.replace(
+                                        var cont16 = cont15.replace(
                                             "Opciones",
                                             ""
                                         );
 
-                                        return $.trim(cont14);
+                                        return $.trim(cont16);
                                     },
                                 },
                             },
@@ -1255,17 +1264,27 @@ function cargartabla(fecha) {
                                                 "Eliminar marc.",
                                                 ""
                                             );
+
                                             var cambiar13 = cambiar12.replace(
+                                                "No tiene controlador de Ent.",
+                                            "---"
+                                            );
+
+                                            var cambiar14 = cambiar13.replace(
+                                                "No tiene controlador de Sal.",
+                                                "---"
+                                            );
+                                            var cambiar15 = cambiar14.replace(
                                                 "Agregar",
                                                 ""
                                             );
-                                            var cambiar14 = cambiar13.replace(
+                                            var cambiar16 = cambiar15.replace(
                                                 "Opciones",
                                                 ""
                                             );
-                                            var cambiar15 = cambiar14.trim();
+                                            var cambiar17 = cambiar16.trim();
                                             bodyNuevo.push({
-                                                text: cambiar15,
+                                                text: cambiar17,
                                                 style: "defaultStyle",
                                             });
                                         });
@@ -1400,7 +1419,6 @@ function cargartabla(fecha) {
                             dataT.api().columns(".puntoDescripHid").visible(false);
                         }
 
-
                         setTimeout(function () {
                             $("#tablaReport").DataTable().draw();
                         }, 200);
@@ -1503,12 +1521,23 @@ function cargartabla(fecha) {
         static: true,
     });
 
+ocultarModif();
+
+}
+function ocultarModif() {
     var permisoMo=$('#modifReporte').val();
     if(permisoMo==0){
         $('.noExport').hide();
-
-    }
-    else{
+         $('span').tooltip('dispose') 
+        /* $('.notooltipS').html(`<span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+        <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+        No tiene salida
+        </span>`); */
+        /*  $("span[title]").each(function() {
+            var text =$("span[title]").text();
+            console.log(text);
+             text.replace("Agregar","");
+            }); */
 
     }
 }
@@ -1970,6 +1999,11 @@ $("#checControlEn").change(function (event) {
     } else {
         dataT.api().columns(".controHidEn").visible(false);
     }
+    var permisoMo=$('#modifReporte').val();
+    if(permisoMo==0){
+        $('.noExport').hide();
+         $('span').tooltip('dispose') 
+    }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
         $("#tablaReport").DataTable().draw(false);
@@ -1983,6 +2017,13 @@ $("#checControlSa").change(function (event) {
     } else {
         dataT.api().columns(".controHidSa").visible(false);
     }
+
+    var permisoMo=$('#modifReporte').val();
+    if(permisoMo==0){
+        $('.noExport').hide();
+         $('span').tooltip('dispose') 
+    }
+
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
         $("#tablaReport").DataTable().draw(false);
