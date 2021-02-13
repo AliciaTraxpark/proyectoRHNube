@@ -3536,7 +3536,7 @@ class apiBiometricoController extends Controller
 
                         if ($tipoMarcacion == 0) {
 
-                            /* CUADNO ES SALIDA DE HORARIO */
+                            /* CUADNO ES SALIDA */
 
                             /* CONVERTIMOS LA FECHA DE MARCACION EN DATE */
                             $fecha1 = Carbon::create($req['fechaMarcacion'])->toDateString();
