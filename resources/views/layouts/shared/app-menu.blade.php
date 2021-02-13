@@ -228,6 +228,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/dispositivosTareo">Dispositivos</a>
                 <a href="/controladoresTareo">Controladores</a>
                 <a href="/reporteTareo">Detalle de tareo</a>
+                <a href="/reporteFechaTareo">Reporte de tareo por fecha</a>
+                <a href="/reporteEmpleadoTareo">Reporte de tareo por empleado</a>
 
 
             </li>
@@ -448,6 +450,10 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                 @if ($permiso_invitado->modifModoTareo==1)
                 <a href="/reporteTareo">Detalle de tareo</a>
+                @endif
+                @if ($permiso_invitado->verModoTareo==1)
+                <a href="/reporteFechaTareo">Reporte de tareo por fecha</a>
+                <a href="/reporteEmpleadoTareo">Reporte de tareo por empleado</a>
                 @endif
             </li>
         </ul>
