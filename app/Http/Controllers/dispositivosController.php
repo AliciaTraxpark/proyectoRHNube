@@ -2644,7 +2644,6 @@ class dispositivosController extends Controller
                         $totalDuration = $horaFParse->diffInSeconds($horaIParse);
                         $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                         $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
-                        dd($tiempoTotal, $tiempoTotalDeHorario, $horario->horasO, $horario->horasA);
                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                             // * VALIDACION CON HORARIO
                             if ($horario->fueraH == 1) {
