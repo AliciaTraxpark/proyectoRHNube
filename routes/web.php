@@ -594,6 +594,9 @@ Route::post('/TareocambiarSM', 'marcacionTareoController@cambiarSalidaMarcacion'
 Route::post('/TareolistaMarcacionS', 'marcacionTareoController@listaDeSalidasSinE');
 Route::post('/TareocambiarEM', 'marcacionTareoController@cambiarEntraMarcacion');
 Route::get('/TareoselectEmp', 'marcacionTareoController@selectFiltro');
+Route::get('/reporteFechaTareo', 'marcacionTareoController@reporteFechaE');
+Route::get('/reporteEmpleadoTareo', 'marcacionTareoController@reporteEmpleadoTareo');
+Route::get('/reporteTareoEmpleado', 'marcacionTareoController@reporteTareoEmpleado');
 /* ------------------------------------------------------------------------ */
 
 /*------------------------ SUBACTIVIDADES--------------------------------- */
