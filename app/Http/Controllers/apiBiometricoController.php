@@ -3501,6 +3501,7 @@ class apiBiometricoController extends Controller
                         $marcacion_puertaVerifMayor = DB::table('marcacion_puerta as mv')
                             ->where('mv.marcaMov_salida', '>=', $req['fechaMarcacion'])
                             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                            ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                             ->orderby('marcaMov_fecha', 'ASC')
                             ->get()->first();
                         if ($tipoMarcacion == 1) {
