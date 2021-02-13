@@ -2966,7 +2966,7 @@ class dispositivosController extends Controller
                         "toleranciaI" => $empleado->toleranciaI,
                         "idHorarioE" => $empleado->idHorarioE,
                         "estado" => $empleado->estado,
-                        "horasObligadas" => $empleado->horasObligadas,
+                        "horasObligadas" => $empleado->horasObligadas  == null ? 0 : $empleado->horasObligadas,
                         "horasAdicionales" => $empleado->horasAdicionales == null ? 0 : $empleado->horasAdicionales,
                         "entrada" => $empleado->entrada,
                         "salida" => $empleado->salida,
@@ -3176,7 +3176,8 @@ class dispositivosController extends Controller
                 DB::raw('IF(hor.horario_id is null, 0 , horario_id) as idHorario'),
                 DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
                 DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(mp.marcaMov_salida,mp.marcaMov_fecha)))) as totalT'),
-                DB::raw('MIN(IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha)) as entrada'),
+                // DB::raw('MIN(IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)) as entrada'),
+                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                 DB::raw('MAX(mp.marcaMov_salida) as salida'),
                 DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
                 'hor.horario_tolerancia as toleranciaI',
@@ -3280,15 +3281,15 @@ class dispositivosController extends Controller
                             Carbon::parse($he->horarioIni)->isoFormat("HH:mm") >= "06:01" ||
                             Carbon::parse($he->horarioIni)->isoFormat("HH:mm") <= "22:00"
                         ) {
-                            if (!empty($marcaciones[$key]->data[$d]["normal"])) {
+                            if (!isset($marcaciones[$key]->data[$d]["normal"])) {
                                 $marcaciones[$key]->data[$d]["normal"] = array();
                             }
-                            $marcaciones[$key]->data[$d]["normal"][$he->idHorario]["dataHorario"] = $he;
+                            $marcaciones[$key]->data[$d]["normal"][$he->idHorarioE]["dataHorario"] = $he;
                         } else {
-                            if (!empty($marcaciones[$key]->data[$d]["nocturno"])) {
+                            if (!isset($marcaciones[$key]->data[$d]["nocturno"])) {
                                 $marcaciones[$key]->data[$d]["nocturno"] = array();
                             }
-                            $marcaciones[$key]->data[$d]["nocturno"][$he->idHorario]["dataHorario"] = $he;
+                            $marcaciones[$key]->data[$d]["nocturno"][$he->idHorarioE]["dataHorario"] = $he;
                         }
                     }
                 } else {
@@ -3320,15 +3321,15 @@ class dispositivosController extends Controller
                                 Carbon::parse($he->horarioIni)->isoFormat("HH:mm") >= "06:01" ||
                                 Carbon::parse($he->horarioIni)->isoFormat("HH:mm") <= "22:00"
                             ) {
-                                if (!empty($marcaciones[$key]->data[$d]["normal"])) {
+                                if (!isset($marcaciones[$key]->data[$d]["normal"])) {
                                     $marcaciones[$key]->data[$d]["normal"] = array();
                                 }
-                                $marcaciones[$key]->data[$d]["normal"][$he->idHorario]["dataHorario"] = $he;
+                                $marcaciones[$key]->data[$d]["normal"][$he->idHorarioE]["dataHorario"] = $he;
                             } else {
-                                if (!empty($marcaciones[$key]->data[$d]["nocturno"])) {
+                                if (!isset($marcaciones[$key]->data[$d]["nocturno"])) {
                                     $marcaciones[$key]->data[$d]["nocturno"] = array();
                                 }
-                                $marcaciones[$key]->data[$d]["nocturno"][$he->idHorario]["dataHorario"] = $he;
+                                $marcaciones[$key]->data[$d]["nocturno"][$he->idHorarioE]["dataHorario"] = $he;
                             }
                         }
                     }

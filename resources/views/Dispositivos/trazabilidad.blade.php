@@ -2,6 +2,7 @@
 
 @section('css')
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
@@ -103,7 +104,7 @@
                     <input type="hidden" name="fechaFin" id="fechaFin">
                     {{-- TABLA DE TRAZABILIDAD --}}
                     <div class="col-md-12">
-                        <table id="tablaTrazabilidad" class="table nowrap order-column" style="font-size: 12.8px;">
+                        <table id="tablaTrazabilidad" class="table nowrap" style="font-size: 12.8px;">
                             <thead id="theadT" style=" background: #edf0f1;color: #6c757d;">
                                 <tr>
                                     <th>#</th>
@@ -148,19 +149,15 @@
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/dataTables.fixedColumns.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
-<script src="{{ asset('landing/js/trazabilidadMarcaciones.js') }}"></script>
-@endsection
-@section('script-bottom')
-<script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js')}}"></script>
+<script src="{{ asset('landing/js/trazabilidadMarcaciones.js')}}"></script>
 <script src="{{ asset('landing/js/notificacionesUser.js') }}"></script>
 @endsection

@@ -11,6 +11,7 @@ var fechaValue = $("#fechaTrazabilidad").flatpickr({
     conjunction: " a ",
     minRange: 1,
     onChange: function (selectedDates) {
+        console.log("ingreso");
         var _this = this;
         var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
         $('#fechaInicio').val(dateArr[0]);
@@ -29,12 +30,11 @@ function inicializarTabla() {
     table = $("#tablaTrazabilidad").DataTable({
         "searching": false,
         "scrollX": true,
-        scrollCollapse: true,
         "ordering": false,
         "autoWidth": false,
-        "bInfo": false,
-        "bLengthChange": false,
-        stateSave: true,
+        "lengthChange": true,
+        "lengthMenu": [10, 25, 50, 75, 100],
+        scrollCollapse: false,
         language: {
             sProcessing: "Procesando...",
             sLengthMenu: "Mostrar _MENU_ registros",
@@ -64,11 +64,19 @@ function inicializarTabla() {
             buttons: {
                 copy: "Copiar",
                 colvis: "Visibilidad",
+                pageLength: {
+                    "_": "Mostrar %d registros"
+                },
             },
 
         },
         dom: 'Bfrtip',
+        lengthMenu: [10, 25, 50, 100],
         buttons: [
+            {
+                extend: 'pageLength',
+                className: 'btn btn-sm mt-1',
+            },
             {
                 extend: 'excel',
                 className: 'btn btn-sm mt-1',
@@ -260,7 +268,7 @@ function inicializarTabla() {
 }
 // * INICIALIZAR PLUGIN
 $(function () {
-    $('#idempleado').select2({
+    $('#idsEmpleado').select2({
         placeholder: 'Todos los empleados',
         language: {
             inputTooShort: function (e) {
@@ -273,7 +281,8 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaAyer = moment().add("day", -1).format("YYYY-MM-DD");
     fechaValue.setDate([fechaAyer, f]);
-    $("#fechaInput").change();
+    $('#fechaInicio').val(fechaAyer);
+    $('#fechaFin').val(f);
     cargarDatos();
 });
 // * OBTENER DATA
@@ -330,6 +339,8 @@ function cargarDatos() {
                 var nocturnas25 = 0;
                 var nocturnas35 = 0;
                 var nocturnas100 = 0;
+                // : ARRAY FECHA
+                var arrayFecha = [];
                 // : RECORRER DATA PARA CALCULAR DATOS
                 for (let item = 0; item < data[index].data.length; item++) {
                     var dataCompleta = data[index].data[item];
@@ -338,24 +349,21 @@ function cargarDatos() {
                             if (element.idHorario != 0) {
                                 // : FALTAS
                                 if (element.totalT == "00:00:00" && element.entrada == null) {
-                                    faltas++;
+                                    if (dataCompleta["incidencias"] != undefined) {
+                                        if (dataCompleta["incidencias"].length == 0) {
+                                            faltas++;
+                                        }
+                                    }
                                 } else {
-                                    diasTrabajdos++;
                                     // : TARDANZA
                                     if (element.entrada != 0) {
+                                        console.log(element);
                                         var horarioInicio = moment(element.horarioIni).add({ "minutes": element.toleranciaI });
                                         var entrada = moment(element.entrada);
                                         if (!entrada.isSameOrBefore(horarioInicio)) {
                                             tardanza++;
                                         }
                                     }
-                                    // : HORAS TRABAJADOS NORMALES
-                                    var horaT = moment(element.totalT, "HH:mm:ss");
-                                    var sumaDeTiempos = horasNormales + horaT;
-                                    var horasTotal = Math.trunc(moment.duration(sumaDeTiempos).asHours());
-                                    var minutosTotal = moment.duration(sumaDeTiempos).minutes();
-                                    var segundosTotal = moment.duration(sumaDeTiempos).seconds();
-                                    horasNormales = horasNormales.add({ "hours": horasTotal, "minutes": minutosTotal, "seconds": segundosTotal });
                                     // : SOBRE TIEMPO NORMAL
                                     var tiempoTrabajado = moment(element.totalT, "HH:mm:ss");
                                     var horasObligadas = moment(element.horasObligadas, "HH:mm:ss");
@@ -395,7 +403,46 @@ function cargarDatos() {
                                         }
                                     }
                                 }
+                                if (element.entrada != null) {
+                                    // : DIAS TRABAJADOS
+                                    var fecha = moment(element.horarioIni).format("YYYY-MM-DD");
+                                    console.log(!arrayFecha.includes(fecha));
+                                    console.log(fecha, arrayFecha);
+                                    if (!arrayFecha.includes(fecha)) {
+                                        arrayFecha.push(fecha);
+                                        diasTrabajdos++;
+                                    }
+                                }
                             }
+                            // : DIAS TRABAJADOS
+                            if (element.entrada != null) {
+                                if (element.entrada != 0) {
+                                    var fecha = moment(element.entrada).format("YYYY-MM-DD");
+                                    console.log(!arrayFecha.includes(fecha));
+                                    console.log(fecha, arrayFecha);
+                                    if (!arrayFecha.includes(fecha)) {
+                                        arrayFecha.push(fecha);
+                                        diasTrabajdos++;
+                                    }
+                                } else {
+                                    if (element.salida != 0) {
+                                        var fecha = moment(element.salida).format("YYYY-MM-DD");
+                                        if (!arrayFecha.includes(fecha)) {
+                                            console.log(!arrayFecha.includes(fecha));
+                                            console.log(fecha, arrayFecha);
+                                            arrayFecha.push(fecha);
+                                            diasTrabajdos++;
+                                        }
+                                    }
+                                }
+                            }
+                            // : HORAS TRABAJADOS NORMALES
+                            var horaT = moment.duration(element.totalT);
+                            var sumaDeTiempos = moment.duration(horaT);
+                            var horasTotal = Math.trunc(moment.duration(sumaDeTiempos).asHours());
+                            var minutosTotal = moment.duration(sumaDeTiempos).minutes();
+                            var segundosTotal = moment.duration(sumaDeTiempos).seconds();
+                            horasNormales = horasNormales.add({ "hours": horasTotal, "minutes": minutosTotal, "seconds": segundosTotal });
                         });
                     }
 
