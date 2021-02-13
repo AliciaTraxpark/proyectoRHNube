@@ -1018,7 +1018,7 @@ function cargartabla(fecha1,fecha2) {
                                 "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                             customize: function (xlsx) {
                                 var sheet = xlsx.xl.worksheets["sheet1.xml"];
-                                var downrows = 5;
+                                var downrows = 10;
                                 var clRow = $("row", sheet);
                                 clRow[0].children[0].remove();
                                 //update Row
@@ -1063,7 +1063,7 @@ function cargartabla(fecha1,fecha2) {
                                     "/" +
                                     now.getFullYear();
                                 //insert
-                                var fechas = 'Desde ' + $('#ID_START').val() + ' Hasta ' + $('#ID_END').val();
+                                var fechas = 'Desde ' + moment($('#ID_START').val()).format('DD/MM/YYYY') + ' Hasta ' + moment($('#ID_END').val()).format('DD/MM/YYYY');
 
                                 var r1 = Addrow(1, [{ k: 'A', v: 'REGISTRO DE TAREO', s: 51 }]);
                                 var r2 = Addrow(2, [{ k: 'A', v: fechas, s: 2 }]);
@@ -1189,7 +1189,7 @@ function cargartabla(fecha1,fecha2) {
                                         alignment: "center",
                                     },
                                 };
-                                doc.pageMargins = [20, 120, 20, 30];
+                                doc.pageMargins = [20, 150, 20, 30];
                                 doc.content[1].margin = [30, 0, 30, 0];
                                 var colCount = new Array();
                                 var tr = $("#tablaReport tbody tr:first-child");
@@ -1332,6 +1332,7 @@ function cargartabla(fecha1,fecha2) {
                                     (now.getMonth() + 1) +
                                     "/" +
                                     now.getFullYear();
+                                    var fechas = 'Desde ' + moment($('#ID_START').val()).format('DD/MM/YYYY') + ' Hasta ' + moment($('#ID_END').val()).format('DD/MM/YYYY');
                                 doc["header"] = function () {
                                     return {
                                         columns: [
@@ -1344,9 +1345,10 @@ function cargartabla(fecha1,fecha2) {
                                                             "\n REGISTRO DE TAREO",
                                                         bold: true,
                                                     },
+                                                    { text: '\n\Fechas:\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: fechas, bold: false },
                                                     {
                                                         text:
-                                                            "\n\nRazón Social:\t\t\t\t\t\t",
+                                                            "\n\Razón Social:\t\t\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     {
@@ -1355,7 +1357,7 @@ function cargartabla(fecha1,fecha2) {
                                                     },
                                                     {
                                                         text:
-                                                            "\nDirección:\t\t\t\t\t\t\t",
+                                                            "\nDirección:\t\t\t\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     {
@@ -1364,19 +1366,14 @@ function cargartabla(fecha1,fecha2) {
                                                     },
                                                     {
                                                         text:
-                                                            "\nNúmero de Ruc:\t\t\t\t\t",
+                                                            "\nNúmero de Ruc:\t\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     { text: ruc, bold: false },
-                                                    {
-                                                        text:
-                                                            "\nFecha:\t\t\t\t\t\t\t\t\t",
-                                                        bold: false,
-                                                    },
-                                                    {
-                                                        text: fechaAsisteDH,
-                                                        bold: false,
-                                                    },
+                                                    { text: '\nDNI:\t\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: dni, bold: false },
+                                                    { text: '\nApellidos y Nombres:\t\t\t\t\t', bold: false }, { text: nombre, bold: false },
+                                                    { text: '\nÁrea:\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: area, bold: false },
+                                                    { text: '\nCargo:\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: cargo, bold: false }
                                                 ],
 
                                                 fontSize: 10,
