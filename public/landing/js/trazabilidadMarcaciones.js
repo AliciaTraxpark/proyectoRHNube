@@ -378,14 +378,14 @@ function cargarDatos() {
                                         // : TIEMPO EXTRAS EL 25%
                                         if (tiempoSobreMoment.isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                             diurnas25++;
-                                            var restaDe25 = moment("02:00:00", "HH:mm:ss") - tiempoSobreMoment;
+                                            var restaDe25 = tiempoSobreMoment - moment("02:00:00", "HH:mm:ss");
                                             var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
                                             var minutosDe25 = moment.duration(restaDe25).minutes();
                                             var segundosDe25 = moment.duration(restaDe25).seconds();
                                             tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
                                             if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                                 diurnas35++;
-                                                var restaDe35 = moment("02:00:00", "HH:mm:ss") - tiempoSobrante;
+                                                var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                 var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
                                                 var minutosDe35 = moment.duration(restaDe35).minutes();
                                                 var segundosDe35 = moment.duration(restaDe35).seconds();
@@ -406,8 +406,6 @@ function cargarDatos() {
                                 if (element.entrada != null) {
                                     // : DIAS TRABAJADOS
                                     var fecha = moment(element.horarioIni).format("YYYY-MM-DD");
-                                    console.log(!arrayFecha.includes(fecha));
-                                    console.log(fecha, arrayFecha);
                                     if (!arrayFecha.includes(fecha)) {
                                         arrayFecha.push(fecha);
                                         diasTrabajdos++;
@@ -418,8 +416,6 @@ function cargarDatos() {
                             if (element.entrada != null) {
                                 if (element.entrada != 0) {
                                     var fecha = moment(element.entrada).format("YYYY-MM-DD");
-                                    console.log(!arrayFecha.includes(fecha));
-                                    console.log(fecha, arrayFecha);
                                     if (!arrayFecha.includes(fecha)) {
                                         arrayFecha.push(fecha);
                                         diasTrabajdos++;
@@ -428,8 +424,6 @@ function cargarDatos() {
                                     if (element.salida != 0) {
                                         var fecha = moment(element.salida).format("YYYY-MM-DD");
                                         if (!arrayFecha.includes(fecha)) {
-                                            console.log(!arrayFecha.includes(fecha));
-                                            console.log(fecha, arrayFecha);
                                             arrayFecha.push(fecha);
                                             diasTrabajdos++;
                                         }
