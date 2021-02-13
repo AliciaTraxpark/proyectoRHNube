@@ -1613,7 +1613,7 @@ class dispositivosController extends Controller
                                 'h.horario_tolerancia as toleranciaI',
                                 'h.horario_toleranciaF as toleranciaF',
                                 'he.fuera_horario as fueraH',
-                                DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                                DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
                                 'h.horasObliga as horasO'
                             )
                             ->where('he.horarioEmp_id', '=', $marcacion->horarioEmp_id)
@@ -1831,7 +1831,7 @@ class dispositivosController extends Controller
                                 'h.horario_tolerancia as toleranciaI',
                                 'h.horario_toleranciaF as toleranciaF',
                                 'he.fuera_horario as fueraH',
-                                DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                                DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
                                 'h.horasObliga as horasO'
                             )
                             ->where('he.horarioEmp_id', '=', $marcacion->horarioEmp_id)
@@ -2177,7 +2177,7 @@ class dispositivosController extends Controller
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
-                    DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                    DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
                     'h.horasObliga as horasO'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
@@ -2316,7 +2316,7 @@ class dispositivosController extends Controller
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
-                    DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                    DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
                     'h.horasObliga as horasO'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
@@ -2451,7 +2451,7 @@ class dispositivosController extends Controller
                 'he.fuera_horario as fueraH',
                 'he.horarioEmp_id as idHorarioE',
                 'h.horasObliga as horasObligadas',
-                DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasAdicionales')
+                DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasAdicionales')
             )
             ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
             ->where('he.empleado_emple_id', '=', $idEmpleado)
@@ -2577,7 +2577,7 @@ class dispositivosController extends Controller
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
-                    DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                    DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
                     'he.empleado_emple_id as idEmpleado',
                     DB::raw('DATE(hd.start) as fecha'),
                     'h.organi_id',
@@ -2644,6 +2644,7 @@ class dispositivosController extends Controller
                         $totalDuration = $horaFParse->diffInSeconds($horaIParse);
                         $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                         $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                        dd($tiempoTotal, $tiempoTotalDeHorario, $horario->horasO, $horario->horasA);
                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                             // * VALIDACION CON HORARIO
                             if ($horario->fueraH == 1) {
