@@ -1704,20 +1704,22 @@ class EmpleadoController extends Controller
 
         //* PARA COMPARAR QUE NO ESTE DENTRO DE HORARIO QUE NO SE CRUCEN
         $horarioEmpleado = horario::where('horario_id', $idhorar)->first();
-        $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
-        $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
+        $horaInicialF = Carbon::parse($horarioEmpleado->horaI)->subMinutes($horarioEmpleado->horario_tolerancia);
+        $horaFinalF = Carbon::parse($horarioEmpleado->horaF)->addMinutes($horarioEmpleado->horario_toleranciaF);
         $arrayHDentro = collect();
         //*
+        //*COMPARAREMOS SI LOS HORARIOS ESTAN DENTRO DE RANGO DE HORARIOS YA CREADOS
         foreach ($datafecha as $datafechas) {
-            $horarioDentro = eventos_empleado_temp::select(['title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+            $horarioDentro = eventos_empleado_temp::select(['title', 'color', 'textColor', 'start', 'end',
+             'horaI', 'horaF', 'borderColor','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF'])
                 ->join('horario as h', 'eventos_empleado_temp.id_horario', '=', 'h.horario_id')
                 ->where('start', '=', $datafechas)
                 ->where('users_id', '=', Auth::user()->id)
                 ->get();
             if ($horarioDentro) {
                 foreach ($horarioDentro as $horarioDentros) {
-                    $horaIDentro = Carbon::parse($horarioDentros->horaI);
-                    $horaFDentro = Carbon::parse($horarioDentros->horaF);
+                    $horaIDentro = Carbon::parse($horarioDentros->horaI)->subMinutes($horarioDentros->toleranciaI);
+                    $horaFDentro = Carbon::parse($horarioDentros->horaF)->addMinutes($horarioDentros->toleranciaF);
                     if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
                         $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
@@ -1764,7 +1766,7 @@ class EmpleadoController extends Controller
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
         /* dd($datafechaValida); */
         if ($datafechaValida != null || $datafechaValida != []) {
-            return 'Ya existe un horario asignado en este rango de horas, revise y vuelva a intentar.';
+            return 'Ya existe un horario asignado en este rango de horas, revise horario con tolerancia y vuelva a intentar.';
         } else {
             return 'Cambios guardados';
         }
@@ -2009,6 +2011,8 @@ class EmpleadoController extends Controller
 
     public function guardarhorarioempleado(Request $request)
     {
+
+        //*PARAMETROS
         $datafecha = $request->fechasArray;
         $horas = $request->hora;
         $idhorar = $request->idhorar;
@@ -2018,8 +2022,9 @@ class EmpleadoController extends Controller
         $horaA = $request->horarioA;
         $nHoraAdic = $request->nHoraAdic;
         $arrayeve = collect();
-        $arrayrep = collect();
-        //COMPRARA SI ES EL MISMO
+        $arrayrep = collect();  //*ARRAY DE REPETIDOS
+
+        //COMPRARA SI ES EL MISMO HORARIO
         foreach ($datafecha as $datafechas) {
             $tempre = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
                 ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
@@ -2031,35 +2036,38 @@ class EmpleadoController extends Controller
                 ->get()->first();
 
             if ($tempre) {
+                //*SI ES EL MISMO LO AÑADIMOS AL ARRAY DE REPETIDO
                 $startArre = carbon::create($tempre->start);
                 $arrayrep->push($startArre->format('Y-m-d'));
             }
         }
+        //* convertir array a simple
         $datos = Arr::flatten($arrayrep);
 
         //DIFERENCIA ARRAYS
+        //*QUITAMOS EN EL ARRAY GENERAL LOS REPETIDOS QUE HAYAMOS
         $datafecha2 = array_values(array_diff($datafecha, $datos));
 
         /////////////////////////////////////COMPARAR SI ESTA DENTRO DE RANGO
         $horarioEmpleado = horario::where('horario_id', $idhorar)->first();
-        $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
-        $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
+        $horaInicialF = Carbon::parse($horarioEmpleado->horaI)->subMinutes($horarioEmpleado->horario_tolerancia);
+        $horaFinalF = Carbon::parse($horarioEmpleado->horaF)->addMinutes($horarioEmpleado->horario_toleranciaF);
         $arrayHDentro = collect();
         /*  dd($horarioDentro); */
+        //*COMPARAREMOS SI LOS HORARIOS ESTAN DENTRO DE RANGO DE HORARIOS YA CREADOS
         foreach ($datafecha as $datafechas) {
-            $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+            $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end',
+               'horaI', 'horaF', 'borderColor','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF'])
                 ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
                 ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
                 ->where('horario_empleado.estado', '=', 1)
                 ->where('start', '=', $datafechas)
-                /* ->where('h.horaI', '=', $idhorar)
-                     ->where('h.horaF', '=', $idhorar) */
                 ->where('horario_empleado.empleado_emple_id', '=', $idempleado)
                 ->get();
             if ($horarioDentro) {
                 foreach ($horarioDentro as $horarioDentros) {
-                    $horaIDentro = Carbon::parse($horarioDentros->horaI);
-                    $horaFDentro = Carbon::parse($horarioDentros->horaF);
+                    $horaIDentro = Carbon::parse($horarioDentros->horaI)->subMinutes($horarioDentros->toleranciaI);
+                    $horaFDentro = Carbon::parse($horarioDentros->horaF)->addMinutes($horarioDentros->toleranciaF);
 
                     if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
                         $startArreD = carbon::create($horarioDentros->start);
@@ -2078,9 +2086,11 @@ class EmpleadoController extends Controller
             }
         }
         $datosDentroN = Arr::flatten($arrayHDentro);
+        //*RESTAMOS AL ARRAY EL OTRO ARRAY DE HORARIOS Q SE CRUZAN
         $datafecha3 = array_values(array_diff($datafecha2, $datosDentroN));
         /*  dd($datafecha3); */
         /////////////////////////////////////
+        //*AHORA CON LOS HORARIOS LIRBES CREAMOS LAS ASIGNACION E HORARIOS
         foreach ($datafecha3 as $datafechas) {
             $horario_dias = new horario_dias();
             $horario_dias->title = $horas;
@@ -2129,11 +2139,13 @@ class EmpleadoController extends Controller
             /* ------------------------------- */
         }
 
+        //* SI HUBO DIFENRECIAS EN EL ARRAY DE FECHAS CON EL ULTIMO ARRAY DE FECHAS QUE OBTUVIMOS
+        //*DESPUES DE HACER LOS CALCULOS DE CRUCES ENTONCES QUIERE DECIR QUE SI HUBO HORARIOS CRUZADOS
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
 
         /* dd($datafechaValida); */
         if ($datafechaValida != null || $datafechaValida != []) {
-            return 'Ya existe un horario asignado en este rango de horas, revise y vuelva a intentar.';
+            return 'Ya existe un horario asignado en este rango de horas, revise horario con tolerancia y vuelva a intentar.';
         } else {
             return 'Cambios guardados';
         }
