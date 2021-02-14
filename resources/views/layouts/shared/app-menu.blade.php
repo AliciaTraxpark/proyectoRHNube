@@ -12,7 +12,18 @@ use Illuminate\Support\Facades\DB;
 
     #sidebar-menu>ul>li>a {
         padding: 9px 30px;
-        font-size: 14px;
+        font-size: 12px;
+    }
+    #sidebar-menu>ul>li>ul>li>a {
+        padding: 7px 30px;
+        font-size: 12px;
+    }
+    #sidebar-menu>ul>li>ul>li>ul>li>a {
+        padding: 7px 30px;
+        font-size: 12px;
+    }
+    #sidebar-menu .menu-arrow{
+        top:9px;
     }
 
     .li-plan {
