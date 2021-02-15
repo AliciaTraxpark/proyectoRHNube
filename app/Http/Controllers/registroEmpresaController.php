@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\condicion_pago;
+use App\incidencias;
 use App\Mail\CorreoMail;
 use App\Mail\NuevoUsuarioMail;
 use Illuminate\Support\Facades\Redirect;
@@ -110,7 +111,36 @@ class registroEmpresaController extends Controller
                 $contrato->organi_id =  $idorgani;
                 $contrato->save();
             }
-            // 
+
+            //*INCIDENCIAS POR ORGANIZACION
+            $incidencias = [
+                'Permiso o licencia concedidos por el empleador',
+                'Caso fortuito o fuerza mayor',
+                'Enfermedad o accidente',
+                'Lactancia',
+                'Licencia para desempeñar cargo civico',
+                'Permiso y licencia para desempeño de cargos',
+                'Licencia con goce de haber',
+                'Gestiones essalud - social',
+                'Gestiones legales',
+                'Gestiones ocupacionales o medicas',
+                'Visitas a campo',
+                'Reuniones internas',
+                'Reuniones con entidades externas',
+                'Vacaciones',
+                'Descanso médico',
+                'Suspensión'
+            ];
+            foreach ($incidencias as $inci) {
+                $incidencia = new incidencias();
+                $incidencia->inciden_descripcion = $inci;
+                $incidencia->inciden_descuento = 0;
+                $incidencia->users_id = $request->get('iduser');
+                $incidencia->organi_id =  $idorgani;
+                $incidencia->save();
+            }
+            //******************************* */
+            //
             $usuario_organizacion = new usuario_organizacion();
             $usuario_organizacion->rol_id = 1;
             $usuario_organizacion->user_id = $request->get('iduser');

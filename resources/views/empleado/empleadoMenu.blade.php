@@ -6203,17 +6203,15 @@ use App\proyecto_empleado;
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="">Descripcion:</label>
-                                        <input type="text" class="form-control form-control-sm" id="descripcionInciCa"
-                                            required>
+                                        <select  class="form-control"
+                                        name="descripcionInciCa" id="descripcionInciCa" data-placeholder="Seleccionar o crear" required >
+                                        <option value=""></option>
+
+                                    </select>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-md-6"><label for=""><br></label>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="descuentoCheckCa">
-                                        <label class="form-check-label" for="descuentoCheckCa">Aplicar
-                                            descuento</label>
-                                    </div>
-                                </div>
+
 
 
 
@@ -6258,19 +6256,28 @@ use App\proyecto_empleado;
                         <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
                             <div class="row">
                                 <div class="col-md-12">
+                                    <label for="">Descripcion de incidencia:</label>
+                                </div>
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="">Descripcion:</label>
-                                        <input type="text" class="form-control form-control-sm"
-                                            id="descripcionInciCa_ed" required>
+                                             <select  class="form-control"
+                                                name="descripcionInciCa_ed" id="descripcionInciCa_ed" data-placeholder="Seleccionar o crear" required >
+                                                <option value=""></option>
+
+                                            </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6"><label for=""><br></label>
+                               {{--  <div class="col-md-2" style="padding-left: 0px;
+                                top: 5px;">
+                                    <button class="btn btn-light btn-sm" style="color: #163552;">Asignar</button>
+                                </div> --}}
+                               {{--  <div class="col-md-6"><label for=""><br></label>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="descuentoCheckCa_ed">
                                         <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar
                                             descuento</label>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 

@@ -2,45 +2,44 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Support\Facades\Auth;
 use App\actividad;
 use App\actividad_area;
 use App\actividad_empleado;
-use Illuminate\Support\Facades\Hash;
-use App\empleado;
 use App\area;
 use App\cargo;
-use App\centro_costo;
 use App\centrocosto_empleado;
+use App\centro_costo;
 use App\condicion_pago;
 use App\contrato;
 use App\doc_empleado;
-use Illuminate\Http\Request;
-use App\ubigeo_peru_departments;
-use App\ubigeo_peru_provinces;
-use App\ubigeo_peru_districts;
-use App\tipo_documento;
-use App\tipo_contrato;
-use App\nivel;
-use App\local;
-use App\persona;
-use App\tipo_dispositivo;
+use App\empleado;
+use App\eventos_empleado;
+use App\eventos_empleado_temp;
+use App\eventos_usuario;
+use App\historial_empleado;
+use App\historial_horarioempleado;
+use App\horario;
+use App\horario_dias;
 use App\horario_empleado;
 use App\incidencias;
-use App\eventos_usuario;
-use App\eventos_empleado_temp;
-use App\horario;
-use App\eventos_empleado;
-use App\historial_empleado;
 use App\incidencia_dias;
-use App\horario_dias;
-use App\pausas_horario;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
-use Carbon\Carbon;
 use App\invitado_empleado;
-use App\historial_horarioempleado;
+use App\local;
+use App\nivel;
+use App\pausas_horario;
+use App\persona;
+use App\tipo_contrato;
+use App\tipo_dispositivo;
+use App\tipo_documento;
+use App\ubigeo_peru_departments;
+use App\ubigeo_peru_districts;
+use App\ubigeo_peru_provinces;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class EmpleadoController extends Controller
 {
@@ -109,6 +108,10 @@ class EmpleadoController extends Controller
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
+            $incidencias = DB::table('incidencias')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get();
+
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
                     return redirect('/dashboard');
@@ -117,7 +120,7 @@ class EmpleadoController extends Controller
                         'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
                         'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
                         'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago, 'incidencias' => $incidencias,
                     ]);
                 }
             } else {
@@ -125,13 +128,13 @@ class EmpleadoController extends Controller
                     'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
                     'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
                     'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago, 'incidencias' => $incidencias,
                 ]);
             }
         }
     }
     public function cargarDatos()
-    {   //DATOS DE TABLA PARA CARGAR EXCEL
+    { //DATOS DE TABLA PARA CARGAR EXCEL
         if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
         } else {
@@ -195,7 +198,6 @@ class EmpleadoController extends Controller
         }
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -256,7 +258,7 @@ class EmpleadoController extends Controller
                 /*  dd(DB::getQueryLog()); */
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.idinvitado', '=', $invitadod->idinvitado)
                     ->where('invem.area_id', '=', null)
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
@@ -469,7 +471,7 @@ class EmpleadoController extends Controller
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.idinvitado', '=', $invitadod->idinvitado)
                     ->where('invem.area_id', '=', null)
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
@@ -699,7 +701,7 @@ class EmpleadoController extends Controller
                 ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get()->first();
             $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                ->where('invem.idinvitado', '=', $invitado->idinvitado)
                 ->get()->first();
             if ($invitado->empleado == 1) {
                 $invitado_empleado = new invitado_empleado();
@@ -714,7 +716,7 @@ class EmpleadoController extends Controller
 
         if ($actividad) {
             //VINCULAR ACTIVIDAD DE CONTROL REMOTO PARA EMPLEADO
-            $actividad_empleado =  new actividad_empleado();
+            $actividad_empleado = new actividad_empleado();
             $actividad_empleado->idActividad = $actividad->Activi_id;
             $actividad_empleado->idEmpleado = $idempleado;
             $actividad_empleado->eliminacion = 0;
@@ -733,7 +735,7 @@ class EmpleadoController extends Controller
             $idActividad = $actividad->Activi_id;
 
             //VINCULAR ACTIVIDAD DE CONTROL REMOTO PARA EMPLEADO
-            $actividad_empleado =  new actividad_empleado();
+            $actividad_empleado = new actividad_empleado();
             $actividad_empleado->idActividad = $idActividad;
             $actividad_empleado->idEmpleado = $idempleado;
             $actividad_empleado->eliminacion = 0;
@@ -745,7 +747,7 @@ class EmpleadoController extends Controller
         if (sizeof($actividadGlobalEmpleado) != 0) {
             foreach ($actividadGlobalEmpleado as $actividadG) {
                 //*VINCULAR ACTIVIDAD DE GLOBAL POR EMPLEADO
-                $actividad_empleado =  new actividad_empleado();
+                $actividad_empleado = new actividad_empleado();
                 $actividad_empleado->idActividad = $actividadG->Activi_id;
                 $actividad_empleado->idEmpleado = $idempleado;
                 $actividad_empleado->eliminacion = 1;
@@ -857,7 +859,7 @@ class EmpleadoController extends Controller
                         $busquedaActividadE = actividad_empleado::where('idEmpleado', '=', $empleado->emple_id)->where('idActividad', '=', $a->idActividad)->get()->first();
                         if (!$busquedaActividadE) {
                             //*VINCULAR ACTIVIDAD DE GLOBAL POR EMPLEADO
-                            $actividad_empleado =  new actividad_empleado();
+                            $actividad_empleado = new actividad_empleado();
                             $actividad_empleado->idActividad = $a->idActividad;
                             $actividad_empleado->idEmpleado = $empleado->emple_id;
                             $actividad_empleado->eliminacion = 1;
@@ -885,7 +887,6 @@ class EmpleadoController extends Controller
         $empleado->save();
         return json_encode(array('status' => true));
     }
-
 
     public function storeCalendario(Request $request, $idE)
     {
@@ -948,7 +949,6 @@ class EmpleadoController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
-
         foreach ($eventos_empleado_tempHor as $eventos_empleado_tempHors) {
             $horario_dias = new horario_dias();
             $horario_dias->title = $eventos_empleado_tempHors->title;
@@ -964,11 +964,11 @@ class EmpleadoController extends Controller
             $horario_empleados->horario_horario_id = $eventos_empleado_tempHors->id_horario;
             $horario_empleados->empleado_emple_id = $idempleado;
             $horario_empleados->horario_dias_id = $horario_dias->id;
-            $horario_empleados->fuera_horario =  $eventos_empleado_tempHors->fuera_horario;
-            $horario_empleados->horarioComp =  $eventos_empleado_tempHors->horarioComp;
-            $horario_empleados->horaAdic =  $eventos_empleado_tempHors->horaAdic;
-            $horario_empleados->nHoraAdic =  $eventos_empleado_tempHors->nHoraAdic;
-            $horario_empleados->estado =  1;
+            $horario_empleados->fuera_horario = $eventos_empleado_tempHors->fuera_horario;
+            $horario_empleados->horarioComp = $eventos_empleado_tempHors->horarioComp;
+            $horario_empleados->horaAdic = $eventos_empleado_tempHors->horaAdic;
+            $horario_empleados->nHoraAdic = $eventos_empleado_tempHors->nHoraAdic;
+            $horario_empleados->estado = 1;
             if ($eventos_empleado_tempHors->fuera_horario == 1) {
                 $horario_empleados->borderColor = '#5369f8';
             }
@@ -1097,7 +1097,10 @@ class EmpleadoController extends Controller
     {
 
         $objEmpleado = json_decode($request->get('objEmpleadoA'), true);
-        if ($request == null) return false;
+        if ($request == null) {
+            return false;
+        }
+
         $empleado = Empleado::findOrFail($idE);
 
         if ($objEmpleado['departamento_v'] != '') {
@@ -1145,7 +1148,10 @@ class EmpleadoController extends Controller
     public function updateEmpresarial(Request $request, $idE)
     {
         $objEmpleado = json_decode($request->get('objEmpleadoA'), true);
-        if ($request == null) return false;
+        if ($request == null) {
+            return false;
+        }
+
         $empleado = Empleado::findOrFail($idE);
         if ($objEmpleado['area_v'] != $empleado->emple_area) {
             //* BUSCAR ACTIVIDADES DEL EMPLEADO
@@ -1171,7 +1177,7 @@ class EmpleadoController extends Controller
                             $busquedaActividadE = actividad_empleado::where('idEmpleado', '=', $empleado->emple_id)->where('idActividad', '=', $a->idActividad)->get()->first();
                             if (!$busquedaActividadE) {
                                 //*VINCULAR ACTIVIDAD DE GLOBAL POR EMPLEADO
-                                $actividad_empleado =  new actividad_empleado();
+                                $actividad_empleado = new actividad_empleado();
                                 $actividad_empleado->idActividad = $a->idActividad;
                                 $actividad_empleado->idEmpleado = $empleado->emple_id;
                                 $actividad_empleado->estado = 1;
@@ -1247,7 +1253,10 @@ class EmpleadoController extends Controller
     public function updateFoto(Request $request, $idE)
     {
         $objEmpleado = json_decode($request->get('objEmpleadoA'), true);
-        if ($request == null) return false;
+        if ($request == null) {
+            return false;
+        }
+
         $empleado = Empleado::findOrFail($idE);
         if ($request->hasfile('file')) {
             $file = $request->file('file');
@@ -1379,6 +1388,10 @@ class EmpleadoController extends Controller
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
+            $incidencias = DB::table('incidencias')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get();
+
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
                     if ($invitadod->permiso_Emp == 1) {
@@ -1390,7 +1403,8 @@ class EmpleadoController extends Controller
                             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
                             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
                             'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago, 'agregarEmp' => $permiso_invitado->agregarEmp,
-                            'modifEmp' => $permiso_invitado->modifEmp, 'bajaEmp' => $permiso_invitado->bajaEmp, 'GestActEmp' => $permiso_invitado->GestActEmp
+                            'modifEmp' => $permiso_invitado->modifEmp, 'bajaEmp' => $permiso_invitado->bajaEmp, 'GestActEmp' => $permiso_invitado->GestActEmp,
+                            'incidencias' => $incidencias,
                         ]);
                     } else {
                         return redirect('/dashboard');
@@ -1401,7 +1415,7 @@ class EmpleadoController extends Controller
                         'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
                         'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
                         'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago, 'incidencias' => $incidencias,
                     ]);
                 }
             } else {
@@ -1409,7 +1423,7 @@ class EmpleadoController extends Controller
                     'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
                     'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
                     'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago, 'incidencias' => $incidencias,
                 ]);
             }
         }
@@ -1456,8 +1470,6 @@ class EmpleadoController extends Controller
             ->where('e.emple_estado', '=', 0)
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->get()->first();
-
-
 
         if ($empleado1 != null) {
             return 1;
@@ -1524,11 +1536,10 @@ class EmpleadoController extends Controller
             }
         }
 
-
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
             ->select([
                 'evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id',
-                'horaI', 'horaF', 'borderColor', 'horaAdic', 'nHoraAdic', 'h.horasObliga', 'evt.id_horario'
+                'horaI', 'horaF', 'borderColor', 'horaAdic', 'nHoraAdic', 'h.horasObliga', 'evt.id_horario',
             ])
             ->leftJoin('horario as h', 'evt.id_horario', '=', 'h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
@@ -1581,27 +1592,40 @@ class EmpleadoController extends Controller
 
     public function storeIncidTem(Request $request)
     {
+        if ($request->get('nuevoSelect') == 0) {
+            $eventos_empleado_tempSave = new eventos_empleado_temp();
+            $eventos_empleado_tempSave->users_id = Auth::user()->id;
+            $eventos_empleado_tempSave->title = $request->get('textDescrip');
+            $eventos_empleado_tempSave->color = '#9E9E9E';
+            $eventos_empleado_tempSave->textColor = '#313131';
+            $eventos_empleado_tempSave->start = $request->get('start');
+            $eventos_empleado_tempSave->end = $request->get('end');
+            $eventos_empleado_tempSave->tipo_ev = $request->get('title');
+            $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
+            $eventos_empleado_tempSave->organi_id = session('sesionidorg');
+            $eventos_empleado_tempSave->save();
+        }
+        else{
+            $incidencia = new incidencias();
+            $incidencia->inciden_descripcion = $request->get('title');
+            $incidencia->inciden_descuento = $request->get('descuentoI');
+            $incidencia->inciden_hora = $request->get('horaIn');
+            $incidencia->users_id = Auth::user()->id;
+            $incidencia->organi_id = session('sesionidorg');
+            $incidencia->save();
 
-        $incidencia = new incidencias();
-        $incidencia->inciden_descripcion =  $request->get('title');
-        $incidencia->inciden_descuento = $request->get('descuentoI');
-        $incidencia->inciden_hora =  $request->get('horaIn');
-        $incidencia->users_id = Auth::user()->id;
-        $incidencia->organi_id = session('sesionidorg');
-        $incidencia->save();
-
-        $eventos_empleado_tempSave = new eventos_empleado_temp();
-        $eventos_empleado_tempSave->users_id = Auth::user()->id;
-        $eventos_empleado_tempSave->title = $request->get('title');
-        $eventos_empleado_tempSave->color = '#9E9E9E';
-        $eventos_empleado_tempSave->textColor = '#313131';
-        $eventos_empleado_tempSave->start = $request->get('start');
-        $eventos_empleado_tempSave->end = $request->get('end');
-        $eventos_empleado_tempSave->tipo_ev = $incidencia->inciden_id;
-        $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
-        $eventos_empleado_tempSave->organi_id = session('sesionidorg');
-        $eventos_empleado_tempSave->save();
-
+            $eventos_empleado_tempSave = new eventos_empleado_temp();
+            $eventos_empleado_tempSave->users_id = Auth::user()->id;
+            $eventos_empleado_tempSave->title = $request->get('title');
+            $eventos_empleado_tempSave->color = '#9E9E9E';
+            $eventos_empleado_tempSave->textColor = '#313131';
+            $eventos_empleado_tempSave->start = $request->get('start');
+            $eventos_empleado_tempSave->end = $request->get('end');
+            $eventos_empleado_tempSave->tipo_ev = $incidencia->inciden_id;
+            $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
+            $eventos_empleado_tempSave->organi_id = session('sesionidorg');
+            $eventos_empleado_tempSave->save();
+        }
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
@@ -1698,7 +1722,6 @@ class EmpleadoController extends Controller
 
         $datos = Arr::flatten($arrayrep);
 
-
         //DIFERENCIA ARRAYS
         $datafecha2 = array_values(array_diff($datafecha, $datos));
 
@@ -1711,7 +1734,7 @@ class EmpleadoController extends Controller
         //*COMPARAREMOS SI LOS HORARIOS ESTAN DENTRO DE RANGO DE HORARIOS YA CREADOS
         foreach ($datafecha as $datafechas) {
             $horarioDentro = eventos_empleado_temp::select(['title', 'color', 'textColor', 'start', 'end',
-             'horaI', 'horaF', 'borderColor','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF'])
+                'horaI', 'horaF', 'borderColor', 'h.horario_tolerancia as toleranciaI', 'h.horario_toleranciaF as toleranciaF'])
                 ->join('horario as h', 'eventos_empleado_temp.id_horario', '=', 'h.horario_id')
                 ->where('start', '=', $datafechas)
                 ->where('users_id', '=', Auth::user()->id)
@@ -1720,7 +1743,7 @@ class EmpleadoController extends Controller
                 foreach ($horarioDentro as $horarioDentros) {
                     $horaIDentro = Carbon::parse($horarioDentros->horaI)->subMinutes($horarioDentros->toleranciaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF)->addMinutes($horarioDentros->toleranciaF);
-                    if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
+                    if ($horaInicialF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
                         $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
                     } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
@@ -1754,7 +1777,7 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->fuera_horario = $fueraHora;
             $eventos_empleado_tempSave->horarioComp = $horaC;
             $eventos_empleado_tempSave->horaAdic = $horaA;
-            $eventos_empleado_tempSave->nHoraAdic =  $nHoraAdic;
+            $eventos_empleado_tempSave->nHoraAdic = $nHoraAdic;
             $eventos_empleado_tempSave->organi_id = session('sesionidorg');
             if ($fueraHora == 1) {
                 $eventos_empleado_tempSave->borderColor = '#5369f8';
@@ -1779,7 +1802,7 @@ class EmpleadoController extends Controller
             ->select([
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic'
+                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
             ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
@@ -1787,14 +1810,14 @@ class EmpleadoController extends Controller
         $eventos_empleado = DB::table('eventos_empleado')
             ->select([
                 'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
-                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic'
+                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic',
             ])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias);
 
         $horario_empleado = DB::table('horario_empleado as he')
             ->select([
-                'he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'
+                'he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic',
             ])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
@@ -1802,7 +1825,6 @@ class EmpleadoController extends Controller
             ->where('he.estado', '=', 1)
             ->union($eventos_empleado)
             ->get();
-
 
         foreach ($horario_empleado as $tab) {
             $pausas_horario = DB::table('pausas_horario as pauh')
@@ -1821,7 +1843,7 @@ class EmpleadoController extends Controller
 
         $horario_empleado = DB::table('horario_empleado as he')
             ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
-            /*  ->where('users_id', '=', Auth::user()->id) */
+        /*  ->where('users_id', '=', Auth::user()->id) */
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.estado', '=', 1)
             ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
@@ -1831,7 +1853,6 @@ class EmpleadoController extends Controller
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $request->get('idempleado'))
             ->union($horario_empleado);
-
 
         $eventos_empleado = DB::table('eventos_empleado')
             ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end'])
@@ -1881,32 +1902,27 @@ class EmpleadoController extends Controller
             }
         }
 
-
-
-
         /*  dd($horario_empleado); */
 
         $incidencias = DB::table('incidencias as i')
             ->select([
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic'
+                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
             ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
         /*   ->union($horario_empleado); */
 
-
         $eventos_empleado = DB::table('eventos_empleado')
             ->select([
                 'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
-                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic'
+                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic',
             ])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias);
 
         /*   $horario_empleado ->union($eventos_empleado); */
-
 
         $horario_empleado = DB::table('horario_empleado as he')
             ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
@@ -1917,15 +1933,12 @@ class EmpleadoController extends Controller
             ->union($eventos_empleado)
             ->get();
 
-
-
         foreach ($horario_empleado as $tab) {
             $pausas_horario = DB::table('pausas_horario as pauh')
                 ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
                 ->where('pauh.horario_id', '=', $tab->idhorario)
                 ->distinct('pauh.idpausas_horario')
                 ->get();
-
 
             $tab->pausas = $pausas_horario;
         }
@@ -1951,9 +1964,7 @@ class EmpleadoController extends Controller
             ->where('id_calendario', '=', $ev1->id_calendario)
             ->get();
 
-
         /* --------------------------------------- */
-
 
         /* VERIFICAR SI EXISTE */
         if ($buscarEvento->isNotEmpty()) {
@@ -1983,29 +1994,42 @@ class EmpleadoController extends Controller
             ->whereDate('start', '=', $fechaRecibida)
             ->get();
 
-
         /* --------------------------------------- */
 
         /* VERIFICAR SI EXISTE */
         if ($buscarEvento->isNotEmpty()) {
             return "Ya existe " . $buscarEvento[0]->title;
         } else {
-            $incidencia = new incidencias();
-            $incidencia->inciden_descripcion =  $request->get('title');
-            $incidencia->inciden_descuento = $request->get('descuentoI');
-            $incidencia->inciden_hora =  $request->get('horaIn');
-            $incidencia->users_id = Auth::user()->id;
-            $incidencia->organi_id = session('sesionidorg');
-            $incidencia->save();
+            if ($request->get('nuevoSelect') == 0) {
 
-            $incidencia_dias = new incidencia_dias();
-            $incidencia_dias->id_incidencia = $incidencia->inciden_id;
-            $incidencia_dias->inciden_dias_fechaI = $request->get('start');
-            $incidencia_dias->inciden_dias_fechaF = $request->get('end');
-            $incidencia_dias->id_empleado = $request->get('idempleado');
+                $incidencia_dias = new incidencia_dias();
+                $incidencia_dias->id_incidencia =$request->get('title');
+                $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+                $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+                $incidencia_dias->id_empleado = $request->get('idempleado');
 
-            $incidencia_dias->save();
-            return 1;
+                $incidencia_dias->save();
+                return 1;
+            }
+            else{
+                $incidencia = new incidencias();
+                $incidencia->inciden_descripcion = $request->get('title');
+                $incidencia->inciden_descuento = $request->get('descuentoI');
+                $incidencia->inciden_hora = $request->get('horaIn');
+                $incidencia->users_id = Auth::user()->id;
+                $incidencia->organi_id = session('sesionidorg');
+                $incidencia->save();
+
+                $incidencia_dias = new incidencia_dias();
+                $incidencia_dias->id_incidencia = $incidencia->inciden_id;
+                $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+                $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+                $incidencia_dias->id_empleado = $request->get('idempleado');
+
+                $incidencia_dias->save();
+                return 1;
+            }
+
         }
     }
 
@@ -2022,7 +2046,7 @@ class EmpleadoController extends Controller
         $horaA = $request->horarioA;
         $nHoraAdic = $request->nHoraAdic;
         $arrayeve = collect();
-        $arrayrep = collect();  //*ARRAY DE REPETIDOS
+        $arrayrep = collect(); //*ARRAY DE REPETIDOS
 
         //COMPRARA SI ES EL MISMO HORARIO
         foreach ($datafecha as $datafechas) {
@@ -2057,7 +2081,7 @@ class EmpleadoController extends Controller
         //*COMPARAREMOS SI LOS HORARIOS ESTAN DENTRO DE RANGO DE HORARIOS YA CREADOS
         foreach ($datafecha as $datafechas) {
             $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end',
-               'horaI', 'horaF', 'borderColor','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF'])
+                'horaI', 'horaF', 'borderColor', 'h.horario_tolerancia as toleranciaI', 'h.horario_toleranciaF as toleranciaF'])
                 ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
                 ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
                 ->where('horario_empleado.estado', '=', 1)
@@ -2069,7 +2093,7 @@ class EmpleadoController extends Controller
                     $horaIDentro = Carbon::parse($horarioDentros->horaI)->subMinutes($horarioDentros->toleranciaI);
                     $horaFDentro = Carbon::parse($horarioDentros->horaF)->addMinutes($horarioDentros->toleranciaF);
 
-                    if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
+                    if ($horaInicialF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
                         $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
                     } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
@@ -2267,8 +2291,8 @@ class EmpleadoController extends Controller
     public function vaciarFdescansoBD(Request $request)
     {
         $eliDescaso = eventos_empleado::where('id_empleado', '=', $request->get('idempleado'))
-            /*  ->where('color', '=', '#4673a0')
-            ->where('textColor', '=', '#ffffff') */
+        /*  ->where('color', '=', '#4673a0')
+        ->where('textColor', '=', '#ffffff') */
             ->whereIn('tipo_ev', [1, 3])
 
             ->whereYear('start', $request->get('aniocalen'))
@@ -2276,7 +2300,6 @@ class EmpleadoController extends Controller
         foreach ($eliDescaso as $eliDescasos) {
             $eliDescasos->delete();
         }
-
 
         /*  $eliDescaso->delete(); */
         return response()->json($eliDescaso);
@@ -2402,7 +2425,7 @@ class EmpleadoController extends Controller
             foreach ($idarea as $idareas) {
                 if ($invitadod) {
                     $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                        ->where('invem.idinvitado', '=', $invitadod->idinvitado)
                         ->where('invem.area_id', '=', null)
                         ->where('invem.emple_id', '!=', null)
                         ->get()->first();
@@ -2553,7 +2576,7 @@ class EmpleadoController extends Controller
                         ->get();
                 } else {
                     $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                        ->where('invem.idinvitado', '=', $invitadod->idinvitado)
                         ->where('invem.area_id', '=', null)
                         ->where('invem.emple_id', '!=', null)
                         ->get()->first();
@@ -2674,10 +2697,6 @@ class EmpleadoController extends Controller
             $result = agruparEmpleadosRefreshArea($arrayem);
         }
 
-
-
-
-
         return response()->json($result, 200);
     }
 
@@ -2733,7 +2752,7 @@ class EmpleadoController extends Controller
                         'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
                         'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
                         'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago,
                     ]);
                 }
             } else {
@@ -2741,7 +2760,7 @@ class EmpleadoController extends Controller
                     'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
                     'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
                     'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago,
                 ]);
             }
         }
@@ -2767,13 +2786,11 @@ class EmpleadoController extends Controller
             ->where('e.emple_estado', '=', 0)
             ->get();
 
-
         return response()->json($tabla_empleado1, 200);
     }
 
     public function refresTablaAreBaja(Request $request)
     {
-
 
         $idarea = $request->idarea;
         $arrayem = collect();
@@ -2839,7 +2856,7 @@ class EmpleadoController extends Controller
         foreach ($arrayEmp[0] as $emp) {
 
             $historial_empleadoN = new historial_empleado();
-            $historial_empleadoN->emple_id =  $emp;
+            $historial_empleadoN->emple_id = $emp;
             $historial_empleadoN->fecha_alta = $fechaAlta;
             $historial_empleadoN->save();
         }
@@ -2848,7 +2865,6 @@ class EmpleadoController extends Controller
 
     public function storeDocumentoAlta(Request $request, $data)
     {
-
 
         //VALIDAR SI ES VACIO O O ACTUALIZAR
         if ($request->hasFile('AltaFile')) {
@@ -2922,5 +2938,12 @@ class EmpleadoController extends Controller
         $horario_empleado->horaAdic = $permiteHadicional;
         $horario_empleado->nHoraAdic = $nHorasAdic;
         $horario_empleado->save();
+    }
+
+    public function incidenciasOrganizacion(){
+        $incidencias = DB::table('incidencias')
+        ->where('organi_id', '=', session('sesionidorg'))
+        ->get();
+        return $incidencias;
     }
 }

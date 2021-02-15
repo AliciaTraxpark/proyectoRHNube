@@ -157,6 +157,7 @@ Route::post('tablaempleado/refreshAreaBaja', 'EmpleadoController@refresTablaAreB
 Route::post('empleado/darAlta', 'EmpleadoController@darAltaEmpleado');
 Route::post('/empleado/actualizarConfigHorario', 'EmpleadoController@actualizarConfigHorario');
 Route::post('/empleado/actualizarConfigHorario_re', 'EmpleadoController@actualizarConfigHorario_re');
+Route::post('/incidenciasOrganizacion', 'EmpleadoController@incidenciasOrganizacion');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
