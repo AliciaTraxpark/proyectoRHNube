@@ -566,9 +566,20 @@ function cargarDatos() {
                 if (dataCompleta["incidencias"] != undefined) {
                     dataCompleta["incidencias"].forEach(element => {
                         element.descripcion = normalize(element.descripcion);
+                        // : DESCANSO MEDICO
                         var estado = element.descripcion.search(RegExp(/medic/gi));
                         if (!(estado === -1)) {
                             descansoM++;
+                        }
+                        // : SUSPENSIÓN
+                        var estadoSusp = element.descripcion.search(RegExp(/suspension/gi));
+                        if (!(estadoSusp === -1)) {
+                            suspension++;
+                        }
+                        // : VACACIONES
+                        var estadoVac = element.descripcion.search(RegExp(/vacaciones/gi));
+                        if (!(estadoVac === -1)) {
+                            vacaciones++;
                         }
                     });
                 }
