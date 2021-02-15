@@ -210,15 +210,13 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                 //distrito
                 $cadDist = $row['distrito'];
-                if (strlen($cadDist) > 5) {
+                if (strlen($cadDist) > 4) {
                     $cadDist = substr($cadDist, 0, -1);
                 }
                 if ($row['distrito'] != null) {
-                    if (strlen($cadDist) > 5) {
-                        $idD = ubigeo_peru_districts::where("name", "like", "%" . escape_like($cadDist) . "%")->get();}
-                        else{
-                            $idD = ubigeo_peru_districts::where("name", '=',$cadDist)->get();
-                        }
+
+                            $idD = ubigeo_peru_districts::where("name", '=',$row['distrito'])->get();
+
 
 
                     if ($idD->isNotEmpty()) {
@@ -329,15 +327,13 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                 //distritoNac
                 $cadDistN = $row['distrito_nacimiento'];
-                if (strlen($cadDistN) > 5) {
+                if (strlen($cadDistN) >4) {
                     $cadDistN = substr($cadDistN, 0, -1);
                 }
                 if ($row['distrito_nacimiento'] != null) {
-                    if (strlen($cadDistN) > 5) {
-                    $idDN = ubigeo_peru_districts::where("name", "like", "%" . escape_like($cadDistN) . "%")->get();}
-                    else{
-                        $idDN = ubigeo_peru_districts::where("name", '=',$cadDistN)->get();
-                    }
+
+                        $idDN = ubigeo_peru_districts::where("name", '=',$row['distrito_nacimiento'])->get();
+
                     if ($idDN->isNotEmpty()) {
                         if ($idDN->count() > 1) {
                             $row['iddistrito_nacimiento'] = $idDN[0]->id;
