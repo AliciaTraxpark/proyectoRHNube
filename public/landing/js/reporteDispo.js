@@ -3153,6 +3153,8 @@ function limpiarAtributos() {
     // ? MODAL DE NUEVA MARCACION
     $('#AM_detalleHorarios').empty();
     $('#AM_detalleHorarios').hide();
+    $('#am_valid').empty();
+    $('#am_valid').hide();
     $('#v_entrada').prop("checked", false);
     $('#v_salida').prop("checked", false);
     $('#nuevaEntrada').prop("disabled", false);
