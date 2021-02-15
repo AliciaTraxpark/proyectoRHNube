@@ -210,7 +210,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/reporteAsistencia">Detalle de asistencia</a>
                 <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
                 <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
-
+                <a href="/indexTrazabilidad">Trazabilidad de marcaciones</a>
             </li>
         </ul>
     </li>
