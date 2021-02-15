@@ -12,38 +12,6 @@ var fechaValue = $("#fechaSelec").flatpickr({
 var fechaGlobal = {};
 var dataT = {};
 var sent = false;
-$(function () {
-    $('#idempleado').select2({
-        placeholder: 'Seleccionar',
-        language: {
-            inputTooShort: function (e) {
-                return "Escribir nombre o apellido";
-            },
-            loadingMore: function () { return "Cargando más resultados…" },
-            noResults: function () { return "No se encontraron resultados" }
-        },
-        minimumInputLength: 2
-    });
-    f = moment().format("YYYY-MM-DD");
-    fechaValue.setDate(f);
-    $("#fechaInput").change();
-    cambiarF();
-    // * HORARIO PADRE
-    $('.horarioPadre').find('input[type=checkbox]').prop({
-        indeterminate: true,
-        checked: false
-    });
-    // * CALCULO DE TIEMPOS PADRE
-    $('.detallePadre').find('input[type=checkbox]').prop({
-        indeterminate: true,
-        checked: false
-    });
-    // * INCIDENCIA
-    $('.incidenciaPadre').find('input[type=checkbox]').prop({
-        indeterminate: true,
-        checked: false
-    });
-});
 
 // * INICIALIZAR TABLA
 var table;
@@ -56,9 +24,11 @@ function inicializarTabla() {
         "autoWidth": false,
         "bInfo": false,
         "bLengthChange": false,
-        stateSave: true,
+        processing: true,
+        retrieve: true,
         language: {
-            sProcessing: "Procesando...",
+            sProcessing: "Generando informe...",
+            processing: "<img src='landing/images/punt.gif' height='40'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
             sLengthMenu: "Mostrar _MENU_ registros",
             sZeroRecords: "No se encontraron resultados",
             sEmptyTable: "Ningún dato disponible en esta tabla",
@@ -280,6 +250,39 @@ function inicializarTabla() {
         }
     }).draw();
 }
+$(function () {
+    $('#idempleado').select2({
+        placeholder: 'Seleccionar',
+        language: {
+            inputTooShort: function (e) {
+                return "Escribir nombre o apellido";
+            },
+            loadingMore: function () { return "Cargando más resultados…" },
+            noResults: function () { return "No se encontraron resultados" }
+        },
+        minimumInputLength: 2
+    });
+    f = moment().format("YYYY-MM-DD");
+    fechaValue.setDate(f);
+    $("#fechaInput").change();
+    inicializarTabla();
+    cambiarF();
+    // * HORARIO PADRE
+    $('.horarioPadre').find('input[type=checkbox]').prop({
+        indeterminate: true,
+        checked: false
+    });
+    // * CALCULO DE TIEMPOS PADRE
+    $('.detallePadre').find('input[type=checkbox]').prop({
+        indeterminate: true,
+        checked: false
+    });
+    // * INCIDENCIA
+    $('.incidenciaPadre').find('input[type=checkbox]').prop({
+        indeterminate: true,
+        checked: false
+    });
+});
 // * VARIABLES PARA EXCEL Y PDF
 var razonSocial;
 var direccion;
@@ -292,13 +295,11 @@ var contenidoHorario = [];
 function cargartabla(fecha) {
     var idemp = $('#idempleado').val();
     $.ajax({
-        async: false,
         type: "GET",
         url: "/reporteTablaMarca",
         data: {
             fecha, idemp
         },
-        async: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -310,507 +311,340 @@ function cargartabla(fecha) {
                 location.reload();
             }
         },
-        success: function (data) {
-            fechaGlobal = fecha;
-            contenidoHorario.length = 0;
-            if (data.length != 0) {
-                if ($.fn.DataTable.isDataTable("#tablaReport")) {
-                    $("#tablaReport").DataTable().destroy();
+        beforeSend: function () {
+            $("#tablaReport").css('opacity', .3);
+            $('div.dataTables_processing').show();
+        },
+    }).then(function (data) {
+        $('div.dataTables_processing').hide();
+        $("#tablaReport").css('opacity', 1);
+        fechaGlobal = fecha;
+        contenidoHorario.length = 0;
+        if (data.length != 0) {
+            if ($.fn.DataTable.isDataTable("#tablaReport")) {
+                $("#tablaReport").DataTable().destroy();
+            }
+            var permisoModificar = $('#modifReporte').val();  // * PERMISO DE MODIFICAR
+            $('#customSwitDetalles').prop("disabled", false);
+            $('#switPausas').prop("disabled", false);
+            $('#theadD').empty();
+            // ? ************************************** CANTIDAD DE COLUMNAS DE LA TABLA*****************************
+            // * ARRAY COMPLETO DE DETALLES, CANTIDAD DE PAUSAS Y MARCACIONES POR EL GRUPO DE HORARIOS
+            var arrayHorario = [];
+            // * CANTIDAD MAXIMA DE GRUPOS DE HORARIOS
+            var cantidadGruposHorario = 1;
+            for (let i = 0; i < data.length; i++) {
+                // * OBTENER EL MAXIMO DE GRUPOS DE HORARIOS
+                if (cantidadGruposHorario < data[i].data.length) {
+                    cantidadGruposHorario = data[i].data.length;
                 }
-                var permisoModificar = $('#modifReporte').val();  // * PERMISO DE MODIFICAR
-                $('#customSwitDetalles').prop("disabled", false);
-                $('#switPausas').prop("disabled", false);
-                $('#theadD').empty();
-                // ? ************************************** CANTIDAD DE COLUMNAS DE LA TABLA*****************************
-                // * ARRAY COMPLETO DE DETALLES, CANTIDAD DE PAUSAS Y MARCACIONES POR EL GRUPO DE HORARIOS
-                var arrayHorario = [];
-                // * CANTIDAD MAXIMA DE GRUPOS DE HORARIOS
-                var cantidadGruposHorario = 1;
+            }
+            // * BUSCAMOS LA CANTIDAD MAXIMA DE PAUSAS Y MARCACIONES POR GRUPO
+            for (let busqueda = 0; busqueda < cantidadGruposHorario; busqueda++) {
+                // * MAXIMO DE PAUSAS POR GRUPO
+                var cantidadPausaG = 1;
+                // * MAXIMO DE MARCACIONES POR GRUPO
+                var cantidadMarcacionG = 1;
                 for (let i = 0; i < data.length; i++) {
-                    // * OBTENER EL MAXIMO DE GRUPOS DE HORARIOS
-                    if (cantidadGruposHorario < data[i].data.length) {
-                        cantidadGruposHorario = data[i].data.length;
-                    }
-                }
-                // * BUSCAMOS LA CANTIDAD MAXIMA DE PAUSAS Y MARCACIONES POR GRUPO
-                for (let busqueda = 0; busqueda < cantidadGruposHorario; busqueda++) {
-                    // * MAXIMO DE PAUSAS POR GRUPO
-                    var cantidadPausaG = 1;
-                    // * MAXIMO DE MARCACIONES POR GRUPO
-                    var cantidadMarcacionG = 1;
-                    for (let i = 0; i < data.length; i++) {
-                        // * OBTENER EL MAXIMO DE MARCACIONES Y PAUSAS POR GRUPO
-                        if (data[i].data[busqueda] != undefined) {
-                            if (cantidadPausaG < data[i].data[busqueda].pausas.length) {
-                                cantidadPausaG = data[i].data[busqueda].pausas.length;
-                            }
-                            if (cantidadMarcacionG < data[i].data[busqueda].marcaciones.length) {
-                                cantidadMarcacionG = data[i].data[busqueda].marcaciones.length;
-                            }
+                    // * OBTENER EL MAXIMO DE MARCACIONES Y PAUSAS POR GRUPO
+                    if (data[i].data[busqueda] != undefined) {
+                        if (cantidadPausaG < data[i].data[busqueda].pausas.length) {
+                            cantidadPausaG = data[i].data[busqueda].pausas.length;
+                        }
+                        if (cantidadMarcacionG < data[i].data[busqueda].marcaciones.length) {
+                            cantidadMarcacionG = data[i].data[busqueda].marcaciones.length;
                         }
                     }
-                    arrayHorario.push(cantidadMarcacionG + "," + cantidadPausaG);
                 }
-                // var theadTablaRow = `<tr>`;
-                // if (permisoModificar == 1) {
-                //     theadTablaRow += `<th class="noExport celdaTransparente"></th>`;
-                // }
-                // theadTablaRow += `<th class="celdaTransparente"></th>
-                //             <th class="text-center celdaTransparente"></th>
-                //             <th class="celdaTransparente"></th>
-                //             <th class="celdaTransparente"></th>
-                //             <th class="celdaTransparente"></th>
-                //             <th class="celdaTransparente"></th>`;
-                // for (let m = 0; m < cantidadGruposHorario; m++) {
-                //     var cantidadColumnas = (parseInt(arrayHorario[m].split(",")[0]) * 3) + (parseInt(arrayHorario[m].split(",")[1]) * 4) + 8;
-                //     theadTablaRow += `<th colspan="${cantidadColumnas}" scope="colgroup" class="text-center" style="background: #fafafa;border-left: 2px solid #383e56!important;">Horario${m + 1}</th>`;
-                // }
-                // theadTablaRow += `<th class="celdaTransparente"></th>
-                //                 <th class="celdaTransparente"></th> 
-                //                 <th class="celdaTransparente"></th>
-                //                 <th class="celdaTransparente"></th>
-                //                 <th class="celdaTransparente"></th>`;
-                // theadTablaRow += `</tr>`;
-                // ? ************************************************* ARMAR CABEZERA **********************************************
-                var theadTabla = `<tr>`;
-                // var theadTabla = theadTablaRow;
-                theadTabla += `<tr>`;
-                // * CONDICIONAL DE PERMISOS
+                arrayHorario.push(cantidadMarcacionG + "," + cantidadPausaG);
+            }
+            // var theadTablaRow = `<tr>`;
+            // if (permisoModificar == 1) {
+            //     theadTablaRow += `<th class="noExport celdaTransparente"></th>`;
+            // }
+            // theadTablaRow += `<th class="celdaTransparente"></th>
+            //             <th class="text-center celdaTransparente"></th>
+            //             <th class="celdaTransparente"></th>
+            //             <th class="celdaTransparente"></th>
+            //             <th class="celdaTransparente"></th>
+            //             <th class="celdaTransparente"></th>`;
+            // for (let m = 0; m < cantidadGruposHorario; m++) {
+            //     var cantidadColumnas = (parseInt(arrayHorario[m].split(",")[0]) * 3) + (parseInt(arrayHorario[m].split(",")[1]) * 4) + 8;
+            //     theadTablaRow += `<th colspan="${cantidadColumnas}" scope="colgroup" class="text-center" style="background: #fafafa;border-left: 2px solid #383e56!important;">Horario${m + 1}</th>`;
+            // }
+            // theadTablaRow += `<th class="celdaTransparente"></th>
+            //                 <th class="celdaTransparente"></th> 
+            //                 <th class="celdaTransparente"></th>
+            //                 <th class="celdaTransparente"></th>
+            //                 <th class="celdaTransparente"></th>`;
+            // theadTablaRow += `</tr>`;
+            // ? ************************************************* ARMAR CABEZERA **********************************************
+            var theadTabla = `<tr>`;
+            // var theadTabla = theadTablaRow;
+            theadTabla += `<tr>`;
+            // * CONDICIONAL DE PERMISOS
+            if (permisoModificar == 1) {
+                theadTabla += `<th class="noExport">Agregar</th>`;
+            }
+            theadTabla += `<th>#&nbsp;</th>
+                            <th class="text-center">Fecha</th>
+                            <th>Número de documento</th>
+                            <th name="colCodigo" class="colCodigo">Código de trabajador</th>
+                            <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th name="colCargo" class="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+            //* GRUPO DE HORARIOS
+            for (let m = 0; m < cantidadGruposHorario; m++) {
+                // ************************************ DATOS DEL GRUPO HORARIO **************************************
+                // !HORARIO
+                theadTabla += `<th class="text-center descripcionHorario" style="border-left: 2px solid #383e56!important;font-weight: 600 !important" name="descripcionHorario">
+                                    <span>
+                                        Descripción del horario <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${m + 1}</b>
+                                    </span>
+                                </th>
+                                <th class="text-center horarioHorario" name="horarioHorario">
+                                    <span>
+                                        Horario <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${m + 1}</b>
+                                    </span>
+                                </th>
+                                <th name="toleranciaIHorario" class="toleranciaIHorario">Tolerancia en el ingreso</th>
+                                <th name="toleranciaFHorario" class="toleranciaFHorario">Tolerancia en la salida</th>
+                                <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo total</th>
+                                <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobretiempo</th>
+                                <th name="colFaltaJornada" class="text-center colFaltaJornada">Jornada incompleta</th>
+                                <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
+                                <th name="faltaHorario" class="faltaHorario">Falta</th>`;
+                // ! MARCACION
+                var cantidadColumnasM = arrayHorario[m].split(",")[0];
+                for (let j = 0; j < cantidadColumnasM; j++) {
+                    theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center colMarcaciones" name="colMarcaciones">
+                                        <span>
+                                            Entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                        </span>
+                                    </th>
+                                    <th class="text-center colMarcaciones" name="colMarcaciones">
+                                        <span>
+                                            Salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                        </span>
+                                    </th>
+                                    <th id="tSitio" name="colTiempoS" class="colTiempoS">
+                                        <span>
+                                            Tiempo total <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                        </span>
+                                    </th>`;
+                }
+                // ! PAUSAS
+                var cantidadColumnasP = arrayHorario[m].split(",")[1];
+                for (let p = 0; p < cantidadColumnasP; p++) {
+                    theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa" class="descripcionPausa">
+                                        <span>Pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
+                                    </th>
+                                    <th name="horarioPausa" class="horarioPausa">
+                                        <span>Horario de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
+                                    </th>
+                                    <th name="tiempoPausa" class="tiempoPausa">
+                                        <span>Tiempo de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
+                                    </th>
+                                    <th name="excesoPausa" class="excesoPausa">
+                                        <span>Exceso de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
+                                    </th>`;
+                }
+            }
+            theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Jornada incompleta total</th>  
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia" class="incidencia">Incidencias</th>`;
+            theadTabla += `</tr>`;
+            //* DIBUJAMOS CABEZERA
+            $('#theadD').html(theadTabla);
+            // ! ********************************************************* BODY DE TABLA**************************************************
+            $('#tbodyD').empty();
+            var tbody = "";
+            //* ARMAMOS BODY DE TABLA
+            for (let index = 0; index < data.length; index++) {
+                razonSocial = data[index].organi_razonSocial;   // : -> VARIABLES PARA EXCEL Y PDF
+                direccion = data[index].organi_direccion;       // : -> VARIABLES PARA EXCEL Y PDF
+                ruc = data[index].organi_ruc;                   // : -> VARIABLES PARA EXCEL Y PDF
+                tbody += `<tr>`;
                 if (permisoModificar == 1) {
-                    theadTabla += `<th class="noExport">Agregar</th>`;
+                    tbody += `<td class="noExport text-center">
+                                <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')" data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                    data-html="true" style="cursor:pointer">
+                                    <img style="margin-bottom: 3px;" src="landing/images/addD.svg"  height="17" />
+                                </a>
+                            </td>`;
                 }
-                theadTabla += `<th>#&nbsp;</th>
-                                <th class="text-center">Fecha</th>
-                                <th>Número de documento</th>
-                                <th name="colCodigo" class="colCodigo">Código de trabajador</th>
-                                <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                <th name="colCargo" class="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
-                //* GRUPO DE HORARIOS
-                for (let m = 0; m < cantidadGruposHorario; m++) {
-                    // ************************************ DATOS DEL GRUPO HORARIO **************************************
-                    // !HORARIO
-                    theadTabla += `<th class="text-center descripcionHorario" style="border-left: 2px solid #383e56!important;font-weight: 600 !important" name="descripcionHorario">
-                                        <span>
-                                            Descripción del horario <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${m + 1}</b>
-                                        </span>
-                                    </th>
-                                    <th class="text-center horarioHorario" name="horarioHorario">
-                                        <span>
-                                            Horario <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${m + 1}</b>
-                                        </span>
-                                    </th>
-                                    <th name="toleranciaIHorario" class="toleranciaIHorario">Tolerancia en el ingreso</th>
-                                    <th name="toleranciaFHorario" class="toleranciaFHorario">Tolerancia en la salida</th>
-                                    <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo total</th>
-                                    <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobretiempo</th>
-                                    <th name="colFaltaJornada" class="text-center colFaltaJornada">Jornada incompleta</th>
-                                    <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
-                                    <th name="faltaHorario" class="faltaHorario">Falta</th>`;
-                    // ! MARCACION
-                    var cantidadColumnasM = arrayHorario[m].split(",")[0];
-                    for (let j = 0; j < cantidadColumnasM; j++) {
-                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center colMarcaciones" name="colMarcaciones">
-                                            <span>
-                                                Entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
-                                            </span>
-                                        </th>
-                                        <th class="text-center colMarcaciones" name="colMarcaciones">
-                                            <span>
-                                                Salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
-                                            </span>
-                                        </th>
-                                        <th id="tSitio" name="colTiempoS" class="colTiempoS">
-                                            <span>
-                                                Tiempo total <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
-                                            </span>
-                                        </th>`;
-                    }
-                    // ! PAUSAS
-                    var cantidadColumnasP = arrayHorario[m].split(",")[1];
-                    for (let p = 0; p < cantidadColumnasP; p++) {
-                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa" class="descripcionPausa">
-                                            <span>Pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
-                                        </th>
-                                        <th name="horarioPausa" class="horarioPausa">
-                                            <span>Horario de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
-                                        </th>
-                                        <th name="tiempoPausa" class="tiempoPausa">
-                                            <span>Tiempo de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
-                                        </th>
-                                        <th name="excesoPausa" class="excesoPausa">
-                                            <span>Exceso de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
-                                        </th>`;
-                    }
-                }
-                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Jornada incompleta total</th>  
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia" class="incidencia">Incidencias</th>`;
-                theadTabla += `</tr>`;
-                //* DIBUJAMOS CABEZERA
-                $('#theadD').html(theadTabla);
-                // ! ********************************************************* BODY DE TABLA**************************************************
-                $('#tbodyD').empty();
-                var tbody = "";
-                //* ARMAMOS BODY DE TABLA
-                for (let index = 0; index < data.length; index++) {
-                    razonSocial = data[index].organi_razonSocial;   // : -> VARIABLES PARA EXCEL Y PDF
-                    direccion = data[index].organi_direccion;       // : -> VARIABLES PARA EXCEL Y PDF
-                    ruc = data[index].organi_ruc;                   // : -> VARIABLES PARA EXCEL Y PDF
-                    tbody += `<tr>`;
-                    if (permisoModificar == 1) {
-                        tbody += `<td class="noExport text-center">
-                                    <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')" data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                        data-html="true" style="cursor:pointer">
-                                        <img style="margin-bottom: 3px;" src="landing/images/addD.svg"  height="17" />
-                                    </a>
-                                </td>`;
-                    }
-                    tbody += `<td>${(index + 1)}&nbsp;</td>
-                                <td>${fechaGlobal}</td>
-                                <td class="text-center">${data[index].emple_nDoc}</td>
-                                <td class="text-center" name="colCodigo">${data[index].emple_codigo}</td>
-                                <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                    tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                tbody += `<td>${(index + 1)}&nbsp;</td>
+                            <td>${fechaGlobal}</td>
+                            <td class="text-center">${data[index].emple_nDoc}</td>
+                            <td class="text-center" name="colCodigo">${data[index].emple_codigo}</td>
+                            <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
-                    // * ARMAR GRUPO DE HORARIOS
-                    var grupoHorario = "";
-                    //* ARMAR Y ORDENAR MARCACIONES
-                    var sumaTiempos = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS
-                    var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
-                    var sumaSobreTiempo = moment("00:00:00", "HH:mm:ss");   //: SUMANDO SOBRE TIEMPO
-                    var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
-                    // * CANTIDAD DE FALTAS
-                    var sumaFaltas = 0;
-                    for (let m = 0; m < cantidadGruposHorario; m++) {
-                        // : HORARIO
-                        var idHorarioM = [];
-                        // : PAUSA
-                        var idPausas = [];
-                        // * PAUSAS
-                        var tiempoHoraPausa = "00";        //: HORAS TARDANZA
-                        var tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
-                        var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
-                        var sumaTiemposEntreHorarios = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS ENTRE HORARIOS
-                        var estadoTiempoHorario = true;
-                        //* EXCESO
-                        var tiempoHoraExceso = "00";
-                        var tiempoMinutoExceso = "00";
-                        var tiempoSegundoExceso = "00";
-                        // * TARDANZA
-                        var segundosTardanza = "00";
-                        var minutosTardanza = "00";
-                        var horasTardanza = "00";
-                        // * SOBRE TIEMPO
-                        var segundosSobreT = "00";
-                        var minutosSobreT = "00";
-                        var horasSobreT = "00";
-                        // * FALTA JORNADA
-                        var segundosFaltaJ = "00";
-                        var minutosFaltaJ = "00";
-                        var horasFaltaJ = "00";
-                        if (data[index].data[m] != undefined) {
-                            // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
-                            var horarioData = data[index].data[m].horario;
-                            contenidoHorario.push({ "idEmpleado": data[index].emple_id, "idHorarioE": horarioData.idHorarioE, "estado": horarioData.estado });
-                            // ! ******************************************* CALCULOS ENTRE HORARIOS ***********************************************
-                            // * DATA PARA TARDANZA
-                            if (data[index].data[m].marcaciones[0] != undefined) {
-                                if (data[index].data[m].marcaciones[0].entrada != 0) {
-                                    // * TARDANZA
-                                    var dataParaTardanza = data[index].data[m].marcaciones[0];
-                                    if (dataParaTardanza.idH != 0) {
-                                        var horaInicial = moment(dataParaTardanza.entrada);
-                                        // ******************************* TARDANZA ***************************************
-                                        // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
-                                        if (!idHorarioM.includes(dataParaTardanza.idH)) {
-                                            idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
-                                            var horaInicioHorario = moment(horarioData.horarioIni);
-                                            var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
-                                            //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
-                                            if (horaInicial.isAfter(horaConTolerancia)) {
-                                                var tardanza = horaInicial - horaInicioHorario;
-                                                segundosTardanza = moment.duration(tardanza).seconds();
-                                                minutosTardanza = moment.duration(tardanza).minutes();
-                                                horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
-                                                if (horasTardanza < 10) {
-                                                    horasTardanza = '0' + horasTardanza;
-                                                }
-                                                if (minutosTardanza < 10) {
-                                                    minutosTardanza = '0' + minutosTardanza;
-                                                }
-                                                if (segundosTardanza < 10) {
-                                                    segundosTardanza = '0' + segundosTardanza;
-                                                }
-                                                sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
+                // * ARMAR GRUPO DE HORARIOS
+                var grupoHorario = "";
+                //* ARMAR Y ORDENAR MARCACIONES
+                var sumaTiempos = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS
+                var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
+                var sumaSobreTiempo = moment("00:00:00", "HH:mm:ss");   //: SUMANDO SOBRE TIEMPO
+                var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
+                // * CANTIDAD DE FALTAS
+                var sumaFaltas = 0;
+                for (let m = 0; m < cantidadGruposHorario; m++) {
+                    // : HORARIO
+                    var idHorarioM = [];
+                    // : PAUSA
+                    var idPausas = [];
+                    // * PAUSAS
+                    var tiempoHoraPausa = "00";        //: HORAS TARDANZA
+                    var tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
+                    var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
+                    var sumaTiemposEntreHorarios = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS ENTRE HORARIOS
+                    var estadoTiempoHorario = true;
+                    //* EXCESO
+                    var tiempoHoraExceso = "00";
+                    var tiempoMinutoExceso = "00";
+                    var tiempoSegundoExceso = "00";
+                    // * TARDANZA
+                    var segundosTardanza = "00";
+                    var minutosTardanza = "00";
+                    var horasTardanza = "00";
+                    // * SOBRE TIEMPO
+                    var segundosSobreT = "00";
+                    var minutosSobreT = "00";
+                    var horasSobreT = "00";
+                    // * FALTA JORNADA
+                    var segundosFaltaJ = "00";
+                    var minutosFaltaJ = "00";
+                    var horasFaltaJ = "00";
+                    if (data[index].data[m] != undefined) {
+                        // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
+                        var horarioData = data[index].data[m].horario;
+                        contenidoHorario.push({ "idEmpleado": data[index].emple_id, "idHorarioE": horarioData.idHorarioE, "estado": horarioData.estado });
+                        // ! ******************************************* CALCULOS ENTRE HORARIOS ***********************************************
+                        // * DATA PARA TARDANZA
+                        if (data[index].data[m].marcaciones[0] != undefined) {
+                            if (data[index].data[m].marcaciones[0].entrada != 0) {
+                                // * TARDANZA
+                                var dataParaTardanza = data[index].data[m].marcaciones[0];
+                                if (dataParaTardanza.idH != 0) {
+                                    var horaInicial = moment(dataParaTardanza.entrada);
+                                    // ******************************* TARDANZA ***************************************
+                                    // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
+                                    if (!idHorarioM.includes(dataParaTardanza.idH)) {
+                                        idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
+                                        var horaInicioHorario = moment(horarioData.horarioIni);
+                                        var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
+                                        //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
+                                        if (horaInicial.isAfter(horaConTolerancia)) {
+                                            var tardanza = horaInicial - horaInicioHorario;
+                                            segundosTardanza = moment.duration(tardanza).seconds();
+                                            minutosTardanza = moment.duration(tardanza).minutes();
+                                            horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
+                                            if (horasTardanza < 10) {
+                                                horasTardanza = '0' + horasTardanza;
                                             }
+                                            if (minutosTardanza < 10) {
+                                                minutosTardanza = '0' + minutosTardanza;
+                                            }
+                                            if (segundosTardanza < 10) {
+                                                segundosTardanza = '0' + segundosTardanza;
+                                            }
+                                            sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
                                         }
                                     }
                                 }
                             }
-                            // * DATA PARA ENTRE HORARIO
-                            if (horarioData.horario != null || horarioData.horario != 0) {
-                                for (let res = 0; res < data[index].data[m].marcaciones.length; res++) {
-                                    var dataM = data[index].data[m].marcaciones[res];
-                                    // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
-                                    if (dataM.entrada != 0 && dataM.salida != 0) {
-                                        var horaFinalData = moment(dataM.salida);
-                                        var horaInicialData = moment(dataM.entrada);
-                                        if (horaFinalData.isSameOrAfter(horaInicialData)) {
-                                            // * TIEMPO TOTAL TRABAJADA
-                                            var tiempoRestanteD = horaFinalData - horaInicialData;
-                                            var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
-                                            var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
-                                            var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
-                                            if (horasTiempoD < 10) {
-                                                horasTiempoD = '0' + horasTiempoD;
-                                            }
-                                            if (minutosTiempo < 10) {
-                                                minutosTiempoD = '0' + minutosTiempoD;
-                                            }
-                                            if (segundosTiempoD < 10) {
-                                                segundosTiempoD = '0' + segundosTiempoD;
-                                            }
-                                            sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
+                        }
+                        // * DATA PARA ENTRE HORARIO
+                        if (horarioData.horario != null || horarioData.horario != 0) {
+                            for (let res = 0; res < data[index].data[m].marcaciones.length; res++) {
+                                var dataM = data[index].data[m].marcaciones[res];
+                                // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
+                                if (dataM.entrada != 0 && dataM.salida != 0) {
+                                    var horaFinalData = moment(dataM.salida);
+                                    var horaInicialData = moment(dataM.entrada);
+                                    if (horaFinalData.isSameOrAfter(horaInicialData)) {
+                                        // * TIEMPO TOTAL TRABAJADA
+                                        var tiempoRestanteD = horaFinalData - horaInicialData;
+                                        var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
+                                        var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
+                                        var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
+                                        if (horasTiempoD < 10) {
+                                            horasTiempoD = '0' + horasTiempoD;
                                         }
+                                        if (minutosTiempo < 10) {
+                                            minutosTiempoD = '0' + minutosTiempoD;
+                                        }
+                                        if (segundosTiempoD < 10) {
+                                            segundosTiempoD = '0' + segundosTiempoD;
+                                        }
+                                        sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                     }
                                 }
                             }
-                            // * SOBRETIEMPO ENTRE HORARIO Y FALTA DE JORNADA
-                            if (horarioData.horario != null || horarioData.horario != 0) {
-                                var horasObligadas = moment(horarioData.horasObligadas, ["HH:mm:ss"]);
-                                var tiempoEntreH = moment(sumaTiemposEntreHorarios.format("HH:mm:ss"), ["HH:mm:ss"]);
-                                // * SOBRETIEMPO
-                                if (tiempoEntreH > horasObligadas) {
-                                    // * SOBRE TIEMPO 
-                                    var tiempoSobreT = tiempoEntreH - horasObligadas;
-                                    segundosSobreT = moment.duration(tiempoSobreT).seconds();
-                                    minutosSobreT = moment.duration(tiempoSobreT).minutes();
-                                    horasSobreT = Math.trunc(moment.duration(tiempoSobreT).asHours());
-                                    if (horasSobreT < 10) {
-                                        horasSobreT = '0' + horasSobreT;
-                                    }
-                                    if (minutosSobreT < 10) {
-                                        minutosSobreT = '0' + minutosSobreT;
-                                    }
-                                    if (segundosSobreT < 10) {
-                                        segundosSobreT = '0' + segundosSobreT;
-                                    }
-                                    sumaSobreTiempo = sumaSobreTiempo.add({ "hours": horasSobreT, "minutes": minutosSobreT, "seconds": segundosSobreT });
-                                } else {
-                                    // * FALTA JORNADA
-                                    var tiempoFaltaJ = horasObligadas - tiempoEntreH;
-                                    segundosFaltaJ = moment.duration(tiempoFaltaJ).seconds();
-                                    minutosFaltaJ = moment.duration(tiempoFaltaJ).minutes();
-                                    horasFaltaJ = Math.trunc(moment.duration(tiempoFaltaJ).asHours());
-                                    if (horasFaltaJ < 10) {
-                                        horasFaltaJ = '0' + horasFaltaJ;
-                                    }
-                                    if (minutosFaltaJ < 10) {
-                                        minutosFaltaJ = '0' + minutosFaltaJ;
-                                    }
-                                    if (segundosFaltaJ < 10) {
-                                        segundosFaltaJ = '0' + segundosFaltaJ;
-                                    }
-                                    sumaFaltaJornada = sumaFaltaJornada.add({ "hours": horasFaltaJ, "minutes": minutosFaltaJ, "seconds": segundosFaltaJ });
+                        }
+                        // * SOBRETIEMPO ENTRE HORARIO Y FALTA DE JORNADA
+                        if (horarioData.horario != null || horarioData.horario != 0) {
+                            var horasObligadas = moment(horarioData.horasObligadas, ["HH:mm:ss"]);
+                            var tiempoEntreH = moment(sumaTiemposEntreHorarios.format("HH:mm:ss"), ["HH:mm:ss"]);
+                            // * SOBRETIEMPO
+                            if (tiempoEntreH > horasObligadas) {
+                                // * SOBRE TIEMPO 
+                                var tiempoSobreT = tiempoEntreH - horasObligadas;
+                                segundosSobreT = moment.duration(tiempoSobreT).seconds();
+                                minutosSobreT = moment.duration(tiempoSobreT).minutes();
+                                horasSobreT = Math.trunc(moment.duration(tiempoSobreT).asHours());
+                                if (horasSobreT < 10) {
+                                    horasSobreT = '0' + horasSobreT;
                                 }
+                                if (minutosSobreT < 10) {
+                                    minutosSobreT = '0' + minutosSobreT;
+                                }
+                                if (segundosSobreT < 10) {
+                                    segundosSobreT = '0' + segundosSobreT;
+                                }
+                                sumaSobreTiempo = sumaSobreTiempo.add({ "hours": horasSobreT, "minutes": minutosSobreT, "seconds": segundosSobreT });
+                            } else {
+                                // * FALTA JORNADA
+                                var tiempoFaltaJ = horasObligadas - tiempoEntreH;
+                                segundosFaltaJ = moment.duration(tiempoFaltaJ).seconds();
+                                minutosFaltaJ = moment.duration(tiempoFaltaJ).minutes();
+                                horasFaltaJ = Math.trunc(moment.duration(tiempoFaltaJ).asHours());
+                                if (horasFaltaJ < 10) {
+                                    horasFaltaJ = '0' + horasFaltaJ;
+                                }
+                                if (minutosFaltaJ < 10) {
+                                    minutosFaltaJ = '0' + minutosFaltaJ;
+                                }
+                                if (segundosFaltaJ < 10) {
+                                    segundosFaltaJ = '0' + segundosFaltaJ;
+                                }
+                                sumaFaltaJornada = sumaFaltaJornada.add({ "hours": horasFaltaJ, "minutes": minutosFaltaJ, "seconds": segundosFaltaJ });
                             }
-                            if (permisoModificar == 1) {
-                                if (horarioData.horario != null) {
-                                    if (horarioData.estado == 1) {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
-                                                            <div class="dropdown">
-                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                    <span class="badge badge-soft-primary mr-2" class="text-center">
-                                                                        ${horarioData.horario}
-                                                                    </span>
-                                                                </a>
-                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                        Opciones
-                                                                    </h6>
-                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                    <div class="dropdown-item dropdown-itemM">
-                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
-                                                                                Actualizar horario
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                        <td name="horarioHorario" style="background: #f0f0f0;">
-                                                            <div class="dropdown">
-                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                    ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                                </a>
-                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorarioH${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                        Opciones
-                                                                    </h6>
-                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                    <div class="dropdown-item dropdown-itemM">
-                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
-                                                                                Actualizar horario
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
-                                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-danger mr-2">
-                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colTardanza" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-danger mr-2">
-                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
-                                                            </a>
-                                                        </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
-                                            sumaFaltas++;
-                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                    Falta
-                                                                </span>
-                                                            </td>`;
-                                        } else {
-                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
-                                        }
-                                    } else {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
-                                                            <div class="dropdown">
-                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                    <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario" data-html="true">
-                                                                        <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
-                                                                        ${horarioData.horario}
-                                                                    </span>
-                                                                </a>
-                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                        Opciones
-                                                                    </h6>
-                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                    <div class="dropdown-item dropdown-itemM noExport">
-                                                                        <div class="form-group noExport pl-3 mt-1" style="margin-bottom: 0.5rem;">
-                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
-                                                                                Actualizar horario
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                        <td name="horarioHorario" style="background: #f0f0f0;">
-                                                            <div class="dropdown">
-                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                    <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
-                                                                    ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                                </a>
-                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorarioH${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                        Opciones
-                                                                    </h6>
-                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                    <div class="dropdown-item dropdown-itemM">
-                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
-                                                                                Actualizar horario
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
-                                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-danger mr-2">
-                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colTardanza" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-danger mr-2">
-                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
-                                                            </a>
-                                                        </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
-                                            sumaFaltas++;
-                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                    Falta
-                                                                </span>
-                                                            </td>`;
-                                        } else {
-                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
-                                        }
-                                    }
-                                } else {
+                        }
+                        if (permisoModificar == 1) {
+                            if (horarioData.horario != null) {
+                                if (horarioData.estado == 1) {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                    Sin horario
+                                                                <span class="badge badge-soft-primary mr-2" class="text-center">
+                                                                    ${horarioData.horario}
                                                                 </span>
                                                             </a>
-                                                            <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
                                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                     <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                     Opciones
                                                                 </h6>
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                <div class="dropdown-item dropdown-itemM">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                         <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                            <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
                                                                         </a>
                                                                     </div>
@@ -818,24 +652,22 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">
+                                                    <td name="horarioHorario" style="background: #f0f0f0;">
                                                         <div class="dropdown">
-                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                    Sin horario
-                                                                </span>
+                                                                ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                             </a>
-                                                            <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorarioH${horarioData.idHorario}" style="padding: 0rem 0rem;">
                                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                     <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                     Opciones
                                                                 </h6>
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                <div class="dropdown-item dropdown-itemM">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                         <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                            <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
                                                                         </a>
                                                                     </div>
@@ -843,15 +675,15 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
-                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
-                                                    <td class="text-center" name="colTiempoEntreH" style="background: #f0f0f0;">
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td class="text-center" name="colSobreTiempo" style="background: #f0f0f0;">
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
@@ -863,148 +695,388 @@ function cargartabla(fecha) {
                                                             ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                         </a>
                                                     </td>
-                                                    <td class="text-center" name="colTardanza" style="background: #f0f0f0;">
+                                                    <td name="colTardanza" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-danger mr-2">
+                                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                            ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                        </a>
+                                                    </td>`;
+                                    if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
+                                        sumaFaltas++;
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                Falta
+                                                            </span>
+                                                        </td>`;
+                                    } else {
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                    }
+                                } else {
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario" data-html="true">
+                                                                    <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                                                                    ${horarioData.horario}
+                                                                </span>
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3 mt-1" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                            Actualizar horario
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td name="horarioHorario" style="background: #f0f0f0;">
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                                                                ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorarioH${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item dropdown-itemM">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                            Actualizar horario
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-danger mr-2">
+                                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                            ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colTardanza" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-danger mr-2">
+                                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                            ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                        </a>
+                                                    </td>`;
+                                    if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
+                                        sumaFaltas++;
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                Falta
+                                                            </span>
+                                                        </td>`;
+                                    } else {
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                    }
+                                }
+                            } else {
+                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                                    <div class="dropdown">
+                                                        <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                Sin horario
+                                                            </span>
+                                                        </a>
+                                                        <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                Opciones
+                                                            </h6>
+                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                        Actualizar horario
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">
+                                                    <div class="dropdown">
+                                                        <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                Sin horario
+                                                            </span>
+                                                        </a>
+                                                        <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                Opciones
+                                                            </h6>
+                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                        Actualizar horario
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
+                                                <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
+                                                <td class="text-center" name="colTiempoEntreH" style="background: #f0f0f0;">
+                                                    <a class="badge badge-soft-primary mr-2">
+                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                        ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td class="text-center" name="colSobreTiempo" style="background: #f0f0f0;">
+                                                    <a class="badge badge-soft-primary mr-2">
+                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                        ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                    </a>
+                                                </td>
+                                                <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                    <a class="badge badge-soft-danger mr-2">
+                                                        <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                        ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
+                                                    </a>
+                                                </td>
+                                                <td class="text-center" name="colTardanza" style="background: #f0f0f0;">
+                                                    <a class="badge badge-soft-danger mr-2">
+                                                        <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                        ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                    </a>
+                                                </td>
+                                                <td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                            }
+                        } else {
+                            if (horarioData.horario != null) {
+                                if (horarioData.estado == 1) {
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                                        <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                            <span class="badge badge-soft-primary mr-2" class="text-center">
+                                                                 ${horarioData.horario}
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                    <td name="horarioHorario" style="background: #f0f0f0;">
+                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                    </td>
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-danger mr-2">
+                                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                            ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colTardanza" style="background: #f0f0f0;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                         </a>
                                                     </td>
-                                                    <td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
-                                }
-                            } else {
-                                if (horarioData.horario != null) {
-                                    if (horarioData.estado == 1) {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
-                                                            <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-primary mr-2" class="text-center">
-                                                                     ${horarioData.horario}
-                                                                </span>
-                                                            </a>
-                                                        </td>
-                                                        <td name="horarioHorario" style="background: #f0f0f0;">
-                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                        </td>
-                                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
-                                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-danger mr-2">
-                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colTardanza" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-danger mr-2">
-                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
-                                                            </a>
-                                                        </td>
-                                                        `;
-                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
-                                            sumaFaltas++;
-                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                    Falta
-                                                                </span>
-                                                            </td>`;
-                                        } else {
-                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
-                                        }
-                                    } else {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
-                                                            <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                     ${horarioData.horario}
-                                                                </span>
-                                                            </a>
-                                                        </td>
-                                                        <td name="horarioHorario" style="background: #f0f0f0;">
-                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                        </td>
-                                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
-                                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-danger mr-2">
-                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
-                                                            </a>
-                                                        </td>
-                                                        <td name="colTardanza" style="background: #f0f0f0;">
-                                                            <a class="badge badge-soft-danger mr-2">
-                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
-                                                            </a>
+                                                    `;
+                                    if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
+                                        sumaFaltas++;
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                Falta
+                                                            </span>
                                                         </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
-                                            sumaFaltas++;
-                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                    Falta
-                                                                </span>
-                                                            </td>`;
-                                        } else {
-                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
-                                        }
+                                    } else {
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                 Sin horario
+                                                                 ${horarioData.horario}
                                                             </span>
                                                         </a>
                                                     </td>
-                                                    <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">---</td>
-                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
-                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
-                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
-                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">--- </td>
-                                                    <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
-                                                    <td name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                                    <td name="horarioHorario" style="background: #f0f0f0;">
+                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                    </td>
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-danger mr-2">
+                                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                            ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colTardanza" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-danger mr-2">
+                                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                            ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                        </a>
+                                                    </td>`;
+                                    if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
+                                        sumaFaltas++;
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                Falta
+                                                            </span>
+                                                        </td>`;
+                                    } else {
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                    }
                                 }
+                            } else {
+                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                                    <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                        <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                             Sin horario
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">---</td>
+                                                <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
+                                                <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
+                                                <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
+                                                <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
+                                                <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">--- </td>
+                                                <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
+                                                <td name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                             }
-                            // ! MARCACIONES
-                            var tbodyEntradaySalida = "";
-                            for (let j = 0; j < data[index].data[m].marcaciones.length; j++) {
-                                // * TIEMPO EN SITIO
-                                var segundosTiempo = "00";
-                                var minutosTiempo = "00";
-                                var horasTiempo = "00";
-                                var marcacionData = data[index].data[m].marcaciones[j];
-                                if (marcacionData.entrada != 0) {
-                                    if (permisoModificar == 1) {
-                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
-                                                                    <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}" data-html="true">
-                                                                        <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
-                                                                            ${moment(marcacionData.entrada).format("HH:mm:ss")}
+                        }
+                        // ! MARCACIONES
+                        var tbodyEntradaySalida = "";
+                        for (let j = 0; j < data[index].data[m].marcaciones.length; j++) {
+                            // * TIEMPO EN SITIO
+                            var segundosTiempo = "00";
+                            var minutosTiempo = "00";
+                            var horasTiempo = "00";
+                            var marcacionData = data[index].data[m].marcaciones[j];
+                            if (marcacionData.entrada != 0) {
+                                if (permisoModificar == 1) {
+                                    tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
+                                                                <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}" data-html="true">
+                                                                    <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                                        style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
+                                                                        ${moment(marcacionData.entrada).format("HH:mm:ss")}
+                                                                    </a>
+                                                                    <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                        <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                            <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                            Opciones
+                                                                        </h6>
+                                                                        <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                        <div class="dropdown-item dropdown-itemM noExport">
+                                                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
+                                                                                    Cambiar a entrada
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="dropdown-item dropdown-itemM noExport">
+                                                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                                    Cambiar a salida
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>`;
+                                    if (marcacionData.salida != 0) {
+                                        tbodyEntradaySalida += `<div class=" dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
+                                                                            Convertir orden
                                                                         </a>
-                                                                        <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                            Asignar a nueva marc.
+                                                                        </a>
+                                                                    </div>
+                                                                </div>`;
+                                    }
+                                    tbodyEntradaySalida += ` <div class="dropdown-item dropdown-itemM noExport">
+                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                    <a onclick="eliminarM(${marcacionData.idMarcacion},1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                        Eliminar marc.
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </ul></div></td>`;
+                                }
+                                else {
+                                    tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
+                                                                        ${moment(marcacionData.entrada).format("HH:mm:ss")}
+                                                                    </td>`;
+                                }
+                                if (marcacionData.salida != 0) {
+                                    if (permisoModificar == 1) {
+                                        tbodyEntradaySalida += `<td name="colMarcaciones">
+                                                                    <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoSalida}">
+                                                                        <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false" 
+                                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
+                                                                            ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                                        </a>
+                                                                        <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
                                                                             <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                                 <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                                 Opciones
@@ -1012,7 +1084,7 @@ function cargartabla(fecha) {
                                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                             <div class="dropdown-item dropdown-itemM noExport">
                                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                         Cambiar a entrada
                                                                                     </a>
@@ -1020,337 +1092,319 @@ function cargartabla(fecha) {
                                                                             </div>
                                                                             <div class="dropdown-item dropdown-itemM noExport">
                                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                         Cambiar a salida
                                                                                     </a>
                                                                                 </div>
-                                                                            </div>`;
-                                        if (marcacionData.salida != 0) {
-                                            tbodyEntradaySalida += `<div class=" dropdown-item dropdown-itemM noExport">
-                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                            <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
-                                                                                Convertir orden
-                                                                            </a>
-                                                                        </div>
+                                                                            </div>
+                                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                    <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
+                                                                                        Convertir orden
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                    <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                        Asignar a nueva marc.
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                    <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                                        Eliminar marc.
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ul>
                                                                     </div>
-                                                                    <div class="dropdown-item dropdown-itemM noExport">
-                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                            <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
-                                                                                Asignar a nueva marc.
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>`;
-                                        }
-                                        tbodyEntradaySalida += ` <div class="dropdown-item dropdown-itemM noExport">
-                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                            <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
-                                                                            Eliminar marc.
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </ul></div></td>`;
-                                    }
-                                    else {
-                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}">
-                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
-                                                                            ${moment(marcacionData.entrada).format("HH:mm:ss")}
-                                                                        </td>`;
-                                    }
-                                    if (marcacionData.salida != 0) {
-                                        if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td name="colMarcaciones">
-                                                                        <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoSalida}">
-                                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false" 
-                                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                                <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
-                                                                                ${moment(marcacionData.salida).format("HH:mm:ss")}
-                                                                            </a>
-                                                                            <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-                                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                                    Opciones
-                                                                                </h6>
-                                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                <div class="dropdown-item dropdown-itemM noExport">
-                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
-                                                                                            Cambiar a entrada
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="dropdown-item dropdown-itemM noExport">
-                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
-                                                                                            Cambiar a salida
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="dropdown-item dropdown-itemM noExport">
-                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                        <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
-                                                                                            Convertir orden
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="dropdown-item dropdown-itemM noExport">
-                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                        <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
-                                                                                            Asignar a nueva marc.
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="dropdown-item dropdown-itemM noExport">
-                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
-                                                                                            Eliminar marc.
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoSalida}">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
-                                                                        ${moment(marcacionData.salida).format("HH:mm:ss")}
-                                                                    </td>`;
-
-                                        }
-                                        // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
-                                        var horaFinal = moment(marcacionData.salida);
-                                        var horaInicial = moment(marcacionData.entrada);
-                                        if (horaFinal.isSameOrAfter(horaInicial)) {
-                                            // * TIEMPO TOTAL TRABAJADA
-                                            var tiempoRestante = horaFinal - horaInicial;
-                                            segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                            minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                            horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                            if (horasTiempo < 10) {
-                                                horasTiempo = '0' + horasTiempo;
-                                            }
-                                            if (minutosTiempo < 10) {
-                                                minutosTiempo = '0' + minutosTiempo;
-                                            }
-                                            if (segundosTiempo < 10) {
-                                                segundosTiempo = '0' + segundosTiempo;
-                                            }
-                                            sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
-                                        }
-                                        // * FINALIZACION
-                                        tbodyEntradaySalida += `<td name="colTiempoS">
-                                                                    <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
-                                                                    <a class="badge badge-soft-primary mr-2">
-                                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
-                                                                    </a>
                                                                 </td>`;
                                     } else {
-                                        if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td name="colMarcaciones">
-                                                                        <div class="dropdown noExport" id="dropSalida${marcacionData.idMarcacion}">
-                                                                            <a type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" 
-                                                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora" data-html="true">
-                                                                                    <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                                    No tiene salida
-                                                                                </span>
-                                                                            </a>
-                                                                            <ul class="dropdown-menu"  style="padding: 0rem 0rem;">
-                                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                                    Opciones
-                                                                                </h6>
-                                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                <div class="dropdown-item dropdown-itemM noExport">
-                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                        <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
-                                                                                            Insertar salida
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>`;
-                                        }
-                                        else {
-                                            tbodyEntradaySalida += `<td name="colMarcaciones">
-                                                                        <span class="badge badge-soft-secondary noExport"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                            No tiene salida
-                                                                        </span>
-                                                                    </td>`;
-                                        }
-
-                                        tbodyEntradaySalida += `<td name="colTiempoS">
-                                                                    <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
-                                                                    <a class="badge badge-soft-primary mr-2">
-                                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
-                                                                    </a>
+                                        tbodyEntradaySalida += `<td name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoSalida}">
+                                                                    <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
+                                                                    ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                 </td>`;
-                                    }
 
+                                    }
+                                    // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
+                                    var horaFinal = moment(marcacionData.salida);
+                                    var horaInicial = moment(marcacionData.entrada);
+                                    if (horaFinal.isSameOrAfter(horaInicial)) {
+                                        // * TIEMPO TOTAL TRABAJADA
+                                        var tiempoRestante = horaFinal - horaInicial;
+                                        segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                        minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                        horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                        if (horasTiempo < 10) {
+                                            horasTiempo = '0' + horasTiempo;
+                                        }
+                                        if (minutosTiempo < 10) {
+                                            minutosTiempo = '0' + minutosTiempo;
+                                        }
+                                        if (segundosTiempo < 10) {
+                                            segundosTiempo = '0' + segundosTiempo;
+                                        }
+                                        sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
+                                    }
+                                    // * FINALIZACION
+                                    tbodyEntradaySalida += `<td name="colTiempoS">
+                                                                <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
+                                                                <a class="badge badge-soft-primary mr-2">
+                                                                    <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                    ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
+                                                                </a>
+                                                            </td>`;
                                 } else {
-                                    if (marcacionData.salida != 0) {
-                                        //* COLUMNA DE ENTRADA
-                                        if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
-                                                                        <div class=" dropdown">
-                                                                            <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
-                                                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                                                <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora" data-html="true">
-                                                                                    <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
-                                                                                    No tiene entrada
-                                                                                </span>
-                                                                            </a>
-                                                                            <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-                                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                                    Opciones
-                                                                                </h6>
-                                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                <div class="dropdown-item dropdown-itemM noExport">
-                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                        <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
-                                                                                            Insertar entrada
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>`;
-                                        }
-                                        else {
-                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
-                                                                                <span class="badge badge-soft-warning noExport">
-                                                                                    <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
-                                                                                    No tiene entrada
-                                                                                </span>
-                                                                            </td>`;
-                                        }
-
-                                        //* COLUMNA DE SALIDA
-                                        var permisoModificarCE2 = $('#modifReporte').val();
-                                        if (permisoModificarCE2 == 1) {
-                                            tbodyEntradaySalida += `<td name="colMarcaciones">
-                                                                                <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoSalida}">
-                                                                                    <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false"
-                                                                                        style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
-                                                                                        ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                    if (permisoModificar == 1) {
+                                        tbodyEntradaySalida += `<td name="colMarcaciones">
+                                                                    <div class="dropdown noExport" id="dropSalida${marcacionData.idMarcacion}">
+                                                                        <a type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" 
+                                                                            aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                                            <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora" data-html="true">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                                                No tiene salida
+                                                                            </span>
+                                                                        </a>
+                                                                        <ul class="dropdown-menu"  style="padding: 0rem 0rem;">
+                                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                                Opciones
+                                                                            </h6>
+                                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                    <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                        Insertar salida
                                                                                     </a>
-                                                                                    <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-                                                                                        <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                                            <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                                            Opciones
-                                                                                        </h6>
-                                                                                        <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                        <div class="dropdown-item dropdown-itemM noExport">
-                                                                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                                    <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
-                                                                                                    Cambiar a entrada
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="dropdown-item dropdown-itemM noExport">
-                                                                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                                <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
-                                                                                                    Cambiar a salida
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="dropdown-item dropdown-itemM noExport">
-                                                                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                                <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                                    <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
-                                                                                                    Eliminar marc.
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </ul>
                                                                                 </div>
-                                                                            </td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td name="colMarcaciones">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
-                                                                        ${moment(marcacionData.salida).format("HH:mm:ss")}
-                                                                    </td>`;
-                                        }
-
-                                        tbodyEntradaySalida += `<td name="colTiempoS">
-                                                                    <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
-                                                                    <a class="badge badge-soft-primary mr-2">
-                                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
-                                                                    </a>
+                                                                            </div>
+                                                                        </ul>
+                                                                    </div>
                                                                 </td>`;
-
                                     }
+                                    else {
+                                        tbodyEntradaySalida += `<td name="colMarcaciones">
+                                                                    <span class="badge badge-soft-secondary noExport"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                                        No tiene salida
+                                                                    </span>
+                                                                </td>`;
+                                    }
+
+                                    tbodyEntradaySalida += `<td name="colTiempoS">
+                                                                <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
+                                                                <a class="badge badge-soft-primary mr-2">
+                                                                    <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                    ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
+                                                                </a>
+                                                            </td>`;
+                                }
+
+                            } else {
+                                if (marcacionData.salida != 0) {
+                                    //* COLUMNA DE ENTRADA
+                                    if (permisoModificar == 1) {
+                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
+                                                                    <div class=" dropdown">
+                                                                        <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
+                                                                            aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                                            <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora" data-html="true">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                                                No tiene entrada
+                                                                            </span>
+                                                                        </a>
+                                                                        <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                                Opciones
+                                                                            </h6>
+                                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                    <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                        Insertar entrada
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ul>
+                                                                    </div>
+                                                                </td>`;
+                                    }
+                                    else {
+                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
+                                                                            <span class="badge badge-soft-warning noExport">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                                                No tiene entrada
+                                                                            </span>
+                                                                        </td>`;
+                                    }
+
+                                    //* COLUMNA DE SALIDA
+                                    var permisoModificarCE2 = $('#modifReporte').val();
+                                    if (permisoModificarCE2 == 1) {
+                                        tbodyEntradaySalida += `<td name="colMarcaciones">
+                                                                            <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoSalida}">
+                                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false"
+                                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                                    <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
+                                                                                    ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                                                </a>
+                                                                                <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                                        Opciones
+                                                                                    </h6>
+                                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                            <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
+                                                                                                Cambiar a entrada
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                            <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                                                Cambiar a salida
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                            <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                                                Eliminar marc.
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </td>`;
+                                    } else {
+                                        tbodyEntradaySalida += `<td name="colMarcaciones">
+                                                                    <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
+                                                                    ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                                </td>`;
+                                    }
+
+                                    tbodyEntradaySalida += `<td name="colTiempoS">
+                                                                <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
+                                                                <a class="badge badge-soft-primary mr-2">
+                                                                    <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                    ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
+                                                                </a>
+                                                            </td>`;
+
                                 }
                             }
-                            for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
-                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
-                                                        <td class="text-center" name="colMarcaciones">---</td>
-                                                        <td name="colTiempoS" class="text-center">---</td>`;
-                            }
-                            grupoHorario += tbodyEntradaySalida;
-                            // ! PAUSAS
-                            var tbodyPausas = "";
-                            for (let p = 0; p < data[index].data[m].pausas.length; p++) {
-                                // * PAUSAS
-                                tiempoHoraPausa = "00";        //: HORAS TARDANZA
-                                tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
-                                tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
-                                estadoTiempoHorario = true;
-                                //* EXCESO
-                                tiempoHoraExceso = "00";
-                                tiempoMinutoExceso = "00";
-                                tiempoSegundoExceso = "00";
-                                var pausaData = data[index].data[m].pausas[p];
-                                for (let mp = 0; mp < data[index].data[m].marcaciones.length; mp++) {
-                                    var dataMarcacionP = data[index].data[m].marcaciones[mp];
-                                    if (dataMarcacionP.idH != 0 && pausaData.horario_id == dataMarcacionP.idH) {
-                                        if (!idPausas.includes(pausaData.id)) {
-                                            var horaInicialM = moment(dataMarcacionP.entrada);
-                                            var horaFinalM = moment(dataMarcacionP.salida);
-                                            // ****************************************** PAUSAS ****************************************
-                                            var fechaI = horaInicialM.clone().format("YYYY-MM-DD");
-                                            var fechaF;
-                                            if (pausaData.inicio > pausaData.fin) {
-                                                fechaF = horaInicialM.clone().add(1, 'day').format("YYYY-MM-DD");
-                                            } else {
-                                                fechaF = horaInicialM.clone().format("YYYY-MM-DD");
+                        }
+                        for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
+                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
+                                                    <td class="text-center" name="colMarcaciones">---</td>
+                                                    <td name="colTiempoS" class="text-center">---</td>`;
+                        }
+                        grupoHorario += tbodyEntradaySalida;
+                        // ! PAUSAS
+                        var tbodyPausas = "";
+                        for (let p = 0; p < data[index].data[m].pausas.length; p++) {
+                            // * PAUSAS
+                            tiempoHoraPausa = "00";        //: HORAS TARDANZA
+                            tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
+                            tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
+                            estadoTiempoHorario = true;
+                            //* EXCESO
+                            tiempoHoraExceso = "00";
+                            tiempoMinutoExceso = "00";
+                            tiempoSegundoExceso = "00";
+                            var pausaData = data[index].data[m].pausas[p];
+                            for (let mp = 0; mp < data[index].data[m].marcaciones.length; mp++) {
+                                var dataMarcacionP = data[index].data[m].marcaciones[mp];
+                                if (dataMarcacionP.idH != 0 && pausaData.horario_id == dataMarcacionP.idH) {
+                                    if (!idPausas.includes(pausaData.id)) {
+                                        var horaInicialM = moment(dataMarcacionP.entrada);
+                                        var horaFinalM = moment(dataMarcacionP.salida);
+                                        // ****************************************** PAUSAS ****************************************
+                                        var fechaI = horaInicialM.clone().format("YYYY-MM-DD");
+                                        var fechaF;
+                                        if (pausaData.inicio > pausaData.fin) {
+                                            fechaF = horaInicialM.clone().add(1, 'day').format("YYYY-MM-DD");
+                                        } else {
+                                            fechaF = horaInicialM.clone().format("YYYY-MM-DD");
+                                        }
+                                        var pausaI = moment(fechaI + " " + pausaData.inicio);
+                                        var pausaF = moment(fechaF + " " + pausaData.fin);
+                                        // ! INICIO DE PAUSA
+                                        var sumaToleranciaPausa = moment(
+                                            pausaI.clone().add(
+                                                { "minutes": pausaData.tolerancia_inicio }    // : CLONAMOS EL TIEMPO Y SUMAR CON TOLERANCIA
+                                            ).toString());
+                                        var restaToleranciaPausa = moment(
+                                            pausaI.clone().subtract(
+                                                { "minutes": pausaData.tolerancia_inicio }
+                                            ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
+                                        // ! FIN DE PAUSA
+                                        var sumaToleranciaPausaFinal = moment(pausaF.clone().add({ "minutes": pausaData.tolerancia_fin }).toString());
+                                        // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
+                                        if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausa)) {
+                                            // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
+                                            if (data[index].data[m].marcaciones[mp + 1] != undefined) {
+                                                if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
+                                                    var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
+                                                    var restarTiempoMarcacion = horaEntradaDespues - horaFinalM;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
+                                                    tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
+                                                    tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
+                                                    tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
+                                                    if (tiempoHoraPausa < 10) {
+                                                        tiempoHoraPausa = '0' + tiempoHoraPausa;
+                                                    }
+                                                    if (tiempoMinutoPausa < 10) {
+                                                        tiempoMinutoPausa = '0' + tiempoMinutoPausa;
+                                                    }
+                                                    if (tiempoSegundoPausa < 10) {
+                                                        tiempoSegundoPausa = '0' + tiempoSegundoPausa;
+                                                    }
+                                                    // * VERIFICAR TIEMPO DE EXCESO
+                                                    var clonarPausaI = pausaI.clone();
+                                                    var clonarPausaF = pausaF.clone();
+                                                    var restaEntrePausa = clonarPausaF - clonarPausaI;
+                                                    // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
+                                                    if (restarTiempoMarcacion <= restaEntrePausa) {
+                                                        tiempoHoraExceso = "00";
+                                                        tiempoMinutoExceso = "00";
+                                                        tiempoSegundoExceso = "00";
+                                                    } else {
+                                                        var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
+                                                        tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
+                                                        tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
+                                                        tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
+                                                        if (tiempoHoraExceso < 10) {
+                                                            tiempoHoraExceso = '0' + tiempoHoraExceso;
+                                                        }
+                                                        if (tiempoMinutoExceso < 10) {
+                                                            tiempoMinutoExceso = '0' + tiempoMinutoExceso;
+                                                        }
+                                                        if (tiempoSegundoPausa < 10) {
+                                                            tiempoSegundoExceso = '0' + tiempoSegundoExceso;
+                                                        }
+                                                    }
+                                                }
                                             }
-                                            var pausaI = moment(fechaI + " " + pausaData.inicio);
-                                            var pausaF = moment(fechaF + " " + pausaData.fin);
-                                            // ! INICIO DE PAUSA
-                                            var sumaToleranciaPausa = moment(
-                                                pausaI.clone().add(
-                                                    { "minutes": pausaData.tolerancia_inicio }    // : CLONAMOS EL TIEMPO Y SUMAR CON TOLERANCIA
-                                                ).toString());
-                                            var restaToleranciaPausa = moment(
-                                                pausaI.clone().subtract(
-                                                    { "minutes": pausaData.tolerancia_inicio }
-                                                ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
-                                            // ! FIN DE PAUSA
-                                            var sumaToleranciaPausaFinal = moment(pausaF.clone().add({ "minutes": pausaData.tolerancia_fin }).toString());
-                                            // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
-                                            if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausa)) {
+                                            idPausas.push(pausaData.id);
+                                        } else {
+                                            if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausaFinal)) {
                                                 // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
                                                 if (data[index].data[m].marcaciones[mp + 1] != undefined) {
                                                     if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
+                                                        estadoTiempoHorario = false;
                                                         var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
                                                         var restarTiempoMarcacion = horaEntradaDespues - horaFinalM;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
                                                         tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
@@ -1392,246 +1446,215 @@ function cargartabla(fecha) {
                                                     }
                                                 }
                                                 idPausas.push(pausaData.id);
-                                            } else {
-                                                if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausaFinal)) {
-                                                    // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
-                                                    if (data[index].data[m].marcaciones[mp + 1] != undefined) {
-                                                        if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
-                                                            estadoTiempoHorario = false;
-                                                            var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
-                                                            var restarTiempoMarcacion = horaEntradaDespues - horaFinalM;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
-                                                            tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
-                                                            tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
-                                                            tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
-                                                            if (tiempoHoraPausa < 10) {
-                                                                tiempoHoraPausa = '0' + tiempoHoraPausa;
-                                                            }
-                                                            if (tiempoMinutoPausa < 10) {
-                                                                tiempoMinutoPausa = '0' + tiempoMinutoPausa;
-                                                            }
-                                                            if (tiempoSegundoPausa < 10) {
-                                                                tiempoSegundoPausa = '0' + tiempoSegundoPausa;
-                                                            }
-                                                            // * VERIFICAR TIEMPO DE EXCESO
-                                                            var clonarPausaI = pausaI.clone();
-                                                            var clonarPausaF = pausaF.clone();
-                                                            var restaEntrePausa = clonarPausaF - clonarPausaI;
-                                                            // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
-                                                            if (restarTiempoMarcacion <= restaEntrePausa) {
-                                                                tiempoHoraExceso = "00";
-                                                                tiempoMinutoExceso = "00";
-                                                                tiempoSegundoExceso = "00";
-                                                            } else {
-                                                                var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
-                                                                tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
-                                                                tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
-                                                                tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
-                                                                if (tiempoHoraExceso < 10) {
-                                                                    tiempoHoraExceso = '0' + tiempoHoraExceso;
-                                                                }
-                                                                if (tiempoMinutoExceso < 10) {
-                                                                    tiempoMinutoExceso = '0' + tiempoMinutoExceso;
-                                                                }
-                                                                if (tiempoSegundoPausa < 10) {
-                                                                    tiempoSegundoExceso = '0' + tiempoSegundoExceso;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                    idPausas.push(pausaData.id);
-                                                }
                                             }
                                         }
                                     }
                                 }
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">${pausaData.descripcion}</td>
-                                        <td name="horarioPausa">${pausaData.inicio} - ${pausaData.fin}</td>`;
-                                if (estadoTiempoHorario) {
-                                    tbodyPausas += `<td name="tiempoPausa" class="text-center">
-                                                        <a class="badge badge-soft-primary mr-2">
-                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                            ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
-                                                        </a>
-                                                    </td>`;
-                                } else {
-                                    tbodyPausas += `<td name="tiempoPausa" class="text-center">
-                                                        <a class="badge badge-soft-warning mr-2" rel="tooltip" data-toggle="tooltip" data-placement="left" 
-                                                            title="El colaborador marcó tarde su ${pausaData.descripcion}.\nSalida:${pausaData.inicio}\n
-                                                            Tolerancia ${pausaData.tolerancia_inicio} min.\nRegreso:${pausaData.fin}\nTolerancia ${pausaData.tolerancia_fin} min." 
-                                                            data-html="true">
-                                                            <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
-                                                            ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
-                                                        </a>
-                                                    </td>`;
-                                }
-                                tbodyPausas += `<td name="excesoPausa" class="text-center">
-                                            <a class="badge badge-soft-danger mr-2">
-                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                ${tiempoHoraExceso}:${tiempoMinutoExceso}:${tiempoSegundoExceso}
-                                            </a>
-                                        </td>`;
                             }
-                            for (let cp = data[index].data[m].pausas.length; cp < arrayHorario[m].split(",")[1]; cp++) {
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="descripcionPausa" class="text-center">----</td>
-                                                <td name="horarioPausa" class="text-center">-----</td>
-                                                <td name="tiempoPausa" class="text-center">-----</td>
-                                                <td name="excesoPausa" class="text-center">------</td>`;
-                            }
-                            grupoHorario += tbodyPausas;
-                        } else {
-                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
-                                                ----
-                                            </td>
-                                            <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">---</td>
-                                            <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
-                                            <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
-                                            <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
-                                            <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
-                                            <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">---</td>
-                                            <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
-                                            <td name="faltaHorario" style="background: #f0f0f0;">---</td>`;
-                            // ! MARCACIONES
-                            var tbodyEntradaySalida = "";
-                            for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
-                                                        <td class="text-center" name="colMarcaciones">---</td>
-                                                        <td name="colTiempoS" class="text-center">---</td>`;
-                            }
-                            grupoHorario += tbodyEntradaySalida;
-                            // ! PAUSAS
-                            var tbodyPausas = "";
-                            for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="descripcionPausa" class="text-center">----</td>
-                                                <td name="horarioPausa" class="text-center">-----</td>
-                                                <td name="tiempoPausa" class="text-center">-----</td>
-                                                <td name="excesoPausa" class="text-center">------</td>`;
-                            }
-                            grupoHorario += tbodyPausas;
-                        }
-                    }
-                    tbody += grupoHorario;
-                    // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
-                    tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
-                                <a class="badge badge-soft-primary mr-2">
-                                    <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                    ${sumaTiempos.format("HH:mm:ss")}
-                                </a>
-                            </td>
-                            <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
-                                <a class="badge badge-soft-primary mr-2">
-                                    <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                    ${sumaSobreTiempo.format("HH:mm:ss")}
-                                </a>
-                            </td>
-                            <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
-                                <a class="badge badge-soft-danger mr-2">
-                                    <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                    ${sumaFaltaJornada.format("HH:mm:ss")}
-                                </a>
-                            </td>
-                            <td name="colTardanzaTotal" style="border-left: 1px dashed #aaaaaa!important">
-                                <a class="badge badge-soft-danger mr-2">
-                                    <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                    ${sumaTardanzas.format("HH:mm:ss")}
-                                </a>
-                            </td>`;
-                    // ******************************* CANTIDAD DE FALTAS **************************
-                    if (sumaFaltas != 0) {
-                        tbody += `<td class="text-center" name="faltaTotal" style="border-left: 1px dashed #aaaaaa!important">`;
-                        for (let f = 0; f < sumaFaltas; f++) {
-                            if (f == 0) {
-                                tbody += `<span class="badge badge-soft-danger mr-1" class="text-center">
-                                            Falta
-                                        </span>`;
+                            tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">${pausaData.descripcion}</td>
+                                    <td name="horarioPausa">${pausaData.inicio} - ${pausaData.fin}</td>`;
+                            if (estadoTiempoHorario) {
+                                tbodyPausas += `<td name="tiempoPausa" class="text-center">
+                                                    <a class="badge badge-soft-primary mr-2">
+                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                        ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
+                                                    </a>
+                                                </td>`;
                             } else {
-                                tbody += `<b>/</b><span class="badge badge-soft-danger ml-1" class="text-center">
-                                            Falta
-                                        </span>`;
+                                tbodyPausas += `<td name="tiempoPausa" class="text-center">
+                                                    <a class="badge badge-soft-warning mr-2" rel="tooltip" data-toggle="tooltip" data-placement="left" 
+                                                        title="El colaborador marcó tarde su ${pausaData.descripcion}.\nSalida:${pausaData.inicio}\n
+                                                        Tolerancia ${pausaData.tolerancia_inicio} min.\nRegreso:${pausaData.fin}\nTolerancia ${pausaData.tolerancia_fin} min." 
+                                                        data-html="true">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                        ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
+                                                    </a>
+                                                </td>`;
                             }
+                            tbodyPausas += `<td name="excesoPausa" class="text-center">
+                                        <a class="badge badge-soft-danger mr-2">
+                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                            ${tiempoHoraExceso}:${tiempoMinutoExceso}:${tiempoSegundoExceso}
+                                        </a>
+                                    </td>`;
                         }
-                        tbody += `</td>`;
-                    } else {
-                        tbody += `<td class="text-center" name="faltaTotal" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
-                    }
-                    // * ********************** FINALIZACION *************************************
-                    if (data[index].incidencias.length == 0) {
-                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important" name="incidencia">--</td>`;
-                    } else {
-                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important;" name="incidencia">`;
-                        for (let item = 0; item < data[index].incidencias.length; item++) {
-                            var dataIncidencia = data[index].incidencias[item];
-                            if (item == 0) {
-                                tbody += `<span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
-                            } else {
-                                tbody += `<b>/</b><span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
-                            }
+                        for (let cp = data[index].data[m].pausas.length; cp < arrayHorario[m].split(",")[1]; cp++) {
+                            tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="descripcionPausa" class="text-center">----</td>
+                                            <td name="horarioPausa" class="text-center">-----</td>
+                                            <td name="tiempoPausa" class="text-center">-----</td>
+                                            <td name="excesoPausa" class="text-center">------</td>`;
                         }
-                        tbody += `</td>`;
-                    }
-                    tbody += `</tr>`;
-                }
-                $('#tbodyD').html(tbody);
-                $('[data-toggle="tooltip"]').tooltip();
-                $('.dropdown-toggle').dropdown();
-                // * PARA PODER MENUS CUANDO SOLO HAY UNA COLUMNA
-                if (data.length == 1) {
-                    var tbodyTR = '';
-                    tbodyTR += '<tr>';
-                    if (permisoModificar == 1) {
-                        tbodyTR += `<td></td>`;
-                    }
-                    tbodyTR += `<td><br><br><br><br><br><br><br><br><br><br></td>
-                                <td></td>
-                                <td></td>
-                                <td name="colCodigo"></td>
-                                <td></td>
-                                <td name="colCargo"></td>`;
-                    for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += `<td name="descripcionHorario"></td>
-                                    <td name="horarioHorario"></td>
-                                    <td name="toleranciaIHorario"></td>
-                                    <td name="toleranciaFHorario"></td>
-                                    <td class="text-center" name="colTiempoEntreH"></td>
-                                    <td class="text-center" name="colSobreTiempo"></td>
-                                    <td class="text-center" name="colFaltaJornada"></td>
-                                    <td name="colTardanza"></td>
-                                    <td name="faltaHorario"></td>`;
+                        grupoHorario += tbodyPausas;
+                    } else {
+                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                            ----
+                                        </td>
+                                        <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">---</td>
+                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
+                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
+                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
+                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
+                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">---</td>
+                                        <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
+                                        <td name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                         // ! MARCACIONES
+                        var tbodyEntradaySalida = "";
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                            tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td>';
+                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
+                                                    <td class="text-center" name="colMarcaciones">---</td>
+                                                    <td name="colTiempoS" class="text-center">---</td>`;
                         }
+                        grupoHorario += tbodyEntradaySalida;
                         // ! PAUSAS
+                        var tbodyPausas = "";
                         for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                            tbodyTR += `<td name="descripcionPausa"></td>
-                                    <td name="horarioPausa"></td>
-                                    <td name="tiempoPausa"></td>
-                                    <td name="excesoPausa"></td>`;
+                            tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="descripcionPausa" class="text-center">----</td>
+                                            <td name="horarioPausa" class="text-center">-----</td>
+                                            <td name="tiempoPausa" class="text-center">-----</td>
+                                            <td name="excesoPausa" class="text-center">------</td>`;
+                        }
+                        grupoHorario += tbodyPausas;
+                    }
+                }
+                tbody += grupoHorario;
+                // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
+                tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
+                            <a class="badge badge-soft-primary mr-2">
+                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                ${sumaTiempos.format("HH:mm:ss")}
+                            </a>
+                        </td>
+                        <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <a class="badge badge-soft-primary mr-2">
+                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                ${sumaSobreTiempo.format("HH:mm:ss")}
+                            </a>
+                        </td>
+                        <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <a class="badge badge-soft-danger mr-2">
+                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                ${sumaFaltaJornada.format("HH:mm:ss")}
+                            </a>
+                        </td>
+                        <td name="colTardanzaTotal" style="border-left: 1px dashed #aaaaaa!important">
+                            <a class="badge badge-soft-danger mr-2">
+                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                ${sumaTardanzas.format("HH:mm:ss")}
+                            </a>
+                        </td>`;
+                // ******************************* CANTIDAD DE FALTAS **************************
+                if (sumaFaltas != 0) {
+                    tbody += `<td class="text-center" name="faltaTotal" style="border-left: 1px dashed #aaaaaa!important">`;
+                    for (let f = 0; f < sumaFaltas; f++) {
+                        if (f == 0) {
+                            tbody += `<span class="badge badge-soft-danger mr-1" class="text-center">
+                                        Falta
+                                    </span>`;
+                        } else {
+                            tbody += `<b>/</b><span class="badge badge-soft-danger ml-1" class="text-center">
+                                        Falta
+                                    </span>`;
                         }
                     }
-                    tbodyTR += `<td name="colTiempoTotal"><br><br></td>
-                                <td name="colSobreTiempoTotal"></td>
-                                <td name="colFaltaJornadaTotal"></td>
-                                <td name="colTardanzaTotal"></td>
-                                <td name="faltaTotal"></td>
-                                <td name="incidencia"></td>
-                                </tr>`;
-                    $('#tbodyD').append(tbodyTR);
+                    tbody += `</td>`;
+                } else {
+                    tbody += `<td class="text-center" name="faltaTotal" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
                 }
-                inicializarTabla();
-                $(window).on('resize', function () {
-                    $("#tablaReport").css('width', '100%');
-                    table.draw(true);
-                });
-                // * SWITCH DE MOSTRAR DETALLES
-                toggleColumnas();
-            } else {
-                $('#customSwitDetalles').prop("disabled", true);
-                $('#switPausas').prop("disabled", true);
-                $('#tbodyD').empty();
-                $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+                // * ********************** FINALIZACION *************************************
+                if (data[index].incidencias.length == 0) {
+                    tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important" name="incidencia">--</td>`;
+                } else {
+                    tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important;" name="incidencia">`;
+                    for (let item = 0; item < data[index].incidencias.length; item++) {
+                        var dataIncidencia = data[index].incidencias[item];
+                        if (item == 0) {
+                            tbody += `<span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                        } else {
+                            tbody += `<b>/</b><span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                        }
+                    }
+                    tbody += `</td>`;
+                }
+                tbody += `</tr>`;
             }
-        },
-        error: function () { }
+            $('#tbodyD').html(tbody);
+            $('[data-toggle="tooltip"]').tooltip();
+            $('.dropdown-toggle').dropdown();
+            // * PARA PODER MENUS CUANDO SOLO HAY UNA COLUMNA
+            if (data.length == 1) {
+                var tbodyTR = '';
+                tbodyTR += '<tr>';
+                if (permisoModificar == 1) {
+                    tbodyTR += `<td></td>`;
+                }
+                tbodyTR += `<td><br><br><br><br><br><br><br><br><br><br></td>
+                            <td></td>
+                            <td></td>
+                            <td name="colCodigo"></td>
+                            <td></td>
+                            <td name="colCargo"></td>`;
+                for (let m = 0; m < cantidadGruposHorario; m++) {
+                    tbodyTR += `<td name="descripcionHorario"></td>
+                                <td name="horarioHorario"></td>
+                                <td name="toleranciaIHorario"></td>
+                                <td name="toleranciaFHorario"></td>
+                                <td class="text-center" name="colTiempoEntreH"></td>
+                                <td class="text-center" name="colSobreTiempo"></td>
+                                <td class="text-center" name="colFaltaJornada"></td>
+                                <td name="colTardanza"></td>
+                                <td name="faltaHorario"></td>`;
+                    // ! MARCACIONES
+                    for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
+                        tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td>';
+                    }
+                    // ! PAUSAS
+                    for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
+                        tbodyTR += `<td name="descripcionPausa"></td>
+                                <td name="horarioPausa"></td>
+                                <td name="tiempoPausa"></td>
+                                <td name="excesoPausa"></td>`;
+                    }
+                }
+                tbodyTR += `<td name="colTiempoTotal"><br><br></td>
+                            <td name="colSobreTiempoTotal"></td>
+                            <td name="colFaltaJornadaTotal"></td>
+                            <td name="colTardanzaTotal"></td>
+                            <td name="faltaTotal"></td>
+                            <td name="incidencia"></td>
+                            </tr>`;
+                $('#tbodyD').append(tbodyTR);
+            }
+            inicializarTabla();
+            $(window).on('resize', function () {
+                $("#tablaReport").css('width', '100%');
+                table.draw(true);
+            });
+            // * SWITCH DE MOSTRAR DETALLES
+            toggleColumnas();
+        } else {
+            $('#customSwitDetalles').prop("disabled", true);
+            $('#switPausas').prop("disabled", true);
+            $('#tbodyD').empty();
+            $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+        }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        $.notify({
+            message: '\nSurgio un error.',
+            icon: 'landing/images/bell.svg',
+        }, {
+            icon_type: 'image',
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
     });
 }
 function cambiarF() {

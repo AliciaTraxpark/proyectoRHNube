@@ -58,6 +58,10 @@
     div.dataTables_processing {
         z-index: 1;
     }
+
+    .dataTables_wrapper .dataTables_processing {
+        box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
+    }
 </style>
 {{-- CONTENIDO --}}
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
