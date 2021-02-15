@@ -108,7 +108,7 @@ class TardanzasController extends Controller
         return view('tardanzas.reporteTardanzas', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
     }
     // CORREGIDO
-    function getTardanzas($empleados){
+    function getTardanzas($empleados, $fechaInicio, $fechaFin, $fechaHorarioI, $fechaHorarioF){
 
         $datos = new Collection();
 
@@ -126,6 +126,8 @@ class TardanzasController extends Controller
             DB::raw('0 as dia')
         )
         ->where('e.organi_id', session('sesionidorg'))
+        ->whereDate(DB::raw('DATE(cp.hora_ini)'), '>=',$fechaInicio)
+        ->whereDate(DB::raw('DATE(cp.hora_ini)'), '<=',$fechaFin)
         ->orderBy('e.emple_id')
         ->get();
 
@@ -149,6 +151,8 @@ class TardanzasController extends Controller
         )
         ->where('he.estado', '=', 1)
         ->where('ho.organi_id', '=', session('sesionidorg'))
+        ->whereDate(DB::raw('DATE(hd.start)'), '>=',$fechaHorarioI)
+        ->whereDate(DB::raw('DATE(hd.start)'), '<=',$fechaHorarioF)
         ->groupBy('hd.start', 'he.empleado_emple_id', 'ho.horaI')
         ->orderBy('he.empleado_emple_id')
         ->get();
@@ -273,37 +277,6 @@ class TardanzasController extends Controller
             }
         }
 
-        //dd($horarios);
-
-        //dd($horarios->sortBy('diaH')->values());
-
-        //$hora_entrada = Carbon::parse($horarios->horaI);
-
-        /*foreach ($empleados as $empleado) {
-            $hora_marcacion = Carbon::parse($empleado->horaM);
-            $dia_marcacion = Carbon::parse($empleado->diaM);
-            foreach($horarios as $horario){
-                $hora = $horario->horaI;
-                $horario_entrada = Carbon::parse($horario->horaI)->subMinutes($horario->horario_tolerancia);
-                $horario_salida = Carbon::parse($horario->horaF)->addMinutes($horario->horario_toleranciaF); 
-
-                //if($horario_salida->greaterThanOrEqualTo($hora_marcacion) && $hora_marcacion->greaterThanOrEqualTo($horario_entrada)){
-                    //$empleado->horario = $horario->horario_id;
-                    if($empleado->horario === 0){
-                        $empleado->horario = $hora;
-                    } else {
-                        $horario_temp = Carbon::parse($empleado->horario);
-                        $diff1 = $horario_entrada->diffInSeconds($hora_marcacion); 
-                        $diff2 = $horario_temp->diffInSeconds($hora_marcacion); // NUEVO HORARIO
-                        if($diff1 < $diff2){
-                            $empleado->horario = $hora;
-                        }
-                    }
-                //}
-            }
-            $hora = "";
-        }*/
-
         $collection = new Collection;
 
         foreach($horarios as $horario){
@@ -315,7 +288,7 @@ class TardanzasController extends Controller
         return $collection;
     }
 
-    function getTardanzasUbi($empleados){
+    function getTardanzasUbi($empleados, $fechaInicio, $fechaFin, $fechaHorarioI, $fechaHorarioF){
 
         $datos = new Collection();
 
@@ -333,6 +306,8 @@ class TardanzasController extends Controller
             DB::raw('0 as dia')
         )
         ->where('e.organi_id', session('sesionidorg'))
+        ->whereDate(DB::raw('DATE(u.hora_ini)'), '>=',$fechaInicio)
+        ->whereDate(DB::raw('DATE(u.hora_ini)'), '<=',$fechaFin)
         ->orderBy('e.emple_id')
         ->get();
 
@@ -356,6 +331,8 @@ class TardanzasController extends Controller
         )
         ->where('he.estado', '=', 1)
         ->where('ho.organi_id', '=', session('sesionidorg'))
+        ->whereDate(DB::raw('DATE(hd.start)'), '>=',$fechaHorarioI)
+        ->whereDate(DB::raw('DATE(hd.start)'), '<=',$fechaHorarioF)
         ->groupBy('hd.start', 'he.empleado_emple_id', 'ho.horaI')
         ->orderBy('he.empleado_emple_id')
         ->get();
@@ -627,16 +604,20 @@ class TardanzasController extends Controller
         }
         /*      FIN DE OBETENER EMPLEADOS    */
         
-        $empleados1 = $this->getTardanzas($empleados);
-
-        $empleados = $empleados1->sortBy('emple_id')->values();
-
         /* RANGO DE FECHA */
         $emple_id = $request->idemp;
         $fecha1 = $request->fecha1;
         $fechaR = Carbon::create($fecha1);
         $fecha2 = $request->fecha2;
         $fechaF = Carbon::create($fecha2);
+
+        $fechaTempoInicio = Carbon::create($fecha1)->subDays(1);
+        $fechaTempI = $fechaTempoInicio->year."-".$fechaTempoInicio->month."-".$fechaTempoInicio->day;
+        $fechaTempoFin = Carbon::create($fecha2)->addDays(1);
+        $fechaTempF = $fechaTempoFin->year."-".$fechaTempoFin->month."-".$fechaTempoFin->day;
+
+        $empleados1 = $this->getTardanzas($empleados, $fechaTempI, $fechaTempF, $fecha1, $fecha2);
+        $empleados = $empleados1->sortBy('emple_id')->values();
 
         /* COLECCIÓN QUE SE ENVIA AL JS */
         $datos = new Collection();
@@ -1450,7 +1431,15 @@ class TardanzasController extends Controller
             }
         }
 
-        $empleados = $this->getTardanzas($empleados);
+        $date1 = new DateTime($fechaF[0]);
+        $date2 = new DateTime($fechaF[1]);
+
+        $fechaTempoInicio = Carbon::create($fechaF[0])->subDays(1);
+        $fechaTempI = $fechaTempoInicio->year."-".$fechaTempoInicio->month."-".$fechaTempoInicio->day;
+        $fechaTempoFin = Carbon::create($fechaF[1])->addDays(1);
+        $fechaTempF = $fechaTempoFin->year."-".$fechaTempoFin->month."-".$fechaTempoFin->day;
+
+        $empleados = $this->getTardanzas($empleados, $fechaTempI, $fechaTempF, $date1, $date2);
         $empleados = $empleados->sortBy('emple_id')->values();
         
         $datos = new Collection();
@@ -2085,8 +2074,20 @@ class TardanzasController extends Controller
         }
         /*      FIN DE OBETENER EMPLEADOS    */
 
-        $empleados_ubi = $this->getTardanzasUbi($empleados_ubi);
-        $empleados_cap = $this->getTardanzas($empleados_cap);
+        /* RANGO DE FECHA */
+        $emple_id = $request->idemp;
+        $fecha1 = $request->fecha1;
+        $fechaR = Carbon::create($fecha1);
+        $fecha2 = $request->fecha2;
+        $fechaF = Carbon::create($fecha2);
+
+        $fechaTempoInicio = Carbon::create($fecha1)->subDays(1);
+        $fechaTempI = $fechaTempoInicio->year."-".$fechaTempoInicio->month."-".$fechaTempoInicio->day;
+        $fechaTempoFin = Carbon::create($fecha2)->addDays(1);
+        $fechaTempF = $fechaTempoFin->year."-".$fechaTempoFin->month."-".$fechaTempoFin->day;
+
+        $empleados_ubi = $this->getTardanzasUbi($empleados_ubi, $fechaTempI, $fechaTempF, $fecha1, $fecha2);
+        $empleados_cap = $this->getTardanzas($empleados_cap, $fechaTempI, $fechaTempF, $fecha1, $fecha2);
 
         $empleados = new Collection();
         foreach($empleados_cap as $empleado_cap){
@@ -2119,13 +2120,6 @@ class TardanzasController extends Controller
         $empleados->values()->all();
 
         //dd($empleados);
-
-        /* RANGO DE FECHA */
-        $emple_id = $request->idemp;
-        $fecha1 = $request->fecha1;
-        $fechaR = Carbon::create($fecha1);
-        $fecha2 = $request->fecha2;
-        $fechaF = Carbon::create($fecha2);
 
         /* COLECCIÓN QUE SE ENVIA AL JS */
         $datos = new Collection();
@@ -3267,8 +3261,16 @@ class TardanzasController extends Controller
             }
         }
 
-        $empleados_cap = $this->getTardanzas($empleados_cap);
-        $empleados_ubi = $this->getTardanzasUbi($empleados_ubi);
+        $date1 = new DateTime($fechaF[0]);
+        $date2 = new DateTime($fechaF[1]);
+
+        $fechaTempoInicio = Carbon::create($fechaF[0])->subDays(1);
+        $fechaTempI = $fechaTempoInicio->year."-".$fechaTempoInicio->month."-".$fechaTempoInicio->day;
+        $fechaTempoFin = Carbon::create($fechaF[1])->addDays(1);
+        $fechaTempF = $fechaTempoFin->year."-".$fechaTempoFin->month."-".$fechaTempoFin->day;
+
+        $empleados_cap = $this->getTardanzas($empleados_cap, $fechaTempI, $fechaTempF, $date1, $date2);
+        $empleados_ubi = $this->getTardanzasUbi($empleados_ubi, $fechaTempI, $fechaTempF, $date1, $date2);
         $datos = new Collection();
 
         $empleados = new Collection();
@@ -3307,8 +3309,6 @@ class TardanzasController extends Controller
             $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ), if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
             // DB::enableQueryLog();
 
-            $date1 = new DateTime($fechaF[0]);
-            $date2 = new DateTime($fechaF[1]);
             $diff = $date1->diff($date2);
             //Array
             $horas = array();
@@ -3760,11 +3760,26 @@ class TardanzasController extends Controller
                 // INVITADO CON PERMISO DE VER TODOS LOS EMPLEADOS
                 if ($invitado->verTodosEmps == 1) {
                     $empleados = DB::table('empleado as e')
-                    ->select('e.emple_id')
-                    ->orderBy('e.emple_id')
-                    ->where('e.organi_id', '=', session('sesionidorg'))
-                    ->where('e.emple_estado', '=', 1)
-                    ->get();
+                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                        ->join('horario_empleado as he', 'he.horarioEmp_id', '=', 'mp.horarioEmp_id')
+                        ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                        ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                        ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                        ->select('e.emple_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'ho.horaI as horaH', 'hd.start as diaH', 'c.cargo_descripcion as cargo', 'a.area_descripcion as area', 'ho.horario_tolerancia', 'ho.horario_descripcion', 'ho.horario_id', 'mp.marcaMov_fecha as marcacion',
+                            DB::raw('DATE(mp.marcaMov_fecha) as diaM'),
+                            DB::raw('TIME(mp.marcaMov_fecha) as horaM'),
+                            DB::raw('MIN(TIME(mp.marcaMov_fecha)) as minMarcacion')
+                        )
+                        ->where('he.estado', '=', 1)
+                        ->orderBy('e.emple_id')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $request->fecha1)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $request->fecha2)
+                        ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
+                        ->get();
 
                 } else {
                     // INVITADOS CON EMPLEADOS ASIGNADOS
@@ -3795,6 +3810,8 @@ class TardanzasController extends Controller
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
                             ->where('invi.estado', '=', 1)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '>=', $request->fecha1)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '<=', $request->fecha2)
                             ->where('inve.idinvitado', '=', $invitado->idinvitado)
                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
@@ -3820,6 +3837,8 @@ class TardanzasController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->where('invi.estado', '=', 1)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $request->fecha1)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $request->fecha2)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
@@ -3844,6 +3863,8 @@ class TardanzasController extends Controller
                     ->orderBy('e.emple_id')
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
+                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $request->fecha1)
+                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $request->fecha2)
                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                     ->get();
             }
@@ -3859,11 +3880,26 @@ class TardanzasController extends Controller
                 // INVITADO CON PERMISO DE VER TODOS LOS EMPLEADOS
                 if ($invitado->verTodosEmps == 1) {
                     $empleados = DB::table('empleado as e')
-                    ->select('e.emple_id')
-                    ->where('e.emple_id', '=', $empleadoL)
+                    ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                    ->join('horario_empleado as he', 'he.horarioEmp_id', '=', 'mp.horarioEmp_id')
+                    ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->leftjoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                    ->select('e.emple_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'ho.horaI as horaH', 'hd.start as diaH', 'c.cargo_descripcion as cargo', 'a.area_descripcion as area', 'ho.horario_tolerancia', 'ho.horario_descripcion', 'ho.horario_id', 'mp.marcaMov_fecha as marcacion',
+                        DB::raw('DATE(mp.marcaMov_fecha) as diaM'),
+                        DB::raw('TIME(mp.marcaMov_fecha) as horaM'),
+                        DB::raw('MIN(TIME(mp.marcaMov_fecha)) as minMarcacion')
+                    )
+                    ->where('he.estado', '=', 1)
+                    ->orderBy('e.emple_id')
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
-                    ->orderBy('e.emple_id')
+                    ->where('e.emple_id', '=', $empleadoL)
+                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $request->fecha1)
+                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $request->fecha2)
+                    ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                     ->get();
 
                 } else {
@@ -3896,6 +3932,8 @@ class TardanzasController extends Controller
                             ->where('e.emple_estado', '=', 1)
                             ->where('invi.estado', '=', 1)
                             ->where('inve.idinvitado', '=', $invitado->idinvitado)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '>=', $request->fecha1)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '<=', $request->fecha2)
                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                     } else {
@@ -3920,6 +3958,8 @@ class TardanzasController extends Controller
                             ->where('e.emple_estado', '=', 1)
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '>=', $request->fecha1)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '<=', $request->fecha2)
                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                     }
@@ -3944,6 +3984,8 @@ class TardanzasController extends Controller
                     ->where('e.emple_id', '=', $empleadoL)
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
+                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $request->fecha1)
+                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $request->fecha2)
                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                     ->get();
             }
@@ -4341,6 +4383,8 @@ class TardanzasController extends Controller
                         ->orderBy('e.emple_id')
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
                 } else {
@@ -4372,6 +4416,8 @@ class TardanzasController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
 
@@ -4396,6 +4442,8 @@ class TardanzasController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->where('invi.estado', '=', 1)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
@@ -4419,6 +4467,8 @@ class TardanzasController extends Controller
                     ->orderBy('e.emple_id')
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
+                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                     ->get();
             }
@@ -4451,6 +4501,8 @@ class TardanzasController extends Controller
                                 ->where('e.organi_id', '=', session('sesionidorg'))
                                 ->where('e.emple_estado', '=', 1)
                                 >whereIn('e.emple_area', $area)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                         } else {
@@ -4473,6 +4525,8 @@ class TardanzasController extends Controller
                                 ->where('e.organi_id', '=', session('sesionidorg'))
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_cargo', $area)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             } else {
@@ -4495,6 +4549,8 @@ class TardanzasController extends Controller
                                         ->where('e.organi_id', '=', session('sesionidorg'))
                                         ->where('e.emple_estado', '=', 1)
                                         ->whereIn('e.emple_local', $area)
+                                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                         ->get();
                                 }
@@ -4530,6 +4586,8 @@ class TardanzasController extends Controller
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                     ->whereIn('e.emple_area', $area)
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
 
@@ -4557,6 +4615,8 @@ class TardanzasController extends Controller
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                     ->whereIn('e.emple_cargo', $area)
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
 
@@ -4584,6 +4644,8 @@ class TardanzasController extends Controller
                                             ->where('invi.estado', '=', 1)
                                             ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                             ->whereIn('e.emple_local', $area)
+                                            ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                            ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                             ->get();
                                     }
@@ -4613,6 +4675,8 @@ class TardanzasController extends Controller
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->whereIn('e.emple_area', $area)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
 
@@ -4641,6 +4705,8 @@ class TardanzasController extends Controller
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                     ->whereIn('e.emple_cargo', $area)
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
 
@@ -4668,6 +4734,8 @@ class TardanzasController extends Controller
                                         ->where('invi.estado', '=', 1)
                                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                         ->whereIn('e.emple_local', $area)
+                                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                         ->get();
                                     }
@@ -4695,6 +4763,8 @@ class TardanzasController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_cargo', $area)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
                     } else {
@@ -4717,6 +4787,8 @@ class TardanzasController extends Controller
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_area', $area)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                            ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                         } else {
@@ -4739,6 +4811,8 @@ class TardanzasController extends Controller
                                 ->where('e.organi_id', '=', session('sesionidorg'))
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_local', $area)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             }
@@ -4773,6 +4847,8 @@ class TardanzasController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_id', $empleadoL)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
 
@@ -4805,6 +4881,8 @@ class TardanzasController extends Controller
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->whereIn('e.emple_id', $empleadoL)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                         } else {
@@ -4830,6 +4908,8 @@ class TardanzasController extends Controller
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->whereIn('e.emple_id', $empleadoL)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                         }
@@ -4853,6 +4933,8 @@ class TardanzasController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_id', $empleadoL)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
                 }
@@ -4886,6 +4968,8 @@ class TardanzasController extends Controller
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_area', $area)
                             ->whereIn('e.emple_id', $empleadoL)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                            ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
                         } else {
@@ -4909,6 +4993,8 @@ class TardanzasController extends Controller
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_cargo', $area)
                                 ->whereIn('e.emple_id', $empleadoL)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             } else {
@@ -4932,6 +5018,8 @@ class TardanzasController extends Controller
                                     ->where('e.emple_estado', '=', 1)
                                     ->whereIn('e.emple_local', $area)
                                     ->whereIn('e.emple_id', $empleadoL)
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
                                 }
@@ -4969,6 +5057,8 @@ class TardanzasController extends Controller
                                 ->whereIn('e.emple_id', $empleadoL)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             } else {
@@ -4996,6 +5086,8 @@ class TardanzasController extends Controller
                                     ->whereIn('e.emple_id', $empleadoL)
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
 
@@ -5024,6 +5116,8 @@ class TardanzasController extends Controller
                                         ->whereIn('e.emple_id', $empleadoL)
                                         ->where('invi.estado', '=', 1)
                                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                         ->get();
 
@@ -5054,6 +5148,8 @@ class TardanzasController extends Controller
                                 ->whereIn('e.emple_area', $area)
                                 ->whereIn('e.emple_id', $empleadoL)
                                 ->where('invi.estado', '=', 1)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
@@ -5083,6 +5179,8 @@ class TardanzasController extends Controller
                                     ->whereIn('e.emple_id', $empleadoL)
                                     ->where('invi.estado', '=', 1)
                                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                    ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                     ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                     ->get();
 
@@ -5111,6 +5209,8 @@ class TardanzasController extends Controller
                                         ->whereIn('e.emple_id', $empleadoL)
                                         ->where('invi.estado', '=', 1)
                                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                         ->get();
 
@@ -5140,6 +5240,8 @@ class TardanzasController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_area', $area)
                         ->whereIn('e.emple_id', $empleadoL)
+                        ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                        ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                         ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                         ->get();
 
@@ -5164,6 +5266,8 @@ class TardanzasController extends Controller
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_cargo', $area)
                             ->whereIn('e.emple_id', $empleadoL)
+                            ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                            ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                             ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                             ->get();
 
@@ -5188,6 +5292,8 @@ class TardanzasController extends Controller
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_local', $area)
                                 ->whereIn('e.emple_id', $empleadoL)
+                                ->whereDate(DB::raw('DATE(hd.start)'), '>=', $fechaF[0])
+                                ->whereDate(DB::raw('DATE(hd.start)'), '<=', $fechaF[1])
                                 ->groupBy(DB::raw('DATE(hd.start)'), 'e.emple_id', 'ho.horario_id')
                                 ->get();
                             }
