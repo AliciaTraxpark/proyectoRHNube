@@ -1771,6 +1771,7 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
     $('a').css('pointer-events', 'auto');
     sent = false;
 }
+var AM_datosHorario = {};
 //* LISTA DE HORARIOS DISPONIBLES
 function listaHorariosD(idEmpleado, fecha) {
     $('#r_horarioXE').empty();
@@ -1791,7 +1792,7 @@ function listaHorariosD(idEmpleado, fecha) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            datosHorario = data;
+            AM_datosHorario = data;
             var container = `<option value="" disabled selected>Seleccionar horario</option>
                                 <option value="0">Sin horario</option>`;
             for (let index = 0; index < data.length; index++) {
@@ -1802,6 +1803,80 @@ function listaHorariosD(idEmpleado, fecha) {
         error: function () { }
     });
 }
+// * MOSTRAR DETALLES DE HORARIO
+$('#r_horarioXE').on("change", function () {
+    $('#AM_detalleHorarios').empty();
+    $('#AM_detalleHorarios').hide();
+    if ($(this).val() != 0) {
+        var contenido = `<div class="col-md-12"><span style="color:#183b5d;font-weight: bold">Detalles de Horario</span></div>`;
+        AM_datosHorario.forEach(element => {
+            if (element.idHorarioE == $('#r_horarioXE').val()) {
+                contenido += `<div class="row ml-3 mr-4" style="border: 1px dashed #aaaaaa!important;border-radius:5px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <span style="color:#62778c;">Horario:</span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span>${element.descripcion}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span style="color:#62778c;">Hora inicio:</span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span>${element.horaI}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span style="color:#62778c;">Hora fin:</span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span>${element.horaF}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span style="color:#62778c;">Horas obligadas:</span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span>${element.horasObligadas}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <span style="color:#62778c;">Permitir trabajar fuera horario:</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span>${(element.fueraH == 1) ? "Si" : "No"}</span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span style="color:#62778c;">Tolerancia inicio (minutos):</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span>${element.toleranciaI}</span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span style="color:#62778c;">Tolerancia fin (minutos):</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span>${element.toleranciaF}</span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span style="color:#62778c;">Horas adicionales:</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span>${element.horasAdicionales}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+            }
+        });
+        console.log(contenido);
+        $('#AM_detalleHorarios').append(contenido);
+        $('#AM_detalleHorarios').show();
+    }
+});
+
 // * VARIABLES DE MARCACIONES
 var newEntrada = {};
 var newSalida = {};

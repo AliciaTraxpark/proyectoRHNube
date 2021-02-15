@@ -900,6 +900,7 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row pt-2" id="AM_detalleHorarios" style="display: none"></div>
                         <div class="row pt-3" style="display: none" id="rowDatosM">
                             <div class="col-md-12">
                                 {{-- CABEZALES --}}
