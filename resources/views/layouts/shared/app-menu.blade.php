@@ -431,10 +431,9 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                 @endif
                 @if ($invitadod->reporteAsisten==1)
-
-
                 <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
                 <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
+                <a href="/indexTrazabilidad">Trazabilidad de marcaciones</a>
                 @endif
 
 
