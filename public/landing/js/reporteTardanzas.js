@@ -419,7 +419,7 @@ function cargartablaCR(fecha1,fecha2) {
         },
         success: function (data) {
             console.log(data.length);
-            if (data.length != 0) {
+            if (data.length > 100000000000000000000000) {
                 razonSocial = data[0].organi_razonSocial;
                 direccion = data[0].organi_direccion;
                 ruc = data[0].organi_ruc;
