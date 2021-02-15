@@ -637,6 +637,8 @@ class TardanzasController extends Controller
         $i = 0;
         $employee = 0;
 
+        //dd($empleados);
+
         foreach($empleados as $key => $empleado){
             //if($empleado->marcacion != 0){
                 $marcacion = Carbon::parse($empleado->marcacion);
@@ -647,14 +649,14 @@ class TardanzasController extends Controller
                 /*  CAPTURA DENTRO DEL RANGO DE FECHAS  */
                 if($fechaF->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR)){
                     if($i == 0){
-                        //$datos->push("-------------1-------------");
-                        //$datos->push($empleado->emple_id);
+                        $datos->push("-------------1-------------");
+                        $datos->push($empleado->emple_id);
                         $employee = $empleado->emple_id;
                     }
 
                     if($employee != $empleado->emple_id && $cantTardanzas > 0 ){
-                        //$datos->push("-------------2-------------");
-                        //$datos->push($empleado->emple_id);
+                        $datos->push("-------------2-------------");
+                        $datos->push($empleado->emple_id);
                         $datos->push($obj);
                         $cantTardanzas = 0;
                         $tiempoTardanza = 0;
@@ -662,8 +664,8 @@ class TardanzasController extends Controller
                     }
                     /*  COMPRUEBA SI HAY TARDANZA    */
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
-                        //$datos->push("-------------3-------------");
-                        //$datos->push($empleado->emple_id);
+                        $datos->push("-------------3-------------");
+                        $datos->push($empleado->emple_id);
                         $diffS = $marcacion->DiffInSeconds($horario);
                         $tiempoTardanza += $diffS;
                         $cantTardanzas += 1;              
@@ -691,13 +693,12 @@ class TardanzasController extends Controller
                             'perso_nombre' => $empleado->nombre
                         );
                     }
-
                     $i++;
                 }
 
                 if($key == $len - 1 && $cantTardanzas > 0){
-                    //$datos->push("-------------4-------------");
-                    //$datos->push($empleado->emple_id);
+                    $datos->push("-------------4-------------");
+                    $datos->push($empleado->emple_id);
                     $datos->push($obj);
                     $cantTardanzas = 0;
                     $tiempoTardanza = 0;
@@ -705,7 +706,7 @@ class TardanzasController extends Controller
            // }
         }
 
-        //dd($datos);
+        dd($datos);
 
         return response()->json($datos, 200);
     }
@@ -5344,7 +5345,7 @@ class TardanzasController extends Controller
                 $horaHorario = Carbon::parse($empleado->horaH);
                 $horario = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second);
                 $horario_tolerancia = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second)->addMinutes($empleado->horario_tolerancia);
-                if($fechaF1->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR2) && $empleado->marcacion != 0){
+                if($fechaF1->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR2) && is_null($empleado->marcacion) === false){
                     if ($i == 0) {
                         $employee = $empleado->emple_id;
                     }
