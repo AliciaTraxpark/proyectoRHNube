@@ -41,6 +41,23 @@
     body {
         background-color: #ffffff;
     }
+
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background: #ced0d3;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #52565b;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        overflow-y: scroll;
+        max-height: 2em;
+    }
+
+    div.dataTables_processing {
+        z-index: 1;
+    }
 </style>
 {{-- CONTENIDO --}}
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
