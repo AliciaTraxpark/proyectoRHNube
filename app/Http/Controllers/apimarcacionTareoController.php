@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\controladores_tareo;
 use App\dispositivos_tareo;
 use App\dispoTareo_nombres;
+use App\incidencias;
 use App\Mail\SoporteApiTareo;
 use App\Mail\SugerenciaApiTareo;
 use App\marcacion_tareo;
+use App\organizacion;
+use App\usuario_organizacion;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -626,6 +629,41 @@ class apimarcacionTareoController extends Controller
         } else {
             return response()->json(array('status' => 400, 'title' => 'puntos de control no encontrados',
                 'detail' => 'No se encontro puntos de control en esta organizacion'), 400);
+        }
+
+    }
+
+    public function temporal(Request $request){
+
+        $organizaciones=usuario_organizacion::distinct('organi_id')
+        ->where('organi_id','!=',null)->get();
+        $incidencias = [
+            'Permiso o licencia concedidos por el empleador',
+            'Caso fortuito o fuerza mayor',
+            'Enfermedad o accidente',
+            'Lactancia',
+            'Licencia para desempeñar cargo civico',
+            'Permiso y licencia para desempeño de cargos',
+            'Licencia con goce de haber',
+            'Gestiones essalud - social',
+            'Gestiones legales',
+            'Gestiones ocupacionales o medicas',
+            'Visitas a campo',
+            'Reuniones internas',
+            'Reuniones con entidades externas',
+            'Vacaciones',
+            'Descanso médico',
+            'Suspensión'
+        ];
+        foreach($organizaciones as $organizacion){
+            foreach ($incidencias as $inci) {
+                $incidencia = new incidencias();
+                $incidencia->inciden_descripcion = $inci;
+                $incidencia->inciden_descuento = 0;
+                $incidencia->users_id = $organizacion->user_id;
+                $incidencia->organi_id =  $organizacion->organi_id;
+                $incidencia->save();
+            }
         }
 
     }
