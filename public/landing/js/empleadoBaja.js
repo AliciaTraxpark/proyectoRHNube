@@ -1296,8 +1296,11 @@ $("#checkboxFechaIB").on("click", function () {
         $('#m_mes_fechaFB').val(0);
         $('#m_ano_fechaFB').val(0);
         $('#ocultarFechaB').hide();
+        $('#noti_dia_fecha_alta').val(0);
+        $('.alertVencimiento').hide();
     } else {
         $('#ocultarFechaB').show();
+        $('.alertVencimiento').show();
     }
 });
 //* FUNCION PARA VALIDAR FECHA INICIO

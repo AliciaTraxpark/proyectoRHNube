@@ -56,13 +56,6 @@ class MailHappyBirthday extends Command
         
         foreach ($organizaciones as $organizacion) {
             $datos = "";
-           // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
-            /*$empleados = DB::table('empleado')
-                ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
-                ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno')
-                ->get();*/
-
             $admins = DB::table('usuario_organizacion')
                     ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
                     ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')

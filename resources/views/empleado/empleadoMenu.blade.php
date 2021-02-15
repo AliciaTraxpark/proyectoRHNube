@@ -1943,11 +1943,9 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de
-                                    contrato1</strong></label>
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
                             <div class="row w-100 alertVencimiento">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
-                                    se le notifique?</label>
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                 <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>

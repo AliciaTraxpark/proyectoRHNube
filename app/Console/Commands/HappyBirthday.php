@@ -47,29 +47,24 @@ class HappyBirthday extends Command
     public function handle()
     {
         $this->info('Enviar notificación de cumpleaños.');
+        // OBETENEMOS TODAS LAS ORGANIZACIONES
         $organizaciones = organizacion::all('organi_id');
+        // DÍA ACTUAL
         $todayNow = carbon::now()->subHours(5);
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
-
+        // RECORREMOS TODAS LAS ORGANIZACIONES
         foreach ($organizaciones as $organizacion) {
-           // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
-            /*$empleados = DB::table('empleado')
-                    ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
-                    ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                    ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_id')
-                    ->get();*/
-
             $admins = DB::table('usuario_organizacion')
                     ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
                     ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')
                     ->where('usuario_organizacion.organi_id', $organizacion->organi_id)
                     ->where(function ($query) {
-                        $query->where('invitado.gestionHb', '<>', 0)
-                              ->orWhereNull('invitado.gestionHb');
+                        $query->where('invitado.gestionHb', '<>', 0) // VALOR 0 -> NO TIENE PERMISO PARA RECIBIR NOTIFICACIONES DE CUMPLEAÑOS
+                              ->orWhereNull('invitado.gestionHb'); // EL CREADOR DE LA ORGANIZACIÓN TIENE VALOR NULL
                     })
                     ->select('usuario_organizacion.user_id', 'usuario_organizacion.rol_id')
                     ->get();
-
+            // RECORREMOS CADA ADMIN
             foreach($admins as $admin){
               if ($admin->rol_id == 3) {
                 $invitado = DB::table('invitado as in')
