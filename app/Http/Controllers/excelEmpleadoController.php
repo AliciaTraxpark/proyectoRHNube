@@ -186,14 +186,18 @@ class excelEmpleadoController extends Controller
                 }
 
                 //centro_costo
-                $centro_costo = centro_costo::where("centroC_descripcion", "like", "%" . $emp[21] . "%")->where('organi_id', '=', session('sesionidorg'))->first();
+                $centro_costo = centro_costo::where('centroC_descripcion', '=', $emp[21] )
+                ->where('organi_id', '=', session('sesionidorg'))->where('porEmpleado', '=', 1)
+                ->where('codigo','=', $emp[28])->first();
                 if ($emp[21] != null) {
                     if ($centro_costo != null) {
                         $row['idcentro_costo'] = $centro_costo->centroC_id;
                     } else {
                         $centrorow = new centro_costo();
                         $centrorow->centroC_descripcion = $emp[21];
+                        $centrorow->codigo = $emp[28];
                         $centrorow->organi_id = session('sesionidorg');
+                        $centrorow->porEmpleado = 1;
                         $centrorow->estado = 1;
                         $centrorow->save();
                         $row['idcentro_costo'] = $centrorow->centroC_id;

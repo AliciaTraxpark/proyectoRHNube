@@ -65,7 +65,8 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 && isset($row['direccion']) && isset($row['distrito']) && isset($row['tipo_contrato'])
                 && isset($row['inicio_contrato']) && isset($row['fin_contrato']) && isset($row['dias_notificacion'])
                 && isset($row['local']) && isset($row['nivel'])
-                && isset($row['cargo']) && isset($row['area']) && isset($row['centro_costo'])
+                && isset($row['cargo']) && isset($row['area'])
+                && isset($row['codigo_centro_costo']) && isset($row['centro_costo'])
                 && isset($row['condicion_pago']) && isset($row['monto_pago'])) {
 
             } else {
@@ -265,8 +266,31 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                     }
                 } else { $row['areaArray'] = null;}
 
+                //*CODIGO DE CENTRO DE COSTO
+                if ($row['codigo_centro_costo'] != null) {
+                    $codcentro_costo = centro_costo::where('codigo', '=', $row['codigo_centro_costo'])
+                    ->where('centroC_descripcion', '!=', $row['centro_costo'])
+                    ->where('organi_id', '=', session('sesionidorg'))->get()->first();
+                    if($codcentro_costo!=null){
+                        return redirect()->back()->with('alert', 'Código de centro de costo ya registrado. El proceso se interrumpio en la fila:' . $filas);
+                    } else{
+                        if ($row['centro_costo'] == null) {
+                            return redirect()->back()->with('alert', 'Centro de costo vacio. El proceso se interrumpio en la fila:' . $filas);
+
+                        }
+                    }
+
+
+                } else{
+                    if($row['centro_costo'] != null){
+                        return redirect()->back()->with('alert', 'Codigo de centro de costo vacio. El proceso se interrumpio en la fila:' . $filas);
+                    }
+                }
+
+                //*************************** */
                 //centro_costo
-                $centro_costo = centro_costo::where("centroC_descripcion", "like", "%" . $row['centro_costo'] . "%")->where('organi_id', '=', session('sesionidorg'))->get()->first();
+                $centro_costo = centro_costo::where('centroC_descripcion', '=', $row['centro_costo'] )
+                ->where('organi_id', '=', session('sesionidorg'))->where('porEmpleado', '=', 1)->get()->first();
                 if ($row['centro_costo'] != null) {
                     if ($centro_costo != null) {
                         $row['idcentro_costo'] = $centro_costo->centroC_id;
@@ -512,7 +536,8 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         $row['correo'], $numeroCelular, $row['genero'], $fechaNacimieB, $row['name_depNArray'], $row['provNArray'],
                         $row['distNArray'], $row['direccion'], $row['name_depArray'], $row['provArray'], $row['distArray'],
                         $row['tipo_contratoArray'], $row['localArray'], $row['nivelArray'], $row['cargoArray'], $row['areaArray'],
-                        $row['centro_costoArray'], $row['condicionArray'], $row['monto_pago'], $fechaInicioC, $row['codigo'], $fechaFinC,$diasNotificacion];
+                        $row['centro_costoArray'], $row['condicionArray'], $row['monto_pago'], $fechaInicioC, $row['codigo'], $fechaFinC,$diasNotificacion,
+                        $row['codigo_centro_costo']];
                 array_push($this->dnias, $din);
 
                 ++$this->numRows;
