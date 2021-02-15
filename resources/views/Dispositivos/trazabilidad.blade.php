@@ -115,7 +115,7 @@
                                     <th class="text-center">Días Trabajados</th>
                                     <th class="text-center">Hora normal</th>
                                     <th class="text-center">Hora nocturno</th>
-                                    <th class="text-center">Descanso Medico</th>
+                                    <th class="text-center">Descanso Médico</th>
                                     <th class="text-center">Faltas</th>
                                     <th class="text-center">FI</th>
                                     <th class="text-center">FJ</th>

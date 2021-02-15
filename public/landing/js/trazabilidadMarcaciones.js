@@ -11,7 +11,6 @@ var fechaValue = $("#fechaTrazabilidad").flatpickr({
     conjunction: " a ",
     minRange: 1,
     onChange: function (selectedDates) {
-        console.log("ingreso");
         var _this = this;
         var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
         $('#fechaInicio').val(dateArr[0]);
@@ -26,6 +25,9 @@ var fechaValue = $("#fechaTrazabilidad").flatpickr({
 });
 // * INICIALIZAR TABLA
 var table;
+var razonSocial = {};
+var direccion = {};
+var ruc = {};
 function inicializarTabla() {
     table = $("#tablaTrazabilidad").DataTable({
         "searching": false,
@@ -33,6 +35,7 @@ function inicializarTabla() {
         "ordering": false,
         "autoWidth": false,
         "lengthChange": true,
+        retrieve: true,
         "lengthMenu": [10, 25, 50, 75, 100],
         scrollCollapse: false,
         language: {
@@ -118,18 +121,18 @@ function inicializarTabla() {
                         msg += '</row>';
                         return msg;
                     }
-                    var now = new Date();
-                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    var fechaI = $('#fechaInicio').val();
+                    var fechaF = $('#fechaFin').val();
                     //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
+                    var r1 = Addrow(1, [{ k: 'A', v: 'MODO ASISTENCIA EN PUERTA - TRAZABILIDAD DE MARCACIONES', s: 2 }]);
                     var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
                     var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
                     var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
-                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: fechaI + "\t a \t" + fechaF, s: 0 }]);
                     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'CONTROL REGISTRO DE ASISTENCIA',
-                title: 'MODO ASISTENCIA EN PUERTA - CONTROL REGISTRO DE ASISTENCIA',
+                sheetName: 'TRAZABILIDAD DE MARCACIONES',
+                title: 'MODO ASISTENCIA EN PUERTA - TRAZABILIDAD DE MARCACIONES',
                 autoFilter: false,
                 exportOptions: {
                     columns: ":visible:not(.noExport)",
@@ -159,7 +162,7 @@ function inicializarTabla() {
                 text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                 orientation: 'landscape',
                 pageSize: 'A1',
-                title: 'MODO ASISTENCIA EN PUERTA - CONTROL REGISTRO DE ASISTENCIA',
+                title: 'MODO ASISTENCIA EN PUERTA - TRAZABILIDAD DE MARCACIONES',
                 exportOptions: {
                     columns: ":visible:not(.noExport)"
                 },
@@ -232,8 +235,8 @@ function inicializarTabla() {
                     objLayout['hLineColor'] = function (i) { return '#aaa'; };
                     objLayout['vLineColor'] = function (i) { return '#aaa'; };
                     doc.content[0].layout = objLayout;
-                    var now = new Date();
-                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    var fechaI = $('#fechaInicio').val();
+                    var fechaF = $('#fechaFin').val();
                     doc["header"] = function () {
                         return {
                             columns: [
@@ -241,11 +244,11 @@ function inicializarTabla() {
                                     alignment: 'left',
                                     italics: false,
                                     text: [
-                                        { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
+                                        { text: '\nMODO ASISTENCIA EN PUERTA - TRAZABILIDAD DE MARCACIONES', bold: true },
                                         { text: '\n\nRazón Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
                                         { text: '\nDirección:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
                                         { text: '\nNúmero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
-                                        { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                        { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: fechaI + "\t a \t" + fechaF, bold: false }
                                     ],
 
                                     fontSize: 10,
@@ -266,6 +269,27 @@ function inicializarTabla() {
         }
     }).draw();
 }
+var normalize = (function () {
+    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+        to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+        mapping = {};
+
+    for (var i = 0, j = from.length; i < j; i++)
+        mapping[from.charAt(i)] = to.charAt(i);
+
+    return function (str) {
+        var ret = [];
+        for (var i = 0, j = str.length; i < j; i++) {
+            var c = str.charAt(i);
+            if (mapping.hasOwnProperty(str.charAt(i)))
+                ret.push(mapping[c]);
+            else
+                ret.push(c);
+        }
+        return ret.join('');
+    }
+
+})();
 // * INICIALIZAR PLUGIN
 $(function () {
     $('#idsEmpleado').select2({
@@ -291,7 +315,6 @@ function cargarDatos() {
     var fechaI = $('#fechaInicio').val();
     var fechaF = $('#fechaFin').val();
     var idsEmpleado = $('#idsEmpleado').val();
-    console.log(idsEmpleado);
     $.ajax({
         async: false,
         url: "/dataTrazabilidad",
@@ -313,9 +336,15 @@ function cargarDatos() {
             }*/
         },
         success: function (data) {
+            razonSocial = data.organizacion.organi_razonSocial;
+            direccion = data.organizacion.organi_direccion;
+            ruc = data.organizacion.organi_ruc;
+            if ($.fn.DataTable.isDataTable("#tablaTrazabilidad")) {
+                $("#tablaTrazabilidad").DataTable().destroy();
+            }
             $('#tbodyT').empty();
             var tbody = "";
-            for (let index = 0; index < data.length; index++) {
+            for (let index = 0; index < data.marcaciones.length; index++) {
                 var tardanza = 0;
                 var diasTrabajdos = 0;
                 // : HORAS NORMALES
@@ -340,8 +369,8 @@ function cargarDatos() {
                 // : ARRAY FECHA
                 var arrayFecha = [];
                 // : RECORRER DATA PARA CALCULAR DATOS
-                for (let item = 0; item < data[index].data.length; item++) {
-                    var dataCompleta = data[index].data[item];
+                for (let item = 0; item < data.marcaciones[index].data.length; item++) {
+                    var dataCompleta = data.marcaciones[index].data[item];
                     // ! *************************** NORMAL **************************************
                     if (dataCompleta["normal"] != undefined) {
                         dataCompleta["normal"].forEach(element => {
@@ -524,12 +553,22 @@ function cargarDatos() {
                             horasNocturnas = horasNocturnas.add({ "hours": horasTotal, "minutes": minutosTotal, "seconds": segundosTotal });
                         });
                     }
+                    // ! ***************************** INCIDENCIAS ****************************
+                    if (dataCompleta["incidencias"] != undefined) {
+                        dataCompleta["incidencias"].forEach(element => {
+                            element.descripcion = normalize(element.descripcion);
+                            var estado = element.descripcion.search(RegExp(/medic/gi));
+                            if (!(estado === -1)) {
+                                descansoM++;
+                            }
+                        });
+                    }
                 }
                 tbody += `<tr>
                             <td>${index + 1}</td>
-                            <td>${data[index].emple_nDoc}</td>
-                            <td>${data[index].nombres_apellidos}</td>
-                            <td>${data[index].area_descripcion}</td>
+                            <td>${data.marcaciones[index].emple_nDoc}</td>
+                            <td>${data.marcaciones[index].nombres_apellidos}</td>
+                            <td>${data.marcaciones[index].area_descripcion}</td>
                             <td class="text-center">${tardanza}</td>
                             <td class="text-center">${diasTrabajdos}</td>
                             <td class="text-center">${horasNormales.format("HH:mm:ss")}</td>
@@ -551,6 +590,7 @@ function cargarDatos() {
                 </tr>`;
             }
             $('#tbodyT').append(tbody);
+            inicializarTabla();
             $(window).on('resize', function () {
                 $("#tablaTrazabilidad").css('width', '100%');
                 table.draw(false);
@@ -559,3 +599,8 @@ function cargarDatos() {
         error: function (data) { }
     })
 }
+
+$(window).on('resize', function () {
+    $("#tablaTrazabilidad").css('width', '100%');
+    table.draw(false);
+});
