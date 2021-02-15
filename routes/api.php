@@ -78,7 +78,7 @@ Route::post("elegirOrganizacionBio", "apiBiometricoController@elegirOrganizacion
 Route::post("editarDispositivo", "apiBiometricoController@editarDispositivo")->middleware('token')->middleware('apilogger');
 Route::post("empleadosBiometrico", "apiBiometricoController@empleadosBiometrico")->middleware('token')->middleware('apilogger');
 Route::post("empleadosHorarioBi", "apiBiometricoController@empleadosHorarioBi")->middleware('token')->middleware('apilogger');
-Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico3")->middleware('token')->middleware('apilogger');
+Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico3");
 Route::post("historialHorario", "apiBiometricoController@historialHorario")->middleware('token')->middleware('apilogger');
 Route::get("descargarExtractor", "apiBiometricoController@descargarExtractor")->middleware('apilogger');
 /* ------------- REGISTRO DE HUELLAS */
@@ -97,4 +97,5 @@ Route::post("empleadoHorarioTareo", "apimarcacionTareoController@empleadoHorario
 Route::post("ticketSoporteTareo", "apimarcacionTareoController@ticketSoporteTareo")->middleware('token')->middleware('apilogger');
 Route::post("centroCostosTareo", "apimarcacionTareoController@centroCostosTareo")->middleware('token')->middleware('apilogger');
 Route::post("puntoControlTareo", "apimarcacionTareoController@puntoControlTareo")->middleware('token')->middleware('apilogger');
+Route::post("temporal", "apimarcacionTareoController@temporal");
 /* ------------------------------------------------------------- */
