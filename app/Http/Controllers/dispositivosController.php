@@ -684,9 +684,16 @@ class dispositivosController extends Controller
                 'hor.horasObliga as horasObligadas',
                 'hoe.estado'
             )
-            ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
+            ->where(DB::raw('IF(hoe.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start))'), '=', $fecha)
             ->where('mp.organi_id', '=', session('sesionidorg'))
-            ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)'), 'ASC', 'p.perso_nombre', 'ASC')
+            ->orderBy(
+                DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),
+                'ASC',
+                DB::raw('IF(mp.marcaMov_fecha is null, TIME(mp.marcaMov_salida) , TIME(mp.marcaMov_fecha))'),
+                'ASC',
+                'p.perso_nombre',
+                'ASC'
+            )
             ->get();
         // dd(DB::getQueryLog());
         // dd($data);
@@ -2462,7 +2469,29 @@ class dispositivosController extends Controller
 
         return response()->json($horario, 200);
     }
+    // * LISTA DE MARCACIONES AGRUPADAS POR HORARIO
+    public function marcacionesHorarioEmpleado(Request $request)
+    {
+        $fecha = $request->get('fecha');
+        $idEmpleado =  $request->get('idEmpleado');
 
+        $marcaciones = DB::table('marcacion_puerta as mp')
+            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+            ->select(
+                'h.horario_descripcion as descripcion',
+                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                DB::raw('IF(hoe.horarioEmp_id is null, 0, hoe.horarioEmp_id)'),
+
+            )
+            ->where('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))', '=', $fecha)
+            ->where('mp.marcaMov_emple_id', '=', $idEmpleado)
+            ->groupBy(DB::raw('IF(hoe.horarioEmp_id is null, 0, hoe.horarioEmp_id)'))
+            ->get();
+
+        return response()->json($marcaciones, 200);
+    }
     // * CAMBIAR HORARIO DE MARCACIONES
     public function cambiarHorario(Request $request)
     {
