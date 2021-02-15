@@ -1069,26 +1069,6 @@ use Carbon\Carbon;
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">
                                         Nuevo</button>
                                 </div>
-
-                                <div class="col-md-4" id="filter_global">
-                                    <td align="center"><input type="text" class="global_filter form-control
-                                                " id="global_filter" style="height: 35px; "
-                                            placeholder="Buscar por...">
-                                    </td>
-                                </div>
-                                <div class="col-md-2">
-                                    <td align="center">
-                                        <select class="form-control" name="select" id="select" style="height: 35.5px;">
-                                            <option value="2">Documento</option>
-                                            <option value="3">Nombre</option>
-                                            <option value="4" selected>Apellidos</option>
-                                            <option value="9">Cargo</option>
-                                            <option value="10">Área</option>
-                                        </select>
-                                    </td>
-                                </div>
-
-
                                 <div class="col-xl-6">
                                     <div class="form-group row">
                                         <label class="col-lg-2 col-form-label">Área:</label>
@@ -1106,6 +1086,35 @@ use Carbon\Carbon;
 
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group row">
+                                    <label class="col-md-6 col-form-label">Seleccionar por:</label>
+                                    <td align="center">
+                                        <select class="form-control col-md-6" name="select" id="select" style="height: 35.5px;">
+                                            <option value="2">Documento</option>
+                                            <option value="3">Nombre</option>
+                                            <option value="4" selected>Apellidos</option>
+                                            <option value="9">Cargo</option>
+                                            <option value="10">Área</option>
+                                        </select>
+                                    </td>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" id="filter_global">
+                                    <td align="center">
+                                        <input type="text" class="global_filter form-control" id="global_filter"
+                                            style="height: 35px;" placeholder="palabra a buscar...">
+                                    </td>
+                                </div>
+                                <div class="col-md-1 text-right">
+                                    <button type="button" id="selectBtn" class="btn btn-sm mt-1 col-md-8"
+                                    style="background-color: #163552;" > <img
+                                        src="{{ asset('landing/images/loupe (1).svg') }}" height="15"></button>
+                                </div>
+
+
+
+
                             </div>
                             <div id="espera" class="text-center" style="display: none">
 
