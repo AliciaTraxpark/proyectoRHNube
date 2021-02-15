@@ -629,27 +629,27 @@ function RefreshTablaEmpleado() {
                             var that = this;
                             var i;
                             var val1;
-                            $("#select").on("keyup change", function () {
-                                i = $.fn.dataTable.util.escapeRegex(this.value);
+                            $("#selectBtn").on("click", function () {
+                                //*reseteamos para que no coga con cache
+                                that
+                                .search( '' )
+                                .columns().search( '' )
+                                .draw();
+
+                                var selector = $("#select").val();
+
+                                i = $.fn.dataTable.util.escapeRegex(selector);
 
                                 var val = $("#global_filter").val();
-                                if (that.column(i).search() !== this.value) {
-                                    that.column(this.value).search(val).draw();
-                                }
-                                val1 = $.fn.dataTable.util.escapeRegex(
-                                    this.value
-                                );
-                                $("#global_filter").on(
-                                    "keyup change clear",
-                                    function () {
-                                        var val = $(this).val();
-                                        if (that.column(i).search() !== val1) {
-                                            that.column(val1)
-                                                .search(val)
-                                                .draw();
-                                        }
+
+                                //*if valor es diferente null entonces buscamos
+                                if(val!=null || val!=''){
+                                    if (that.column(i).search() !== selector) {
+                                        that.column(selector).search(val).draw();
                                     }
-                                );
+                                }
+
+
                             });
                         });
                 },
@@ -679,9 +679,7 @@ function RefreshTablaEmpleado() {
     });
     $('#tablaEmpleado tbody #tdC').css('display', 'block');
 
-    $('input.global_filter').on('keyup click', function () {
-        filterGlobal();
-    });
+
 
     $('input.column_filter').on('keyup click', function () {
         filterColumn($(this).parents('div').attr('data-column'));
@@ -690,6 +688,7 @@ function RefreshTablaEmpleado() {
     // SELECT DEFECTO PARA BUSQUEDA
     $('#select').val(4).trigger('change');
 }
+
 $('#selectarea').on("change", function (e) {
     console.log($('#selectarea').val());
     RefreshTablaEmpleadoBajaArea();
@@ -836,27 +835,27 @@ function RefreshTablaEmpleadoBajaArea() {
                             var that = this;
                             var i;
                             var val1;
-                            $("#select").on("keyup change", function () {
-                                i = $.fn.dataTable.util.escapeRegex(this.value);
+                            $("#selectBtn").on("click", function () {
+                                //*reseteamos para que no coga con cache
+                                that
+                                .search( '' )
+                                .columns().search( '' )
+                                .draw();
+
+                                var selector = $("#select").val();
+
+                                i = $.fn.dataTable.util.escapeRegex(selector);
 
                                 var val = $("#global_filter").val();
-                                if (that.column(i).search() !== this.value) {
-                                    that.column(this.value).search(val).draw();
-                                }
-                                val1 = $.fn.dataTable.util.escapeRegex(
-                                    this.value
-                                );
-                                $("#global_filter").on(
-                                    "keyup change clear",
-                                    function () {
-                                        var val = $(this).val();
-                                        if (that.column(i).search() !== val1) {
-                                            that.column(val1)
-                                                .search(val)
-                                                .draw();
-                                        }
+
+                                //*if valor es diferente null entonces buscamos
+                                if(val!=null || val!=''){
+                                    if (that.column(i).search() !== selector) {
+                                        that.column(selector).search(val).draw();
                                     }
-                                );
+                                }
+
+
                             });
                         });
                 },
