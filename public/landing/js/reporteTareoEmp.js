@@ -1,13 +1,27 @@
 //* FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
-    mode: "single",
+    mode: "range",
     dateFormat: "Y-m-d",
     altInput: true,
-    altFormat: "D, j F",
+    altFormat: "j F",
     locale: "es",
     maxDate: "today",
     wrap: true,
     allowInput: true,
+    conjunction: " a ",
+    minRange: 1,
+    onChange: function (selectedDates) {
+        var _this = this;
+        var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
+        $('#ID_START').val(dateArr[0]);
+        $('#ID_END').val(dateArr[1]);
+    },
+    onClose: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length == 1) {
+            var fm = moment(selectedDates[0]).add("day", -1).format("YYYY-MM-DD");
+            instance.setDate([fm, selectedDates[0]], true);
+        }
+    }
 });
 // * HORAS PARA INSERTAR ENTRADA Y SALIDA
 var horasE = {};
@@ -37,12 +51,13 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
     $("#fechaInput").change();
-    cambiarF();
+   
+  
 });
 
-function cargartabla(fecha) {
+function cargartabla(fecha1,fecha2) {
     /* ****INICALIZAR VALORES DE SELECTORES****/
-    $("#fechaSwitch").prop("checked", false);
+    $("#fechaSwitch").prop("checked", true);
     $("#checCodigo").prop("checked", true);
     $("#checnumdoc").prop("checked", true);
     $("#checSexo").prop("checked", false);
@@ -51,12 +66,33 @@ function cargartabla(fecha) {
     $("#checPuntocDescrip").prop("checked", false);
     $("#checControl").prop("checked", true);
     /* ************************************** */
-    var idemp = $("#idempleado").val();
+    var idemp = $("#idempleado").val(); console.log('id'+idemp)
+    if (idemp == 0) { alert('no empleado');
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccione empleado.',
+            icon: '/landing/images/alert1.svg',
+        }, {
+            icon_type: 'image',
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return false;
+    }
     $.ajax({
         type: "GET",
-        url: "/tablaTareo",
+        url: "/reporteTareoEmpleado",
         data: {
-            fecha,
+            fecha1,
+            fecha2,
             idemp,
         },
         async: false,
@@ -72,7 +108,7 @@ function cargartabla(fecha) {
             },
         },
         success: function (data) {
-            fechaGlobal = fecha;
+           
             contenidoHorario.length = 0;
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
@@ -136,7 +172,7 @@ function cargartabla(fecha) {
                                 <td>${index + 1}</td>
 
                                 <td class="fechaHid"  name="tiempoSitHi">${moment(
-                                    $("#pasandoV").val()
+                                    data[index].fechaMarcacion
                                 ).format("DD/MM/YYYY")}&nbsp;</td>
                                 <td class="codigoHid">${
                                     data[index].emple_codigo
@@ -301,7 +337,7 @@ function cargartabla(fecha) {
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item dropdown-itemM noExport">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a  style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                             Cambiar a entrada
                                                                         </a>
@@ -309,7 +345,8 @@ function cargartabla(fecha) {
                                                                 </div>
                                                                 <div class="dropdown-item dropdown-itemM noExport">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a 
+                                                                         style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                             Cambiar a salida
                                                                         </a>
@@ -392,7 +429,7 @@ function cargartabla(fecha) {
                                                                     <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                     <div class="dropdown-item dropdown-itemM noExport">
                                                                         <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                            <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <a  style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                 Cambiar a entrada
                                                                             </a>
@@ -400,7 +437,7 @@ function cargartabla(fecha) {
                                                                     </div>
                                                                     <div class="dropdown-item dropdown-itemM noExport">
                                                                         <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                            <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <a  style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                 Cambiar a salida
                                                                             </a>
@@ -768,7 +805,7 @@ function cargartabla(fecha) {
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item dropdown-itemM noExport">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a  style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                             Cambiar a entrada
                                                                         </a>
@@ -776,7 +813,7 @@ function cargartabla(fecha) {
                                                                 </div>
                                                                 <div class="dropdown-item dropdown-itemM noExport">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a  style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                             Cambiar a salida
                                                                         </a>
@@ -901,6 +938,10 @@ function cargartabla(fecha) {
                 var razonSocial = $("#nameOrganizacion").val();
                 var direccion = $("#direccionO").val();
                 var ruc = $("#rucOrg").val();
+                 dni=data[0].emple_nDoc;
+                nombre = data[0].perso_nombre + "\t" + data[0].perso_apPaterno + "\t" + data[0].perso_apMaterno;
+                area = (data[0].area_descripcion == null) ? "------" : data[0].area_descripcion;
+                cargo = (data[0].cargo_descripcion == null) ? "------" : data[0].cargo_descripcion;
 
                 var fechaAsisteDH = moment($("#pasandoV").val()).format(
                     "DD/MM/YYYY"
@@ -977,7 +1018,7 @@ function cargartabla(fecha) {
                                 "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                             customize: function (xlsx) {
                                 var sheet = xlsx.xl.worksheets["sheet1.xml"];
-                                var downrows = 5;
+                                var downrows = 10;
                                 var clRow = $("row", sheet);
                                 clRow[0].children[0].remove();
                                 //update Row
@@ -1000,24 +1041,18 @@ function cargartabla(fecha) {
                                 });
 
                                 function Addrow(index, data) {
-                                    msg = '<row r="' + index + '">';
+                                    msg = `<row r="${index}">`;
                                     for (i = 0; i < data.length; i++) {
                                         var key = data[i].k;
                                         var value = data[i].v;
                                         var bold = data[i].s;
-                                        msg +=
-                                            '<c t="inlineStr" r="' +
-                                            key +
-                                            index +
-                                            '" s="' +
-                                            bold +
-                                            '" >';
-                                        msg += "<is>";
-                                        msg += "<t>" + value + "</t>";
-                                        msg += "</is>";
-                                        msg += "</c>";
+                                        msg += `<c t="inlineStr" r="${key} ${index}" s="${bold}" wpx="149">`;
+                                        msg += `<is>`;
+                                        msg += `<t>${value}</t>`;
+                                        msg += `</is>`;
+                                        msg += `</c>`;
                                     }
-                                    msg += "</row>";
+                                    msg += `</row>`;
                                     return msg;
                                 }
                                 var now = new Date();
@@ -1028,36 +1063,18 @@ function cargartabla(fecha) {
                                     "/" +
                                     now.getFullYear();
                                 //insert
-                                var r1 = Addrow(1, [
-                                    {
-                                        k: "A",
-                                        v: "CONTROL REGISTRO DE TAREO",
-                                        s: 2,
-                                    },
-                                ]);
-                                var r2 = Addrow(2, [
-                                    { k: "A", v: "Razón Social:", s: 2 },
-                                    { k: "C", v: razonSocial, s: 0 },
-                                ]);
-                                var r3 = Addrow(3, [
-                                    { k: "A", v: "Dirección:", s: 2 },
-                                    { k: "C", v: direccion, s: 0 },
-                                ]);
-                                var r4 = Addrow(4, [
-                                    { k: "A", v: "Número de Ruc:", s: 2 },
-                                    { k: "C", v: ruc, s: 0 },
-                                ]);
-                                var r5 = Addrow(5, [
-                                    { k: "A", v: "Fecha:", s: 2 },
-                                    { k: "C", v: fechaAsisteDH, s: 0 },
-                                ]);
-                                sheet.childNodes[0].childNodes[1].innerHTML =
-                                    r1 +
-                                    r2 +
-                                    r3 +
-                                    r4 +
-                                    r5 +
-                                    sheet.childNodes[0].childNodes[1].innerHTML;
+                                var fechas = 'Desde ' + moment($('#ID_START').val()).format('DD/MM/YYYY') + ' Hasta ' + moment($('#ID_END').val()).format('DD/MM/YYYY');
+
+                                var r1 = Addrow(1, [{ k: 'A', v: 'REGISTRO DE TAREO', s: 51 }]);
+                                var r2 = Addrow(2, [{ k: 'A', v: fechas, s: 2 }]);
+                                var r3 = Addrow(3, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                                var r4 = Addrow(4, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                                var r5 = Addrow(5, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                                var r6 = Addrow(7, [{ k: 'A', v: 'DNI:', s: 2 }, { k: 'C', v: dni, s: 0 }]);
+                                var r7 = Addrow(8, [{ k: 'A', v: 'Apellidos y Nombres:', s: 2 }, { k: 'C', v: nombre, s: 0 }]);
+                                var r8 = Addrow(9, [{ k: 'A', v: 'Área:', s: 2 }, { k: 'C', v: area, s: 0 }]);
+                                var r9 = Addrow(10, [{ k: 'A', v: 'Cargo:', s: 2 }, { k: 'C', v: cargo, s: 0 }]);
+                                sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + r9 + sheet.childNodes[0].childNodes[1].innerHTML;
                             },
                             sheetName: "Registro de Tareo",
                             title: "Registro de Tareo",
@@ -1120,7 +1137,7 @@ function cargartabla(fecha) {
                                             "Eliminar marc.",
                                             ""
                                         );
-                                        
+
                                         var cont13=cont12.replace(
                                             "No tiene controlador de Ent.",
                                             "---"
@@ -1172,7 +1189,7 @@ function cargartabla(fecha) {
                                         alignment: "center",
                                     },
                                 };
-                                doc.pageMargins = [20, 120, 20, 30];
+                                doc.pageMargins = [20, 150, 20, 30];
                                 doc.content[1].margin = [30, 0, 30, 0];
                                 var colCount = new Array();
                                 var tr = $("#tablaReport tbody tr:first-child");
@@ -1264,7 +1281,6 @@ function cargartabla(fecha) {
                                                 "Eliminar marc.",
                                                 ""
                                             );
-
                                             var cambiar13 = cambiar12.replace(
                                                 "No tiene controlador de Ent.",
                                             "---"
@@ -1316,6 +1332,7 @@ function cargartabla(fecha) {
                                     (now.getMonth() + 1) +
                                     "/" +
                                     now.getFullYear();
+                                    var fechas = 'Desde ' + moment($('#ID_START').val()).format('DD/MM/YYYY') + ' Hasta ' + moment($('#ID_END').val()).format('DD/MM/YYYY');
                                 doc["header"] = function () {
                                     return {
                                         columns: [
@@ -1328,9 +1345,10 @@ function cargartabla(fecha) {
                                                             "\n REGISTRO DE TAREO",
                                                         bold: true,
                                                     },
+                                                    { text: '\n\Fechas:\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: fechas, bold: false },
                                                     {
                                                         text:
-                                                            "\n\nRazón Social:\t\t\t\t\t\t",
+                                                            "\n\Razón Social:\t\t\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     {
@@ -1339,7 +1357,7 @@ function cargartabla(fecha) {
                                                     },
                                                     {
                                                         text:
-                                                            "\nDirección:\t\t\t\t\t\t\t",
+                                                            "\nDirección:\t\t\t\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     {
@@ -1348,19 +1366,14 @@ function cargartabla(fecha) {
                                                     },
                                                     {
                                                         text:
-                                                            "\nNúmero de Ruc:\t\t\t\t\t",
+                                                            "\nNúmero de Ruc:\t\t\t\t\t\t\t",
                                                         bold: false,
                                                     },
                                                     { text: ruc, bold: false },
-                                                    {
-                                                        text:
-                                                            "\nFecha:\t\t\t\t\t\t\t\t\t",
-                                                        bold: false,
-                                                    },
-                                                    {
-                                                        text: fechaAsisteDH,
-                                                        bold: false,
-                                                    },
+                                                    { text: '\nDNI:\t\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: dni, bold: false },
+                                                    { text: '\nApellidos y Nombres:\t\t\t\t\t', bold: false }, { text: nombre, bold: false },
+                                                    { text: '\nÁrea:\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: area, bold: false },
+                                                    { text: '\nCargo:\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: cargo, bold: false }
                                                 ],
 
                                                 fontSize: 10,
@@ -1418,6 +1431,7 @@ function cargartabla(fecha) {
                         } else {
                             dataT.api().columns(".puntoDescripHid").visible(false);
                         }
+
 
                         setTimeout(function () {
                             $("#tablaReport").DataTable().draw();
@@ -1528,7 +1542,7 @@ function ocultarModif() {
     var permisoMo=$('#modifReporte').val();
     if(permisoMo==0){
         $('.noExport').hide();
-         $('span').tooltip('dispose') 
+         $('a>span').tooltip('dispose') 
         /* $('.notooltipS').html(`<span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
         <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
         No tiene salida
@@ -1542,362 +1556,53 @@ function ocultarModif() {
     }
 }
 
+
 function cambiarF() {
-    f1 = $("#fechaInput").val();
+
+    f1 = $("#ID_START").val();
     f2 = moment(f1).format("YYYY-MM-DD");
-    $("#pasandoV").val(f2);
-    if ($.fn.DataTable.isDataTable("#tablaReport")) {
-        /* $('#tablaReport').DataTable().destroy(); */
+    $('#pasandoV').val(f2);
+    f3 = $("#ID_END").val();
+    if ($('#idempleado').val() == "" || $('#idempleado').val() == null) {
+        $.notifyClose();
+        $.notify(
+            {
+                message:
+                    "\nElegir empleado.",
+                icon: "admin/images/warning.svg",
+            },
+            {
+                position: "fixed",
+                mouse_over: "pause",
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 2000,
+                template:
+                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    "</div>",
+                spacing: 35,
+            }
+        );
+    } else {
+        cargartabla(f2, f3);
     }
 
-    cargartabla(f2);
 }
 
-/* --------------INTERCAMBIAR  ENTRADA Y SALIDA--------------------------------- */
-function intercambiarMar(id) {
-    alertify
-        .confirm("¿Desea intercambiar entrada y salida?", function (e) {
-            if (e) {
-                $.ajax({
-                    async: false,
-                    type: "POST",
-                    url: "/intercambiarTareo",
-                    data: {
-                        id: id,
-                    },
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                            "content"
-                        ),
-                    },
-                    statusCode: {
-                        /*401: function () {
-                            location.reload();
-                        },*/
-                        419: function () {
-                            location.reload();
-                        },
-                    },
-                    success: function (data) {
-                        $("#btnRecargaTabla").click();
-                        $.notifyClose();
-                        $.notify(
-                            {
-                                message: data,
-                                icon: "admin/images/checked.svg",
-                            },
-                            {
-                                icon_type: "image",
-                                allow_dismiss: true,
-                                newest_on_top: true,
-                                delay: 6000,
-                                template:
-                                    '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                                    "</div>",
-                                spacing: 35,
-                            }
-                        );
-                    },
-                    error: function () {},
-                });
-            }
-        })
-        .setting({
-            title: "Intercambiar Marcación",
-            labels: {
-                ok: "Si",
-                cancel: "No",
-            },
-            modal: true,
-            startMaximized: false,
-            reverseButtons: true,
-            resizable: false,
-            closable: false,
-            transition: "zoom",
-            oncancel: function (closeEvent) {},
-        });
-}
-/* ------------------------------------ */
-///////////////////
-// * VARIABLES DE MARCACIONES
-var newEntrada = {};
-var newSalida = {};
-/* ---------FUNCION INSERTAR SALIDA.------- */
-// * MODAL DE INSERTAR SALIDA
-function insertarSalidaModal(hora, id, idH) {
-    var estadoH = false;
-    contenidoHorario.forEach((element) => {
-        if (element.idHorarioE == idH) {
-            if (element.estado == 0) {
-                $("#actualizarH").modal();
-                estadoH = true;
-                return;
-            }
-        }
-    });
-    if (estadoH) return;
-    $("#idMarcacionIS").val(id);
-    $("#i_hora").text(hora);
-    $("#idHorarioIS").val(idH);
-    $("#insertarSalida").modal();
-    horasS = $("#horaSalidaNueva").flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i:s",
-        defaultDate: "00:00:00",
-        time_24hr: true,
-        enableSeconds: true,
-        static: true,
-    });
-}
 
-// * INSERTAR SALIDA
-function insertarSalida() {
-    var id = $("#idMarcacionIS").val();
-    var salida = $("#horaSalidaNueva").val();
-    var horario = $("#idHorarioIS").val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareoregistrarNSalida",
-        data: {
-            id: id,
-            salida: salida,
-            horario: horario,
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            if (data.respuesta != undefined) {
-                $("#i_validS").empty();
-                $("#i_validS").append(data.respuesta);
-                $("#i_validS").show();
-                $('button[type="submit"]').attr("disabled", false);
-                sent = false;
-            } else {
-                $("#i_validS").empty();
-                $("#i_validS").hide();
-                $("#insertarSalida").modal("toggle");
-                $('button[type="submit"]').attr("disabled", false);
-                fechaValue.setDate(fechaGlobal);
-                $("#btnRecargaTabla").click();
-                limpiarAtributos();
-                $.notifyClose();
-                $.notify(
-                    {
-                        message: "\nMarcación modificada.",
-                        icon: "admin/images/checked.svg",
-                    },
-                    {
-                        position: "fixed",
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 5000,
-                        template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
-            }
-        },
-        error: function () {},
-    });
-}
-// * VALIDACION
-$("#formInsertarSalida").attr("novalidate", true);
-$("#formInsertarSalida").submit(function (e) {
-    e.preventDefault();
-    if (
-        $("#horaSalidaNueva").val() == "00:00:00" ||
-        $("#horaSalidaNueva").val() == "00:00:0"
-    ) {
-        $("#i_validS").empty();
-        $("#i_validS").append("Ingresar salida.");
-        $("#i_validS").show();
-        $('button[type="submit"]').attr("disabled", false);
-        return;
-    }
-    $("#i_validS").empty();
-    $("#i_validS").hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
-});
+
 /* ---------------------------------------- */
 
-/* -------------------FUNCIONES INSERTAR ENTRADA----------- */
-function insertarEntradaModal(hora, id, idH) {
-    var estadoH = false;
-    contenidoHorario.forEach((element) => {
-        if (element.idHorarioE == idH) {
-            if (element.estado == 0) {
-                $("#actualizarH").modal();
-                estadoH = true;
-                return;
-            }
-        }
-    });
-    if (estadoH) return;
-    $("#idMarcacionIE").val(id);
-    $("#ie_hora").text(hora);
-    $("#idHorarioIE").val(idH);
-    $("#insertarEntrada").modal();
-    horasE = $("#horasEntradaNueva").flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i:s",
-        defaultDate: "00:00:00",
-        time_24hr: true,
-        enableSeconds: true,
-        static: true,
-    });
-}
-// * INSERTAR ENTRADA
-function insertarEntrada() {
-    var id = $("#idMarcacionIE").val();
-    var entrada = $("#horasEntradaNueva").val();
-    var horario = $("#idHorarioIE").val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareoregistrarNEntrada",
-        data: {
-            id: id,
-            entrada: entrada,
-            horario: horario,
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            if (data.respuesta != undefined) {
-                $("#i_validE").empty();
-                $("#i_validE").append(data.respuesta);
-                $("#i_validE").show();
-                $('button[type="submit"]').attr("disabled", false);
-                sent = false;
-            } else {
-                $("#i_validE").empty();
-                $("#i_validE").hide();
-                $("#insertarEntrada").modal("toggle");
-                $('button[type="submit"]').attr("disabled", false);
-                fechaValue.setDate(fechaGlobal);
-                $("#btnRecargaTabla").click();
-                limpiarAtributos();
-                $.notifyClose();
-                $.notify(
-                    {
-                        message: "\nMarcación modificada.",
-                        icon: "admin/images/checked.svg",
-                    },
-                    {
-                        position: "fixed",
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 5000,
-                        template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
-            }
-        },
-        error: function () {},
-    });
-}
-// * VALIDACION
-$("#formInsertarEntrada").attr("novalidate", true);
-$("#formInsertarEntrada").submit(function (e) {
-    e.preventDefault();
-    if (
-        $("#horasEntradaNueva").val() == "00:00:00" ||
-        $("#horasEntradaNueva").val() == "00:00:0"
-    ) {
-        $("#i_validE").empty();
-        $("#i_validE").append("Ingresar entrada.");
-        $("#i_validE").show();
-        $('button[type="submit"]').attr("disabled", false);
-        return;
-    }
-    $("#i_validE").empty();
-    $("#i_validE").hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
-});
-/* -------------------------------------------------------- */
-// * LIMPIEZA DE CAMPOS
-function limpiarAtributos() {
-    // ? MODAL DE CAMBIAR ENTRADA
-    $("#entradaM").empty();
-    $("#e_valid").empty();
-    $("#e_valid").hide();
-    $("#c_horaE").empty();
-    // ? MODAL DE CAMBIAR SALIDA
-    $("#salidaM").empty();
-    $("#s_valid").empty();
-    $("#s_valid").hide();
-    $("#c_horaS").empty();
-    // ? MODAL DE ASIGNACION A NUEVA MARCACIÓN
-    $("#a_valid").empty();
-    $("#a_valid").hide();
-    $("#horarioM").empty();
-    $("#a_hora").empty();
-    // ? MODAL DE INSERTAR SALIDA
-    $("#i_validS").empty();
-    $("#i_validS").hide();
-    if (horasS.config != undefined) {
-        horasS.setDate("00:00:00");
-    }
-    // ? MODAL DE INSERTAR ENTRADA
-    $("#i_validE").empty();
-    $("#i_validE").hide();
-    if (horasE.config != undefined) {
-        horasE.setDate("00:00:00");
-    }
-    // ? MODAL DE CAMBIAR HORARIO
-    $('#ch_valid').empty();
-    $('#ch_valid').hide();
-    $('#horarioXE').empty();
-    $('#detalleHorarios').empty();
-    $('#detalleHorarios').hide();
-    // ? MODAL DE NUEVA MARCACION
-    $("#v_entrada").prop("checked", false);
-    $("#v_salida").prop("checked", false);
-    $("#nuevaEntrada").prop("disabled", false);
-    $("#nuevaSalida").prop("disabled", false);
-    if (newSalida.config != undefined) {
-        newSalida.setDate("00:00:00");
-    }
-    if (newEntrada.config != undefined) {
-        newEntrada.setDate("00:00:00");
-    }
-    $("#rowDatosM").hide();
-    $("#r_horarioXE").empty();
-}
+
+
 
 /* *************************EVENTOS DE SELECTOR DE COLUMNA ********************************* */
 
@@ -2017,13 +1722,11 @@ $("#checControlSa").change(function (event) {
     } else {
         dataT.api().columns(".controHidSa").visible(false);
     }
-
     var permisoMo=$('#modifReporte').val();
     if(permisoMo==0){
         $('.noExport').hide();
          $('span').tooltip('dispose') 
     }
-
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
         $("#tablaReport").DataTable().draw(false);
@@ -2038,1346 +1741,4 @@ $(document).on("click", ".allow-focus", function (e) {
 
 /* ************************************************ */
 
-//*FUNCION AGREGAR PUNTO DE CONTROL***************
-$("#selectPuntoC").select2({
-    placeholder: "Seleccione punto de control",
-});
-function agregarPuntoC(idMarcacion) {
-    $("#idMarcacionPC").val(idMarcacion);
 
-    /* PARA SELECT DE PUNTO DE CONTROL */
-    $("#selectPuntoC").empty();
-    var container = $("#selectPuntoC");
-
-    $.ajax({
-        async: false,
-        url: "/listPuntoControl",
-        method: "GET",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option = `<option value="" disabled selected>Seleccionar punto de control</option>`;
-
-            /* AGREGANDO OPTIONS*/
-            data.forEach((element) => {
-                option += `<option value="${element.id}">${element.descripcion} </option>`;
-            });
-            container.append(option);
-
-            $("#insertarPuntoC").modal("show");
-        },
-        error: function () {},
-    });
-}
-//*NSERTAR PUNTO DE CONTROL
-function insertarPuntoC() {
-    let idMarcacion = $("#idMarcacionPC").val();
-    let idPunto = $("#selectPuntoC").val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareoregistrarPunto",
-        data: {
-            idMarcacion,
-            idPunto,
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            $("#btnRecargaTabla").click();
-            $("#insertarPuntoC").modal("hide");
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nPunto de control agregado.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-        },
-        error: function () {},
-    });
-}
-/* ********************************************* */
-
-//******************AGREGAR ACTIVIDAD*********************************** */
-function agregarActiv(idMarcacion) {
-    $("#idMarcacionACT").val(idMarcacion);
-
-    /* PARA SELECT DE ACTIVIDAD */
-    $("#selectActiv").empty();
-    var container = $("#selectActiv");
-
-    /* PARA SELECT DE SUBACTIVIDAD */
-    $("#selectSubActiv").empty();
-
-    $.ajax({
-        async: false,
-        url: "/listActividadTareo",
-        method: "GET",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option = `<option value="" disabled selected>Seleccionar actividad</option>`;
-
-            /* AGREGANDO OPTIONS*/
-            data.forEach((element) => {
-                if (element.conSub == 1) {
-                    option += `<option value="${element.Activi_id}">${element.Activi_Nombre} </option>`;
-                } else {
-                    option += `<option value="${element.Activi_id}" disabled>${element.Activi_Nombre} (Sin subactividades)</option>`;
-                }
-            });
-            container.append(option);
-
-            $("#selectSubActiv").prop("disabled", true);
-
-            $("#insertarActivMo").modal("show");
-        },
-        error: function () {},
-    });
-}
-//************************************************************************/
-
-//*******************SELECCIONAR SUBACTIVIDADES POR ACTIVIDAD
-$(function () {
-    $("#selectActiv").on("change", function () {
-        $("#selectSubActiv").empty();
-        var containerSub = $("#selectSubActiv");
-
-        let valorActiv = $("#selectActiv").val();
-        console.log(valorActiv);
-        $.ajax({
-            async: false,
-            url: "/listActividadTareo",
-            method: "GET",
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                /*419: function () {
-                    location.reload();
-                }*/
-            },
-            success: function (data) {
-                var option2 = `<option value="" disabled selected>Seleccionar subactividad</option>`;
-
-                /* AGREGANDO OPTIONS*/
-                data.forEach((element) => {
-                    //*PONIENDO SUBACTIVIDADES
-                    element.subactividades.forEach((element2) => {
-                        if (element2.Activi_id == valorActiv) {
-                            option2 += `<option value="${element2.idsubActividad}" >${element2.subAct_nombre} </option>`;
-                        }
-                    });
-                });
-
-                containerSub.append(option2);
-                $("#selectSubActiv").prop("disabled", false);
-            },
-            error: function () {},
-        });
-    });
-});
-//********************************************************* */
-
-//* INSERTAR ACTIVIDAD
-function insertarActiv() {
-    let idMarcacion = $("#idMarcacionACT").val();
-    let idActiv = $("#selectActiv").val();
-    let idSubact = $("#selectSubActiv").val();
-
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareoregistrarActiv",
-        data: {
-            idMarcacion,
-            idActiv,
-            idSubact,
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            $("#btnRecargaTabla").click();
-            $("#insertarActivMo").modal("hide");
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nActividad agregada.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-        },
-        error: function () {},
-    });
-}
-//****************************************
-
-//*SUBACTIVIDADES-----------------------------------------
-function agregarSubAct(idMarcacion) {
-    $("#idMarcacionSACT").val(idMarcacion);
-
-    /* PARA SELECT DE ACTIVIDAD */
-    $("#selectSubActiv2").empty();
-    var container = $("#selectSubActiv2");
-
-    $("#divActi").hide();
-
-    $.ajax({
-        async: false,
-        url: "/listActividadTareo",
-        method: "GET",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option2 = `<option value="" disabled selected>Seleccionar subactividad</option>`;
-
-            /* AGREGANDO OPTIONS*/
-            data.forEach((element) => {
-                //*PONIENDO SUBACTIVIDADES
-                element.subactividades.forEach((element2) => {
-                    option2 += `<option value="${element2.idsubActividad}" >${element2.subAct_nombre} </option>`;
-                });
-            });
-            container.append(option2);
-
-            $("#selectSubActiv").prop("disabled", true);
-
-            $("#insertarSubMo").modal("show");
-        },
-        error: function () {},
-    });
-}
-
-//*******************SELECCIONAR SUBACTIVIDADES y mostrar ACTIVIDAD
-$(function () {
-    $("#selectSubActiv2").on("change", function () {
-        let valorActiv = $("#selectSubActiv2").val();
-        console.log(valorActiv);
-        $.ajax({
-            async: false,
-            url: "/listActividadTareo",
-            method: "GET",
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                /*419: function () {
-                    location.reload();
-                }*/
-            },
-            success: function (data) {
-                /* AGREGANDO OPTIONS*/
-                data.forEach((element) => {
-                    //*PONIENDO SUBACTIVIDADES
-                    element.subactividades.forEach((element2) => {
-                        if (element2.idsubActividad == valorActiv) {
-                            $("#idActi").val(element2.Activi_id);
-                            $("#actividadSub").text(element.Activi_Nombre);
-                        }
-                    });
-                });
-                $("#divActi").show();
-            },
-            error: function () {},
-        });
-    });
-});
-
-//* INSERTAR SUBACTIVIDAD
-function insertarSubac() {
-    let idMarcacion = $("#idMarcacionSACT").val();
-    let idActiv = $("#idActi").val();
-    let idSubact = $("#selectSubActiv2").val();
-
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareoregistrarActiv",
-        data: {
-            idMarcacion,
-            idActiv,
-            idSubact,
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            $("#btnRecargaTabla").click();
-            $("#insertarSubMo").modal("hide");
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nSubactividad agregada.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-        },
-        error: function () {},
-    });
-}
-//********************************************************* */
-
-//* AGREGAR CONTROLADOR ENTRADA*****************************
-
-function agregarControE(idMarcacion, entrada) {
-    //verificamos si tiene entrada
-    if (entrada != 0) {
-        let formatEn = moment(entrada).format("HH:mm:ss");
-
-        $("#i_horaContEntrada").text(formatEn);
-
-        $("#idMarcacionContEntrada").val(idMarcacion);
-
-        /* PARA SELECT DE CONTROLADOR */
-        $("#selectContEntrada").empty();
-        var container = $("#selectContEntrada");
-
-        $.ajax({
-            async: false,
-            url: "/listControladores",
-            method: "GET",
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                /*419: function () {
-                location.reload();
-            }*/
-            },
-            success: function (data) {
-                var option = `<option value="" disabled selected>Seleccionar controlador</option>`;
-
-                /* AGREGANDO OPTIONS*/
-                data.forEach((element) => {
-                    option += `<option value="${element.idcontroladores_tareo}">${element.nombre} </option>`;
-                });
-                container.append(option);
-
-                $("#insertarContEntradaModal").modal("show");
-            },
-            error: function () {},
-        });
-    } else {
-        $.notifyClose();
-        $.notify(
-            {
-                message: "\nSin marcacion de entrada",
-                icon: "admin/images/warning.svg",
-            },
-            {
-                position: "fixed",
-                mouse_over: "pause",
-                placement: {
-                    from: "top",
-                    align: "center",
-                },
-                icon_type: "image",
-                newest_on_top: true,
-                delay: 2000,
-                template:
-                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                    "</div>",
-                spacing: 35,
-            }
-        );
-    }
-}
-//**** */
-
-//*INSERTAR A BD CONTROLADOR DE ENTRADA
-function insertarContEntrada() {
-    let idMarcacion = $("#idMarcacionContEntrada").val();
-    let idControl = $("#selectContEntrada").val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareoregistrarContE",
-        data: {
-            idMarcacion,
-            idControl,
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            $("#btnRecargaTabla").click();
-            $("#insertarContEntradaModal").modal("hide");
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nControlador agregado.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-        },
-        error: function () {},
-    });
-}
-//************************************************ */
-
-//*AGREGAR CONTROLADOR SALIDA**********************************
-function agregarControSa(idMarcacion, salida) {
-    //verificamos si tiene entrada
-    if (salida != 0) {
-        let formatEn = moment(salida).format("HH:mm:ss");
-
-        $("#i_horaContSalida").text(formatEn);
-
-        $("#idMarcacionContSalida").val(idMarcacion);
-
-        /* PARA SELECT DE CONTROLADOR */
-        $("#selectContSalida").empty();
-        var container = $("#selectContSalida");
-
-        $.ajax({
-            async: false,
-            url: "/listControladores",
-            method: "GET",
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                /*419: function () {
-                location.reload();
-            }*/
-            },
-            success: function (data) {
-                var option = `<option value="" disabled selected>Seleccionar controlador</option>`;
-
-                /* AGREGANDO OPTIONS*/
-                data.forEach((element) => {
-                    option += `<option value="${element.idcontroladores_tareo}">${element.nombre} </option>`;
-                });
-                container.append(option);
-
-                $("#insertarContSalidaModal").modal("show");
-            },
-            error: function () {},
-        });
-    } else {
-        $.notifyClose();
-        $.notify(
-            {
-                message: "\nSin marcacion de salida",
-                icon: "admin/images/warning.svg",
-            },
-            {
-                position: "fixed",
-                mouse_over: "pause",
-                placement: {
-                    from: "top",
-                    align: "center",
-                },
-                icon_type: "image",
-                newest_on_top: true,
-                delay: 2000,
-                template:
-                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                    "</div>",
-                spacing: 35,
-            }
-        );
-    }
-}
-
-//*INSERTAR A BD CONTROLADOR DE SALIDA
-function insertarContSalida() {
-    let idMarcacion = $("#idMarcacionContSalida").val();
-    let idControl = $("#selectContSalida").val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareoregistrarContS",
-        data: {
-            idMarcacion,
-            idControl,
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            $("#btnRecargaTabla").click();
-            $("#insertarContSalidaModal").modal("hide");
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nControlador agregado.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-        },
-        error: function () {},
-    });
-}
-
-//*********************************************************** */
-// ! ********************************** ELIMINAR MARCACIÓN *****************************************************
-// * ELIMINAR MARCACION
-function eliminarM(id, tipo, idHE) {
-    $('a').css('pointer-events', 'none');
-    var estadoH = false;
-    contenidoHorario.forEach(element => {
-        if (element.idHorarioE == idHE) {
-            if (element.estado == 0) {
-                $('#actualizarH').modal();
-                estadoH = true;
-                return;
-            }
-        }
-    });
-    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
-    alertify
-        .confirm("¿Desea eliminar marcación si o no?", function (
-            e
-        ) {
-            if (e) {
-                $.ajax({
-                    async: false,
-                    type: "POST",
-                    url: "/TareoeliminarMarcacion",
-                    data: {
-                        id: id,
-                        tipo: tipo
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        /*401: function () {
-                            location.reload();
-                        },*/
-                        419: function () {
-                            location.reload();
-                        }
-                    },
-                    success: function (data) {
-                       /*  fechaValue.setDate(fechaGlobal); */
-                        $('#btnRecargaTabla').click();
-                        $.notifyClose();
-                        $.notify({
-                            message: data,
-                            icon: '/landing/images/alert1.svg',
-                        }, {
-                            icon_type: 'image',
-                            allow_dismiss: true,
-                            newest_on_top: true,
-                            delay: 6000,
-                            template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                                '</div>',
-                            spacing: 35
-                        });
-                    },
-                    error: function () { }
-                });
-            }
-        })
-        .setting({
-            title: "Eliminar Marcación",
-            labels: {
-                ok: "Si",
-                cancel: "No",
-            },
-            modal: true,
-            startMaximized: false,
-            reverseButtons: true,
-            resizable: false,
-            closable: false,
-            transition: "zoom",
-            oncancel: function (closeEvent) {
-            },
-        });
-    $('a').css('pointer-events', 'auto');
-}
-/* ----------------------------------------------------------------- */
-// ! ********************************** ASIGNAR A NUEVA MARCACIÓN *********************************************
-// * ASIGNAR NUEVA MARCACION
-function asignarNuevaM(id, hora, tipo, horario) {
-    $('a').css('pointer-events', 'none');
-    var estadoH = false;
-    contenidoHorario.forEach(element => {
-        if (element.idHorarioE == horario) {
-            if (element.estado == 0) {
-                $('#actualizarH').modal();
-                estadoH = true;
-                return;
-            }
-        }
-    });
-    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
-    $('#idMarcacionA').val(id);
-    $('#tipoM').val(tipo);
-    $('#a_hora').text(hora);
-    if (tipo == 1) {
-        $('#img_a').attr("src", "landing/images/entradaD.svg");
-    } else {
-        $('#img_a').attr("src", "landing/images/salidaD.svg");
-    }
-    $('#horarioM').empty();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareohorariosxMarcacion",
-        data: {
-            id: id,
-            tipo: tipo
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            var option = `<option value="0" selected>Sin horario</option>`;
-            for (let index = 0; index < data.length; index++) {
-                option += `<option value="${data[index].id}">Horario: ${data[index].horario_descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
-            }
-            $('#horarioM').append(option);
-            $('#horarioM').val(horario).trigger("change");
-        },
-        error: function () { }
-    });
-    $('#asignacionMarcacion').modal();
-    $('#asignacionM').val(tipo).trigger('change');
-    $('a').css('pointer-events', 'auto');
-    sent = false;
-}
-// * GUARDAR ASIGNACION
-function guardarAsignacion() {
-    var id = $('#idMarcacionA').val();
-    var idHorario = $('#horarioM').val();
-    var tipoM = $('#tipoM').val();
-    var tipo = $('#asignacionM').val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareoasignacionNew",
-        data: {
-            id: id,
-            idHorario: idHorario,
-            tipoM: tipoM,
-            tipo: tipo
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            if (data.respuesta == undefined) {
-                $('#a_valid').empty();
-                $('#a_valid').hide();
-                /* fechaValue.setDate(fechaGlobal); */
-                $('#btnRecargaTabla').click();
-                $('#asignacionMarcacion').modal('toggle');
-                $('button[type="submit"]').attr("disabled", false);
-                limpiarAtributos();
-            } else {
-                $('#a_valid').empty();
-                $('#a_valid').append(data.respuesta);
-                $('#a_valid').show();
-                sent = false;
-                $('button[type="submit"]').attr("disabled", false);
-            }
-        },
-        error: function () { }
-    });
-}
-$('#formGuardarAsignacion').attr('novalidate', true);
-$('#formGuardarAsignacion').submit(function (e) {
-    e.preventDefault();
-    if ($("#horarioM").val() == "" || $("#horarioM").val() == null) {
-        $('#a_valid').empty();
-        $('#a_valid').append("Seleccionar horario.");
-        $('#a_valid').show();
-        $('button[type="submit"]').attr("disabled", false);
-        sent = false;
-        return;
-    }
-    if ($("#asignacionM").val() == "" || $("#asignacionM").val() == null) {
-        $('#a_valid').empty();
-        $('#a_valid').append("Seleccionar marcación.");
-        $('#a_valid').show();
-        $('button[type="submit"]').attr("disabled", false);
-        sent = false;
-        return;
-    }
-    if (!sent) {
-        sent = true;
-        $('#a_valid').empty();
-        $('#a_valid').hide();
-        $('button[type="submit"]').attr("disabled", true);
-        this.submit();
-    }
-});
-/* ---------------------------------------------------------------------------- */
-// ! *********************************** CONVERTIR ORDEN ******************************************************
-// * CONVERTIR ORDEN
-function convertirOrden(id, idHE) {
-    $('a').css('pointer-events', 'none');
-    var estadoH = false;
-    contenidoHorario.forEach(element => {
-        if (element.idHorarioE == idHE) {
-            if (element.estado == 0) {
-                $('#actualizarH').modal();
-                estadoH = true;
-                return;
-            }
-        }
-    });
-    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
-    alertify
-        .confirm("¿Desea Convertir orden si o no?", function (
-            e
-        ) {
-            if (e) {
-                $.ajax({
-                    async: false,
-                    type: "POST",
-                    url: "/TareoconvertirTiempos",
-                    data: {
-                        id: id
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        /*401: function () {
-                            location.reload();
-                        },*/
-                        419: function () {
-                            location.reload();
-                        }
-                    },
-                    success: function (data) {
-                        if (data.respuesta == undefined) {
-                          /*   fechaValue.setDate(fechaGlobal); */
-                            $('#btnRecargaTabla').click();
-                            $.notifyClose();
-                            $.notify(
-                                {
-                                    message: "\nMarcación modificada.",
-                                    icon: "admin/images/checked.svg",
-                                },
-                                {
-                                    position: "fixed",
-                                    icon_type: "image",
-                                    newest_on_top: true,
-                                    delay: 5000,
-                                    template:
-                                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                        '<span data-notify="title">{1}</span> ' +
-                                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                                        "</div>",
-                                    spacing: 35,
-                                }
-                            );
-                        } else {
-                            $.notifyClose();
-                            $.notify(
-                                {
-                                    message: data.respuesta,
-                                    icon: "admin/images/warning.svg",
-                                },
-                                {
-                                    position: "fixed",
-                                    mouse_over: "pause",
-                                    placement: {
-                                        from: "top",
-                                        align: "center",
-                                    },
-                                    icon_type: "image",
-                                    newest_on_top: true,
-                                    delay: 2000,
-                                    template:
-                                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                        '<span data-notify="title">{1}</span> ' +
-                                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                        "</div>",
-                                    spacing: 35,
-                                }
-                            );
-                        }
-                    },
-                    error: function () { }
-                });
-            }
-        })
-        .setting({
-            title: "Modificar Marcación",
-            labels: {
-                ok: "Si",
-                cancel: "No",
-            },
-            modal: true,
-            startMaximized: false,
-            reverseButtons: true,
-            resizable: false,
-            closable: false,
-            transition: "zoom",
-            oncancel: function (closeEvent) {
-            },
-        });
-    $('a').css('pointer-events', 'auto');
-}
-/* -------------------------------------------------------------------------------------- */
-// ! *********************************** CAMBIAR A SALIDA ****************************************************
-// * FUNCION DE LISTA DE ENTRADAS CON SALIDAS NULL
-function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
-    $('a').css('pointer-events', 'none');
-    var estadoH = false;
-    contenidoHorario.forEach(element => {
-        if (element.idHorarioE == idHE) {
-            if (element.estado == 0) {
-                $('#actualizarH').modal();
-                estadoH = true;
-                return;
-            }
-        }
-    });
-    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
-    $('#entradaM').empty();
-    $('#c_horaE').text(hora);
-    $('#c_tipoE').val(tipo);
-    $('#listaEntradasMarcacion').modal();
-    $('#idMarcacionE').val(id);
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareolistaMarcacionE",
-        data: {
-            fecha: fecha,
-            idEmpleado: idEmpleado
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            if (data.length != 0) {
-                var container = `<option value="" disabled selected>Seleccionar entrada</option>`;
-                for (let index = 0; index < data.length; index++) {
-                    container += `<optgroup label="Horario ${data[index].horario}">`;
-                    data[index].data.forEach(element => {
-                        if (element.id == id) {
-                            container += `<option value="${element.id}" selected="selected">
-                                    ${moment(element.entrada).format("HH:mm:ss")}
-                                </option>`;
-                        } else {
-                            container += `<option value="${element.id}">
-                                    ${moment(element.entrada).format("HH:mm:ss")}
-                                </option>`;
-                        }
-                    });
-                    container += `</optgroup>`;
-                }
-            } else {
-                var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
-            }
-            console.log(container);
-            $('#entradaM').append(container);
-            imagenesEntrada();
-        },
-        error: function () { }
-    });
-    sent = false;
-    $('a').css('pointer-events', 'auto');
-}
-// * FUNCION DE CAMBIAR SALIDA
-function cambiarSalidaM() {
-    var idCambiar = $('#idMarcacionE').val();
-    var idMarcacion = $('#entradaM').val();
-    var tipo = $('#c_tipoE').val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareocambiarSM",
-        data: {
-            idCambiar: idCambiar,
-            idMarcacion: idMarcacion,
-            tipo: tipo
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            if (data.respuesta == undefined) {
-                $('#e_valid').hide();
-                $('#listaEntradasMarcacion').modal('toggle');
-                $('button[type="submit"]').attr("disabled", false);
-               /*  fechaValue.setDate(fechaGlobal); */
-                $('#btnRecargaTabla').click();
-                $.notifyClose();
-                $.notify(
-                    {
-                        message: "\nMarcación modificada.",
-                        icon: "admin/images/checked.svg",
-                    },
-                    {
-                        position: "fixed",
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 5000,
-                        template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
-            } else {
-                $('#e_valid').empty();
-                $('#e_valid').append(data.respuesta);
-                $('#e_valid').show();
-                $('button[type="submit"]').attr("disabled", false);
-                sent = false;
-            }
-        },
-        error: function () {
-        }
-    });
-}
-// * COMBOX DE ENTRADA
-function imagenesEntrada() {
-    function formatState(state) {
-        if (!state.id) {
-            return state.text;
-        }
-        var baseUrl = "landing/images/entradaD.svg";
-        var $state = $(
-            `<span>Entrada : <img src="${baseUrl}" height="12" class="ml-1 mr-1" /> ${state.text} </span>`
-        );
-        return $state;
-    };
-    $("#entradaM").select2({
-        templateResult: formatState
-    });
-}
-// * VALIDACION
-$('#formCambiarSalidaM').attr('novalidate', true);
-$('#formCambiarSalidaM').submit(function (e) {
-    e.preventDefault();
-    if ($("#entradaM").val() == "" || $("#entradaM").val() == null) {
-        $('#e_valid').empty();
-        $('#e_valid').append("Seleccionar marcación.");
-        $('#e_valid').show();
-        $('button[type="submit"]').attr("disabled", false);
-        sent = false;
-        return;
-    }
-    if (!sent) {
-        sent = true;
-        $('#e_valid').empty();
-        $('#e_valid').hide();
-        $('button[type="submit"]').attr("disabled", true);
-        this.submit();
-    }
-});
-
-/* ----------------------------------------------------------------------------------------- */
-// ! *********************************** CAMBIAR A ENTRADA ********************************************
-// * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
-function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
-    $('a').css('pointer-events', 'none');
-    var estadoH = false;
-    contenidoHorario.forEach(element => {
-        if (element.idHorarioE == idHE) {
-            if (element.estado == 0) {
-                $('#actualizarH').modal();
-                estadoH = true;
-                return;
-            }
-        }
-    });
-    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
-    $('#salidaM').empty();
-    $('#c_horaS').text(hora);
-    $('#c_tipoS').val(tipo);
-    $('#listaSalidasMarcacion').modal();
-    $('#idMarcacion').val(id);
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareolistaMarcacionS",
-        data: {
-            fecha: fecha,
-            idEmpleado: idEmpleado
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            if (data.length != 0) {
-                var container = `<option value="" disabled selected>Seleccionar salida</option>`;
-                for (let index = 0; index < data.length; index++) {
-                    container += `<optgroup label="Horario ${data[index].horario}">`;
-                    data[index].data.forEach(element => {
-                        if (element.id == id) {
-                            container += `<option value="${element.id}" selected="selected">
-                                    ${moment(element.salida).format("HH:mm:ss")}
-                                </option>`;
-                        } else {
-                            container += `<option value="${element.id}">
-                                    ${moment(element.salida).format("HH:mm:ss")}
-                                </option>`;
-                        }
-                    });
-                    container += `</optgroup>`;
-                }
-            } else {
-                var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
-            }
-            $('#salidaM').append(container);
-            imagenesSalida();
-        },
-        error: function () { }
-    });
-    sent = false;
-    $('a').css('pointer-events', 'auto');
-}
-// * FUNCION DE CAMBIAR ENTRADA
-function cambiarEntradaM() {
-    var idCambiar = $('#idMarcacion').val();
-    var idMarcacion = $('#salidaM').val();
-    var tipo = $('#c_tipoS').val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/TareocambiarEM",
-        data: {
-            idCambiar: idCambiar,
-            idMarcacion: idMarcacion,
-            tipo: tipo
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            if (data.respuesta == undefined) {
-                $('#s_valid').hide();
-                $('#listaSalidasMarcacion').modal('toggle');
-                $('button[type="submit"]').attr("disabled", false);
-              /*   fechaValue.setDate(fechaGlobal); */
-                $('#btnRecargaTabla').click();
-                limpiarAtributos();
-                $.notifyClose();
-                $.notify(
-                    {
-                        message: "\nMarcación modificada.",
-                        icon: "admin/images/checked.svg",
-                    },
-                    {
-                        position: "fixed",
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 5000,
-                        template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
-            } else {
-                sent = false;
-                $('button[type="submit"]').attr("disabled", false);
-                $('#s_valid').append(data.respuesta);
-                $('#s_valid').show();
-            }
-        },
-        error: function () {
-        }
-    });
-}
-// * COMBOX DE SALIDA
-function imagenesSalida() {
-    function formatState(state) {
-        if (!state.id) {
-            return state.text;
-        }
-        var baseUrl = "landing/images/salidaD.svg";
-        var $state = $(
-            `<span>Salida : <img src="${baseUrl}" height="12" class="ml-1 mr-1" /> ${state.text} </span>`
-        );
-        return $state;
-    };
-    $("#salidaM").select2({
-        templateResult: formatState
-    });
-}
-// * VALIDACION
-$('#formCambiarEntradaM').attr('novalidate', true);
-$('#formCambiarEntradaM').submit(function (e) {
-    e.preventDefault();
-    if ($("#salidaM").val() == "" || $("#salidaM").val() == null) {
-        $('#s_valid').empty();
-        $('#s_valid').append("Seleccionar marcación.");
-        $('#s_valid').show();
-        $('button[type="submit"]').attr("disabled", false);
-        sent = false;
-        return;
-    }
-    if (!sent) {
-        sent = true;
-        $('#s_valid').empty();
-        $('#s_valid').hide();
-        $('button[type="submit"]').attr("disabled", true);
-        this.submit();
-    }
-});
-/* ---------------------------------------------------------------------------------- */
-$('#areaT').on("change", function (e) {
-    /* fechaDefectoT(); */
-    var area = $(this).val();
-    if(area.length==0){
-        $("#idempleado > option").prop("selected", false);
-        $("#idempleado").trigger("change");
-        return false;
-    }
-    let textSelec = $('select[id="areaT"] option:selected:last').text();
-    let selector = textSelec.split(' ')[0];
-    console.log(area);
-/*     $('#idempleado').empty(); */
-    $.ajax({
-        async: false,
-        url: "/TareoselectEmp",
-        method: "GET",
-        data: {
-            area: area,
-            selector: selector
-
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            /* var select = "";
-            for (let i = 0; i < data.length; i++) {
-                select += `<option value="${data[i].emple_id}">${data[i].nombre} ${data[i].apPaterno} ${data[i].apMaterno}</option>`
-            }
-            $('#idempleado').append(select); */
-            $("#idempleado > option").prop("selected", false);
-                $("#idempleado").trigger("change");
-
-                    $.each(data, function (index, value1) {
-                        $(
-                            "#idempleado > option[value='" +
-                                value1.emple_id +
-                                "']"
-                        ).prop("selected", "selected");
-                        $("#idempleado").trigger("change");
-                    });
-
-        },
-        error: function () { }
-    });
-});

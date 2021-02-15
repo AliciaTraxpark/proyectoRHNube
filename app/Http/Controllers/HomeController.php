@@ -108,6 +108,7 @@ class HomeController extends Controller
                 ->join('usuario_organizacion as uo', 'o.organi_id', '=', 'uo.organi_id')
                 ->join('rol as r', 'uo.rol_id', '=', 'r.rol_id')
                 ->where('uo.user_id', '=', Auth::user()->id)
+                ->where('o.organi_estado', '=', 1)
                 ->get();
             /*  dd($organizacion); */
             return view('elegirEmpresa', ['organizacion' => $organizacion]);

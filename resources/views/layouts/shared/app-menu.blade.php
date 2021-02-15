@@ -12,7 +12,18 @@ use Illuminate\Support\Facades\DB;
 
     #sidebar-menu>ul>li>a {
         padding: 9px 30px;
-        font-size: 14px;
+        font-size: 12px;
+    }
+    #sidebar-menu>ul>li>ul>li>a {
+        padding: 7px 30px;
+        font-size: 12px;
+    }
+    #sidebar-menu>ul>li>ul>li>ul>li>a {
+        padding: 7px 30px;
+        font-size: 12px;
+    }
+    #sidebar-menu .menu-arrow{
+        top:9px;
     }
 
     .li-plan {
@@ -228,6 +239,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/dispositivosTareo">Dispositivos</a>
                 <a href="/controladoresTareo">Controladores</a>
                 <a href="/reporteTareo">Detalle de tareo</a>
+                <a href="/reporteFechaTareo">Reporte de tareo por fecha</a>
+                <a href="/reporteEmpleadoTareo">Reporte de tareo por empleado</a>
 
 
             </li>
@@ -448,6 +461,10 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                 @if ($permiso_invitado->modifModoTareo==1)
                 <a href="/reporteTareo">Detalle de tareo</a>
+                @endif
+                @if ($permiso_invitado->verModoTareo==1)
+                <a href="/reporteFechaTareo">Reporte de tareo por fecha</a>
+                <a href="/reporteEmpleadoTareo">Reporte de tareo por empleado</a>
                 @endif
             </li>
         </ul>

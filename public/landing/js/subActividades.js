@@ -1,4 +1,4 @@
-$.fn.select2.defaults.set("language", "es");
+$.fn.select2.defaults.set('language', 'es');
 var table;
 
 /*----------------- DATATABLE ---------------------------- */
@@ -7,47 +7,44 @@ function datatableSubactividades() {
         scrollX: true,
         responsive: true,
         retrieve: true,
-        searching: true,
-        lengthChange: true,
+        "searching": true,
+        "lengthChange": true,
         scrollCollapse: false,
-        bAutoWidth: true,
+        "bAutoWidth": true,
         /* le quito el sortable a columnas que es flechitas para ordenar */
         columnDefs: [
             { targets: 3, sortable: false },
 
-            { targets: 5, sortable: false },
+            { targets: 5, sortable: false }
         ],
         language: {
-            sProcessing: "Procesando...",
-            sLengthMenu: "Mostrar _MENU_ registros",
-            sZeroRecords: "No se encontraron resultados",
-            sEmptyTable: "Ningún dato disponible en esta tabla",
-            sInfo: "Mostrando registros del _START_ al _END_ ",
-            sInfoEmpty:
-                "Mostrando registros del 0 al 0 de un total de 0 registros",
-            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-            sInfoPostFix: "",
-            sSearch: "Buscar:",
-            sUrl: "",
-            sInfoThousands: ",",
-            sLoadingRecords: "Cargando...",
-            oPaginate: {
-                sFirst: "Primero",
-                sLast: "Último",
-                sNext: ">",
-                sPrevious: "<",
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ ",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": ">",
+                "sPrevious": "<"
             },
-            oAria: {
-                sSortAscending:
-                    ": Activar para ordenar la columna de manera ascendente",
-                sSortDescending:
-                    ": Activar para ordenar la columna de manera descendente",
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             },
-            buttons: {
-                copy: "Copiar",
-                colvis: "Visibilidad",
-            },
-        },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        }
     });
 }
 /*---------------- FIN DATATABLE --------------------------*/
@@ -76,81 +73,69 @@ function tablaSubactividades() {
         success: function (data) {
             var tr = "";
             for (let index = 0; index < data.length; index++) {
-                tr +=
-                    "<tr id=tr" +
-                    data[index].idsubActividad +
-                    "><td>" +
-                    (index + 1) +
-                    "</td>";
-                tr += "<td>" + data[index].subAct_nombre + "</td>";
+                tr += `<tr><td>${(index + 1)}</td>`;
+                tr += `<td> ${data[index].subAct_nombre} </td>`;
 
                 if (data[index].subAct_codigo != null) {
-                    tr += "<td>" + data[index].subAct_codigo + "</td>";
+                    tr += `<td>${data[index].subAct_codigo}</td>`;
                 } else {
-                    tr += "<td>No definido</td>";
+                    tr += `<td>No definido</td>`;
                 }
 
                 if (data[index].modoTareo == 1) {
                     tr +=
-                        '<td class="text-center"><div class="custom-control custom-switch mb-2">\
-                        <input type="checkbox" class="custom-control-input"\
-                            id="switchActvMT' +
-                        data[index].idsubActividad +
-                        '" checked disabled >\
-                        <label class="custom-control-label" for="switchActvMT' +
-                        data[index].idsubActividad +
-                        '"\
-                            style="font-weight: bold"></label>\
-                        </div></td>';
+                        `<td class="text-center"><div class="custom-control custom-switch mb-2">
+                        <input type="checkbox" class="custom-control-input"
+                            id="switchActvMT${data[index].idsubActividad}" checked disabled >
+                        <label class="custom-control-label" for="switchActvMT${data[index].idsubActividad}"
+                            style="font-weight: bold"></label>
+                        </div></td>`;
                 } else {
                     tr +=
-                        '<td class="text-center"><div class="custom-control custom-switch mb-2">\
-                        <input type="checkbox" class="custom-control-input"\
-                            id="switchActvMT' +
-                        data[index].idsubActividad +
-                        '" >\
-                        <label class="custom-control-label" for="switchActvMT' +
-                        data[index].idsubActividad +
-                        '"\
-                            style="font-weight: bold"></label>\
-                        </div></td>';
+                    `<td class="text-center"><div class="custom-control custom-switch mb-2">
+                        <input type="checkbox" class="custom-control-input"
+                            id="switchActvMT${data[index].idsubActividad}" >
+                        <label class="custom-control-label" for="switchActvMT${data[index].idsubActividad}"
+                        style="font-weight: bold"></label>
+                        </div></td>`;
                 }
                 if (data[index].uso == 1) {
                     tr +=
-                        '<td class="text-center" style="font-size:12px"><img src="/admin/images/checkH.svg" height="13" class="mr-2">SI</td>';
+                    `<td class="text-center" style="font-size:12px"><img src="/admin/images/checkH.svg" height="13" class="mr-2">SI</td>`;
                 } else {
                     tr +=
-                        '<td class="text-center" style="font-size:12px"><img src="/admin/images/borrarH.svg" height="11" class="mr-2">NO</td>';
+                    `<td class="text-center" style="font-size:12px"><img src="/admin/images/borrarH.svg" height="11" class="mr-2">NO</td>`;
                 }
                 if (data[index].uso == 1) {
                     tr +=
-                    '<td class="text-center"><a name="aedit" onclick="javascript:editarSubactividad(' +
-                    data[index].idsubActividad +
-                    ')" style="cursor: pointer">\
-                                <img src="/admin/images/edit.svg" height="15">\
-                            </a>&nbsp;&nbsp;&nbsp;</td>';
+                    `<td class="text-center"><a name="aedit" onclick="javascript:editarSubactividad(${data[index].idsubActividad})" style="cursor: pointer">
+                      <img src="/admin/images/edit.svg" height="15"> </a>&nbsp;&nbsp;&nbsp;</td>`;
                 }
                 else{
                     tr +=
-                    '<td class="text-center"><a name="aedit" onclick="javascript:editarSubactividad(' +
-                    data[index].idsubActividad +
-                    ')" style="cursor: pointer">\
-                                <img src="/admin/images/edit.svg" height="15">\
-                            </a>&nbsp;&nbsp;&nbsp;<a name="deletePermiso" onclick="javascript:eliminarSubacti(' +
-                    data[index].idsubActividad +
-                    ')" style="cursor: pointer">\
-                                <img src="/admin/images/delete.svg" height="15">\
-                                </a></td>';
+                    `<td class="text-center"><a name="aedit" onclick="javascript:editarSubactividad(${data[index].idsubActividad})"
+                    style="cursor: pointer"> <img src="/admin/images/edit.svg" height="15">
+                    </a>&nbsp;&nbsp;&nbsp;
+                    <a name="deletePermiso" onclick="javascript:eliminarSubacti(${data[index].idsubActividad})"
+                     style="cursor: pointer"><img src="/admin/images/delete.svg" height="15">
+                                </a></td>`;
                 }
 
 
-                tr += "</tr>";
+                tr += `</tr>`;
             }
             $("#actividOrga").html(tr);
             datatableSubactividades();
+            $(window).on('resize', function () {
+                $("#subActividades").css('width', '100%');
+                table.draw(true);
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+           /*  console.log(tr); */
         },
         error: function () {},
     });
+    datatableSubactividades();
     var valorswitch = $("#modifActI").val();
     var valorBaja = $("#bajaActI").val();
     if (valorswitch == 0) {
@@ -194,10 +179,19 @@ $("#e_codigoTarea").keyup(function () {
 //* ****************************************
 // * BUSCAR PERSONALIZADO
 function filterGlobal() {
-    $("#subActividades").DataTable().search($("#global_filter").val()).draw();
+    $("#subActividades").DataTable().search(
+        $('#global_filter').val(),
+
+    ).draw();
 }
-$("input.global_filter").on("keyup click change clear", function () {
+$('input.global_filter').on('keyup click change clear', function () {
     filterGlobal();
+});
+$(function () {
+    $(window).on('resize', function () {
+        $("#subActividades").css('width', '100%');
+        table.draw(true);
+    });
 });
 // **********************************
 
@@ -214,7 +208,7 @@ $("#actividadesAsignar_ed").select2({
 
 //LISTAR ACTIVIDADES EN EL SELECT
 function listaActividades() {
-   
+
     /* PARA REGISTRO */
     $("#actividadesAsignar").empty();
     var container = $("#actividadesAsignar");
@@ -702,7 +696,7 @@ function actualizarSubactividad() {
         success: function (data) {
             if (data != 0) {
                 tablaSubactividades();
-                $("#editSubactividad").modal("hide");
+
                 $.notifyClose();
                 $.notify(
                     {
@@ -724,6 +718,7 @@ function actualizarSubactividad() {
                         spacing: 35,
                     }
                 );
+                $("#editSubactividad").modal("toggle");
             } else {
                 $("#codigoSubact_ed").addClass("borderColor");
                 $.notifyClose();

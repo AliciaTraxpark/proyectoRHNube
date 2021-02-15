@@ -56,6 +56,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
             'nivel',
             'cargo',
             'area',
+            'codigo_centro_costo',
             'centro_costo',
             'condicion_pago',
             'monto_pago'
@@ -90,7 +91,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $spreadsheet = new Spreadsheet();
 
                 // * CAMPOS OBLIGATORIOS
-                $event->sheet->getStyle('A1:Y1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:Z1')->applyFromArray($styleArray);
                 $event->sheet->getStyle('A1:B1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
@@ -105,7 +106,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                     ->getStartColor()->setRGB('C00000');
                 // * ***************************************************************
                 $event->sheet->getDelegate()->setTitle("Empleado");
-                foreach (range('A', 'Y') as $columnID) {
+                foreach (range('A', 'Z') as $columnID) {
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
                     $event->sheet->getColumnDimension($columnID)
                         ->setWidth(25);
@@ -116,7 +117,8 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $tipoContrato = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
                 $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
                 $area = area::where('organi_id', '=', session('sesionidorg'))->get();
-                $centroC = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)->get();
+                $centroC = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)
+                ->where('porEmpleado', '=', 1)->get();
                 $local = local::where('organi_id', '=', session('sesionidorg'))->get();
                 $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
                 $condicion_pago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
@@ -127,13 +129,13 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $drop_columnC = 'O';
                 $drop_columnCargo = 'U';
                 $drop_columnArea = 'V';
-                $drop_columnCentro = 'W';
+                $drop_columnCentro = 'X';
                 $drop_columnLocal = 'S';
                 $drop_columnNivel = 'T';
                 $drop_columnGenero = 'J';
 
                 $drop_columnFecha = 'K';
-                $drop_columnCondicionP = 'X';
+                $drop_columnCondicionP = 'Y';
 
                 $drop_columnDisritoN = 'L';
                 $drop_columnDisritoVive = 'N';

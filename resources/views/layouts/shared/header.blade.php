@@ -68,6 +68,7 @@ use App\persona;
             ->join('rol as r', 'uo.rol_id', '=', 'r.rol_id')
             ->where('uo.user_id','=',Auth::user()->id)
             ->where('o.organi_id','!=',session('sesionidorg'))
+            ->where('o.organi_estado','=',1)
             ->get();
         @endphp
         <div id="content123" class="alert alert-success" role="alert" style="display: none;font-size:12px;color: #163552;position: fixed; right: 0; top: 70px; height: 40px;">
@@ -93,7 +94,7 @@ use App\persona;
 
             </li>
 
-
+            
             @endif
 
 

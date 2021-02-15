@@ -237,6 +237,7 @@ use App\invitado;
     <div class="content-page" style="margin-top: 40px; margin-left: 120px; margin-right: 55px; margin-bottom: 0px;">
         <div class="container">
             <div class="row">
+                @if(count($organizacion)>0)
                 @foreach ($organizacion as $organizaciones)
                 <div class="col-xl-3 col-lg-4">
                     <div class="card" style="border: 1px solid #f1f1f1;">
@@ -290,6 +291,9 @@ use App\invitado;
                     <!-- end card -->
                 </div>
                 @endforeach
+                @else 
+                <label for="">No tiene organizaciones</label>
+                @endif
             </div>
         </div>
     </div>

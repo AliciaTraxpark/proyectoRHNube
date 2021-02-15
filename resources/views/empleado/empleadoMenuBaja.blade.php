@@ -535,23 +535,6 @@
                     <div class="col-md-12">
                         <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
                     </div>
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 inputResponsive" id="filter_global">
-                        <td align="center">
-                            <input type="text" class="global_filter form-control" id="global_filter"
-                                style="height: 35px;" placeholder="Buscar por...">
-                        </td>
-                    </div>
-                    <div class="col-12 col-sm-2 col-md-2 col-lg-2 inputResponsive">
-                        <td align="center">
-                            <select class="form-control" name="select" id="select" style="height: 35.5px;">
-                                <option value="2">Documento</option>
-                                <option value="3">Nombre</option>
-                                <option value="4" selected>Apellidos</option>
-                                <option value="5">Cargo</option>
-                                <option value="6">Área</option>
-                            </select>
-                        </td>
-                    </div>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6 inputResponsive">
                         <div class="form-group row">
                             <label class="col-lg-2 col-md-3 col-sm-3 col-form-label">Área:</label>
@@ -566,6 +549,33 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-sm-3 col-md-3 col-lg-3 inputResponsive">
+                        <div class="form-group row">
+                        <label class="col-lg-6 col-md-6 col-sm-6 col-form-label">Seleccionar por:</label>
+                        <td align="center">
+                            <select class="form-control col-lg-6 col-md-6 col-sm-6" name="select" id="select" style="height: 35.5px;">
+                                <option value="2">Documento</option>
+                                <option value="3">Nombre</option>
+                                <option value="4" selected>Apellidos</option>
+                                <option value="5">Cargo</option>
+                                <option value="6">Área</option>
+                            </select>
+                        </td>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-2 col-md-2 col-lg-2 inputResponsive" id="filter_global">
+                        <td align="center">
+                            <input type="text" class="global_filter form-control" id="global_filter"
+                                style="height: 35px;" placeholder="palabra a buscar...">
+                        </td>
+                    </div>
+                    <div class="col-12 col-sm-1 col-md-1 col-lg-1 inputResponsive text-right">
+                        <button type="button" id="selectBtn" class="btn btn-sm mt-1 col-lg-8 col-md-8 col-sm-8"
+                        style="background-color: #163552;" > <img
+                            src="{{ asset('landing/images/loupe (1).svg') }}" height="15"></button>
+                    </div>
+
+
                     {{-- FINALZACION DE BUSQUEDA --}}
                 </div>
                 {{-- GIF DE BUSQUEDA --}}

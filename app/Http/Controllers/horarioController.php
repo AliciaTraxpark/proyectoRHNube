@@ -136,34 +136,35 @@ class horarioController extends Controller
 
         //* PARA COMPARAR QUE NO ESTE DENTRO DE HORARIO QUE NO SE CRUCEN
         $horarioEmpleado = horario::where('horario_id', $idhorar)->first();
-        $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
-        $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
+        $horaInicialF = Carbon::parse($horarioEmpleado->horaI)->subMinutes($horarioEmpleado->horario_tolerancia);
+        $horaFinalF = Carbon::parse($horarioEmpleado->horaF)->addMinutes($horarioEmpleado->horario_toleranciaF);
         $arrayHDentro = collect();
 
         //*
         foreach ($datafecha as $datafechas) {
-            $horarioDentro = temporal_eventos::select(['title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+            $horarioDentro = temporal_eventos::select(['title', 'color', 'textColor', 'start', 'end', 'horaI',
+             'horaF', 'borderColor','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF'])
                 ->join('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
                 ->where('start', '=', $datafechas)
                 ->where('users_id', '=', Auth::user()->id)
                 ->get();
             if ($horarioDentro) {
                 foreach ($horarioDentro as $horarioDentros) {
-                    $horaIDentro = Carbon::parse($horarioDentros->horaI);
-                    $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                    if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
+                    $horaIDentro = Carbon::parse($horarioDentros->horaI)->subMinutes($horarioDentros->toleranciaI);
+                    $horaFDentro = Carbon::parse($horarioDentros->horaF)->addMinutes($horarioDentros->toleranciaF);
+
+                    if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
                         $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
-                    } else {
-                        if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
-                            $startArreD = carbon::create($horarioDentros->start);
-                            $arrayHDentro->push($startArreD->format('Y-m-d'));
-                        } else {
-                            if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
-                                $startArreD = carbon::create($horarioDentros->start);
-                                $arrayHDentro->push($startArreD->format('Y-m-d'));
-                            }
-                        }
+                    } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
+                        $startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+                    } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {
+                        $startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+                    } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {
+                        $startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
                     }
                 }
             }
@@ -201,7 +202,7 @@ class horarioController extends Controller
         }
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
         if ($datafechaValida != null || $datafechaValida != []) {
-            return 'Ya existe un horario asignado en este rango de horas, revise y vuelva a intentar.';
+            return 'Ya existe un horario asignado en este rango de horas, revise horario con tolerancia y vuelva a intentar.';
         } else {
             return 'Horario asignado';
         }
@@ -593,12 +594,13 @@ class horarioController extends Controller
                 /////////////////////////////////////COMPARAR SI ESTA DENTRO DE RANGO
 
                 $horarioEmpleado = horario::where('horario_id', $temporal_eventosH->id_horario)->first();
-                $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
-                $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
+                $horaInicialF = Carbon::parse($horarioEmpleado->horaI)->subMinutes($horarioEmpleado->horario_tolerancia);
+                $horaFinalF = Carbon::parse($horarioEmpleado->horaF)->addMinutes($horarioEmpleado->horario_toleranciaF);
                 $arrayHDentro = collect();
                 ////////////////////////////////////
                 foreach ($idemps as $idempsva) {
-                    $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+                    $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor',
+                     'start', 'end', 'horaI', 'horaF', 'borderColor','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF'])
                         ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
                         ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
                         ->where('start', '=', $temporal_eventosH->start)
@@ -609,21 +611,21 @@ class horarioController extends Controller
                         ->get();
                     if ($horarioDentro) {
                         foreach ($horarioDentro as $horarioDentros) {
-                            $horaIDentro = Carbon::parse($horarioDentros->horaI);
-                            $horaFDentro = Carbon::parse($horarioDentros->horaF);
-                            if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
+                            $horaIDentro = Carbon::parse($horarioDentros->horaI)->subMinutes($horarioDentros->toleranciaI);
+                            $horaFDentro = Carbon::parse($horarioDentros->horaF)->addMinutes($horarioDentros->toleranciaF);
+                            
+                            if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
                                 $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($idempsva);
-                            } else {
-                                if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
-                                    $startArreD = carbon::create($horarioDentros->start);
-                                    $arrayHDentro->push($idempsva);
-                                } else {
-                                    if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
-                                        $startArreD = carbon::create($horarioDentros->start);
-                                        $arrayHDentro->push($idempsva);
-                                    }
-                                }
+                            } elseif (($horaInicialF->gt($horaIDentro) && $horaInicialF->lt($horaFDentro)) || ($horaFinalF->gt($horaIDentro) && $horaFinalF->lt($horaFDentro))) {
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($idempsva);
+                            } elseif ($horaInicialF == $horaIDentro || $horaFinalF == $horaFDentro) {
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($idempsva);
+                            } elseif ($horaIDentro->gt($horaInicialF) && $horaFDentro->lt($horaFinalF)) {
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($idempsva);
                             }
                         }
                     }

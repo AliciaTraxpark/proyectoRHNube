@@ -266,6 +266,7 @@ use App\User;
                                 <th>Nivel</th>
                                 <th>Cargo</th>
                                 <th>Área</th>
+                                <th>Código de centro de costo</th>
                                 <th>Centro de costo</th>
                                 <th>Condicion de pago</th>
                                 <th>Monto de pago</th>
@@ -300,6 +301,7 @@ use App\User;
                                         <td>{{$item[18]}}</td>
                                         <td>{{$item[19]}}</td>
                                         <td>{{$item[20]}}</td>
+                                        <td>{{$item[28]}}</td>
                                         <td>{{$item[21]}}</td>
                                         <td>{{$item[22]}}</td>
                                         <td>{{$item[23]}}</td>
