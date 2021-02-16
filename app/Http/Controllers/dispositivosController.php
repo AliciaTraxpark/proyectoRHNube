@@ -2609,7 +2609,7 @@ class dispositivosController extends Controller
                 'h.horario_descripcion as descripcion',
                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                DB::raw('IF(he.horarioEmp_id is null, 0, he.horarioEmp_id)'),
+                DB::raw('IF(he.horarioEmp_id is null, 0, he.horarioEmp_id)')
             )
             ->whereRaw("IF(he.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start)) = '$fecha'")
             ->where('mp.marcaMov_emple_id', '=', $idEmpleado)
