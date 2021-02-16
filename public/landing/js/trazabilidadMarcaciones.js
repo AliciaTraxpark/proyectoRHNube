@@ -41,7 +41,7 @@ function inicializarTabla() {
         scrollCollapse: false,
         language: {
             sProcessing: "Generando informe...",
-            processing: "<img src='landing/images/punt.gif' height='55'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
+            processing: "<img src='landing/images/punt.gif' height='40'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
             sLengthMenu: "Mostrar _MENU_ registros",
             sZeroRecords: "No se encontraron resultados",
             sEmptyTable: "Ningún dato disponible en esta tabla",
@@ -268,9 +268,7 @@ function inicializarTabla() {
             setTimeout(function () {
                 $("#tablaTrazabilidad").DataTable().draw();
             }, 1);
-        },
-        PreDrawCallback: function () { $(".dataTables_processing").show(); return true; },
-        DrawCallback: function () { $(".dataTables_processing").hide(); },
+        }
     }).draw();
 }
 var normalize = (function () {

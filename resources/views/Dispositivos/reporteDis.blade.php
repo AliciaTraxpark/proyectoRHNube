@@ -238,6 +238,14 @@
         background: #ffffff !important;
         border-top: #ffffff !important;
     }
+
+    div.dataTables_processing {
+        z-index: 1;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -892,12 +900,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row pt-2" id="AM_detalleHorarios" style="display: none"></div>
                         <div class="row pt-3" style="display: none" id="rowDatosM">
                             <div class="col-md-12">
                                 {{-- CABEZALES --}}
                                 <div class="row">
                                     <div class="col-md-2">
                                         <span>Tipo</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>Fecha</span>
                                     </div>
                                     <div class="col-md-3">
                                         <span>Hora</span>
@@ -913,6 +925,10 @@
                                             <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
                                             &nbsp;Entrada
                                         </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control form-control-sm" id="fechaNuevaEntrada"
+                                            data-input>
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" class="form-control form-control-sm" id="nuevaEntrada">
@@ -931,6 +947,10 @@
                                             <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
                                             &nbsp;Salida
                                         </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control form-control-sm" id="fechaNuevaSalida"
+                                            data-input>
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" class="form-control form-control-sm" id="nuevaSalida">

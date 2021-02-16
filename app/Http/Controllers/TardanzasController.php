@@ -174,7 +174,7 @@ class TardanzasController extends Controller
                 $horario->DP = $temp->year."-".$temp->month."-".$temp->day;
             }
         }
-
+        $capturas = $capturas->values();
         /*      RECORREMOS CADA HORARIO        */
         foreach ($horarios as $horario) {
             $dia_horario = Carbon::parse($horario->diaH); // DÍA: 15
@@ -207,6 +207,20 @@ class TardanzasController extends Controller
                                         $captura->dia = $horario->diaH;
                                     }
                                 }
+
+                                if($horario->horaM == 0){
+                                    $horario->horaM = $captura->horaM;
+                                    $horario->diaM = $captura->diaM;
+                                    $horario->marcacion = $captura->hora_ini;
+                                } else {
+                                    $marca_temp = Carbon::parse($horario->horaM);
+                                    $marca_new = Carbon::parse($captura->horaM);
+                                    if($marca_temp > $marca_new){
+                                        $horario->horaM = $captura->horaM;
+                                        $horario->diaM = $captura->diaM;
+                                        $horario->marcacion = $captura->hora_ini;
+                                    }
+                                }
                                 //$captura->Falta = $captura->Falta."|".$horario->horaH."|";
                             }
                         } else {
@@ -217,6 +231,19 @@ class TardanzasController extends Controller
                                     $captura->horario = $horario->horario_id;
                                     $captura->dia = $horario->diaH;
                                     //$captura->Falta = $captura->Falta."/".$horario->horaH."/";
+                                    if($horario->horaM == 0){
+                                        $horario->horaM = $captura->horaM;
+                                        $horario->diaM = $captura->diaM;
+                                        $horario->marcacion = $captura->hora_ini;
+                                    } else {
+                                        $marca_temp = Carbon::parse($horario->horaM);
+                                        $marca_new = Carbon::parse($captura->horaM);
+                                        if($marca_temp > $marca_new){
+                                            $horario->horaM = $captura->horaM;
+                                            $horario->diaM = $captura->diaM;
+                                            $horario->marcacion = $captura->hora_ini;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -235,6 +262,20 @@ class TardanzasController extends Controller
                                     if($diff1 < $diff2){
                                         $captura->horario = $horario->horario_id;
                                         $captura->dia = $horario->diaH;
+                                    }
+                                }
+
+                                if($horario->horaM == 0){
+                                    $horario->horaM = $captura->horaM;
+                                    $horario->diaM = $captura->diaM;
+                                    $horario->marcacion = $captura->hora_ini;
+                                } else {
+                                    $marca_temp = Carbon::parse($horario->horaM);
+                                    $marca_new = Carbon::parse($captura->horaM);
+                                    if($marca_temp > $marca_new){
+                                        $horario->horaM = $captura->horaM;
+                                        $horario->diaM = $captura->diaM;
+                                        $horario->marcacion = $captura->hora_ini;
                                     }
                                 }
                             }
@@ -258,27 +299,7 @@ class TardanzasController extends Controller
 
         $capturas = $capturas->values();
 
-        // HORARIOS TIENE TODOS LOS HORARIOS QUE TIENE UN EMPLEADO EN UN DÍA
-        foreach($horarios as $horario){
-            foreach ($capturas as $captura) {
-                // MISMO EMPLEADO, MISMO HORARIO Y MISMO DIA DE HORARIO
-                if($captura->emple_id == $horario->emple_id && $captura->horario == $horario->horario_id && $horario->diaH == $captura->diaM){
-                    if($horario->horaM == 0){
-                        $horario->horaM = $captura->horaM;
-                        $horario->diaM = $captura->diaM;
-                        $horario->marcacion = $captura->hora_ini;
-                    } else {
-                        $marca_temp = Carbon::parse($horario->horaM);
-                        $marca_new = Carbon::parse($captura->horaM);
-                        if($marca_temp > $marca_new){
-                            $horario->horaM = $captura->horaM;
-                            $horario->diaM = $captura->diaM;
-                            $horario->marcacion = $captura->hora_ini;
-                        }
-                    }
-                }
-            } 
-        }
+       
 
         $collection = new Collection;
 
@@ -393,6 +414,20 @@ class TardanzasController extends Controller
                                     }
                                 }
                                 //$captura->Falta = $captura->Falta."|".$horario->horaH."|";
+
+                                if($horario->horaM == 0){
+                                    $horario->horaM = $captura->horaM;
+                                    $horario->diaM = $captura->diaM;
+                                    $horario->marcacion = $captura->hora_ini;
+                                } else {
+                                    $marca_temp = Carbon::parse($horario->horaM);
+                                    $marca_new = Carbon::parse($captura->horaM);
+                                    if($marca_temp > $marca_new){
+                                        $horario->horaM = $captura->horaM;
+                                        $horario->diaM = $captura->diaM;
+                                        $horario->marcacion = $captura->hora_ini;
+                                    }
+                                }
                             }
                         } else {
                             // DIA DE LA MARCACIÓN ES IGUAL A UN DÍA DESPUÉS DEL HORARIO
@@ -402,6 +437,19 @@ class TardanzasController extends Controller
                                     $captura->horario = $horario->horario_id;
                                     $captura->dia = $horario->diaH;
                                     //$captura->Falta = $captura->Falta."/".$horario->horaH."/";
+                                    if($horario->horaM == 0){
+                                        $horario->horaM = $captura->horaM;
+                                        $horario->diaM = $captura->diaM;
+                                        $horario->marcacion = $captura->hora_ini;
+                                    } else {
+                                        $marca_temp = Carbon::parse($horario->horaM);
+                                        $marca_new = Carbon::parse($captura->horaM);
+                                        if($marca_temp > $marca_new){
+                                            $horario->horaM = $captura->horaM;
+                                            $horario->diaM = $captura->diaM;
+                                            $horario->marcacion = $captura->hora_ini;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -420,6 +468,20 @@ class TardanzasController extends Controller
                                     if($diff1 < $diff2){
                                         $captura->horario = $horario->horario_id;
                                         $captura->dia = $horario->diaH;
+                                    }
+                                }
+
+                                if($horario->horaM == 0){
+                                    $horario->horaM = $captura->horaM;
+                                    $horario->diaM = $captura->diaM;
+                                    $horario->marcacion = $captura->hora_ini;
+                                } else {
+                                    $marca_temp = Carbon::parse($horario->horaM);
+                                    $marca_new = Carbon::parse($captura->horaM);
+                                    if($marca_temp > $marca_new){
+                                        $horario->horaM = $captura->horaM;
+                                        $horario->diaM = $captura->diaM;
+                                        $horario->marcacion = $captura->hora_ini;
                                     }
                                 }
                             }
@@ -443,27 +505,7 @@ class TardanzasController extends Controller
 
         $capturas = $capturas->values();
 
-        // HORARIOS TIENE TODOS LOS HORARIOS QUE TIENE UN EMPLEADO EN UN DÍA
-        foreach($horarios as $horario){
-            foreach ($capturas as $captura) {
-                // MISMO EMPLEADO, MISMO HORARIO Y MISMO DIA DE HORARIO
-                if($captura->emple_id == $horario->emple_id && $captura->horario == $horario->horario_id && $horario->diaH == $captura->diaM){
-                    if($horario->horaM == 0){
-                        $horario->horaM = $captura->horaM;
-                        $horario->diaM = $captura->diaM;
-                        $horario->marcacion = $captura->hora_ini;
-                    } else {
-                        $marca_temp = Carbon::parse($horario->horaM);
-                        $marca_new = Carbon::parse($captura->horaM);
-                        if($marca_temp > $marca_new){
-                            $horario->horaM = $captura->horaM;
-                            $horario->diaM = $captura->diaM;
-                            $horario->marcacion = $captura->hora_ini;
-                        }
-                    }
-                }
-            } 
-        }
+
 
         $collection = new Collection;
 
@@ -654,16 +696,15 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $cantTardanzas > 0 ){
+                    if($employee != $empleado->emple_id){
                         //$datos->push("-------------2-------------");
                         //$datos->push($empleado->emple_id);
-                        $datos->push($obj);
-                        $cantTardanzas = 0;
-                        $tiempoTardanza = 0;
-
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
+                        if($cantTardanzas > 0 ){
+                            $datos->push($obj);
+                            $cantTardanzas = 0;
+                            $tiempoTardanza = 0;
                         }
+                        $employee = $empleado->emple_id;
                     }
                     /*  COMPRUEBA SI HAY TARDANZA    */
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
@@ -1491,15 +1532,15 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $sumTardanza > 0){
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
-                        }
-                        $datos->push($obj);
-                        $sumTardanza = 0;
-                        $tiempoTardanza = 0;
-                        for ($i = 0; $i <= $diff->days; $i++) {
-                            $horas[$i] = 0;
+                    if($employee != $empleado->emple_id){
+                        $employee = $empleado->emple_id;
+                        if($sumTardanza > 0 ){
+                            $datos->push($obj);
+                            $sumTardanza = 0;
+                            $tiempoTardanza = 0;
+                            for ($i = 0; $i <= $diff->days; $i++) {
+                                $horas[$i] = 0;
+                            }
                         }
                     }
 
@@ -1528,7 +1569,6 @@ class TardanzasController extends Controller
                             "fechaH" => $fechaF[1]
                         );
                     }
-                    
                     $i++;
                 }
                 if($contEmpleados == $len - 1 && $sumTardanza > 0){
@@ -2158,14 +2198,15 @@ class TardanzasController extends Controller
                     $employee = $empleado->emple_id;
                 }
 
-                if($employee != $empleado->emple_id && $cantTardanzas > 0){
+                if($employee != $empleado->emple_id){
                     //$datos->push("-------------2-------------");
-                    $datos->push($obj);
-                    $cantTardanzas = 0;
-                    $tiempoTardanza = 0;
-                    if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                        $employee = $empleado->emple_id;
+                    if($cantTardanzas > 0){
+                        $datos->push($obj);
+                        $cantTardanzas = 0;
+                        $tiempoTardanza = 0;  
                     }
+                    
+                    $employee = $empleado->emple_id;
                 }
                 /*  COMPRUEBA SI HAY TARDANZA    */
                 if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
@@ -3355,15 +3396,15 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $sumTardanza > 0){
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
-                        }
-                        $datos->push($obj);
-                        $sumTardanza = 0;
-                        $tiempoTardanza = 0;
-                        for ($i = 0; $i <= $diff->days; $i++) {
-                            $horas[$i] = 0;
+                    if($employee != $empleado->emple_id){
+                        $employee = $empleado->emple_id;
+                        if($sumTardanza > 0){
+                            $datos->push($obj);
+                            $sumTardanza = 0;
+                            $tiempoTardanza = 0;
+                            for ($i = 0; $i <= $diff->days; $i++) {
+                                $horas[$i] = 0;
+                            }
                         }
                     }
 
@@ -4045,15 +4086,16 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $cantTardanzas > 0 ){
+                    if($employee != $empleado->emple_id){
                         //$datos->push("-------------2-------------");
                         //$datos->push($empleado->emple_id);
-                        $datos->push($obj);
-                        $cantTardanzas = 0;
-                        $tiempoTardanza = 0;
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
+                        if($cantTardanzas > 0){
+                            $datos->push($obj);
+                            $cantTardanzas = 0;
+                            $tiempoTardanza = 0;  
                         }
+                        
+                        $employee = $empleado->emple_id;
                     }
                     /*  COMPRUEBA SI HAY TARDANZA    */
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
@@ -5362,16 +5404,17 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $sumTardanza > 0){
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
+                    if($employee != $empleado->emple_id){
+                        $employee = $empleado->emple_id;
+                        if($sumTardanza > 0 ){
+                            $datos->push($obj);
+                            $sumTardanza = 0;
+                            $tiempoTardanza = 0;
+                            for ($i = 0; $i <= $diff->days; $i++) {
+                                $horas[$i] = 0;
+                            } 
                         }
-                        $datos->push($obj);
-                        $sumTardanza = 0;
-                        $tiempoTardanza = 0;
-                        for ($i = 0; $i <= $diff->days; $i++) {
-                            $horas[$i] = 0;
-                        }
+                        
                     }
 
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
