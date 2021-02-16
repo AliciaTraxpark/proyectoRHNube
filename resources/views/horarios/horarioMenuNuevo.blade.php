@@ -270,7 +270,7 @@
         <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true" data-backdrop="static" style="overflow-y: auto;">
             <div class="modal-dialog  modal-lg d-flex modal-dialog-scrollable justify-content-center"
-                style="margin-top: 15px;max-width:1000px!important;">
+                style="margin-top: 15px;max-width:900px!important;">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:#163552;">
                         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -326,7 +326,7 @@
                                             <div class="col-md-5 form-check">
                                                 <input type="checkbox" class="form-check-input" id="selectTodoCheck">
                                                 <label class="form-check-label" for="selectTodoCheck"
-                                                    style="font-style: oblique;margin-top: 2px;">
+                                                    style="margin-top: 2px;font-size: 11px!important">
                                                     Seleccionar todos.
                                                 </label>
                                             </div>
@@ -352,7 +352,8 @@
                                 </div>
                                 <br>
                             </div>
-                            <div class="col-md-10">
+
+                            <div class="col-md-12">
                                 <div class="col-md-12 text-center" id="DatoscalendarOculto" style=" display: none">
                                     <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                                 </div>
@@ -365,34 +366,7 @@
                                 <input type="hidden" id="horarioEnd">
                                 <input type="hidden" id="horarioStart">
                             </div>
-                            <div class="col-md-2" style="margin-top: 100px;">
-                                <div class="col-md-12" style="padding-left: 0px;">
-                                    <div class="col-md-12 form-check" style="padding-left: 10px;">
-                                        <input type="checkbox" style="" class="form-check-input" id="FeriadosCheck">
-                                        <label class="form-check-label" for="FeriadosCheck">Ver feriados.</label>
-                                    </div>
-                                </div>
-                                <br><br>
-                                <div class="row">
-                                    <div class="col-md-6" style="padding-left: 0px;">
-                                        <div class="btn-group mt-2 mr-1">
-                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
-                                                style="color: #fff;background-color: #1c3763;border-color: #1c3763;"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="{{ asset('admin/images/borrador.svg') }}" height="15">
-                                                Borrar
-                                                <i class="icon">
-                                                    <span data-feather="chevron-down"></span>
-                                                </i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" onclick="vaciarhor()">Horarios</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br><br><br>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer" style="padding-top: 8px;padding-bottom: 8px;">
@@ -1418,76 +1392,6 @@
 <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>
 <script src="{{ asset('admin/packages/timegrid/main.js') }}"></script>
 <script src="{{ asset('admin/packages/interaction/main.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-
-<script>
-    function screenshot() {
-            html2canvas(document.querySelector("#calendarHorario > div.fc-view-container > div > table"), {
-                useCORS: true,
-                allowTaint: true,
-                letterRendering: true,
-                onrendered: function(canvas) {
-                    var ctx = canvas.getContext('2d');
-                    ctx.webkitImageSmoothingEnabled = false;
-                    ctx.mozImageSmoothingEnabled = false;
-                    ctx.imageSmoothingEnabled = false;
-                }
-            }).then(canvas => {
-                //document.body.appendChild(canvas)
-            });
-
-            console.log(html2canvas(document.querySelector('#calendarHorario > div.fc-view-container')));
-            html2canvas(document.querySelector('#calendarHorario > div.fc-view-container'), {
-                useCORS: true,
-                allowTaint: true,
-                letterRendering: true,
-                onrendered: function(canvas) {
-                    var ctx = canvas.getContext('2d');
-                    ctx.webkitImageSmoothingEnabled = false;
-                    ctx.mozImageSmoothingEnabled = false;
-                    ctx.imageSmoothingEnabled = false;
-                    // console.log(canvas.toDataURL());
-                    var image = canvas.toDataURL("image/jpg");
-                    console.log("image => ", image); //image in base64
-                    var pHtml = "<img src=" + image + " />";
-                    // $("#parent").append(pHtml); //you can append image tag anywhere
-                    var doc = new jsPDF();
-                    var specialElementHandlers = {
-                        '#getPDF': function(element, renderer) {
-                            return true;
-                        },
-                        '.controls': function(element, renderer) {
-                            return true;
-                        }
-                    };
-
-                    // All units are in the set measurement for the document
-                    // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
-                    doc.setFontSize(11);
-                    doc.setTextColor(48, 47, 44);
-                    doc.text(80, 10, 'DATOS DE EMPLEADO')
-                    doc.text(25, 25, 'Num. Documento: ' + $('#docEmpleado').val());
-                    doc.text(120, 25, 'Área: ' + $('#areaEmpleado').val());
-                    doc.text(25, 30, 'Nombre: ' + $('#idEmHorario').val());
-                    doc.text(120, 30, 'Cargo: ' + $('#cargoEmpleado').val());
-                    doc.text(25, 35, 'Correo: ' + $('#correoEmpleado').val());
-                    doc.text(120, 35, 'Centro costo: ' + $('#ccEmpleado').val());
-                    doc.text(25, 40, 'Celular: ' + $('#celEmpleado').val());
-                    doc.text(120, 40, 'Local: ' + $('#localEmpleado').val());
-                    doc.fromHTML($('#calendarHorario > div.fc-toolbar.fc-header-toolbar > div.fc-center').get(
-                        0), 85, 45, {
-                            'width': 170,
-                            'elementHandlers': specialElementHandlers
-                        });
-
-                    doc.addImage(image, 'JPG', 2, 60);
-                    doc.save('horario.pdf');
-                }
-            });
-        }
-
-</script>
 
 @endsection
 

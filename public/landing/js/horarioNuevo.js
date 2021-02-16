@@ -275,7 +275,7 @@ function calendario() {
         //defaultDate: ano + '-01-01',
         defaultDate: fecha,
         height: "auto",
-        contentHeight: 440,
+        contentHeight: 400,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
         unselectAuto: false,
@@ -395,7 +395,7 @@ function calendario() {
         header: {
             left: 'prev,next',
             center: 'title',
-            right: ''
+            right: "borrarHorarios",
         },
         eventRender: function (info) {
             $('.tooltip').remove();
@@ -472,9 +472,19 @@ function calendario() {
              $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.borderColor});
           }*/
         },
+        customButtons: {
+            borrarHorarios: {
+                text: "Borrar Horarios.",
+                /*  icon:"right-double-arrow", */
+
+                click: function () {
+                    vaciarhor();
+                }
+            },
+        },
         events: function (info, successCallback, failureCallback) {
 
-            $.ajax({
+           /*  $.ajax({
                 type: "get",
                 url: "/eventosHorario",
                 data: {
@@ -494,7 +504,37 @@ function calendario() {
 
                 },
                 error: function () { }
-            });
+            }); */
+            var idempleado = $('#nombreEmpleado').val();
+            num=$('#nombreEmpleado').val().length;
+            console.log(num);
+            if(num==1){
+                $.ajax({
+                    type: "POST",
+                    url: "/empleado/calendarioEmpleado",
+                    data: {
+
+                        idempleado
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+
+                        successCallback(data);
+
+                    },
+                    error: function () {}
+                });
+            }
+            else{
+                successCallback([{}]);
+            }
 
         },
     }
@@ -508,6 +548,7 @@ function calendario() {
     calendar.render();
     /*  $("#calendar > div.fc-toolbar.fc-header-toolbar > div.fc-right").html(); */
 }
+document.addEventListener('DOMContentLoaded', calendario);
 function agregarHorarioSe() {
     if ($("*").hasClass("fc-highlight")) {
 
@@ -584,9 +625,17 @@ function agregarHorarioSe() {
             });
         });
 
+        calendar.addEvent({
 
+           title: 'Laborable',
+           start:'2021-02-17 00:00:00',
+           end: '2021-02-19 00:00:00',
+           color : '#dfe6f2',
+           textColor:'#0b1b29'
 
-        $.ajax({
+         });
+
+        /* $.ajax({
             type: "post",
             url: "/guardarEventos",
             data: {
@@ -631,7 +680,7 @@ function agregarHorarioSe() {
             }
 
 
-        });
+        }); */
     } else {
         $("#selectHorario").val("Asignar horario");
         $("#selectHorario").trigger("change");
@@ -643,7 +692,7 @@ function agregarHorarioSe() {
 };
 
 
-document.addEventListener('DOMContentLoaded', calendario);
+
 
 ///////////////////////////////
 
@@ -2080,59 +2129,7 @@ $('#selectEmpresarial').change(function (e) {
 
 })
 /////////////////////////////////
-$("#FeriadosCheck").click(function () {
-    $('#Datoscalendar').hide();
-    $('#DatoscalendarOculto').show();
-    if ($("#FeriadosCheck").is(':checked')) {
-        $.ajax({
-            type: "post",
-            url: "/horario/copiarferiados",
-            data: {
-            },
-            statusCode: {
-                419: function () {
-                    location.reload();
-                }
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (data) {
-                calendar.refetchEvents();
-                $('#DatoscalendarOculto').hide();
-                $('#Datoscalendar').show();
-            },
-            error: function (data) {
-                alert('Ocurrio un error');
-            }
-        });
 
-    } else {
-        $.ajax({
-            type: "post",
-            url: "/horario/borrarferiados",
-            data: {
-            },
-            statusCode: {
-                419: function () {
-                    location.reload();
-                }
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (data) {
-                calendar.refetchEvents();
-                $('#DatoscalendarOculto').hide();
-                $('#Datoscalendar').show();
-            },
-            error: function (data) {
-                alert('Ocurrio un error');
-            }
-        });
-
-    }
-});
 function newDate(partes) {
     var date = new Date(0);
     date.setHours(partes[0]);
@@ -3914,3 +3911,9 @@ function actualizarConfigHorario_re() {
     });
 }
 /* ---------------------------------------------------------------------------- */
+//* select empleado cuando cambia
+$( "#nombreEmpleado" ).change(function() {
+    calendario();
+  });
+//*
+
