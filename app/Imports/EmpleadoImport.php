@@ -148,12 +148,14 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                     $linealCorreo = Arr::flatten($this->NCorreo);
                     $clave2Correo = array_splice($linealCorreo, 0, $filaCorreo);
                     if($row['correo'] != null){
-                    $claveCC = array_search($row['correo'], $clave2Correo);}
+                    $claveCC = array_search($row['correo'], $clave2Correo);
                     if ($claveCC !== false) {
                         //dd($clave2,$clave,$filaA);
                         return redirect()->back()->with('alert', 'El correo está repetido en el archivo de carga: ' . $row['correo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
 
                     }
+                }
+
 
                 //PREFIJO
                 if ($row['prefijo'] != null || $row['prefijo'] != '') {
