@@ -75,10 +75,14 @@ class excelEmpleadoController extends Controller
         ->where('id', '=', Auth::user()->id)->get();
       /*   redirect()->route('cargarEmpleado',['filas' => $filas])->with('key','info'); */
      /*  return redirect()->route('cargarEmpleado', [$empleados]); */
+
       return view('empleado.cargarEmpleado', ['usuario' => $usuario[0]->user_estado,'filas' => $filas, 'empleados' => $empleados
     ]);
+
+
+
         /* return back(['filas' => $filas, 'empleados' => $empleados]); */
-       
+
     }
     public function guardarBD(request $request)
     {
