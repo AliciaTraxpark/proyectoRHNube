@@ -654,16 +654,15 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $cantTardanzas > 0 ){
+                    if($employee != $empleado->emple_id){
                         //$datos->push("-------------2-------------");
                         //$datos->push($empleado->emple_id);
-                        $datos->push($obj);
-                        $cantTardanzas = 0;
-                        $tiempoTardanza = 0;
-
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
+                        if($cantTardanzas > 0 ){
+                            $datos->push($obj);
+                            $cantTardanzas = 0;
+                            $tiempoTardanza = 0;
                         }
+                        $employee = $empleado->emple_id;
                     }
                     /*  COMPRUEBA SI HAY TARDANZA    */
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
@@ -1491,15 +1490,15 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $sumTardanza > 0){
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
-                        }
-                        $datos->push($obj);
-                        $sumTardanza = 0;
-                        $tiempoTardanza = 0;
-                        for ($i = 0; $i <= $diff->days; $i++) {
-                            $horas[$i] = 0;
+                    if($employee != $empleado->emple_id){
+                        $employee = $empleado->emple_id;
+                        if($cantTardanzas > 0 ){
+                            $datos->push($obj);
+                            $cantTardanzas = 0;
+                            $tiempoTardanza = 0;
+                            for ($i = 0; $i <= $diff->days; $i++) {
+                                $horas[$i] = 0;
+                            }
                         }
                     }
 
@@ -1528,7 +1527,6 @@ class TardanzasController extends Controller
                             "fechaH" => $fechaF[1]
                         );
                     }
-                    
                     $i++;
                 }
                 if($contEmpleados == $len - 1 && $sumTardanza > 0){
@@ -2158,14 +2156,15 @@ class TardanzasController extends Controller
                     $employee = $empleado->emple_id;
                 }
 
-                if($employee != $empleado->emple_id && $cantTardanzas > 0){
+                if($employee != $empleado->emple_id){
                     //$datos->push("-------------2-------------");
-                    $datos->push($obj);
-                    $cantTardanzas = 0;
-                    $tiempoTardanza = 0;
-                    if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                        $employee = $empleado->emple_id;
+                    if($cantTardanzas > 0){
+                        $datos->push($obj);
+                        $cantTardanzas = 0;
+                        $tiempoTardanza = 0;  
                     }
+                    
+                    $employee = $empleado->emple_id;
                 }
                 /*  COMPRUEBA SI HAY TARDANZA    */
                 if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
@@ -3355,15 +3354,15 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $sumTardanza > 0){
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
-                        }
-                        $datos->push($obj);
-                        $sumTardanza = 0;
-                        $tiempoTardanza = 0;
-                        for ($i = 0; $i <= $diff->days; $i++) {
-                            $horas[$i] = 0;
+                    if($employee != $empleado->emple_id){
+                        $employee = $empleado->emple_id;
+                        if($sumTardanza > 0){
+                            $datos->push($obj);
+                            $sumTardanza = 0;
+                            $tiempoTardanza = 0;
+                            for ($i = 0; $i <= $diff->days; $i++) {
+                                $horas[$i] = 0;
+                            }
                         }
                     }
 
@@ -4045,15 +4044,16 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $cantTardanzas > 0 ){
+                    if($employee != $empleado->emple_id){
                         //$datos->push("-------------2-------------");
                         //$datos->push($empleado->emple_id);
-                        $datos->push($obj);
-                        $cantTardanzas = 0;
-                        $tiempoTardanza = 0;
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
+                        if($cantTardanzas > 0){
+                            $datos->push($obj);
+                            $cantTardanzas = 0;
+                            $tiempoTardanza = 0;  
                         }
+                        
+                        $employee = $empleado->emple_id;
                     }
                     /*  COMPRUEBA SI HAY TARDANZA    */
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
@@ -5362,16 +5362,17 @@ class TardanzasController extends Controller
                         $employee = $empleado->emple_id;
                     }
 
-                    if($employee != $empleado->emple_id && $sumTardanza > 0){
-                        if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
-                            $employee = $empleado->emple_id;
+                    if($employee != $empleado->emple_id){
+                        $employee = $empleado->emple_id;
+                        if$sumTardanza > 0(){
+                            $datos->push($obj);
+                            $sumTardanza = 0;
+                            $tiempoTardanza = 0;
+                            for ($i = 0; $i <= $diff->days; $i++) {
+                                $horas[$i] = 0;
+                            } 
                         }
-                        $datos->push($obj);
-                        $sumTardanza = 0;
-                        $tiempoTardanza = 0;
-                        for ($i = 0; $i <= $diff->days; $i++) {
-                            $horas[$i] = 0;
-                        }
+                        
                     }
 
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
