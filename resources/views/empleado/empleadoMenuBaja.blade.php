@@ -535,7 +535,7 @@
                     <div class="col-md-12">
                         <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 inputResponsive">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 inputResponsive">
                         <div class="form-group row">
                             <label class="col-lg-2 col-md-3 col-sm-3 col-form-label">Área:</label>
                             <div class="col-lg-10 col-md-9 col-sm-9 text-left">
@@ -563,7 +563,7 @@
                         </td>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-2 col-md-2 col-lg-2 inputResponsive" id="filter_global">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 inputResponsive" id="filter_global">
                         <td align="center">
                             <input type="text" class="global_filter form-control" id="global_filter"
                                 style="height: 35px;" placeholder="palabra a buscar...">
