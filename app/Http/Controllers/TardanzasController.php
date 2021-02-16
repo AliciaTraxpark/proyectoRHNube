@@ -128,13 +128,15 @@ class TardanzasController extends Controller
             DB::raw('TIME(cp.hora_ini) as horaM'),
             DB::raw('0 as horario'),
             DB::raw('0 as Falta'),
-            DB::raw('0 as dia')
+            DB::raw('0 as dia'),
+            DB::raw('MIN(TIME(cp.hora_ini)) as min')
         )
         ->where('e.organi_id', session('sesionidorg'))
         ->whereDate(DB::raw('DATE(cp.hora_ini)'), '>=',$fechaInicio)
         ->whereDate(DB::raw('DATE(cp.hora_ini)'), '<=',$fechaFin)
         ->orderBy('e.emple_id')
         ->whereIn('e.emple_id', $e)
+        ->groupby(DB::raw('DATE(cp.hora_ini)'), 'e.emple_id')
         ->get();
 
         // HORARIOS
@@ -164,6 +166,36 @@ class TardanzasController extends Controller
         ->whereIn('e.emple_id', $e)
         ->get();
 
+        $col = new Collection();
+        foreach ($horarios as $horario) {
+            $cp = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+            ->select('p.perso_nombre', 'cp.hora_ini', 'e.emple_id', 'cp.idCaptura', 'c.cargo_descripcion', 'a.area_descripcion',
+                DB::raw('DATE(cp.hora_ini) as diaM'),
+                DB::raw('TIME(cp.hora_ini) as horaM'),
+                DB::raw('0 as horario'),
+                DB::raw('0 as Falta'),
+                DB::raw('0 as dia'),
+                DB::raw('MIN(TIME(cp.hora_ini)) as min')
+            )
+            ->where('e.organi_id', session('sesionidorg'))
+            ->whereDate(DB::raw('DATE(cp.hora_ini)'), '>=',$fechaHorarioI)
+            ->whereDate(DB::raw('DATE(cp.hora_ini)'), '<=',$fechaFin)
+            ->whereTime(DB::raw('TIME(cp.hora_ini)'), '>=', $horario->horaH) // Falta agregar la tolerancia
+            ->whereTime(DB::raw('TIME(cp.hora_ini)'), '<=', $horario->horaF)
+            ->orderBy('e.emple_id')
+            ->whereIn('e.emple_id', $e)
+            ->groupby(DB::raw('DATE(cp.hora_ini)'), 'e.emple_id')
+            ->get();
+
+            $col->push($cp);
+        }
+        $capturas = $col->collapse()->unique()->all();
+        //dd();
+
         foreach ($horarios as $horario) {
             $horaEntrada = Carbon::parse($horario->horaH);
             $horaSalida = Carbon::parse($horario->horaF);
@@ -174,7 +206,7 @@ class TardanzasController extends Controller
                 $horario->DP = $temp->year."-".$temp->month."-".$temp->day;
             }
         }
-        $capturas = $capturas->values();
+        //$capturas = $capturas->values();
         /*      RECORREMOS CADA HORARIO        */
         foreach ($horarios as $horario) {
             $dia_horario = Carbon::parse($horario->diaH); // DÍA: 15
@@ -297,9 +329,7 @@ class TardanzasController extends Controller
 
         //dd($capturas);
 
-        $capturas = $capturas->values();
-
-       
+        //$capturas = $capturas->values();
 
         $collection = new Collection;
 

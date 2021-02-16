@@ -58,7 +58,7 @@ $(function () {
 function cargartablaRuta(fecha1,fecha2) {
 
     var idemp = $('#idempleado').val();
-
+    $(".loader").show();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzasRuta",
@@ -364,10 +364,16 @@ function cargartablaRuta(fecha1,fecha2) {
                     table.draw(true);
                 });
                 
+                setTimeout(function() {
+                    $(".loader").hide();
+                }, 1000);
             } else {
                 //$('#btnsDescarga').hide();
                 $('#tbodyD').empty();
                 $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+                setTimeout(function() {
+                    $(".loader").hide();
+                }, 1000);
             }
         },
         error: function () { }
