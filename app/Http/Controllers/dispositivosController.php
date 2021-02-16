@@ -2602,16 +2602,16 @@ class dispositivosController extends Controller
         $idEmpleado =  $request->get('idEmpleado');
 
         $marcaciones = DB::table('marcacion_puerta as mp')
-            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+            ->leftJoin('horario_empleado as he', 'mp.horarioEmp_id', '=', 'he.horarioEmp_id')
+            ->leftJoin('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
+            ->leftJoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
             ->select(
                 'h.horario_descripcion as descripcion',
                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                DB::raw('IF(hoe.horarioEmp_id is null, 0, hoe.horarioEmp_id)'),
-
+                DB::raw('IF(he.horarioEmp_id is null, 0, he.horarioEmp_id)'),
             )
-            ->where('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))', '=', $fecha)
+            ->whereRaw("IF(he.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start)) = '$fecha'")
             ->where('mp.marcaMov_emple_id', '=', $idEmpleado)
             ->groupBy(DB::raw('IF(hoe.horarioEmp_id is null, 0, hoe.horarioEmp_id)'))
             ->get();
