@@ -4197,7 +4197,7 @@ class TardanzasController extends Controller
         /* VARIABLES PARA LA COMPARACIÓN */
         $cantTardanzas = 0;
         $tiempoTardanza = 0;
-        $len = count($empleados);
+        $len = $empleados->count();
         $i = 0;
         $employee = 0;
 
@@ -5554,26 +5554,25 @@ class TardanzasController extends Controller
                         $tiempoTardanza += $diffS;
                         $sumTardanza += 1;
                         $horas[$diaHorario->day-1] += 1;
+                        $obj = (object) array(
+                            "emple_id" => $empleado->emple_id, 
+                            "nombre" => $empleado->nombre, 
+                            "apPaterno" => $empleado->apPaterno,
+                            "apMaterno" => $empleado->apMaterno, 
+                            "horas" => $horas, 
+                            "fechaF" => $dias, 
+                            "totalTardanza" => gmdate('H:i:s', $tiempoTardanza),
+                            "cantidadTardanza" => $sumTardanza,
+                            "ruc" => $usuario_organizacion->ruc, 
+                            "razonSocial" => $usuario_organizacion->razonSocial, 
+                            "direccion" => $usuario_organizacion->direccion,
+                            "codigo" => strlen($empleado->codigo) > 0 ? $empleado->codigo : $empleado->documento, 
+                            "documento" => $empleado->documento, 
+                            "fecha" => now()->format('d-m-Y H:i:s'), 
+                            "fechaD" => $fechaF[0], 
+                            "fechaH" => $fechaF[1]
+                        );
                     }
-
-                    $obj = (object) array(
-                        "emple_id" => $empleado->emple_id, 
-                        "nombre" => $empleado->nombre, 
-                        "apPaterno" => $empleado->apPaterno,
-                        "apMaterno" => $empleado->apMaterno, 
-                        "horas" => $horas, 
-                        "fechaF" => $dias, 
-                        "totalTardanza" => gmdate('H:i:s', $tiempoTardanza),
-                        "cantidadTardanza" => $sumTardanza,
-                        "ruc" => $usuario_organizacion->ruc, 
-                        "razonSocial" => $usuario_organizacion->razonSocial, 
-                        "direccion" => $usuario_organizacion->direccion,
-                        "codigo" => strlen($empleado->codigo) > 0 ? $empleado->codigo : $empleado->documento, 
-                        "documento" => $empleado->documento, 
-                        "fecha" => now()->format('d-m-Y H:i:s'), 
-                        "fechaD" => $fechaF[0], 
-                        "fechaH" => $fechaF[1]
-                    );
                     $i++;
                 }
                 if($contEmpleados == $len - 1 && $sumTardanza > 0){
