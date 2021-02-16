@@ -64,6 +64,7 @@ class apiBiometricoController extends Controller
                         ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
                             'uso.rol_id', 'r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial', 'o.organi_ruc', 'o.created_at as fechaRegistro', 'o.organi_tipo', 'o.sinc_Biometrico')
                         ->where('user_id', '=', $tab->id)
+                        ->where('o.organi_estado', '=',1)
                         ->join('users as u', 'uso.user_id', '=', 'u.id')
                         ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                         ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
@@ -117,6 +118,7 @@ class apiBiometricoController extends Controller
                                     ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
                                         'uso.rol_id', 'r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial', 'o.organi_ruc', 'o.created_at as fechaRegistro', 'o.organi_tipo', 'o.sinc_Biometrico')
                                     ->where('user_id', '=', Auth::user()->id)
+                                    ->where('o.organi_estado', '=',1)
                                     ->join('users as u', 'uso.user_id', '=', 'u.id')
                                     ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                                     ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
@@ -157,6 +159,7 @@ class apiBiometricoController extends Controller
                                         ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
                                             'uso.rol_id', 'r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial', 'o.organi_ruc', 'o.created_at as fechaRegistro', 'o.organi_tipo', 'o.sinc_Biometrico')
                                         ->where('user_id', '=', Auth::user()->id)
+                                        ->where('o.organi_estado', '=',1)
                                         ->join('users as u', 'uso.user_id', '=', 'u.id')
                                         ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                                         ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
@@ -212,6 +215,7 @@ class apiBiometricoController extends Controller
                             ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
                                 'uso.rol_id', 'r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial', 'o.organi_ruc', 'o.created_at as fechaRegistro', 'o.organi_tipo', 'o.sinc_Biometrico')
                             ->where('user_id', '=', Auth::user()->id)
+                            ->where('o.organi_estado', '=',1)
                             ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                             ->join('users as u', 'uso.user_id', '=', 'u.id')
                             ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
@@ -3997,6 +4001,48 @@ class apiBiometricoController extends Controller
 
                             if($tipoMarcacion == 1){
                                 /* AQUI FALTA Y ME QUEDE */
+                                if ($marcacion_puertaVerifMayor) {
+                                    //*si tengo marcacion de entrada
+
+                                   if($marcacion_puertaVerifMayor->marcaMov_fecha!=null){
+                                       $marcacion_biometrico = new marcacion_puerta();
+
+                                       $marcacion_biometrico->marcaMov_fecha =$marcacion_puertaVerifMayor->marcaMov_salida;
+                                       /* -------------------- */
+
+                                       $marcacion_biometrico->marcaMov_emple_id = $marcacion_puertaVerifMayor->marcaMov_emple_id;
+                                       $marcacion_biometrico->dispositivoEntrada = $marcacion_puertaVerifMayor->dispositivoSalida;
+
+                                       $marcacion_biometrico->organi_id = $marcacion_puertaVerifMayor->organi_id;
+
+                                       $marcacion_biometrico->horarioEmp_id =$marcacion_puertaVerifMayor->horarioEmp_id;
+
+                                       $marcacion_biometrico->tipoMarcacionB = 1;
+
+                                       $marcacion_biometrico->save();
+
+                                       $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerifMayor->marcaMov_id);
+                                       $marcacion_biometrico2->marcaMov_salida = $req['fechaMarcacion'];
+                                       $marcacion_biometrico2->dispositivoSalida = $req['idDisposi'];
+                                       $marcacion_biometrico2->save();
+
+                                       $respuestaMarcacion = array(
+                                           'id' => $req['id'],
+                                           'estado' => true);
+                                   }
+                                   else{
+                                       //*tengo una marcacion donde solo tiene salida y es mayor a nueva marcacion
+                                       $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerifMayor->marcaMov_id);
+                                       $marcacion_biometrico2->marcaMov_fecha=$req['fechaMarcacion'];
+                                       $marcacion_biometrico2->dispositivoEntrada = $req['idDisposi'];
+                                       $marcacion_biometrico2->save();
+                                       $respuestaMarcacion = array(
+                                           'id' => $req['id'],
+                                           'estado' => true);
+
+                                   }
+                               }
+
 
                             } else{
                                 /* AQUI VALIDAREMOS PARA INSERTAR LA SALIDA */
