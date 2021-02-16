@@ -2317,7 +2317,11 @@ class dispositivosController extends Controller
         }
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {
-            $fecha = $entrada->copy()->isoFormat('YYYY-MM-DD');
+            if ($idhorarioE != 0) {
+                $fecha = $entrada->copy()->isoFormat('YYYY-MM-DD');
+            } else {
+                $fecha = $horarioInicio->copy()->isoFormat('YYYY-MM-DD');
+            }
             $fechaS = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');
             // * VALIDACION ENTRE CRUCES DE HORAS
             $marcacionesValidar = DB::table('marcacion_puerta as m')
@@ -2425,10 +2429,11 @@ class dispositivosController extends Controller
         if ($idhorarioE != 0) {
             $horario = DB::table('horario_empleado as he')
                 ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                 ->select(
                     'h.horario_descripcion as descripcion',
-                    'h.horaI',
-                    'h.horaF',
+                    DB::raw("CONCAT( DATE(hd.start),' ', h.horaI) as horaI"),
+                    DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horaF"),
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
@@ -2439,20 +2444,17 @@ class dispositivosController extends Controller
                 ->get()
                 ->first();
             // * OBTENER TIEMPO DE HORARIOS
-            $horarioInicio = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaI);
-            if ($horario->horaF > $horario->horaI) {
-                $horarioFin = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaF);
-                // ? OBTENER TIEMPO DE SALIDA
-                $nuevoTiempo = $salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
+            $horarioInicio = Carbon::parse($horario->horaI);
+            $horarioFin = Carbon::parse($horario->horaF);
+            if ($horarioFin->lt($horarioInicio)) {
+                $nuevoTiempo = $horarioInicio->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
             } else {
-                $nuevaFecha = $salida->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
-                $horarioFin = Carbon::parse($nuevaFecha . " " . $horario->horaF);
-                if ($tiempo > $salida->copy()->isoFormat('HH:mm:ss')) {
-                    // ? OBTENER TIEMPO DE SALIDA
-                    $nuevoTiempo = $salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-                } else {
-                    // ? OBTENER TIEMPO DE SALIDA
+                $inicioHora = $horarioInicio->copy()->isoFormat('HH:mm:ss');
+                if ($tiempo < $inicioHora) {
+                    $nuevaFecha = $horarioInicio->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
                     $nuevoTiempo = $nuevaFecha . " " . $tiempo;
+                } else {
+                    $nuevoTiempo = $horarioInicio->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
                 }
             }
             $entrada = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
@@ -2460,6 +2462,12 @@ class dispositivosController extends Controller
         $entrada = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {
+            if ($idhorarioE != 0) {
+                $fecha = $entrada->copy()->isoFormat('YYYY-MM-DD');
+            } else {
+                $fecha = $horarioInicio->copy()->isoFormat('YYYY-MM-DD');
+            }
+            $fechaS = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');
             // * VALIDACION ENTRE CRUCES DE HORAS
             $marcacionesValidar = DB::table('marcacion_puerta as m')
                 ->select(
@@ -2468,7 +2476,7 @@ class dispositivosController extends Controller
                     DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
                 )
                 ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
-                ->where(DB::raw('IF(m.marcaMov_fecha is null,DATE(m.marcaMov_salida),DATE(m.marcaMov_fecha))'), "=", $salida->copy()->isoFormat('YYYY-MM-DD'))
+                ->whereIn(DB::raw('IF(m.marcaMov_fecha is null,DATE(m.marcaMov_salida),DATE(m.marcaMov_fecha))'), [$fecha, $fechaS])
                 ->whereNotIn('m.marcaMov_id', [$marcacion->marcaMov_id])
                 ->get();
             $respuesta = true;
@@ -2506,27 +2514,35 @@ class dispositivosController extends Controller
                     $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                     $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                     if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                        $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
                         if ($horario->fueraH == 0) {
                             // * VALIDAR SIN FUERA DE HORARIO
-                            $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                            $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
-
                             if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
                                 $marcacion->marcaMov_fecha = $entrada;
                                 $marcacion->dispositivoEntrada = NULL;
+                                $marcacion->controladores_idControladores = NULL;
                                 $marcacion->save();
                                 return response()->json($marcacion->marcaMov_id, 200);
                             } else {
                                 return response()->json(
-                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),
                                     200
                                 );
                             }
                         } else {
-                            $marcacion->marcaMov_fecha = $entrada;
-                            $marcacion->dispositivoEntrada = NULL;
-                            $marcacion->save();
-                            return response()->json($marcacion->marcaMov_id, 200);
+                            if ($entrada->gte($horarioInicioT) && $entrada->lte($horarioFinT)) {
+                                $marcacion->marcaMov_fecha = $entrada;
+                                $marcacion->dispositivoEntrada = NULL;
+                                $marcacion->controladores_idControladores = NULL;
+                                $marcacion->save();
+                                return response()->json($marcacion->marcaMov_id, 200);
+                            } else {
+                                return response()->json(
+                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),
+                                    200
+                                );
+                            }
                         }
                     } else {
                         return response()->json(
@@ -2537,6 +2553,7 @@ class dispositivosController extends Controller
                 } else {
                     $marcacion->marcaMov_fecha = $entrada;
                     $marcacion->dispositivoEntrada = NULL;
+                    $marcacion->controladores_idControladores = NULL;
                     $marcacion->save();
                     return response()->json($marcacion->marcaMov_id, 200);
                 }
