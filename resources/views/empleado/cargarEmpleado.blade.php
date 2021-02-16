@@ -429,15 +429,15 @@ function agregar(){
     var saldoCapital = $(this).find('td').eq(4).html();
    });  console.log(cuotaNo); */
    @if(isset($empleados))
-   const emplead = {!! json_encode($empleados) !!};
-    console.log(emplead);
+   const empleada = {!! json_encode($empleados) !!};
+    console.log(empleada);
    var zoektermen_json;
-/*    var emplead=[];
+   var emplead=[];
 
    zoektermen_json = {!! json_encode($empleados,JSON_FORCE_OBJECT) !!};
                   for(var property in zoektermen_json) {
                     emplead.push({location:zoektermen_json[property],stopover:false});
-                    } */
+                    }
     // empleados =JSON.parse(JSON.stringify());
     $.ajax({
         type:"post",
