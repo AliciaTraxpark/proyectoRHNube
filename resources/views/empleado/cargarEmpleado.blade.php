@@ -199,9 +199,9 @@ use App\User;
                                         </div>
                                         <div class="col-md-8"></div>
                                         <div class="col-md-12">
-                                            @if (session('alert'))
+                                            @if (isset($alert))
                                                 <div class="alert alert-danger">
-                                                    {{ session('alert') }}
+                                                    {{ $alert }}
                                                 </div>
                                             @endif
                                         </div>
