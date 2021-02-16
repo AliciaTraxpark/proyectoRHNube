@@ -337,6 +337,7 @@ Route::get('/areasCR', 'dashboardController@selctAreas');
 Route::get('/empleados', 'EmpleadoController@indexMenu');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
+Route::get('/horariosNuevo', 'horarioController@horarioNuevo');
 Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
 //VINCULACION
 Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAndroid');

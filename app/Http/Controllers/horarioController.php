@@ -613,7 +613,7 @@ class horarioController extends Controller
                         foreach ($horarioDentro as $horarioDentros) {
                             $horaIDentro = Carbon::parse($horarioDentros->horaI)->subMinutes($horarioDentros->toleranciaI);
                             $horaFDentro = Carbon::parse($horarioDentros->horaF)->addMinutes($horarioDentros->toleranciaF);
-                            
+
                             if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
                                 $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($idempsva);
@@ -1366,5 +1366,62 @@ class horarioController extends Controller
         $horario_empleado->horaAdic = $permiteHadicional;
         $horario_empleado->nHoraAdic = $nHorasAdic;
         $horario_empleado->save();
+    }
+
+    public function horarioNuevo()
+    {
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+                ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('eve.id_empleado', '!=', null)
+                ->where('e.emple_estado', '=', 1)
+                ->groupBy('e.emple_id')
+                ->get();
+            $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+            $horarion = DB::table('horario as h')
+                ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->where('he.estado', '=', 1)
+                ->where('h.organi_id', '=', session('sesionidorg'))
+                ->whereNull('he.horario_horario_id')
+                ->get();
+            $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
+                ->select('area_id as idarea', 'area_descripcion as descripcion')
+                ->get();
+            $cargo = DB::table('cargo')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
+                ->get();
+            $local = DB::table('local')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->select('local_id as idlocal', 'local_descripcion as descripcion')
+                ->get();
+
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    return redirect('/dashboard');
+                } else {
+                    return view('horarios.horarioMenuNuevo', [
+                         'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                        'area' => $area, 'cargo' => $cargo, 'local' => $local
+                    ]);
+                }
+            } else {
+                return view('horarios.horarioMenuNuevo', [
+                   'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                    'area' => $area, 'cargo' => $cargo, 'local' => $local
+                ]);
+            }
+        }
     }
 }
