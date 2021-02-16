@@ -30,6 +30,7 @@ use App\eventos_usuario;
 use App\eventos_empleado;
 use App\historial_empleado;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class excelEmpleadoController extends Controller
 {
@@ -70,8 +71,14 @@ class excelEmpleadoController extends Controller
         $path = public_path() . '/datosExcel';
         $fileName = uniqid() . $fileGuardar->getClientOriginalName();
         $fileGuardar->move($path, $fileName);
-
-        return back()->with(['filas' => $filas, 'empleados' => $empleados]);
+        $usuario = DB::table('users')
+        ->where('id', '=', Auth::user()->id)->get();
+      /*   redirect()->route('cargarEmpleado',['filas' => $filas])->with('key','info'); */
+     /*  return redirect()->route('cargarEmpleado', [$empleados]); */
+      return view('empleado.cargarEmpleado', ['usuario' => $usuario[0]->user_estado,'filas' => $filas, 'empleados' => $empleados
+    ]);
+        /* return back(['filas' => $filas, 'empleados' => $empleados]); */
+       
     }
     public function guardarBD(request $request)
     {

@@ -26,12 +26,13 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-
-class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, WithBatchInserts, SkipsOnError
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, WithBatchInserts,WithChunkReading, SkipsOnError
 {use Importable, SkipsErrors;
     private $numRows = 0;
     public $dnias = [];
     public $Ndoc = [];
+    public $NCorreo = [];
 
     /**
      * @param array $row
@@ -121,14 +122,26 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 }
                 //correo
                 if ($row['correo'] != null || $row['correo'] != '') {
+                    $filaCorreo = $this->numRows;
                     $correoAntiguo = DB::table('empleado')->where('emple_Correo', '=', $row['correo'])->where('empleado.organi_id', '=', session('sesionidorg'))
                         ->where('empleado.emple_estado', '=', 1)->first();
                     if ($correoAntiguo != null) {
                         return redirect()->back()->with('alert', 'correo ya registrado en otro empleado: ' . $row['correo'] . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                     };
-                } else {
-                    return redirect()->back()->with('alert', 'Debe especificar correo de empleado' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
-                }
+
+                    //*VALIDANDO QUE NO ESTE EN OTRO EMPLEADO
+                    $capturaCorreo = [$row['correo']];
+                     array_push($this->NCorreo, $capturaCorreo);
+
+                    $linealCorreo = Arr::flatten($this->NCorreo);
+                    $clave2Correo = array_splice($linealCorreo, 0, $filaCorreo);
+                    $claveCC = array_search($row['correo'], $clave2Correo);
+                    if ($claveCC !== false) {
+                        //dd($clave2,$clave,$filaA);
+                        return redirect()->back()->with('alert', 'correo duplicado en la importacion: ' . $row['correo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
+
+                    }
+                    }
 
                 //PREFIJO
                 if ($row['prefijo'] != null || $row['prefijo'] != '') {
@@ -552,6 +565,10 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
         ];
     }
     public function batchSize(): int
+    {
+        return 2000;
+    }
+    public function chunkSize(): int
     {
         return 2000;
     }
