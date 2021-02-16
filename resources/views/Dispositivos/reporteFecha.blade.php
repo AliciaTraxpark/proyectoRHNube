@@ -223,15 +223,6 @@
         padding: 0.1rem 1rem !important;
         margin: 0.1rem 0 !important;
     }
-
-    .dt-button-collection {
-        min-width: 12rem !important;
-    }
-
-    .dt-button {
-        padding: 0.15rem 0.15rem !important;
-    }
-
     div.dataTables_processing {
         z-index: 1;
     }

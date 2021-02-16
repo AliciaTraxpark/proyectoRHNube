@@ -3,7 +3,7 @@ var fechaValue = $("#fechaTrazabilidad").flatpickr({
     mode: "range",
     dateFormat: "Y-m-d",
     altInput: true,
-    altFormat: "j M",
+    altFormat: "j F",
     locale: "es",
     maxDate: "today",
     wrap: true,
@@ -28,6 +28,7 @@ var table;
 var razonSocial = {};
 var direccion = {};
 var ruc = {};
+var paginaGlobal = 10;
 function inicializarTabla() {
     table = $("#tablaTrazabilidad").DataTable({
         "searching": false,
@@ -37,7 +38,8 @@ function inicializarTabla() {
         "lengthChange": true,
         retrieve: true,
         processing: true,
-        "lengthMenu": [10, 25, 50, 75, 100],
+        lengthMenu: [10, 25, 50, 75, 100],
+        pageLength: paginaGlobal,
         scrollCollapse: false,
         language: {
             sProcessing: "Generando informe...",
@@ -268,30 +270,15 @@ function inicializarTabla() {
             setTimeout(function () {
                 $("#tablaTrazabilidad").DataTable().draw();
             }, 1);
+            this.api().page.len(paginaGlobal).draw(false);
+        },
+        drawCallback: function () {
+            var api = this.api();
+            var len = api.page.len();
+            paginaGlobal = len;
         }
-    }).draw();
+    });
 }
-var normalize = (function () {
-    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
-        to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
-        mapping = {};
-
-    for (var i = 0, j = from.length; i < j; i++)
-        mapping[from.charAt(i)] = to.charAt(i);
-
-    return function (str) {
-        var ret = [];
-        for (var i = 0, j = str.length; i < j; i++) {
-            var c = str.charAt(i);
-            if (mapping.hasOwnProperty(str.charAt(i)))
-                ret.push(mapping[c]);
-            else
-                ret.push(c);
-        }
-        return ret.join('');
-    }
-
-})();
 // * INICIALIZAR PLUGIN
 $(function () {
     $('#idsEmpleado').select2({
@@ -563,19 +550,18 @@ function cargarDatos() {
                 // ! ***************************** INCIDENCIAS ****************************
                 if (dataCompleta["incidencias"] != undefined) {
                     dataCompleta["incidencias"].forEach(element => {
-                        element.descripcion = normalize(element.descripcion);
                         // : DESCANSO MEDICO
-                        var estado = element.descripcion.search(RegExp(/medic/gi));
+                        var estado = element.descripcion.search(RegExp(/Descanso médico/gi));
                         if (!(estado === -1)) {
                             descansoM++;
                         }
                         // : SUSPENSIÓN
-                        var estadoSusp = element.descripcion.search(RegExp(/suspension/gi));
+                        var estadoSusp = element.descripcion.search(RegExp(/Suspensión/gi));
                         if (!(estadoSusp === -1)) {
                             suspension++;
                         }
                         // : VACACIONES
-                        var estadoVac = element.descripcion.search(RegExp(/vacaciones/gi));
+                        var estadoVac = element.descripcion.search(RegExp(/Vacaciones/gi));
                         if (!(estadoVac === -1)) {
                             vacaciones++;
                         }
@@ -640,4 +626,7 @@ $('#idsEmpleado').on("change", function () {
 $(window).on('resize', function () {
     $("#tablaTrazabilidad").css('width', '100%');
     table.draw(false);
+});
+$("#tablaTrazabilidad").on('length.dt', function (e, settings, len) {
+    console.log('New page length: ' + len);
 });
