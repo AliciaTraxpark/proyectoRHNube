@@ -123,10 +123,18 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 //correo
                 if ($row['correo'] != null || $row['correo'] != '') {
                     $filaCorreo = $this->numRows;
-                    $correoAntiguo = DB::table('empleado')->where('emple_Correo', '=', $row['correo'])->where('empleado.organi_id', '=', session('sesionidorg'))
+                    $correoAntiguo = DB::table('empleado')->join('persona as p', 'p.perso_id', '=', 'empleado.emple_persona')
+                    ->select(
+                            DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                            'emple_nDoc as dni'
+                        )
+                    ->where('emple_Correo', '=', $row['correo'])
+                    ->where('empleado.organi_id', '=', session('sesionidorg'))
                         ->where('empleado.emple_estado', '=', 1)->first();
                     if ($correoAntiguo != null) {
-                        return redirect()->back()->with('alert', 'correo ya registrado en otro empleado: ' . $row['correo'] . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
+                        return redirect()->back()->with('alert', 'El correo: ' . $row['correo'] . '
+                         ya se encuentra registrado previamente en RH nube, a nombre del empleado '. $correoAntiguo->nombre .
+                          ' con documento:  '.$correoAntiguo->dni.'  .El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                     };
 
                     //*VALIDANDO QUE NO ESTE EN OTRO EMPLEADO
@@ -138,7 +146,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                     $claveCC = array_search($row['correo'], $clave2Correo);
                     if ($claveCC !== false) {
                         //dd($clave2,$clave,$filaA);
-                        return redirect()->back()->with('alert', 'correo duplicado en la importacion: ' . $row['correo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
+                        return redirect()->back()->with('alert', 'El correo está repetido en el archivo de carga: ' . $row['correo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
 
                     }
                     }
@@ -286,7 +294,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         return redirect()->back()->with('alert', 'Código de centro de costo ya registrado. El proceso se interrumpio en la fila:' . $filas);
                     } else{
                         if ($row['centro_costo'] == null) {
-                            return redirect()->back()->with('alert', 'Centro de costo vacio. El proceso se interrumpio en la fila:' . $filas);
+                            return redirect()->back()->with('alert', 'La descripcion del centro de costo debe completarse, ya que has ingresado el código de centro de costo. El proceso se interrumpio en la fila:' . $filas);
 
                         }
                     }
@@ -294,7 +302,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                 } else{
                     if($row['centro_costo'] != null){
-                        return redirect()->back()->with('alert', 'Codigo de centro de costo vacio. El proceso se interrumpio en la fila:' . $filas);
+                        return redirect()->back()->with('alert', 'El código del centro de costo debe completarse, ya que has ingresado una descripción. El proceso se interrumpio en la fila:' . $filas);
                     }
                 }
 
@@ -580,6 +588,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
     {
         return $this->dnias;
     }
+    
 
     public function onError(\Throwable $e)
     {
