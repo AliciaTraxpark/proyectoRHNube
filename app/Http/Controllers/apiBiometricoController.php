@@ -698,8 +698,15 @@ class apiBiometricoController extends Controller
             ->get()->first();
 
         /* FUNCION PARA AGRUPAR CON ID DE BIOMETRICOS */
-        function agruparIDBiometricos($empleado)
-        {
+        function agruparIDBiometricos($empleado,Request $request)
+        {   $idUsuarioOrgani = $request->idusuario_organizacion;
+            $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario', 'uso.rol_id', 'o.organi_id', 'o.organi_razonSocial', 'O.organi_estado')
+            ->where('uso.usua_orga_id', '=', $idUsuarioOrgani)
+            ->join('users as u', 'uso.user_id', '=', 'u.id')
+            ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
+            ->get()->first();
+
             $idBiometricos = array();
             foreach ($empleado as $tab1) {
 
@@ -741,6 +748,7 @@ class apiBiometricoController extends Controller
                     ->where('da.area_id', '=', $tab1->emple_area)
                     ->where('di.dispo_estadoActivo', '=', 1)
                     ->where('da.estado', '=', 1)
+                    ->where('organi_id', '=', $usuario_organizacion->organi_id)
                     ->get();
                 if ($dispositivosBiAr->isNotEmpty()) {
                     foreach ($dispositivosBiAr as $dispositivosBiArs) {
@@ -3984,7 +3992,7 @@ class apiBiometricoController extends Controller
                         ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                         ->get()->first();
-                      
+
                         if (!$marcacion_puertaVerifrepeticion) {
 
                             //*OBTENEMOS ULTIMA MARCACION cuando la salida es mayor de lo nuevo q recibo
