@@ -56,11 +56,19 @@ function inicializarTabla() {
             buttons: {
                 copy: "Copiar",
                 colvis: "Visibilidad",
+                pageLength: {
+                    "_": "Mostrar %d registros"
+                },
             },
 
         },
         dom: 'Bfrtip',
+        lengthMenu: [10, 25, 50, 100],
         buttons: [
+            {
+                extend: 'pageLength',
+                className: 'btn btn-sm mt-1',
+            },
             {
                 extend: 'excel',
                 className: 'btn btn-sm mt-1',
@@ -137,7 +145,8 @@ function inicializarTabla() {
                         }
                     }
                 },
-            }, {
+            },
+            {
                 extend: "pdfHtml5",
                 className: 'btn btn-sm mt-1',
                 text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
@@ -240,7 +249,8 @@ function inicializarTabla() {
                         };
                     };
                 }
-            }],
+            }
+        ],
         paging: true,
         initComplete: function () {
             dataT = this;

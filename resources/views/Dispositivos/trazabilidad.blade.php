@@ -78,7 +78,7 @@
                     <div class="col-xl-4">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
+                            <div class="input-group col-md-9 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaTrazabilidad">
                                 <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
