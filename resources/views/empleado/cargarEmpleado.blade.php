@@ -206,8 +206,8 @@ use App\User;
                                             @endif
                                         </div>
                                         <div class="col-md-12">
-                                            @if (session('filas'))
-                                                <div class="alert alert-info alert-dismissible fade show" role="alert">Se importaron {{ session('filas') }} empleados.
+                                            @if (isset($filas))
+                                                <div class="alert alert-info alert-dismissible fade show" role="alert">Se importaron {{$filas }} empleados.
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -229,7 +229,7 @@ use App\User;
                                 </div>
                             </form>
                             <div class="col-md-12 text-right mt-3">
-                                @if (session('empleados'))
+                                @if (isset($empleados))
                                     <button type="button" style="font-size: 12.25px; padding-top: 5.5px; padding-bottom: 4.5px;" id="btnRegistraBD" class="boton btn-sm " onclick="agregar()">Validar y registrar</button>
                                 @endif
                             </div>
@@ -273,8 +273,8 @@ use App\User;
                             </tr>
                         </thead>
                         <tbody style="background:#f7f7f7;color: #2c2c2c;">
-                            @if (session('empleados'))
-                                @foreach (session('empleados') as $item)
+                            @if(isset($empleados))
+                                @foreach ($empleados as $item)
                                     <tr>
                                         <td>{{$item[0]}}</td>
                                         <td>{{$item[1]}}</td>
@@ -428,10 +428,13 @@ function agregar(){
     var valorCuota = $(this).find('td').eq(3).html();
     var saldoCapital = $(this).find('td').eq(4).html();
    });  console.log(cuotaNo); */
-   @if(session()->has('empleados'))
+   @if(isset($empleados))
+   const empleada = {!! json_encode($empleados) !!};
+    console.log(empleada);
    var zoektermen_json;
    var emplead=[];
-   zoektermen_json = {!! json_encode(session()->get('empleados'),JSON_FORCE_OBJECT) !!};
+
+   zoektermen_json = {!! json_encode($empleados,JSON_FORCE_OBJECT) !!};
                   for(var property in zoektermen_json) {
                     emplead.push({location:zoektermen_json[property],stopover:false});
                     }

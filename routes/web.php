@@ -157,6 +157,7 @@ Route::post('tablaempleado/refreshAreaBaja', 'EmpleadoController@refresTablaAreB
 Route::post('empleado/darAlta', 'EmpleadoController@darAltaEmpleado');
 Route::post('/empleado/actualizarConfigHorario', 'EmpleadoController@actualizarConfigHorario');
 Route::post('/empleado/actualizarConfigHorario_re', 'EmpleadoController@actualizarConfigHorario_re');
+Route::post('/incidenciasOrganizacion', 'EmpleadoController@incidenciasOrganizacion');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
@@ -212,6 +213,12 @@ Route::get('/cargarTablaTardanzasRuta', 'TardanzasController@cargarReporteTardan
 Route::get('/reporteMatrizTardanzasRuta', 'TardanzasController@mostrarMatrizTardanzasRuta');
 Route::get('/cargarMatrizTardanzasRuta', 'TardanzasController@cargarMatrizTardanzasRuta');
 Route::get('/selectMatrizTardanzasRuta', 'TardanzasController@selectMatrizTardanzasRuta');
+// TARDANZAS CONTROL EN PUERTA
+Route::get('/reporteTardanzasPuerta', 'TardanzasController@mostrarReporteTardanzaPuerta');
+Route::get('/cargarTablaTardanzasPuerta', 'TardanzasController@cargarReporteTardanzasPuerta');
+Route::get('/reporteMatrizTardanzasPuerta', 'TardanzasController@mostrarMatrizTardanzasPuerta');
+Route::get('/cargarMatrizTardanzasPuerta', 'TardanzasController@cargarMatrizTardanzasPuerta');
+Route::get('/selectMatrizTardanzasPuerta', 'TardanzasController@selectMatrizTardanzasPuerta');
 
 
 //FUNCION PARA MOSTRAR CAPTURAS Y MINIATURAS

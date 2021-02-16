@@ -815,6 +815,8 @@ public function editarInviArea(Request $request){
     $permisoEmp_ed=$request->permisoEmp_ed;
 
     $switchActividades_ed=$request->switchActividades_ed;
+    $switchHb_ed=$request->switchHb_ed;
+    $switchContract_ed=$request->switchContract_ed;
     $switchasisPuerta_ed=$request->switchasisPuerta_ed;
     $switchCRemo_ed=$request->switchCRemo_ed;
     $switchCRuta_ed=$request->switchCRuta_ed;
@@ -874,7 +876,7 @@ public function editarInviArea(Request $request){
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed, 'ControlRuta'=>$switchCRuta_ed,'extractorRH'=>$switchExtractor_ed,
-           'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed, 'gestionHb'=>$switchHb_ed, 'gestionContract'=>$switchContract_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>0, 'area'=>1, 'modoTareo'=> $switchmodoTareo_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed ]);
         /* ----------------------------------------------------------------------------------------- */
@@ -910,7 +912,7 @@ public function editarInviArea(Request $request){
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed, 'ControlRuta'=>$switchCRuta_ed, 'extractorRH'=>$switchExtractor_ed,
-           'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed, 'gestionHb'=>$switchHb_ed, 'gestionContract'=>$switchContract_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>0, 'area'=>1, 'modoTareo'=> $switchmodoTareo_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed]);
         /* ----------------------------------------------------------------------------------------------------------- */

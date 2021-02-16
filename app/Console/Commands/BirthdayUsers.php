@@ -50,14 +50,6 @@ class BirthdayUsers extends Command
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
 
         foreach ($organizaciones as $organizacion) {
-           // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
-            //SOLAMENTE EMPLEADOS 
-
-            /*$empleados = DB::table('empleado')
-                    ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
-                    ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                    ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_id')
-                    ->get();*/
 
             //COLECCIÓN DE ADMINISTRADORES POR ORGANIZACIÓN
             $admins = DB::table('usuario_organizacion')

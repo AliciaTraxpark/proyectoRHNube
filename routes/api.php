@@ -97,4 +97,5 @@ Route::post("empleadoHorarioTareo", "apimarcacionTareoController@empleadoHorario
 Route::post("ticketSoporteTareo", "apimarcacionTareoController@ticketSoporteTareo")->middleware('token')->middleware('apilogger');
 Route::post("centroCostosTareo", "apimarcacionTareoController@centroCostosTareo")->middleware('token')->middleware('apilogger');
 Route::post("puntoControlTareo", "apimarcacionTareoController@puntoControlTareo")->middleware('token')->middleware('apilogger');
+
 /* ------------------------------------------------------------- */

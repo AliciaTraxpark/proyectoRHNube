@@ -222,6 +222,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
                 <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
                 <a href="/indexTrazabilidad">Trazabilidad de marcaciones</a>
+                <a href="/reporteTardanzasPuerta">Tardanzas</a>
+                <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
             </li>
         </ul>
     </li>
@@ -434,6 +436,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
                 <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
                 <a href="/indexTrazabilidad">Trazabilidad de marcaciones</a>
+                <a href="/reporteTardanzasPuerta">Tardanzas</a>
+                <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
                 @endif
 
 

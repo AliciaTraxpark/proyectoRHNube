@@ -1581,6 +1581,7 @@ function registrarInvit_edit() {
                         permisoEmp_ed,
                         switchActividades_ed,
                         switchHb_ed,
+                        switchContract_ed,
                         switchasisPuerta_ed,
                         switchCRemo_ed,
                         switchCRuta_ed,

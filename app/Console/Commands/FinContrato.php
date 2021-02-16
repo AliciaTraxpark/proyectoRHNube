@@ -47,31 +47,27 @@ class FinContrato extends Command
     public function handle()
     {
       $this->info('Enviar correo de fin de contrato.');
+      // SE OBTIENE TODAS LAS ORGANIZACIONES, PORQUE ENVIAMOS CORREOS POR ORGANIZACIONES
       $organizaciones = organizacion::all('organi_id', 'organi_razonSocial', 'organi_tipo');
+      // OBTENEMOS EL DÍA DE HOY
       $todayNow = carbon::now()->subHours(5);
       $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
       
+      // RECORREMOS CADA ORGANIZACIÓN
       foreach ($organizaciones as $organizacion) {
         $datos = "";
-       // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
-        /*$empleados = DB::table('empleado')
-                ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
-                ->join('contrato', 'emple_id', '=', 'contrato.idEmpleado')
-                ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_id', 'contrato.fechaFinal', 'contrato.notiTiempo')
-                ->get();*/
-
+        // SE OBTIENE LOS ADMINISTRADORES O INVITADOS CON PERMISOS DE RECIBIR NOTIFICACIONES DE FIN DE CONTRATO
         $admins = DB::table('usuario_organizacion')
                 ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
                 ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')
                 ->where('usuario_organizacion.organi_id', $organizacion->organi_id)
                 ->where(function ($query) {
-                    $query->where('invitado.gestionContract', '<>', 0)
-                          ->orWhereNull('invitado.gestionContract');
+                    $query->where('invitado.gestionContract', '<>', 0) // DIFERENTE DE CERO
+                          ->orWhereNull('invitado.gestionContract'); // IGUAL A NULL, PORQUE EL CREADOR DE LA ORGANIZACIÓN TIENE NULL
                     })
                 ->select('usuario_organizacion.user_id', 'usuario_organizacion.rol_id')
                 ->get();
-
+        // RECORREMOS CADA COLECCIÓN DE ADMIS
         foreach($admins as $admin){
           if ($admin->rol_id == 3) {
             $invitado = DB::table('invitado as in')
@@ -85,6 +81,7 @@ class FinContrato extends Command
                   ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'contrato.fechaFinal', 'contrato.notiTiempo')
                   ->where('e.organi_id', '=', $organizacion->organi_id)
                   ->where('e.emple_estado', '=', 1)
+                  ->where('contrato.estado', '=', 1)
                   ->groupBy('e.emple_id')
                   ->get();
             } else {
@@ -102,6 +99,7 @@ class FinContrato extends Command
                       ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'contrato.fechaFinal', 'contrato.notiTiempo')
                       ->where('e.organi_id', '=', $organizacion->organi_id)
                       ->where('e.emple_estado', '=', 1)
+                      ->where('contrato.estado', '=', 1)
                       ->where('invi.estado', '=', 1)
                       ->where('invi.idinvitado', '=', $invitado->idinvitado)
                       ->groupBy('e.emple_id')
@@ -115,6 +113,7 @@ class FinContrato extends Command
                     ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'contrato.fechaFinal', 'contrato.notiTiempo')
                     ->where('e.organi_id', '=', $organizacion->organi_id)
                     ->where('e.emple_estado', '=', 1)
+                    ->where('contrato.estado', '=', 1)
                     ->where('invi.estado', '=', 1)
                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                     ->groupBy('e.emple_id')
@@ -128,6 +127,7 @@ class FinContrato extends Command
                   ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'contrato.fechaFinal', 'contrato.notiTiempo')
                   ->where('e.organi_id', '=', $organizacion->organi_id)
                   ->where('e.emple_estado', '=', 1)
+                  ->where('contrato.estado', '=', 1)
                   ->groupBy('e.emple_id')
                   ->get();
           }
@@ -138,7 +138,8 @@ class FinContrato extends Command
               $fc = carbon::parse($empleado->fechaFinal);
               $diff = $today->diffInDays($fc);
               $edad = $today->year - $fc->year;
-              if($diff <= $empleado->notiTiempo && $today <= $fc){
+              // CERO SIGNIFICA QUE TIENE FECHA INDEFINIDA DE CONTRATO.
+              if($empleado->notiTiempo > 0 && $diff <= $empleado->notiTiempo && $today <= $fc){
                 $datos = $datos."<div class=''><strong>• ".$empleado->nombre." ".$empleado->apPaterno." ".$empleado->apMaterno."</strong>, su contrato finaliza el <strong>".$empleado->fechaFinal."</strong> le quedan ".$diff." días. </div><br>";
                 $mensaje =  [
                               "idOrgani" => $organizacion->organi_id,
@@ -151,13 +152,14 @@ class FinContrato extends Command
                               "mensaje" => "Su contrato finaliza en ".$diff." días.",
                               "asunto" => "contract"
                             ];
-
+                //ENVÍA LA NOTIFICACIÓN            
                 $recipient = User::find($admin->user_id);
                 $recipient->notify(new NuevaNotification($mensaje)); 
               }
             }
             // FIN DE NOTIFICACIÓN
           }
+          // ENVÍA EL CORREO
           if($datos != "" && isset($admins)){
             $mail_body = "<h4 style='color: #163552'>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4>".$datos;
             $email = User::find($admin->user_id)->email;

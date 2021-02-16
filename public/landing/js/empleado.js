@@ -743,6 +743,45 @@ function diaferiadoRe_ed() {
 
 //* ABRIR INCIDENCIA
 function agregarinciden_ed() {
+    $("#descripcionInciCa_ed").empty();
+    var options=$('#descripcionInciCa_ed');
+    $.ajax({
+        async: false,
+        url: "/incidenciasOrganizacion",
+        method: "POST",
+        data: {
+
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value=""></option>`;
+            data.forEach(element => {
+                option += `<option value="${element.inciden_id}">${element.inciden_descripcion} </option>`;
+            });
+            options.append(option);
+
+
+        },
+        error: function () { },
+    });
     $("#calendarioAsignar_ed").modal("hide");
     $("#frmIncidenciaCa_ed")[0].reset();
     $("#modalIncidencia_ed").modal("show");
@@ -750,8 +789,10 @@ function agregarinciden_ed() {
 
 //*REGISTRAR INCIDENCIA
 function modalIncidencia_ed() {
+
     var idempleado = $("#idempleado").val();
     descripcionI = $("#descripcionInciCa_ed").val();
+
     var descuentoI;
     if ($("#descuentoCheckCa_ed").prop("checked")) {
         descuentoI = 1;
@@ -761,6 +802,16 @@ function modalIncidencia_ed() {
     fechaI = $("#pruebaStar_ed").val();
     fechaFin = $("#pruebaEnd_ed").val();
 
+    var nuevoSelect;
+    //* verificamos si tiene el atributo que es tag
+    var nuevoOantiguo=( $('#descripcionInciCa_ed option:selected').attr('data-select2-tag'));
+    console.log(nuevoOantiguo);
+    if(nuevoOantiguo == 'true'){
+        nuevoSelect=1;
+    }
+    else{
+        nuevoSelect=0;
+    }
 
     $.ajax({
         type: "post",
@@ -770,7 +821,7 @@ function modalIncidencia_ed() {
             title: descripcionI,
             descuentoI: descuentoI,
             end: fechaFin,
-
+            nuevoSelect,
             idempleado,
         },
         headers: {
@@ -1160,6 +1211,46 @@ function nolaborableTem() {
 }
 //*ABRIR MODAL INCIDENCIA
 function agregarinciden() {
+    $("#descripcionInciCa").empty();
+    var options=$('#descripcionInciCa');
+
+    $.ajax({
+        async: false,
+        url: "/incidenciasOrganizacion",
+        method: "POST",
+        data: {
+
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value=""></option>`;
+            data.forEach(element => {
+                option += `<option value="${element.inciden_id}">${element.inciden_descripcion} </option>`;
+            });
+            options.append(option);
+
+
+        },
+        error: function () { },
+    });
     $("#calendarioAsignar").modal("hide");
     $("#frmIncidenciaCa")[0].reset();
     $("#modalIncidencia").modal("show");
@@ -1177,7 +1268,17 @@ function modalIncidencia() {
     fechaI = $("#pruebaStar").val();
     fechaFin = $("#pruebaEnd").val();
 
+    var nuevoSelect;
+    //* verificamos si tiene el atributo que es tag
+    var nuevoOantiguo=( $('#descripcionInciCa option:selected').attr('data-select2-tag'));
 
+    if(nuevoOantiguo == 'true'){
+        nuevoSelect=1;
+    }
+    else{
+        nuevoSelect=0;
+    }
+    var textDescrip = $("#descripcionInciCa").text();
     $.ajax({
         type: "post",
         url: "/empleado/storeIncidTem",
@@ -1186,8 +1287,8 @@ function modalIncidencia() {
             title: descripcionI,
             descuentoI: descuentoI,
             end: fechaFin,
-
-            id_calendario,
+            nuevoSelect,
+            id_calendario,textDescrip
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -6004,3 +6105,14 @@ function actualizarConfigHorario_re() {
     });
 }
 /* ---------------------------------------------------------------------------- */
+//*select incidencia en editar
+
+$("#descripcionInciCa_ed").select2({
+  tags: true
+});
+
+//*select incidencia en registrar
+
+$("#descripcionInciCa").select2({
+    tags: true
+  });

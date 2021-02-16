@@ -1507,10 +1507,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 pt-3 d-flex inline">
-                            <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que
-                                se le notifique?</label>
-                            <select class="form-control col-2" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta"
+                        <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                        <div class="row w-100 alertVencimiento">
+                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                            <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta"
                                 required="">
                                 <option value="0">Día</option>
                                 @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
