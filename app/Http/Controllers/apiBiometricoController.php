@@ -3492,7 +3492,7 @@ class apiBiometricoController extends Controller
 
                     //*VALIDANDO QUE MARCACION NO SE REPITA
                     $marcacion_puertaVerifrepeticion = DB::table('marcacion_puerta as mv')
-                        ->where(DB::raw('IF(mv.marcaMov_fecha is null,marcaMov_salida ,mv.marcaMov_fecha)'), '=', $req['fechaMarcacion'])
+                        ->where(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $req['fechaMarcacion'])
                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                         ->get()->first();
                       /*   dd($req['idEmpleado'],$marcacion_puertaVerifrepeticion); */
@@ -3977,7 +3977,7 @@ class apiBiometricoController extends Controller
                     if ($empleados) {
                         //*VALIDANDO QUE MARCACION NO SE REPITA
                         $marcacion_puertaVerifrepeticion = DB::table('marcacion_puerta as mv')
-                        ->where(DB::raw('IF(mv.marcaMov_fecha is null,marcacion_puertaVerifrepeticion ,mv.marcaMov_fecha)'), '=', $req['fechaMarcacion'])
+                        ->where(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $req['fechaMarcacion'])
                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                         ->get()->first();
 
