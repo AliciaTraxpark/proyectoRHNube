@@ -5364,7 +5364,7 @@ class TardanzasController extends Controller
 
                     if($employee != $empleado->emple_id){
                         $employee = $empleado->emple_id;
-                        if$sumTardanza > 0(){
+                        if($sumTardanza > 0 ){
                             $datos->push($obj);
                             $sumTardanza = 0;
                             $tiempoTardanza = 0;
