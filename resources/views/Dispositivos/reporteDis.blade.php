@@ -909,6 +909,9 @@
                                         <span>Tipo</span>
                                     </div>
                                     <div class="col-md-3">
+                                        <span>Fecha</span>
+                                    </div>
+                                    <div class="col-md-3">
                                         <span>Hora</span>
                                     </div>
                                     <div class="col-md-3">
@@ -922,6 +925,10 @@
                                             <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
                                             &nbsp;Entrada
                                         </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control form-control-sm" id="fechaNuevaEntrada"
+                                            data-input>
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" class="form-control form-control-sm" id="nuevaEntrada">
@@ -940,6 +947,10 @@
                                             <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
                                             &nbsp;Salida
                                         </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control form-control-sm" id="fechaNuevaSalida"
+                                            data-input>
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" class="form-control form-control-sm" id="nuevaSalida">

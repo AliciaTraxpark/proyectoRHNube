@@ -1543,7 +1543,9 @@ class dispositivosController extends Controller
         $idEmpleado = $request->get('idEmpleado');
         $fecha = $request->get('fecha');
         $marcacion = marcacion_puerta::select('marcaMov_id')
-            ->whereRaw("IF(marcaMov_fecha is null, DATE(marcaMov_salida), DATE(marcaMov_fecha)) = '$fecha'")
+            ->leftJoin('horario_empleado as hoe', 'marcacion_puerta.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+            ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+            ->whereRaw("IF(hoe.horarioEmp_id is null, IF(marcaMov_fecha is null,DATE(marcaMov_salida) , DATE(marcaMov_fecha)) , DATE(hd.start)) = '$fecha'")
             ->where(function ($query) {
                 $query->whereNull('marcaMov_fecha')
                     ->orWhereNull('marcaMov_salida');
@@ -1566,6 +1568,7 @@ class dispositivosController extends Controller
         $salidas = DB::table('marcacion_puerta as mp')
             ->leftJoin('horario_empleado as he', 'mp.horarioEmp_id', '=', 'he.horarioEmp_id')
             ->leftJoin('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->leftJoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
             ->select(
                 'mp.marcaMov_id as id',
                 'mp.marcaMov_salida as salida',
@@ -1574,7 +1577,7 @@ class dispositivosController extends Controller
             )
             ->whereNotNull('mp.marcaMov_salida')
             ->whereNull('mp.marcaMov_fecha')
-            ->whereRaw("DATE(marcaMov_salida) = '$fecha'")
+            ->whereRaw("IF(he.horarioEmp_id is null, IF(marcaMov_fecha is null,DATE(marcaMov_salida) , DATE(marcaMov_fecha)) , DATE(hd.start)) = '$fecha'")
             ->where('mp.marcaMov_emple_id', '=', $idEmpleado)
             ->get();
 
@@ -1602,16 +1605,18 @@ class dispositivosController extends Controller
             }
             if (Carbon::parse($nuevaSalida)->gt(Carbon::parse($nuevaEntrada))) {
                 // DB::enableQueryLog();
-                $marcacionesValidar = DB::table('marcacion_puerta as m')
-                    ->select(
-                        'm.marcaMov_id',
-                        DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
-                        DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
-                    )
-                    ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
-                    ->where(DB::raw('IF(m.marcaMov_fecha is null,DATE(m.marcaMov_salida),DATE(m.marcaMov_fecha))'), "=", $fecha)
-                    ->whereNotIn('m.marcaMov_id', [$marcacion->marcaMov_id])
-                    ->get();
+                if (!empty($marcacion->horarioEmp_id)) {
+                    $marcacionesValidar = DB::table('marcacion_puerta as m')
+                        ->select(
+                            'm.marcaMov_id',
+                            DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
+                            DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
+                        )
+                        ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+                        ->where(DB::raw('IF(m.marcaMov_fecha is null,DATE(m.marcaMov_salida),DATE(m.marcaMov_fecha))'), "=", $fecha)
+                        ->whereNotIn('m.marcaMov_id', [$marcacion->marcaMov_id])
+                        ->get();
+                }
                 // dd(DB::getQueryLog());
                 $respuesta = true;
                 foreach ($marcacionesValidar as $mv) {
@@ -2614,7 +2619,17 @@ class dispositivosController extends Controller
         $fin = $request->get('horaF');
         $idEmpleado = $request->get('idEmpleado');
         $fechaM = $request->get('fecha');
-
+        $fechaSiguinte = Carbon::parse($fechaM)->addDays(1)->isoFormat("YYYY-MM-DD");
+        // ? ******************************** VALIDACION ENTRE CRUCES DE HORAS ***************************
+        $marcacionesValidar = DB::table('marcacion_puerta as m')
+            ->select(
+                'm.marcaMov_id',
+                DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
+                DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
+            )
+            ->where('m.marcaMov_emple_id', '=', $idEmpleado)
+            ->whereIn(DB::raw('IF(m.marcaMov_fecha is null,DATE(m.marcaMov_salida),DATE(m.marcaMov_fecha))'), [$fechaM, $fechaSiguinte])
+            ->get();
         // ? ******************************* VALIDACION DE SIN HORARIO Y CON HORARIO ************************
         if ($idHorarioE != 0) {
             // * HORARIO EMPLEADO, HORARIO Y HORA DIAS
@@ -2652,93 +2667,58 @@ class dispositivosController extends Controller
             // : *********************************** MARCACION *****************************
             // : HORA DE INICIO DE MARCACION
             if (!is_null($inicio)) {
-                if ($horario->horaI > $horario->horaF) {
-                    if ($inicio < $horario->horaI) {
-                        $entrada = Carbon::parse($fechaNext . " " . $inicio);
-                        $fechaParaValidar = [$fechaM, $fechaNext];
-                    } else {
-                        $fechaParaValidar = [$fechaM];
-                        $entrada = Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $inicio);
-                    }
-                } else {
-                    $fechaParaValidar = [$fechaM];
-                    $entrada = Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $inicio);
-                }
+                $entrada = Carbon::parse($inicio);
             } else {
                 $entrada = NULL;
             }
             // : HORA DE FIN DE MARCACION
             if (!is_null($fin)) {
-                if ($horario->horaI > $horario->horaF) {
-                    if ($fin < $horario->horaI) {
-                        $fechaParaValidar = [$fechaM, $fechaNext];
-                        $salida = Carbon::parse($fechaNext . " " . $fin);
-                    } else {
-                        if ($fin  > $inicio) {
-                            $fechaParaValidar = [$fechaM];
-                            $salida = Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $fin);
-                        } else {
-                            $fechaParaValidar = [$fechaM, $fechaNext];
-                            $salida = Carbon::parse($fechaNext . " " . $fin);
-                        }
-                    }
-                } else {
-                    $fechaParaValidar = [$fechaM];
-                    $salida = Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $fin);
-                }
+                $salida = Carbon::parse($fin);
             } else {
                 $salida = NULL;
             }
-            // ? ******************************** VALIDACION ENTRE CRUCES DE HORAS ***************************
-            $marcacionesValidar = DB::table('marcacion_puerta as m')
-                ->select(
-                    'm.marcaMov_id',
-                    DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
-                    DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
-                )
-                ->where('m.marcaMov_emple_id', '=', $idEmpleado)
-                ->whereIn(DB::raw('IF(m.marcaMov_fecha is null,DATE(m.marcaMov_salida),DATE(m.marcaMov_fecha))'), $fechaParaValidar)
-                ->get();
             // * QUE NO SE ENCUENTRE VACIOS NINGUNO DE LOS DOS
-            if (!is_null($fin) && !is_null($inicio)) {
+            if (!is_null($salida) && !is_null($entrada)) {
+                // : SALIDA MAYOR ENTRADA
                 if ($salida->gt($entrada)) {
-                    $respuesta = true;
-                    foreach ($marcacionesValidar as $mv) {
-                        if ($mv->entrada != 0) {
-                            $respuestaCheck = checkHora($entrada, $salida, $mv->entrada);
-                            if ($respuestaCheck) {
-                                $respuesta = false;
+                    // : ENTRADA DEBE ESTAR EN EL RANGO DE HORARIO
+                    if ($entrada->gte($horarioInicio) && $entrada->lte($horarioFin)) {
+                        $respuesta = true;
+                        // : VALIDACION DE CRUCES
+                        foreach ($marcacionesValidar as $mv) {
+                            if ($mv->entrada != 0) {
+                                $respuestaCheck = checkHora($entrada, $salida, $mv->entrada);
+                                if ($respuestaCheck) {
+                                    $respuesta = false;
+                                }
+                            }
+                            if ($mv->salida != 0) {
+                                $respuestaCheck = checkHora($entrada, $salida, $mv->salida);
+                                if ($respuestaCheck) {
+                                    $respuesta = false;
+                                }
                             }
                         }
-                        if ($mv->salida != 0) {
-                            $respuestaCheck = checkHora($entrada, $salida, $mv->salida);
-                            if ($respuestaCheck) {
-                                $respuesta = false;
-                            }
-                        }
-                    }
-
-                    // ! SI NO ENCUENTRA CRUCES
-                    if ($respuesta) {
-                        $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
-                            ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
-                            ->where('m.marcaMov_emple_id', '=', $idEmpleado)
-                            ->whereNotNull('m.marcaMov_fecha')
-                            ->whereNotNull('m.marcaMov_salida')
-                            ->where(DB::raw('DATE(marcaMov_fecha)'), '=', $fechaM)
-                            ->where('m.horarioEmp_id', '=', $idHorarioE)
-                            ->get();
-                        // * CALCULAR TIEMPO
-                        $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
-                        $horaIParse = Carbon::parse($entrada);
-                        $horaFParse = Carbon::parse($salida);
-                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);
-                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
-                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
-                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
-                            // * VALIDACION CON HORARIO
-                            if ($horario->fueraH == 1) {
-                                if ($entrada->gte($horarioInicio)) {
+                        // ! SI NO ENCUENTRA CRUCES
+                        if ($respuesta) {
+                            $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
+                                ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
+                                ->where('m.marcaMov_emple_id', '=', $idEmpleado)
+                                ->whereNotNull('m.marcaMov_fecha')
+                                ->whereNotNull('m.marcaMov_salida')
+                                ->where(DB::raw('DATE(marcaMov_fecha)'), '=', $fechaM)
+                                ->where('m.horarioEmp_id', '=', $idHorarioE)
+                                ->get();
+                            // * CALCULAR TIEMPO
+                            $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                            $horaIParse = Carbon::parse($entrada);
+                            $horaFParse = Carbon::parse($salida);
+                            $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                            $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                            $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                            if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                // * VALIDACION CON HORARIO
+                                if ($horario->fueraH == 1) {
                                     $marcacion = new marcacion_puerta();
                                     $marcacion->marcaMov_fecha = $entrada;
                                     $marcacion->marcaMov_emple_id = $horario->idEmpleado;
@@ -2748,156 +2728,157 @@ class dispositivosController extends Controller
                                     $marcacion->save();
                                     return response()->json($marcacion->marcaMov_id, 200);
                                 } else {
-                                    return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
+                                    if ($entrada->gte($horarioInicio) && $salida->lte($horarioFin)) {
+                                        $marcacion = new marcacion_puerta();
+                                        $marcacion->marcaMov_fecha = $entrada;
+                                        $marcacion->marcaMov_emple_id = $horario->idEmpleado;
+                                        $marcacion->organi_id = session('sesionidorg');
+                                        $marcacion->horarioEmp_id = $idHorarioE;
+                                        $marcacion->marcaMov_salida = $salida;
+                                        $marcacion->save();
+                                        return response()->json($marcacion->marcaMov_id, 200);
+                                    } else {
+                                        return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
+                                    }
                                 }
                             } else {
-                                if ($entrada->gte($horarioInicio) && $salida->lte($horarioFin)) {
-                                    $marcacion = new marcacion_puerta();
-                                    $marcacion->marcaMov_fecha = $entrada;
-                                    $marcacion->marcaMov_emple_id = $horario->idEmpleado;
-                                    $marcacion->organi_id = session('sesionidorg');
-                                    $marcacion->horarioEmp_id = $idHorarioE;
-                                    $marcacion->marcaMov_salida = $salida;
-                                    $marcacion->save();
-                                    return response()->json($marcacion->marcaMov_id, 200);
-                                } else {
-                                    return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
-                                }
+                                return response()->json(
+                                    array("respuesta" => "Sobretiempo en la marcación."),
+                                    200
+                                );
                             }
                         } else {
-                            return response()->json(
-                                array("respuesta" => "Sobretiempo en la marcación."),
-                                200
-                            );
-                        }
-                    } else {
-                        return response()->json(array("respuesta" => "Posibilidad de cruce de hora."), 200);
-                    }
-                } else {
-                    return response()->json(array("respuesta" => "Hora salida debe ser menor a la hora de entrada."), 200);
-                }
-            } else {
-                $respuesta = true;
-                foreach ($marcacionesValidar as $mv) {
-                    if (!is_null($entrada)) {
-                        $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
-                        if ($mv->entrada != 0 && $mv->salida != 0) {
-                            $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
-                            if ($respuestaCheck) {
-                                $respuesta = false;
-                            }
-                        }
-                        if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
-                            if ($horaMinutoV == $horaMinutoE) {
-                                $respuesta = false;
-                            }
-                        }
-                        if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
-                            if ($horaMinutoV == $horaMinutoE) {
-                                $respuesta = false;
-                            }
-                        }
-                    }
-                    if (!is_null($salida)) {
-                        $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
-                        if ($mv->entrada != 0 && $mv->salida != 0) {
-                            $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
-                            if ($respuestaCheck) {
-                                $respuesta = false;
-                            }
-                        }
-                        if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
-                            if ($horaMinutoV == $horaMinutoE) {
-                                $respuesta = false;
-                            }
-                        }
-                        if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
-                            if ($horaMinutoV == $horaMinutoE) {
-                                $respuesta = false;
-                            }
-                        }
-                    }
-                }
-                // ! SI NO ENCUENTRA CRUCES
-                if ($respuesta) {
-                    $estado = true;
-                    if (!is_null($entrada)) {
-                        $respuestaCheck = checkHora($horarioInicio, $horarioFin, $entrada);
-                        if (!$respuestaCheck) $estado = false;
-                    }
-                    if (!is_null($salida)) {
-                        $respuestaCheck = checkHora($horarioInicio, $horarioFin, $salida);
-                        if (!$respuestaCheck) $estado = false;
-                    }
-                    if ($estado) {
-                        $estadoH = true;
-                        if (!is_null($entrada)) {
-                            if ($horario->fueraH == 1) {
-                                if (!(Carbon::parse($entrada)->gte($horarioInicio))) {
-                                    $estadoH = false;
-                                }
-                            } else {
-                                if (!(Carbon::parse($entrada)->gte($horarioInicio) && Carbon::parse($entrada)->lte($horarioFin))) {
-                                    $estadoH = false;
-                                }
-                            }
-                        }
-                        if (!is_null($salida)) {
-                            if ($horario->fueraH == 1) {
-                                if (!(Carbon::parse($salida)->gte($horarioInicio))) {
-                                    $estadoH = false;
-                                }
-                            } else {
-                                if (!(Carbon::parse($salida)->gte($horarioInicio) && Carbon::parse($salida)->lte($horarioFin))) {
-                                    $estadoH = false;
-                                }
-                            }
-                        }
-                        if ($estadoH) {
-                            $marcacion = new marcacion_puerta();
-                            $marcacion->marcaMov_fecha = $entrada;
-                            $marcacion->marcaMov_emple_id = $idEmpleado;
-                            $marcacion->organi_id = session('sesionidorg');
-                            $marcacion->horarioEmp_id = $idHorarioE;
-                            $marcacion->marcaMov_salida = $salida;
-                            $marcacion->save();
-                            return response()->json($marcacion->marcaMov_id, 200);
-                        } else {
-                            return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
+                            return response()->json(array("respuesta" => "Posibilidad de cruce de hora."), 200);
                         }
                     } else {
                         return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
                     }
                 } else {
-                    return response()->json(array("respuesta" => "Posibilidad de cruce de hora."), 200);
+                    return response()->json(array("respuesta" => "Hora salida debe ser mayor a la hora de entrada."), 200);
+                }
+            } else {
+                if (!is_null($inicio)) {
+                    // : ENTRADA DEBE ESTAR EN EL RANGO DE HORARIO
+                    if ($entrada->gte($horarioInicio) && $entrada->lte($horarioFin)) {
+                        $respuesta = true;
+                        foreach ($marcacionesValidar as $mv) {
+                            $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
+                            if ($mv->entrada != 0 && $mv->salida != 0) {
+                                $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
+                                if ($respuestaCheck) {
+                                    $respuesta = false;
+                                }
+                            }
+                            if ($mv->entrada != 0) {
+                                $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
+                                $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                                if ($horaMinutoV == $horaMinutoE) {
+                                    $respuesta = false;
+                                }
+                            }
+                            if ($mv->salida != 0) {
+                                $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
+                                $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                                if ($horaMinutoV == $horaMinutoE) {
+                                    $respuesta = false;
+                                }
+                            }
+                        }
+                        // ! SI NO ENCUENTRA CRUCES
+                        if ($respuesta) {
+                            $estado = true;
+                            $respuestaCheck = checkHora($horarioInicio, $horarioFin, $entrada);
+                            if (!$respuestaCheck) $estado = false;
+
+                            if ($estado) {
+                                $estadoH = true;
+                                if ($horario->fueraH == 0) {
+                                    if (!(Carbon::parse($entrada)->gte($horarioInicio) && Carbon::parse($entrada)->lte($horarioFin))) {
+                                        $estadoH = false;
+                                    }
+                                }
+                                if ($estadoH) {
+                                    $marcacion = new marcacion_puerta();
+                                    $marcacion->marcaMov_fecha = $entrada;
+                                    $marcacion->marcaMov_emple_id = $idEmpleado;
+                                    $marcacion->organi_id = session('sesionidorg');
+                                    $marcacion->horarioEmp_id = $idHorarioE;
+                                    $marcacion->marcaMov_salida = $salida;
+                                    $marcacion->save();
+                                    return response()->json($marcacion->marcaMov_id, 200);
+                                } else {
+                                    return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
+                                }
+                            } else {
+                                return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
+                            }
+                        } else {
+                            return response()->json(array("respuesta" => "Posibilidad de cruce de hora."), 200);
+                        }
+                    } else {
+                        return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
+                    }
+                } else {
+                    if (!is_null($salida)) {
+                        $respuesta = true;
+                        foreach ($marcacionesValidar as $mv) {
+                            $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
+                            if ($mv->entrada != 0 && $mv->salida != 0) {
+                                $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
+                                if ($respuestaCheck) {
+                                    $respuesta = false;
+                                }
+                            }
+                            if ($mv->entrada != 0) {
+                                $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
+                                $horaMinutoE = Carbon::create($salida)->format('H:i');
+                                if ($horaMinutoV == $horaMinutoE) {
+                                    $respuesta = false;
+                                }
+                            }
+                            if ($mv->salida != 0) {
+                                $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
+                                $horaMinutoE = Carbon::create($salida)->format('H:i');
+                                if ($horaMinutoV == $horaMinutoE) {
+                                    $respuesta = false;
+                                }
+                            }
+                        }
+                        // ! SI NO ENCUENTRA CRUCES
+                        if ($respuesta) {
+                            $estadoH = true;
+                            if ($horario->fueraH == 0) {
+                                if (!(Carbon::parse($salida)->gte($horarioInicio) && Carbon::parse($salida)->lte($horarioFin))) {
+                                    $estadoH = false;
+                                }
+                            }
+                            if ($estadoH) {
+                                $marcacion = new marcacion_puerta();
+                                $marcacion->marcaMov_fecha = $entrada;
+                                $marcacion->marcaMov_emple_id = $idEmpleado;
+                                $marcacion->organi_id = session('sesionidorg');
+                                $marcacion->horarioEmp_id = $idHorarioE;
+                                $marcacion->marcaMov_salida = $salida;
+                                $marcacion->save();
+                                return response()->json($marcacion->marcaMov_id, 200);
+                            } else {
+                                return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
+                            }
+                        } else {
+                            return response()->json(array("respuesta" => "Posibilidad de cruce de hora."), 200);
+                        }
+                    }
                 }
             }
         } else {
             // ? ******************************** VALIDACION ENTRE CRUCES DE HORAS ***************************
-            $marcacionesValidar = DB::table('marcacion_puerta as m')
-                ->select(
-                    'm.marcaMov_id',
-                    DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
-                    DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
-                )
-                ->where('m.marcaMov_emple_id', '=', $idEmpleado)
-                ->where(DB::raw('IF(m.marcaMov_fecha is null,DATE(m.marcaMov_salida),DATE(m.marcaMov_fecha))'), '=', $fechaM)
-                ->get();
             $fecha = Carbon::parse($fechaM);
             $fechaNext = $fecha->copy()->addDays(1)->isoFormat("YYYY-MM-DD");
-            $entrada = $inicio == null ? NULL : Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $inicio);
-            $salida = $fin == null ? NULL : Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $fin);
+            $entrada = $inicio == null ? NULL : Carbon::parse($inicio);
+            $salida = $fin == null ? NULL : Carbon::parse($fin);
             // * QUE NO SE ENCUENTRE VACIOS NINGUNO DE LOS DOS
             if (!is_null($fin) && !is_null($inicio)) {
-                if ($fin > $inicio) {
+                if ($entrada->lte($salida)) {
                     foreach ($marcacionesValidar as $mv) {
                         // : ENTRADA
                         $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
@@ -2958,7 +2939,7 @@ class dispositivosController extends Controller
                         return response()->json(array("respuesta" => "Posibilidad de cruce de hora."), 200);
                     }
                 } else {
-                    return response()->json(array("respuesta" => "Hora salida debe ser menor a la hora de entrada."), 200);
+                    return response()->json(array("respuesta" => "Hora salida debe ser mayor a la hora de entrada."), 200);
                 }
             } else {
                 $respuesta = true;

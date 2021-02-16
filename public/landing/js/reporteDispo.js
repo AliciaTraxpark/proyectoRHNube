@@ -1876,10 +1876,11 @@ $('#r_horarioXE').on("change", function () {
         $('#AM_detalleHorarios').show();
     }
 });
-
 // * VARIABLES DE MARCACIONES
 var newEntrada = {};
 var newSalida = {};
+var newFechaEntrada = {};
+var newFechaSalida = {};
 // * MOSTRAR BOTON DE AGREGAR MARCACION
 $('#r_horarioXE').on("change", function () {
     $('#am_valid').empty();
@@ -1895,6 +1896,23 @@ $('#r_horarioXE').on("change", function () {
         enableSeconds: true,
         static: true
     });
+    var minDat = moment($("#fechaInput").val()).format("YYYY-MM-DD");
+    if ($(this).val() == 0) {
+        var maxDat = moment($("#fechaInput").val()).format("YYYY-MM-DD");
+    } else {
+        var maxDat = moment($("#fechaInput").val()).add("day", 1).format("YYYY-MM-DD");
+    }
+    var defaultDat = moment($("#fechaInput").val()).format("YYYY-MM-DD");
+    // * FECHA DE ENTRADA
+    newFechaEntrada = $('#fechaNuevaEntrada').flatpickr({
+        mode: "single",
+        dateFormat: "Y-m-d",
+        locale: "es",
+        defaultDate: defaultDat,
+        maxDate: maxDat,
+        minDate: minDat,
+        enableTime: false,
+    });
     // * INPUT DE SALIDA
     newSalida = $('#nuevaSalida').flatpickr({
         enableTime: true,
@@ -1905,16 +1923,29 @@ $('#r_horarioXE').on("change", function () {
         enableSeconds: true,
         static: true
     });
+    // * FECHA DE SALIDA
+    newFechaSalida = $('#fechaNuevaSalida').flatpickr({
+        mode: "single",
+        dateFormat: "Y-m-d",
+        locale: "es",
+        defaultDate: defaultDat,
+        maxDate: maxDat,
+        minDate: minDat,
+        enableTime: false,
+    });
 });
 // * SIN ENTRADA
 $('#v_entrada').on("change", function (event) {
     if (event.target.checked) {
         newEntrada.setDate("00:00:00");
         $('#nuevaEntrada').prop("disabled", true);
+        $('#fechaNuevaEntrada').prop("disabled", true);
         $('#nuevaSalida').prop("disabled", false);
         $('#v_salida').prop("checked", false);
+        $('#fechaNuevaSalida').prop("disabled", false);
     } else {
         $('#nuevaEntrada').prop("disabled", false);
+        $('#fechaNuevaEntrada').prop("disabled", false);
     }
 });
 // * SIN SALIDA
@@ -1922,10 +1953,13 @@ $('#v_salida').on("change", function (event) {
     if (event.target.checked) {
         newSalida.setDate("00:00:00");
         $('#nuevaSalida').prop("disabled", true);
+        $('#fechaNuevaSalida').prop("disabled", true);
         $('#v_entrada').prop("checked", false);
         $('#nuevaEntrada').prop("disabled", false);
+        $('#fechaNuevaEntrada').prop("disabled", false);
     } else {
         $('#nuevaSalida').prop("disabled", false);
+        $('#fechaNuevaSalida').prop("disabled", false);
     }
 });
 // * REGISTRAR MARCACION
@@ -1936,12 +1970,12 @@ function registrarMar() {
     if ($('#v_entrada').is(":checked")) {
         var horaI = null;
     } else {
-        var horaI = $('#nuevaEntrada').val();
+        var horaI = $('#fechaNuevaEntrada').val() + " " + $('#nuevaEntrada').val();
     }
     if ($('#v_salida').is(":checked")) {
         var horaF = null;
     } else {
-        var horaF = $('#nuevaSalida').val();
+        var horaF = $('#fechaNuevaSalida').val() + " " + $('#nuevaSalida').val();
     }
     $.ajax({
         async: false,
@@ -3159,6 +3193,8 @@ function limpiarAtributos() {
     $('#v_salida').prop("checked", false);
     $('#nuevaEntrada').prop("disabled", false);
     $('#nuevaSalida').prop("disabled", false);
+    $('#fechaNuevaEntrada').prop("disabled", false);
+    $('#fechaNuevaSalida').prop("disabled", false);
     if (newSalida.config != undefined) {
         newSalida.setDate("00:00:00");
     }
