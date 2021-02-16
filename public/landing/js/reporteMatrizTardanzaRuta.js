@@ -40,7 +40,7 @@ $(function () {
         "searching": false,
         "scrollX": true,
         retrieve: true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "autoWidth": false,
         "lengthChange": false,
@@ -171,7 +171,7 @@ function reporteMatriz() {
             "searching": false,
             "scrollX": true,
             retrieve: true,
-            "ordering": false,
+            "ordering": true,
             "autoWidth": true,
             paging: false,
             language: {

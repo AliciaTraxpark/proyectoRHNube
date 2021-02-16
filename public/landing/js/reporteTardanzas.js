@@ -134,7 +134,7 @@ function cargartablaRuta(fecha1,fecha2) {
             table = $("#tablaReport").DataTable({
                 "searching": false,
                 "scrollX": true,
-                "ordering": false,
+                "ordering": true,
                 "autoWidth": false,
                 "bInfo": false,
                 "bLengthChange": true,
@@ -484,7 +484,7 @@ function cargartablaCR(fecha1,fecha2) {
             table = $("#tablaReport").DataTable({
                 "searching": false,
                 "scrollX": true,
-                "ordering": false,
+                "ordering": true,
                 "autoWidth": false,
                 "bInfo": false,
                 "bLengthChange": true,
@@ -828,7 +828,7 @@ function cargartablaPuerta(fecha1,fecha2) {
             table = $("#tablaReport").DataTable({
                 "searching": false,
                 "scrollX": true,
-                "ordering": false,
+                "ordering": true,
                 "autoWidth": false,
                 "bInfo": false,
                 "bLengthChange": true,
