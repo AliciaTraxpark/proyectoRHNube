@@ -12,20 +12,20 @@ var fechaValue = $("#fechaSelec").flatpickr({
 var fechaGlobal = {};
 var dataT = {};
 var sent = false;
-
+var paginaGlobal = 10;
 // * INICIALIZAR TABLA
 var table;
 function inicializarTabla() {
     table = $("#tablaReport").DataTable({
         "searching": false,
         "scrollX": true,
-        scrollCollapse: true,
         "ordering": false,
         "autoWidth": false,
-        "bInfo": false,
-        "bLengthChange": false,
+        "lengthChange": true,
         processing: true,
         retrieve: true,
+        lengthMenu: [10, 25, 50, 75, 100],
+        pageLength: paginaGlobal,
         language: {
             sProcessing: "Generando informe...",
             processing: "<img src='landing/images/punt.gif' height='40'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
@@ -257,8 +257,14 @@ function inicializarTabla() {
             setTimeout(function () {
                 $("#tablaReport").DataTable().draw();
             }, 1);
+            this.api().page.len(paginaGlobal).draw(false);
+        },
+        drawCallback: function () {
+            var api = this.api();
+            var len = api.page.len();
+            paginaGlobal = len;
         }
-    }).draw();
+    });
 }
 $(function () {
     $('#idempleado').select2({
