@@ -2317,7 +2317,7 @@ class dispositivosController extends Controller
         }
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {
-            if ($idhorarioE != 0) {
+            if ($idhorarioE == 0) {
                 $fecha = $entrada->copy()->isoFormat('YYYY-MM-DD');
             } else {
                 $fecha = $horarioInicio->copy()->isoFormat('YYYY-MM-DD');
