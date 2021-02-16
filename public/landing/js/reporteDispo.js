@@ -3028,6 +3028,27 @@ function modalCambiarHorario(idHE, fecha, id) {
     });
     $('a').css('pointer-events', 'auto');
     sent = false;
+    // : MARCACIONES
+    $.ajax({
+        type: "POST",
+        url: "/marcacionHorario",
+        data: {
+            fecha: fecha,
+            idEmpleado: id
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function () { }
+    });
 }
 // * MOSTRAR DETALLES DE HORARIO
 $('#horarioXE').on("change", function () {
@@ -3037,7 +3058,7 @@ $('#horarioXE').on("change", function () {
         var contenido = `<div class="col-md-12"><span style="color:#183b5d;font-weight: bold">Detalles de Horario</span></div>`;
         datosHorario.forEach(element => {
             if (element.idHorarioE == $('#horarioXE').val()) {
-                contenido += `<div class="row ml-3 mr-4" style="background: #ffffff;border-radius: 5px">
+                contenido += `<div class="row ml-3 mr-4" style="border: 1px dashed #aaaaaa!important;border-radius:5px">
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
