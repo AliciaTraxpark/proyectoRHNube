@@ -275,7 +275,7 @@ function calendario() {
         //defaultDate: ano + '-01-01',
         defaultDate: fecha,
         height: "auto",
-        contentHeight: 400,
+        contentHeight: 500,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
         unselectAuto: false,
@@ -314,6 +314,8 @@ function calendario() {
             id = info.event.id;
 
             var event = calendar.getEventById(id);
+
+            //*CUANDO ES HORARIO NUEVO ASIGNADO
             if (info.event.textColor == '111111') {
 
                 /* UNBIND SOLO UNA VEZ */
@@ -386,6 +388,45 @@ function calendario() {
 
                 $('#editarConfigHorario_re').modal('show');
             }
+            else{
+                //*SI ES ASIGNADO
+                if(info.event.textColor=='#000'){
+                    let diadeHorario=moment(info.event.start).format('YYYY-MM-DD HH:mm:ss');
+                    let empleados=$('#nombreEmpleado').val();
+                    $.ajax({
+                        type: "post",
+                        url: "/datosHorarioEmpleado",
+                        data: {
+                            diadeHorario,empleados
+                        },
+                        statusCode: {
+
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            $("#rowdivs").empty();
+                            $.each(data, function (key, item) {
+                                $("#rowdivs").append(
+                                  "<div class='col-md-12'>" + item[0].nombre +" " +item[0].apellidos+ " </div>"
+                                );
+                            });
+                            $('#modalHorarioEmpleados').modal('show');
+                        },
+                        error: function (data) {
+                            alert('Ocurrio un error');
+                        }
+
+
+                    });
+
+
+                }
+            }
 
 
             //info.event.remove();
@@ -399,7 +440,8 @@ function calendario() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-            if (info.event.extendedProps.horaI === null) {
+            if(info.event.textColor!='#000'){
+              if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
 
@@ -468,9 +510,9 @@ function calendario() {
                 }
 
             }
-            /*if(info.event.borderColor=='#5369f8'){
-             $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.borderColor});
-          }*/
+            }
+
+
         },
         customButtons: {
             borrarHorarios: {
@@ -507,7 +549,7 @@ function calendario() {
             }); */
             var idempleado = $('#nombreEmpleado').val();
             num=$('#nombreEmpleado').val().length;
-            console.log(num);
+
             if(num==1){
                 $.ajax({
                     type: "POST",
@@ -3025,7 +3067,7 @@ function modalEditar(id) {
                 var contenido = "";
                 for (let index = 0; index < data.pausas.length; index++) {
                     var pausa = data.pausas[index];
-                    console.log(pausa);
+
                     contenido +=
                         `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}" style="border-top:1px dashed #aaaaaa!important;">
                             <input type="hidden" class="e_rowInputs" value="${pausa.idpausas_horario}">
@@ -3385,7 +3427,7 @@ function e_validarHorasPausaHorario() {
             // : FIN DE PAUSA MAS LA TOLERANCIA DE FIN PARA ENCONTRAR EL MAXIMO DE FIN
             var resultadoSuma = sumarMinutosHoras($('#e_FinPausa' + idI).val(), parseInt($('#e_ToleranciaFP' + idI).val()));
             var horaF = moment(resultadoSuma, ["HH:mm"]);
-            console.log(horaI, horaF);
+
             // * -> ********************************************** TIEMPOS DE HORARIO ******************************************
             // : INICIO DE HORARIO MENOS LA TOLERANCIA DE INICIO PARA ENCONTRAR EL MINIMO DE INICIO DE HORARIO
             var resultadoRestaHorario = sustraerMinutosHoras($('#horaI_ed').val(), parseInt($('#toleranciaH_ed').val()));
