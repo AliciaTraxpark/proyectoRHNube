@@ -2990,6 +2990,7 @@ $('#formInsertarEntrada').submit(function (e) {
 });
 // ! ****************************** CAMBIAR DE HORARIO ***********************************************************
 var datosHorario = {};
+var dataMarcaciones = {};
 // * MODAL CON LISTA DE HORARIOS
 function modalCambiarHorario(idHE, fecha, id) {
     $('a').css('pointer-events', 'none');
@@ -3028,6 +3029,10 @@ function modalCambiarHorario(idHE, fecha, id) {
     });
     $('a').css('pointer-events', 'auto');
     sent = false;
+    listaMarcaciones(fecha, id);
+}
+// * MOSTRAR MARCACIONES
+function listaMarcaciones(fecha, id) {
     // : MARCACIONES
     $.ajax({
         type: "POST",
@@ -3045,7 +3050,7 @@ function modalCambiarHorario(idHE, fecha, id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
+            dataMarcaciones = data;
         },
         error: function () { }
     });
@@ -3121,6 +3126,74 @@ $('#horarioXE').on("change", function () {
         $('#detalleHorarios').append(contenido);
         $('#detalleHorarios').show();
     }
+    var containerMarcaciones = `<div class="col-md-12">
+                                    <span style="color:#183b5d;font-weight: bold">Marcaciones</span>
+                                </div>
+                                <div class="col-md-12"><div class="row mt-2">`;
+    // : MARCACIONES
+    var estadoM = false;
+    $('#detalleMarcaciones').empty();
+    for (let index = 0; index < dataMarcaciones.length; index++) {
+        var dataM = dataMarcaciones[index];
+        if ($('#horarioXE').val() != "") {
+            if (dataM.idHorarioE != $('#horarioXE').val()) {
+                estadoM = true;
+                containerMarcaciones += `<div class="col-md-12">
+                                                <span style="color:#62778c;">${(dataM.descripcion == 0) ? 'Sin horario' : dataM.descripcion}</span>`;
+                var conteM = `<div class="row">`;
+                dataM.data.forEach(element => {
+                    conteM += `<div class="col-md-12">
+                                    <span>
+                                        <input type="checkbox" class="mt-2 idMarcacion" value="${element.id}">
+                                    </span>`;
+                    if (element.entrada != 0) {
+                        conteM += `<span>
+                                        <img src="landing/images/entradaD.svg" height="12" class="ml-1 mr-1" />
+                                        ${element.entrada}
+                                    </span>&nbsp;&nbsp;`;
+                        if (element.salida != 0) {
+                            conteM += `<span>
+                                            <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
+                                            ${element.salida}
+                                        </span>`;
+                        } else {
+                            conteM += `<span>
+                                            <span class="badge badge-soft-secondary noExport">
+                                                <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                No tiene salida
+                                            </span>
+                                        </span>`;
+                        }
+                    } else {
+                        if (element.salida != 0) {
+                            conteM += `<span>
+                                            <span class="badge badge-soft-warning noExport">
+                                                <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                No tiene entrada
+                                            </span>
+                                        </span>&nbsp;&nbsp;`;
+                            conteM += `<span>
+                                            <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
+                                            ${element.salida}
+                                        </span>`;
+                        }
+                    }
+                    conteM += `</div>`;
+                });
+                conteM += `</div>`;
+                containerMarcaciones += conteM;
+                containerMarcaciones += `</div>`;
+            }
+        }
+    }
+    if (estadoM) {
+        $('button[type="submit"]').attr("disabled", false);
+    } else {
+        $('button[type="submit"]').attr("disabled", true);
+    }
+    containerMarcaciones += `</div></div>`;
+    $('#detalleMarcaciones').append(containerMarcaciones);
+    $('#detalleMarcaciones').show();
 });
 // * FUNCION DE CAMBIAR DE HORARIO
 function cambiarHorarioM() {
@@ -3221,6 +3294,8 @@ function limpiarAtributos() {
     $('#horarioXE').empty();
     $('#detalleHorarios').empty();
     $('#detalleHorarios').hide();
+    $('#detalleMarcaciones').empty();
+    $('#detalleMarcaciones').hide();
     // ? MODAL DE NUEVA MARCACION
     $('#AM_detalleHorarios').empty();
     $('#AM_detalleHorarios').hide();
@@ -3232,6 +3307,7 @@ function limpiarAtributos() {
     $('#nuevaSalida').prop("disabled", false);
     $('#fechaNuevaEntrada').prop("disabled", false);
     $('#fechaNuevaSalida').prop("disabled", false);
+    $('button[type="submit"]').attr("disabled", false);
     if (newSalida.config != undefined) {
         newSalida.setDate("00:00:00");
     }

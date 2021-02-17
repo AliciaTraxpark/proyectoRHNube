@@ -825,17 +825,17 @@
                             </div>
                         </div>
                         <div class="row pt-2" id="detalleHorarios" style="display: none"></div>
-                </div>
-            </div>
-            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
-                <div class="col-md-12 text-right" style="padding-right: 0px;">
-                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
-                        onclick="javascript:limpiarAtributos()">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
-                        Guardar
-                    </button>
+                        <div class="row pt-2" id="detalleMarcaciones" style="display: none"></div>
+                        <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                            <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                                    onclick="javascript:limpiarAtributos()">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background: #183b5d;border-color:#62778c;">
+                                    Guardar
+                                </button>
                     </form>
                 </div>
             </div>

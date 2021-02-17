@@ -2376,12 +2376,13 @@ class dispositivosController extends Controller
         }
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {
-            if ($idhorarioE != 0) {
+            if ($idhorarioE == 0) {
                 $fecha = $entrada->copy()->isoFormat('YYYY-MM-DD');
+                $fechaS = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');
             } else {
                 $fecha = $horarioInicio->copy()->isoFormat('YYYY-MM-DD');
+                $fechaS = $horarioInicio->copy()->addDays(1)->isoFormat('YYYY-MM-DD');
             }
-            $fechaS = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');
             // * VALIDACION ENTRE CRUCES DE HORAS
             $marcacionesValidar = DB::table('marcacion_puerta as m')
                 ->select(
@@ -2521,12 +2522,13 @@ class dispositivosController extends Controller
         $entrada = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {
-            if ($idhorarioE != 0) {
+            if ($idhorarioE == 0) {
                 $fecha = $entrada->copy()->isoFormat('YYYY-MM-DD');
+                $fechaS = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');
             } else {
                 $fecha = $horarioInicio->copy()->isoFormat('YYYY-MM-DD');
+                $fechaS = $horarioInicio->copy()->addDays(1)->isoFormat('YYYY-MM-DD');
             }
-            $fechaS = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');
             // * VALIDACION ENTRE CRUCES DE HORAS
             $marcacionesValidar = DB::table('marcacion_puerta as m')
                 ->select(
@@ -2660,20 +2662,45 @@ class dispositivosController extends Controller
         $fecha = $request->get('fecha');
         $idEmpleado =  $request->get('idEmpleado');
 
+        function agruparMarcacionesH($array)
+        {
+            $resultado = array();
+            foreach ($array as $marcacion) {
+                if (!isset($resultado[$marcacion->horarioE])) {
+                    $resultado[$marcacion->horarioE] = (object)array(
+                        "descripcion" =>  $marcacion->descripcion,
+                        "idHorarioE" => $marcacion->horarioE,
+                        "data" => array()
+                    );
+                }
+                $objectoMarcacion = (object)array(
+                    "entrada" =>  $marcacion->entrada,
+                    "salida" => $marcacion->salida,
+                    "id" => $marcacion->marcaMov_id
+                );
+                array_push($resultado[$marcacion->horarioE]->data, $objectoMarcacion);
+            }
+
+            return array_values($resultado);
+        }
+
         $marcaciones = DB::table('marcacion_puerta as mp')
             ->leftJoin('horario_empleado as he', 'mp.horarioEmp_id', '=', 'he.horarioEmp_id')
             ->leftJoin('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
             ->select(
-                'hor.horario_descripcion as descripcion',
+                DB::raw('IF(hor.horario_descripcion is null, 0 ,hor.horario_descripcion ) as descripcion'),
                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                DB::raw('IF(he.horarioEmp_id is null, 0, he.horarioEmp_id)')
+                'mp.marcaMov_id',
+                DB::raw('IF(he.horarioEmp_id is null, 0, he.horarioEmp_id) as horarioE')
             )
             ->whereRaw("IF(he.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start)) = '$fecha'")
             ->where('mp.marcaMov_emple_id', '=', $idEmpleado)
             ->groupBy(DB::raw('IF(he.horarioEmp_id is null, 0, he.horarioEmp_id)'))
             ->get();
+
+        $marcaciones = agruparMarcacionesH($marcaciones);
 
         return response()->json($marcaciones, 200);
     }
