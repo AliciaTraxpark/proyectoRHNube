@@ -4211,7 +4211,7 @@ class TardanzasController extends Controller
                 $horario = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second);
                 $horario_tolerancia = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second)->addMinutes($empleado->horario_tolerancia);
                 /*  CAPTURA DENTRO DEL RANGO DE FECHAS  */
-                if($fechaF->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR)){
+                if($fechaF->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR) && is_null($empleado->marcacion) === false){
                     if($i == 0){
                         //$datos->push("-------------1-------------");
                         //$datos->push($empleado->emple_id);
@@ -5546,7 +5546,6 @@ class TardanzasController extends Controller
                                 $horas[$i] = 0;
                             } 
                         }
-                        
                     }
 
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
