@@ -923,6 +923,33 @@ $('#FormEditarActividadTarea').submit(function (e) {
             return;
         }
     }
+    if ($('#e_nombreTarea').val() == "" || $('#e_nombreTarea').val() == null) {
+        $.notifyClose();
+        $.notify({
+            message: '\nIngresar actividad.',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#editactividadTarea"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        sent = false;
+        return;
+    }
     if (!sent) {
         sent = true;
         this.submit();
