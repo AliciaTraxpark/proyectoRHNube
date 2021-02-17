@@ -317,17 +317,19 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 $capturaCentro = [$row['codigo_centro_costo']];
 
                 array_push($this->NCentro, $capturaCentro);
-
+                $codcentro_costo2 = centro_costo::where('codigo', '=', $row['codigo_centro_costo'])
+                    ->where('centroC_descripcion', '!=', $row['centro_costo'])
+                    ->where('organi_id', '=', session('sesionidorg'))->get()->first();
                $linealCentro = Arr::flatten($this->NCentro);
                $clave2Centro = array_splice($linealCentro, 0, $filaCentro);
-               if($row['codigo_centro_costo'] != null){
+               /* if($row['codigo_centro_costo'] != null && $row['centro_costo']!= $codcentro_costo2->centroC_descripcion){
                $claveCCosto = array_search($row['codigo_centro_costo'], $clave2Centro);
                if ($claveCCosto !== false) {
                    //dd($clave2,$clave,$filaA);
                    return redirect()->back()->with('alert', 'El codigo de centro de costo está repetido en el archivo de carga: ' . $row['codigo_centro_costo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
 
                 }
-                 }
+                 } */
                 //*************************** */
                 //centro_costo
                 $centro_costo = centro_costo::where('centroC_descripcion', '=', $row['centro_costo'] )
