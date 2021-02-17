@@ -2993,8 +2993,6 @@ var dataMarcaciones = {};
 // * MODAL CON LISTA DE HORARIOS
 function modalCambiarHorario(idHE, fecha, id) {
     $('a').css('pointer-events', 'none');
-    $('#idHorarioECH').val(idHE);
-    $('#fechaCH').val(fecha);
     $('#idEmpleadoCH').val(id);
     $('#modalCambiarHorario').modal();
     $('#horarioXE').empty();
@@ -3210,8 +3208,6 @@ function contenidoCheckboxM() {
 // * FUNCION DE CAMBIAR DE HORARIO
 function cambiarHorarioM() {
     var newH = $('#horarioXE').val();
-    var idHE = $('#idHorarioECH').val();
-    var fecha = $('#fechaCH').val();
     var idEmpleado = $('#idEmpleadoCH').val();
     var idsMarcaciones = contenidoCheckboxM();
     $.ajax({
@@ -3219,9 +3215,7 @@ function cambiarHorarioM() {
         type: "POST",
         url: "/cambiarHorarioM",
         data: {
-            idHE: idHE,
             idNuevo: newH,
-            fecha: fecha,
             idEmpleado: idEmpleado,
             idsMarcaciones: idsMarcaciones
         },

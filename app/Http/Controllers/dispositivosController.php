@@ -2703,9 +2703,7 @@ class dispositivosController extends Controller
     // * CAMBIAR HORARIO DE MARCACIONES
     public function cambiarHorario(Request $request)
     {
-        $idHorarioE = $request->get('idHE') == 0 ? null : $request->get('idHE');
         $nuevoHorarioE = $request->get('idNuevo');
-        $fecha = $request->get('fecha');
         $idEmpleado = $request->get('idEmpleado');
         $marcaciones = (array)$request->get('idsMarcaciones');
         $marcacion = marcacion_puerta::whereIn('marcaMov_id', $marcaciones)->get();

@@ -811,10 +811,6 @@
             <div class="modal-body" style="font-size:12px!important;">
                 <div class="col-md-12">
                     <form action="javascript:cambiarHorarioM()" id="formCambiarHorarioM">
-                        {{-- ID HORARIO EMPLEADO --}}
-                        <input type="hidden" id="idHorarioECH">
-                        {{-- FECHA --}}
-                        <input type="hidden" id="fechaCH">
                         {{-- EMPLEADO --}}
                         <input type="hidden" id="idEmpleadoCH">
                         <div class="row">
