@@ -238,6 +238,12 @@
     .dataTables_wrapper .dataTables_processing {
         box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
     }
+
+    .form-check-input {
+        position: absolute;
+        margin-top: 0.2rem;
+        margin-left: 0rem;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -805,10 +811,6 @@
             <div class="modal-body" style="font-size:12px!important;">
                 <div class="col-md-12">
                     <form action="javascript:cambiarHorarioM()" id="formCambiarHorarioM">
-                        {{-- ID HORARIO EMPLEADO --}}
-                        <input type="hidden" id="idHorarioECH">
-                        {{-- FECHA --}}
-                        <input type="hidden" id="fechaCH">
                         {{-- EMPLEADO --}}
                         <input type="hidden" id="idEmpleadoCH">
                         <div class="row">
@@ -825,6 +827,7 @@
                             </div>
                         </div>
                         <div class="row pt-2" id="detalleHorarios" style="display: none"></div>
+                        <div class="row pt-2" id="detalleMarcaciones" style="display: none"></div>
                 </div>
             </div>
             <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
