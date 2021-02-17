@@ -511,7 +511,7 @@ function calendario() {
             if(num==1){
                 $.ajax({
                     type: "POST",
-                    url: "/empleado/calendarioEmpleado",
+                    url: "/horario/horariosAsignar",
                     data: {
 
                         idempleado
@@ -533,7 +533,31 @@ function calendario() {
                 });
             }
             else{
-                successCallback([{}]);
+                 if(num>1){
+                    $.ajax({
+                    type: "POST",
+                    url: "/horario/horariosVariosEmps",
+                    data: {
+
+                        idempleado
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+
+                        successCallback(data);
+
+                    },
+                    error: function () {}
+                });
+                 }
+
             }
 
         },
@@ -625,17 +649,9 @@ function agregarHorarioSe() {
             });
         });
 
-        calendar.addEvent({
 
-           title: 'Laborable',
-           start:'2021-02-17 00:00:00',
-           end: '2021-02-19 00:00:00',
-           color : '#dfe6f2',
-           textColor:'#0b1b29'
 
-         });
-
-        /* $.ajax({
+         $.ajax({
             type: "post",
             url: "/guardarEventos",
             data: {
@@ -680,7 +696,7 @@ function agregarHorarioSe() {
             }
 
 
-        }); */
+        });
     } else {
         $("#selectHorario").val("Asignar horario");
         $("#selectHorario").trigger("change");
