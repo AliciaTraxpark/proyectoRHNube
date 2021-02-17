@@ -1069,7 +1069,7 @@ use Carbon\Carbon;
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">
                                         Nuevo</button>
                                 </div>
-                                <div class="col-xl-6">
+                                <div class="col-xl-4">
                                     <div class="form-group row">
                                         <label class="col-lg-2 col-form-label">Área:</label>
                                         <div class="col-lg-10">
@@ -1100,7 +1100,7 @@ use Carbon\Carbon;
                                     </td>
                                     </div>
                                 </div>
-                                <div class="col-md-2" id="filter_global">
+                                <div class="col-md-4" id="filter_global">
                                     <td align="center">
                                         <input type="text" class="global_filter form-control" id="global_filter"
                                             style="height: 35px;" placeholder="palabra a buscar...">

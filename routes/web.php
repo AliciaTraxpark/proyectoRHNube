@@ -314,6 +314,8 @@ Route::post('/pausasHorario', 'horarioController@pausasHorario');
 Route::post('/editarHorario', 'horarioController@editarHorario');
 Route::get('/obtenerHorarios', 'horarioController@obtenerHorarios');
 Route::post('/horario/actualizarConfigHorario', 'horarioController@actualizarConfigHorario');
+Route::post('/horario/horariosAsignar', 'horarioController@horariosEmpleado');
+Route::post('/horario/horariosVariosEmps', 'horarioController@horariosVariosEmps');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');
@@ -337,6 +339,7 @@ Route::get('/areasCR', 'dashboardController@selctAreas');
 Route::get('/empleados', 'EmpleadoController@indexMenu');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
+Route::get('/horariosNuevo', 'horarioController@horarioNuevo');
 Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
 //VINCULACION
 Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAndroid');

@@ -698,8 +698,9 @@ class apiBiometricoController extends Controller
             ->get()->first();
 
         /* FUNCION PARA AGRUPAR CON ID DE BIOMETRICOS */
-        function agruparIDBiometricos($empleado)
+        function agruparIDBiometricos($empleado,$idorganiz)
         {
+
             $idBiometricos = array();
             foreach ($empleado as $tab1) {
 
@@ -709,6 +710,7 @@ class apiBiometricoController extends Controller
                     ->where('di.dispo_todosEmp', '=', 1)
                     ->where('di.tipoDispositivo', '=', 3)
                     ->where('di.dispo_estadoActivo', '=', 1)
+                    ->where('di.organi_id', '=', $idorganiz)
                     ->get();
                 if ($dispositivosBi->isNotEmpty()) {
                     foreach ($dispositivosBi as $dispositivosBis) {
@@ -725,6 +727,7 @@ class apiBiometricoController extends Controller
                     ->join('dispositivos as di', 'de.idDispositivos', '=', 'di.idDispositivos')
                     ->where('de.emple_id', '=', $tab1->idempleado)
                     ->where('di.dispo_estadoActivo', '=', 1)
+                    ->where('di.organi_id', '=', $idorganiz)
                     ->where('de.estado', '=', 1)
                     ->get();
                 if ($dispositivosBiEmp->isNotEmpty()) {
@@ -741,6 +744,7 @@ class apiBiometricoController extends Controller
                     ->where('da.area_id', '=', $tab1->emple_area)
                     ->where('di.dispo_estadoActivo', '=', 1)
                     ->where('da.estado', '=', 1)
+                     ->where('di.organi_id', '=', $idorganiz)
                     ->get();
                 if ($dispositivosBiAr->isNotEmpty()) {
                     foreach ($dispositivosBiAr as $dispositivosBiArs) {
@@ -786,7 +790,7 @@ class apiBiometricoController extends Controller
                         ->where('e.asistencia_puerta', '=', 1)
                         ->distinct('e.emple_id')
                         ->paginate();
-                    $empleado = agruparIDBiometricos($empleado);
+                    $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
 
                 } else {
                     /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -813,7 +817,7 @@ class apiBiometricoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->distinct('e.emple_id')
                             ->paginate();
-                        $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
 
                     } else {
                         /* EMPLEADOS POR AREA */
@@ -834,7 +838,7 @@ class apiBiometricoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->distinct('e.emple_id')
                             ->paginate();
-                        $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
 
                     }
                 }
@@ -852,7 +856,7 @@ class apiBiometricoController extends Controller
                     ->where('e.asistencia_puerta', '=', 1)
                     ->distinct('e.emple_id')
                     ->paginate();
-                $empleado = agruparIDBiometricos($empleado);
+                $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
 
             }
         } else {
@@ -900,7 +904,7 @@ class apiBiometricoController extends Controller
                                 ->where('e.asistencia_puerta', '=', 1)
                                 ->distinct('e.emple_id')
                                 ->paginate();
-                            $empleado = agruparIDBiometricos($empleado);
+                            $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
 
                         } else {
                             /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -927,7 +931,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
 
                             } else {
                                 /* EMPLEADOS POR AREA */
@@ -948,7 +952,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
 
                             }
                         }
@@ -966,7 +970,7 @@ class apiBiometricoController extends Controller
                             ->where('e.asistencia_puerta', '=', 1)
                             ->distinct('e.emple_id')
                             ->paginate();
-                        $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
 
                     }
 
@@ -1001,7 +1005,7 @@ class apiBiometricoController extends Controller
                                 ->where('de.idDispositivos', '=', $idbiometrico)
                                 ->distinct('e.emple_id')
                                 ->paginate();
-                            $empleado = agruparIDBiometricos($empleado);
+                            $empleado = agruparIDBiometricos($empleado,$usuario_organizacion->organi_id);
                             /* --------------------------------------------------------------------- */
 
                         } else {
@@ -1034,7 +1038,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado, $usuario_organizacion->organi_id);
                                 /* ----------------------------------------------------------------- */
 
                             } else {
@@ -1061,7 +1065,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado, $usuario_organizacion->organi_id);
                                 /* -------------------------------------------------------------- */
 
                             }
@@ -1084,7 +1088,7 @@ class apiBiometricoController extends Controller
                             ->where('de.idDispositivos', '=', $idbiometrico)
                             ->distinct('e.emple_id')
                             ->paginate();
-                        $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado, $usuario_organizacion->organi_id);
                         /* --------------------------------------------------------------------- */
 
                     }
@@ -1123,7 +1127,7 @@ class apiBiometricoController extends Controller
                                 ->where('da.idDispositivos', '=', $idbiometrico)
                                 ->distinct('e.emple_id')
                                 ->paginate();
-                            $empleado = agruparIDBiometricos($empleado);
+                            $empleado = agruparIDBiometricos($empleado, $usuario_organizacion->organi_id);
                             /* --------------------------------------------------------------------- */
 
                         } else {
@@ -1156,7 +1160,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado, $usuario_organizacion->organi_id);
                                 /* ----------------------------------------------------------------- */
 
                             } else {
@@ -1184,7 +1188,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado, $usuario_organizacion->organi_id);
                                 /* -------------------------------------------------------------- */
 
                             }
@@ -1208,7 +1212,7 @@ class apiBiometricoController extends Controller
                             ->where('da.idDispositivos', '=', $idbiometrico)
                             ->distinct('e.emple_id')
                             ->paginate();
-                        $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado, $usuario_organizacion->organi_id);
                         /* --------------------------------------------------------------------- */
 
                     }
@@ -3492,8 +3496,10 @@ class apiBiometricoController extends Controller
 
                     //*VALIDANDO QUE MARCACION NO SE REPITA
                     $marcacion_puertaVerifrepeticion = DB::table('marcacion_puerta as mv')
-                        ->where(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $req['fechaMarcacion'])
-                        ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                    ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                    ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
+                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                         ->get()->first();
                       /*   dd($req['idEmpleado'],$marcacion_puertaVerifrepeticion); */
 
@@ -3977,7 +3983,9 @@ class apiBiometricoController extends Controller
                     if ($empleados) {
                         //*VALIDANDO QUE MARCACION NO SE REPITA
                         $marcacion_puertaVerifrepeticion = DB::table('marcacion_puerta as mv')
-                        ->where(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $req['fechaMarcacion'])
+                        ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                        ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                        ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                         ->get()->first();
 

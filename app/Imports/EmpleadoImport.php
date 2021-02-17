@@ -121,8 +121,9 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                     return redirect()->back()->with('alert', 'numero de Pasaporte ' . $row['numero_documento'] . ' invalido en la importacion(Debe tener 12 digitos)  .El proceso se interrumpio en la fila ' . $filas . ' de excel');
                 }
                 //correo
+                $filaCorreo = $this->numRows;
                 if ($row['correo'] != null || $row['correo'] != '') {
-                    $filaCorreo = $this->numRows;
+
                     $correoAntiguo = DB::table('empleado')->join('persona as p', 'p.perso_id', '=', 'empleado.emple_persona')
                     ->select(
                             DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
@@ -137,19 +138,24 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                           ' con documento:  '.$correoAntiguo->dni.'  .El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                     };
 
-                    //*VALIDANDO QUE NO ESTE EN OTRO EMPLEADO
-                    $capturaCorreo = [$row['correo']];
+
+                    }
+                     //*VALIDANDO QUE NO ESTE EN OTRO EMPLEADO
+                     $capturaCorreo = [$row['correo']];
+
                      array_push($this->NCorreo, $capturaCorreo);
 
                     $linealCorreo = Arr::flatten($this->NCorreo);
                     $clave2Correo = array_splice($linealCorreo, 0, $filaCorreo);
+                    if($row['correo'] != null){
                     $claveCC = array_search($row['correo'], $clave2Correo);
                     if ($claveCC !== false) {
                         //dd($clave2,$clave,$filaA);
                         return redirect()->back()->with('alert', 'El correo está repetido en el archivo de carga: ' . $row['correo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
 
                     }
-                    }
+                }
+
 
                 //PREFIJO
                 if ($row['prefijo'] != null || $row['prefijo'] != '') {
@@ -588,7 +594,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
     {
         return $this->dnias;
     }
-    
+
 
     public function onError(\Throwable $e)
     {

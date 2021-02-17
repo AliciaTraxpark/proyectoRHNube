@@ -95,7 +95,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $event->sheet->getStyle('A1:B1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
-                $event->sheet->getStyle('D1:G1')->getFill()
+                $event->sheet->getStyle('D1:F1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
                 $event->sheet->getStyle('J1:K1')->getFill()

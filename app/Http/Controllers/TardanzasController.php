@@ -112,13 +112,14 @@ class TardanzasController extends Controller
 
         $e = new Collection();
         $datos = new Collection();
+        $colCapturas = new Collection();
 
         foreach($empleados as $empleado){
             $e->push($empleado->emple_id);
         }
 
         // CAPTURAS
-        $capturas = DB::table('empleado as e')
+        /*$capturas = DB::table('empleado as e')
         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
         ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
         ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
@@ -128,14 +129,16 @@ class TardanzasController extends Controller
             DB::raw('TIME(cp.hora_ini) as horaM'),
             DB::raw('0 as horario'),
             DB::raw('0 as Falta'),
-            DB::raw('0 as dia')
+            DB::raw('0 as dia'),
+            DB::raw('MIN(TIME(cp.hora_ini)) as min')
         )
         ->where('e.organi_id', session('sesionidorg'))
         ->whereDate(DB::raw('DATE(cp.hora_ini)'), '>=',$fechaInicio)
         ->whereDate(DB::raw('DATE(cp.hora_ini)'), '<=',$fechaFin)
         ->orderBy('e.emple_id')
         ->whereIn('e.emple_id', $e)
-        ->get();
+        ->groupby(DB::raw('DATE(cp.hora_ini)'), 'e.emple_id')
+        ->get();*/
 
         // HORARIOS
         $horarios = DB::table('horario_empleado as he')
@@ -165,16 +168,102 @@ class TardanzasController extends Controller
         ->get();
 
         foreach ($horarios as $horario) {
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            $dHor = Carbon::parse($horario->diaH);
+            $temp = Carbon::parse($horario->DP)->addDays(1);
+            $diaHorario = $dHor->year."-".$dHor->month."-".$dHor->day;
+            $diaHorario_tmw = $temp->year."-".$temp->month."-".$temp->day;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            $horEnt = Carbon::parse($horario->horaH)->subMinutes($horario->horario_tolerancia);
+            $horarioEntrada = $horEnt->hour.":".$horEnt->minute.":".$horEnt->second;
+            $horSal = Carbon::parse($horario->horaF)->addMinutes($horario->horario_toleranciaF);
+            $horarioSalida = $horSal->hour.":".$horSal->minute.":".$horSal->second;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             $horaEntrada = Carbon::parse($horario->horaH);
             $horaSalida = Carbon::parse($horario->horaF);
-            $temp = Carbon::parse($horario->DP)->addDays(1);
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             if($horaEntrada > $horaSalida){
                 $horario->HF = "23:59:59";
                 $horario->HI = "00:00:00";
-                $horario->DP = $temp->year."-".$temp->month."-".$temp->day;
+                $horario->DP = $diaHorario_tmw;
+
+                $cp = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('p.perso_nombre', 'e.emple_id', 'cp.idCaptura', 'c.cargo_descripcion', 'a.area_descripcion',
+                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                    DB::raw('MIN(TIME(cp.hora_ini)) as horaM'),
+                    DB::raw('0 as horario'),
+                    DB::raw('0 as Falta'),
+                    DB::raw('0 as dia'),
+                    DB::raw('MIN(cp.hora_ini) as hora_ini')
+                )
+                ->where('e.organi_id', session('sesionidorg'))
+                ->whereDate(DB::raw('DATE(cp.hora_ini)'), '=',$diaHorario)
+                ->whereTime(DB::raw('TIME(cp.hora_ini)'), '>=', $horarioEntrada) 
+                ->whereTime(DB::raw('TIME(cp.hora_ini)'), '<=', $horario->HF)
+                ->orderBy('e.emple_id')
+                ->whereIn('e.emple_id', $e)
+                ->groupby(DB::raw('DATE(cp.hora_ini)'), 'e.emple_id')
+                ->get();
+                $colCapturas->push($cp);
+
+                $cp = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('p.perso_nombre', 'e.emple_id', 'cp.idCaptura', 'c.cargo_descripcion', 'a.area_descripcion',
+                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                    DB::raw('MIN(TIME(cp.hora_ini)) as horaM'),
+                    DB::raw('0 as horario'),
+                    DB::raw('0 as Falta'),
+                    DB::raw('0 as dia'),
+                    DB::raw('MIN(TIME(cp.hora_ini)) as min'),
+                    DB::raw('MIN(cp.hora_ini) as hora_ini')
+                )
+                ->where('e.organi_id', session('sesionidorg'))
+                ->whereDate(DB::raw('DATE(cp.hora_ini)'), '=',$diaHorario_tmw)
+                ->whereTime(DB::raw('TIME(cp.hora_ini)'), '>=', $horario->HI) 
+                ->whereTime(DB::raw('TIME(cp.hora_ini)'), '<=', $horarioSalida)
+                ->orderBy('e.emple_id')
+                ->whereIn('e.emple_id', $e)
+                ->groupby(DB::raw('DATE(cp.hora_ini)'), 'e.emple_id')
+                ->get();
+                $colCapturas->push($cp);
+            } else {
+                $cp = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('p.perso_nombre', 'e.emple_id', 'cp.idCaptura', 'c.cargo_descripcion', 'a.area_descripcion',
+                    DB::raw('DATE(cp.hora_ini) as diaM'),
+                    DB::raw('MIN(TIME(cp.hora_ini)) as horaM'),
+                    DB::raw('0 as horario'),
+                    DB::raw('0 as Falta'),
+                    DB::raw('0 as dia'),
+                    DB::raw('MIN(cp.hora_ini) as hora_ini')
+                )
+                ->where('e.organi_id', session('sesionidorg'))
+                ->whereDate(DB::raw('DATE(cp.hora_ini)'), '=', $diaHorario)
+                ->whereTime(DB::raw('TIME(cp.hora_ini)'), '>=', $horarioEntrada) 
+                ->whereTime(DB::raw('TIME(cp.hora_ini)'), '<=', $horarioSalida)
+                ->orderBy('e.emple_id')
+                ->whereIn('e.emple_id', $e)
+                ->groupby(DB::raw('DATE(cp.hora_ini)'), 'e.emple_id')
+                ->get();
+                $colCapturas->push($cp);
             }
         }
-        $capturas = $capturas->values();
+
+        $capturas = $colCapturas->collapse()->unique()->all();
+
+        //dd($capturas);
+
+        //$capturas = $capturas->values();
         /*      RECORREMOS CADA HORARIO        */
         foreach ($horarios as $horario) {
             $dia_horario = Carbon::parse($horario->diaH); // DÍA: 15
@@ -207,20 +296,6 @@ class TardanzasController extends Controller
                                         $captura->dia = $horario->diaH;
                                     }
                                 }
-
-                                if($horario->horaM == 0){
-                                    $horario->horaM = $captura->horaM;
-                                    $horario->diaM = $captura->diaM;
-                                    $horario->marcacion = $captura->hora_ini;
-                                } else {
-                                    $marca_temp = Carbon::parse($horario->horaM);
-                                    $marca_new = Carbon::parse($captura->horaM);
-                                    if($marca_temp > $marca_new){
-                                        $horario->horaM = $captura->horaM;
-                                        $horario->diaM = $captura->diaM;
-                                        $horario->marcacion = $captura->hora_ini;
-                                    }
-                                }
                                 //$captura->Falta = $captura->Falta."|".$horario->horaH."|";
                             }
                         } else {
@@ -231,19 +306,6 @@ class TardanzasController extends Controller
                                     $captura->horario = $horario->horario_id;
                                     $captura->dia = $horario->diaH;
                                     //$captura->Falta = $captura->Falta."/".$horario->horaH."/";
-                                    if($horario->horaM == 0){
-                                        $horario->horaM = $captura->horaM;
-                                        $horario->diaM = $captura->diaM;
-                                        $horario->marcacion = $captura->hora_ini;
-                                    } else {
-                                        $marca_temp = Carbon::parse($horario->horaM);
-                                        $marca_new = Carbon::parse($captura->horaM);
-                                        if($marca_temp > $marca_new){
-                                            $horario->horaM = $captura->horaM;
-                                            $horario->diaM = $captura->diaM;
-                                            $horario->marcacion = $captura->hora_ini;
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -262,20 +324,6 @@ class TardanzasController extends Controller
                                     if($diff1 < $diff2){
                                         $captura->horario = $horario->horario_id;
                                         $captura->dia = $horario->diaH;
-                                    }
-                                }
-
-                                if($horario->horaM == 0){
-                                    $horario->horaM = $captura->horaM;
-                                    $horario->diaM = $captura->diaM;
-                                    $horario->marcacion = $captura->hora_ini;
-                                } else {
-                                    $marca_temp = Carbon::parse($horario->horaM);
-                                    $marca_new = Carbon::parse($captura->horaM);
-                                    if($marca_temp > $marca_new){
-                                        $horario->horaM = $captura->horaM;
-                                        $horario->diaM = $captura->diaM;
-                                        $horario->marcacion = $captura->hora_ini;
                                     }
                                 }
                             }
@@ -297,9 +345,28 @@ class TardanzasController extends Controller
 
         //dd($capturas);
 
-        $capturas = $capturas->values();
+        //$capturas = $capturas->values();
 
-       
+        foreach($horarios as $horario){
+            foreach ($capturas as $captura) {
+                // MISMO EMPLEADO, MISMO HORARIO Y MISMO DIA DE HORARIO
+                if($captura->emple_id == $horario->emple_id && $captura->horario == $horario->horario_id && $horario->diaH == $captura->diaM){
+                    if($horario->horaM == 0){
+                        $horario->horaM = $captura->horaM;
+                        $horario->diaM = $captura->diaM;
+                        $horario->marcacion = $captura->hora_ini;
+                    } else {
+                        $marca_temp = Carbon::parse($horario->horaM);
+                        $marca_new = Carbon::parse($captura->horaM);
+                        if($marca_temp > $marca_new){
+                            $horario->horaM = $captura->horaM;
+                            $horario->diaM = $captura->diaM;
+                            $horario->marcacion = $captura->hora_ini;
+                        }
+                    }
+                }
+            } 
+        }
 
         $collection = new Collection;
 
@@ -318,13 +385,14 @@ class TardanzasController extends Controller
 
         $e = new Collection();
         $datos = new Collection();
+        $colUbicaciones = new Collection();
 
         foreach($empleados as $empleado){
             $e->push($empleado->emple_id);
         }
 
         // CAPTURAS
-        $capturas = DB::table('empleado as e')
+        /*$capturas = DB::table('empleado as e')
         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
         ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
         ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
@@ -341,7 +409,7 @@ class TardanzasController extends Controller
         ->whereDate(DB::raw('DATE(u.hora_ini)'), '<=',$fechaFin)
         ->orderBy('e.emple_id')
         ->whereIn('e.emple_id', $e)
-        ->get();
+        ->get();*/
 
         // HORARIOS
         $horarios = DB::table('horario_empleado as he')
@@ -370,16 +438,100 @@ class TardanzasController extends Controller
         ->whereIn('e.emple_id', $e)
         ->get();
 
+
         foreach ($horarios as $horario) {
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            $dHor = Carbon::parse($horario->diaH);
+            $temp = Carbon::parse($horario->DP)->addDays(1);
+            $diaHorario = $dHor->year."-".$dHor->month."-".$dHor->day;
+            $diaHorario_tmw = $temp->year."-".$temp->month."-".$temp->day;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            $horEnt = Carbon::parse($horario->horaH)->subMinutes($horario->horario_tolerancia);
+            $horarioEntrada = $horEnt->hour.":".$horEnt->minute.":".$horEnt->second;
+            $horSal = Carbon::parse($horario->horaF)->addMinutes($horario->horario_toleranciaF);
+            $horarioSalida = $horSal->hour.":".$horSal->minute.":".$horSal->second;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             $horaEntrada = Carbon::parse($horario->horaH);
             $horaSalida = Carbon::parse($horario->horaF);
-            $temp = Carbon::parse($horario->DP)->addDays(1);
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             if($horaEntrada > $horaSalida){
                 $horario->HF = "23:59:59";
                 $horario->HI = "00:00:00";
-                $horario->DP = $temp->year."-".$temp->month."-".$temp->day;
+                $horario->DP = $diaHorario_tmw;
+
+                $cp = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
+                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('p.perso_nombre', 'e.emple_id', 'u.id', 'c.cargo_descripcion', 'a.area_descripcion',
+                    DB::raw('DATE(u.hora_ini) as diaM'),
+                    DB::raw('MIN(TIME(u.hora_ini)) as horaM'),
+                    DB::raw('0 as horario'),
+                    DB::raw('0 as Falta'),
+                    DB::raw('0 as dia'),
+                    DB::raw('MIN(u.hora_ini) as hora_ini')
+                )
+                ->where('e.organi_id', session('sesionidorg'))
+                ->whereDate(DB::raw('DATE(u.hora_ini)'), '=',$diaHorario)
+                ->whereTime(DB::raw('TIME(u.hora_ini)'), '>=', $horarioEntrada) 
+                ->whereTime(DB::raw('TIME(u.hora_ini)'), '<=', $horario->HF)
+                ->orderBy('e.emple_id')
+                ->whereIn('e.emple_id', $e)
+                ->groupby(DB::raw('DATE(u.hora_ini)'), 'e.emple_id')
+                ->get();
+                $colUbicaciones->push($cp);
+                $cp = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
+                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('p.perso_nombre', 'e.emple_id', 'u.id', 'c.cargo_descripcion', 'a.area_descripcion',
+                    DB::raw('DATE(u.hora_ini) as diaM'),
+                    DB::raw('MIN(TIME(u.hora_ini)) as horaM'),
+                    DB::raw('0 as horario'),
+                    DB::raw('0 as Falta'),
+                    DB::raw('0 as dia'),
+                    DB::raw('MIN(u.hora_ini) as hora_ini')
+                )
+                ->where('e.organi_id', session('sesionidorg'))
+                ->whereDate(DB::raw('DATE(u.hora_ini)'), '=',$diaHorario_tmw)
+                ->whereTime(DB::raw('TIME(u.hora_ini)'), '>=', $horario->HI) 
+                ->whereTime(DB::raw('TIME(u.hora_ini)'), '<=', $horarioSalida)
+                ->orderBy('e.emple_id')
+                ->whereIn('e.emple_id', $e)
+                ->groupby(DB::raw('DATE(u.hora_ini)'), 'e.emple_id')
+                ->get();
+                $colUbicaciones->push($cp);
+            } else {
+                $cp = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
+                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('p.perso_nombre', 'e.emple_id', 'u.id', 'c.cargo_descripcion', 'a.area_descripcion',
+                    DB::raw('DATE(u.hora_ini) as diaM'),
+                    DB::raw('MIN(TIME(u.hora_ini)) as horaM'),
+                    DB::raw('0 as horario'),
+                    DB::raw('0 as Falta'),
+                    DB::raw('0 as dia'),
+                    DB::raw('MIN(u.hora_ini) as hora_ini')
+                )
+                ->where('e.organi_id', session('sesionidorg'))
+                ->whereDate(DB::raw('DATE(u.hora_ini)'), '=',$diaHorario)
+                ->whereTime(DB::raw('TIME(u.hora_ini)'), '>=', $horarioEntrada) 
+                ->whereTime(DB::raw('TIME(u.hora_ini)'), '<=', $horarioSalida)
+                ->orderBy('e.emple_id')
+                ->whereIn('e.emple_id', $e)
+                ->groupby(DB::raw('DATE(u.hora_ini)'), 'e.emple_id')
+                ->get();
+                $colUbicaciones->push($cp);
             }
         }
+        
+        $capturas = $colUbicaciones->collapse()->unique()->all();
+
+        //dd($capturas);
 
         /*      RECORREMOS CADA HORARIO        */
         foreach ($horarios as $horario) {
@@ -414,20 +566,6 @@ class TardanzasController extends Controller
                                     }
                                 }
                                 //$captura->Falta = $captura->Falta."|".$horario->horaH."|";
-
-                                if($horario->horaM == 0){
-                                    $horario->horaM = $captura->horaM;
-                                    $horario->diaM = $captura->diaM;
-                                    $horario->marcacion = $captura->hora_ini;
-                                } else {
-                                    $marca_temp = Carbon::parse($horario->horaM);
-                                    $marca_new = Carbon::parse($captura->horaM);
-                                    if($marca_temp > $marca_new){
-                                        $horario->horaM = $captura->horaM;
-                                        $horario->diaM = $captura->diaM;
-                                        $horario->marcacion = $captura->hora_ini;
-                                    }
-                                }
                             }
                         } else {
                             // DIA DE LA MARCACIÓN ES IGUAL A UN DÍA DESPUÉS DEL HORARIO
@@ -437,19 +575,6 @@ class TardanzasController extends Controller
                                     $captura->horario = $horario->horario_id;
                                     $captura->dia = $horario->diaH;
                                     //$captura->Falta = $captura->Falta."/".$horario->horaH."/";
-                                    if($horario->horaM == 0){
-                                        $horario->horaM = $captura->horaM;
-                                        $horario->diaM = $captura->diaM;
-                                        $horario->marcacion = $captura->hora_ini;
-                                    } else {
-                                        $marca_temp = Carbon::parse($horario->horaM);
-                                        $marca_new = Carbon::parse($captura->horaM);
-                                        if($marca_temp > $marca_new){
-                                            $horario->horaM = $captura->horaM;
-                                            $horario->diaM = $captura->diaM;
-                                            $horario->marcacion = $captura->hora_ini;
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -468,20 +593,6 @@ class TardanzasController extends Controller
                                     if($diff1 < $diff2){
                                         $captura->horario = $horario->horario_id;
                                         $captura->dia = $horario->diaH;
-                                    }
-                                }
-
-                                if($horario->horaM == 0){
-                                    $horario->horaM = $captura->horaM;
-                                    $horario->diaM = $captura->diaM;
-                                    $horario->marcacion = $captura->hora_ini;
-                                } else {
-                                    $marca_temp = Carbon::parse($horario->horaM);
-                                    $marca_new = Carbon::parse($captura->horaM);
-                                    if($marca_temp > $marca_new){
-                                        $horario->horaM = $captura->horaM;
-                                        $horario->diaM = $captura->diaM;
-                                        $horario->marcacion = $captura->hora_ini;
                                     }
                                 }
                             }
@@ -503,9 +614,28 @@ class TardanzasController extends Controller
 
         //dd($capturas);
 
-        $capturas = $capturas->values();
+        //$capturas = $capturas->values();
 
-
+        foreach($horarios as $horario){
+            foreach ($capturas as $captura) {
+                // MISMO EMPLEADO, MISMO HORARIO Y MISMO DIA DE HORARIO
+                if($captura->emple_id == $horario->emple_id && $captura->horario == $horario->horario_id && $horario->diaH == $captura->diaM){
+                    if($horario->horaM == 0){
+                        $horario->horaM = $captura->horaM;
+                        $horario->diaM = $captura->diaM;
+                        $horario->marcacion = $captura->hora_ini;
+                    } else {
+                        $marca_temp = Carbon::parse($horario->horaM);
+                        $marca_new = Carbon::parse($captura->horaM);
+                        if($marca_temp > $marca_new){
+                            $horario->horaM = $captura->horaM;
+                            $horario->diaM = $captura->diaM;
+                            $horario->marcacion = $captura->hora_ini;
+                        }
+                    }
+                }
+            } 
+        }
 
         $collection = new Collection;
 
@@ -2184,6 +2314,8 @@ class TardanzasController extends Controller
         $i = 0;
         $employee = 0;
         $contEmpleados = 0;
+
+        //dd($empleados);
 
         foreach($empleados as $empleado){
             $marcacion = Carbon::parse($empleado->marcacion);
@@ -4065,7 +4197,7 @@ class TardanzasController extends Controller
         /* VARIABLES PARA LA COMPARACIÓN */
         $cantTardanzas = 0;
         $tiempoTardanza = 0;
-        $len = count($empleados);
+        $len = $empleados->count();
         $i = 0;
         $employee = 0;
 
@@ -4079,7 +4211,7 @@ class TardanzasController extends Controller
                 $horario = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second);
                 $horario_tolerancia = Carbon::create($diaHorario->year, $diaHorario->month, $diaHorario->day, $horaHorario->hour, $horaHorario->minute, $horaHorario->second)->addMinutes($empleado->horario_tolerancia);
                 /*  CAPTURA DENTRO DEL RANGO DE FECHAS  */
-                if($fechaF->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR)){
+                if($fechaF->greaterThanOrEqualTo($diaHorario) && $diaHorario->greaterThanOrEqualTo($fechaR) && is_null($empleado->marcacion) === false){
                     if($i == 0){
                         //$datos->push("-------------1-------------");
                         //$datos->push($empleado->emple_id);
@@ -5414,7 +5546,6 @@ class TardanzasController extends Controller
                                 $horas[$i] = 0;
                             } 
                         }
-                        
                     }
 
                     if ($marcacion->greaterThan($horario_tolerancia) == TRUE){
@@ -5422,26 +5553,25 @@ class TardanzasController extends Controller
                         $tiempoTardanza += $diffS;
                         $sumTardanza += 1;
                         $horas[$diaHorario->day-1] += 1;
+                        $obj = (object) array(
+                            "emple_id" => $empleado->emple_id, 
+                            "nombre" => $empleado->nombre, 
+                            "apPaterno" => $empleado->apPaterno,
+                            "apMaterno" => $empleado->apMaterno, 
+                            "horas" => $horas, 
+                            "fechaF" => $dias, 
+                            "totalTardanza" => gmdate('H:i:s', $tiempoTardanza),
+                            "cantidadTardanza" => $sumTardanza,
+                            "ruc" => $usuario_organizacion->ruc, 
+                            "razonSocial" => $usuario_organizacion->razonSocial, 
+                            "direccion" => $usuario_organizacion->direccion,
+                            "codigo" => strlen($empleado->codigo) > 0 ? $empleado->codigo : $empleado->documento, 
+                            "documento" => $empleado->documento, 
+                            "fecha" => now()->format('d-m-Y H:i:s'), 
+                            "fechaD" => $fechaF[0], 
+                            "fechaH" => $fechaF[1]
+                        );
                     }
-
-                    $obj = (object) array(
-                        "emple_id" => $empleado->emple_id, 
-                        "nombre" => $empleado->nombre, 
-                        "apPaterno" => $empleado->apPaterno,
-                        "apMaterno" => $empleado->apMaterno, 
-                        "horas" => $horas, 
-                        "fechaF" => $dias, 
-                        "totalTardanza" => gmdate('H:i:s', $tiempoTardanza),
-                        "cantidadTardanza" => $sumTardanza,
-                        "ruc" => $usuario_organizacion->ruc, 
-                        "razonSocial" => $usuario_organizacion->razonSocial, 
-                        "direccion" => $usuario_organizacion->direccion,
-                        "codigo" => strlen($empleado->codigo) > 0 ? $empleado->codigo : $empleado->documento, 
-                        "documento" => $empleado->documento, 
-                        "fecha" => now()->format('d-m-Y H:i:s'), 
-                        "fechaD" => $fechaF[0], 
-                        "fechaH" => $fechaF[1]
-                    );
                     $i++;
                 }
                 if($contEmpleados == $len - 1 && $sumTardanza > 0){

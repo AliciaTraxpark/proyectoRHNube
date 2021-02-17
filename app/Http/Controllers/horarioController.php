@@ -23,6 +23,7 @@ use App\historial_horarioempleado;
 use Illuminate\Support\Facades\Auth;
 use App\pausas_horario;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class horarioController extends Controller
 {
@@ -182,7 +183,7 @@ class horarioController extends Controller
             $temporal_eventos = new temporal_eventos();
             $temporal_eventos->title = $horas;
             $temporal_eventos->start = $datafechas;
-            $temporal_eventos->color = '#ffffff';
+            $temporal_eventos->color = '#e2e2e2';
             $temporal_eventos->textColor = '111111';
             $temporal_eventos->users_id = Auth::user()->id;
 
@@ -585,7 +586,7 @@ class horarioController extends Controller
                 $horario_dias->title = $temporal_eventosH->title;
                 $horario_dias->start = $temporal_eventosH->start;
                 $horario_dias->end = $temporal_eventosH->end;
-                $horario_dias->color = $temporal_eventosH->color;
+                $horario_dias->color = '#ffffff';
                 $horario_dias->textColor = $temporal_eventosH->textColor;
                 $horario_dias->users_id = $temporal_eventosH->users_id;
                 $horario_dias->organi_id = session('sesionidorg');
@@ -613,7 +614,7 @@ class horarioController extends Controller
                         foreach ($horarioDentro as $horarioDentros) {
                             $horaIDentro = Carbon::parse($horarioDentros->horaI)->subMinutes($horarioDentros->toleranciaI);
                             $horaFDentro = Carbon::parse($horarioDentros->horaF)->addMinutes($horarioDentros->toleranciaF);
-                            
+
                             if ($horaInicialF->gt($horaIDentro)  && $horaFinalF->lt($horaFDentro) && $horaInicialF->lt($horaFDentro)) {
                                 $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($idempsva);
@@ -1366,5 +1367,210 @@ class horarioController extends Controller
         $horario_empleado->horaAdic = $permiteHadicional;
         $horario_empleado->nHoraAdic = $nHorasAdic;
         $horario_empleado->save();
+    }
+
+    public function horarioNuevo()
+    {
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+                ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('eve.id_empleado', '!=', null)
+                ->where('e.emple_estado', '=', 1)
+                ->groupBy('e.emple_id')
+                ->get();
+            $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+            $horarion = DB::table('horario as h')
+                ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->where('he.estado', '=', 1)
+                ->where('h.organi_id', '=', session('sesionidorg'))
+                ->whereNull('he.horario_horario_id')
+                ->get();
+            $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
+                ->select('area_id as idarea', 'area_descripcion as descripcion')
+                ->get();
+            $cargo = DB::table('cargo')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
+                ->get();
+            $local = DB::table('local')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->select('local_id as idlocal', 'local_descripcion as descripcion')
+                ->get();
+
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    return redirect('/dashboard');
+                } else {
+                    return view('horarios.horarioMenuNuevo', [
+                         'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                        'area' => $area, 'cargo' => $cargo, 'local' => $local
+                    ]);
+                }
+            } else {
+                return view('horarios.horarioMenuNuevo', [
+                   'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                    'area' => $area, 'cargo' => $cargo, 'local' => $local
+                ]);
+            }
+        }
+    }
+    public function horariosEmpleado(Request $request)
+    {
+        $idcalendario = $request->idcalendario;
+        $idempleado = $request->idempleado;
+
+        $eventos_empleado = eventos_empleado::where('id_empleado', '=', $idempleado)
+            ->get();
+
+        if ($eventos_empleado->isEmpty()) {
+            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+                ->where('id_calendario', '=', $idcalendario)->get();
+            if ($eventos_usuario) {
+                foreach ($eventos_usuario as $eventos_usuarios) {
+                    $eventos_empleado_r = new eventos_empleado();
+                    $eventos_empleado_r->id_empleado = $idempleado;
+                    $eventos_empleado_r->title = $eventos_usuarios->title;
+                    $eventos_empleado_r->color = $eventos_usuarios->color;
+                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
+                    $eventos_empleado_r->start = $eventos_usuarios->start;
+                    $eventos_empleado_r->end = $eventos_usuarios->end;
+                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_r->id_calendario = $idcalendario;
+                    $eventos_empleado_r->laborable = 0;
+                    $eventos_empleado_r->save();
+                }
+            }
+        }
+
+        /*  dd($horario_empleado); */
+
+        $incidencias = DB::table('incidencias as i')
+            ->select([
+                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
+                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
+                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
+            ])
+            ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+            ->where('idi.id_empleado', '=', $idempleado);
+        /*   ->union($horario_empleado); */
+
+        $eventos_empleado = DB::table('eventos_empleado')
+            ->select([
+                'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
+                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic',
+            ])
+            ->where('id_empleado', '=', $idempleado)
+            ->union($incidencias);
+
+        /*   $horario_empleado ->union($eventos_empleado); */
+         /* -------HORARIOS QUE NO ESTAN GUARDADOS------ */
+         $temporal_eventos = DB::table('temporal_eventos')->select([
+            'id', 'title','color', 'textColor', 'start', 'end',  'horaI',
+            'horaF', 'borderColor','color as laborable', 'horaAdic', 'id_horario as idhorario', 'horasObliga', 'nHoraAdic'
+        ])
+            ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
+            ->where('users_id', '=', Auth::user()->id)
+            ->union($eventos_empleado);
+
+
+         /* -------------------------------------------- */
+        $horario_empleado = DB::table('horario_empleado as he')
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('he.estado', '=', 1)
+            ->where('he.empleado_emple_id', '=', $idempleado)
+            ->union($temporal_eventos)
+            ->get();
+
+        foreach ($horario_empleado as $tab) {
+            $pausas_horario = DB::table('pausas_horario as pauh')
+                ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
+                ->where('pauh.horario_id', '=', $tab->idhorario)
+                ->distinct('pauh.idpausas_horario')
+                ->get();
+
+            $tab->pausas = $pausas_horario;
+        }
+        return $horario_empleado;
+    }
+
+    public function horariosVariosEmps(Request $request){
+        $idcalendario = $request->idcalendario;
+        $idempleados = $request->idempleado;
+
+        $incidencias=new Collection();
+        $eventos_empleado=new Collection();
+        foreach($idempleados as $idempleado){
+            $incidencias2 = DB::table('incidencias as i')
+            ->select([
+                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
+                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
+                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
+            ])
+            ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+            ->where('idi.id_empleado', '=', $idempleado)->get();
+            $incidencias->push($incidencias2);
+
+        }
+
+
+        foreach($idempleados as $idempleado){
+            $eventos_empleado2 = DB::table('eventos_empleado')
+            ->select([
+                'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
+                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic',
+            ])
+            ->where('id_empleado', '=', $idempleado)
+           ->get();
+            $incidencias->push($eventos_empleado2);
+        }
+      /*   dd(Arr::flatten($incidencias)); */
+
+        /*   $horario_empleado ->union($eventos_empleado); */
+         /* -------HORARIOS QUE NO ESTAN GUARDADOS------ */
+         $temporal_eventos = DB::table('temporal_eventos')->select([
+            'id', 'title','color', 'textColor', 'start', 'end',  'horaI',
+            'horaF', 'borderColor','color as laborable', 'horaAdic', 'id_horario as idhorario', 'horasObliga', 'nHoraAdic'
+        ])
+            ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
+            ->where('users_id', '=', Auth::user()->id)
+            ->get();
+
+            $incidencias->push($temporal_eventos);
+         /* -------------------------------------------- */
+         foreach($idempleados as $idempleado){
+           $horario_empleado = DB::table('horario_empleado as he')
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('he.estado', '=', 1)
+            ->where('he.empleado_emple_id', '=', $idempleado)
+            ->get();
+            $incidencias->push($horario_empleado);
+         }
+
+
+        foreach ($horario_empleado as $tab) {
+            $pausas_horario = DB::table('pausas_horario as pauh')
+                ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
+                ->where('pauh.horario_id', '=', $tab->idhorario)
+                ->distinct('pauh.idpausas_horario')
+                ->get();
+
+            $tab->pausas = $pausas_horario;
+        }
+        return (Arr::flatten($incidencias));
     }
 }
