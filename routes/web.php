@@ -314,7 +314,8 @@ Route::post('/pausasHorario', 'horarioController@pausasHorario');
 Route::post('/editarHorario', 'horarioController@editarHorario');
 Route::get('/obtenerHorarios', 'horarioController@obtenerHorarios');
 Route::post('/horario/actualizarConfigHorario', 'horarioController@actualizarConfigHorario');
-
+Route::post('/horario/horariosAsignar', 'horarioController@horariosEmpleado');
+Route::post('/horario/horariosVariosEmps', 'horarioController@horariosVariosEmps');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');
