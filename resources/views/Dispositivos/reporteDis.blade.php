@@ -238,6 +238,12 @@
     .dataTables_wrapper .dataTables_processing {
         box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
     }
+
+    .form-check-input {
+        position: absolute;
+        margin-top: 0.2rem;
+        margin-left: 0rem;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -826,16 +832,17 @@
                         </div>
                         <div class="row pt-2" id="detalleHorarios" style="display: none"></div>
                         <div class="row pt-2" id="detalleMarcaciones" style="display: none"></div>
-                        <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
-                            <div class="col-md-12 text-right" style="padding-right: 0px;">
-                                <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
-                                    onclick="javascript:limpiarAtributos()">
-                                    Cancelar
-                                </button>
-                                <button type="submit" class="btn btn-sm"
-                                    style="background: #183b5d;border-color:#62778c;">
-                                    Guardar
-                                </button>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
+                    </button>
                     </form>
                 </div>
             </div>

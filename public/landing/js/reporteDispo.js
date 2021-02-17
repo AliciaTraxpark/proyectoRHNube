@@ -3129,10 +3129,11 @@ $('#horarioXE').on("change", function () {
     var containerMarcaciones = `<div class="col-md-12">
                                     <span style="color:#183b5d;font-weight: bold">Marcaciones</span>
                                 </div>
-                                <div class="col-md-12"><div class="row mt-2">`;
+                                <div class="col-md-12"><div class="row mt-2 mb-2">`;
     // : MARCACIONES
     var estadoM = false;
     $('#detalleMarcaciones').empty();
+    console.log(dataMarcaciones);
     for (let index = 0; index < dataMarcaciones.length; index++) {
         var dataM = dataMarcaciones[index];
         if ($('#horarioXE').val() != "") {
@@ -3144,17 +3145,17 @@ $('#horarioXE').on("change", function () {
                 dataM.data.forEach(element => {
                     conteM += `<div class="col-md-12">
                                     <span>
-                                        <input type="checkbox" class="mt-2 idMarcacion" value="${element.id}">
+                                        <input type="checkbox" class="form-check-input idMarcacion" value="${element.id}">
                                     </span>`;
                     if (element.entrada != 0) {
-                        conteM += `<span>
+                        conteM += `<span class="ml-3">
                                         <img src="landing/images/entradaD.svg" height="12" class="ml-1 mr-1" />
-                                        ${element.entrada}
+                                        ${moment(element.entrada).format("HH:mm:ss")}
                                     </span>&nbsp;&nbsp;`;
                         if (element.salida != 0) {
                             conteM += `<span>
                                             <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
-                                            ${element.salida}
+                                            ${moment(element.salida).format("HH:mm:ss")}
                                         </span>`;
                         } else {
                             conteM += `<span>
@@ -3166,7 +3167,7 @@ $('#horarioXE').on("change", function () {
                         }
                     } else {
                         if (element.salida != 0) {
-                            conteM += `<span>
+                            conteM += `<span class="ml-3">
                                             <span class="badge badge-soft-warning noExport">
                                                 <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
                                                 No tiene entrada
@@ -3174,7 +3175,7 @@ $('#horarioXE').on("change", function () {
                                         </span>&nbsp;&nbsp;`;
                             conteM += `<span>
                                             <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
-                                            ${element.salida}
+                                            ${moment(element.salida).format("HH:mm:ss")}
                                         </span>`;
                         }
                     }
@@ -3194,13 +3195,27 @@ $('#horarioXE').on("change", function () {
     containerMarcaciones += `</div></div>`;
     $('#detalleMarcaciones').append(containerMarcaciones);
     $('#detalleMarcaciones').show();
+    $('#ch_valid').empty();
+    $('#ch_valid').hide();
 });
+// * IDS DE CHECBOCK
+function contenidoCheckboxM() {
+    var resultado = [];
+    $('.idMarcacion').each(function () {
+        if ($(this).is(":checked")) {
+            var idI = $(this).val();
+            resultado.push(idI);
+        }
+    });
+    return resultado;
+}
 // * FUNCION DE CAMBIAR DE HORARIO
 function cambiarHorarioM() {
     var newH = $('#horarioXE').val();
     var idHE = $('#idHorarioECH').val();
     var fecha = $('#fechaCH').val();
     var idEmpleado = $('#idEmpleadoCH').val();
+    var idsMarcaciones = contenidoCheckboxM();
     $.ajax({
         async: false,
         type: "POST",
@@ -3209,7 +3224,8 @@ function cambiarHorarioM() {
             idHE: idHE,
             idNuevo: newH,
             fecha: fecha,
-            idEmpleado: idEmpleado
+            idEmpleado: idEmpleado,
+            idsMarcaciones: idsMarcaciones
         },
         statusCode: {
             419: function () {
@@ -3249,6 +3265,21 @@ $('#formCambiarHorarioM').submit(function (e) {
         $('button[type="submit"]').attr("disabled", false);
         sent = false;
         return;
+    }
+    if ($('.idMarcacion').length != 0) {
+        var estadoM = true;
+        $('.idMarcacion').each(function () {
+            if ($(this).is(":checked")) {
+                estadoM = false;
+            }
+        });
+        if (estadoM) {
+            $('#ch_valid').empty();
+            $('#ch_valid').append("Seleccionar marcación.");
+            $('#ch_valid').show();
+            sent = false;
+            return;
+        }
     }
     if (!sent) {
         sent = true;
@@ -3316,6 +3347,7 @@ function limpiarAtributos() {
     }
     $('#rowDatosM').hide();
     $('#r_horarioXE').empty();
+    $('[data-toggle="tooltip"]').tooltip("hide");
 }
 // ! ********************************* SELECTOR DE COLUMNAS ****************************************************
 // * FUNCION PARA QUE NO SE CIERRE DROPDOWN
