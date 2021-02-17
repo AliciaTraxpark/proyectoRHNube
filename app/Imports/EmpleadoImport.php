@@ -314,17 +314,17 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 }
                 $filaCentro = $this->numRows;
                 //*VALIDANDO QUE NO ESTE EN OTRO EMPLEADO CENTRO COS
-                $capturaCentro = [$row['centro_costo']];
+                $capturaCentro = [$row['codigo_centro_costo']];
 
                 array_push($this->NCentro, $capturaCentro);
 
                $linealCentro = Arr::flatten($this->NCentro);
                $clave2Centro = array_splice($linealCentro, 0, $filaCentro);
-               if($row['centro_costo'] != null){
-               $claveCCosto = array_search($row['centro_costo'], $clave2Centro);
+               if($row['codigo_centro_costo'] != null){
+               $claveCCosto = array_search($row['codigo_centro_costo'], $clave2Centro);
                if ($claveCCosto !== false) {
                    //dd($clave2,$clave,$filaA);
-                   return redirect()->back()->with('alert', 'El centro de costo está repetido en el archivo de carga: ' . $row['centro_costo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
+                   return redirect()->back()->with('alert', 'El codigo de centro de costo está repetido en el archivo de carga: ' . $row['codigo_centro_costo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
 
                 }
                  }
