@@ -324,7 +324,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                $claveCCosto = array_search($row['centro_costo'], $clave2Centro);
                if ($claveCCosto !== false) {
                    //dd($clave2,$clave,$filaA);
-                   return redirect()->back()->with('alert', 'El correo está repetido en el archivo de carga: ' . $row['centro_costo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
+                   return redirect()->back()->with('alert', 'El centro de costo está repetido en el archivo de carga: ' . $row['centro_costo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
 
                 }
                  }
