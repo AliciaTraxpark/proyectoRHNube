@@ -695,8 +695,6 @@ class dispositivosController extends Controller
                 'ASC'
             )
             ->get();
-        // dd(DB::getQueryLog());
-        // dd($data);
         $data = agruparEmpleadosMarcaciones($data);  //: CONVERTIR UN SOLO EMPLEADO CON VARIOS MARCACIONES
 
         // * UNIR EMPLEADOS CON MARCACIONES
