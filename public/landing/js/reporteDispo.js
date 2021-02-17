@@ -551,7 +551,7 @@ function cargartabla(fecha) {
                                     if (!idHorarioM.includes(dataParaTardanza.idH)) {
                                         idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
                                         var horaInicioHorario = moment(horarioData.horarioIni);
-                                        var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
+                                        var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.toleranciaI });
                                         //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
                                         if (horaInicial.isAfter(horaConTolerancia)) {
                                             var tardanza = horaInicial - horaInicioHorario;
@@ -1887,7 +1887,6 @@ $('#r_horarioXE').on("change", function () {
                         </div>`;
             }
         });
-        console.log(contenido);
         $('#AM_detalleHorarios').append(contenido);
         $('#AM_detalleHorarios').show();
     }
@@ -3133,7 +3132,6 @@ $('#horarioXE').on("change", function () {
     // : MARCACIONES
     var estadoM = false;
     $('#detalleMarcaciones').empty();
-    console.log(dataMarcaciones);
     for (let index = 0; index < dataMarcaciones.length; index++) {
         var dataM = dataMarcaciones[index];
         if ($('#horarioXE').val() != "") {
