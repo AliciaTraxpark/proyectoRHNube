@@ -2930,7 +2930,7 @@ class dispositivosController extends Controller
             if (!is_null($salida) && !is_null($entrada)) {
                 // : SALIDA MAYOR ENTRADA
                 if ($salida->gt($entrada)) {
-                    // : ENTRADA DEBE ESTAR EN EL RANGO DE HORARIO
+                    // : ENTRADA DEBE ESTAR EN EL RANGO DEL HORARIO
                     if ($entrada->gte($horarioInicio) && $entrada->lte($horarioFin)) {
                         $respuesta = true;
                         // : VALIDACION DE CRUCES
@@ -3040,24 +3040,14 @@ class dispositivosController extends Controller
                             if (!$respuestaCheck) $estado = false;
 
                             if ($estado) {
-                                $estadoH = true;
-                                if ($horario->fueraH == 0) {
-                                    if (!(Carbon::parse($entrada)->gte($horarioInicio) && Carbon::parse($entrada)->lte($horarioFin))) {
-                                        $estadoH = false;
-                                    }
-                                }
-                                if ($estadoH) {
-                                    $marcacion = new marcacion_puerta();
-                                    $marcacion->marcaMov_fecha = $entrada;
-                                    $marcacion->marcaMov_emple_id = $idEmpleado;
-                                    $marcacion->organi_id = session('sesionidorg');
-                                    $marcacion->horarioEmp_id = $idHorarioE;
-                                    $marcacion->marcaMov_salida = $salida;
-                                    $marcacion->save();
-                                    return response()->json($marcacion->marcaMov_id, 200);
-                                } else {
-                                    return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
-                                }
+                                $marcacion = new marcacion_puerta();
+                                $marcacion->marcaMov_fecha = $entrada;
+                                $marcacion->marcaMov_emple_id = $idEmpleado;
+                                $marcacion->organi_id = session('sesionidorg');
+                                $marcacion->horarioEmp_id = $idHorarioE;
+                                $marcacion->marcaMov_salida = $salida;
+                                $marcacion->save();
+                                return response()->json($marcacion->marcaMov_id, 200);
                             } else {
                                 return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
                             }
