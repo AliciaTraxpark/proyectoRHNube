@@ -47,7 +47,7 @@ function inicializarTabla() {
         pageLength: paginaGlobal,
         language: {
             sProcessing: "Generando informe...",
-            processing: "<img src='landing/images/punt.gif' height='40'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
+            processing: "<img src='landing/images/logoR.gif' height='80'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
             sLengthMenu: "Mostrar _MENU_ registros",
             sZeroRecords: "No se encontraron resultados",
             sEmptyTable: "Ningún dato disponible en esta tabla",
@@ -896,3 +896,6 @@ function vistasDeTabla() {
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
+$('#tablaReport tbody').on('click', 'tr', function () {
+    $(this).toggleClass('selected');
+});
