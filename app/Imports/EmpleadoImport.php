@@ -34,6 +34,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
     public $Ndoc = [];
     public $NCorreo = [];
     public $NCentro = [];
+    public $NCentroDe = [];
 
     /**
      * @param array $row
@@ -317,19 +318,42 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 $capturaCentro = [$row['codigo_centro_costo']];
 
                 array_push($this->NCentro, $capturaCentro);
-                $codcentro_costo2 = centro_costo::where('codigo', '=', $row['codigo_centro_costo'])
-                    ->where('centroC_descripcion', '!=', $row['centro_costo'])
-                    ->where('organi_id', '=', session('sesionidorg'))->get()->first();
+
                $linealCentro = Arr::flatten($this->NCentro);
                $clave2Centro = array_splice($linealCentro, 0, $filaCentro);
-               /* if($row['codigo_centro_costo'] != null && $row['centro_costo']!= $codcentro_costo2->centroC_descripcion){
-               $claveCCosto = array_search($row['codigo_centro_costo'], $clave2Centro);
-               if ($claveCCosto !== false) {
-                   //dd($clave2,$clave,$filaA);
-                   return redirect()->back()->with('alert', 'El codigo de centro de costo está repetido en el archivo de carga: ' . $row['codigo_centro_costo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
 
-                }
-                 } */
+               //PARA CENTRO Y DESCRI
+               $capturaCentroDe = [$row['codigo_centro_costo'],$row['centro_costo']];
+               array_push($this->NCentroDe, $capturaCentroDe);
+               $linealCentroDe = Arr::flatten($this->NCentroDe);
+               $clave2CentroDe = array_splice($linealCentroDe, 0, $filaCentro);
+
+              //**************************************** */
+                if($row['codigo_centro_costo'] != null){
+                  $claveCCosto = array_search($row['codigo_centro_costo'], $clave2Centro);
+
+                    if ($claveCCosto !== false) {
+                        /* $abuscar=$row['codigo_centro_costo'];
+                        dd($linealCentro);
+                        $claveCCostoDe = array_search($row['codigo_centro_costo'], $clave2CentroDe);
+                        if ($claveCCostoDe !== false) {
+
+
+                        } */
+                        foreach($this->NCentroDe as $arrayComparacion){
+                            if($row['codigo_centro_costo']==$arrayComparacion[0]){
+                                if($row['centro_costo']==$arrayComparacion[1]){
+
+                                 } else{
+                                    return redirect()->back()->with('alert', 'El siguiente código de centro de costo está repetido en otro centro de costo en el archivo de carga: ' . $row['codigo_centro_costo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
+                                 }
+                            }
+                        }
+
+
+
+                        }
+                 }
                 //*************************** */
                 //centro_costo
                 $centro_costo = centro_costo::where('centroC_descripcion', '=', $row['centro_costo'] )
