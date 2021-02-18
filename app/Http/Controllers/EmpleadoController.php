@@ -832,7 +832,7 @@ class EmpleadoController extends Controller
             $empleado->emple_area = $objEmpleado['area'];
         }
         if (!is_null($objEmpleado['centroc'])) {
-            foreach ($objEmpleado['centroc_v'] as $centro) {
+            foreach ($objEmpleado['centroc'] as $centro) {
                 $newCentroEmpleado = new centrocosto_empleado();
                 $newCentroEmpleado->idCentro = $centro;
                 $newCentroEmpleado->idEmpleado = $idE;
