@@ -2651,7 +2651,6 @@ class dispositivosController extends Controller
     public function horarioEmpleado(Request $request)
     {
         $fecha = $request->get('fecha');
-        $idHorarioE = $request->get('idHE');
         $idEmpleado = $request->get('idEmpleado');
         // DB::enableQueryLog();
         $horario = DB::table('horario_empleado as he')
@@ -2670,7 +2669,6 @@ class dispositivosController extends Controller
             )
             ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
             ->where('he.empleado_emple_id', '=', $idEmpleado)
-            ->where('he.horarioEmp_id', '!=', $idHorarioE)
             ->where('he.estado', '=', 1)
             ->get();
         // dd(DB::getQueryLog());

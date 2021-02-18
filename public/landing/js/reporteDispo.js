@@ -659,7 +659,7 @@ function cargartabla(fecha) {
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item dropdown-itemM">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a onclick="modalCambiarHorario('${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
                                                                         </a>
@@ -682,7 +682,7 @@ function cargartabla(fecha) {
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item dropdown-itemM">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a onclick="modalCambiarHorario('${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
                                                                         </a>
@@ -745,7 +745,7 @@ function cargartabla(fecha) {
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item dropdown-itemM noExport">
                                                                     <div class="form-group noExport pl-3 mt-1" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a onclick="modalCambiarHorario('${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
                                                                         </a>
@@ -769,7 +769,7 @@ function cargartabla(fecha) {
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item dropdown-itemM">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a onclick="modalCambiarHorario('${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
                                                                         </a>
@@ -832,7 +832,7 @@ function cargartabla(fecha) {
                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                             <div class="dropdown-item dropdown-itemM noExport">
                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                    <a onclick="modalCambiarHorario('${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
                                                                         Actualizar horario
                                                                     </a>
@@ -857,7 +857,7 @@ function cargartabla(fecha) {
                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                             <div class="dropdown-item dropdown-itemM noExport">
                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                    <a onclick="modalCambiarHorario('${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
                                                                         Actualizar horario
                                                                     </a>
@@ -2991,7 +2991,7 @@ $('#formInsertarEntrada').submit(function (e) {
 var datosHorario = {};
 var dataMarcaciones = {};
 // * MODAL CON LISTA DE HORARIOS
-function modalCambiarHorario(idHE, fecha, id) {
+function modalCambiarHorario(fecha, id) {
     $('a').css('pointer-events', 'none');
     $('#idEmpleadoCH').val(id);
     $('#modalCambiarHorario').modal();
@@ -3001,7 +3001,6 @@ function modalCambiarHorario(idHE, fecha, id) {
         type: "POST",
         url: "/horariosxEmpleado",
         data: {
-            idHE: idHE,
             fecha: fecha,
             idEmpleado: id
         },
@@ -3186,6 +3185,14 @@ $('#horarioXE').on("change", function () {
     if (estadoM) {
         $('button[type="submit"]').attr("disabled", false);
     } else {
+        containerMarcaciones += `<div class="col-md-12">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6 text-center">
+                                            <img src='landing/images/escaneoM.svg' height='80'>
+                                            <p>No se encontraron marcaciones disponibles</p>
+                                        </div>
+                                    </div>
+                                </div>`;
         $('button[type="submit"]').attr("disabled", true);
     }
     containerMarcaciones += `</div></div>`;
@@ -3655,6 +3662,3 @@ function toggleColumnas() {
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
-$('#tablaReport tbody').on('click', 'tr', function () {
-    $(this).toggleClass('selected');
-});
