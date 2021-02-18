@@ -233,84 +233,85 @@ use App\User;
                                     <button type="button" style="font-size: 12.25px; padding-top: 5.5px; padding-bottom: 4.5px;" id="btnRegistraBD" class="boton btn-sm " onclick="agregar()">Validar y registrar</button>
                                 @endif
                             </div>
+                            <div class="col-xl-12" style="padding: 10px !important; margin: 2px !important; color: #1b1b1b;">
+                                <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
+                                    <table id="basic-datatable1"class="table nowrap" style="width:100%!important;font-size: 13px!important;" >
+                                    <thead style="background: #4C5D73;color: white;">
+                                        <tr>
+                                            <th>Tipo de Doc.</th>
+                                            <th>Nro de documento</th>
+                                            <th>Código</th>
+                                            <th>Nombres</th>
+                                            <th>Ap. Paterno</th>
+                                            <th>Ap. Materno</th>
+                                            <th>Correo</th>
+                                            <th>Celular</th>
+                                            <th>Género</th>
+                                            <th>Fecha nacimiento</th>
+                                            <th>Departamento Nac.</th>
+                                            <th>Provincia Nac.</th>
+                                            <th>Distrito Nac.</th>
+                                            <th>Direccion</th>
+                                            <th>Departamento</th>
+                                            <th>Provincia</th>
+                                            <th>Distrito</th>
+                                            <th>Contrato</th>
+                                            <th>Inicio contrato</th>
+                                            <th>Fin de contrato</th>
+                                            <th>Dias de notificación</th>
+                                            <th>Local</th>
+                                            <th>Nivel</th>
+                                            <th>Cargo</th>
+                                            <th>Área</th>
+                                            <th>Código de centro de costo</th>
+                                            <th>Centro de costo</th>
+                                            <th>Condicion de pago</th>
+                                            <th>Monto de pago</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="background:#f7f7f7;color: #2c2c2c;">
+                                        @if(isset($empleados))
+                                            @foreach ($empleados as $item)
+                                                <tr>
+                                                    <td>{{$item[0]}}</td>
+                                                    <td>{{$item[1]}}</td>
+                                                    <td>{{$item[25]}}</td>
+                                                    <td>{{$item[2]}}</td>
+                                                    <td>{{$item[3]}}</td>
+                                                    <td>{{$item[4]}}</td>
+                                                    <td>{{$item[5]}}</td>
+                                                    <td>{{$item[6]}}</td>
+                                                    <td>{{$item[7]}}</td>
+                                                    <td>{{$item[8]}}</td>
+                                                    <td>{{$item[9]}}</td>
+                                                    <td>{{$item[10]}}</td>
+                                                    <td>{{$item[11]}}</td>
+                                                    <td>{{$item[12]}}</td>
+                                                    <td>{{$item[13]}}</td>
+                                                    <td>{{$item[14]}}</td>
+                                                    <td>{{$item[15]}}</td>
+                                                    <td>{{$item[16]}}</td>
+                                                    <td>{{$item[24]}}</td>
+                                                    <td>{{$item[26]}}</td>
+                                                    <td>{{$item[27]}}</td>
+                                                    <td>{{$item[17]}}</td>
+                                                    <td>{{$item[18]}}</td>
+                                                    <td>{{$item[19]}}</td>
+                                                    <td>{{$item[20]}}</td>
+                                                    <td>{{$item[28]}}</td>
+                                                    <td>{{$item[21]}}</td>
+                                                    <td>{{$item[22]}}</td>
+                                                    <td>{{$item[23]}}</td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table><br>
+                            </div> <!-- end card body-->
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-12" style="padding: 10px !important; margin: 2px !important; color: #1b1b1b;">
-                    <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                        <table id="basic-datatable1"class="table nowrap" style="width:100%!important;font-size: 13px!important;" >
-                        <thead style="background: #4C5D73;color: white;">
-                            <tr>
-                                <th>Tipo de Doc.</th>
-                                <th>Nro de documento</th>
-                                <th>Código</th>
-                                <th>Nombres</th>
-                                <th>Ap. Paterno</th>
-                                <th>Ap. Materno</th>
-                                <th>Correo</th>
-                                <th>Celular</th>
-                                <th>Género</th>
-                                <th>Fecha nacimiento</th>
-                                <th>Departamento Nac.</th>
-                                <th>Provincia Nac.</th>
-                                <th>Distrito Nac.</th>
-                                <th>Direccion</th>
-                                <th>Departamento</th>
-                                <th>Provincia</th>
-                                <th>Distrito</th>
-                                <th>Contrato</th>
-                                <th>Inicio contrato</th>
-                                <th>Fin de contrato</th>
-                                <th>Dias de notificación</th>
-                                <th>Local</th>
-                                <th>Nivel</th>
-                                <th>Cargo</th>
-                                <th>Área</th>
-                                <th>Código de centro de costo</th>
-                                <th>Centro de costo</th>
-                                <th>Condicion de pago</th>
-                                <th>Monto de pago</th>
-                            </tr>
-                        </thead>
-                        <tbody style="background:#f7f7f7;color: #2c2c2c;">
-                            @if(isset($empleados))
-                                @foreach ($empleados as $item)
-                                    <tr>
-                                        <td>{{$item[0]}}</td>
-                                        <td>{{$item[1]}}</td>
-                                        <td>{{$item[25]}}</td>
-                                        <td>{{$item[2]}}</td>
-                                        <td>{{$item[3]}}</td>
-                                        <td>{{$item[4]}}</td>
-                                        <td>{{$item[5]}}</td>
-                                        <td>{{$item[6]}}</td>
-                                        <td>{{$item[7]}}</td>
-                                        <td>{{$item[8]}}</td>
-                                        <td>{{$item[9]}}</td>
-                                        <td>{{$item[10]}}</td>
-                                        <td>{{$item[11]}}</td>
-                                        <td>{{$item[12]}}</td>
-                                        <td>{{$item[13]}}</td>
-                                        <td>{{$item[14]}}</td>
-                                        <td>{{$item[15]}}</td>
-                                        <td>{{$item[16]}}</td>
-                                        <td>{{$item[24]}}</td>
-                                        <td>{{$item[26]}}</td>
-                                        <td>{{$item[27]}}</td>
-                                        <td>{{$item[17]}}</td>
-                                        <td>{{$item[18]}}</td>
-                                        <td>{{$item[19]}}</td>
-                                        <td>{{$item[20]}}</td>
-                                        <td>{{$item[28]}}</td>
-                                        <td>{{$item[21]}}</td>
-                                        <td>{{$item[22]}}</td>
-                                        <td>{{$item[23]}}</td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </tbody>
-                    </table><br>
-                </div> <!-- end card body-->
+
 
                 <div id="cargar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true" data-backdrop="static">
