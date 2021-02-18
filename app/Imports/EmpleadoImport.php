@@ -480,6 +480,10 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         $fechaNacimieB = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']), 'Y-m-d');
                     } else {
                         $sincomilla = str_replace("'", "", $row['fecha_nacimiento']);
+                        $crearformatBool1 = DateTime::createFromFormat('d/m/Y', $sincomilla);
+                        if($crearformatBool1==false){
+                            return redirect()->back()->with('alert', 'Formato de fecha de nacimiento incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                        }
                         $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
                         $validacion = validateDate($crearformat, 'Y/m/d');
                         if ($validacion == true) {
@@ -524,7 +528,14 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         $fechaInicioC = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
                     } else {
                         $sincomilla = str_replace("'", "", $row['inicio_contrato']);
+
+                        $crearformatBool = DateTime::createFromFormat('d/m/Y', $sincomilla);
+                        if($crearformatBool==false){
+                            return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                        }
+
                         $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
+
 
                         $validacion = validateDate($crearformat, 'Y/m/d');
 
@@ -557,6 +568,11 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                     } else {
                         $sincomilla = str_replace("'", "", $row['fin_contrato']);
+                        //*validando fecha
+                        $crearformatBool2 = DateTime::createFromFormat('d/m/Y', $sincomilla);
+                        if($crearformatBool2==false){
+                            return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                        }
                         $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
 
                         $validacion = validateDate($crearformat, 'Y/m/d');
