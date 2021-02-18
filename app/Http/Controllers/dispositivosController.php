@@ -3763,10 +3763,10 @@ class dispositivosController extends Controller
             // DB::enableQueryLog();
             $incidencias = DB::table('incidencia_dias as id')
                 ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                ->where('id.id_empleado', '=', $idEmpleado)
                 ->select('i.inciden_id as id', DB::raw('DATEDIFF(id.inciden_dias_fechaF,id.inciden_dias_fechaI) as total'))
                 ->whereBetween(DB::raw('DATE(id.inciden_dias_fechaI)'), [$fechaInicio, $fechaFin])
                 ->whereBetween(DB::raw('DATE(id.inciden_dias_fechaF)'), [$fechaInicio, $fechaFin])
-                ->where('id.id_empleado', '=', $idEmpleado)
                 ->groupBy('id.id_incidencia')
                 ->get();
             // dd(DB::getQueryLog());
