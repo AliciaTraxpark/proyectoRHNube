@@ -25,6 +25,7 @@ var fechaValue = $("#fechaTrazabilidad").flatpickr({
 });
 // * INICIALIZAR TABLA
 var table;
+var dataT = {};
 var razonSocial = {};
 var direccion = {};
 var ruc = {};
@@ -336,6 +337,15 @@ function cargarDatos() {
         if ($.fn.DataTable.isDataTable("#tablaTrazabilidad")) {
             $("#tablaTrazabilidad").DataTable().destroy();
         }
+        $('#menuIncidencias').empty();
+        var listaI = "";
+        for (let item = 0; item < data.incidencias.length; item++) {
+            listaI += `<li class="liContenido" onclick="javascript:menuIncidencias(${data.incidencias[item].id})">
+                            <input type="checkbox" checked id="incidencia${data.incidencias[item].id}">
+                            <label for="">${data.incidencias[item].descripcion}</label>
+                        </li>`;
+        }
+        $('#menuIncidencias').append(listaI);
         // ! ****************************************** CABEZERA DE TABLA **************************
         $('#theadT').empty();
         var thead = `<tr>
@@ -349,7 +359,7 @@ function cargarDatos() {
                         <th class="text-center">Hora nocturno</th>
                         <th class="text-center">Faltas</th>`;
         for (let item = 0; item < data.incidencias.length; item++) {
-            thead += `<th class="text-center">${data.incidencias[item].descripcion}</th>`;
+            thead += `<th class="text-center incidencia${data.incidencias[item].id}">${data.incidencias[item].descripcion}</th>`;
         }
         thead += `<th class="text-center">H.E. 25% Diurnas</th>
                     <th class="text-center">H.E. 35% Diurnas</th>
@@ -631,6 +641,16 @@ function cargarDatos() {
 $('#idsEmpleado').on("change", function () {
     cargarDatos();
 });
+// * MENU DE INCIDENCIAS
+function menuIncidencias(id) {
+    console.log(id);
+    if ($('#incidencia' + id).is(":checked")) {
+        dataT.api().columns('.incidencia' + id).visible(true);
+    } else {
+        dataT.api().columns('.incidencia' + id).visible(false);
+    }
+}
+// * FINALIZACION
 $('#tablaTrazabilidad tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
 });

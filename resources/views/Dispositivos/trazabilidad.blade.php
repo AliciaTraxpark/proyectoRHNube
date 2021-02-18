@@ -62,6 +62,15 @@
     .dataTables_wrapper .dataTables_processing {
         box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
     }
+
+    .liContenido {
+        list-style: none;
+    }
+
+    .dropdown-itemSelector {
+        padding: 0.1rem 1rem !important;
+        margin: 0.1rem 0 !important;
+    }
 </style>
 {{-- CONTENIDO --}}
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -111,6 +120,39 @@
                             onclick="javascript:cargarDatos()">
                             <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
                         </button>
+                    </div>
+                </div>
+                <div class="row justify-content-left">
+                    <div class="col-md-4 pb-2">
+                        <div class="dropdown" id="dropSelector">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="cursor: pointer">
+                                <div class="custom-control custom-switch mb-2">
+                                    <input type="checkbox" class="custom-control-input" id="switchO" checked
+                                        style="cursor: pointer">
+                                    <label class="custom-control-label" for="switchO" style="font-weight: bold">
+                                        <img src="{{asset('landing/images/insert.svg')}}" height="18">
+                                        Selector de incidencias
+                                    </label>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu allow-focus"
+                                style="padding: 0rem 0;min-width: 16em!important;height: auto;max-height: 250px;overflow: auto;position: absolute;">
+                                <h6 class="dropdown-header text-left"
+                                    style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                    <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"
+                                        height="12" />
+                                    Opciones
+                                </h6>
+                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px" id="menuIncidencias">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked id="colCargo">
+                                        <label for="">Cargo</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row justify-content-left">
