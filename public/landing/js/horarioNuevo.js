@@ -1,3 +1,4 @@
+var dataDeempleado={};
 $(document).ready(function () {
     var table = $("#tablaEmpleado").DataTable({
         "searching": true,
@@ -410,11 +411,53 @@ function calendario() {
                         },
                         success: function (data) {
                             $("#rowdivs").empty();
+                            dataDeempleado=data;
+                            var contenido= "";
                             $.each(data, function (key, item) {
-                                $("#rowdivs").append(
-                                  "<div class='col-md-12'>" + item[0].nombre +" " +item[0].apellidos+ " </div>"
-                                );
+
+                            //*NOMBRE DE EMPLEADO
+                            contenido+=`<div class='col-md-12'>
+                            <h5 class='header-title' style='font-size: 13.4px;'>` + item[0].nombre +` `+item[0].apellidos+`</h5>
+                            </div>`;
+
+                            //*HORARIOS
+                            $.each(item, function (key, horario) {
+                            contenido+=
+                            `<div class="col-md-4 mb-3">
+                            <div class="media">
+                                <div class="media-body">
+                                <h6 class="mt-1 mb-0 font-size-14">` + horario.horario_descripcion+`</h6>
+                                </div>
+                                <div class="dropdown align-self-center float-right">
+                                <a
+                                    href="#"
+                                    class="dropdown-toggle arrow-none text-muted"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    <i class="uil uil-ellipsis-v"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" >
+
+                                    <a onclick="verDatosHorario(` + item[0].idempleado+`,` + horario.idHorarioEmp+`)" class="dropdown-item font-size-12"
+                                    ><i class="uil uil-exit mr-2"></i>Ver</a>
+
+                                    <a onclick="borrarHorarioEmpleado()" class="dropdown-item font-size-12 text-danger"
+                                    ><i class="uil uil-trash mr-2"></i>Borrar</a
+                                    >
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            `;
+                            contenido+=
+                            `<div class="col-md-12" id="dataHorarioElegido"></div>`;
                             });
+
+                            });
+                            $("#rowdivs").append(contenido);
+
+
                             $('#modalHorarioEmpleados').modal('show');
                         },
                         error: function (data) {
@@ -3975,3 +4018,7 @@ $( "#nombreEmpleado" ).change(function() {
   });
 //*
 
+/* DATOS DE HORARIOS EN CALENDARIO */
+function verDatosHorario(){
+    console.log(dataDeempleado);
+}

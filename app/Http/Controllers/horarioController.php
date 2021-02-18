@@ -333,9 +333,11 @@ class horarioController extends Controller
                 ->select(['evEmpleado_id', 'title', 'color', 'textColor', 'start', 'end'])
                 ->where('id_empleado', '=', $idsEm);
 
-            $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+            $horario_empleado = DB::table('horario_empleado as he')
+            ->select(['id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end'])
                 /*  ->where('users_id', '=', Auth::user()->id) */
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
                 ->where('he.empleado_emple_id', '=', $idsEm)
                 ->where('he.estado', '=', 1)
                 ->union($eventos_empleado);
@@ -351,7 +353,7 @@ class horarioController extends Controller
 
 
             $horarioEmpleado = DB::table('horario_empleado as he')
-                ->select('hd.title', 'h.horaI', 'h.horaF', 'h.horaF', 'he.empleado_emple_id')
+                ->select( 'h.horario_descripcion as title', 'h.horaI', 'h.horaF', 'h.horaF', 'he.empleado_emple_id')
                 ->where('he.organi_id', '=', session('sesionidorg'))
                 ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
@@ -600,7 +602,7 @@ class horarioController extends Controller
                 $arrayHDentro = collect();
                 ////////////////////////////////////
                 foreach ($idemps as $idempsva) {
-                    $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor',
+                    $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id','h.horario_descripcion as title', 'color', 'textColor',
                      'start', 'end', 'horaI', 'horaF', 'borderColor','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF'])
                         ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
                         ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
@@ -868,8 +870,10 @@ class horarioController extends Controller
             ->select(['evEmpleado_id', 'title', 'color', 'textColor', 'start', 'end'])
             ->where('id_empleado', '=', $idempl);
 
-        $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+        $horario_empleado = DB::table('horario_empleado as he')
+        ->select(['id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end'])
             ->where('he.organi_id', '=', session('sesionidorg'))
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
             ->where('he.estado', '=', 1)
@@ -913,8 +917,10 @@ class horarioController extends Controller
             ->select(['evEmpleado_id', 'title', 'color', 'textColor', 'start', 'end'])
             ->where('id_empleado', '=', $idempl);
 
-        $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+        $horario_empleado = DB::table('horario_empleado as he')
+        ->select(['id','h.horario_descripcion as title', 'color', 'textColor', 'start', 'end'])
             ->where('he.organi_id', '=', session('sesionidorg'))
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
             ->where('he.estado', '=', 1)
@@ -953,9 +959,11 @@ class horarioController extends Controller
             ->select(['evEmpleado_id', 'title', 'color', 'textColor', 'start', 'end'])
             ->where('id_empleado', '=', $idempl);
 
-        $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+        $horario_empleado = DB::table('horario_empleado as he')
+        ->select(['id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end'])
             ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->where('he.empleado_emple_id', '=', $idempl)
             ->where('he.estado', '=', 1)
             ->union($eventos_empleado1);
@@ -993,7 +1001,9 @@ class horarioController extends Controller
             ->select(['evEmpleado_id', 'title', 'color', 'textColor', 'start', 'end'])
             ->where('id_empleado', '=', $idempl);
 
-        $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+        $horario_empleado = DB::table('horario_empleado as he')
+        ->select(['id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end'])
+        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
@@ -1486,7 +1496,7 @@ class horarioController extends Controller
 
          /* -------------------------------------------- */
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
+            ->select(['he.horarioEmp_id as id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.estado', '=', 1)
@@ -1553,7 +1563,7 @@ class horarioController extends Controller
          /* -------------------------------------------- */
          foreach($idempleados as $idempleado){
            $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
+            ->select(['he.horarioEmp_id as id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.estado', '=', 1)
