@@ -47,7 +47,7 @@ function inicializarTabla() {
         pageLength: paginaGlobal,
         language: {
             sProcessing: "Generando informe...",
-            processing: "<img src='landing/images/logoR.gif' height='80'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
+            processing: "<img src='landing/images/logoR.gif' height='60'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
             sLengthMenu: "Mostrar _MENU_ registros",
             sZeroRecords: "No se encontraron resultados",
             sEmptyTable: "Ningún dato disponible en esta tabla",

@@ -44,7 +44,7 @@ function inicializarTabla() {
         scrollCollapse: false,
         language: {
             sProcessing: "Generando informe...",
-            processing: "<img src='landing/images/punt.gif' height='40'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
+            processing: "<img src='landing/images/logoR.gif' height='60'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
             sLengthMenu: "Mostrar _MENU_ registros",
             sZeroRecords: "No se encontraron resultados",
             sEmptyTable: "Ningún dato disponible en esta tabla",
@@ -381,14 +381,7 @@ function cargarDatos() {
             var diurnas35 = 0;
             var diurnas100 = 0;
             // : FINALIZACION
-            var descansoM = 0;
             var faltas = 0;
-            var fi = 0;
-            var fj = 0;
-            var per = 0;
-            var sme = 0;
-            var suspension = 0;
-            var vacaciones = 0;
             // : HORAS NOCTURNAS
             var horasNocturnas = moment("00:00:00", "HH:mm:ss");
             var nocturnas25 = 0;
