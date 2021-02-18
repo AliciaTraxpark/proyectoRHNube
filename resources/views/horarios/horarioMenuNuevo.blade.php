@@ -1369,6 +1369,42 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+
+        {{-- MODAL HORARIOS POR EMPELADO --}}
+        <div id="modalHorarioEmpleados" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 650px; margin-top: 150px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #163552;">
+                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Horarios de empleados
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="font-size:12px!important;background: #ffffff;">
+                        <div class="row" id="rowdivs">
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer" style="background: #ffffff;">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="button" class="btn btn-light btn-sm "
+                                        data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" name="" style="background-color: #163552;"
+                                        class="btn btn-sm">Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
 </div>
 @endsection

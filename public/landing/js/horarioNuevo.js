@@ -1,3 +1,4 @@
+var dataDeempleado={};
 $(document).ready(function () {
     var table = $("#tablaEmpleado").DataTable({
         "searching": true,
@@ -275,7 +276,7 @@ function calendario() {
         //defaultDate: ano + '-01-01',
         defaultDate: fecha,
         height: "auto",
-        contentHeight: 400,
+        contentHeight: 500,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
         unselectAuto: false,
@@ -314,6 +315,8 @@ function calendario() {
             id = info.event.id;
 
             var event = calendar.getEventById(id);
+
+            //*CUANDO ES HORARIO NUEVO ASIGNADO
             if (info.event.textColor == '111111') {
 
                 /* UNBIND SOLO UNA VEZ */
@@ -386,6 +389,87 @@ function calendario() {
 
                 $('#editarConfigHorario_re').modal('show');
             }
+            else{
+                //*SI ES ASIGNADO
+                if(info.event.textColor=='#000'){
+                    let diadeHorario=moment(info.event.start).format('YYYY-MM-DD HH:mm:ss');
+                    let empleados=$('#nombreEmpleado').val();
+                    $.ajax({
+                        type: "post",
+                        url: "/datosHorarioEmpleado",
+                        data: {
+                            diadeHorario,empleados
+                        },
+                        statusCode: {
+
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            $("#rowdivs").empty();
+                            dataDeempleado=data;
+                            var contenido= "";
+                            $.each(data, function (key, item) {
+
+                            //*NOMBRE DE EMPLEADO
+                            contenido+=`<div class='col-md-12'>
+                            <h5 class='header-title' style='font-size: 13.4px;'>` + item[0].nombre +` `+item[0].apellidos+`</h5>
+                            </div>`;
+
+                            //*HORARIOS
+                            $.each(item, function (key, horario) {
+                            contenido+=
+                            `<div class="col-md-4 mb-3">
+                            <div class="media">
+                                <div class="media-body">
+                                <h6 class="mt-1 mb-0 font-size-14">` + horario.horario_descripcion+`</h6>
+                                </div>
+                                <div class="dropdown align-self-center float-right">
+                                <a
+                                    href="#"
+                                    class="dropdown-toggle arrow-none text-muted"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    <i class="uil uil-ellipsis-v"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" >
+
+                                    <a onclick="verDatosHorario(` + item[0].idempleado+`,` + horario.idHorarioEmp+`)" class="dropdown-item font-size-12"
+                                    ><i class="uil uil-exit mr-2"></i>Ver</a>
+
+                                    <a onclick="borrarHorarioEmpleado()" class="dropdown-item font-size-12 text-danger"
+                                    ><i class="uil uil-trash mr-2"></i>Borrar</a
+                                    >
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            `;
+                            contenido+=
+                            `<div class="col-md-12" id="dataHorarioElegido"></div>`;
+                            });
+
+                            });
+                            $("#rowdivs").append(contenido);
+
+
+                            $('#modalHorarioEmpleados').modal('show');
+                        },
+                        error: function (data) {
+                            alert('Ocurrio un error');
+                        }
+
+
+                    });
+
+
+                }
+            }
 
 
             //info.event.remove();
@@ -399,7 +483,8 @@ function calendario() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-            if (info.event.extendedProps.horaI === null) {
+            if(info.event.textColor!='#000'){
+              if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
 
@@ -468,9 +553,9 @@ function calendario() {
                 }
 
             }
-            /*if(info.event.borderColor=='#5369f8'){
-             $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.borderColor});
-          }*/
+            }
+
+
         },
         customButtons: {
             borrarHorarios: {
@@ -507,7 +592,7 @@ function calendario() {
             }); */
             var idempleado = $('#nombreEmpleado').val();
             num=$('#nombreEmpleado').val().length;
-            console.log(num);
+
             if(num==1){
                 $.ajax({
                     type: "POST",
@@ -3025,7 +3110,7 @@ function modalEditar(id) {
                 var contenido = "";
                 for (let index = 0; index < data.pausas.length; index++) {
                     var pausa = data.pausas[index];
-                    console.log(pausa);
+
                     contenido +=
                         `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}" style="border-top:1px dashed #aaaaaa!important;">
                             <input type="hidden" class="e_rowInputs" value="${pausa.idpausas_horario}">
@@ -3385,7 +3470,7 @@ function e_validarHorasPausaHorario() {
             // : FIN DE PAUSA MAS LA TOLERANCIA DE FIN PARA ENCONTRAR EL MAXIMO DE FIN
             var resultadoSuma = sumarMinutosHoras($('#e_FinPausa' + idI).val(), parseInt($('#e_ToleranciaFP' + idI).val()));
             var horaF = moment(resultadoSuma, ["HH:mm"]);
-            console.log(horaI, horaF);
+
             // * -> ********************************************** TIEMPOS DE HORARIO ******************************************
             // : INICIO DE HORARIO MENOS LA TOLERANCIA DE INICIO PARA ENCONTRAR EL MINIMO DE INICIO DE HORARIO
             var resultadoRestaHorario = sustraerMinutosHoras($('#horaI_ed').val(), parseInt($('#toleranciaH_ed').val()));
@@ -3933,3 +4018,7 @@ $( "#nombreEmpleado" ).change(function() {
   });
 //*
 
+/* DATOS DE HORARIOS EN CALENDARIO */
+function verDatosHorario(){
+    console.log(dataDeempleado);
+}

@@ -33,6 +33,8 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
     public $dnias = [];
     public $Ndoc = [];
     public $NCorreo = [];
+    public $NCentro = [];
+    public $NCentroDe = [];
 
     /**
      * @param array $row
@@ -153,8 +155,8 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         //dd($clave2,$clave,$filaA);
                         return redirect()->back()->with('alert', 'El correo está repetido en el archivo de carga: ' . $row['correo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
 
-                    }
-                }
+                     }
+                      }
 
 
                 //PREFIJO
@@ -311,7 +313,47 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         return redirect()->back()->with('alert', 'El código del centro de costo debe completarse, ya que has ingresado una descripción. El proceso se interrumpio en la fila:' . $filas);
                     }
                 }
+                $filaCentro = $this->numRows;
+                //*VALIDANDO QUE NO ESTE EN OTRO EMPLEADO CENTRO COS
+                $capturaCentro = [$row['codigo_centro_costo']];
 
+                array_push($this->NCentro, $capturaCentro);
+
+               $linealCentro = Arr::flatten($this->NCentro);
+               $clave2Centro = array_splice($linealCentro, 0, $filaCentro);
+
+               //PARA CENTRO Y DESCRI
+               $capturaCentroDe = [$row['codigo_centro_costo'],$row['centro_costo']];
+               array_push($this->NCentroDe, $capturaCentroDe);
+               $linealCentroDe = Arr::flatten($this->NCentroDe);
+               $clave2CentroDe = array_splice($linealCentroDe, 0, $filaCentro);
+
+              //**************************************** */
+                if($row['codigo_centro_costo'] != null){
+                  $claveCCosto = array_search($row['codigo_centro_costo'], $clave2Centro);
+
+                    if ($claveCCosto !== false) {
+                        /* $abuscar=$row['codigo_centro_costo'];
+                        dd($linealCentro);
+                        $claveCCostoDe = array_search($row['codigo_centro_costo'], $clave2CentroDe);
+                        if ($claveCCostoDe !== false) {
+
+
+                        } */
+                        foreach($this->NCentroDe as $arrayComparacion){
+                            if($row['codigo_centro_costo']==$arrayComparacion[0]){
+                                if($row['centro_costo']==$arrayComparacion[1]){
+
+                                 } else{
+                                    return redirect()->back()->with('alert', 'El siguiente código de centro de costo está repetido en otro centro de costo en el archivo de carga: ' . $row['codigo_centro_costo'] . ' .El proceso se interrumpio en la fila ' . $filas . ' de excel');
+                                 }
+                            }
+                        }
+
+
+
+                        }
+                 }
                 //*************************** */
                 //centro_costo
                 $centro_costo = centro_costo::where('centroC_descripcion', '=', $row['centro_costo'] )
@@ -438,6 +480,10 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         $fechaNacimieB = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']), 'Y-m-d');
                     } else {
                         $sincomilla = str_replace("'", "", $row['fecha_nacimiento']);
+                        $crearformatBool1 = DateTime::createFromFormat('d/m/Y', $sincomilla);
+                        if($crearformatBool1==false){
+                            return redirect()->back()->with('alert', 'Formato de fecha de nacimiento incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                        }
                         $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
                         $validacion = validateDate($crearformat, 'Y/m/d');
                         if ($validacion == true) {
@@ -482,7 +528,14 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         $fechaInicioC = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
                     } else {
                         $sincomilla = str_replace("'", "", $row['inicio_contrato']);
+
+                        $crearformatBool = DateTime::createFromFormat('d/m/Y', $sincomilla);
+                        if($crearformatBool==false){
+                            return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                        }
+
                         $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
+
 
                         $validacion = validateDate($crearformat, 'Y/m/d');
 
@@ -515,6 +568,11 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                     } else {
                         $sincomilla = str_replace("'", "", $row['fin_contrato']);
+                        //*validando fecha
+                        $crearformatBool2 = DateTime::createFromFormat('d/m/Y', $sincomilla);
+                        if($crearformatBool2==false){
+                            return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                        }
                         $crearformat = DateTime::createFromFormat('d/m/Y', $sincomilla)->format('Y/m/d');
 
                         $validacion = validateDate($crearformat, 'Y/m/d');
