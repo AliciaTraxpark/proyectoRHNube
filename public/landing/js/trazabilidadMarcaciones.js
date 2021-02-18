@@ -631,6 +631,9 @@ function cargarDatos() {
 $('#idsEmpleado').on("change", function () {
     cargarDatos();
 });
+$('#tablaTrazabilidad tbody').on('click', 'tr', function () {
+    $(this).toggleClass('selected');
+});
 $(window).on('resize', function () {
     $("#tablaTrazabilidad").css('width', '100%');
     table.draw(false);

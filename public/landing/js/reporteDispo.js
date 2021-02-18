@@ -3655,3 +3655,6 @@ function toggleColumnas() {
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
+$('#tablaReport tbody').on('click', 'tr', function () {
+    $(this).toggleClass('selected');
+});
