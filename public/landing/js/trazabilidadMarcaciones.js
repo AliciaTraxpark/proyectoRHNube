@@ -399,6 +399,7 @@ function cargarDatos() {
                             // : FALTAS
                             if (element.totalT == "00:00:00" && element.entrada == null) {
                                 if (dataCompleta["incidencias"] != undefined) {
+                                    console.log(element.totalT, dataCompleta["incidencias"]);
                                     if (dataCompleta["incidencias"].length == 0) {
                                         faltas++;
                                     }
