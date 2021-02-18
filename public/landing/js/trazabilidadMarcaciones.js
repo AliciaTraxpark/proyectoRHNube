@@ -637,7 +637,6 @@ $('#idsEmpleado').on("change", function () {
 });
 // * MENU DE INCIDENCIAS
 function menuIncidencias(id) {
-    console.log(id);
     if ($('#incidencia' + id).is(":checked")) {
         dataT.api().columns('.incidencia' + id).visible(true);
     } else {
