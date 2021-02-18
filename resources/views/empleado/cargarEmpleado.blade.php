@@ -238,7 +238,7 @@ use App\User;
                 </div>
                 <div class="col-xl-12" style="padding: 10px !important; margin: 2px !important; color: #1b1b1b;">
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                        <table id="basic-datatable1" class="table" style="font-size: 13px!important;">
+                        <table id="basic-datatable1"class="table nowrap" style="width:100%!important;font-size: 13px!important;" >
                         <thead style="background: #4C5D73;color: white;">
                             <tr>
                                 <th>Tipo de Doc.</th>
