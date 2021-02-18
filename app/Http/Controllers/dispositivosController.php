@@ -804,8 +804,14 @@ class dispositivosController extends Controller
             $idEmpleado = $m->emple_id;
             // * TABLA EVENTOS EMPLEADO
             $eventos = eventos_empleado::select('title as descripcion')
-                ->where(DB::raw('DATE(start)'), '=', $fecha)
                 ->where('id_empleado', '=', $idEmpleado)
+                ->whereBetween(DB::raw('DATE(eventos_empleado.start)'), [$fecha, $fecha])
+                ->orWhere(function ($query) use ($fecha, $idEmpleado) {
+                    $query->where('id_empleado', '=', $idEmpleado);
+                    $query->whereNotNull('eventos_empleado.end');
+                    $query->where(DB::raw('DATE(eventos_empleado.start)'), '<=', $fecha);
+                    $query->where(DB::raw('DATE(eventos_empleado.end)'), '>', $fecha);
+                })
                 ->get();
             foreach ($eventos as $e) {
                 array_push($m->incidencias, $e);
@@ -814,8 +820,13 @@ class dispositivosController extends Controller
             $incidencias = DB::table('incidencia_dias as id')
                 ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
                 ->select('i.inciden_descripcion as descripcion')
-                ->where(DB::raw('DATE(id.inciden_dias_fechaI)'), '=', $fecha)
                 ->where('id.id_empleado', '=', $idEmpleado)
+                ->whereBetween('id.inciden_dias_fechaI', [$fecha, $fecha])
+                ->orWhere(function ($query) use ($fecha, $idEmpleado) {
+                    $query->where('id.id_empleado', '=', $idEmpleado);
+                    $query->where('id.inciden_dias_fechaI', '<=', $fecha);
+                    $query->where('id.inciden_dias_fechaF', '>', $fecha);
+                })
                 ->get();
             foreach ($incidencias as $i) {
                 array_push($m->incidencias, $i);
@@ -1458,7 +1469,6 @@ class dispositivosController extends Controller
                 // * *********************** INCIDENCIAS ***********************
                 $idEmpleado = $m->emple_id;
                 // * TABLA EVENTOS EMPLEADO
-                // DB::enableQueryLog();
                 $eventos = eventos_empleado::select('title as descripcion')
                     ->where('id_empleado', '=', $idEmpleado)
                     ->whereBetween(DB::raw('DATE(eventos_empleado.start)'), [$d, $d])
@@ -1469,9 +1479,7 @@ class dispositivosController extends Controller
                         $query->where(DB::raw('DATE(eventos_empleado.end)'), '>', $d);
                     })
                     ->get();
-                // dd(DB::getQueryLog());
                 // * TABLA INCIDENCIAS DIA
-                // DB::enableQueryLog();
                 $incidencias = DB::table('incidencia_dias as id')
                     ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
                     ->select('i.inciden_descripcion as descripcion')
@@ -1483,7 +1491,6 @@ class dispositivosController extends Controller
                         $query->where('id.inciden_dias_fechaF', '>', $d);
                     })
                     ->get();
-                // dd(DB::getQueryLog());
                 if (array_key_exists($d, $m->datos)) {
                     $horarios = array_keys($m->datos[$d]);
                     foreach ($horarios as $h) {
