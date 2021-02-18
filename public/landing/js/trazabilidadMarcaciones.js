@@ -398,9 +398,8 @@ function cargarDatos() {
                         if (element.idHorario != 0) {
                             // : FALTAS
                             if (element.totalT == "00:00:00" && element.entrada == null) {
-                                if (dataCompleta["incidencias"] != undefined) {
-                                    console.log(element.totalT, dataCompleta["incidencias"]);
-                                    if (dataCompleta["incidencias"].length == 0) {
+                                if (data.marcaciones[index]["incidencias"] != undefined) {
+                                    if (data.marcaciones[index]["incidencias"].length == 0) {
                                         faltas++;
                                     }
                                 }
