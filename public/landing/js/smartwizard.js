@@ -177,71 +177,71 @@ $(document).ready(function () {
             } else {
                 $("#validGenero").hide();
             }
-            if ($("#email").val() != "") {
-                //VALIDAR CORREO
-                var email = $("#email").val();
-                $("#validCorreo").hide();
-                idE = $("#idEmpleado").val();
-                if (idE == "") {
-                    $.ajax({
-                        async: false,
-                        type: "GET",
-                        url: "email",
-                        data: {
-                            email: email,
-                        },
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                                "content"
-                            ),
-                        },
-                        statusCode: {
-                            /*401: function () {
-                                location.reload();
-                            },*/
-                            419: function () {
-                                location.reload();
-                            },
-                        },
-                        success: function (data) {
-                            if (data == 1) {
-                                $("#emailR").show();
-                                isStepValid = false;
-                                return false;
-                            } else {
-                                $("#emailR").hide();
-                            }
-                        },
-                    });
-                } else {
-                    $.ajax({
-                        async: false,
-                        type: "GET",
-                        url: "emailE",
-                        data: {
-                            email: email,
-                            idE: idE,
-                        },
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                                "content"
-                            ),
-                        },
-                        success: function (data) {
-                            if (data == 1) {
-                                $("#v_emailR").show();
-                                isStepValid = false;
-                                return false;
-                            } else {
-                                $("#v_emailR").hide();
-                            }
-                        },
-                    });
-                }
-            } else {
-                $("#validCorreo").show();
-                isStepValid = false;
-            }
+            // if ($("#email").val() != "") {
+            //     //VALIDAR CORREO
+            //     var email = $("#email").val();
+            //     $("#validCorreo").hide();
+            //     idE = $("#idEmpleado").val();
+            //     if (idE == "") {
+            //         $.ajax({
+            //             async: false,
+            //             type: "GET",
+            //             url: "email",
+            //             data: {
+            //                 email: email,
+            //             },
+            //             headers: {
+            //                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+            //                     "content"
+            //                 ),
+            //             },
+            //             statusCode: {
+            //                 /*401: function () {
+            //                     location.reload();
+            //                 },*/
+            //                 419: function () {
+            //                     location.reload();
+            //                 },
+            //             },
+            //             success: function (data) {
+            //                 if (data == 1) {
+            //                     $("#emailR").show();
+            //                     isStepValid = false;
+            //                     return false;
+            //                 } else {
+            //                     $("#emailR").hide();
+            //                 }
+            //             },
+            //         });
+            //     } else {
+            //         $.ajax({
+            //             async: false,
+            //             type: "GET",
+            //             url: "emailE",
+            //             data: {
+            //                 email: email,
+            //                 idE: idE,
+            //             },
+            //             headers: {
+            //                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+            //                     "content"
+            //                 ),
+            //             },
+            //             success: function (data) {
+            //                 if (data == 1) {
+            //                     $("#v_emailR").show();
+            //                     isStepValid = false;
+            //                     return false;
+            //                 } else {
+            //                     $("#v_emailR").hide();
+            //                 }
+            //             },
+            //         });
+            //     }
+            // } else {
+            //     $("#validCorreo").show();
+            //     isStepValid = false;
+            // }
             if ($("#celular").val() != "") {
                 var regex = RegExp("^9{1}[0-9]{8,8}");
                 if (regex.test($("#celular").val())) {
@@ -387,38 +387,38 @@ $(document).ready(function () {
                 }
             }
             /////////////////////////////
-            if ($("#v_email").val() != "") {
-                //VALIDAR CORREO
-                var email = $("#v_email").val();
-                var idE = $("#v_id").val();
-                $("#v_validCorreo").hide();
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "emailE",
-                    data: {
-                        email: email,
-                        idE: idE,
-                    },
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                            "content"
-                        ),
-                    },
-                    success: function (data) {
-                        if (data == 1) {
-                            $("#v_emailR").show();
-                            isStepValid = false;
-                            return false;
-                        } else {
-                            $("#v_emailR").hide();
-                        }
-                    },
-                });
-            } else {
-                $("#v_validCorreo").show();
-                isStepValid = false;
-            }
+            // if ($("#v_email").val() != "") {
+            //     //VALIDAR CORREO
+            //     var email = $("#v_email").val();
+            //     var idE = $("#v_id").val();
+            //     $("#v_validCorreo").hide();
+            //     $.ajax({
+            //         async: false,
+            //         type: "GET",
+            //         url: "emailE",
+            //         data: {
+            //             email: email,
+            //             idE: idE,
+            //         },
+            //         headers: {
+            //             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+            //                 "content"
+            //             ),
+            //         },
+            //         success: function (data) {
+            //             if (data == 1) {
+            //                 $("#v_emailR").show();
+            //                 isStepValid = false;
+            //                 return false;
+            //             } else {
+            //                 $("#v_emailR").hide();
+            //             }
+            //         },
+            //     });
+            // } else {
+            //     $("#v_validCorreo").show();
+            //     isStepValid = false;
+            // }
             if ($("#v_celular").val() != "") {
                 var regex = RegExp("^9{1}[0-9]{8,8}");
                 if (regex.test($("#v_celular").val())) {
