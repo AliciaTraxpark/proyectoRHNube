@@ -771,7 +771,8 @@ class dispositivosController extends Controller
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
                     'he.estado as estado',
-                    'he.horarioEmp_id as idHorarioE'
+                    'he.horarioEmp_id as idHorarioE',
+                    'h.horasObliga as horasObligadas'
                 )
                 ->whereNotIn('he.horarioEmp_id', $arrayHorarioE)
                 ->where('empleado_emple_id', '=', $m->emple_id)
