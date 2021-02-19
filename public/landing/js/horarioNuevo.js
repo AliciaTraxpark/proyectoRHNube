@@ -4138,13 +4138,20 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
             var contenido= "";
 
             //*boton para elimnar seleecionados
-            contenido+=`<div class="col-md-12 mb-2">
+            contenido+=`<div class="col-md-12 row mb-2">
 
-            <div class="btn-group d-none d-sm-inline-block">
+            <div class="col-md-6">
+            <div class="form-check" style="padding-bottom: 10px;">
+            <input type="checkbox" class="form-check-input" id="checkselectElim">
+            <label class="form-check-label" for="checkselectElim"
+                style="margin-top: 2px;font-weight: 600">Seleccionar todos</label>
+            </div>
+            </div>
+            <div class="col-md-6 text-right">
                 <button onclick="eliminarMasivoHorarios()" type="button" class="btn btn-soft-danger btn-sm"><i
                         class="uil uil-trash-alt mr-1"></i>Eliminar seleccionados</button>
-            </div>
-        </div>`;
+             </div>
+                      </div>`;
 
             $.each(data, function (key, item) {
 
@@ -4199,3 +4206,16 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
 
     });
 }
+//*CHECK SELECCIONAR TODOS LOS HORARIOS PARA BORRAR
+$(function () {
+    $(document).on('change', '#checkselectElim', function (event) {
+        if ($('#checkselectElim').prop('checked')) {
+            $('#nHorasAdic_Actualizar_re').show();
+            $(".chechHoraEmp").prop("checked",true);
+        } else {
+            $(".chechHoraEmp").prop("checked",false);
+
+        }
+
+    });
+});
