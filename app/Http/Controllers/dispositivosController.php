@@ -3265,6 +3265,190 @@ class dispositivosController extends Controller
         }
     }
 
+    // * LISTA DE HORARIOS EXCLUYENDO SU ID DE HORARIO 
+    public function horariosDeEmpleado(Request $request)
+    {
+        $fecha = $request->get('fecha');
+        $idEmpleado = $request->get('idEmpleado');
+        $idHE = $request->get('idHE');
+        // DB::enableQueryLog();
+        $horario = DB::table('horario_empleado as he')
+            ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+            ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+            ->select(
+                'h.horario_descripcion as descripcion',
+                'h.horaI',
+                'h.horaF',
+                'h.horario_tolerancia as toleranciaI',
+                'h.horario_toleranciaF as toleranciaF',
+                'he.fuera_horario as fueraH',
+                'he.horarioEmp_id as idHorarioE',
+                'h.horasObliga as horasObligadas',
+                DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasAdicionales')
+            )
+            ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+            ->where('he.empleado_emple_id', '=', $idEmpleado)
+            ->where('he.horarioEmp_id', '!=', $idHE)
+            ->where('he.estado', '=', 1)
+            ->get();
+        // dd(DB::getQueryLog());
+
+        return response()->json($horario, 200);
+    }
+
+    // * ACTUALIZAR HORARIO EN MARCACION
+    public function actualizarHorarioMarcacion(Request $request)
+    {
+        $idMarcacion = $request->get('idM');
+        $idHorarioE = $request->get('idHE');
+        // : MARCACIÓN
+        $marcacion = marcacion_puerta::findOrFail($idMarcacion);
+        // : HORARIO EMPLEADO
+        if (!empty($idHorarioE)) {           // : -> HORARIO EMPLEADO ES DIFERENTE A CERO
+            $horario = DB::table('horario_empleado as he')
+                ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->select(
+                    'h.horario_descripcion as descripcion',
+                    DB::raw("CONCAT( DATE(hd.start),' ', h.horaI) as horaI"),
+                    DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horaF"),
+                    'h.horario_tolerancia as toleranciaI',
+                    'h.horario_toleranciaF as toleranciaF',
+                    'he.fuera_horario as fueraH',
+                    DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
+                    'h.horasObliga as horasO'
+                )
+                ->where('he.horarioEmp_id', '=', $idHorarioE)
+                ->get()
+                ->first();
+            // : OBTENER TIEMPO DE HORARIOS
+            $horarioInicio = Carbon::parse($horario->horaI);
+            $horarioFin = Carbon::parse($horario->horaF);
+            $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+            $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+            // : SUMA DE TIEMPO EN MARCACIONES
+            $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
+                ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
+                ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+                ->whereNotNull('m.marcaMov_fecha')
+                ->whereNotNull('m.marcaMov_salida')
+                ->where('m.horarioEmp_id', '=', $idHorarioE)
+                ->get();
+            // : CALCULOS DE TIEMPO
+            $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+            // : SI MARCACIÓN TIENE ENTRADA Y SALIDA
+            if (!empty($marcacion->marcaMov_fecha) && !empty($marcacion->marcaMov_salida)) {
+                $entrada = Carbon::parse($marcacion->marcaMov_fecha);
+                $salida = Carbon::parse($marcacion->marcaMov_salida);
+                $totalDuration = $salida->diffInSeconds($entrada);
+                $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                // : ENTRADA DEBE ESTAR ENTRE INICIO DEL HORARIO Y SALIDA DEL HORARIO
+                if ($entrada->gte($horarioInicioT) && $entrada->lte($horarioFinT)) {
+                    if ($horario->fueraH == 1) {
+                        // : TIEMPO TOTAL DE LA MARCACIÓN MENOR O IGUAL AL TIEMPO DEL HORARIO
+                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                            // : ACTUALIZAR HORARIO DE LA MARCACIÓN
+                            $marcacion->horarioEmp_id = $idHorarioE;
+                            $marcacion->save();
+                            return response()->json($marcacion->marcaMov_id, 200);
+                        } else {
+                            return response()->json(
+                                array("respuesta" => "Sobretiempo en la marcación."),
+                                200
+                            );
+                        }
+                    } else {
+                        // : SALIDA DEBE ESTAR ENTRE INICIO DEL HORARIO Y SALIDA DEL HORARIO
+                        if ($salida->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                            // : TIEMPO TOTAL DE LA MARCACIÓN MENOR O IGUAL AL TIEMPO DEL HORARIO
+                            if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                // : ACTUALIZAR HORARIO DE LA MARCACIÓN
+                                $marcacion->horarioEmp_id = $idHorarioE;
+                                $marcacion->save();
+                                return response()->json($marcacion->marcaMov_id, 200);
+                            } else {
+                                return response()->json(
+                                    array("respuesta" => "Sobretiempo en la marcación."),
+                                    200
+                                );
+                            }
+                        } else {
+                            return response()->json(
+                                array("respuesta" => "Marcación de salida fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),
+                                200
+                            );
+                        }
+                    }
+                } else {
+                    return response()->json(
+                        array("respuesta" => "Marcación de entrada fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),
+                        200
+                    );
+                }
+            } else {
+                // : SI MARCACIÓN SOLO TIENE ENTRADA
+                if (!empty($marcacion->marcaMov_fecha)) {
+                    $entrada = Carbon::parse($marcacion->marcaMov_fecha);
+                    $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT);
+                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                    // : ENTRADA DEBE ESTAR ENTRE INICIO DEL HORARIO Y SALIDA DEL HORARIO
+                    if ($entrada->gte($horarioInicioT) && $entrada->lte($horarioFinT)) {
+                        if ($tiempoTotal->lt($tiempoTotalDeHorario)) {
+                            // : ACTUALIZAR HORARIO DE LA MARCACIÓN
+                            $marcacion->horarioEmp_id = $idHorarioE;
+                            $marcacion->save();
+                            return response()->json($marcacion->marcaMov_id, 200);
+                        } else {
+                            return response()->json(
+                                array("respuesta" => "Sobretiempo en la marcación."),
+                                200
+                            );
+                        }
+                    } else {
+                        return response()->json(
+                            array("respuesta" => "Marcación de entrada fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),
+                            200
+                        );
+                    }
+                } else {
+                    // : SI MARCACIÓN SOLO TIENE SALIDA
+                    if (!empty($marcacion->marcaMov_salida)) {
+                        $salida = Carbon::parse($marcacion->marcaMov_salida);
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT);
+                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                        if ($horario->fueraH == 1) {
+                            // : TIEMPO TOTAL DE LA MARCACIÓN MENOR AL TIEMPO DEL HORARIO
+                            if ($tiempoTotal->lt($tiempoTotalDeHorario)) {
+                                // : ACTUALIZAR HORARIO DE LA MARCACIÓN
+                                $marcacion->horarioEmp_id = $idHorarioE;
+                                $marcacion->save();
+                                return response()->json($marcacion->marcaMov_id, 200);
+                            } else {
+                                return response()->json(
+                                    array("respuesta" => "Sobretiempo en la marcación."),
+                                    200
+                                );
+                            }
+                        } else {
+                            // : SALIDA DEBE ESTAR ENTRE INICIO DEL HORARIO Y SALIDA DEL HORARIO
+                            if ($salida->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                            } else {
+                                return response()->json(
+                                    array("respuesta" => "Marcación de salida fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),
+                                    200
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            $marcacion->horarioEmp_id = NULL;
+            $marcacion->save();
+            return response($marcacion->marcaMov_id, 200);
+        }
+    }
     // ? ******************************** TRAZABILIDAD DE MARCACIÓN **********************************
     // * INDEX
     public function indexTrazabilidadM()

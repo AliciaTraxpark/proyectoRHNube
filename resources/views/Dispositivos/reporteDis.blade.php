@@ -977,6 +977,70 @@
     </div>
 </div>
 {{-- FINALIZACION --}}
+{{-- ACTUALIZAR HORARIO A UNA SOLA MARCACION --}}
+<div id="modalActualizarHM" class="modal fade" role="dialog" aria-labelledby="modalActualizarHM" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-lg d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                {{-- ID DE MARCACIÓN --}}
+                <input type="hidden" id="idMarcacionHM">
+                <div class="col-md-12">
+                    <form action="javascript:actualizacionMarcacionH()" id="formActualizacionMarcacionH">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="table-responsive">
+                                    <table id="detalleM" class="table nowrap order-column" style="font-size: 12.8px;">
+                                        <thead style="background: #fafafa;">
+                                            <tr>
+                                                <th class="text-center">Entrada</th>
+                                                <th class="text-center">Salida</th>
+                                                <th class="text-center">Descripción del horario</th>
+                                                <th class="text-center">Horario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbodyDetalleHM"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-1">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Horario</span>
+                            </div>
+                            <div class="col-md-12 pt-1">
+                                <span id="hm_valid" style="color: #8b3a1e;display:none">
+                                    Seleccionar horario
+                                </span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="horarioXM" required>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row pt-2" id="detalleHorariosEM" style="display: none"></div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
 {{-- MODIFICAR --}}
 @if (isset($modifReporte))
 @if ($modifReporte==1)

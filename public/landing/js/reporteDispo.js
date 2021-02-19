@@ -1069,6 +1069,15 @@ function cargartabla(fecha) {
                                     }
                                     tbodyEntradaySalida += ` <div class="dropdown-item dropdown-itemM noExport">
                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                    <a onclick="modalActualizarHorarioMarc(${marcacionData.idHE},${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${marcacionData.entrada}','${marcacionData.salida}','${horarioData.horario}','${horarioData.horarioIni}','${horarioData.horarioFin}',${horarioData.estado})" 
+                                                                        style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                        Actualizar horario
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                     <a onclick="eliminarM(${marcacionData.idMarcacion},1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
                                                                         Eliminar marc.
@@ -2987,7 +2996,7 @@ $('#formInsertarEntrada').submit(function (e) {
         this.submit();
     }
 });
-// ! ****************************** CAMBIAR DE HORARIO ***********************************************************
+// ! ********************************************** CAMBIAR DE HORARIO ***********************************************************
 var datosHorario = {};
 var dataMarcaciones = {};
 // * MODAL CON LISTA DE HORARIOS
@@ -3288,6 +3297,226 @@ $('#formCambiarHorarioM').submit(function (e) {
         this.submit();
     }
 });
+// ! ************************************* ACTUALIZAR HORARIO EN MARCACION ****************************************************************
+// * MODAL DE INFORMACION
+function modalActualizarHorarioMarc(idHE, idM, fecha, id, entrada, salida, horario, inicioH, finH, estado) {
+    $('#tbodyDetalleHM').empty();
+    var tbodyHM = `<tr>`;
+    // * ENTRADA
+    if (entrada != 0) {
+        tbodyHM += `<td class="text-center">
+                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
+                        ${moment(entrada).format("HH:mm:ss")}
+                    </td>`;
+    } else {
+        tbodyHM += `<td class="text-center">
+                        <span class="badge badge-soft-warning noExport">
+                            <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                            No tiene entrada
+                        </span>
+                    </td>`;
+    }
+    // * SALIDA 
+    if (salida != 0) {
+        tbodyHM += `<td class="text-center">
+                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
+                        ${moment(salida).format("HH:mm:ss")}
+                    </td>`;
+    } else {
+        tbodyHM += `<td class="text-center">
+                        <span class="badge badge-soft-secondary noExport"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                            No tiene salida
+                        </span>
+                    </td>`;
+    }
+    // * HORARIO
+    if (horario == 'null') {
+        tbodyHM += `<td class="text-center">
+                        <span class="badge badge-soft-danger mr-2" class="text-center">
+                            Sin horario
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span class="badge badge-soft-danger mr-2" class="text-center">
+                            Sin horario
+                        </span>
+                    </td>`;
+    } else {
+        if (estado == 1) {
+            tbodyHM += `<td class="text-center">
+                            <span class="badge badge-soft-primary mr-2" class="text-center">
+                                ${horario}
+                            </span>
+                    </td>
+                    <td class="text-center">
+                        ${moment(inicioH).format("HH:mm:ss")} - ${moment(finH).format("HH:mm:ss")}
+                    </td>`;
+        } else {
+            tbodyHM += `<td class="text-center">
+                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                                ${horario}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                            ${moment(inicioH).format("HH:mm:ss")} - ${moment(finH).format("HH:mm:ss")}
+                        </td>`;
+        }
+    }
+    $('#tbodyDetalleHM').append(tbodyHM);
+    $('#idMarcacionHM').val(idM);
+    $('#modalActualizarHM').modal();
+    sent = false;
+    listaDeHorarios(idHE, fecha, id);
+}
+var dataHorarioM = {};
+// * COMBOX DE HORARIO
+function listaDeHorarios(idHE, fecha, id) {
+    $('#horarioXM').empty();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/listaHorarioM",
+        data: {
+            idHE: idHE,
+            fecha: fecha,
+            idEmpleado: id
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            dataHorarioM = data;
+            var container = `<option value="" disabled selected>Seleccionar horario</option>`;
+            if (idHE != 0) {
+                container += `<option value="0">Sin horario</option>`;
+            } else {
+                if (data.length == 0) {
+                    var container = `<option value="" disabled selected>No se encontraron horarios disponibles</option>`;
+                }
+            }
+            for (let index = 0; index < data.length; index++) {
+                container += `<option value="${data[index].idHorarioE}">${data[index].descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
+            }
+            $('#horarioXM').append(container);
+        },
+        error: function () { }
+    });
+}
+// * MOSTRAR DETALLES DE HORARIO
+$('#horarioXM').on("change", function () {
+    $('#detalleHorariosEM').empty();
+    $('#detalleHorariosEM').hide();
+    if ($(this).val() != 0) {
+        var contenido = `<div class="col-md-12"><span style="color:#183b5d;font-weight: bold">Detalles de Horario</span></div>`;
+        console.log(dataHorarioM);
+        dataHorarioM.forEach(element => {
+            if (element.idHorarioE == $('#horarioXM').val()) {
+                contenido += `<div class="col-md-12">
+                                    <div class="row p-2">
+                                        <div class="col-md-12" style="border: 1px dashed #aaaaaa!important;border-radius:5px">
+                                            <div class="table-responsive">
+                                                <table>
+                                                    <tr>
+                                                        <td><span style="color:#62778c;">Horario:</span></td>
+                                                        <td style="padding-right: 15em;padding-left: 1em"><span>${element.descripcion}</span></td>
+                                                        <td><span style="color:#62778c;">Permitir trabajar fuera horario:</span></td>
+                                                        <td style="padding-left: 1em"><span>${(element.fueraH == 1) ? "Si" : "No"}</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span style="color:#62778c;">Hora inicio:</span></td>
+                                                        <td style="padding-right: 15em;padding-left: 1em"><span>${element.horaI}</span></td>
+                                                        <td><span style="color:#62778c;">Tolerancia inicio (minutos):</span></td>
+                                                        <td style="padding-left: 1em"><span>${element.toleranciaI}</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span style="color:#62778c;">Hora fin:</span></td>
+                                                        <td style="padding-right: 15em;padding-left: 1em"><span>${element.horaF}</span></td>
+                                                        <td><span style="color:#62778c;">Tolerancia fin (minutos):</span></td>
+                                                        <td style="padding-left: 1em"><span>${element.toleranciaF}</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span style="color:#62778c;">Horas obligadas:</span></td>
+                                                        <td style="padding-right: 15em;padding-left: 1em"><span>${element.horasObligadas}</span></td>
+                                                        <td><span style="color:#62778c;">Horas adicionales:</span></td>
+                                                        <td style="padding-left: 1em"><span>${element.horasAdicionales}</span></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+            }
+        });
+        $('#detalleHorariosEM').append(contenido);
+        $('#detalleHorariosEM').show();
+    }
+});
+// * ACTUALIZAR HORARIO EN MARCACIÓN
+function actualizacionMarcacionH() {
+    var idM = $('#idMarcacionHM').val();
+    var idHE = $('#horarioXM').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/actualizarHorarioM",
+        data: {
+            idHE: idHE,
+            idM: idM
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.respuesta == undefined) {
+                $('#hm_valid').hide();
+                $('#modalActualizarHM').modal("toggle");
+                $('button[type="submit"]').attr("disabled", false);
+                fechaValue.setDate(fechaGlobal);
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+            } else {
+                $('#hm_valid').empty();
+                $('#hm_valid').append(data.respuesta);
+                $('#hm_valid').show();
+                $('button[type="submit"]').attr("disabled", false);
+                sent = false;
+            }
+        },
+        error: function () { }
+    });
+}
+// * VALIDACION
+$('#formActualizacionMarcacionH').attr('novalidate', true);
+$('#formActualizacionMarcacionH').submit(function (e) {
+    e.preventDefault();
+    if ($('#horarioXM').val() == null || $('#horarioXM').val() == "") {
+        $('#hm_valid').empty();
+        $('#hm_valid').append("Seleccionar horario.");
+        $('#hm_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
+        sent = false;
+        return;
+    }
+    if (!sent) {
+        sent = true;
+        $('#hm_valid').empty();
+        $('#hm_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
+});
 // ! ********************************* FINALIZACION *************************************************************
 // * LIMPIEZA DE CAMPOS
 function limpiarAtributos() {
@@ -3347,6 +3576,13 @@ function limpiarAtributos() {
     $('#rowDatosM').hide();
     $('#r_horarioXE').empty();
     $('[data-toggle="tooltip"]').tooltip("hide");
+    // ? MODAL DE ACTUALIZAR HORARIO EN MARCACIÓN
+    $('#tbodyDetalleHM').empty();
+    $('#horarioXM').empty();
+    $('#detalleHorariosEM').empty();
+    $('#detalleHorariosEM').hide();
+    $('#hm_valid').empty();
+    $('#hm_valid').hide();
 }
 // ! ********************************* SELECTOR DE COLUMNAS ****************************************************
 // * FUNCION PARA QUE NO SE CIERRE DROPDOWN
