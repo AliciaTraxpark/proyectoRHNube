@@ -484,6 +484,7 @@ Route::post('/horariosxEmpleado', 'dispositivosController@horarioEmpleado');
 Route::post('/cambiarHorarioM', 'dispositivosController@cambiarHorario');
 Route::post('/agregarM', 'dispositivosController@nuevaMarcacion');
 Route::post('/marcacionHorario', 'dispositivosController@marcacionesHorarioEmpleado');
+Route::post('/listaHorarioM', 'dispositivosController@horariosDeEmpleado');
 // : *********************** REPORTE DE TRAZABILIDAD ****************************
 Route::get('/indexTrazabilidad', 'dispositivosController@indexTrazabilidadM');
 Route::get('/dataTrazabilidad', 'dispositivosController@dataTrazabilidad');
