@@ -7,7 +7,8 @@ var fechaValue = $("#fechaSelec").flatpickr({
     locale: "es",
     maxDate: "today",
     wrap: true,
-    allowInput: true,
+    allowInput: false,
+    disableMobile: true
 });
 var fechaGlobal = {};
 var dataT = {};
@@ -374,30 +375,8 @@ function cargartabla(fecha) {
                 }
                 arrayHorario.push(cantidadMarcacionG + "," + cantidadPausaG);
             }
-            // var theadTablaRow = `<tr>`;
-            // if (permisoModificar == 1) {
-            //     theadTablaRow += `<th class="noExport celdaTransparente"></th>`;
-            // }
-            // theadTablaRow += `<th class="celdaTransparente"></th>
-            //             <th class="text-center celdaTransparente"></th>
-            //             <th class="celdaTransparente"></th>
-            //             <th class="celdaTransparente"></th>
-            //             <th class="celdaTransparente"></th>
-            //             <th class="celdaTransparente"></th>`;
-            // for (let m = 0; m < cantidadGruposHorario; m++) {
-            //     var cantidadColumnas = (parseInt(arrayHorario[m].split(",")[0]) * 3) + (parseInt(arrayHorario[m].split(",")[1]) * 4) + 8;
-            //     theadTablaRow += `<th colspan="${cantidadColumnas}" scope="colgroup" class="text-center" style="background: #fafafa;border-left: 2px solid #383e56!important;">Horario${m + 1}</th>`;
-            // }
-            // theadTablaRow += `<th class="celdaTransparente"></th>
-            //                 <th class="celdaTransparente"></th> 
-            //                 <th class="celdaTransparente"></th>
-            //                 <th class="celdaTransparente"></th>
-            //                 <th class="celdaTransparente"></th>`;
-            // theadTablaRow += `</tr>`;
             // ? ************************************************* ARMAR CABEZERA **********************************************
             var theadTabla = `<tr>`;
-            // var theadTabla = theadTablaRow;
-            theadTabla += `<tr>`;
             // * CONDICIONAL DE PERMISOS
             if (permisoModificar == 1) {
                 theadTabla += `<th class="noExport">Agregar</th>`;
@@ -1912,7 +1891,9 @@ $('#r_horarioXE').on("change", function () {
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: false
+        static: false,
+        allowInput: false,
+        disableMobile: true
     });
     var minDat = moment($("#fechaInput").val()).format("YYYY-MM-DD");
     if ($(this).val() == 0) {
@@ -1930,6 +1911,8 @@ $('#r_horarioXE').on("change", function () {
         maxDate: maxDat,
         minDate: minDat,
         enableTime: false,
+        allowInput: false,
+        disableMobile: true
     });
     // * INPUT DE SALIDA
     newSalida = $('#nuevaSalida').flatpickr({
@@ -1939,7 +1922,9 @@ $('#r_horarioXE').on("change", function () {
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: false
+        static: false,
+        allowInput: false,
+        disableMobile: true
     });
     // * FECHA DE SALIDA
     newFechaSalida = $('#fechaNuevaSalida').flatpickr({
@@ -1950,6 +1935,8 @@ $('#r_horarioXE').on("change", function () {
         maxDate: maxDat,
         minDate: minDat,
         enableTime: false,
+        allowInput: false,
+        disableMobile: true
     });
 });
 // * SIN ENTRADA
@@ -2787,7 +2774,9 @@ function insertarSalidaModal(hora, id, idH) {
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: false
+        static: false,
+        allowInput: false,
+        disableMobile: true
     });
     $('a').css('pointer-events', 'auto');
     sent = false;
@@ -2901,7 +2890,9 @@ function insertarEntradaModal(hora, id, idH) {
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: false
+        static: false,
+        allowInput: false,
+        disableMobile: true
     });
     $('a').css('pointer-events', 'auto');
     sent = false;

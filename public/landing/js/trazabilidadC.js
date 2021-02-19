@@ -7,7 +7,8 @@ var fechaValue = $("#fechaSelec").flatpickr({
     locale: "es",
     maxDate: "today",
     wrap: true,
-    allowInput: true,
+    allowInput: false,
+    disableMobile: true
 });
 
 $(function () {
@@ -40,6 +41,8 @@ $('#horaI').flatpickr({
     dateFormat: "H:i",
     time_24hr: true,
     defaultDate: hi + ":00",
+    allowInput: false,
+    disableMobile: true,
     onClose: function (selectedDates, dateStr, instance) {
         horaFinal.set("minTime", minHoraF());
         horaFinal.set("defaultDate", defaultHora());
@@ -55,6 +58,8 @@ var horaFinal = $('#horaF').flatpickr({
     time_24hr: true,
     defaultDate: hf + ":00",
     minTime: minHoraF(),
+    allowInput: false,
+    disableMobile: true
 });
 $('#empresa').select2({
     placeholder: 'Seleccionar empresa',

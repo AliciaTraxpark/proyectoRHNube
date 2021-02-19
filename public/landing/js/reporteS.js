@@ -6,8 +6,8 @@ var fechaValue = $("#fechaSelec").flatpickr({
     altFormat: "D, j F",
     locale: "es",
     wrap: true,
-    allowInput: true,
-    disableMobile: "true",
+    allowInput: false,
+    disableMobile: true,
     "plugins": [new weekSelect({})],
     "onChange": [function () {
         // extract the week number

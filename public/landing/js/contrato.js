@@ -1084,8 +1084,8 @@ function bajaEmpleadoContrato(id) {
         altFormat: "Y-m-d",
         locale: "es",
         wrap: true,
-        allowInput: true,
-        disableMobile: "true"
+        allowInput: false,
+        disableMobile: true
     });
     $(function () {
         f = moment().format("YYYY-MM-DD");
@@ -1795,8 +1795,8 @@ function bajaEmpleadoContratoReg(id) {
         locale: "es",
         maxDate: "today",
         wrap: true,
-        allowInput: true,
-        disableMobile: "true"
+        allowInput: false,
+        disableMobile: true
     });
     $(function () {
         f = moment().format("YYYY-MM-DD");

@@ -7,7 +7,8 @@ var fechaValue = $("#fechaSelec").flatpickr({
     locale: "es",
     maxDate: "today",
     wrap: true,
-    allowInput: true,
+    allowInput: false,
+    disableMobile: true,
     conjunction: " a ",
     minRange: 1,
     onChange: function (selectedDates) {
