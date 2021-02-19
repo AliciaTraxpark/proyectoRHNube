@@ -47,8 +47,8 @@ function agregarempleado() {
     if (regex2.test($("#email").val())) {
         $("#validCorreo").hide();
     } else {
-        $("#validCorreo").show();
-        return false;
+       /*  $("#validCorreo").show();
+        return false; */
     }
     if (regex.test($("#celular").val())) {
         $("#validCel").hide();

@@ -239,8 +239,8 @@ $(document).ready(function () {
                     });
                 }
             } else {
-                $("#validCorreo").show();
-                isStepValid = false;
+               /*  $("#validCorreo").show();
+                isStepValid = false; */
             }
             if ($("#celular").val() != "") {
                 var regex = RegExp("^9{1}[0-9]{8,8}");
@@ -416,8 +416,8 @@ $(document).ready(function () {
                     },
                 });
             } else {
-                $("#v_validCorreo").show();
-                isStepValid = false;
+                /* $("#v_validCorreo").show();
+                isStepValid = false; */
             }
             if ($("#v_celular").val() != "") {
                 var regex = RegExp("^9{1}[0-9]{8,8}");
