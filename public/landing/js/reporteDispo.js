@@ -1912,7 +1912,7 @@ $('#r_horarioXE').on("change", function () {
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: true
+        static: false
     });
     var minDat = moment($("#fechaInput").val()).format("YYYY-MM-DD");
     if ($(this).val() == 0) {
@@ -1939,7 +1939,7 @@ $('#r_horarioXE').on("change", function () {
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: true
+        static: false
     });
     // * FECHA DE SALIDA
     newFechaSalida = $('#fechaNuevaSalida').flatpickr({
@@ -2787,7 +2787,7 @@ function insertarSalidaModal(hora, id, idH) {
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: true
+        static: false
     });
     $('a').css('pointer-events', 'auto');
     sent = false;
@@ -2901,7 +2901,7 @@ function insertarEntradaModal(hora, id, idH) {
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: true
+        static: false
     });
     $('a').css('pointer-events', 'auto');
     sent = false;

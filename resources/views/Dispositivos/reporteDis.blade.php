@@ -245,6 +245,10 @@
         padding-left: 1em
     }
 
+    .flatpickr-calendar {
+        width: auto !important;
+    }
+
     @media (max-width: 767.98px) {
         .separacion {
             padding-right: 1em !important;
@@ -693,7 +697,7 @@
                             <input type="hidden" id="idMarcacionIS">
                             {{-- ID DE HORARIO --}}
                             <input type="hidden" id="idHorarioIS">
-                            <div class="col-md-12">
+                            <div class="col-md-12 pl-2">
                                 <span style="color:#62778c;font-weight: bold">Agregar salida</span>
                             </div>
                             <div class="col-md-12">
@@ -701,24 +705,29 @@
                                     Seleccionar marcación
                                 </span>
                             </div>
-                            <div class="col-xl-5 mt-2">
-                                <label>
-                                    Entrada
-                                    &nbsp;
-                                    <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
-                                    &nbsp;
-                                    <span id="i_hora" style="color:#383e56;font-weight: bold"></span>
-                                </label>
-                            </div>
-                            <div class="col-xl-7">
-                                <div class="form-group row">
-                                    <label class="col-lg-5 col-form-label text-right">Salida &nbsp;
-                                        <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
-                                    </label>
-                                    <div class="col-lg-7 mt-1">
-                                        <input type="text" class="form-control form-control-sm horasEntrada"
-                                            onchange="$(this).removeClass('borderColor');" id="horaSalidaNueva">
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table cellpadding="8">
+                                        <tr>
+                                            <th style="color:#383e56;">
+                                                Entrada
+                                                <img src="{{asset('landing/images/entradaD.svg') }}" height="12"
+                                                    class="ml-1" />
+                                            </th>
+                                            <td>
+                                                <span id="i_hora" style="font-weight: bold"></span>
+                                            </td>
+                                            <th style="color:#383e56;">
+                                                Salida
+                                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12"
+                                                    class="ml-1" />
+                                            </th>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm horasEntrada"
+                                                    onchange="$(this).removeClass('borderColor');" id="horaSalidaNueva">
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -766,25 +775,31 @@
                                     Ingresar entrada
                                 </span>
                             </div>
-                            <div class="col-xl-7">
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label text-left">Entrada &nbsp;
-                                        <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
-                                    </label>
-                                    <div class="col-lg-8 mt-1 text-left">
-                                        <input type="text" class="form-control form-control-sm horasEntrada"
-                                            onchange="$(this).removeClass('borderColor');" id="horasEntradaNueva">
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table cellpadding="8">
+                                        <tr>
+                                            <th style="color:#383e56;">
+                                                Entrada
+                                                <img src="{{asset('landing/images/entradaD.svg') }}" height="12"
+                                                    class="ml-1" />
+                                            </th>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm horasEntrada"
+                                                    onchange="$(this).removeClass('borderColor');"
+                                                    id="horasEntradaNueva">
+                                            </td>
+                                            <th style="color:#383e56;">
+                                                Salida
+                                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12"
+                                                    class="ml-1" />
+                                            </th>
+                                            <td>
+                                                <span id="ie_hora" style="font-weight: bold"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
-                            </div>
-                            <div class="col-xl-5 mt-2">
-                                <label>
-                                    Salida
-                                    &nbsp;
-                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
-                                    &nbsp;
-                                    <span id="ie_hora" style="color:#62778c;font-weight: bold"></span>
-                                </label>
                             </div>
                         </div>
                 </div>

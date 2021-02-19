@@ -129,15 +129,15 @@ function inicializarTabla() {
                     var fechaI = $('#fechaInicio').val();
                     var fechaF = $('#fechaFin').val();
                     //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'MODO ASISTENCIA EN PUERTA - TRAZABILIDAD DE MARCACIONES', s: 2 }]);
+                    var r1 = Addrow(1, [{ k: 'A', v: 'MODO ASISTENCIA EN PUERTA - ASISTENCIA CONSOLIDADA', s: 2 }]);
                     var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
                     var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
                     var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
                     var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: fechaI + "\t a \t" + fechaF, s: 0 }]);
                     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'TRAZABILIDAD DE MARCACIONES',
-                title: 'MODO ASISTENCIA EN PUERTA - TRAZABILIDAD DE MARCACIONES',
+                sheetName: 'ASISTENCIA CONSOLIDADA',
+                title: 'MODO ASISTENCIA EN PUERTA - ASISTENCIA CONSOLIDADA',
                 autoFilter: false,
                 exportOptions: {
                     columns: ":visible:not(.noExport)",
@@ -167,7 +167,7 @@ function inicializarTabla() {
                 text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                 orientation: 'landscape',
                 pageSize: 'A1',
-                title: 'MODO ASISTENCIA EN PUERTA - TRAZABILIDAD DE MARCACIONES',
+                title: 'MODO ASISTENCIA EN PUERTA - ASISTENCIA CONSOLIDADA',
                 exportOptions: {
                     columns: ":visible:not(.noExport)"
                 },
@@ -249,7 +249,7 @@ function inicializarTabla() {
                                     alignment: 'left',
                                     italics: false,
                                     text: [
-                                        { text: '\nMODO ASISTENCIA EN PUERTA - TRAZABILIDAD DE MARCACIONES', bold: true },
+                                        { text: '\nMODO ASISTENCIA EN PUERTA - ASISTENCIA CONSOLIDADA', bold: true },
                                         { text: '\n\nRazón Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
                                         { text: '\nDirección:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
                                         { text: '\nNúmero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
