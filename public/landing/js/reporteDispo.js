@@ -3086,64 +3086,40 @@ $('#horarioXE').on("change", function () {
         var contenido = `<div class="col-md-12"><span style="color:#183b5d;font-weight: bold">Detalles de Horario</span></div>`;
         datosHorario.forEach(element => {
             if (element.idHorarioE == $('#horarioXE').val()) {
-                contenido += `<div class="row ml-3 mr-4" style="border: 1px dashed #aaaaaa!important;border-radius:5px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <span style="color:#62778c;">Horario:</span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span>${element.descripcion}</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span style="color:#62778c;">Hora inicio:</span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span>${element.horaI}</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span style="color:#62778c;">Hora fin:</span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span>${element.horaF}</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span style="color:#62778c;">Horas obligadas:</span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span>${element.horasObligadas}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <span style="color:#62778c;">Permitir trabajar fuera horario:</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span>${(element.fueraH == 1) ? "Si" : "No"}</span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span style="color:#62778c;">Tolerancia inicio (minutos):</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span>${element.toleranciaI}</span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span style="color:#62778c;">Tolerancia fin (minutos):</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span>${element.toleranciaF}</span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span style="color:#62778c;">Horas adicionales:</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span>${element.horasAdicionales}</span>
+                contenido += `<div class="col-md-12">
+                                <div class="row pt-2 pb-2 pl-3 pr-3">
+                                    <div class="col-md-12" style="border: 1px dashed #aaaaaa!important;border-radius:5px">
+                                        <div class="table-responsive">
+                                            <table>
+                                                <tr>
+                                                    <td><span style="color:#62778c;">Horario:</span></td>
+                                                    <td style="padding-right: 15em;padding-left: 1em"><span>${element.descripcion}</span></td>
+                                                    <td><span style="color:#62778c;">Permitir trabajar fuera horario:</span></td>
+                                                    <td style="padding-left: 1em"><span>${(element.fueraH == 1) ? "Si" : "No"}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span style="color:#62778c;">Hora inicio:</span></td>
+                                                    <td style="padding-right: 15em;padding-left: 1em"><span>${element.horaI}</span></td>
+                                                    <td><span style="color:#62778c;">Tolerancia inicio (minutos):</span></td>
+                                                    <td style="padding-left: 1em"><span>${element.toleranciaI}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span style="color:#62778c;">Hora fin:</span></td>
+                                                    <td style="padding-right: 15em;padding-left: 1em"><span>${element.horaF}</span></td>
+                                                    <td><span style="color:#62778c;">Tolerancia fin (minutos):</span></td>
+                                                    <td style="padding-left: 1em"><span>${element.toleranciaF}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span style="color:#62778c;">Horas obligadas:</span></td>
+                                                    <td style="padding-right: 15em;padding-left: 1em"><span>${element.horasObligadas}</span></td>
+                                                    <td><span style="color:#62778c;">Horas adicionales:</span></td>
+                                                    <td style="padding-left: 1em"><span>${element.horasAdicionales}</span></td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>`;
+                            </div>`;
             }
         });
         $('#detalleHorarios').append(contenido);
