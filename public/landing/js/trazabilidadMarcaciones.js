@@ -25,6 +25,7 @@ var fechaValue = $("#fechaTrazabilidad").flatpickr({
 });
 // * INICIALIZAR TABLA
 var table;
+var dataT = {};
 var razonSocial = {};
 var direccion = {};
 var ruc = {};
@@ -43,7 +44,7 @@ function inicializarTabla() {
         scrollCollapse: false,
         language: {
             sProcessing: "Generando informe...",
-            processing: "<img src='landing/images/punt.gif' height='40'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
+            processing: "<img src='landing/images/logoR.gif' height='60'>\n&nbsp;&nbsp;&nbsp;&nbsp;Generando informe...",
             sLengthMenu: "Mostrar _MENU_ registros",
             sZeroRecords: "No se encontraron resultados",
             sEmptyTable: "Ningún dato disponible en esta tabla",
@@ -336,6 +337,39 @@ function cargarDatos() {
         if ($.fn.DataTable.isDataTable("#tablaTrazabilidad")) {
             $("#tablaTrazabilidad").DataTable().destroy();
         }
+        $('#menuIncidencias').empty();
+        var listaI = "";
+        for (let item = 0; item < data.incidencias.length; item++) {
+            listaI += `<li class="liContenido" onclick="javascript:menuIncidencias(${data.incidencias[item].id})">
+                            <input type="checkbox" checked id="incidencia${data.incidencias[item].id}">
+                            <label for="">${data.incidencias[item].descripcion}</label>
+                        </li>`;
+        }
+        $('#menuIncidencias').append(listaI);
+        // ! ****************************************** CABEZERA DE TABLA **************************
+        $('#theadT').empty();
+        var thead = `<tr>
+                        <th>#</th>
+                        <th>DNI</th>
+                        <th>Empleado</th>
+                        <th>Departamento</th>
+                        <th class="text-center">Tardanzas</th>
+                        <th class="text-center">Días Trabajados</th>
+                        <th class="text-center">Hora normal</th>
+                        <th class="text-center">Hora nocturno</th>
+                        <th class="text-center">Faltas</th>`;
+        for (let item = 0; item < data.incidencias.length; item++) {
+            thead += `<th class="text-center incidencia${data.incidencias[item].id}">${data.incidencias[item].descripcion}</th>`;
+        }
+        thead += `<th class="text-center">H.E. 25% Diurnas</th>
+                    <th class="text-center">H.E. 35% Diurnas</th>
+                    <th class="text-center">H.E. 100% Diurnas</th>
+                    <th class="text-center">H.E. 25% Nocturnas</th>
+                    <th class="text-center">H.E. 35% Nocturnas </th>
+                    <th class="text-center">H.E. 100% Nocturnas</th>
+                </tr>`;
+        $('#theadT').append(thead);
+        // ! ****************************************** BODY DE TABLA ******************************
         $('#tbodyT').empty();
         var tbody = "";
         for (let index = 0; index < data.marcaciones.length; index++) {
@@ -347,14 +381,7 @@ function cargarDatos() {
             var diurnas35 = 0;
             var diurnas100 = 0;
             // : FINALIZACION
-            var descansoM = 0;
             var faltas = 0;
-            var fi = 0;
-            var fj = 0;
-            var per = 0;
-            var sme = 0;
-            var suspension = 0;
-            var vacaciones = 0;
             // : HORAS NOCTURNAS
             var horasNocturnas = moment("00:00:00", "HH:mm:ss");
             var nocturnas25 = 0;
@@ -371,8 +398,8 @@ function cargarDatos() {
                         if (element.idHorario != 0) {
                             // : FALTAS
                             if (element.totalT == "00:00:00" && element.entrada == null) {
-                                if (dataCompleta["incidencias"] != undefined) {
-                                    if (dataCompleta["incidencias"].length == 0) {
+                                if (data.marcaciones[index]["incidencias"] != undefined) {
+                                    if (data.marcaciones[index]["incidencias"].length == 0) {
                                         faltas++;
                                     }
                                 }
@@ -547,26 +574,6 @@ function cargarDatos() {
                         horasNocturnas = horasNocturnas.add({ "hours": horasTotal, "minutes": minutosTotal, "seconds": segundosTotal });
                     });
                 }
-                // ! ***************************** INCIDENCIAS ****************************
-                if (dataCompleta["incidencias"] != undefined) {
-                    dataCompleta["incidencias"].forEach(element => {
-                        // : DESCANSO MEDICO
-                        var estado = element.descripcion.search(RegExp(/Descanso médico/gi));
-                        if (!(estado === -1)) {
-                            descansoM++;
-                        }
-                        // : SUSPENSIÓN
-                        var estadoSusp = element.descripcion.search(RegExp(/Suspensión/gi));
-                        if (!(estadoSusp === -1)) {
-                            suspension++;
-                        }
-                        // : VACACIONES
-                        var estadoVac = element.descripcion.search(RegExp(/Vacaciones/gi));
-                        if (!(estadoVac === -1)) {
-                            vacaciones++;
-                        }
-                    });
-                }
             }
             tbody += `<tr>
                         <td>${index + 1}</td>
@@ -577,21 +584,25 @@ function cargarDatos() {
                         <td class="text-center">${diasTrabajdos}</td>
                         <td class="text-center">${horasNormales.format("HH:mm:ss")}</td>
                         <td class="text-center">${horasNocturnas.format("HH:mm:ss")}</td>
-                        <td class="text-center">${descansoM}</td>
-                        <td class="text-center">${faltas}</td>
-                        <td class="text-center">${fi}</td>
-                        <td class="text-center">${fj}</td>
-                        <td class="text-center">${per}</td>
-                        <td class="text-center">${sme}</td>
-                        <td class="text-center">${suspension}</td>
-                        <td class="text-center">${vacaciones}</td>
+                        <td class="text-center">${faltas}</td>`;
+            for (let i = 0; i < data.incidencias.length; i++) {
+                var respuestaI = 0;
+                var busqueda = data.marcaciones[index].incidencias.filter(resp => (resp.id == data.incidencias[i].id));
+                if (busqueda.length != 0) {
+                    busqueda.forEach(element => {
+                        respuestaI = element.total;
+                    });
+                }
+                tbody += `<td class="text-center">${respuestaI}</td>`;
+            }
+            tbody += `
                         <td class="text-center">${diurnas25}</td>
                         <td class="text-center">${diurnas35}</td>
                         <td class="text-center">${diurnas100}</td>
                         <td class="text-center">${nocturnas25}</td>
                         <td class="text-center">${nocturnas35}</td>
                         <td class="text-center">${nocturnas100}</td>
-            </tr>`;
+                    </tr>`;
         }
         $('#tbodyT').append(tbody);
         inicializarTabla();
@@ -623,10 +634,19 @@ function cargarDatos() {
 $('#idsEmpleado').on("change", function () {
     cargarDatos();
 });
+// * MENU DE INCIDENCIAS
+function menuIncidencias(id) {
+    if ($('#incidencia' + id).is(":checked")) {
+        dataT.api().columns('.incidencia' + id).visible(true);
+    } else {
+        dataT.api().columns('.incidencia' + id).visible(false);
+    }
+}
+// * FINALIZACION
+$('#tablaTrazabilidad tbody').on('click', 'tr', function () {
+    $(this).toggleClass('selected');
+});
 $(window).on('resize', function () {
     $("#tablaTrazabilidad").css('width', '100%');
     table.draw(false);
-});
-$("#tablaTrazabilidad").on('length.dt', function (e, settings, len) {
-    console.log('New page length: ' + len);
 });

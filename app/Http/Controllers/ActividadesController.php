@@ -307,6 +307,7 @@ class ActividadesController extends Controller
             if (!$buscarNombre) {
                 if ($actividad) {
                     //* ACTUALIZAR ATRIBUTOS DE ACTIVIDAD
+                    $actividad->Activi_Nombre = $request->get('descripcion');
                     $actividad->codigoActividad = $request->get('codigo');
                     $actividad->controlRemoto = $request->get('cr');
                     $actividad->asistenciaPuerta = $request->get('ap');
