@@ -531,6 +531,28 @@
                                                         required class="form-input" maxlength="5" />
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group">
+                                                    <label for="">Mantener data por(Días):</label> <span id="errorData_bio"
+                                                        style="color: #690f0f;display: none">El valor min es 7.</span>
+                                                    <input type="number" id="tiempoData_bio" min="7" max="60" value="7" required
+                                                        class="form-control form-control-sm" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group">
+                                                    <label for="">Seleecione tipo de biometrico:</label>
+                                                        <select  class="form-control form-control-sm" id="selecttipoBio"  required>
+                                                            <option value="" hidden>Seleccionar</option>
+                                                             @foreach ($tipo_biometrico as $tipo_biometricos)
+                                                                <option value="{{ $tipo_biometricos->idtipo_biometrico }}">
+                                                                    {{ $tipo_biometricos->nombre_tipo }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                </div>
+                                            </div>
 
                                             <div id="divFrmEmpleados" class="col-md-12"
                                                 style="padding-left: 0px;padding-right: 0px;padding-top: 10px;border-top: 1.5px solid #dedede;top: 10px;">
@@ -708,6 +730,27 @@
                                                     <label for="">version firmware:</label>
                                                     <input type="text" id="versionFi_ed"
                                                         class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group">
+                                                    <label for="">Mantener data por(Días):</label>
+                                                    <input type="number" id="tiempoData_bio_ed" min="7" max="60" value="7" required
+                                                        class="form-control form-control-sm" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group">
+                                                    <label for="">Seleecione tipo de biometrico:</label>
+                                                        <select  class="form-control form-control-sm" id="selecttipoBio_ed"  required>
+                                                            <option value="" hidden>Seleccionar</option>
+                                                             @foreach ($tipo_biometrico as $tipo_biometricos)
+                                                                <option value="{{ $tipo_biometricos->idtipo_biometrico }}">
+                                                                    {{ $tipo_biometricos->nombre_tipo }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                 </div>
                                             </div>
 
