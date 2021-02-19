@@ -239,10 +239,17 @@
         box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
     }
 
-    .form-check-input {
-        position: absolute;
-        margin-top: 0.2rem;
-        margin-left: 0rem;
+    /* SEPARACION ENTRE COLUMNAS */
+    .separacion {
+        padding-right: 15em;
+        padding-left: 1em
+    }
+
+    @media (max-width: 767.98px) {
+        .separacion {
+            padding-right: 1em !important;
+            padding-left: 1em !important;
+        }
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -896,66 +903,59 @@
                             </div>
                         </div>
                         <div class="row pt-2" id="AM_detalleHorarios" style="display: none"></div>
-                        <div class="row pt-3" style="display: none" id="rowDatosM">
-                            <div class="col-md-12">
-                                {{-- CABEZALES --}}
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <span>Tipo</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <span>Fecha</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <span>Hora</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        Sin marcación
-                                    </div>
-                                </div>
-                                {{-- PRIMERA COLUMNA --}}
-                                <div class="row pt-2">
-                                    <div class="col-md-2">
-                                        <span>
-                                            <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
-                                            &nbsp;Entrada
-                                        </span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control form-control-sm" id="fechaNuevaEntrada"
-                                            data-input>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control form-control-sm" id="nuevaEntrada">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group mb-0 mt-2 ml-2">
-                                            <input type="checkbox" id="v_entrada">
-                                            <label for="" class="mb-0"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- SEGUNDA COLUMNA --}}
-                                <div class="row pt-2">
-                                    <div class="col-md-2">
-                                        <span>
-                                            <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
-                                            &nbsp;Salida
-                                        </span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control form-control-sm" id="fechaNuevaSalida"
-                                            data-input>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control form-control-sm" id="nuevaSalida">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group mb-0 mt-2 ml-2">
-                                            <input type="checkbox" id="v_salida">
-                                            <label for="" class="mb-0"></label>
-                                        </div>
-                                    </div>
+                        <div class="row justify-content-center" style="display: none" id="rowDatosM">
+                            <div class="col-md-12 p-3">
+                                <div class="table-responsive">
+                                    <table cellpadding="6">
+                                        <tr>
+                                            <th><span style="color:#62778c;">Tipo</span></th>
+                                            <th><span style="color:#62778c;">Fecha</span></th>
+                                            <th><span style="color:#62778c;">Hora</span></th>
+                                            <th><span style="color:#62778c;">Sin marcación</span></th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src="{{asset('landing/images/entradaD.svg') }}" height="12"
+                                                    class="mr-1" />
+                                                Entrada
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="fechaNuevaEntrada" data-input>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="nuevaEntrada">
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-group mb-0 mt-2">
+                                                    <input type="checkbox" id="v_entrada">
+                                                    <label for="" class="mb-0"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12"
+                                                    class="mr-1 ml-1" />
+                                                Salida
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="fechaNuevaSalida" data-input>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="nuevaSalida">
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-group mb-0 mt-2">
+                                                    <input type="checkbox" id="v_salida">
+                                                    <label for="" class="mb-0"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
