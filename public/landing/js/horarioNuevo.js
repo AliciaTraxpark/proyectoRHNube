@@ -3949,12 +3949,12 @@ function actualizarConfigHorario_re() {
         permiteHadicional = 0;
         nHorasAdic = null;
     }
-
+    let tipHorarioC=$('#tipoHorario').val();
     $.ajax({
         type: "post",
         url: "/horario/actualizarConfigHorario",
         data: {
-            idHoraEmp, fueraHorario, permiteHadicional, nHorasAdic
+            idHoraEmp, fueraHorario, permiteHadicional, nHorasAdic,tipHorarioC
         },
         statusCode: {
             419: function () {

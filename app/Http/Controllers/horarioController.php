@@ -1395,18 +1395,35 @@ class horarioController extends Controller
         $fueraHorario = $request->fueraHorario;
         $permiteHadicional = $request->permiteHadicional;
         $nHorasAdic = $request->nHorasAdic;
+        $tipHorarioC = $request->tipHorarioC;
 
-        //*ACTUALIZANDO
-        $horario_empleado = temporal_eventos::findOrfail($idHoraEmp);
-        if ($fueraHorario == 1) {
-            $horario_empleado->borderColor = '#5369f8';
-        } else {
-            $horario_empleado->borderColor = null;
+        //*ACTUALIZANDO CUANDO ES HORARIO NO REGISTRADO
+        if($tipHorarioC==0){
+            $horario_empleado = temporal_eventos::findOrfail($idHoraEmp);
+            if ($fueraHorario == 1) {
+                $horario_empleado->borderColor = '#5369f8';
+            } else {
+                $horario_empleado->borderColor = null;
+            }
+            $horario_empleado->fuera_horario = $fueraHorario;
+            $horario_empleado->horaAdic = $permiteHadicional;
+            $horario_empleado->nHoraAdic = $nHorasAdic;
+            $horario_empleado->save();
         }
-        $horario_empleado->fuera_horario = $fueraHorario;
-        $horario_empleado->horaAdic = $permiteHadicional;
-        $horario_empleado->nHoraAdic = $nHorasAdic;
-        $horario_empleado->save();
+        else{
+            //*ACTUALIZANDO CUANDO ES HORARIO REGISTRADO
+            $horario_empleado = horario_empleado::findOrfail($idHoraEmp);
+            if ($fueraHorario == 1) {
+                $horario_empleado->borderColor = '#5369f8';
+            } else {
+                $horario_empleado->borderColor = null;
+            }
+            $horario_empleado->fuera_horario = $fueraHorario;
+            $horario_empleado->horaAdic = $permiteHadicional;
+            $horario_empleado->nHoraAdic = $nHorasAdic;
+            $horario_empleado->save();
+        }
+
     }
 
     public function horarioNuevo()
