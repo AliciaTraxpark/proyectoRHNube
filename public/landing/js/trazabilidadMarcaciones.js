@@ -356,8 +356,8 @@ function cargarDatos() {
                         <th>Departamento</th>
                         <th class="text-center">Tardanzas</th>
                         <th class="text-center">Días Trabajados</th>
-                        <th class="text-center">Hora normal</th>
-                        <th class="text-center">Hora nocturno</th>
+                        <th class="text-center">Horario normal</th>
+                        <th class="text-center">Horario nocturno</th>
                         <th class="text-center">Faltas</th>`;
         for (let item = 0; item < data.incidencias.length; item++) {
             thead += `<th class="text-center incidencia${data.incidencias[item].id}">${data.incidencias[item].descripcion}</th>`;
