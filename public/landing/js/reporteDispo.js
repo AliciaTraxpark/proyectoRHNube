@@ -519,69 +519,69 @@ function cargartabla(fecha) {
                         contenidoHorario.push({ "idEmpleado": data[index].emple_id, "idHorarioE": horarioData.idHorarioE, "estado": horarioData.estado });
                         // ! ******************************************* CALCULOS ENTRE HORARIOS ***********************************************
                         // * DATA PARA TARDANZA
-                        if (data[index].data[m].marcaciones[0] != undefined) {
-                            if (data[index].data[m].marcaciones[0].entrada != 0) {
-                                // * TARDANZA
-                                var dataParaTardanza = data[index].data[m].marcaciones[0];
-                                if (dataParaTardanza.idH != 0) {
-                                    var horaInicial = moment(dataParaTardanza.entrada);
-                                    // ******************************* TARDANZA ***************************************
-                                    // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
-                                    if (!idHorarioM.includes(dataParaTardanza.idH)) {
-                                        idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
-                                        var horaInicioHorario = moment(horarioData.horarioIni);
-                                        var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.toleranciaI });
-                                        //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
-                                        if (horaInicial.isAfter(horaConTolerancia)) {
-                                            var tardanza = horaInicial - horaInicioHorario;
-                                            segundosTardanza = moment.duration(tardanza).seconds();
-                                            minutosTardanza = moment.duration(tardanza).minutes();
-                                            horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
-                                            if (horasTardanza < 10) {
-                                                horasTardanza = '0' + horasTardanza;
+                        if (horarioData.idHorario != 0) {
+                            if (data[index].data[m].marcaciones[0] != undefined) {
+                                if (data[index].data[m].marcaciones[0].entrada != 0) {
+                                    // * TARDANZA
+                                    var dataParaTardanza = data[index].data[m].marcaciones[0];
+                                    if (dataParaTardanza.idH != 0) {
+                                        var horaInicial = moment(dataParaTardanza.entrada);
+                                        // ******************************* TARDANZA ***************************************
+                                        // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
+                                        if (!idHorarioM.includes(dataParaTardanza.idH)) {
+                                            idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
+                                            var horaInicioHorario = moment(horarioData.horarioIni);
+                                            var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.toleranciaI });
+                                            //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
+                                            if (horaInicial.isAfter(horaConTolerancia)) {
+                                                var tardanza = horaInicial - horaInicioHorario;
+                                                segundosTardanza = moment.duration(tardanza).seconds();
+                                                minutosTardanza = moment.duration(tardanza).minutes();
+                                                horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
+                                                if (horasTardanza < 10) {
+                                                    horasTardanza = '0' + horasTardanza;
+                                                }
+                                                if (minutosTardanza < 10) {
+                                                    minutosTardanza = '0' + minutosTardanza;
+                                                }
+                                                if (segundosTardanza < 10) {
+                                                    segundosTardanza = '0' + segundosTardanza;
+                                                }
+                                                sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
                                             }
-                                            if (minutosTardanza < 10) {
-                                                minutosTardanza = '0' + minutosTardanza;
-                                            }
-                                            if (segundosTardanza < 10) {
-                                                segundosTardanza = '0' + segundosTardanza;
-                                            }
-                                            sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
                                         }
                                     }
                                 }
                             }
                         }
                         // * DATA PARA ENTRE HORARIO
-                        if (horarioData.horario != null || horarioData.horario != 0) {
-                            for (let res = 0; res < data[index].data[m].marcaciones.length; res++) {
-                                var dataM = data[index].data[m].marcaciones[res];
-                                // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
-                                if (dataM.entrada != 0 && dataM.salida != 0) {
-                                    var horaFinalData = moment(dataM.salida);
-                                    var horaInicialData = moment(dataM.entrada);
-                                    if (horaFinalData.isSameOrAfter(horaInicialData)) {
-                                        // * TIEMPO TOTAL TRABAJADA
-                                        var tiempoRestanteD = horaFinalData - horaInicialData;
-                                        var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
-                                        var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
-                                        var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
-                                        if (horasTiempoD < 10) {
-                                            horasTiempoD = '0' + horasTiempoD;
-                                        }
-                                        if (minutosTiempo < 10) {
-                                            minutosTiempoD = '0' + minutosTiempoD;
-                                        }
-                                        if (segundosTiempoD < 10) {
-                                            segundosTiempoD = '0' + segundosTiempoD;
-                                        }
-                                        sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
+                        for (let res = 0; res < data[index].data[m].marcaciones.length; res++) {
+                            var dataM = data[index].data[m].marcaciones[res];
+                            // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
+                            if (dataM.entrada != 0 && dataM.salida != 0) {
+                                var horaFinalData = moment(dataM.salida);
+                                var horaInicialData = moment(dataM.entrada);
+                                if (horaFinalData.isSameOrAfter(horaInicialData)) {
+                                    // * TIEMPO TOTAL TRABAJADA
+                                    var tiempoRestanteD = horaFinalData - horaInicialData;
+                                    var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
+                                    var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
+                                    var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
+                                    if (horasTiempoD < 10) {
+                                        horasTiempoD = '0' + horasTiempoD;
                                     }
+                                    if (minutosTiempo < 10) {
+                                        minutosTiempoD = '0' + minutosTiempoD;
+                                    }
+                                    if (segundosTiempoD < 10) {
+                                        segundosTiempoD = '0' + segundosTiempoD;
+                                    }
+                                    sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                 }
                             }
                         }
                         // * SOBRETIEMPO ENTRE HORARIO Y FALTA DE JORNADA
-                        if (horarioData.horario != null || horarioData.horario != 0) {
+                        if (horarioData.idHorario != 0) {
                             var horasObligadas = moment(horarioData.horasObligadas, ["HH:mm:ss"]);
                             var tiempoEntreH = moment(sumaTiemposEntreHorarios.format("HH:mm:ss"), ["HH:mm:ss"]);
                             // * SOBRETIEMPO
@@ -1145,7 +1145,7 @@ function cargartabla(fecha) {
                                                                 </td>`;
 
                                     }
-                                    // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
+                                    // * CALCULAR TIEMPO TOTAL
                                     var horaFinal = moment(marcacionData.salida);
                                     var horaInicial = moment(marcacionData.entrada);
                                     if (horaFinal.isSameOrAfter(horaInicial)) {
@@ -1380,53 +1380,7 @@ function cargartabla(fecha) {
                                             // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
                                             if (data[index].data[m].marcaciones[mp + 1] != undefined) {
                                                 if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
-                                                    var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
-                                                    var restarTiempoMarcacion = horaEntradaDespues - horaFinalM;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
-                                                    tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
-                                                    tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
-                                                    tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
-                                                    if (tiempoHoraPausa < 10) {
-                                                        tiempoHoraPausa = '0' + tiempoHoraPausa;
-                                                    }
-                                                    if (tiempoMinutoPausa < 10) {
-                                                        tiempoMinutoPausa = '0' + tiempoMinutoPausa;
-                                                    }
-                                                    if (tiempoSegundoPausa < 10) {
-                                                        tiempoSegundoPausa = '0' + tiempoSegundoPausa;
-                                                    }
-                                                    // * VERIFICAR TIEMPO DE EXCESO
-                                                    var clonarPausaI = pausaI.clone();
-                                                    var clonarPausaF = pausaF.clone();
-                                                    var restaEntrePausa = clonarPausaF - clonarPausaI;
-                                                    // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
-                                                    if (restarTiempoMarcacion <= restaEntrePausa) {
-                                                        tiempoHoraExceso = "00";
-                                                        tiempoMinutoExceso = "00";
-                                                        tiempoSegundoExceso = "00";
-                                                    } else {
-                                                        var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
-                                                        tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
-                                                        tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
-                                                        tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
-                                                        if (tiempoHoraExceso < 10) {
-                                                            tiempoHoraExceso = '0' + tiempoHoraExceso;
-                                                        }
-                                                        if (tiempoMinutoExceso < 10) {
-                                                            tiempoMinutoExceso = '0' + tiempoMinutoExceso;
-                                                        }
-                                                        if (tiempoSegundoPausa < 10) {
-                                                            tiempoSegundoExceso = '0' + tiempoSegundoExceso;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            idPausas.push(pausaData.id);
-                                        } else {
-                                            if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausaFinal)) {
-                                                // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
-                                                if (data[index].data[m].marcaciones[mp + 1] != undefined) {
-                                                    if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
-                                                        estadoTiempoHorario = false;
+                                                    if (data[index].data[m].marcaciones[mp + 1].entrada != 0) {
                                                         var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
                                                         var restarTiempoMarcacion = horaEntradaDespues - horaFinalM;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
                                                         tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
@@ -1463,6 +1417,56 @@ function cargartabla(fecha) {
                                                             }
                                                             if (tiempoSegundoPausa < 10) {
                                                                 tiempoSegundoExceso = '0' + tiempoSegundoExceso;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            idPausas.push(pausaData.id);
+                                        } else {
+                                            if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausaFinal)) {
+                                                // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
+                                                if (data[index].data[m].marcaciones[mp + 1] != undefined) {
+                                                    if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
+                                                        if (data[index].data[m].marcaciones[mp + 1].entrada != 0) {
+                                                            estadoTiempoHorario = false;
+                                                            var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
+                                                            var restarTiempoMarcacion = horaEntradaDespues - horaFinalM;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
+                                                            tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
+                                                            tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
+                                                            tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
+                                                            if (tiempoHoraPausa < 10) {
+                                                                tiempoHoraPausa = '0' + tiempoHoraPausa;
+                                                            }
+                                                            if (tiempoMinutoPausa < 10) {
+                                                                tiempoMinutoPausa = '0' + tiempoMinutoPausa;
+                                                            }
+                                                            if (tiempoSegundoPausa < 10) {
+                                                                tiempoSegundoPausa = '0' + tiempoSegundoPausa;
+                                                            }
+                                                            // * VERIFICAR TIEMPO DE EXCESO
+                                                            var clonarPausaI = pausaI.clone();
+                                                            var clonarPausaF = pausaF.clone();
+                                                            var restaEntrePausa = clonarPausaF - clonarPausaI;
+                                                            // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
+                                                            if (restarTiempoMarcacion <= restaEntrePausa) {
+                                                                tiempoHoraExceso = "00";
+                                                                tiempoMinutoExceso = "00";
+                                                                tiempoSegundoExceso = "00";
+                                                            } else {
+                                                                var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
+                                                                tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
+                                                                tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
+                                                                tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
+                                                                if (tiempoHoraExceso < 10) {
+                                                                    tiempoHoraExceso = '0' + tiempoHoraExceso;
+                                                                }
+                                                                if (tiempoMinutoExceso < 10) {
+                                                                    tiempoMinutoExceso = '0' + tiempoMinutoExceso;
+                                                                }
+                                                                if (tiempoSegundoPausa < 10) {
+                                                                    tiempoSegundoExceso = '0' + tiempoSegundoExceso;
+                                                                }
                                                             }
                                                         }
                                                     }
