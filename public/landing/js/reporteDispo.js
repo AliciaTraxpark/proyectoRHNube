@@ -3138,50 +3138,100 @@ $('#horarioXE').on("change", function () {
             if (dataM.idHorarioE != $('#horarioXE').val()) {
                 estadoM = true;
                 containerMarcaciones += `<div class="col-md-12">
-                                                <span style="color:#62778c;">${(dataM.descripcion == 0) ? 'Sin horario' : dataM.descripcion}</span>`;
-                var conteM = `<div class="row">`;
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table>
+                                                            <tr>
+                                                                <th colspan="3"><span style="color:#62778c;">${(dataM.descripcion == 0) ? 'Sin horario' : dataM.descripcion}</span></th>
+                                                            </tr>`;
                 dataM.data.forEach(element => {
-                    conteM += `<div class="col-md-12">
-                                    <span>
-                                        <input type="checkbox" class="form-check-input idMarcacion" value="${element.id}">
-                                    </span>`;
+                    containerMarcaciones += `<tr>
+                                                <td><input type="checkbox" class="idMarcacion mt-2" value="${element.id}"></td>`;
                     if (element.entrada != 0) {
-                        conteM += `<span class="ml-3">
-                                        <img src="landing/images/entradaD.svg" height="12" class="ml-1 mr-1" />
-                                        ${moment(element.entrada).format("HH:mm:ss")}
-                                    </span>&nbsp;&nbsp;`;
+                        containerMarcaciones += `<td>
+                                                    <img src="landing/images/entradaD.svg" height="12" class="ml-1 mr-1" />
+                                                    ${moment(element.entrada).format("HH:mm:ss")}
+                                                </td>`;
                         if (element.salida != 0) {
-                            conteM += `<span>
-                                            <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
-                                            ${moment(element.salida).format("HH:mm:ss")}
-                                        </span>`;
+                            containerMarcaciones += `<td>
+                                                        <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
+                                                        ${moment(element.salida).format("HH:mm:ss")}
+                                                    </td>`;
                         } else {
-                            conteM += `<span>
-                                            <span class="badge badge-soft-secondary noExport">
-                                                <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                No tiene salida
-                                            </span>
-                                        </span>`;
+                            containerMarcaciones += `<td>
+                                                        <span class="badge badge-soft-secondary noExport">
+                                                            <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                            No tiene salida
+                                                        </span>
+                                                    </td>`;
                         }
                     } else {
                         if (element.salida != 0) {
-                            conteM += `<span class="ml-3">
-                                            <span class="badge badge-soft-warning noExport">
-                                                <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
-                                                No tiene entrada
-                                            </span>
-                                        </span>&nbsp;&nbsp;`;
-                            conteM += `<span>
-                                            <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
-                                            ${moment(element.salida).format("HH:mm:ss")}
-                                        </span>`;
+                            containerMarcaciones += `<td>
+                                                        <span class="badge badge-soft-warning noExport">
+                                                            <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                            No tiene entrada
+                                                        </span>
+                                                    </td>`;
+                            containerMarcaciones += `<td>
+                                                        <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
+                                                        ${moment(element.salida).format("HH:mm:ss")}
+                                                    </td>`;
                         }
                     }
-                    conteM += `</div>`;
+                    containerMarcaciones += `</tr>`;
                 });
-                conteM += `</div>`;
-                containerMarcaciones += conteM;
-                containerMarcaciones += `</div>`;
+                containerMarcaciones += `</table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                // containerMarcaciones += `<div class="col-md-12">
+                //                                 <span style="color:#62778c;">${(dataM.descripcion == 0) ? 'Sin horario' : dataM.descripcion}</span>`;
+                // var conteM = `<div class="row">`;
+                // dataM.data.forEach(element => {
+                //     conteM += `<div class="col-md-12">
+                //                     <span>
+                //                         <input type="checkbox" class="form-check-input idMarcacion" value="${element.id}">
+                //                     </span>`;
+                //     if (element.entrada != 0) {
+                //         conteM += `<span class="ml-3">
+                //                         <img src="landing/images/entradaD.svg" height="12" class="ml-1 mr-1" />
+                //                         ${moment(element.entrada).format("HH:mm:ss")}
+                //                     </span>&nbsp;&nbsp;`;
+                //         if (element.salida != 0) {
+                //             conteM += `<span>
+                //                             <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
+                //                             ${moment(element.salida).format("HH:mm:ss")}
+                //                         </span>`;
+                //         } else {
+                //             conteM += `<span>
+                //                             <span class="badge badge-soft-secondary noExport">
+                //                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                //                                 No tiene salida
+                //                             </span>
+                //                         </span>`;
+                //         }
+                //     } else {
+                //         if (element.salida != 0) {
+                //             conteM += `<span class="ml-3">
+                //                             <span class="badge badge-soft-warning noExport">
+                //                                 <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                //                                 No tiene entrada
+                //                             </span>
+                //                         </span>&nbsp;&nbsp;`;
+                //             conteM += `<span>
+                //                             <img src="landing/images/salidaD.svg" height="12" class="ml-1 mr-1" />
+                //                             ${moment(element.salida).format("HH:mm:ss")}
+                //                         </span>`;
+                //         }
+                //     }
+                //     conteM += `</div>`;
+                // });
+                // conteM += `</div>`;
+                // containerMarcaciones += conteM;
+                // containerMarcaciones += `</div>`;
             }
         }
     }
