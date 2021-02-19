@@ -317,6 +317,7 @@ Route::post('/horario/actualizarConfigHorario', 'horarioController@actualizarCon
 Route::post('/horario/horariosAsignar', 'horarioController@horariosEmpleado');
 Route::post('/horario/horariosVariosEmps', 'horarioController@horariosVariosEmps');
 Route::post('/datosHorarioEmpleado', 'horarioController@datosHorarioEmpleado');
+Route::post('/elimarhoraEmps', 'horarioController@elimarhoraEmps');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');
