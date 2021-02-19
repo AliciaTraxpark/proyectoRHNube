@@ -3433,6 +3433,18 @@ class dispositivosController extends Controller
                         } else {
                             // : SALIDA DEBE ESTAR ENTRE INICIO DEL HORARIO Y SALIDA DEL HORARIO
                             if ($salida->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                                // : TIEMPO TOTAL DE LA MARCACIÓN MENOR AL TIEMPO DEL HORARIO
+                                if ($tiempoTotal->lt($tiempoTotalDeHorario)) {
+                                    // : ACTUALIZAR HORARIO DE LA MARCACIÓN
+                                    $marcacion->horarioEmp_id = $idHorarioE;
+                                    $marcacion->save();
+                                    return response()->json($marcacion->marcaMov_id, 200);
+                                } else {
+                                    return response()->json(
+                                        array("respuesta" => "Sobretiempo en la marcación."),
+                                        200
+                                    );
+                                }
                             } else {
                                 return response()->json(
                                     array("respuesta" => "Marcación de salida fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),

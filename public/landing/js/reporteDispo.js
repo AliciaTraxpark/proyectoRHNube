@@ -1141,6 +1141,15 @@ function cargartabla(fecha) {
                                                                             </div>
                                                                             <div class="dropdown-item dropdown-itemM noExport">
                                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                    <a onclick="modalActualizarHorarioMarc(${marcacionData.idHE},${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${marcacionData.entrada}','${marcacionData.salida}','${horarioData.horario}','${horarioData.horarioIni}','${horarioData.horarioFin}',${horarioData.estado})" 
+                                                                                        style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                                        Actualizar horario
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="dropdown-item dropdown-itemM noExport">
+                                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                     <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
                                                                                         Eliminar marc.
@@ -1300,6 +1309,15 @@ function cargartabla(fecha) {
                                                                                             <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                                 Cambiar a salida
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                                            <a onclick="modalActualizarHorarioMarc(${marcacionData.idHE},${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${marcacionData.entrada}','${marcacionData.salida}','${horarioData.horario}','${horarioData.horarioIni}','${horarioData.horarioFin}',${horarioData.estado})" 
+                                                                                                style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                                                Actualizar horario
                                                                                             </a>
                                                                                         </div>
                                                                                     </div>
