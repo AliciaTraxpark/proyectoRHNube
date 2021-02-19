@@ -320,7 +320,11 @@ function calendario() {
 
             //*CUANDO ES HORARIO NUEVO ASIGNADO
             if (info.event.textColor == '111111') {
-
+               if(info.event.backgroundColor=='#e2e2e2'){
+                $('#tipoHorario').val('0');
+               } else{
+                $('#tipoHorario').val('1');
+               }
                 /* UNBIND SOLO UNA VEZ */
                 $('#eliminaHorarioDia_re').unbind().click(function () {
                     $('#editarConfigHorario_re').modal('hide');
@@ -339,11 +343,12 @@ function calendario() {
                         },
                         callback: function (result) {
                             if (result == true) {
+                                var tipoEliminar= $('#tipoHorario').val();
                                 $.ajax({
                                     type: "post",
                                     url: "/eliminarHora",
                                     data: {
-                                        idHora: info.event.id
+                                        idHora: info.event.id,tipoEliminar
                                     },
                                     statusCode: {
 
@@ -413,7 +418,7 @@ function calendario() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-            if(info.event.textColor!='#000'){
+            if(info.event.textColor=='111111'){
               if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {

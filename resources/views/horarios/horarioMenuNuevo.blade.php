@@ -1301,6 +1301,7 @@
                     <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                         <div class="row">
                             <input type="hidden" id="idHoraEmpleado_re">
+                            <input type="hidden" id="tipoHorario">
                             <div class="col-md-12">
                                 <form action="javascript:actualizarConfigHorario_re()">
                                     <div class="row">
