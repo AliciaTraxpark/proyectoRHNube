@@ -14,16 +14,19 @@ use Illuminate\Support\Facades\DB;
         padding: 9px 30px;
         font-size: 12px;
     }
+
     #sidebar-menu>ul>li>ul>li>a {
         padding: 7px 30px;
         font-size: 12px;
     }
+
     #sidebar-menu>ul>li>ul>li>ul>li>a {
         padding: 7px 30px;
         font-size: 12px;
     }
-    #sidebar-menu .menu-arrow{
-        top:9px;
+
+    #sidebar-menu .menu-arrow {
+        top: 9px;
     }
 
     .li-plan {
@@ -216,14 +219,34 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
-                <a href="/dispositivos">Dispositivos</a>
-                <a href="/controladores">Controladores</a>
-                <a href="/reporteAsistencia">Detalle de asistencia</a>
-                <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
-                <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
-                <a href="/indexTrazabilidad">Trazabilidad de marcaciones</a>
-                <a href="/reporteTardanzasPuerta">Tardanzas</a>
-                <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
+                <a href="javascript: void(0);">
+                    <span>Configuración</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul class="nav-third-level" aria-expanded="false">
+                    <li>
+                        <a href="/dispositivos">Dispositivos</a>
+                        <a href="/controladores">Controladores</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="/reporteAsistencia">Detalle de asistencia</a></li>
+            <li>
+                <a href="javascript: void(0);">
+                    <span>Reportes e informes</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul class="nav-third-level" aria-expanded="false">
+                    <li>
+                        <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
+                        <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
+                        <a href="/indexTrazabilidad">Asistencia consolidada</a>
+                        <a href="/reporteTardanzasPuerta">Tardanzas</a>
+                        <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </li>
@@ -423,25 +446,40 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
+            @if ($permiso_invitado->verPuerta==1)
             <li>
-                @if ($permiso_invitado->verPuerta==1)
-                <a href="/dispositivos">Dispositivos</a>
-                <a href="/controladores">Controladores</a>
-                @endif
-                @if ($invitadod->ModificarReportePuerta==1)
-                <a href="/reporteAsistencia">Detalle de asistencia</a>
-
-                @endif
-                @if ($invitadod->reporteAsisten==1)
-                <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
-                <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
-                <a href="/indexTrazabilidad">Trazabilidad de marcaciones</a>
-                <a href="/reporteTardanzasPuerta">Tardanzas</a>
-                <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
-                @endif
-
-
+                <a href="javascript: void(0);">
+                    <span>Configuración</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-third-level" aria-expanded="false">
+                    <li>
+                        <a href="/dispositivos">Dispositivos</a>
+                        <a href="/controladores">Controladores</a>
+                    </li>
+                </ul>
             </li>
+            @endif
+            @if ($invitadod->ModificarReportePuerta==1)
+            <li><a href="/reporteAsistencia">Detalle de asistencia</a></li>
+            @endif
+            @if ($invitadod->reporteAsisten==1)
+            <li>
+                <a href="javascript: void(0);">
+                    <span>Reportes e informes</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-third-level" aria-expanded="false">
+                    <li>
+                        <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
+                        <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
+                        <a href="/indexTrazabilidad">Asistencia consolidada</a>
+                        <a href="/reporteTardanzasPuerta">Tardanzas</a>
+                        <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
+                    </li>
+                </ul>
+            </li>
+            @endif
         </ul>
     </li>
 

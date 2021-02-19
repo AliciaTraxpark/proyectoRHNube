@@ -29,7 +29,8 @@ var fechaG = $("#fechaSelecG").flatpickr({
   locale: "es",
   maxDate: "today",
   wrap: true,
-  allowInput: true,
+  allowInput: false,
+  disableMobile: true
 });
 $(function () {
   f = moment().format("YYYY-MM-DD");
@@ -316,7 +317,8 @@ var fechaValue = $("#fechaSelec").flatpickr({
   locale: "es",
   maxDate: "today",
   wrap: true,
-  allowInput: true,
+  allowInput: false,
+  disableMobile: true
 });
 $(function () {
   f = moment().format("YYYY-MM-DD");

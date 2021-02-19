@@ -30,7 +30,7 @@
 </div>
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="header-title mt-0 "></i>Trazabilidad de marcaciones</h4>
+        <h4 class="header-title mt-0 "></i>Asistencia consolidada</h4>
     </div>
 </div>
 @endsection

@@ -239,10 +239,21 @@
         box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
     }
 
-    .form-check-input {
-        position: absolute;
-        margin-top: 0.2rem;
-        margin-left: 0rem;
+    /* SEPARACION ENTRE COLUMNAS */
+    .separacion {
+        padding-right: 15em;
+        padding-left: 1em
+    }
+
+    .flatpickr-calendar {
+        width: auto !important;
+    }
+
+    @media (max-width: 767.98px) {
+        .separacion {
+            padding-right: 1em !important;
+            padding-left: 1em !important;
+        }
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -686,7 +697,7 @@
                             <input type="hidden" id="idMarcacionIS">
                             {{-- ID DE HORARIO --}}
                             <input type="hidden" id="idHorarioIS">
-                            <div class="col-md-12">
+                            <div class="col-md-12 pl-2">
                                 <span style="color:#62778c;font-weight: bold">Agregar salida</span>
                             </div>
                             <div class="col-md-12">
@@ -694,24 +705,29 @@
                                     Seleccionar marcación
                                 </span>
                             </div>
-                            <div class="col-xl-5 mt-2">
-                                <label>
-                                    Entrada
-                                    &nbsp;
-                                    <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
-                                    &nbsp;
-                                    <span id="i_hora" style="color:#383e56;font-weight: bold"></span>
-                                </label>
-                            </div>
-                            <div class="col-xl-7">
-                                <div class="form-group row">
-                                    <label class="col-lg-5 col-form-label text-right">Salida &nbsp;
-                                        <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
-                                    </label>
-                                    <div class="col-lg-7 mt-1">
-                                        <input type="text" class="form-control form-control-sm horasEntrada"
-                                            onchange="$(this).removeClass('borderColor');" id="horaSalidaNueva">
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table cellpadding="8">
+                                        <tr>
+                                            <th style="color:#383e56;">
+                                                Entrada
+                                                <img src="{{asset('landing/images/entradaD.svg') }}" height="12"
+                                                    class="ml-1" />
+                                            </th>
+                                            <td>
+                                                <span id="i_hora" style="font-weight: bold"></span>
+                                            </td>
+                                            <th style="color:#383e56;">
+                                                Salida
+                                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12"
+                                                    class="ml-1" />
+                                            </th>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm horasEntrada"
+                                                    onchange="$(this).removeClass('borderColor');" id="horaSalidaNueva">
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -759,25 +775,31 @@
                                     Ingresar entrada
                                 </span>
                             </div>
-                            <div class="col-xl-7">
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label text-left">Entrada &nbsp;
-                                        <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
-                                    </label>
-                                    <div class="col-lg-8 mt-1 text-left">
-                                        <input type="text" class="form-control form-control-sm horasEntrada"
-                                            onchange="$(this).removeClass('borderColor');" id="horasEntradaNueva">
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table cellpadding="8">
+                                        <tr>
+                                            <th style="color:#383e56;">
+                                                Entrada
+                                                <img src="{{asset('landing/images/entradaD.svg') }}" height="12"
+                                                    class="ml-1" />
+                                            </th>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm horasEntrada"
+                                                    onchange="$(this).removeClass('borderColor');"
+                                                    id="horasEntradaNueva">
+                                            </td>
+                                            <th style="color:#383e56;">
+                                                Salida
+                                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12"
+                                                    class="ml-1" />
+                                            </th>
+                                            <td>
+                                                <span id="ie_hora" style="font-weight: bold"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
-                            </div>
-                            <div class="col-xl-5 mt-2">
-                                <label>
-                                    Salida
-                                    &nbsp;
-                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
-                                    &nbsp;
-                                    <span id="ie_hora" style="color:#62778c;font-weight: bold"></span>
-                                </label>
                             </div>
                         </div>
                 </div>
@@ -801,7 +823,7 @@
 {{-- MODAL DE CAMBIAR DE HORARIO --}}
 <div id="modalCambiarHorario" class="modal fade" role="dialog" aria-labelledby="modalCambiarHorario" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog modal-lg   d-flex modal-dialog-centered justify-content-center">
+    <div class="modal-dialog modal-lg d-flex modal-dialog-centered justify-content-center modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
                 <h6 class="modal-title" style="color:#ffffff;">
@@ -896,69 +918,126 @@
                             </div>
                         </div>
                         <div class="row pt-2" id="AM_detalleHorarios" style="display: none"></div>
-                        <div class="row pt-3" style="display: none" id="rowDatosM">
-                            <div class="col-md-12">
-                                {{-- CABEZALES --}}
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <span>Tipo</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <span>Fecha</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <span>Hora</span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        Sin marcación
-                                    </div>
-                                </div>
-                                {{-- PRIMERA COLUMNA --}}
-                                <div class="row pt-2">
-                                    <div class="col-md-2">
-                                        <span>
-                                            <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
-                                            &nbsp;Entrada
-                                        </span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control form-control-sm" id="fechaNuevaEntrada"
-                                            data-input>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control form-control-sm" id="nuevaEntrada">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group mb-0 mt-2 ml-2">
-                                            <input type="checkbox" id="v_entrada">
-                                            <label for="" class="mb-0"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- SEGUNDA COLUMNA --}}
-                                <div class="row pt-2">
-                                    <div class="col-md-2">
-                                        <span>
-                                            <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
-                                            &nbsp;Salida
-                                        </span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control form-control-sm" id="fechaNuevaSalida"
-                                            data-input>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control form-control-sm" id="nuevaSalida">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group mb-0 mt-2 ml-2">
-                                            <input type="checkbox" id="v_salida">
-                                            <label for="" class="mb-0"></label>
-                                        </div>
-                                    </div>
+                        <div class="row justify-content-center" style="display: none" id="rowDatosM">
+                            <div class="col-md-12 p-3">
+                                <div class="table-responsive">
+                                    <table cellpadding="6">
+                                        <tr>
+                                            <th><span style="color:#62778c;">Tipo</span></th>
+                                            <th><span style="color:#62778c;">Fecha</span></th>
+                                            <th><span style="color:#62778c;">Hora</span></th>
+                                            <th><span style="color:#62778c;">Sin marcación</span></th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src="{{asset('landing/images/entradaD.svg') }}" height="12"
+                                                    class="mr-1" />
+                                                Entrada
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="fechaNuevaEntrada" data-input>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="nuevaEntrada">
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-group mb-0 mt-2">
+                                                    <input type="checkbox" id="v_entrada">
+                                                    <label for="" class="mb-0"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12"
+                                                    class="mr-1 ml-1" />
+                                                Salida
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="fechaNuevaSalida" data-input>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="nuevaSalida">
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-group mb-0 mt-2">
+                                                    <input type="checkbox" id="v_salida">
+                                                    <label for="" class="mb-0"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- ACTUALIZAR HORARIO A UNA SOLA MARCACION --}}
+<div id="modalActualizarHM" class="modal fade" role="dialog" aria-labelledby="modalActualizarHM" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-lg d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                {{-- ID DE MARCACIÓN --}}
+                <input type="hidden" id="idMarcacionHM">
+                <div class="col-md-12">
+                    <form action="javascript:actualizacionMarcacionH()" id="formActualizacionMarcacionH">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="table-responsive">
+                                    <table id="detalleM" class="table nowrap order-column" style="font-size: 12.8px;">
+                                        <thead style="background: #fafafa;">
+                                            <tr>
+                                                <th class="text-center">Entrada</th>
+                                                <th class="text-center">Salida</th>
+                                                <th class="text-center">Descripción del horario</th>
+                                                <th class="text-center">Horario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbodyDetalleHM"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-1">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Horario</span>
+                            </div>
+                            <div class="col-md-12 pt-1">
+                                <span id="hm_valid" style="color: #8b3a1e;display:none">
+                                    Seleccionar horario
+                                </span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="horarioXM" required>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row pt-2" id="detalleHorariosEM" style="display: none"></div>
                 </div>
             </div>
             <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
