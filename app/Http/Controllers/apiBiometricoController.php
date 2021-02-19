@@ -286,8 +286,9 @@ class apiBiometricoController extends Controller
                     if ($invitado->rol_id == 1) {
 
                         $biometricos = DB::table('dispositivos')
+                            ->leftJoin('tipo_biometrico as tipBi','dispositivos.idtipo_biometrico', '=', 'tipBi.idtipo_biometrico')
                             ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
-                                'dispo_codigo as serie', 'version_firmware', 'dispo_todosEmp', 'dispo_porEmp')
+                                'dispo_codigo as serie', 'version_firmware', 'dispo_todosEmp', 'dispo_porEmp','dispo_Data as diasData','tipBi.cod_tipo as tipoBiometrico')
                             ->where('tipoDispositivo', '=', 3)
                             ->where('dispo_estadoActivo', '=', 1)
                             ->where('organi_id', '=', $usuario_organizacion->organi_id)
@@ -346,8 +347,9 @@ class apiBiometricoController extends Controller
                         if ($invitado->extractorRH == 1) {
                             /*   dd('soy admin con reestricciones'); */
                             $biometricos = DB::table('dispositivos')
+                            ->leftJoin('tipo_biometrico as tipBi','dispositivos.idtipo_biometrico', '=', 'tipBi.idtipo_biometrico')
                                 ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
-                                    'dispo_codigo as serie', 'version_firmware', 'dispo_todosEmp', 'dispo_porEmp')
+                                    'dispo_codigo as serie', 'version_firmware', 'dispo_todosEmp', 'dispo_porEmp','dispo_Data  as diasData','tipBi.cod_tipo as tipoBiometrico')
                                 ->where('tipoDispositivo', '=', 3)
                                 ->where('dispo_estadoActivo', '=', 1)
                                 ->where('organi_id', '=', $usuario_organizacion->organi_id)
@@ -554,8 +556,9 @@ class apiBiometricoController extends Controller
                 /* dd('soy admin'); */
 
                 $biometricos = DB::table('dispositivos')
+                    ->leftJoin('tipo_biometrico as tipBi','dispositivos.idtipo_biometrico', '=', 'tipBi.idtipo_biometrico')
                     ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
-                        'dispo_codigo as serie', 'version_firmware', 'dispo_todosEmp', 'dispo_porEmp')
+                        'dispo_codigo as serie', 'version_firmware', 'dispo_todosEmp', 'dispo_porEmp','dispo_Data  as diasData','tipBi.cod_tipo as tipoBiometrico')
                     ->where('tipoDispositivo', '=', 3)
                     ->where('dispo_estadoActivo', '=', 1)
                     ->where('organi_id', '=', $usuario_organizacion->organi_id)
@@ -645,8 +648,9 @@ class apiBiometricoController extends Controller
             if ($dispositivo->dispo_codigo == null) {
                 /* BUSCAR DISPOSITIVO CON LA MISMA SERIE */
                 $dispoSerie = DB::table('dispositivos')
+                    ->leftJoin('tipo_biometrico as tipBi','dispositivos.idtipo_biometrico', '=', 'tipBi.idtipo_biometrico')
                     ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
-                        'dispo_codigo as serie', 'version_firmware')
+                        'dispo_codigo as serie', 'version_firmware','dispo_Data  as diasData','tipBi.cod_tipo as tipoBiometrico')
                     ->where('tipoDispositivo', '=', 3)
                     ->where('organi_id', '=', $dispositivo->organi_id)
                     ->where('dispo_codigo', '=', $serie)
