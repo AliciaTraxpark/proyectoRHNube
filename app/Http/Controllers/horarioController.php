@@ -785,11 +785,31 @@ class horarioController extends Controller
         return $datosEmpleadosSH;
     }
 
-    public function vaciarhor()
+    public function vaciarhor(Request $request)
     {
         DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)->delete();
         $temporal_evento = temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
+
+        $empleados=$request->empleados;
+        $aniocalen=$request->aniocalen;
+        $mescale=$request->mescale;
+
+        foreach($empleados as $empleado){
+
+            DB::table('horario_empleado as he')
+            ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->join('empleado as e', 'he.empleado_emple_id', '=', 'e.emple_id')
+            ->whereYear('hd.start',$aniocalen)
+            ->whereMonth('hd.start', $mescale)
+            ->where('he.estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_id', '=', $empleado)
+            ->update(['he.estado' => 0]);
+        }
+
+
         return $temporal_evento;
     }
     public function vaciardl()
@@ -1623,7 +1643,9 @@ class horarioController extends Controller
             ->select('he.empleado_emple_id as idempleado', 'he.horarioEmp_id as idHorarioEmp',
             'h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF',
             'h.horario_tolerancia as toleranciaI', 'h.horario_toleranciaF as toleranciaF',
-            'he.fuera_horario','p.perso_nombre as nombre',
+            'he.fuera_horario','p.perso_nombre as nombre',	'h.horasObliga',
+            DB::raw("IF(he.fuera_horario=1,'Si' , 'No') as fueraHorario"),
+            DB::raw("IF(he.nHoraAdic is null, 0 , nHoraAdic) as horaAdicional"),
             DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'))
             ->where(DB::raw('DATE(hd.start)'), '=', $fechaHorario)
             ->where('he.estado', '=', 1)
@@ -1638,6 +1660,61 @@ class horarioController extends Controller
 
         }
         return ($dataHorario);
+
+    }
+
+    //*ELIMINAR HORARIO EMPLEADOS MASIVAMENTE
+    public function elimarhoraEmps(Request $request){
+        $diadeHorario=$request->diadeHorario;
+        $empleados=$request->empleados;
+        $idsHoraEmps=$request->valoresCheck;
+        foreach($idsHoraEmps as $idsHoraEmp){
+            $horario_Empleado=horario_empleado::findOrfail($idsHoraEmp);
+            $horario_Empleado->estado=0;
+            $horario_Empleado->save();
+
+        }
+
+       //*LLAMNDO DATOS DE NUEVO***********************************************
+       //*formateamos fecha
+       $fecha = Carbon::create($diadeHorario);
+       $fechaHorario = $fecha->isoFormat('YYYY-MM-DD');
+
+       //*declaramos collection para guardar horarios de empeado
+       $dataHorario=new Collection();
+       //*recorremos empleados seleccionnados
+       foreach($empleados as $empleado){
+
+           //*buscamos su horario para el dia de hoy
+           $horarioEmpleado = DB::table('horario_empleado as he')
+           ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+           ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+           ->join('empleado as e', 'he.empleado_emple_id', '=', 'e.emple_id')
+           ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+           ->select('he.empleado_emple_id as idempleado', 'he.horarioEmp_id as idHorarioEmp',
+           'h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF',
+           'h.horario_tolerancia as toleranciaI', 'h.horario_toleranciaF as toleranciaF',
+           'he.fuera_horario','p.perso_nombre as nombre',	'h.horasObliga',
+           DB::raw("IF(he.fuera_horario=1,'Si' , 'No') as fueraHorario"),
+           DB::raw("IF(he.nHoraAdic is null, 0 , nHoraAdic) as horaAdicional"),
+           DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'))
+           ->where(DB::raw('DATE(hd.start)'), '=', $fechaHorario)
+           ->where('he.estado', '=', 1)
+           ->where('e.organi_id', '=', session('sesionidorg'))
+           ->where('e.emple_id', '=', $empleado)
+           ->get();
+
+           //*obtenr solo de empleado con horario
+           if($horarioEmpleado->isNotEmpty()){
+              $dataHorario->push($horarioEmpleado);
+           }
+
+       }
+       if($dataHorario){
+        return ($dataHorario);
+       } else{
+        return ('0');
+       }
 
     }
 }

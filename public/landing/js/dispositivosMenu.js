@@ -51,8 +51,8 @@ $(document).ready(function () {
  ajax: {
    type: "post",
    url: "/tablaDisposito",
-    headers: {
-       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    data: {
+        "_token": $("meta[name='csrf-token']").attr("content")
    },
    statusCode: {
     401: function () {

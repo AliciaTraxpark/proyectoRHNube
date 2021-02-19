@@ -38,8 +38,25 @@ $(document).ready(function () {
         ajax: {
             type: "post",
             url: "/horario/listar",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            data: {
+                "_token": $("meta[name='csrf-token']").attr("content")
+                },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                402: function () {
+                    location.reload();
+                },
+                419: function () {
+                    location.reload();
+                },
+                403: function () {
+                    location.reload();
+                },
+                302: function () {
+                    location.reload();
+                }
             },
 
             "dataSrc": ""
@@ -238,22 +255,7 @@ $('#btnasignar').on('click', function (e) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            /*  json1 = JSON.parse(JSON.stringify(data));
 
-             for (var i in json1) {
-
-             $('#nombreEmpleado').append('<option value="' + json1[i].emple_id + '" >' + json1[i].perso_nombre + " " + json1[i].perso_apPaterno + '</option>');
-              }
-
-
-              if (allVals.length > 0) {
-
-                 $.each( allVals, function( index, value ){
-                     $("#nombreEmpleado option[value='"+ value +"']").attr("selected",true);
-                 });
-                 num2=$('#nombreEmpleado').val().length;
-
-             } */
 
         },
         error: function (data) {
@@ -394,79 +396,7 @@ function calendario() {
                 if(info.event.textColor=='#000'){
                     let diadeHorario=moment(info.event.start).format('YYYY-MM-DD HH:mm:ss');
                     let empleados=$('#nombreEmpleado').val();
-                    $.ajax({
-                        type: "post",
-                        url: "/datosHorarioEmpleado",
-                        data: {
-                            diadeHorario,empleados
-                        },
-                        statusCode: {
-
-                            419: function () {
-                                location.reload();
-                            }
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function (data) {
-                            $("#rowdivs").empty();
-                            dataDeempleado=data;
-                            var contenido= "";
-                            $.each(data, function (key, item) {
-
-                            //*NOMBRE DE EMPLEADO
-                            contenido+=`<div class='col-md-12'>
-                            <h5 class='header-title' style='font-size: 13.4px;'>` + item[0].nombre +` `+item[0].apellidos+`</h5>
-                            </div>`;
-
-                            //*HORARIOS
-                            $.each(item, function (key, horario) {
-                            contenido+=
-                            `<div class="col-md-4 mb-3">
-                            <div class="media">
-                                <div class="media-body">
-                                <h6 class="mt-1 mb-0 font-size-14">` + horario.horario_descripcion+`</h6>
-                                </div>
-                                <div class="dropdown align-self-center float-right">
-                                <a
-                                    href="#"
-                                    class="dropdown-toggle arrow-none text-muted"
-                                    data-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    <i class="uil uil-ellipsis-v"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" >
-
-                                    <a onclick="verDatosHorario(` + item[0].idempleado+`,` + horario.idHorarioEmp+`)" class="dropdown-item font-size-12"
-                                    ><i class="uil uil-exit mr-2"></i>Ver</a>
-
-                                    <a onclick="borrarHorarioEmpleado()" class="dropdown-item font-size-12 text-danger"
-                                    ><i class="uil uil-trash mr-2"></i>Borrar</a
-                                    >
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                            `;
-                            contenido+=
-                            `<div class="col-md-12" id="dataHorarioElegido"></div>`;
-                            });
-
-                            });
-                            $("#rowdivs").append(contenido);
-
-
-                            $('#modalHorarioEmpleados').modal('show');
-                        },
-                        error: function (data) {
-                            alert('Ocurrio un error');
-                        }
-
-
-                    });
-
+                    datosModalHorarioEmpleado(diadeHorario,empleados);
 
                 }
             }
@@ -601,6 +531,7 @@ function calendario() {
 
                         idempleado
                     },
+                    async:false,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -626,6 +557,7 @@ function calendario() {
 
                         idempleado
                     },
+                    async:false,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -1734,7 +1666,7 @@ function vaciarcalendario() {
 function vaciarhor() {
     bootbox.confirm({
         title: "Elminar horario",
-        message: "¿Esta seguro que desea eliminar horario(s) del calendario?",
+        message: "¿Esta seguro que desea eliminar horario(s) de este mes del calendario?",
         buttons: {
             confirm: {
                 label: 'Aceptar',
@@ -1747,12 +1679,39 @@ function vaciarhor() {
         },
         callback: function (result) {
             if (result == true) {
-                $.get("/vaciarhor", {}, function (data, status) {
-                    var mesAg = $('#fechaDa').val();
-                    var d = mesAg;
-                    var fechasM = new Date(d);
-                    calendar.refetchEvents();
+                //* obtengo empleados, mes y año de calendario
+                fmes = calendar.getDate();
+                mescale = fmes.getMonth() + 1;
+                aniocalen = fmes.getFullYear();
+                let empleados=$('#nombreEmpleado').val();
+                $.ajax({
+                    type: "get",
+                    url: "/vaciarhor",
+                    data: {
+                        mescale,
+                        aniocalen,
+                        empleados
+                    },
+                    async:false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+
+                        var mesAg = $('#fechaDa').val();
+                        var d = mesAg;
+                        var fechasM = new Date(d);
+                        calendar.refetchEvents();
+
+                    },
+                    error: function () {}
                 });
+
 
             }
         }
@@ -4019,6 +3978,219 @@ $( "#nombreEmpleado" ).change(function() {
 //*
 
 /* DATOS DE HORARIOS EN CALENDARIO */
-function verDatosHorario(){
-    console.log(dataDeempleado);
+function verDatosHorario(idempleado,idHorarioEmp){
+    $('#dataHorarioElegido'+ idempleado).empty();
+    $('#dataHorarioElegido'+ idempleado).css("background","#f3f3f3" );
+    console.log('#media'+ idempleado+'EH'+idHorarioEmp);
+    $('.mediaE'+ idempleado).css( "background","#fff" );
+    var contenidoH= "";
+    $.each(dataDeempleado, function (key, item) {
+        //*empleado
+        if(item[0].idempleado==idempleado){
+            $.each(item, function (key, horario) {
+
+                //*datos de horario
+                if(horario.idHorarioEmp==idHorarioEmp){
+                    $('#media'+ idempleado+'EH'+idHorarioEmp).css( "background","#f3f3f3" );
+                    contenidoH+=
+                    `<div class='col-md-4'>
+                      <div class='form-group'>
+                       <span style="font-weight: 700;">Horario:</span>
+                       <span>` + horario.horario_descripcion+`</span>
+                      </div>
+                    </div>`;
+                    contenidoH+=
+                    `<div class='col-md-4'>
+                      <div class='form-group'>
+                       <span style="font-weight: 700;">Hora de inicio:</span>
+                       <span>` + horario.horaI+`</span>
+                      </div>
+                    </div>`;
+                    contenidoH+=
+                    `<div class='col-md-4'>
+                      <div class='form-group'>
+                       <span style="font-weight: 700;">Hora de fin:</span>
+                       <span>` + horario.horaF+`</span>
+                      </div>
+                    </div>`;
+                    contenidoH+=
+                    `<div class='col-md-4'>
+                      <div class='form-group'>
+                       <span style="font-weight: 700;">Horas obligadas:</span>
+                       <span>` + horario.horasObliga+`</span>
+                      </div>
+                    </div>`;
+                    contenidoH+=
+                    `<div class='col-md-4'>
+                    <div class='form-group'>
+                     <span style="font-weight: 700;">Tolerancia ingreso:</span>
+                     <span>` + horario.toleranciaI+` minutos</span>
+                    </div>
+                  </div>`;
+                  contenidoH+=
+                  `<div class='col-md-4'>
+                   <div class='form-group'>
+                   <span style="font-weight: 700;">Tolerancia salida:</span>
+                   <span>` + horario.toleranciaF+` minutos</span>
+                   </div>
+                  </div>`;
+                  contenidoH+=
+                  `<div class='col-md-4'>
+                   <div class='form-group'>
+                   <span style="font-weight: 700;">Trabaja fuera horario:</span>
+                   <span>` + horario.fueraHorario+` </span>
+                   </div>
+                  </div>`;
+                  contenidoH+=
+                  `<div class='col-md-4'>
+                   <div class='form-group'>
+                   <span style="font-weight: 700;">Horas adicionales:</span>
+                   <span>` + horario.horaAdicional+` hora(s)</span>
+                   </div>
+                  </div>`;
+
+                    $('#dataHorarioElegido'+ idempleado).append(contenidoH);
+                }
+
+            });
+        }
+    });
+
+}
+//**ELIMINAR HORARIOS EMPLEADOS MASIVOS */
+function eliminarMasivoHorarios(){
+    let valoresCheck = [];
+    let empleados=$('#nombreEmpleado').val();
+    let diadeHorario=$('#fechaSelectora').val();
+    $(".chechHoraEmp:checked").each(function(){
+        valoresCheck.push($(this).attr('data-id'));
+    });
+    if(valoresCheck.length<1){
+        alert('seleccione');
+        return false;
+    }
+    $.ajax({
+        type: "post",
+        url: "/elimarhoraEmps",
+        data:{
+            valoresCheck,empleados,diadeHorario
+        },
+        async:false,
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if(data!=0){
+
+                /* ACTUALIZO LOS DATO DE MODAL */
+                datosModalHorarioEmpleado(diadeHorario,empleados);
+                /* ............................. */
+
+            } else{
+                console.log('no tengo datos');
+                $('#modalHorarioEmpleados').modal('hide');
+                calendar.refetchEvents();
+            }
+
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+
+
+}
+//*FUNCION PARA CREAR LOS DATOS DEL MODAL DE BOTON ASIGNADO PARA VER
+//*EMPLEADOS Y HORARIOS
+function datosModalHorarioEmpleado(diadeHorario,empleados){
+    $.ajax({
+        type: "post",
+        url: "/datosHorarioEmpleado",
+        data: {
+            diadeHorario,empleados
+        },
+
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#rowdivs").empty();
+            dataDeempleado=data;
+            var contenido= "";
+
+            //*boton para elimnar seleecionados
+            contenido+=`<div class="col-md-12 mb-2">
+
+            <div class="btn-group d-none d-sm-inline-block">
+                <button onclick="eliminarMasivoHorarios()" type="button" class="btn btn-soft-danger btn-sm"><i
+                        class="uil uil-trash-alt mr-1"></i>Eliminar seleccionados</button>
+            </div>
+        </div>`;
+
+            $.each(data, function (key, item) {
+
+            //*NOMBRE DE EMPLEADO
+            contenido+=`<div class='col-md-12' style="border-top: 1px dashed #aaaaaa!important;">
+            <h5 class='header-title' style='font-size: 13.4px;'>` + item[0].nombre +` `+item[0].apellidos+`</h5>
+            <h5 class='header-title' style='font-size: 13px'>Horarios:</h5>
+            </div>`;
+
+            //*HORARIOS
+            $.each(item, function (key, horario) {
+                contenido+=
+                `<div class="col-md-6 mb-3" >
+                <div class="row">
+                <input type="checkbox" style="margin-top: 7px;" data-id="` + horario.idHorarioEmp+`" class="chechHoraEmp col-md-2" id="checkEliminarhoE` + horario.idHorarioEmp+`" >
+                <div class="col-md-10 media mediaE` + item[0].idempleado+`" style="border:2px solid #e6e6e6;" id="media` + item[0].idempleado+`EH` + horario.idHorarioEmp+`">
+                    <div class="media-body">
+                    <h6 class="mt-1 mb-0 font-size-14"  style="
+                    padding-bottom: 5px;">` + horario.horario_descripcion+`</h6>
+                    </div>
+                    <div class="dropdown align-self-center float-right">
+                    <a  onclick="verDatosHorario(` + item[0].idempleado+`,` + horario.idHorarioEmp+`)"
+
+                        class=""
+
+                    >
+                        <i class="uil uil-eye"></i>
+                    </a>
+
+                    </div>
+                </div>
+                </div>
+                </div>
+                `;
+
+            });
+            contenido+=
+            `<div class="col-md-12 row" style="    margin-left: 0px;padding-top: 5px;
+            padding-left: 0px;" id="dataHorarioElegido` + item[0].idempleado+`"></div>`;
+            });
+            $("#rowdivs").append(contenido);
+
+            $("#fechaSelectora").val(diadeHorario);
+            $("#modalidsEmpleado").val(empleados);
+
+            $('#modalHorarioEmpleados').modal('show');
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+
+
+    });
 }

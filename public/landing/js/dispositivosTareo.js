@@ -41,8 +41,25 @@ $(document).ready(function () {
         ajax: {
             type: "post",
             url: "/tablaDispositoTareo",
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            data: {
+                "_token": $("meta[name='csrf-token']").attr("content")
+                },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                402: function () {
+                    location.reload();
+                },
+                419: function () {
+                    location.reload();
+                },
+                403: function () {
+                    location.reload();
+                },
+                302: function () {
+                    location.reload();
+                }
             },
 
             dataSrc: "",

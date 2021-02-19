@@ -1373,7 +1373,7 @@
         {{-- MODAL HORARIOS POR EMPELADO --}}
         <div id="modalHorarioEmpleados" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog" style="max-width: 650px; margin-top: 150px;">
+            <div class="modal-dialog  modal-dialog-scrollable" style="max-width: 670px;">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #163552;">
                         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Horarios de empleados
@@ -1382,6 +1382,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <input type="hidden" id="modalidsEmpleado">
+                    <input type="hidden" id="fechaSelectora">
                     <div class="modal-body" style="font-size:12px!important;background: #ffffff;">
                         <div class="row" id="rowdivs">
 
