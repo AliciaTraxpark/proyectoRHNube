@@ -584,6 +584,9 @@ function editarDispo(id){
                 $('#descripcionDisBio_ed').val(data[0].dispo_descripUbicacion);
                 $('#descripcionBiome_ed').val(data[0].dispo_codigo);
 
+                $('#tiempoData_bio_ed').val(data[0].dispo_Data);
+                $('#selecttipoBio_ed').val(data[0].idtipo_biometrico);
+
                 $('#descripcionBiome_ed').prop("disabled",true);
                 $('#versionFi_ed').prop("disabled",true);
 
@@ -818,6 +821,8 @@ function NuevoBiome(){
     /* RESETERAR FORMULARIO */
     $("#frmHorNuevoBi")[0].reset();
 
+    $('#errorData_bio').hide();
+
     /* ESCONDER AVISO DE SELECCIOAN */
     $('#spanChEmple').hide();
 
@@ -848,7 +853,8 @@ function RegistraBiome(){
     var switchArea;
     var selectEmp=$("#nombreEmpleado").val();
     var selectArea=$("#selectArea").val();
-
+    var tiempoData=$("#tiempoData_bio").val();
+    var selectTipoBiom=$("#selecttipoBio").val();
 
   var valid= ValidateIPaddress(ip);
 
@@ -897,7 +903,8 @@ function RegistraBiome(){
         type: "post",
         url: "/dispoStoreBiometrico",
         data: {
-           ippuerto,descripcionBio,checkTodoEmp,switchEmp,switchArea,selectEmp,selectArea
+           ippuerto,descripcionBio,checkTodoEmp,switchEmp,switchArea,selectEmp,selectArea,
+           tiempoData,selectTipoBiom
         },
         statusCode: {
             419: function () {
@@ -961,6 +968,8 @@ function EditaBiome(){
     var ippuerto_ed=IP_ed.concat(ppp_ed, puerto_ed);
     var version_ed=$('#versionFi_ed').val();
     var idDisposEd_ed= $('#idDisposiBio').val();
+    var tiempoData_ed=$("#tiempoData_bio_ed").val();
+    var selectTipoBiom_ed=$("#selecttipoBio_ed").val();
 
     /* DATOS DE EMPLEADOS EN EDITAR */
     var checkTodoEmp_ed;
@@ -1018,7 +1027,8 @@ function EditaBiome(){
         url: "/actualizarBiometrico",
         data: {
             descripccionUb_ed, nserie_ed, ippuerto_ed,version_ed,
-            idDisposEd_ed,checkTodoEmp_ed,switchEmp_ed, switchArea_ed,selectEmp_ed,selectArea_ed
+            idDisposEd_ed,checkTodoEmp_ed,switchEmp_ed, switchArea_ed,selectEmp_ed,selectArea_ed,
+            tiempoData_ed,selectTipoBiom_ed
         },
         statusCode: {
             419: function () {
@@ -1221,3 +1231,20 @@ $("#selectAreaCheck_edit").click(function () {
         $("#selectArea_edit").trigger("change");
     }
 });
+
+/* VALIDACIONES BIOMETRICO  */
+//* valiacion tiempo data
+$(function() {
+	$(document).on('keyup', '#tiempoData_bio', function(event) {
+    	let minD= parseInt(this.min);
+        let valorD = parseInt(this.value);
+    	if(valorD<minD){
+    		$('#errorData_bio').show();
+    		this.value = min;
+        }
+        else{
+            $('#errorData_bio').hide();
+        }
+
+	});
+})

@@ -54,6 +54,8 @@ class biometricoController extends Controller
         $dispositivos->dispo_todosEmp = $request->checkTodoEmp;
         $dispositivos->dispo_porEmp = $request->switchEmp;
         $dispositivos->dispo_porArea = $request->switchArea;
+        $dispositivos->dispo_Data =  $request->tiempoData;
+        $dispositivos->idtipo_biometrico = $request->selectTipoBiom;
         $dispositivos->save();
         /* ----------------------------------- */
         $todosE = $request->checkTodoEmp;
@@ -101,6 +103,8 @@ class biometricoController extends Controller
         $dispositivos->dispo_todosEmp = $request->checkTodoEmp_ed;
         $dispositivos->dispo_porEmp = $request->switchEmp_ed;
         $dispositivos->dispo_porArea = $request->switchArea_ed;
+        $dispositivos->dispo_Data = $request->tiempoData_ed;
+        $dispositivos->idtipo_biometrico = $request->selectTipoBiom_ed;
         $dispositivos->save();
         /* -------------------------------------------------------- */
 

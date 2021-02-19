@@ -1,4 +1,4 @@
-
+var calendarioValid=0;
 /*CALENDARIO DISABLED EN REGISTRAR  */
 function calendarioInv() {
     var calendarElInv = document.getElementById("calendarInv");
@@ -1325,6 +1325,9 @@ $("#selectCalendario").change(function () {
     });
     $("#detallehorario").empty();
     idca = $("#selectCalendario").val();
+    if(idca!="Asignar calendario"){
+        calendarioValid=1;
+    }
     $.ajax({
         type: "post",
         url: "/empleado/vaciarcalendId",
@@ -4408,6 +4411,7 @@ $("#condicion").on("change", function () {
     $("#formContrato :input").prop("disabled", false);
 });
 $("#formNuevoE").click(function () {
+    calendarioValid=0;
     fechaActual = new Date();
     $("#m_ano_fecha").val(fechaActual.getFullYear());
     $("#m_mes_fecha").val(fechaActual.getMonth() + 1);
@@ -4522,6 +4526,28 @@ $("#cerrarEd").click(function () {
     $("#estadoF").val("false");
 });
 $("#cerrarModalEmpleado").click(function () {
+    if(calendarioValid==0 && $('#idEmpleado').val()!=''){
+        $.notifyClose();
+        $.notify({
+            message: "\nDebe especificar un calendario\n",
+            icon: '/landing/images/alert1.svg',
+        }, {
+            element: $('#form-registrar'),
+            position: "fixed",
+            icon_type: 'image',
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return false;
+    }
     RefreshTablaEmpleado();
     $("#formNuevoEd").hide();
     $("#formNuevoEl").hide();

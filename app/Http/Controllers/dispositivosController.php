@@ -39,6 +39,9 @@ class dispositivosController extends Controller
             ->where('cont_estado', '=', 1)
             ->get();
 
+        $tipo_biometrico = DB::table('tipo_biometrico')
+        ->get();
+
         $area = DB::table('area as ar')
             ->where('ar.organi_id', '=', session('sesionidorg'))
             ->select(
@@ -106,14 +109,16 @@ class dispositivosController extends Controller
                         ->get()->first();
                     return view('Dispositivos.dispositivos', [
                         'verPuerta' => $permiso_invitado->verPuerta, 'agregarPuerta' => $permiso_invitado->agregarPuerta,
-                        'modifPuerta' => $permiso_invitado->modifPuerta, 'controladores' => $controladores, 'area' => $area, 'empleado' => $empleados
+                        'modifPuerta' => $permiso_invitado->modifPuerta, 'controladores' => $controladores, 'area' => $area, 'empleado' => $empleados,
+                        'tipo_biometrico'=>$tipo_biometrico
                     ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.dispositivos', ['controladores' => $controladores, 'area' => $area, 'empleado' => $empleados]);
+                return view('Dispositivos.dispositivos', ['controladores' => $controladores, 'area' => $area, 'empleado' => $empleados,
+                'tipo_biometrico'=>$tipo_biometrico]);
             }
         } else {
 
@@ -125,7 +130,8 @@ class dispositivosController extends Controller
                 ->where('e.asistencia_puerta', '=', 1)
                 ->get();
 
-            return view('Dispositivos.dispositivos', ['controladores' => $controladores, 'area' => $area, 'empleado' => $empleados]);
+            return view('Dispositivos.dispositivos', ['controladores' => $controladores, 'area' => $area, 'empleado' => $empleados,
+            'tipo_biometrico'=>$tipo_biometrico]);
         }
     }
     public function store(Request $request)
@@ -858,7 +864,8 @@ class dispositivosController extends Controller
                 'dispo_codigo',
                 'dispo_todosEmp',
                 'dispo_porEmp',
-                'dispo_porArea'
+                'dispo_porArea',
+                'idtipo_biometrico'
             )->get();
         foreach ($dispositivo as  $dispositivos) {
             $disposit_controlador = DB::table('dispositivo_controlador as dc')
