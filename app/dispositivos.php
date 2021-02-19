@@ -26,7 +26,8 @@ class dispositivos extends Model
        'version_firmware',
        'dispo_todosEmp',
        'dispo_porEmp',
-       'dispo_porArea'
+       'dispo_porArea',
+       'idtipo_biometrico'
 
     ];
 }
