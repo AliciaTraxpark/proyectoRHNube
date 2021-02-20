@@ -79,7 +79,7 @@ class soportesPorCorreoController extends Controller
         $agenda->save();
         $horario = $agenda->fecha;
 
-        $envio = Mail::to('miguelpacheco.1622@gmail.com')->queue(new correoReunion($nombres, $apellidos, $telefono, $correo, $empresa, $cargo, $nTrabajadores, $comment, $fecha, $horario));
+        $envio = Mail::to($email)->queue(new correoReunion($nombres, $apellidos, $telefono, $correo, $empresa, $cargo, $nTrabajadores, $comment, $fecha, $horario));
         return response()->json($horario, 200);
     }
 
