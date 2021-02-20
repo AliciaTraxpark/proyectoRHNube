@@ -357,6 +357,10 @@
                                             <label for="">Horario nocturno por horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colHoraNocturnaTotal">
+                                            <label for="">Horario nocturno total</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colFaltaJornada">
                                             <label for="">Jornada incompleta por horario</label>
                                         </li>

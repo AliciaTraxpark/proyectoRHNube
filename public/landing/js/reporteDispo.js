@@ -3984,6 +3984,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colHoraNormalTotal').visible(false);
     }
+    // ? HORARIO NOCTURNO TOTAL
+    if ($('#colHoraNocturnaTotal').is(":checked")) {
+        dataT.api().columns('.colHoraNocturnaTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNocturnaTotal').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
