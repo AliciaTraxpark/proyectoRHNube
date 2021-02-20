@@ -122,7 +122,7 @@ class soportesPorCorreoController extends Controller
         $telefono = $request->get('telefonoP');
         $mensaje = $request->get('mensajeP');
         $fecha = $fecha;
-        $envio = Mail::to('miguelpacheco.1622@gmail.com')->queue(new correoPartner($ruc, $razonSocial, $contacto, $correo, $telefono, $mensaje, $fecha));
+        $envio = Mail::to($email)->queue(new correoPartner($ruc, $razonSocial, $contacto, $correo, $telefono, $mensaje, $fecha));
         return response()->json($envio, 200);
     }
 }

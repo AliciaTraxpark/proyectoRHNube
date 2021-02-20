@@ -770,6 +770,7 @@ function cargartablaPuerta(fecha1,fecha2) {
         },
         success: function (data) {
             $(".img-loader").hide();
+            $(".loader").hide();
             console.log(data.length);
             if (data.length != 0) {
                 razonSocial = data[0].organi_razonSocial;
