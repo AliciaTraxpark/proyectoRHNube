@@ -390,6 +390,8 @@
                                                             <strong>Empresa:</strong> {{ $empresa }} <br>
                                                             <strong>Cargo:</strong> {{ $cargo }} <br>
                                                             <strong>Número de trabajadores:</strong> {{ $nTrabajadores }} <br> 
+                                                            <strong>Comentario: </strong>  {{ $comentario }} <br>
+                                                            <strong>Horario de reunión: </strong>  {{ $horario }} <br> <br> <br> 
                                                             <strong>Fecha de envío: </strong>  {{ $fecha }} <br> <br> <br> 
                                                         </p>
                                                     </td>

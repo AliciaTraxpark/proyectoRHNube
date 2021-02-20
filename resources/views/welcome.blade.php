@@ -1,957 +1,541 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>RH nube</title>
 
-<head>
-    <title>RH nube</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
-    <link rel="shortcut icon" href="{{asset('landing/images/logo_v2_ico.svg')}}">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169261172-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-169261172-1');
-
-    </script>
-</head>
-
-<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
-    <style>
-        body {
-            background-color: #ffffff !important;
-        }
-
-        .pResp {
-            padding-top: 16px !important;
-            padding-bottom: 30px !important;
-        }
-
-        .tooltip-arrow,
-        .red-tooltip+.tooltip>.tooltip-inner {
-            background-color: rgb(0, 0, 0);
-        }
-
-
-        .tooltip-arrow,
-        .red-tooltip+.tooltip>.tooltip-inner {
-            background-color: rgb(0, 0, 0);
-        }
-
-        .inputResp {
-            padding: 2px 15px !important;
-        }
-
-        .btn-group-sm>.btn,
-        .btn-sm {
-            padding: .25rem .5rem !important;
-            font-size: 14px !important;
-        }
-
-        @media (min-width: 992px) {
-            footer {
-              font-size: 15px;
-              color: #555;
-              background: #eee;
-              text-align: center;
-              position: fixed;
-              display: block;
-              width: 100%;
-              bottom: 0;
-              margin-top: 20px;
-            }
-            body {
-                padding-bottom: 50px;
-            } 
-            .txt_home{
-                padding-left: 65px !important;
-            }
-            
-        }
-        .modal{
-                top: 5% !important;
-            }
-
-        @media (max-width: 576px) {
-            /*.col-*/
-            .iframe_rh{
-                height: 85%;
-            } 
-
-            .iframe_rh_div{
-                padding:60% 0 0 0;
-            }
-            .img_rh{
-                padding: 5px 20px !important;
-            }
-        }
-
-        @media (min-width: 576px) and (max-width: 767px) {
-            /*.col-sm-*/
-            .iframe_rh{
-                height: 85%;
-            } 
-
-            .iframe_rh_div{
-                padding:55% 0 0 0;
-            }
-
-            .img_rh{
-                padding: 10px 40px !important;
-            }
-        }
-
-        @media (min-width: 767px) and (max-width: 921px) {
-            /*.col-sm-*/
-            .iframe_rh{
-                height: 85%;
-            } 
-
-            .iframe_rh_div{
-                padding:50% 40% 0 0;
-            }
-
-            .video_rsp{
-                 width: 500px;
-            }
-        }
-
-        @media (min-width: 921px) and (max-width: 992px) {
-            /*.col-sm-*/
-            .iframe_rh{
-                height: 85%;
-            } 
-
-            .iframe_rh_div{
-                padding:50% 0 0 0;
-            }
-
-            .video_rsp{
-                 width: 500px;
-            }
-        }
-
-        @media (min-width: 992px) and (max-width: 1050px) {
-            /*.col-xl-*/
-           .iframe_rh{
-                height: 85%;
-                padding-right: 11% !important;
-            } 
-
-            .iframe_rh_div{
-                padding:70% 0 0 0;
-            }
-            .container_img{
-                padding-left: 35px !important;
-                padding-right: 35px !important;
-            }
-            .video_rsp{
-                 width: 800px;
-            }
-        }
-
-        @media (min-width: 1050px) and (max-width: 1200px) {
-            /*.col-xl-*/
-           .iframe_rh{
-                height: 85%;
-                padding-right: 8% !important;
-            } 
-
-            .iframe_rh_div{
-                padding:64% 0 0 0;
-            }
-            .container_img{
-                padding-left: 50px !important;
-                padding-right: 50px !important;
-            }
-            .video_rsp{
-                 width: 800px;
-            }
-        }
-
-        @media (min-width: 1200px) and (max-width: 1300px) {
-            /*.col-*/
-            .iframe_rh{
-                height: 85%;
-
-            }
-            .iframe_rh_div{
-                padding:58% 0 0 0;
-            }
-            .container_img{
-                padding-left: 60px !important;
-                padding-right: 60px !important;
-            }
-            .video_rsp{
-                 width: 800px;
-            }
-            .credential_rh{
-                margin-left: 70px !important;
-            }
-            .user_rh{
-                max-width: 200px !important;
-            }
-            .pass_rh{
-                max-width: 200px !important;
-            }
-            .span_rh{
-                padding-left: 30px !important;
-            }
-        }
-
-        @media (min-width: 1300px) and (max-width: 1400px) {
-            /*.col-*/
-            .iframe_rh{
-                height: 85%;
-                padding-left: 9% !important;
-            }
-            .iframe_rh_div{
-                padding:50% 0 0 0;
-            }
-            .container_img{
-                padding-left: 75px !important;
-                padding-right: 75px !important;
-            }
-            .video_rsp{
-                 width: 800px;
-            }
-            .credential_rh{
-                margin-left: 115px !important;
-            }
-            .user_rh{
-                max-width: 200px !important;
-            }
-            .pass_rh{
-                max-width: 200px !important;
-            }
-            .span_rh{
-                padding-left: 50px !important;
-            }
-        }
-
-        @media (min-width: 1400px) and (max-width: 1500px) {
-            /*.col-*/
-            .iframe_rh{
-                height: 87%;
-                padding-left: 135px !important;
-            }
-            .iframe_rh_div{
-                padding:40% 0 0 0;
-            }
-            .container_img{
-                padding-left: 70px !important;
-                padding-right: 70px !important;
-            }
-            .video_rsp{
-                 width: 800px;
-            }
-            .credential_rh{
-                margin-left: 180px !important;
-            }
-            .user_rh{
-                max-width: 200px !important;
-            }
-            .pass_rh{
-                max-width: 200px !important;
-            }
-            .span_rh{
-                padding-left: 100px !important;
-            }
-            
-        }
-
-        @media (min-width: 1500px){
-            /*.col-xl-*/
-            .iframe_rh{
-                height: 87%;
-                padding-left: 135px !important;
-            }
-            .iframe_rh_div{
-                padding:40% 0 0 0;
-            }
-
-            .container_img{
-                padding-left: 80px !important;
-                padding-right: 80px !important;
-            }
-            .video_rsp{
-                 width: 800px;
-            }
-            .credential_rh{
-                margin-left: 220px !important;
-            }
-            .user_rh{
-                max-width: 200px !important;
-            }
-            .pass_rh{
-                max-width: 200px !important;
-            }
-            .span_rh{
-                padding-left: 110px !important;
-            }
-        }
-
-        @media (min-width: 1564px) and (max-width: 1579px) {
-            .pResp {
-                padding-top: 3% !important;
-                padding-bottom: 12% !important;
-            }
-        }
-
-        @media (max-width: 1563px) and (min-width: 1541px) {
-            .pResp {
-                padding-top: 16px !important;
-                padding-bottom: 30px !important;
-            }
-        }
-
-        @media (max-width: 1540px) and (min-width: 1449px) {
-            .pResp {
-                padding-top: 16px !important;
-                padding-bottom: 5% !important;
-            }
-        }
-
-        @media(max-width: 1300px) and (min-width: 1270px) {
-            .pResp {
-                padding-top: 16px !important;
-                padding-bottom: 12% !important;
-            }
-        }
-
-        @media(max-width:1260px) {
-            .pResp {
-                padding-top: 3vh !important;
-                padding-bottom: 2.5vw !important;
-            }
-        }
-
-
-        @media (max-width: 767px) {
-            .navbar {
-                padding: 0% !important;
-            }
-
-            .container {
-                padding-bottom: 3% !important;
-                padding-left: 10px !important;
-                padding-right: 10px !important;
-            }
-
-            .colResp {
-                justify-content: center !important;
-                padding: 0% !important;
-            }
-
-            .colBtn {
-                justify-content: center !important;
-            }
-
-            .colResetResp {
-                padding-top: 4% !important;
-                justify-content: center !important;
-                text-align: center !important;
-            }
-
-            .btnLinkResp {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-            }
-
-            .marginRow {
-                margin-top: 1% !important;
-            }
-
-            .grid-margin {
-                margin-bottom: 40px !important;
-            }
-
-            .customer-feedback {
-                margin: 5% !important;
-            }
-
-            .modal {
-                text-align: center;
-                padding: 0 !important;
-            }
-
-            .modal:before {
-                content: '';
-                display: inline-block;
-                height: 100%;
-                vertical-align: middle;
-                margin-right: -4px;
-                /* Adjusts for spacing */
-            }
-
-            .modal-dialog {
-                display: inline-block;
-                text-align: left;
-                vertical-align: middle;
-            }
-
-            .btnResp {
-                text-align: center !important;
-            }
-
-            .btnVideoR {
-                padding-top: 1rem !important;
-            }
-            .video_rsp{
-                 width: 400px;
-            }
-        }
-        @media(min-width: 508px) and (max-width: 857px){
-            .colResp{
-                padding-left: 0px !important;
-            }
-        }
-        @media(max-width: 575px){
-            .colResp{
-                display: flex !important;
-                justify-content: center !important;
-                padding: 0% !important;
-            }
-        }
-    </style>
-    <header id="header-section">
-        <nav class="navbar  pl-3 pl-sm-0" style="padding-bottom: 20px;" id="navbar">
-            <div class="container pb-0 pt-2">
-                <div class="col-md-5 col-sm-4 col-12 colResp" style="margin-bottom: 0px;padding-left: 40px; height: 80px !important;">
-                    <div class="navbar-brand-wrapper colResp" >
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="85">
-                    </div>
-                </div>
-                {{-- FORMULARIO LOGIN --}}
-                <div class="col-md-7 col-sm-8 col-12">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="row" style="margin-top: 18px;">
-                            <div class="col-md-0 col-lg-2  credential_rh"></div>
-                            <div class="col-md-5 col-lg-4  col-12 form-group mb-0 pb-2 user_rh" style="padding:0px 4px;">
-                                <!--<label class="blanco">Correo electrónico o teléfono </label>-->
-                                <input id="email"
-                                    class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo">
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="col-md-5 col-lg-4 col-12 form-group mb-0 pb-2 pass_rh" style="padding:0px 4px;" >
-                                <!--<label class="blanco">Contraseña</label>-->
-                                <input tid="password" type="password"
-                                    class="form-control form-control-sm @error('password') is-invalid @enderror"
-                                    name="password" required autocomplete="current-password" placeholder="Contraseña">
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="col-md-2 col-lg-1 col-12 form-group mb-0 colBtn start_rh" style="display:flex; align-items: center; top: -4px; padding-left: 4px; padding-right: 4px">
-                                <button type="submit" style="font-size: 11px;padding-bottom: 2px;padding-top: 6px;"
-                                    class="botonIs"><img src="{{asset('landing/images/log-in.png')}}" style="color: white;" width="18px"></button>
-                            </div>
-                            <div class="col-md-12 form-group row p-0 m-0 text-left">
-                                <div class="col-md-7 col-lg-6 offset-md-5 offset-lg-6 p-0 colResetResp span_rh">
-                                    @if (Route::has('password.request'))
-                                    <a class="btn btn-link btnLinkResp" href="{{ route('password.request') }}"
-                                        style="font-size:11.5px;color: #ffffff;padding-top: 0px;padding-bottom: 5px;padding-left: 14px;margin-left: 0px;">
-                                        ¿Olvidaste tu contraseña?
-                                    </a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                {{-- FINALIZA FORMULARIO LOGIN --}}
+      <link rel="stylesheet" href="{{ asset('landing/home/css/lib/bootstrap.min.css') }}">
+      <link rel="stylesheet" href="{{ asset('landing/home/css/lib/fontawesome-all.css') }}">
+      <link rel="stylesheet" href="{{ asset('landing/home/css/style.css') }}">
+      <link rel="shortcut icon" href="{{ asset('landing/home/images/Logo.png') }}">
+      <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+   </head>
+   <body>
+      <div class="div-general">
+         <nav class="navbar-1 navbar navbar-expand-lg navbar-dark bg-dark">
+         </nav>
+         <nav class="navbar-2 navbar navbar-expand-lg navbar-dark">
+            <div class="navbar-collapse collapse w-100 dual-collapse2 order-1 order-md-0">
+               <ul class="navbar-nav ml-auto text-center">
+                  <li class="nav-item active">
+                     <a class="nav-link informacion" href="#informacion">INFORMACIÓN</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link partner" href="#partner">PARTNER</a>
+                  </li>
+               </ul>
             </div>
-        </nav>
-    </header>
-    {{-- MODAL DE LANZAMIENTO --}}
-    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="mx-auto my-2 order-0 order-md-1 position-relative">
+               <a class="mx-auto logo" href="#inicio">
+                  <img src="{{ asset('/landing/images/logo_animado.gif') }}" class="rounded-circle img-fluid imgResp logo" width="50" style="width: 250px !important;">
+               </a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+               <span class="navbar-toggler-icon"></span>
+               </button>
+            </div>
+            <div class="navbar-collapse collapse w-100 dual-collapse2 order-2 order-md-2">
+               <ul class="navbar-nav mr-auto text-center">
+                  <li class="nav-item">
+                     <a class="nav-link agendar-reunion" href="#agendar-reunion">AGENDAR UNA REUNIÓN</a>
+                  </li>
+                  <li class="nav-item" style="display: grid; align-items: center;">
+                     <!--<a class="nav-link" target="_blank" download="Brochure RH nube" href="documentacion/BrochureRHnube .pdf">BROCHURE</a>-->
+                     <!-- <a class="nav-link login" href="#login">LOGIN</a> -->
+                     <a class="nav-link dropdown-toggle"  data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">LOGIN</a>
+                      <div class="dropdown-menu justify-content-center" style="border-color: white;">
+                       <form class="px-4 py-3" method="POST" action="{{ route('login') }}" >
+                        @csrf
+                         <div class="form-group">
+                           <input id="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo electrónico" style="padding: 21px 16px;">
+                           @error('email')
+                             <span class="invalid-feedback" role="alert">
+                                 <strong>{{ $message }}</strong>
+                             </span>
+                           @enderror
+                         </div>
+                         <div class="form-group">
+                           <input tid="password" type="password" class="form-control form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Contraseña" style="padding: 21px 16px">
+                           @error('password')
+                             <span class="invalid-feedback" role="alert">
+                                 <strong>{{ $message }}</strong>
+                             </span>
+                           @enderror
+                         </div>
+                         <button type="submit" class="btn btn-primary btn-rh btn-block">Iniciar Sesión</button>
+                       </form>
+                       <div class="dropdown-divider"></div>
+                       <a class="dropdown-item text-center" href="{{ route('password.request') }}" style="font-size: 13px">¿Olvidaste tu contraseña?</a>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+         </nav>
+      </div>
+      <ul class="nav justify-content-center">
+         <li class="nav-item general">
+            <a class="nav-link active pc" href="#">PC</a>
+         </li>
+         <li class="nav-item general">
+            <a class="nav-link movil" href="#">Móvil</a>
+         </li>
+      </ul>
+      <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
+      <div class="bg img-fluid"></div>
+      <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
+      <div class="container-fluid inicio p-10 text-center my-3" id="inicio">
+         <div class="row mx-auto my-auto">
+            <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+               <div class="carousel-inner w-100" role="listbox">
+                  <div class="carousel-item active">
+                     <div class="col-md-4">
+                        <div class="card card-body">
+                           <h5 class="h5 text-center">¿Qué es Modo Control Remoto?</h5>
+                           <div class="embed-responsive embed-responsive-16by9">
+                              <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/512111026?byline=0&portrait=0&title=0" allowfullscreen></iframe>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="carousel-item">
+                     <div class="col-md-4">
+                        <div class="card card-body">
+                           <h5 class="h5 text-center">¿Qué es Modo Control en Ruta?</h5>
+                           <div class="embed-responsive embed-responsive-16by9">
+                              <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/512111206?byline=0&portrait=0&title=0" allowfullscreen></iframe>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="carousel-item">
+                     <div class="col-md-4">
+                        <div class="card card-body">
+                           <h5 class="h5 text-center">¿Qué es Modo Asistencia en Puerta?</h5>
+                           <div class="embed-responsive embed-responsive-16by9">
+                              <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/514307168?byline=0&portrait=0&title=0" allowfullscreen></iframe>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="carousel-item">
+                     <div class="col-md-4">
+                        <div class="card card-body">
+                           <h5 class="h5 text-center">¿Qué es Modo Control de Tareo?</h5>
+                           <div class="embed-responsive embed-responsive-16by9">
+                              <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/512111271?byline=0&portrait=0&title=0" allowfullscreen></iframe>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+               <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+               <span class="sr-only">Previous</span>
+               </a>
+               <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+               <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+               <span class="sr-only">Next</span>
+               </a>
+            </div>
+         </div>
+      </div>
+      <div class="container-fluid inicio p-10">
+         <div class="row">
+            <div class="col-sm-12 col-lg-4">
+            </div>
+            <div class="col-sm-12 col-lg-4">
+               <div class="col text-center">
+                  <div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>
+                  <a href="{{route('registroPersona')}}" class="btn boton-enviar btn-default">¡Registrate en RH nube <b>GRATIS!</b> 
+                     <img class="imagen-personalizada" src="{{ asset('landing/home/images/recurso_flecha.png') }}">
+                  </a>
+               </div>
+            </div>
+            <div class="col-sm-12 col-lg-4">
+               <div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>
+               <div class="col text-center">
+                  <a href="#" id="chatJivo">
+                     <span>
+                        Chatea con nosotros
+                        <picture>
+                           <img src="{{ asset('landing/home/images/Recurso 1@3x.png') }}" width="40px" class="preguntas img-fluid img-thumbnail" alt="...">
+                        </picture>
+                     </span>
+                  </a>
+               </div>
+               <div class="col text-center">
+                  <a href="{{route('registroPersona')}}">
+                     <span>
+                        Regístrate
+                        <picture>
+                           <img src="{{ asset('landing/home/images/Recurso 1@2x.png') }}" width="40px" class="preguntas img-fluid img-thumbnail" alt="...">
+                        </picture>
+                     </span>
+                  </a>
+               </div>
+               <div class="col text-center">
+                  <span>
+                     <a  href="http://192.168.1.50:8000/files/BrochureRHnube .pdf" target="_blank" download="BrochureRHnube.pdf">
+                        Nuestro brochure
+                        <picture>
+                           <img src="{{ asset('landing/home/images/Recurso 1@1x.png') }}" width="40px" class="preguntas img-fluid img-thumbnail" alt="...">
+                        </picture>
+                     </a>
+                  </span>
+                  <span>
+                     <picture>
+                        <img src="{{ asset('landing/home/images/Recurso 1@5x.png') }}" width="40px" class="preguntas img-fluid img-thumbnail" style="    width: 60px;
+                           margin-top: -40px;" alt="...">
+                     </picture>
+                  </span>
+               </div>
+            </div>
+         </div>
+         <div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>
+      </div>
+      <div id="informacion" class="container informacion">
+         <div id="accordion">
+            <div class="card">
+               <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                     <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                     Información
+                     </button>
+                  </h5>
+               </div>
+               <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                  <div class="card-body">
+                     Finalmente hemos creado una plataforma única que permite administrar personal en sus 360° grados con una inversión increiblemente baja y con una facilidad increíble.
+                  </div>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header" id="headingTwo">
+                  <h5 class="mb-0">
+                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                     ¿A quién va dirigido?
+                     </button>
+                  </h5>
+               </div>
+               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                  <div class="card-body">
+                     RH nube está dirigida a todo empleador tipo empresa, gobierno, ong, club y cualquier organización o grupo que requiera administrar personal y optimizar sus costos e inversión de tiempo.
+                  </div>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header" id="headingThree">
+                  <h5 class="mb-0">
+                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                     ¿Es legal?
+                     </button>
+                  </h5>
+               </div>
+               <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                  <div class="card-body">
+                     En el Perú los empleadores deben mantener un registro manual o digital, en este caso RH nube es totalmente digital.
+                  </div>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header" id="headingFour">
+                  <h5 class="mb-0">
+                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                     ¿Por cuánto tiempo debo mantener el registro?
+                     </button>
+                  </h5>
+               </div>
+               <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                  <div class="card-body">
+                     En el Perú el empleador está obligado a manejar el registro de asistencia de cada uno de sus trabajadores por un periodo de 5 años.
+                  </div>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header" id="headingFive">
+                  <h5 class="mb-0">
+                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                     ¿Qué seguridad tiene?
+                     </button>
+                  </h5>
+               </div>
+               <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                  <div class="card-body">
+                     La información es almacenada en un estado de USA y la seguridad se rige en base a las estrictas leyes americanas, además de garantizar la privacidad de las personas y organizaciones.
+                  </div>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header" id="headingSix">
+                  <h5 class="mb-0">
+                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                     ¿Qué medidas de seguridad se toman?
+                     </button>
+                  </h5>
+               </div>
+               <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                  <div class="card-body">
+                     <ul class="list-group">
+                        <li class="list-group-item">Las conexiones son seguras: Están cifradas mediante conexiones SSL.</li>
+                        <li class="list-group-item">Aumentamos la seguridad a través de la generación de TOKEN's digitales.</li>
+                        <li class="list-group-item">Los empleadores tienen su información a salvo, almacenada en servidores seguros en USA o JAPÓN según sea el caso.</li>
+                        <li class="list-group-item">Realizamos backups diarios ante una posible falla de los discos sólidos.</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header" id="headingSeven">
+                  <h5 class="mb-0">
+                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                     ¿Cómo puedo adquirir un servicio de RH nube?
+                     </button>
+                  </h5>
+               </div>
+               <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                  <div class="card-body">
+                     <ul class="list-group">
+                        <li class="list-group-item"><span>Opción 1:</span> Puedes registrarte de manera gratuita en la plataforma y un consultor asignado tomará contacto a tu correo y número corporativo para ayudarte a configurar tu cuenta.</li>
+                        <li class="list-group-item"><span>Opción2:</span> Agendar una reunión en la página principal</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
+      </div>
+      <div id="partner" class="container partner">
+         <div class="row">
+            <div class="col-sm-12 col-lg-12">
+               El Programa de Partnership de RH nube es para aquellas compañías que se encuentran en la actividad de brindar servicios de administración de personal, suministro de tecnología y software para control de personal. Si crees que RH nube puede ayudarte a crear valor agregado a tus clientes y brindarles así un mejor servicio. ¡Este programa es para tí!
+               <br>
+               Como Partner, tendrás acceso a los siguientes beneficios:
+               <ul>
+                  <li>Programa de distribución de la plataforma</li>
+                  <li>Uso de la plataforma para la administración de tu personal (1 administrador por 1 empresa)</li>
+                  <li>Formación y soporte continuo del uso y beneficios de la plataforma.</li>
+                  <li>Prioridad en soporte</li>
+                  <li>Pruebas de concepto y recepción de requerimientos nuevos</li>
+               </ul>
+               <h5><b>Tipos de partnert</b></h5>
+               <ul>
+                  <li>Partnert - Integrator: Compañías dedicadas a suministrar equipamiento biométrico y software de control de asistencia</li>
+                  <li>Partnert - HR: Compañías que brindan servicio de gestión de planillas y/o administración de personal.</li>
+                  <li>Partnert - Payroll: Compañías que brindan el software de control de planas o planillas de pago</li>
+               </ul>
+               <button class="btn boton-enviar btn-default" data-toggle="modal" data-target="#registrarPartner">CALIFICAR COMO <b>PARTNERT</b></button>
+            </div>
+         </div>
+         <div class="vc_empty_space" style="height: 30px"><span class="vc_empty_space_inner"></span></div>
+      </div>
+      <div class="container agendar-reunion" id="agendar-reunion">
+         <div class="row">
+            <div class="col-sm-12 col-lg-6">
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+               </div>
+               <div class="vc_empty_space" style="height: 30px"><span class="vc_empty_space_inner"></span></div>
+               <div id="mensajeForm" class="alertas"><p>• Rellena todos los campos.</p></div>
+               <form id="regiration_form" action="javascript:enviarAgenda()"  method="post">
+                  @csrf
+                  <fieldset class="colum-1">
+                     <div class="form-group">
+                        <input type="text" class="form-control" id="nombre_apellidos" name="nombre_apellidos" placeholder="Nombres y apellidos" onkeypress='return validaTexto(event)' required="">
+                     </div>
+                     <div class="form-group">
+                        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" onkeypress='return validaNumericos(event)' required="">
+                     </div>
+                     <div class="form-group">
+                        <span id="mensajeEmail" class="alertas"><p>• Ingresa un correo válido.</p></span>
+                        <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo Electrónico" required="">
+                     </div>
+                     <div class="form-group">
+                        <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa" required="">
+                     </div>
+                     <div class="form-group">
+                        <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Cargo" required="">
+                     </div>
+                     <div class="form-group">
+                        <input type="number" class="form-control" id="colaborador" name="colaborador" placeholder="Cantidad de colaboradores" required="">
+                     </div>
+                     <div class="form-group">
+                        <label>Fecha y hora<span id="mensajeDate" class="alertas"><p>• Elige un horario.</p></span></label>
+                            <div class="form-row">
+                               <div class="form-group col-6 col-sm-4">
+                                 <input type="text" id="diaReunion" name="diaReunion" class="form-control form-control-sm"  readonly placeholder="Fecha">
+                               </div>
+                               <div class="form-group col-6 col-sm-4">
+                                 <input type="text" id="horaReunion" name="horaReunion" class="form-control form-control-sm" readonly placeholder="Hora">
+                               </div>
+                               <div class="form-group col-12 col-sm-4">
+                                 <button type="button" class="btn btn-primary btn-sm btn-second-rh btn-block" data-toggle="modal" data-target="#horarioDisponibles"> <img src="landing/images/eyewhite.png" width="18"> Ver horarios</button>
+                               </div>
+                             </div>
+                     </div>
+                     <input type="button" id="gts" class="next btn btn-info" value="Siguiente" />
+                     <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
+                  </fieldset>
+                  <fieldset class="colum-2">
+                     <div class="form-group">
+                        <label>Déjame tu comentario</label>
+                        <textarea  class="form-control" name="comentario" id="comentario" placeholder="Comentario" required=""></textarea>
+                     </div>
+                     <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
+                     <input type="submit" name="submit" class="submit btn btn-success" value="Enviar" />
+                     <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
+                  </fieldset>
+               </form>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+               <img src="https://rhnube.com.pe/landing/images/career.gif" alt="" class="img-fluid pb-5 imgResp">
+            </div>
+         </div>
+      </div>
+      <div class="container login text-center" id="login">
+         
+      </div>
+
+      <!-- MODAL FECHAS DISPONIBLES -->
+      <div class="modal fade" id="horarioDisponibles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header text-center"
-                    style="padding-top: 8px;padding-bottom: 20px;background-color:#163552;color:#ffffff">
-                    <h6 style="font-size: 14px" class="modal-title"></h6>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/LogoAzul.png')}}" height="90">
-                    <h5 style="color: #c51516!important;margin-top: 0px!important;" class="text-danger mt-4">
-                        Próximo lanzamiento en Perú
-                    </h5>
-                    <p class="w-75 mx-auto text-muted" style="color: black!important">
-                        17 de Diciembre 2020.
-                    </p>
-                    <div class="mt-4">
-                        <button class="btn btn-opacity-primary mr-1" data-dismiss="modal">
-                            <i class="uil uil-arrow-right mr-1"></i>
-                            OK
-                        </button>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    {{-- FINAL DE MODAL --}}
-    {{-- MODAL DE VIDEO --}}
-    <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog modal-lg ">
-        <div class="modal-content video_rsp">
-            <div class="modal-header" style="background-color:#163552;padding:0.5rem">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="javascript:stopVideo()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+          <div class="modal-content">
+            <div class="modal-header" style="padding-bottom:3px;padding-top:10px;background: #163552;color: #f8f9fa">
+              <h5 class="modal-title" style="font-size:14px">Fechas de reuniones</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
             <div class="modal-body">
-                {{-- VIDEO --}}
-                <div class="row justify-content-center">
-                    <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
-                        data-aos="fade-left">
-                        <div style="padding:50.46% 0 0 0;">
-                            <iframe src="https://player.vimeo.com/video/471441178?title=0&byline=0&portrait=0"
-                                width="640" height="564"
-                                style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
-                                allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-                        </div>
-                        <script src="https://player.vimeo.com/api/player.js"></script>
-                    </div>
-                </div>
-                {{-- FINALIZAR VIDEO --}}
+               <div class="d-flex justify-content-center">
+                  <div class="form-inline diaAgenda ">
+                      <label for="diaAgenda">Dia:&nbsp;</label>
+                      
+                      <input type="text" id="diaAgenda" class="form-control form-control-sm ml-1" data-input> 
+                      <a class="btn btn-light" data-toggle="tooltip" data-placement="top"  title="Elige una fecha" data-toggle>
+                          <img src="landing/images/calendarioA.svg" width="22" >
+                      </a>
+                  </div>
+               </div>
+               </div>
+               <table id="horarios" class="table nowrap" style="font-size: 13px!important;width: 100%;">
+                  <thead style="background: #fafafa;" id="diasMensual">
+                      <tr>
+                          <th>Horario</th>
+                          <th>Estado</th>
+                          <th>Acción</th>
+                      </tr>
+                  </thead>
+                  <tbody id="bodyHorarios">
+                  </tbody>
+               </table>
             </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="modal fade" id="modal-video1" tabindex="-1" role="dialog" aria-labelledby="modal-video1"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false" >
-        <div class="modal-dialog  modal-lg d-flex justify-content-center">
-            <div class="modal-content" style="width: 800px">
-                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="javascript:stopVideo()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {{-- VIDEO --}}
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
-                            data-aos="fade-left">
-                            <div style="padding:50.46% 0 0 0;">
-                                <iframe src="https://player.vimeo.com/video/471441178?title=0&byline=0&portrait=0"
-                                    width="640" height="564"
-                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
-                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-                            </div>
-                            <script src="https://player.vimeo.com/api/player.js"></script>
-                        </div>
-                    </div>
-                    {{-- FINALIZAR VIDEO --}}
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-    {{-- FINAL DE MODAL --}}
-    <div class="container" style="margin-top: 5%; margin-bottom: 5%;">
-        <div class="row">
-            <div class="col-lg-6 txt_home" data-aos="fade-right">
-                <h3 class="text-center" style="font-size: 23px; font-weight: 500 !important;">Una nueva forma de administrar personal</h3>
-                <div class="col-lg-12 col-xl-12 text-center p-0">
-                    <p class="py-4 m-0 text-muted " style="font-size: 16px">
-                        Porque ahora "Administrar personal" será más sencillo y eficaz. El registro es fácil,
-                        gratuito y el costo de administración
-                        tiene un retorno de inversión (ROI) de sólo 3 días. <br><br>
-                    </p>
-                    <div class="row justify-content-center">
-                       <div class="col-md-12 text-center btnResp btnVideoR p-2">
-                            <a data-toggle="tooltip" data-placement="bottom" title='ver video "crear mi cuenta"'
-                                data-original-title='ver video "crear mi cuenta"'
-                                onclick="$('#modal-video').modal()" style="cursor: pointer">
-                                <img src="{{asset('landing/images/play.svg')}}" height="45">
-                            </a>
-                        </div>
-                        <div class="col-md-12 text-center btnResp p-2">
-                            <a href="{{route('registroPersona')}} " >
-                                <button {{-- onclick=" $('#modal-error').modal('show')"  --}}
-                                    class="btn btn-opacity-comienza mr-1">Crear mi cuenta
-                                </button>
-                            </a>
-                        </div>
-                        <div class="col-md-12 text-center btnResp p-2">
-                            <a href="#" style="text-decoration: underline;  " data-toggle="modal" data-target="#modal_saveMeet">
-                              Agenda reunión
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6" data-aos="fade-left">
-              <div class="iframe_rh_div">
-                    <iframe src="https://player.vimeo.com/video/460820175?color=ffffff&title=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;" class="iframe_rh" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                </div>
-                <script src="https://player.vimeo.com/api/player.js"></script>  
-            </div>
-        </div>
-    </div>
-
-
-    <!--<div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;background-color: #ffffff">
-        <div class="container">
-            <section class="digital-marketing-service" id="digital-marketing-section">
-                <div class="row align-items-center marginRow" style="margin-top: 55px;">
-                    <div class="col-12 col-lg-1 p-0 img-digital grid-margin"></div>
-                    <div class="col-12 col-lg-5 text-center grid-margin grid-margin-lg-0" data-aos="fade-right">
-                        <h3 class=" m-0" style="font-size: 23px; font-weight: 500 !important;">¿Por qué registrar tu organización en RH nube?</h3>
-                        <div class="col-lg-12 col-xl-12 text-center p-0">
-                            <p class="py-4 m-0 text-muted " style="font-size: 16px">
-                                Porque ahora "Administrar personal" será más sencillo y eficaz. El registro es fácil,
-                                gratuito y el costo de administración
-                                tiene un retorno de inversión (ROI) de sólo 3 días.
-                            </p>
-                            <div class="row justify-content-center">
-                               <div class="col-md-12 text-center btnResp btnVideoR p-2">
-                                    <a data-toggle="tooltip" data-placement="bottom" title='ver video "crear mi cuenta"'
-                                        data-original-title='ver video "crear mi cuenta"'
-                                        onclick="$('#modal-video').modal()" style="cursor: pointer">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="45">
-                                    </a>
-                                </div>
-                                <div class="col-md-12 text-center btnResp p-2">
-                                    <a href="{{route('registroPersona')}} " >
-                                        <button {{-- onclick=" $('#modal-error').modal('show')"  --}}
-                                            class="btn btn-opacity-comienza mr-1">Crear mi cuenta
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="col-md-12 text-center btnResp p-2">
-                                    <a href="#" style="text-decoration: underline;  " data-toggle="modal" data-target="#modal_saveMeet">
-                                      Agenda reunión
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- VIDEO --}}
-                    <div class="col-12 col-lg-6 p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
-                        <div class="iframe_rh_div">
-                            <iframe
-                                src="https://player.vimeo.com/video/460820175?color=ffffff&title=0&portrait=0"
-                                style="position:absolute;top:0;left:0;width:100%;" class="iframe_rh" frameborder="0"
-                                allow="autoplay; fullscreen" allowfullscreen></iframe>
-                        </div>
-                        <script src="https://player.vimeo.com/api/player.js"></script>
-                    </div>
-                    {{-- FINALIZAR VIDEO --}}
-                </div>
-            </section>
-            {{-- INICIO DE CARRUSEL --}}
-            
-            {{-- FINALIZACION DE CARRUSEL --}}
-        </div>
-    </div>  -->
-    <div class="container mb-4" style="padding: 0 80px !important;">
-        <div class="row d-flex justify-content-around">
-            <div class="col-md-4 img_rh" style="max-width: 400px;">
-                <img  class="card-img-top " src="{{ URL::asset('admin/images/remoto1.jpg') }}" style="border: black 3px solid;">
-            </div>
-            <div class="col-md-4 img_rh" style="max-width: 400px;">
-                <img  class="card-img-top " src="{{ URL::asset('admin/images/puerta1.jpg') }}" style="border: black 3px solid;">
-            </div>
-            <div class="col-md-4 img_rh" style="max-width: 400px;">
-                <img  class="card-img-top " src="{{ URL::asset('admin/images/rutas1.jpg') }}" style="border: black 3px solid;">
-            </div>
-        </div>
-    </div>
-<!--
-    <div class="container container_img">
-        <div class="row align-items-center marginRow" >
-          <div class="col-md-4 col-12 col-xs-12 p-4 img_rh">
-            <img  class="card-img-top " src="{{ URL::asset('admin/images/remoto1.jpg') }}" style="border: black 3px solid;">
-          </div>
-          <div class="col-md-4 col-12 col-xs-12 p-4 img_rh">
-            <img  class="card-img-top " src="{{ URL::asset('admin/images/puerta1.jpg') }}"  style="border: black 3px solid;">
-          </div>
-          <div class="col-md-4 col-12 col-xs-12 p-4 img_rh">
-            <img  class="card-img-top " src="{{ URL::asset('admin/images/rutas1.jpg') }}"  style="border: black 3px solid;">
-          </div>  
-        </div>
-    </div> -->
-
-
-    {{-- MODAL DE ERRORES --}}
-    @if (session('error'))
-    <div class="modal" id="modal1" role="dialog" style="display:block;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center"
-                    style="padding-top: 8px;padding-bottom: 5px;background-color:#163552;color:#ffffff">
-                    <h6 style="font-size: 14px" class="modal-title">Advertencia</h6>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                    <p>{{ session('error') }}</p>
-                </div>
-                <div class="modal-footer text-center" style="padding-top: 5px;padding-bottom: 5px;">
-                    <button type="button" onclick="cerrarModalAdvertencia()" class="btn btn-sm"
-                        style="background-color:#163552;color:#ffffff" data-dismiss="modal">
-                        OK
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-    {{-- FINALIZAR MODAL --}}
-    {{-- MODAL CONFIRMACIÓN DE AGENDA REUNIÓN --}}
-    <div class="modal" tabindex="-1" id="confirmacion_correo">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header" style="padding-bottom:3px;padding-top:10px;background: #163552;color: #f8f9fa">
-            <h5 class="modal-title" style="font-size:14px">¡Correo enviado con éxito!</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Gracias por tu tiempo, hoy me pondré en contacto contigo.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-sm" style="background: #163552; color: #ecebeb">Ok</button>
           </div>
         </div>
       </div>
-    </div>
-    {{-- FINALIZAR MODAL --}}
+      <!-- FIN MODAL-->
+      {{-- MODAL CONFIRMACIÓN DE AGENDA REUNIÓN --}}
+       <div class="modal" tabindex="-1" id="confirmacion_correo">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title">¡Correo enviado con éxito!</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <p>Gracias por tu tiempo, hoy me pondré en contacto contigo.</p>
+             </div>
+             <div class="modal-footer">
+               <button type="button" data-dismiss="modal" class="btn btn-sm" style="background: #163552; color: #ecebeb">Ok</button>
+             </div>
+           </div>
+         </div>
+       </div>
+      {{-- FINALIZAR MODAL --}}
+      
+      </div>
+      @if (session('error'))
+       <div class="modal" id="modal1" role="dialog" style="display:block;">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header text-center"
+                       style="padding-top: 8px;padding-bottom: 5px;background-color:#163552;color:#ffffff">
+                       <h6 style="font-size: 14px" class="modal-title">Advertencia</h6>
+                   </div>
+                   <div class="modal-body text-center">
+                       <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                       <p>{{ session('error') }}</p>
+                   </div>
+                   <div class="modal-footer text-center" style="padding-top: 5px;padding-bottom: 5px;">
+                       <button type="button" onclick="cerrarModalAdvertencia()" class="btn btn-sm" style="background-color:#163552;color:#ffffff" data-dismiss="modal">
+                        OK
+                       </button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       @endif
 
-    {{-- MODAL AGENDA REUNIÓN --}}
-    <div class="modal fade" id="modal_saveMeet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header"  style="padding-bottom:3px;padding-top:10px;background: #163552;color: #f8f9fa">
-            <h5 class="modal-title" id="" style="font-size:14px">Agendar reunión</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true" >&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="form_agendarReunion" action="javascript:enviarAgenda()">
-                @csrf
-              <div class="form-row">
-                <div class="form-group col-md-12 inputResp" style="">
-                  <input type="text" class="form-control" id="modal_saveMeet_name" name="modal_saveMeet_name" required="" onkeypress='return validaTexto(event)' placeholder="Nombres y apellidos">
+
+      <div class="modal fade" id="registrarPartner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Calificar como Partner</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               <form id="regirationPartner_form" action="javascript:enviarPartner()"  method="post">
+                  @csrf
+                  <div class="form-group">
+                     <input type="text" class="form-control form-control-sm" id="rucP" name="rucP" onkeypress='return validaNumericos(event)' placeholder="RUC" required="">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" class="form-control form-control-sm" id="razonSocialP" name="razonSocialP" placeholder="Razón Social" required="">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" class="form-control form-control-sm" id="contactoP" name="contactoP" placeholder="Contacto" required="">
+                  </div>
+                  <div class="form-group">
+                      <input type="email" class="form-control form-control-sm" id="correoP" name="correoP" placeholder="Correo electrónico" required="">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" class="form-control form-control-sm" id="telefonoP" name="telefonoP" onkeypress='return validaNumericos(event)' placeholder="Teléfono" required="">
+                  </div>
+                  <div class="form-group">
+                      <textarea  class="form-control form-control-sm" name="mensajeP" id="mensajeP" placeholder="Mensaje" rows="2"></textarea>
+                  </div> 
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm btn-rh">Enviar</button>
                 </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-12 inputResp">
-                  <input type="text" class="form-control" id="modal_saveMeet_movil" name="modal_saveMeet_movil" onkeypress='return validaNumericos(event)' required="" maxlength="9" minlength="6" placeholder="Teléfono">
-                </div>
-                <div class="form-group col-md-12 inputResp">
-                  <input type="email" class="form-control" id="modal_saveMeet_email" name="modal_saveMeet_email" required="" placeholder="Correo Electrónico">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-12 inputResp" >
-                    <input type="text" class="form-control" id="modal_saveMeet_company" name="modal_saveMeet_company" required="" placeholder="¿En qué empresa trabajas?"> 
-                </div>  
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-12 inputResp">
-                  <input type="text" class="form-control" id="modal_saveMeet_job" name="modal_saveMeet_job"  required="" placeholder="Cargo">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6 inputResp" >
-                  <input type="text" class="form-control" id="modal_saveMeet_nWorkers" name="modal_saveMeet_nWorkers" onkeypress='return validaNumericos(event)' required="" placeholder="Cantidad de trabajadores">
-                </div>
-              </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm" style="background: #163552; color: #ecebeb">Enviar</button>
-                </div>
-            </form>
+               </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    {{-- FINALIZAR MODAL --}}
 
-    <footer class="border-top" style="background:#163552; bottom: 0 !important; z-index: 100 !important;">
-        <div class="col-md-12 text-center"
-            style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
-            <span style="color: #faf3f3;font-size: 12px!important">
-                © <?php echo date("
-                    Y" ); ?> - RH nube Corp - USA | Todos los derechos
-                reservados &nbsp; |
-            </span>
-            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
-            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
-        </div>
-    </footer>
-    {{-- SCRIPT --}}
-    <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
-    <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
-    <script src="{{asset('landing/js/landingpage.js')}}"></script>
-    {{-- FINALIZACION DE SCRIPT --}}
-    {{-- SCRIPT MODAL AGENDAR REUNION --}}
-    <script type="text/javascript">
-        function enviarAgenda(){
-            var data = $('#form_agendarReunion').serialize();
-             $.ajax({
-                method: "POST",
-                url: '/agendaReunion',
-                data: data,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(e){
-                    console.log(e);
-                    $('#modal_saveMeet_name').val('');
-                    $('#modal_saveMeet_lastname').val('');
-                    $('#modal_saveMeet_movil').val('');
-                    $('#modal_saveMeet_email').val('');
-                    $('#modal_saveMeet_company').val('');
-                    $('#modal_saveMeet_job').val('');
-                    $('#modal_saveMeet_nWorkers').val('');
-                    $('#modal_saveMeet').modal('hide');
-                    $('#confirmacion_correo').modal('show');
-                }
-            });
-        }
 
-        function validaNumericos(event) {
-            if(event.charCode >= 48 && event.charCode <= 57){
-              return true;
-             }
-            return false;        
-        }
-        function validaTexto(event) {
-            if(event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32 || event.charCode == 46 || event.charCode == 225 || event.charCode == 233 || event.charCode == 193 || event.charCode == 201 || event.charCode == 205 || event.charCode == 211 || event.charCode == 218 || event.charCode == 237 || event.charCode == 243 || event.charCode == 250){
-              return true;
-             }
-            return false;        
-        }
-    </script>
-    {{-- FIN SCRIPT --}}
+       <footer class="text-center">
+         <div>
+            <span>© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
+            <a style="color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span>Central Perú: <a style="color:#faf3f3;" href="tel:017482415">017482415</a> | <a style="color:#faf3f3;" href="mailto:info@rhnube.com.pe">info@rhnube.com.pe</a></span>
+         </div>
+      </footer>
 
-    {{-- MODAL DE CONFIRMACION --}}
-    @if (session('mensaje'))
-    <div class="modal" id="modal" role="dialog" style="display: block;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header"
-                    style="padding-top: 8px;padding-bottom: 5px;background-color:#163552;color:#ffffff">
-                    <h5 style="font-size: 14px" class="modal-title">CONFIRMACION</h5>
-                    <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
-                    <p>{{ session('mensaje') }}</p>
-                </div>
-                <div class="modal-footer" style="padding-top: 8px;padding-bottom: 8px;">
-                    <button type="button" class="btn btn-sm" style="background-color:#163552;color:#ffffff"
-                        onclick="cerrarModal()">
-                        OK
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-    {{-- FINAL MODAL --}}
-    <script>
-        function cerrarModalAdvertencia(){
-            document.getElementById("modal1").style.display = "none";
-        }
-    </script>
-    {{-- MODAL DE CONFIRMACION --}}
-    <div class="modal" id="modalInv" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header"
-                    style="padding-top: 8px;padding-bottom: 5px;background-color:#163552;color:#ffffff">
-                    <h5 style="font-size: 14px" class="modal-title">CONFIRMACION</h5>
-                    <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
-                    <p>Bien hecho, estas registrado! Te hemos enviado un correo de verificación.</p>
-                </div>
-                <div class="modal-footer" style="padding-top: 8px;padding-bottom: 8px;">
-                    <button type="button" class="btn btn-sm" style="background-color:#163552;color:#ffffff"
-                        onclick="cerrarModal()">
-                        OK
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://player.vimeo.com/api/player.js"></script>
-    {{-- FINAL DE MODAL --}}
-    <script>
-        function stopVideo(){
-            var iframe = document.querySelector('iframe');
-            var player = new Vimeo.Player(iframe);
-            player.unload();
-        }
-        function cerrarModal() {
-            document.getElementById("modalInv").style.display = "none";
-            document.getElementById("modal").style.display = "none";
-        }
-    </script>
-    <script>
-        $( ".botonAgru" ).click(function() {
-            $(".botonAgru").css({
-                "background-color": "#163552",
-                "color": "#ffffff"
-            });
-            $( this ).css({
-                "background-color": "#38afff",
-                "color": "#ffffff"
-            });
-            var valor=$( this ).val();
-           if(valor=="idPerso"){
-               $('#divDispo').hide();
-               $('#divMoni').hide();
-               $('#divPerso').show();
-           }
-           if(valor=="idDisp"){
-               $('#divMoni').hide();
-               $('#divPerso').hide();
-               $('#divDispo').show();
-           }
-           if(valor=="idMoni"){
-               $('#divDispo').hide();
-               $('#divPerso').hide();
-               $('#divMoni').show();
-           }
-        });
-    </script>
-</body>
-
+      <script src="{{ asset('landing/home/js/lib/jquery-3.4.1.min.js') }}"></script>
+      <script src="{{ asset('landing/home/js/lib/popper.min.js') }}"></script>
+      <script src="{{ asset('landing/home/js/lib/bootstrap.min.js') }}"></script>
+      <script src="{{ asset('landing/home/js/script.js') }}"></script>
+      <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+      <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
+      <script src="https://player.vimeo.com/api/player.js"></script>
+      <script type="text/javascript">
+         $('.dropdown-toggle').dropdown()
+      </script>
+   </body>
 </html>
