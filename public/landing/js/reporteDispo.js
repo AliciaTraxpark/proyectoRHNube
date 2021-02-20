@@ -526,6 +526,10 @@ function cargartabla(fecha) {
                     var sumaHorasNormales = moment("00:00:00", "HH:mm:ss");
                     // * HORARIO NOCTURNO
                     var sumaHorasNocturnas = moment("00:00:00", "HH:mm:ss");
+                    // * HORAS EXTRAS
+                    var diurnas25 = 0;
+                    var diurnas35 = 0;
+                    var diurnas100 = 0;
                     if (data[index].data[m] != undefined) {
                         // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                         var horarioData = data[index].data[m].horario;
@@ -634,7 +638,6 @@ function cargartabla(fecha) {
                                 sumaSobreTiempo = sumaSobreTiempo.add({ "hours": horasSobreT, "minutes": minutosSobreT, "seconds": segundosSobreT });
                             } else {
                                 // * FALTA JORNADA
-                                console.log(horasObligadas, horarioData, horarioData.horasObligadas);
                                 var tiempoFaltaJ = horasObligadas - tiempoEntreH;
                                 segundosFaltaJ = moment.duration(tiempoFaltaJ).seconds();
                                 minutosFaltaJ = moment.duration(tiempoFaltaJ).minutes();
@@ -649,6 +652,40 @@ function cargartabla(fecha) {
                                     segundosFaltaJ = '0' + segundosFaltaJ;
                                 }
                                 sumaFaltaJornada = sumaFaltaJornada.add({ "hours": horasFaltaJ, "minutes": minutosFaltaJ, "seconds": segundosFaltaJ });
+                            }
+                            if (sumaHorasNormales > horasObligadas) {
+                                // * HORAS EXTRAS
+                                var tiempoExtraResta = sumaHorasNormales - horasObligadas;
+                                var segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                var minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                var tiempoSobrante = {};
+                                if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                    diurnas25++;
+                                    var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                    var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
+                                    var minutosDe25 = moment.duration(restaDe25).minutes();
+                                    var segundosDe25 = moment.duration(restaDe25).seconds();
+                                    tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
+                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                        diurnas35++;
+                                        var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                        var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
+                                        var minutosDe35 = moment.duration(restaDe35).minutes();
+                                        var segundosDe35 = moment.duration(restaDe35).seconds();
+                                        tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
+                                        if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                            diurnas100++;
+                                        }
+                                    } else {
+                                        if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                            diurnas35++;
+                                        }
+                                    }
+                                } else {
+                                    diurnas25++;
+                                }
                             }
                         }
                         if (permisoModificar == 1) {
@@ -750,9 +787,9 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
-                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <div class="dropdown">
@@ -852,9 +889,9 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
-                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                                 }
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
@@ -955,9 +992,9 @@ function cargartabla(fecha) {
                                 } else {
                                     grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                 }
-                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
-                                                <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
-                                                <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
+                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
+                                                <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
+                                                <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                             }
                         } else {
                             if (horarioData.horario != null) {
@@ -1021,9 +1058,9 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
-                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -1083,9 +1120,9 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
-                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                                 }
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
@@ -1150,9 +1187,9 @@ function cargartabla(fecha) {
                                 } else {
                                     grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                 }
-                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
-                                                <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
-                                                <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
+                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
+                                                <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
+                                                <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                             }
                         }
                         // ! MARCACIONES
