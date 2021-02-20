@@ -1693,8 +1693,8 @@ function cargartabla(fecha) {
                             </a>
                         </td>
                         <td name="colHoraNocturnaTotal" class="text-center colHoraNocturnaTotal" style="border-left: 1px dashed #aaaaaa!important">
-                            <a class="badge badge-soft-warning mr-2">
-                                <img src="landing/images/sun.svg" height="12" class="mr-2">
+                            <a class="badge badge-soft-info mr-2">
+                                <img src="landing/images/moon.svg" height="12" class="mr-2">
                                 ${sumaHorasNormalesT.format("HH:mm:ss")}
                             </a>
                         </td>
