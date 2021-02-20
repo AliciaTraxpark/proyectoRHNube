@@ -1,3 +1,4 @@
+$.fn.dataTable.ext.errMode = 'throw';
 $(document).ready(function () {
     /* ---------------------------TABLA CONTROLADORES --------------------------------*/
     var table = $("#tablaContr").DataTable({
