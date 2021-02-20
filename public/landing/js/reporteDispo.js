@@ -447,6 +447,7 @@ function cargartabla(fecha) {
                 }
             }
             theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Jornada incompleta total</th>  
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza total</th>
@@ -486,6 +487,7 @@ function cargartabla(fecha) {
                 var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
                 var sumaSobreTiempo = moment("00:00:00", "HH:mm:ss");   //: SUMANDO SOBRE TIEMPO
                 var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
+                var sumaHorasNormalesT = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS NORMALES
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -576,6 +578,7 @@ function cargartabla(fecha) {
                                         var minutosNormal = moment.duration(tiempoNormal).minutes();
                                         var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
                                         sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                        sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
                                     } else {
                                         // * HORAS NOCTURNAS
                                         var tiempoNocturno = horaFinalData - horaInicialData;
@@ -935,7 +938,6 @@ function cargartabla(fecha) {
                         } else {
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
-                                    console.log(horasFaltaJ);
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                             <span class="badge badge-soft-primary mr-2" class="text-center">
@@ -1683,6 +1685,12 @@ function cargartabla(fecha) {
                                 ${sumaTiempos.format("HH:mm:ss")}
                             </a>
                         </td>
+                        <td name="colHoraNormalTotal" class="text-center colHoraNormalTotal" style="border-left: 1px dashed #aaaaaa!important">
+                            <a class="badge badge-soft-warning mr-2">
+                                <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                ${sumaHorasNormalesT.format("HH:mm:ss")}
+                            </a>
+                        </td>
                         <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1777,6 +1785,7 @@ function cargartabla(fecha) {
                     }
                 }
                 tbodyTR += `<td name="colTiempoTotal"><br><br></td>
+                            <td name="colHoraNormalTotal"></td>
                             <td name="colSobreTiempoTotal"></td>
                             <td name="colFaltaJornadaTotal"></td>
                             <td name="colTardanzaTotal"></td>
@@ -3946,6 +3955,18 @@ function toggleColumnas() {
         dataT.api().columns('.colFaltaJornadaTotal').visible(true);
     } else {
         dataT.api().columns('.colFaltaJornadaTotal').visible(false);
+    }
+    // ? HORARIO NORMAL
+    if ($('#colHoraNormal').is(":checked")) {
+        dataT.api().columns('.colHoraNormal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNormal').visible(false);
+    }
+    // ? HORARIO NOCTURNO
+    if ($('#colHoraNocturna').is(":checked")) {
+        dataT.api().columns('.colHoraNocturna').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNocturna').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
