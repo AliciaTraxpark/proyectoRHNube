@@ -1102,7 +1102,6 @@ function asignarCalendario(){
             idcalenReg,idemples
         },
         statusCode: {
-
             419: function () {
                 location.reload();
             }

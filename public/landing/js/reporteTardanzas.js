@@ -56,13 +56,13 @@ $(function () {
 });
 /*   FIN DE COMBO BOX  */
 /*   CARGAR TABLA DE CONTROL EN RUTA  */
+$("#btnRecargaTabla").click(function(){
+    $(".loader").show();
+    $(".img-load").show();
+    console.log("click");
+});
 function cargartablaRuta(fecha1,fecha2) {
-
     var idemp = $('#idempleado').val();
-    setTimeout(function() {
-        $(".loader").show();
-        $(".img-load").show();
-    }, 1);
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzasRuta",
