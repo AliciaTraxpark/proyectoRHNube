@@ -410,7 +410,9 @@ function cargartabla(fecha) {
                                 <th name="colFaltaJornada" class="text-center colFaltaJornada">Jornada incompleta</th>
                                 <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
                                 <th name="faltaHorario" class="faltaHorario">Falta</th>
-                                <th name="colHE25D" class="text-center colHE25D">H.E. 25% Diurnas</th>`;
+                                <th name="colHE25D" class="text-center colHE25D">H.E. 25% Diurnas</th>
+                                <th name="colHE35D" class="text-center colHE35D">H.E. 35% Diurnas</th>
+                                <th name="colHE100D" class="text-center colHE100D">H.E. 100% Diurnas</th>`;
                 // ! MARCACION
                 var cantidadColumnasM = arrayHorario[m].split(",")[0];
                 for (let j = 0; j < cantidadColumnasM; j++) {
@@ -748,7 +750,9 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <div class="dropdown">
@@ -848,7 +852,9 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
                                 }
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
@@ -949,7 +955,9 @@ function cargartabla(fecha) {
                                 } else {
                                     grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                 }
-                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>`;
+                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
+                                                <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
+                                                <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
                             }
                         } else {
                             if (horarioData.horario != null) {
@@ -1013,7 +1021,9 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -1073,7 +1083,9 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
                                 }
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
@@ -1138,7 +1150,9 @@ function cargartabla(fecha) {
                                 } else {
                                     grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                 }
-                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>`;
+                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">---</td>
+                                                <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
+                                                <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
                             }
                         }
                         // ! MARCACIONES
@@ -1676,8 +1690,10 @@ function cargartabla(fecha) {
                                         <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
                                         <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">---</td>
                                         <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
-                                        <td name="faltaHorario" style="background: #f0f0f0;">---</td>
-                                        <td name="colHE25D" style="background: #f0f0f0;">---</td>`;
+                                        <td name="faltaHorario" class="text-center" style="background: #f0f0f0;">---</td>
+                                        <td name="colHE25D" class="text-center" style="background: #f0f0f0;">---</td>
+                                        <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
+                                        <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
                         // ! MARCACIONES
                         var tbodyEntradaySalida = "";
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
@@ -1798,7 +1814,9 @@ function cargartabla(fecha) {
                                 <td name="colFaltaJornada"></td>
                                 <td name="colTardanza"></td>
                                 <td name="faltaHorario"></td>
-                                <td name="colHE25D"></td>`;
+                                <td name="colHE25D"></td>
+                                <td name="colHE35D"></td>
+                                <td name="colHE100D"></td>`;
                     // ! MARCACIONES
                     for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                         tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td>';
