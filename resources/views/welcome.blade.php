@@ -63,7 +63,7 @@
                              </span>
                            @enderror
                          </div>
-                         <button type="submit" class="btn btn-primary btn-rh btn-block">Iniciar Sesión</button>
+                         <button type="submit" class="btn btn-rh btn-block">Iniciar Sesión</button>
                        </form>
                        <div class="dropdown-divider"></div>
                        <a class="dropdown-item text-center" href="{{ route('password.request') }}" style="font-size: 13px">¿Olvidaste tu contraseña?</a>
@@ -176,7 +176,7 @@
                </div>
                <div class="col text-center">
                   <span>
-                     <a  href="/files/BrochureRHnube .pdf" target="_blank" download="BrochureRHnube.pdf">
+                     <a  href="https://rhnube.com.pe/files/BrochureRHnube .pdf" target="_blank" download="BrochureRHnube.pdf">
                         Nuestro brochure
                         <picture>
                            <img src="{{ asset('landing/home/images/Recurso 1@1x.png') }}" width="40px" class="preguntas img-fluid img-thumbnail" alt="...">
@@ -369,7 +369,7 @@
                                  <input type="text" id="horaReunion" name="horaReunion" class="form-control form-control-sm" readonly placeholder="Hora">
                                </div>
                                <div class="form-group col-12 col-sm-4">
-                                 <button type="button" class="btn btn-primary btn-sm btn-second-rh btn-block" data-toggle="modal" data-target="#horarioDisponibles"> <img src="landing/images/eyewhite.png" width="18"> Ver horarios</button>
+                                 <button type="button" class="btn btn-sm btn-second-rh btn-block" data-toggle="modal" data-target="#horarioDisponibles"> <img src="landing/images/eyewhite.png" width="18"> Ver horarios</button>
                                </div>
                              </div>
                      </div>
@@ -382,7 +382,7 @@
                         <textarea  class="form-control" name="comentario" id="comentario" placeholder="Comentario" required=""></textarea>
                      </div>
                      <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                     <input type="submit" name="submit" class="submit btn btn-success" value="Enviar" />
+                     <input type="submit" name="submit" class="submit btn btn-second-rh" value="Enviar" />
                      <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
                   </fieldset>
                </form>
@@ -510,7 +510,7 @@
                       <textarea  class="form-control form-control-sm" name="mensajeP" id="mensajeP" placeholder="Mensaje" rows="2"></textarea>
                   </div> 
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-sm btn-rh">Enviar</button>
+                    <button type="submit" class="btn btn-sm btn-rh">Enviar</button>
                 </div>
                </form>
             </div>

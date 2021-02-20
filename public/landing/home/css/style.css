@@ -303,7 +303,14 @@ textarea.form-control {
 
 .btn-rh{
     background-color: #163652; 
-    border-color: #163652
+    border-color: #163652;
+    color: white;
+}
+
+.btn-rh:hover{
+    background-color: #0C2A44; 
+    border-color: #0C2A44;
+    color: white;
 }
 
 .color-rh{
@@ -361,9 +368,15 @@ jdiv#jvlabelWrap {
 .btn-second-rh{
     background-color: #ab60e0;
     border-color: #ab60e0;
+    color: white;
 }
 
 .btn-second-rh:hover {
   background-color: #9C3CE0;
   border-color: #9C3CE0;
+  color: white;
+}
+
+.dropdown-item:active{
+    background-color: #0C2A44; 
 }
