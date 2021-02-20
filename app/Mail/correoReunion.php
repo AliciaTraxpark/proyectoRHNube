@@ -24,7 +24,10 @@ class correoReunion extends Mailable
     public $cargo;
     public $nTrabajadores;
     public $fecha;
-    public function __construct($nombres, $apellidos, $telefono, $email, $empresa, $cargo, $nTrabajadores, $fecha)
+    public $comentario;
+    public $horario;
+    
+    public function __construct($nombres, $apellidos, $telefono, $email, $empresa, $cargo, $nTrabajadores, $comment, $fecha, $horario)
     {
         $this->nombres = $nombres;
         $this->apellidos = $apellidos;
@@ -34,6 +37,8 @@ class correoReunion extends Mailable
         $this->cargo = $cargo;
         $this->nTrabajadores = $nTrabajadores;
         $this->fecha = $fecha;
+        $this->comentario = $comment;
+        $this->horario = $horario;
     }
 
     /**

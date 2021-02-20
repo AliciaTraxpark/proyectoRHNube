@@ -139,6 +139,17 @@
             padding-top: 40px !important;
         }
     }
+
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        opacity: .8;
+        background: rgb(252,252,252);
+    }
 </style>
 
 
@@ -193,8 +204,8 @@
 
                 <div class="row justify-content-center">
                     {{-- GIF DE ESPERA --}}
-                    <div class="loader" class="text-center" style="display: none">
-                        <img src="{{ asset('landing/images/loading.gif') }}" height="100">
+                    <div class="loader" class="text-center"  style="display: flex !important; justify-content: center !important; align-items: center;">
+                        <img src="https://rhnube.com.pe/landing/images/logo_animado.gif" height="300" class="img-load" style="display: none">
                     </div>
 
                     <div id="tableZoom" class="col-md-12">
