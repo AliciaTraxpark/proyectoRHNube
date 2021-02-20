@@ -349,6 +349,10 @@
                                             <label for="">Horario normal por horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colHoraNormalTotal">
+                                            <label for="">Horario normal total</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colHoraNocturna">
                                             <label for="">Horario nocturno por horario</label>
                                         </li>
