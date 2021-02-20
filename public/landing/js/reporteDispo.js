@@ -489,6 +489,7 @@ function cargartabla(fecha) {
                 var sumaSobreTiempo = moment("00:00:00", "HH:mm:ss");   //: SUMANDO SOBRE TIEMPO
                 var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
                 var sumaHorasNormalesT = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS NORMALES
+                var sumaHorasNocturnasT = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS NOCTURNAS
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -587,6 +588,7 @@ function cargartabla(fecha) {
                                         var minutosNocturno = moment.duration(tiempoNocturno).minutes();
                                         var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
                                         sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                        sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                     }
                                     // * TIEMPO TOTAL TRABAJADA
                                     var tiempoRestanteD = horaFinalData - horaInicialData;
@@ -1695,7 +1697,7 @@ function cargartabla(fecha) {
                         <td name="colHoraNocturnaTotal" class="text-center colHoraNocturnaTotal" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-info mr-2">
                                 <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                ${sumaHorasNormalesT.format("HH:mm:ss")}
+                                ${sumaHorasNocturnasT.format("HH:mm:ss")}
                             </a>
                         </td>
                         <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
