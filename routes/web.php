@@ -631,3 +631,11 @@ Route::get('/recuperarSubact', 'subactividadController@recuperarSubactividad');
 Route::post('/registrarActivSimple', 'subactividadController@registrarActividadE');
 Route::get('/recuperarActSimple', 'subactividadController@recuperarActividad');
 /* ----------------------------------------------------------------------- */
+
+/*-----------------------------AGENDAR REUNIÓN------------------------------------------*/
+Route::get('/getFechasAgenda', 'AgendaController@getFreeHour');
+Route::get('/agendaPersonalizada', 'AgendaController@verAgenda');
+/*-----------------------------------------------------------------------*/
+
+Route::post('/partner', 'soportesPorCorreoController@envioPartner');
+

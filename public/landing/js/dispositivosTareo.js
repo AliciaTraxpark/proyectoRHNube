@@ -1,3 +1,4 @@
+$.fn.dataTable.ext.errMode = 'throw';
 $(document).ready(function () {
     /*-- TABLA DATATABLE DE DISPOSITIVOS---------- */
     var table = $("#tablaDips").DataTable({

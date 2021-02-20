@@ -1,3 +1,4 @@
+$.fn.dataTable.ext.errMode = 'throw';
 $(document).ready(function () {
     var ipv4_address = $('#ipv4');
     ipv4_address.inputmask({
@@ -70,6 +71,10 @@ $(document).ready(function () {
     302: function () {
         location.reload();
     }
+},
+"error": function() {
+    console.log("error encountered ! ");
+
 },
 
    "dataSrc": ""

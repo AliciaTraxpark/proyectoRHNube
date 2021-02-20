@@ -1301,6 +1301,7 @@
                     <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                         <div class="row">
                             <input type="hidden" id="idHoraEmpleado_re">
+                            <input type="hidden" id="tipoHorario">
                             <div class="col-md-12">
                                 <form action="javascript:actualizarConfigHorario_re()">
                                     <div class="row">
@@ -1396,9 +1397,8 @@
                             <div class="row">
                                 <div class="col-md-12 text-right">
                                     <button type="button" class="btn btn-light btn-sm "
-                                        data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" name="" style="background-color: #163552;"
-                                        class="btn btn-sm">Guardar</button>
+                                        data-dismiss="modal">Cerrar</button>
+                                    
                                     </form>
                                 </div>
                             </div>

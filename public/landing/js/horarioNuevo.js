@@ -320,7 +320,11 @@ function calendario() {
 
             //*CUANDO ES HORARIO NUEVO ASIGNADO
             if (info.event.textColor == '111111') {
-
+               if(info.event.backgroundColor=='#e2e2e2'){
+                $('#tipoHorario').val('0');
+               } else{
+                $('#tipoHorario').val('1');
+               }
                 /* UNBIND SOLO UNA VEZ */
                 $('#eliminaHorarioDia_re').unbind().click(function () {
                     $('#editarConfigHorario_re').modal('hide');
@@ -339,11 +343,12 @@ function calendario() {
                         },
                         callback: function (result) {
                             if (result == true) {
+                                var tipoEliminar= $('#tipoHorario').val();
                                 $.ajax({
                                     type: "post",
                                     url: "/eliminarHora",
                                     data: {
-                                        idHora: info.event.id
+                                        idHora: info.event.id,tipoEliminar
                                     },
                                     statusCode: {
 
@@ -413,7 +418,7 @@ function calendario() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-            if(info.event.textColor!='#000'){
+            if(info.event.textColor=='111111'){
               if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
@@ -3944,12 +3949,12 @@ function actualizarConfigHorario_re() {
         permiteHadicional = 0;
         nHorasAdic = null;
     }
-
+    let tipHorarioC=$('#tipoHorario').val();
     $.ajax({
         type: "post",
         url: "/horario/actualizarConfigHorario",
         data: {
-            idHoraEmp, fueraHorario, permiteHadicional, nHorasAdic
+            idHoraEmp, fueraHorario, permiteHadicional, nHorasAdic,tipHorarioC
         },
         statusCode: {
             419: function () {
@@ -4133,13 +4138,20 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
             var contenido= "";
 
             //*boton para elimnar seleecionados
-            contenido+=`<div class="col-md-12 mb-2">
+            contenido+=`<div class="col-md-12 row mb-2">
 
-            <div class="btn-group d-none d-sm-inline-block">
+            <div class="col-md-6">
+            <div class="form-check" style="padding-bottom: 10px;">
+            <input type="checkbox" class="form-check-input" id="checkselectElim">
+            <label class="form-check-label" for="checkselectElim"
+                style="margin-top: 2px;font-weight: 600">Seleccionar todos</label>
+            </div>
+            </div>
+            <div class="col-md-6 text-right">
                 <button onclick="eliminarMasivoHorarios()" type="button" class="btn btn-soft-danger btn-sm"><i
                         class="uil uil-trash-alt mr-1"></i>Eliminar seleccionados</button>
-            </div>
-        </div>`;
+             </div>
+                      </div>`;
 
             $.each(data, function (key, item) {
 
@@ -4194,3 +4206,16 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
 
     });
 }
+//*CHECK SELECCIONAR TODOS LOS HORARIOS PARA BORRAR
+$(function () {
+    $(document).on('change', '#checkselectElim', function (event) {
+        if ($('#checkselectElim').prop('checked')) {
+            $('#nHorasAdic_Actualizar_re').show();
+            $(".chechHoraEmp").prop("checked",true);
+        } else {
+            $(".chechHoraEmp").prop("checked",false);
+
+        }
+
+    });
+});

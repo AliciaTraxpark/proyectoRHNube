@@ -7,6 +7,7 @@ var fecha;
 var fechaD;
 var fechaH;
 
+$("div.loader").hide(0);
 //* FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
     mode: "range",
@@ -55,10 +56,13 @@ $(function () {
 });
 /*   FIN DE COMBO BOX  */
 /*   CARGAR TABLA DE CONTROL EN RUTA  */
-function cargartablaRuta(fecha1,fecha2) {
-
-    var idemp = $('#idempleado').val();
+$("#btnRecargaTabla").click(function(){
     $(".loader").show();
+    $(".img-load").show();
+    console.log("click");
+});
+function cargartablaRuta(fecha1,fecha2) {
+    var idemp = $('#idempleado').val();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzasRuta",
@@ -366,6 +370,7 @@ function cargartablaRuta(fecha1,fecha2) {
                 
                 setTimeout(function() {
                     $(".loader").hide();
+                    $(".img-load").hide();
                 }, 1000);
             } else {
                 //$('#btnsDescarga').hide();
@@ -373,6 +378,7 @@ function cargartablaRuta(fecha1,fecha2) {
                 $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
                 setTimeout(function() {
                     $(".loader").hide();
+                    $(".img-load").hide();
                 }, 1000);
             }
         },
@@ -407,7 +413,7 @@ function cargartablaRuta(fecha1,fecha2) {
 function cargartablaCR(fecha1,fecha2) {
 
     var idemp = $('#idempleado').val();
-
+    $(".loader").show();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzas",
@@ -424,6 +430,7 @@ function cargartablaCR(fecha1,fecha2) {
             }
         },
         success: function (data) {
+             $(".loader").hide();
             console.log(data.length);
             if (data.length != 0) {
                 razonSocial = data[0].organi_razonSocial;
@@ -713,7 +720,6 @@ function cargartablaCR(fecha1,fecha2) {
                     $("#tablaReport").css('width', '100%');
                     table.draw(true);
                 });
-                
             } else {
                 ///$('#btnsDescarga').hide();
                 $('#tbodyD').empty();
@@ -751,7 +757,7 @@ function cargartablaCR(fecha1,fecha2) {
 function cargartablaPuerta(fecha1,fecha2) {
 
     var idemp = $('#idempleado').val();
-
+    $(".loader").show();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzasPuerta",
@@ -768,6 +774,7 @@ function cargartablaPuerta(fecha1,fecha2) {
             }
         },
         success: function (data) {
+            $(".loader").hide();
             console.log(data.length);
             if (data.length != 0) {
                 razonSocial = data[0].organi_razonSocial;
@@ -1057,7 +1064,6 @@ function cargartablaPuerta(fecha1,fecha2) {
                     $("#tablaReport").css('width', '100%');
                     table.draw(true);
                 });
-                
             } else {
                 ///$('#btnsDescarga').hide();
                 $('#tbodyD').empty();

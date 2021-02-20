@@ -69,7 +69,29 @@ class apiBiometricoController extends Controller
                         ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                         ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
                         ->get();
-                    $tab->organizacion = $organizacion;
+                        $OrganizacionesReg=new Collection();
+                        if($organizacion->isNotEmpty()){
+                            foreach($organizacion as $organizaciones ){
+                                if($organizaciones->rol_id==1){
+                                    $OrganizacionesReg->push($organizaciones) ;
+                                }
+                                else{
+                                    $invitado = invitado::where('user_Invitado', '=', Auth::user()->id)
+                                    ->where('organi_id', '=', $organizaciones->organi_id)
+                                    ->get()->first();
+                                    if($invitado){
+                                        if ($invitado->estado_condic == 1 && $invitado->estado == 1) {
+                                            if ($invitado->extractorRH == 1) {
+                                                $OrganizacionesReg->push($organizaciones) ;
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                        $tab->organizacion = $OrganizacionesReg;
+
                 }
 
                 return response()->json(array(
