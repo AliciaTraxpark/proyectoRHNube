@@ -249,6 +249,15 @@
         width: auto !important;
     }
 
+    .allow-focus {
+        padding: 0rem 0;
+        min-width: 19em !important;
+        height: auto;
+        max-height: 250px;
+        overflow: auto;
+        position: absolute;
+    }
+
     @media (max-width: 767.98px) {
         .separacion {
             padding-right: 1em !important;
@@ -320,8 +329,7 @@
                                     </label>
                                 </div>
                             </a>
-                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;min-width: 16em!important;height: auto;
-                                max-height: 250px;overflow: auto;position: absolute;">
+                            <div class="dropdown-menu allow-focus">
                                 <h6 class="dropdown-header text-left"
                                     style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                     <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"
