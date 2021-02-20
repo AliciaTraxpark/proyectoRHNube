@@ -176,7 +176,7 @@
                </div>
                <div class="col text-center">
                   <span>
-                     <a  href="http://192.168.1.50:8000/files/BrochureRHnube .pdf" target="_blank" download="BrochureRHnube.pdf">
+                     <a  href="/files/BrochureRHnube .pdf" target="_blank" download="BrochureRHnube.pdf">
                         Nuestro brochure
                         <picture>
                            <img src="{{ asset('landing/home/images/Recurso 1@1x.png') }}" width="40px" class="preguntas img-fluid img-thumbnail" alt="...">

@@ -205,7 +205,7 @@
                 <div class="row justify-content-center">
                     {{-- GIF DE ESPERA --}}
                     <div class="loader" class="text-center"  style="display: flex !important; justify-content: center !important; align-items: center;">
-                        <img src="{{ asset('landing/images/logo_animado.gif') }}" height="300" class="img-load" style="display: none">
+                        <img src="https://rhnube.com.pe/landing/images/logo_animado.gif" height="300" class="img-load" style="display: none">
                     </div>
 
                     <div id="tableZoom" class="col-md-12">

@@ -59,8 +59,10 @@ $(function () {
 function cargartablaRuta(fecha1,fecha2) {
 
     var idemp = $('#idempleado').val();
-    $(".loader").show();
-    $(".img-load").show();
+    setTimeout(function() {
+        $(".loader").show();
+        $(".img-load").show();
+    }, 1);
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzasRuta",
@@ -77,8 +79,6 @@ function cargartablaRuta(fecha1,fecha2) {
             }
         },
         success: function (data) {
-            $(".loader").hide();
-            $(".img-load").hide();
             if (data.length != 0) {
                 razonSocial = data[0].organi_razonSocial;
                 direccion = data[0].organi_direccion;
@@ -368,10 +368,18 @@ function cargartablaRuta(fecha1,fecha2) {
                     table.draw(true);
                 });
                 
+                setTimeout(function() {
+                    $(".loader").hide();
+                    $(".img-load").hide();
+                }, 1000);
             } else {
                 //$('#btnsDescarga').hide();
                 $('#tbodyD').empty();
                 $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+                setTimeout(function() {
+                    $(".loader").hide();
+                    $(".img-load").hide();
+                }, 1000);
             }
         },
         error: function () { }
@@ -406,7 +414,6 @@ function cargartablaCR(fecha1,fecha2) {
 
     var idemp = $('#idempleado').val();
     $(".loader").show();
-    $(".img-loader").show();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzas",
@@ -423,8 +430,7 @@ function cargartablaCR(fecha1,fecha2) {
             }
         },
         success: function (data) {
-            $(".loader").hide();
-            $(".img-loader").hide();
+             $(".loader").hide();
             console.log(data.length);
             if (data.length != 0) {
                 razonSocial = data[0].organi_razonSocial;
@@ -752,7 +758,6 @@ function cargartablaPuerta(fecha1,fecha2) {
 
     var idemp = $('#idempleado').val();
     $(".loader").show();
-    $(".img-loader").show();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzasPuerta",
@@ -769,7 +774,6 @@ function cargartablaPuerta(fecha1,fecha2) {
             }
         },
         success: function (data) {
-            $(".img-loader").hide();
             $(".loader").hide();
             console.log(data.length);
             if (data.length != 0) {
