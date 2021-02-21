@@ -249,6 +249,15 @@
         width: auto !important;
     }
 
+    .allow-focus {
+        padding: 0rem 0;
+        min-width: 19em !important;
+        height: auto;
+        max-height: 250px;
+        overflow: auto;
+        position: absolute;
+    }
+
     @media (max-width: 767.98px) {
         .separacion {
             padding-right: 1em !important;
@@ -320,8 +329,7 @@
                                     </label>
                                 </div>
                             </a>
-                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;min-width: 16em!important;height: auto;
-                                max-height: 250px;overflow: auto;position: absolute;">
+                            <div class="dropdown-menu allow-focus">
                                 <h6 class="dropdown-header text-left"
                                     style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                     <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"
@@ -345,32 +353,48 @@
                                     </li>
                                     <ul class="ulHijo" style="display: none" id="contenidoDetalle">
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colTiempoSitio">
-                                            <label for="">Tiempo entre marcaciónes</label>
+                                            <input type="checkbox" id="colHoraNormal">
+                                            <label for="">Horario normal por horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colTiempoEntreH">
-                                            <label for="">Tiempo entre horario</label>
+                                            <input type="checkbox" id="colHoraNormalTotal">
+                                            <label for="">Horario normal total</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colTiempoTotal" checked>
-                                            <label for="">Tiempo total</label>
+                                            <input type="checkbox" id="colHoraNocturna">
+                                            <label for="">Horario nocturno por horario</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colHoraNocturnaTotal">
+                                            <label for="">Horario nocturno total</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colFaltaJornada">
+                                            <label for="">Jornada incompleta por horario</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colFaltaJornadaTotal">
+                                            <label for="">Jornada incompleta total</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colSobreTiempo">
-                                            <label for="">Sobretiempo entre horario</label>
+                                            <label for="">Sobretiempo por horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colSobreTiempoTotal" checked>
                                             <label for="">Sobretiempo total</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colFaltaJornada">
-                                            <label for="">Jornada incompleta entre horario</label>
+                                            <input type="checkbox" id="colTiempoEntreH">
+                                            <label for="">Tiempo por horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colFaltaJornadaTotal">
-                                            <label for="">Jornada incompleta total</label>
+                                            <input type="checkbox" id="colTiempoSitio">
+                                            <label for="">Tiempo por marcaciones</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colTiempoTotal" checked>
+                                            <label for="">Tiempo total</label>
                                         </li>
                                     </ul>
                                 </ul>
