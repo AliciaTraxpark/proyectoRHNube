@@ -592,7 +592,7 @@ class horarioController extends Controller
             ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)->get();
         $idasignar = collect();
         $idhors = collect();
-        if ($temporal_eventoH) {
+        if ($temporal_eventoH->isNotEmpty()) {
             foreach ($temporal_eventoH as $temporal_eventosH) {
                 $horario_dias = new horario_dias();
                 $horario_dias->title = $temporal_eventosH->title;
@@ -689,7 +689,7 @@ class horarioController extends Controller
         $temporal_evento = temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '=', null)->where('temp_horaF', '=', null)->where('textColor', '!=', '#0b1b29')
             ->where('textColor', '!=', '#fff7f7')->get();
-        if ($temporal_evento) {
+        if ($temporal_evento->isNotEmpty()) {
             $empleadoN = DB::table('empleado as e')
                 ->select('e.emple_id')
                 ->distinct('e.emple_id')
@@ -741,7 +741,7 @@ class horarioController extends Controller
         $temporal_eventotextc = temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '=', null)->where('temp_horaF', '=', null)->where('textColor', '=', '#0b1b29')
             ->orWhere('textColor', '=', '#fff7f7')->get();
-        if ($temporal_eventotextc) {
+        if ($temporal_eventotextc->isNotEmpty()) {
             foreach ($temporal_eventotextc as $temporal_eventotextcs) {
                 foreach ($idemps as $idempleados) {
                     $eventos_empleado = new eventos_empleado();
@@ -760,7 +760,7 @@ class horarioController extends Controller
 
         $temporal_eventoInc =  temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->where('temp_horaF', '!=', null)->get();
-        if ($temporal_eventoInc) {
+        if ($temporal_eventoInc->isNotEmpty()) {
             foreach ($temporal_eventoInc as $temporal_eventoIncs) {
                 $inc_dias = new incidencia_dias();
                 $inc_dias->inciden_dias_fechaI = $temporal_eventoIncs->start;
@@ -781,7 +781,8 @@ class horarioController extends Controller
 
         /*   dd($datosDentroN); */
         $empleadosMostrar = collect();
-        foreach ($datosDentroN as $datosDentroNs) {
+        if ($temporal_eventoH->isNotEmpty()) {
+           foreach ($datosDentroN as $datosDentroNs) {
             $empleadosTabla = DB::table('empleado as e')
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'e.emple_nDoc', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
@@ -790,6 +791,8 @@ class horarioController extends Controller
                 ->get();
             $empleadosMostrar->push($empleadosTabla);
         }
+        }
+
 
         $datosEmpleadosSH = Arr::flatten($empleadosMostrar);
         return $datosEmpleadosSH;
