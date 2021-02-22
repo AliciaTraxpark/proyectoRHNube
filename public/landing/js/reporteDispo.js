@@ -410,6 +410,7 @@ function cargartabla(fecha) {
                                 <th name="toleranciaFHorario" class="toleranciaFHorario">Tolerancia en la salida</th>
                                 <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo total</th>
                                 <th name="colHoraNormal" class="text-center colHoraNormal">Horario normal</th>
+                                <th name="colSobreTNormal" class="text-center colSobreTNormal">Sobretiempo normal</th>
                                 <th name="colHoraNocturna" class="text-center colHoraNocturna">Horario nocturno</th>
                                 <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobretiempo</th>
                                 <th name="colFaltaJornada" class="text-center colFaltaJornada">Jornada incompleta</th>
@@ -529,6 +530,7 @@ function cargartabla(fecha) {
                     var horasFaltaJ = "00";
                     // * HORARIO NORMAL
                     var sumaHorasNormales = moment("00:00:00", "HH:mm:ss");
+                    var sobretiempoNormales = moment("00:00:00", "HH:mm:ss");
                     // * HORARIO NOCTURNO
                     var sumaHorasNocturnas = moment("00:00:00", "HH:mm:ss");
                     // * HORAS EXTRAS
@@ -665,6 +667,7 @@ function cargartabla(fecha) {
                                 var minutosExtra = moment.duration(tiempoExtraResta).minutes();
                                 var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
                                 var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                sobretiempoNormales = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
                                 var tiempoSobrante = {};
                                 if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                     diurnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
@@ -756,6 +759,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
                                                             ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;">
@@ -858,6 +867,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
                                                             ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;">
@@ -963,6 +978,12 @@ function cargartabla(fecha) {
                                                         ${moment(sumaHorasNormales).format("HH:mm:ss")}
                                                     </a>
                                                 </td>
+                                                <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
                                                 <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;">
                                                     <a class="badge badge-soft-info mr-2">
                                                         <img src="landing/images/moon.svg" height="12" class="mr-2">
@@ -1028,6 +1049,12 @@ function cargartabla(fecha) {
                                                             ${moment(sumaHorasNormales).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
+                                                    <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;">
                                                         <a class="badge badge-soft-info mr-2">
                                                             <img src="landing/images/moon.svg" height="12" class="mr-2">
@@ -1089,6 +1116,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
                                                             ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;">
@@ -1158,6 +1191,12 @@ function cargartabla(fecha) {
                                                         ${moment(sumaHorasNormales).format("HH:mm:ss")}
                                                     </a>
                                                 </td>
+                                                <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
                                                 <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;">
                                                     <a class="badge badge-soft-info mr-2">
                                                         <img src="landing/images/moon.svg" height="12" class="mr-2">
@@ -1728,6 +1767,7 @@ function cargartabla(fecha) {
                                         <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;">---</td>
                                         <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;">---</td>
                                         <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;">---</td>
+                                        <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;">---</td>
                                         <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;">---</td>
                                         <td name="colSobreTiempo" class="text-center" style="background: #fafafa;">---</td>
                                         <td name="colFaltaJornada" class="text-center" style="background: #fafafa;">---</td>
@@ -1851,6 +1891,7 @@ function cargartabla(fecha) {
                                 <td name="toleranciaFHorario"></td>
                                 <td name="colTiempoEntreH"></td>
                                 <td name="colHoraNormal"></td>
+                                <td name="colSobreTNormal"></td>
                                 <td name="colHoraNocturna"></td>
                                 <td name="colSobreTiempo"></td>
                                 <td name="colFaltaJornada"></td>
@@ -4076,6 +4117,12 @@ function toggleColumnas() {
         dataT.api().columns('.colHE100D').visible(true);
     } else {
         dataT.api().columns('.colHE100D').visible(false);
+    }
+    // ? SOBRETIEMPO NORMAL POR HORARIO
+    if ($('#colSobreTNormal').is(":checked")) {
+        dataT.api().columns('.colSobreTNormal').visible(true);
+    } else {
+        dataT.api().columns('.colSobreTNormal').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA

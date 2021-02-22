@@ -390,6 +390,10 @@
                                                 <label for="">Sobretiempo total por horario</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colSobreTNormal">
+                                                <label for="">Sobretiempo normal por horario</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoEntreH">
                                                 <label for="">Tiempo por horario</label>
                                             </li>
