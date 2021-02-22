@@ -412,6 +412,7 @@ function cargartabla(fecha) {
                                 <th name="toleranciaIHorario" class="toleranciaIHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en el ingreso</th>
                                 <th name="toleranciaFHorario" class="toleranciaFHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en la salida</th>
                                 <th name="colTiempoEntreH" class="text-center colTiempoEntreH" style="border-right: 1px dashed #c8d4de!important;">Tiempo total</th>
+                                <th name="colSobreTiempo" class="text-center colSobreTiempo" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo</th>
                                 <th name="colHoraNormal" class="text-center colHoraNormal" style="border-right: 1px dashed #c8d4de!important;">Horario normal</th>
                                 <th name="colSobreTNormal" class="text-center colSobreTNormal" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo normal</th>
                                 <th name="colHE25D" class="text-center colHE25D" style="border-right: 1px dashed #c8d4de!important;">H.E. 25% Diurnas</th>
@@ -419,13 +420,12 @@ function cargartabla(fecha) {
                                 <th name="colHE100D" class="text-center colHE100D" style="border-right: 1px dashed #c8d4de!important;">H.E. 100% Diurnas</th>
                                 <th name="colHoraNocturna" class="text-center colHoraNocturna" style="border-right: 1px dashed #c8d4de!important;">Horario nocturno</th>
                                 <th name="colSobreTNocturno" class="text-center colSobreTNocturno" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo nocturno</th>
-                                <th name="colSobreTiempo" class="text-center colSobreTiempo" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo</th>
-                                <th name="colFaltaJornada" class="text-center colFaltaJornada" style="border-right: 1px dashed #c8d4de!important;">Jornada incompleta</th>
-                                <th name="colTardanza" class="text-center colTardanza" style="border-right: 1px dashed #c8d4de!important;">Tardanza</th>
-                                <th name="faltaHorario" class="faltaHorario" style="border-right: 1px dashed #c8d4de!important;">Falta</th>
                                 <th name="colHE25N" class="text-center colHE25N" style="border-right: 1px dashed #c8d4de!important;">H.E. 25% Nocturnas</th>
                                 <th name="colHE35N" class="text-center colHE35N" style="border-right: 1px dashed #c8d4de!important;">H.E. 35% Nocturnas</th>
-                                <th name="colHE100N" class="text-center colHE100N">H.E. 100% Nocturnas</th>`;
+                                <th name="colHE100N" class="text-center colHE100N" style="border-right: 1px dashed #c8d4de!important;">H.E. 100% Nocturnas</th>
+                                <th name="colFaltaJornada" class="text-center colFaltaJornada" style="border-right: 1px dashed #c8d4de!important;">Jornada incompleta</th>
+                                <th name="colTardanza" class="text-center colTardanza" style="border-right: 1px dashed #c8d4de!important;">Tardanza</th>
+                                <th name="faltaHorario" class="faltaHorario" style="border-right: 1px dashed #c8d4de!important;">Falta</th>`;
                 // ! MARCACION
                 var cantidadColumnasM = arrayHorario[m].split(",")[0];
                 for (let j = 0; j < cantidadColumnasM; j++) {
@@ -804,6 +804,12 @@ function cargartabla(fecha) {
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                        </a>
+                                                    </td>
                                                     <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -831,12 +837,9 @@ function cargartabla(fecha) {
                                                             ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        <a class="badge badge-soft-primary mr-2">
-                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
-                                                        </a>
-                                                    </td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -859,10 +862,6 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                     }
-                                    grupoHorario += `
-                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
-                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
-                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>`;
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                         <div class="dropdown">
@@ -922,6 +921,12 @@ function cargartabla(fecha) {
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                        </a>
+                                                    </td>
                                                     <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -949,12 +954,9 @@ function cargartabla(fecha) {
                                                             ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        <a class="badge badge-soft-primary mr-2">
-                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
-                                                        </a>
-                                                    </td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -977,10 +979,6 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                     }
-                                    grupoHorario += `
-                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
-                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
-                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>`;
                                 }
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
@@ -1041,6 +1039,12 @@ function cargartabla(fecha) {
                                                         ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                     </a>
                                                 </td>
+                                                <td class="text-center" name="colSobreTiempo" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-primary mr-2">
+                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                        ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                    </a>
+                                                </td>
                                                 <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-warning mr-2">
                                                         <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -1063,17 +1067,14 @@ function cargartabla(fecha) {
                                                     </a>
                                                 </td>
                                                 <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        <a class="badge badge-soft-info mr-2">
-                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                <td class="text-center" name="colSobreTiempo" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                    <a class="badge badge-soft-primary mr-2">
-                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                        ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                    <a class="badge badge-soft-info mr-2">
+                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                        ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                     </a>
                                                 </td>
+                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                 <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-danger mr-2">
                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -1096,10 +1097,6 @@ function cargartabla(fecha) {
                                 } else {
                                     grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                 }
-                                grupoHorario += `
-                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
-                                                <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
-                                                <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>`;
                             }
                         } else {
                             if (horarioData.horario != null) {
@@ -1120,6 +1117,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                         </a>
                                                     </td>
                                                     <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1149,12 +1152,9 @@ function cargartabla(fecha) {
                                                             ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        <a class="badge badge-soft-primary mr-2">
-                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
-                                                        </a>
-                                                    </td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -1178,10 +1178,6 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                     }
-                                    grupoHorario += `
-                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
-                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
-                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>`;
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -1199,6 +1195,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                         </a>
                                                     </td>
                                                     <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1228,12 +1230,9 @@ function cargartabla(fecha) {
                                                             ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        <a class="badge badge-soft-primary mr-2">
-                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
-                                                        </a>
-                                                    </td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -1256,10 +1255,6 @@ function cargartabla(fecha) {
                                     } else {
                                         grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                     }
-                                    grupoHorario += `
-                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
-                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
-                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>`;
                                 }
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
@@ -1284,6 +1279,12 @@ function cargartabla(fecha) {
                                                         ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                     </a>
                                                 </td>
+                                                <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-primary mr-2">
+                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                        ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                    </a>
+                                                </td>
                                                 <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-warning mr-2">
                                                         <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -1306,17 +1307,14 @@ function cargartabla(fecha) {
                                                     </a>
                                                 </td>
                                                 <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        <a class="badge badge-soft-info mr-2">
-                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                    <a class="badge badge-soft-primary mr-2">
-                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                        ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                    <a class="badge badge-soft-info mr-2">
+                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                        ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                     </a>
                                                 </td>
+                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                 <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-danger mr-2">
                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -1339,10 +1337,6 @@ function cargartabla(fecha) {
                                 } else {
                                     grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                 }
-                                grupoHorario += `
-                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
-                                                <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
-                                                <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>`;
                             }
                         }
                         // ! MARCACIONES
@@ -1875,6 +1869,7 @@ function cargartabla(fecha) {
                                         <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHE25D" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
@@ -1882,13 +1877,12 @@ function cargartabla(fecha) {
                                         <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
-                                        <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
-                                        <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
-                                        <td name="colTardanza" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
-                                        <td name="faltaHorario" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHE25N" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHE35N" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
-                                        <td name="colHE100N" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
+                                        <td name="colHE100N" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colTardanza" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="faltaHorario" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                         // ! MARCACIONES
                         var tbodyEntradaySalida = "";
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
@@ -2003,6 +1997,7 @@ function cargartabla(fecha) {
                                 <td name="toleranciaIHorario"></td>
                                 <td name="toleranciaFHorario"></td>
                                 <td name="colTiempoEntreH"></td>
+                                <td name="colSobreTiempo"></td>
                                 <td name="colHoraNormal"></td>
                                 <td name="colSobreTNormal"></td>
                                 <td name="colHE25D"></td>
@@ -2010,13 +2005,12 @@ function cargartabla(fecha) {
                                 <td name="colHE100D"></td>
                                 <td name="colHoraNocturna"></td>
                                 <td name="colSobreTNocturno"></td>
-                                <td name="colSobreTiempo"></td>
-                                <td name="colFaltaJornada"></td>
-                                <td name="colTardanza"></td>
-                                <td name="faltaHorario"></td>
                                 <td name="colHE25N"></td>
                                 <td name="colHE35N"></td>
-                                <td name="colHE100N"></td>`;
+                                <td name="colHE100N"></td>
+                                <td name="colFaltaJornada"></td>
+                                <td name="colTardanza"></td>
+                                <td name="faltaHorario"></td>`;
                     // ! MARCACIONES
                     for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                         tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td>';
@@ -4242,7 +4236,7 @@ function toggleColumnas() {
         dataT.api().columns('.colSobreTNormal').visible(false);
     }
     // ? SOBRETIEMPO NOCTURNO POR HORARIO
-    if($('#colSobreTNocturno').is(":checked")) {
+    if ($('#colSobreTNocturno').is(":checked")) {
         dataT.api().columns('.colSobreTNocturno').visible(true);
     } else {
         dataT.api().columns('.colSobreTNocturno').visible(false);
