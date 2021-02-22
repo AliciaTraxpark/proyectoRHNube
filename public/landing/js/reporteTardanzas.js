@@ -55,12 +55,13 @@ $(function () {
     $('#ID_END').val(fHoy);
 });
 /*   FIN DE COMBO BOX  */
-/*   CARGAR TABLA DE CONTROL EN RUTA  */
+/*   MOSTRAR GIF DE CARGANDO  */
 $("#btnRecargaTabla").click(function(){
     $(".loader").show();
     $(".img-load").show();
     console.log("click");
 });
+/*   CARGAR TABLA DE CONTROL EN RUTA   */
 function cargartablaRuta(fecha1,fecha2) {
     var idemp = $('#idempleado').val();
     $.ajax({
@@ -779,7 +780,7 @@ function cargartablaCR(fecha1,fecha2) {
     });
 }
 
-/*   CARGAR TABLA DE CONTROL REMOTO   */
+/*   CARGAR TABLA DE CONTROL EN PUERTA   */
 function cargartablaPuerta(fecha1,fecha2) {
     var idemp = $('#idempleado').val();
     $.ajax({
