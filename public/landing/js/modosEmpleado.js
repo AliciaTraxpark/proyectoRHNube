@@ -1527,38 +1527,6 @@ function agregarControlRT(id) {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-        // success: function (data) {
-        //     if (data == 1) {
-        //         $("#modalControlRT").modal("toggle");
-        //         RefreshTablaEmpleado();
-        //         $.notifyClose();
-        //         agregarCelularE(idEmpleado);
-        //     } else {
-        //         $("#modalControlRT").modal("toggle");
-        //         RefreshTablaEmpleado();
-        //         showNotificaciones();
-        //         $.notify(
-        //             {
-        //                 message: "\nRegistro de dispositivo y sms enviado con exito\n",
-        //                 icon: "admin/images/checked.svg",
-        //             },
-        //             {
-        //                 icon_type: "image",
-        //                 newest_on_top: true,
-        //                 delay: 5000,
-        //                 template:
-        //                     '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-        //                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-        //                     '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-        //                     '<span data-notify="title">{1}</span> ' +
-        //                     '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-        //                     "</div>",
-        //                 spacing: 35,
-        //             }
-        //         );
-        //     }
-        // },
-        // error: function () { },
     })
         .done(function (data) {
             if (data.respuesta != undefined) {

@@ -3810,34 +3810,6 @@ function togglePorHorario() {
 function togglePorTotales() {
     $('#contenidoPorT').toggle();
 }
-// * FUNCION DE CHECKBOX HIJOS DETALLES
-// $('.detalleHijo input[type=checkbox]').change(function () {
-//     var contenido = $(this).closest('ul');
-//     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
-//         contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
-//             indeterminate: false,
-//             checked: true
-//         });
-//     } else {
-//         if (contenido.find('input[type=checkbox]:checked').length != 0) {
-//             contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
-//                 indeterminate: true,
-//                 checked: false
-//             });
-//         } else {
-//             contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
-//                 indeterminate: false,
-//                 checked: false
-//             });
-//         }
-//     }
-//     toggleColumnas();
-// });
-// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
-// $('.detallePadre input[type=checkbox]').change(function () {
-//     $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
-//     toggleColumnas();
-// });
 // * HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
     var contenido = $(this).closest('ul');
