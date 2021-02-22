@@ -4253,6 +4253,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colHE35N').visible(false);
     }
+    // ? HORAS EXTRAS 100% DIURNAS
+    if ($('#colHE100N').is(":checked")) {
+        dataT.api().columns('.colHE100N').visible(true);
+    } else {
+        dataT.api().columns('.colHE100N').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
