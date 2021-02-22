@@ -8,6 +8,12 @@ var table = {};
 var tableActividad = {};
 var datos = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$("div.loader").hide(0);
+$("#btnRecargaTabla").click(function(){
+    $(".loader").show();
+    $(".img-load").show();
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*    SELECCIONA MES PARA EL REPORTE     */
 $('#fechaMensual').datetimepicker({
     language: 'es',
@@ -112,8 +118,17 @@ function getTardanzas() {
             /*  OBTIENE TODAS LAS TARDANZAS SEGÚN EL EMPLEADO Y DÍA  */
             datos = data;
             reporteMatriz();
+            setTimeout(function() {
+                $(".loader").hide();
+                $(".img-load").hide();
+            }, 500);
         },
-        error: function (data) { }
+        error: function (data) { 
+            setTimeout(function() {
+                $(".loader").hide();
+                    $(".img-load").hide();
+            }, 500);
+        }
     })
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,6 +189,10 @@ function reporteMatriz() {
             "ordering": true,
             "autoWidth": true,
             paging: false,
+            lengthMenu: [10, 25, 50, 75, 100],
+            processing: true,
+            retrieve: true,
+            pageLength: 10,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -199,14 +218,21 @@ function reporteMatriz() {
                 },
                 "buttons": {
                     "copy": "Copiar",
-                    "colvis": "Visibilidad"
+                    "colvis": "Visibilidad",
+                    pageLength: {
+                        "_": "Mostrar %d registros"
+                    },
                 }
             },
-            dom: 'Blfrtip',
+            dom: 'Bfrtip',
+            lengthMenu: [10, 25, 50, 100],
             buttons: [{
+                    extend: 'pageLength',
+                    className: 'btn btn-sm mt-1',
+                },{
                 extend: 'excel',
                 className: 'btn btn-sm mt-1',
-                text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                text: "<i><img src='admin/images/excel.svg' height='16'></i> Descargar",
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var downrows = 5;
@@ -280,7 +306,7 @@ function reporteMatriz() {
             }, {
                 extend: "pdfHtml5",
                 className: 'btn btn-sm mt-1',
-                text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                text: "<i><img src='admin/images/pdf.svg' height='16'></i> Descargar",
                 orientation: 'landscape',
                 pageSize: 'A1',
                 title: 'Matriz Tardanzas',
