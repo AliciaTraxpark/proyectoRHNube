@@ -45,7 +45,7 @@ class schedulingWork extends Command
             if ( $today->hour === 5 && $today->minute === 0 && $today->second === 0) {
                 $this->call('schedule:run');
             }
-
+            
             sleep(1);
         }
     }
