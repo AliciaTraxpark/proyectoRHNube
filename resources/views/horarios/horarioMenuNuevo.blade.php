@@ -12,6 +12,9 @@
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <link href="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -227,9 +230,20 @@
         .borderColor {
             border-color: red;
         }
+        .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        opacity: .8;
+        background: rgb(252,252,252);
+    }
 
     </style>
     <div class="row row-divided">
+
         <div class="col-md-12 col-xl-12">
             <div class="card">
                 <div class="card-body"
@@ -282,6 +296,10 @@
                             </button>
                         </div>
                         <div class="modal-body" style="font-size: 13x!important;padding-top: 4px;padding-bottom: 8px;">
+
+                            <div class="loader" class="text-center"  style="display: flex !important; justify-content: center !important; align-items: center;">
+                                <img src="{{URL::asset('landing/images/logo_animado.gif') }}"  height="300" class="img-load" style="display: none">
+                            </div>
                             <input type="hidden" id="horario1">
                             <input type="hidden" id="horario2">
                             <div class="row">
@@ -1471,23 +1489,23 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="form-check" style="padding-bottom: 10px;">
-                                        <input type="checkbox" class="form-check-input" id="asignarNuevoHorarioC">
-                                        <label class="form-check-label" for="asignarNuevoHorarioC"
+                                    <div class="custom-control custom-switch" style="padding-bottom: 10px;">
+                                        <input type="checkbox" class="custom-control-input" id="asignarNuevoHorarioC">
+                                        <label class="custom-control-label" for="asignarNuevoHorarioC"
                                             style="margin-top: 2px;font-weight: 600">Asignar como nuevo</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-check" style="padding-bottom: 10px;">
-                                        <input type="checkbox" class="form-check-input" id="reemplazarNuevoHorarioC">
-                                        <label class="form-check-label" for="reemplazarNuevoHorarioC"
-                                            style="margin-top: 2px;font-weight: 600">Reemplazar existente</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <span></span>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="custom-control custom-switch" style="padding-bottom: 10px;">
+                                        <input type="checkbox" class="custom-control-input" id="reemplazarNuevoHorarioC">
+                                        <label class="custom-control-label" for="reemplazarNuevoHorarioC"
+                                            style="margin-top: 2px;font-weight: 600">Reemplazar existente</label>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <span id="alertReemplazar"  style="color:#911818;display:none">Se borrará horarios existentes y crearan nuevos</span>
                                 </div>
@@ -1537,7 +1555,9 @@
     <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>
     <script src="{{ asset('admin/packages/timegrid/main.js') }}"></script>
     <script src="{{ asset('admin/packages/interaction/main.js') }}"></script>
-
+    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 @endsection
 
 @section('script-bottom')

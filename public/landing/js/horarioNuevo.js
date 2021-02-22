@@ -222,6 +222,8 @@ $('#horaFen').flatpickr({
 });
 
 $('#btnasignar').on('click', function (e) {
+    $(".loader").hide();
+    $(".img-load").hide();
     $('#guardarHorarioEventos').prop('disabled', false);
     $('#divOtrodia').hide();
     $('input[type=checkbox]').prop('checked', false);
@@ -766,6 +768,9 @@ $('#guardarHorarioEventos').click(function () {
 });
 ////////////
 $('#guardarTodoHorario').click(function () {
+    $(".loader").show();
+    $(".img-load").show();
+    $('#guardarTodoHorario').prop('disabled', true);
     $('#tablaEmpleadoExcel').DataTable().destroy();
 
     /* if ($("*").hasClass("fc-highlight")) {
@@ -778,7 +783,7 @@ $('#guardarTodoHorario').click(function () {
         })
         return false;
     } */
-    $('#guardarTodoHorario').prop('disabled', true);
+  /*   $('#guardarTodoHorario').prop('disabled', true); */
     idemps = $('#nombreEmpleado').val();
 
     if (idemps == '') {
@@ -789,6 +794,8 @@ $('#guardarTodoHorario').click(function () {
 
         });
         $('#guardarTodoHorario').prop('disabled', false);
+        $(".loader").hide();
+        $(".img-load").hide();
         return false;
     }
     $.ajax({
@@ -815,8 +822,8 @@ $('#guardarTodoHorario').click(function () {
             $('#tablaEmpleado').DataTable().ajax.reload();
             $('#guardarTodoHorario').prop('disabled', false);
 
-            $('#asignarHorario').modal('toggle');
-            calendar.refetchEvents();
+           /*  $('#asignarHorario').modal('toggle'); */
+
             if (data.length > 0) {
 
                 var tbodyTabla = [];
@@ -898,6 +905,53 @@ $('#guardarTodoHorario').click(function () {
         }
     });
 
+
+    $.ajax({
+
+        url: "/vaciartemporal",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            $('#guardarTodoHorario').prop('disabled', false);
+            calendar.refetchEvents();
+
+            $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nHorarios registrados a empleado(s).",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {   element: $('#asignarHorario'),
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 50,
+                    }
+                );
+
+                $(".loader").hide();
+                $(".img-load").hide();
+        },
+        error: function () { }
+    });
 
 })
 
@@ -1661,7 +1715,7 @@ function vaciarcalendario() {
 function vaciarhor() {
     bootbox.confirm({
         title: "Elminar horario",
-        message: "¿Esta seguro que desea eliminar horario(s) de este mes del calendario?",
+        message: "¿Esta seguro que desea borrar horario(s) de este mes del calendario?",
         buttons: {
             confirm: {
                 label: 'Aceptar',
@@ -4054,52 +4108,74 @@ function verDatosHorario(idempleado,idHorarioEmp){
 }
 //**ELIMINAR HORARIOS EMPLEADOS MASIVOS */
 function eliminarMasivoHorarios(){
-    let valoresCheck = [];
-    let empleados=$('#nombreEmpleado').val();
-    let diadeHorario=$('#fechaSelectora').val();
-    $(".chechHoraEmp:checked").each(function(){
-        valoresCheck.push($(this).attr('data-id'));
-    });
-    if(valoresCheck.length<1){
-        alert('seleccione');
-        return false;
-    }
-    $.ajax({
-        type: "post",
-        url: "/elimarhoraEmps",
-        data:{
-            valoresCheck,empleados,diadeHorario
-        },
-        async:false,
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
+    bootbox.confirm({
+        title: "Elminar horario",
+        message: "¿Estás seguro que desea borrar los horarios seleccionados?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
             }
         },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            if(data!=0){
+        callback: function (result) {
+            if (result == true) {
 
-                /* ACTUALIZO LOS DATO DE MODAL */
-                datosModalHorarioEmpleado(diadeHorario,empleados);
-                /* ............................. */
+                let valoresCheck = [];
+                let empleados=$('#nombreEmpleado').val();
+                let diadeHorario=$('#fechaSelectora').val();
+                $(".chechHoraEmp:checked").each(function(){
+                    valoresCheck.push($(this).attr('data-id'));
+                });
+                if(valoresCheck.length<1){
+                    alert('seleccione');
+                    return false;
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/elimarhoraEmps",
+                    data:{
+                        valoresCheck,empleados,diadeHorario
+                    },
+                    async:false,
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if(data!=0){
 
-            } else{
-                console.log('no tengo datos');
-                $('#modalHorarioEmpleados').modal('hide');
-                calendar.refetchEvents();
+                            /* ACTUALIZO LOS DATO DE MODAL */
+                            datosModalHorarioEmpleado(diadeHorario,empleados);
+                            /* ............................. */
+
+                        } else{
+                            console.log('no tengo datos');
+                            $('#modalHorarioEmpleados').modal('hide');
+                            calendar.refetchEvents();
+                        }
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+
+
             }
-
-        },
-        error: function (data) {
-            alert('Ocurrio un error');
         }
     });
+
 
 
 }
@@ -4139,7 +4215,7 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
             </div>
             <div class="col-md-6 text-right">
                 <button onclick="eliminarMasivoHorarios()" type="button" class="btn btn-soft-danger btn-sm"><i
-                        class="uil uil-trash-alt mr-1"></i>Eliminar seleccionados</button>
+                        class="uil uil-trash-alt mr-1"></i>Borrar seleccionados</button>
              </div>
                       </div>`;
 
@@ -4244,7 +4320,6 @@ var fechaValue = $("#fechaSelec").flatpickr({
     altInput: true,
     altFormat: "j F",
     locale: "es",
-    maxDate: "today",
     wrap: true,
     allowInput: true,
     conjunction: " a ",
