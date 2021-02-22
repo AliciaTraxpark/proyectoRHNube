@@ -154,7 +154,9 @@ class DispositivoTareoController extends Controller
             ));
             $err = curl_error($curl);
             $response = curl_exec($curl);
+            return $response;
         }
+
     }
 
     /**
@@ -400,6 +402,7 @@ class DispositivoTareoController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
+        return $response;
     }
     public function reenviarmensaje(Request $request)
     {
@@ -433,6 +436,7 @@ class DispositivoTareoController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
+       return $response;
     }
 
     public function desactivarDisposi(Request $request)
