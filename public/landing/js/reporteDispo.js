@@ -3793,6 +3793,8 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoPausas').hide();
     $('#contenidoHorarios').hide();
     $('#contenidoIncidencias').hide();
+    $('#contenidoPorH').hide();
+    $('#contenidoPorT').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
@@ -4062,6 +4064,12 @@ function toggleColumnas() {
         dataT.api().columns('.colHE25D').visible(true);
     } else {
         dataT.api().columns('.colHE25D').visible(false);
+    }
+    // ? HORAS EXTRAS 35% DIURNAS
+    if ($('#colHE35D').is(":checked")) {
+        dataT.api().columns('.colHE35D').visible(true);
+    } else {
+        dataT.api().columns('.colHE35D').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
