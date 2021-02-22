@@ -218,6 +218,9 @@ class dispositivosController extends Controller
             ));
             $err = curl_error($curl);
             $response = curl_exec($curl);
+            if($response==false){
+                return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
+            }
         }
     }
     public function enviarmensaje(Request $request)
@@ -255,6 +258,9 @@ class dispositivosController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
+        if($response==false){
+            return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
+        }
     }
 
     public function reenviarmensaje(Request $request)
@@ -289,6 +295,9 @@ class dispositivosController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
+        if($response==false){
+            return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
+        }
     }
 
     public function tablaDisposit()
