@@ -134,9 +134,22 @@
             padding-left: 95px !important;
         }
     }
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        opacity: .8;
+        background: rgb(252,252,252);
+    }
 
     /* FINALIZACION */
 </style>
+<div class="loader" class="text-center"  style="display: flex !important; justify-content: center !important; align-items: center;">
+    <img src="https://rhnube.com.pe/landing/images/logo_animado.gif" height="300" class="img-load" style="display: none">
+</div>
 <div class="row justify-content-center pt-5 pr-5 pl-5 pb-2">
     <div class="col-xl-4" style="padding-left: 2%;padding-right: 0%;">
         <div class="input-group col-xl-12 colR">
@@ -145,7 +158,7 @@
                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
             </div>
             <div class="pl-2">
-                <button type="button" class="btn btn-sm" style="background-color: #163552;" onclick="javascript:buscarReporteT()"> <img src="{{asset('landing/images/loupe (1).svg')}}" height="18" class="text-center mb-1"></button>
+                <button type="button" id="btnRecargaTabla" class="btn btn-sm" style="background-color: #163552;" onclick="javascript:buscarReporteT()"> <img src="{{asset('landing/images/loupe (1).svg')}}" height="18" class="text-center mb-1"></button>
             </div>
         </div>
     </div>

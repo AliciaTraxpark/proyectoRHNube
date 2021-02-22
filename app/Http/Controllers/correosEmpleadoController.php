@@ -112,7 +112,7 @@ class correosEmpleadoController extends Controller
             }',
                 CURLOPT_HTTPHEADER => array(
                     "Content-Type: application/json",
-                    "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                    "Authorization:zAS+nYnqJ+zX8KBr05ojMufSWuo=",
                     "Cache-Control: no-cache"
                 ),
             ));
