@@ -499,14 +499,14 @@ function calendario() {
         },
         customButtons: {
             borrarHorarios: {
-                text: "Borrar horarios.",
+                text: "Borrar horarios",
                 click: function () {
                     vaciarhor();
                 }
             },
 
             Clonar: {
-                text: "Clonar horarios.",
+                text: "Clonar horarios",
                 click: function () {
                     ClonarHorarios();
                 }
