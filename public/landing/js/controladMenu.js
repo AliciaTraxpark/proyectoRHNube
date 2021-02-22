@@ -62,7 +62,7 @@ $(document).ready(function () {
         }
     },
     "error": function() {
-        console.log("error encountered ! ");
+        console.log("se recarga en 401");
 
     },
 

@@ -62,6 +62,10 @@ $(document).ready(function () {
                         location.reload();
                     }
                 },
+                "error": function() {
+                    console.log("se recarga en 401 ");
+
+                },
 
             dataSrc: "",
         },

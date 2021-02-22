@@ -1,4 +1,5 @@
 var dataDeempleado={};
+$.fn.dataTable.ext.errMode = 'throw';
 $(document).ready(function () {
     var table = $("#tablaEmpleado").DataTable({
         "searching": true,
@@ -57,6 +58,10 @@ $(document).ready(function () {
                 302: function () {
                     location.reload();
                 }
+            },
+            "error": function() {
+                console.log("se recarga en 401");
+
             },
 
             "dataSrc": ""
@@ -414,7 +419,7 @@ function calendario() {
         header: {
             left: 'prev,next',
             center: 'title',
-            right: "borrarHorarios",
+            right: "Clonar,borrarHorarios",
         },
         eventRender: function (info) {
             $('.tooltip').remove();
@@ -494,37 +499,22 @@ function calendario() {
         },
         customButtons: {
             borrarHorarios: {
-                text: "Borrar Horarios.",
-                /*  icon:"right-double-arrow", */
-
+                text: "Borrar horarios.",
                 click: function () {
                     vaciarhor();
+                }
+            },
+
+            Clonar: {
+                text: "Clonar horarios.",
+                click: function () {
+                    ClonarHorarios();
                 }
             },
         },
         events: function (info, successCallback, failureCallback) {
 
-           /*  $.ajax({
-                type: "get",
-                url: "/eventosHorario",
-                data: {
 
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                statusCode: {
-                    419: function () {
-                        location.reload();
-                    }
-                },
-                success: function (data) {
-
-                    successCallback(data);
-
-                },
-                error: function () { }
-            }); */
             var idempleado = $('#nombreEmpleado').val();
             num=$('#nombreEmpleado').val().length;
 
@@ -778,7 +768,7 @@ $('#guardarHorarioEventos').click(function () {
 $('#guardarTodoHorario').click(function () {
     $('#tablaEmpleadoExcel').DataTable().destroy();
 
-    if ($("*").hasClass("fc-highlight")) {
+    /* if ($("*").hasClass("fc-highlight")) {
         $('#guardarTodoHorario').prop('disabled', false);
     } else {
         $('#guardarTodoHorario').prop('disabled', false);
@@ -787,7 +777,7 @@ $('#guardarTodoHorario').click(function () {
 
         })
         return false;
-    }
+    } */
     $('#guardarTodoHorario').prop('disabled', true);
     idemps = $('#nombreEmpleado').val();
 
@@ -4219,3 +4209,90 @@ $(function () {
 
     });
 });
+
+//******FUNCION CLONAR HORARIOS******* */
+function ClonarHorarios(){
+    //*validar que al menos tenga un empleado seelect
+    let idempSelect = $('#nombreEmpleado').val();
+            if (idempSelect == '') {
+                /* calendar.unselect(); */
+                bootbox.alert({
+                    message: "Seleccione empleado",
+
+                });
+
+                return false;
+            }
+    //***************************************** */  */
+    $('#divClonacionElegir').hide();
+    $('#modalHorarioClonar').modal('show');
+}
+//************************************* */
+   //*INICIO Y FIN DE MES
+   var inicioC=  moment().startOf('month').format('YYYY-MM-DD');
+   var finC=moment().format('YYYY-MM-DD');
+   console.log('fechaAct'+inicioC+'-'+finC);
+   $('#ID_START').val(inicioC);
+   $('#ID_END').val(finC);
+    //*
+
+//* ELEGIR FECHA PARA CLOBAR HORARIOS */
+var fechaValue = $("#fechaSelec").flatpickr({
+    mode: "range",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "j F",
+    locale: "es",
+    maxDate: "today",
+    wrap: true,
+    allowInput: true,
+    conjunction: " a ",
+    minRange: 1,
+
+    onChange: function (selectedDates) {
+        var _this = this;
+        var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
+        $('#ID_START').val(dateArr[0]);
+        $('#ID_END').val(dateArr[1]);
+
+
+
+    },
+    defaultDate: [inicioC,finC],
+    onClose: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length == 1) {
+            var fm = moment(selectedDates[0]).add("day", -1).format("YYYY-MM-DD");
+            instance.setDate([fm, selectedDates[0]], true);
+        }
+    }
+});
+
+//*VALIDAR CHECK EN FORMULARIO CLONAR
+
+//*asignar
+$("#asignarNuevoHorarioC").change(function (event) {
+    if ($("#asignarNuevoHorarioC").prop("checked")) {
+        $("#reemplazarNuevoHorarioC").prop("checked", false);
+    }
+});
+
+//*reemplazar
+$("#reemplazarNuevoHorarioC").change(function (event) {
+    if ($("#reemplazarNuevoHorarioC").prop("checked")) {
+        $("#asignarNuevoHorarioC").prop("checked", false);
+    }
+});
+//********************************** */
+function registrarClonacionH(){
+
+ //**VALIDAR QUE AL MENOS ESTE CHECK UNA OPCION */
+ if (!$("#asignarNuevoHorarioC").is(":checked") && !$("#reemplazarNuevoHorarioC").is(":checked") ){
+     $('#divClonacionElegir').show();
+     return false;
+ } else{
+    $('#divClonacionElegir').hide();
+ }
+ //* **************************************************** */
+   alert('llegue');
+
+}

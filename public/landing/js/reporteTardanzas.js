@@ -143,8 +143,11 @@ function cargartablaRuta(fecha1,fecha2) {
                 "bInfo": false,
                 "bLengthChange": true,
                 fixedHeader: true,
+                lengthMenu: [10, 25, 50, 75, 100],
+                processing: true,
+                retrieve: true,
+                pageLength: 10,
                 language: {
-                    sProcessing: "Procesando...",
                     sLengthMenu: "Mostrar _MENU_ registros",
                     sZeroRecords: "No se encontraron resultados",
                     sEmptyTable: "Ningún dato disponible en esta tabla",
@@ -172,10 +175,17 @@ function cargartablaRuta(fecha1,fecha2) {
                     buttons: {
                         copy: "Copiar",
                         colvis: "Visibilidad",
+                        pageLength: {
+                            "_": "Mostrar %d registros"
+                        },
                     },
                 },
-                dom: 'Blfrtip',
+                dom: 'Bfrtip',
+                lengthMenu: [10, 25, 50, 100],
                 buttons: [{
+                        extend: 'pageLength',
+                        className: 'btn btn-sm mt-1 mb-1',
+                    },{
                     extend: 'excel',
                     className: 'btn btn-sm mt-1 mb-1',
                     text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
@@ -371,7 +381,7 @@ function cargartablaRuta(fecha1,fecha2) {
                 setTimeout(function() {
                     $(".loader").hide();
                     $(".img-load").hide();
-                }, 1000);
+                }, 500);
             } else {
                 //$('#btnsDescarga').hide();
                 $('#tbodyD').empty();
@@ -379,7 +389,7 @@ function cargartablaRuta(fecha1,fecha2) {
                 setTimeout(function() {
                     $(".loader").hide();
                     $(".img-load").hide();
-                }, 1000);
+                }, 500);
             }
         },
         error: function () { }
@@ -411,9 +421,7 @@ function cargartablaRuta(fecha1,fecha2) {
 
 /*   CARGAR TABLA DE CONTROL REMOTO   */
 function cargartablaCR(fecha1,fecha2) {
-
     var idemp = $('#idempleado').val();
-    $(".loader").show();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzas",
@@ -430,7 +438,6 @@ function cargartablaCR(fecha1,fecha2) {
             }
         },
         success: function (data) {
-             $(".loader").hide();
             console.log(data.length);
             if (data.length != 0) {
                 razonSocial = data[0].organi_razonSocial;
@@ -496,6 +503,10 @@ function cargartablaCR(fecha1,fecha2) {
                 "bInfo": false,
                 "bLengthChange": true,
                 fixedHeader: true,
+                lengthMenu: [10, 25, 50, 75, 100],
+                processing: true,
+                retrieve: true,
+                pageLength: 10,
                 language: {
                     sProcessing: "Procesando...",
                     sLengthMenu: "Mostrar _MENU_ registros",
@@ -525,10 +536,17 @@ function cargartablaCR(fecha1,fecha2) {
                     buttons: {
                         copy: "Copiar",
                         colvis: "Visibilidad",
+                        pageLength: {
+                            "_": "Mostrar %d registros"
+                        },
                     },
                 },
-                dom: 'Blfrtip',
+                dom: 'Bfrtip',
+                lengthMenu: [10, 25, 50, 100],
                 buttons: [{
+                        extend: 'pageLength',
+                        className: 'btn btn-sm mt-1 mb-1',
+                    },{
                     extend: 'excel',
                     className: 'btn btn-sm mt-1 mb-1',
                     text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
@@ -720,10 +738,18 @@ function cargartablaCR(fecha1,fecha2) {
                     $("#tablaReport").css('width', '100%');
                     table.draw(true);
                 });
+                setTimeout(function() {
+                    $(".loader").hide();
+                    $(".img-load").hide();
+                }, 500);
             } else {
                 ///$('#btnsDescarga').hide();
                 $('#tbodyD').empty();
                 $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+                setTimeout(function() {
+                    $(".loader").hide();
+                    $(".img-load").hide();
+                }, 500);
             }
         },
         error: function () { }
@@ -755,9 +781,7 @@ function cargartablaCR(fecha1,fecha2) {
 
 /*   CARGAR TABLA DE CONTROL REMOTO   */
 function cargartablaPuerta(fecha1,fecha2) {
-
     var idemp = $('#idempleado').val();
-    $(".loader").show();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzasPuerta",
@@ -774,8 +798,6 @@ function cargartablaPuerta(fecha1,fecha2) {
             }
         },
         success: function (data) {
-            $(".loader").hide();
-            console.log(data.length);
             if (data.length != 0) {
                 razonSocial = data[0].organi_razonSocial;
                 direccion = data[0].organi_direccion;
@@ -840,6 +862,10 @@ function cargartablaPuerta(fecha1,fecha2) {
                 "bInfo": false,
                 "bLengthChange": true,
                 fixedHeader: true,
+                lengthMenu: [10, 25, 50, 75, 100],
+                processing: true,
+                retrieve: true,
+                pageLength: 10,
                 language: {
                     sProcessing: "Procesando...",
                     sLengthMenu: "Mostrar _MENU_ registros",
@@ -869,10 +895,17 @@ function cargartablaPuerta(fecha1,fecha2) {
                     buttons: {
                         copy: "Copiar",
                         colvis: "Visibilidad",
+                        pageLength: {
+                            "_": "Mostrar %d registros"
+                        },
                     },
                 },
-                dom: 'Blfrtip',
+                dom: 'Bfrtip',
+                lengthMenu: [10, 25, 50, 100],
                 buttons: [{
+                        extend: 'pageLength',
+                        className: 'btn btn-sm mt-1 mb-1',
+                    },{
                     extend: 'excel',
                     className: 'btn btn-sm mt-1 mb-1',
                     text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
@@ -1064,10 +1097,18 @@ function cargartablaPuerta(fecha1,fecha2) {
                     $("#tablaReport").css('width', '100%');
                     table.draw(true);
                 });
+                setTimeout(function() {
+                    $(".loader").hide();
+                    $(".img-load").hide();
+                }, 500);
             } else {
                 ///$('#btnsDescarga').hide();
                 $('#tbodyD').empty();
                 $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+                setTimeout(function() {
+                    $(".loader").hide();
+                    $(".img-load").hide();
+                }, 500);
             }
         },
         error: function () { }
