@@ -259,6 +259,9 @@ function inicializarTabla() {
                 $("#tablaReport").DataTable().draw();
             }, 1);
             this.api().page.len(paginaGlobal).draw(false);
+            this.api().columns('.colHE25D').visible(false);
+            this.api().columns('.colHE35D').visible(false);
+            this.api().columns('.colHE100D').visible(false);
         },
         drawCallback: function () {
             var api = this.api();
