@@ -266,7 +266,7 @@ function inicializarTabla() {
             paginaGlobal = len;
         },
         rowCallback: function (row, data, index) {
-           console.log($(table.row(index).node()).hasClass('prueba'),index);
+            console.log($(this.api().row(index).node()).hasClass('prueba'), index);
         }
     }).draw();
 }
@@ -415,6 +415,7 @@ function cargartabla(fecha) {
                                 <th name="colHoraNormal" class="text-center colHoraNormal">Horario normal</th>
                                 <th name="colSobreTNormal" class="text-center colSobreTNormal">Sobretiempo normal</th>
                                 <th name="colHoraNocturna" class="text-center colHoraNocturna">Horario nocturno</th>
+                                <th name="colSobreTNocturno" class="text-center colSobreTNocturno">Sobretiempo nocturno</th>
                                 <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobretiempo</th>
                                 <th name="colFaltaJornada" class="text-center colFaltaJornada">Jornada incompleta</th>
                                 <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
@@ -536,10 +537,15 @@ function cargartabla(fecha) {
                     var sobretiempoNormales = moment("00:00:00", "HH:mm:ss");
                     // * HORARIO NOCTURNO
                     var sumaHorasNocturnas = moment("00:00:00", "HH:mm:ss");
-                    // * HORAS EXTRAS
+                    var sobretiempoNocturnos = moment("00:00:00", "HH:mm:ss");
+                    // * HORAS EXTRAS - DIURNAS
                     var diurnas25 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
                     var diurnas35 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
                     var diurnas100 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    // * HORAS EXTRAS - NOCTURNAS
+                    var nocturnas25 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    var noctunas35 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    var noctunas100 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
                     if (data[index].data[m] != undefined) {
                         // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                         var horarioData = data[index].data[m].horario;
@@ -663,6 +669,7 @@ function cargartabla(fecha) {
                                 }
                                 sumaFaltaJornada = sumaFaltaJornada.add({ "hours": horasFaltaJ, "minutes": minutosFaltaJ, "seconds": segundosFaltaJ });
                             }
+                            // * HORAS NORMALES
                             if (sumaHorasNormales > horasObligadas) {
                                 // * HORAS EXTRAS
                                 var tiempoExtraResta = sumaHorasNormales - horasObligadas;
@@ -696,6 +703,42 @@ function cargartabla(fecha) {
                                     }
                                 } else {
                                     diurnas25 = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                }
+                            }
+                            // * HORAS NOCTURNAS
+                            if (sumaHorasNocturnas > horasObligadas) {
+                                // * HORAS EXTRAS
+                                var tiempoExtraRestaN = sumaHorasNocturnas - horasObligadas;
+                                var segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                var minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                var tiempoExtraN = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                sobretiempoNocturnos = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                var tiempoSobranteN = {};
+                                if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                    noctunas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                    var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                    var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
+                                    var minutosDe25N = moment.duration(restaDe25N).minutes();
+                                    var segundosDe25N = moment.duration(restaDe25N).seconds();
+                                    tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                        noctunas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                        var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                        var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
+                                        var minutosDe35N = moment.duration(restaDe35N).minutes();
+                                        var segundosDe35N = moment.duration(restaDe35N).seconds();
+                                        tiempoSobranteN = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                        if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                            noctunas100 = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                        }
+                                    } else {
+                                        if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                            noctunas35 = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                        }
+                                    }
+                                } else {
+                                    noctunas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
                                 }
                             }
                         }
@@ -774,6 +817,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-info mr-2">
                                                             <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                             ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;">
@@ -882,6 +931,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-info mr-2">
                                                             <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                             ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;">
@@ -993,6 +1048,12 @@ function cargartabla(fecha) {
                                                         ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
                                                     </a>
                                                 </td>
+                                                <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
                                                 <td class="text-center" name="colSobreTiempo" style="background: #fafafa;">
                                                     <a class="badge badge-soft-primary mr-2">
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1064,6 +1125,12 @@ function cargartabla(fecha) {
                                                             ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
+                                                    <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1131,6 +1198,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-info mr-2">
                                                             <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                             ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
                                                         </a>
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;">
@@ -1206,6 +1279,12 @@ function cargartabla(fecha) {
                                                         ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
                                                     </a>
                                                 </td>
+                                                <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
                                                 <td name="colSobreTiempo" class="text-center" style="background: #fafafa;">
                                                     <a class="badge badge-soft-primary mr-2">
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1772,6 +1851,7 @@ function cargartabla(fecha) {
                                         <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;">---</td>
                                         <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;">---</td>
                                         <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;">---</td>
+                                        <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;">---</td>
                                         <td name="colSobreTiempo" class="text-center" style="background: #fafafa;">---</td>
                                         <td name="colFaltaJornada" class="text-center" style="background: #fafafa;">---</td>
                                         <td name="colTardanza" class="text-center" style="background: #fafafa;">---</td>
@@ -1896,6 +1976,7 @@ function cargartabla(fecha) {
                                 <td name="colHoraNormal"></td>
                                 <td name="colSobreTNormal"></td>
                                 <td name="colHoraNocturna"></td>
+                                <td name="colSobreTNocturno"></td>
                                 <td name="colSobreTiempo"></td>
                                 <td name="colFaltaJornada"></td>
                                 <td name="colTardanza"></td>
