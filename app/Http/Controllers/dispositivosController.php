@@ -295,6 +295,7 @@ class dispositivosController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
+        dd($response);
         if($response==false){
             return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
         }
