@@ -127,7 +127,7 @@ class correosEmpleadoController extends Controller
             if ($err) {
                 $vinculacion_ruta->disponible = 'e';
                 $vinculacion_ruta->save();
-                return 1;
+                return response()->json(array("respuesta" => 1, "mensaje" => "Tenemos problemas con el servidor mensajeria.Comunicarse con nosotros.", "error" => $err), 200);
             } else {
                 $vinculacion_ruta->disponible = 'e';
                 $vinculacion_ruta->envio = $vinculacion_ruta->envio + 1;
@@ -136,7 +136,7 @@ class correosEmpleadoController extends Controller
                 return response()->json($vinculacion_ruta, 200);
             }
         } else {
-            return 0;
+            return response()->json(array("respuesta" => 0, "mensaje" => "Registrar número de celular del empleado."), 200);
         }
     }
 }
