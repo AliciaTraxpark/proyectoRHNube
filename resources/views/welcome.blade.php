@@ -297,7 +297,7 @@
                   <div class="card-body">
                      <ul class="list-group">
                         <li class="list-group-item"><span>Opción 1:</span> Puedes registrarte de manera gratuita en la plataforma y un consultor asignado tomará contacto a tu correo y número corporativo para ayudarte a configurar tu cuenta.</li>
-                        <li class="list-group-item"><span>Opción2:</span> Agendar una reunión en la página principal</li>
+                        <li class="list-group-item"><span>Opción 2:</span> Agendar una reunión en la página principal</li>
                      </ul>
                   </div>
                </div>
