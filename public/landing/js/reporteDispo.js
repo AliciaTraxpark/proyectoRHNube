@@ -264,6 +264,9 @@ function inicializarTabla() {
             var api = this.api();
             var len = api.page.len();
             paginaGlobal = len;
+        },
+        rowCallback: function (row, data, index) {
+           console.log($(table.row(index).node()).hasClass('prueba'),index);
         }
     }).draw();
 }
@@ -474,7 +477,7 @@ function cargartabla(fecha) {
                 razonSocial = data[index].organi_razonSocial;   // : -> VARIABLES PARA EXCEL Y PDF
                 direccion = data[index].organi_direccion;       // : -> VARIABLES PARA EXCEL Y PDF
                 ruc = data[index].organi_ruc;                   // : -> VARIABLES PARA EXCEL Y PDF
-                tbody += `<tr>`;
+                tbody += `<tr class="prueba">`;
                 if (permisoModificar == 1) {
                     tbody += `<td class="noExport text-center">
                                 <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')" data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
