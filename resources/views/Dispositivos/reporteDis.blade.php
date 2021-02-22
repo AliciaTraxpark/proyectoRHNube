@@ -363,39 +363,43 @@
                                         <ul class="ulHijoPadre" style="display: none" id="contenidoPorH">
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHE25D">
-                                                <label for="">H.E. 25% Diurnas por horario</label>
+                                                <label for="">H.E. 25% Diurnas</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHE35D">
-                                                <label for="">H.E. 35% Diurnas por horario</label>
+                                                <label for="">H.E. 35% Diurnas</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHE100D">
-                                                <label for="">H.E. 100% Diurnas por horario</label>
+                                                <label for="">H.E. 100% Diurnas</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNormal">
-                                                <label for="">Horario normal por horario</label>
+                                                <label for="">Horario normal</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNocturna">
-                                                <label for="">Horario nocturno por horario</label>
+                                                <label for="">Horario nocturno</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colFaltaJornada">
-                                                <label for="">Jornada incompleta por horario</label>
+                                                <label for="">Jornada incompleta</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colSobreTiempo">
-                                                <label for="">Sobretiempo total por horario</label>
+                                                <label for="">Sobretiempo total</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colSobreTNormal">
-                                                <label for="">Sobretiempo normal por horario</label>
+                                                <label for="">Sobretiempo normal</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colSobreTNocturno">
+                                                <label for="">Sobretiempo nocturno</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoEntreH">
-                                                <label for="">Tiempo por horario</label>
+                                                <label for="">Tiempo total</label>
                                             </li>
                                         </ul>
                                         <li class="liContenido detalleHijo">

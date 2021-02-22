@@ -4208,6 +4208,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colSobreTNormal').visible(false);
     }
+    // ? SOBRETIEMPO NOCTURNO POR HORARIO
+    if($('#colSobreTNocturno').is(":checked")) {
+        dataT.api().columns('.colSobreTNocturno').visible(true);
+    } else {
+        dataT.api().columns('.colSobreTNocturno').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
