@@ -275,16 +275,16 @@ class vinculacionDispositivoController extends Controller
             if ($err) {
                 $vinc->disponible = 'e';
                 $vinc->save();
+                return response()->json(array("respuesta" => 0, "estado" => 0, "mensaje" => "Tenemos problemas con el servidor mensajeria.Comunicarse con nosotros.", "error" => $err), 200);
             } else {
                 $vinc->disponible = 'e';
                 $vinc->envio = $vinc->envio + 1;
                 $vinc->fecha_envio = Carbon::now();
                 $vinc->save();
+                return response()->json(array("respuesta" => 0, "estado" => 1, "mensaje" => "sms enviado con éxito"), 200);
             }
-
-            return response()->json($vinculacion, 200);
         } else {
-            return 1;
+            return response()->json(array("respuesta" => 1), 200);
         }
     }
     public function editarNumeroV(Request $request)
