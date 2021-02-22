@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Crypt;
 
 class dispositivosController extends Controller
 {
@@ -138,8 +139,12 @@ class dispositivosController extends Controller
     {
 
         /*   dd($request->tData,$request->lectura); */
-        $codigo = STR::random(4);
 
+        //*ENCRIPTAMOS ID DE ORG
+        $idorEncrip = base64_encode(session('sesionidorg'));
+        $codigo = STR::random(4).$idorEncrip;
+
+        /* dd($idorEncrip,base64_decode($idorEncrip)); */
         $dispositivos = new dispositivos();
         $dispositivos->tipoDispositivo = 2;
         $dispositivos->dispo_descripUbicacion = $request->descripccionUb;
@@ -207,7 +212,7 @@ class dispositivosController extends Controller
                 }',
                 CURLOPT_HTTPHEADER => array(
                     "Content-Type: application/json",
-                    "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                    "Authorization: zAS+nYnqJ+zX8KBr05ojMufSWuo=",
                     "Cache-Control: no-cache"
                 ),
             ));
@@ -217,7 +222,8 @@ class dispositivosController extends Controller
     }
     public function enviarmensaje(Request $request)
     {
-        $codigo = STR::random(4);
+        $idorEncrip = base64_encode(session('sesionidorg'));
+        $codigo = STR::random(4).$idorEncrip;
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $dispositivosAc->dispo_estado = 1;
         $dispositivosAc->dispo_codigo = $codigo;
@@ -243,7 +249,7 @@ class dispositivosController extends Controller
             }',
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                "Authorization: zAS+nYnqJ+zX8KBr05ojMufSWuo=",
                 "Cache-Control: no-cache"
             ),
         ));
@@ -277,7 +283,7 @@ class dispositivosController extends Controller
             }',
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                "Authorization: zAS+nYnqJ+zX8KBr05ojMufSWuo=",
                 "Cache-Control: no-cache"
             ),
         ));
@@ -294,7 +300,8 @@ class dispositivosController extends Controller
     public function comprobarMovil(Request $request)
     {
 
-        $dispositivos = dispositivos::where('dispo_movil', '=', $request->numeroM)->get()->first();
+        $dispositivos = dispositivos::where('dispo_movil', '=', $request->numeroM)
+        ->where('organi_id','=',session('sesionidorg'))->get()->first();
 
         if ($dispositivos != null) {
             return 1;
@@ -3273,7 +3280,7 @@ class dispositivosController extends Controller
         }
     }
 
-    // * LISTA DE HORARIOS EXCLUYENDO SU ID DE HORARIO 
+    // * LISTA DE HORARIOS EXCLUYENDO SU ID DE HORARIO
     public function horariosDeEmpleado(Request $request)
     {
         $fecha = $request->get('fecha');

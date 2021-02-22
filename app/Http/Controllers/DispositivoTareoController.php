@@ -81,7 +81,8 @@ class DispositivoTareoController extends Controller
     public function store(Request $request)
     {
         //
-        $codigo = STR::random(4);
+        $idorEncrip = base64_encode(session('sesionidorg'));
+        $codigo = STR::random(4).$idorEncrip;
 
         $dispositivos = new dispositivos_tareo();
         $dispositivos->tipo_dispositivo_id = 2;
@@ -147,7 +148,7 @@ class DispositivoTareoController extends Controller
                 }',
                 CURLOPT_HTTPHEADER => array(
                     "Content-Type: application/json",
-                    "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                    "Authorization: zAS+nYnqJ+zX8KBr05ojMufSWuo=",
                     "Cache-Control: no-cache",
                 ),
             ));
@@ -354,7 +355,8 @@ class DispositivoTareoController extends Controller
     public function comprobarMovil(Request $request)
     {
 
-        $dispositivos = dispositivos_tareo::where('dispoT_movil', '=', $request->numeroM)->get()->first();
+        $dispositivos = dispositivos_tareo::where('dispoT_movil', '=', $request->numeroM)
+        ->where('organi_id','=',session('sesionidorg'))->get()->first();
 
         if ($dispositivos != null) {
             return 1;
@@ -365,7 +367,8 @@ class DispositivoTareoController extends Controller
 
     public function enviarmensaje(Request $request)
     {
-        $codigo = STR::random(4);
+        $idorEncrip = base64_encode(session('sesionidorg'));
+        $codigo = STR::random(4).$idorEncrip;
         $dispositivosAc = dispositivos_tareo::findOrFail($request->idDis);
         $dispositivosAc->dispoT_estado = 1;
         $dispositivosAc->dispoT_codigo = $codigo;
@@ -391,7 +394,7 @@ class DispositivoTareoController extends Controller
             }',
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                "Authorization: zAS+nYnqJ+zX8KBr05ojMufSWuo=",
                 "Cache-Control: no-cache",
             ),
         ));
@@ -424,7 +427,7 @@ class DispositivoTareoController extends Controller
             }',
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                "Authorization: zAS+nYnqJ+zX8KBr05ojMufSWuo=",
                 "Cache-Control: no-cache",
             ),
         ));
