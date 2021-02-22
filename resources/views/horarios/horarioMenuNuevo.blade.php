@@ -1431,7 +1431,7 @@
                                     <label class="col-md-5" style="  padding-top: 8px; font-weight: 600">Seleccione empleado:</label>
                                     <div class="col-md-7" style="padding-left: 0px;">
                                         <select class="" data-plugin="customselect"
-                                        id="nombreEmpleadoClonar">
+                                        id="nombreEmpleadoClonar" required>
                                         @foreach ($empleado as $empleados)
                                             <option value="{{ $empleados->emple_id }}">
                                                 {{ $empleados->perso_nombre }}
@@ -1484,6 +1484,12 @@
                                         <label class="form-check-label" for="reemplazarNuevoHorarioC"
                                             style="margin-top: 2px;font-weight: 600">Reemplazar existente</label>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <span></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span id="alertReemplazar"  style="color:#911818;display:none">Se borrará horarios existentes y crearan nuevos</span>
                                 </div>
 
                             </div>

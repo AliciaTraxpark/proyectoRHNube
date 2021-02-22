@@ -318,6 +318,7 @@ Route::post('/horario/horariosAsignar', 'horarioController@horariosEmpleado');
 Route::post('/horario/horariosVariosEmps', 'horarioController@horariosVariosEmps');
 Route::post('/datosHorarioEmpleado', 'horarioController@datosHorarioEmpleado');
 Route::post('/elimarhoraEmps', 'horarioController@elimarhoraEmps');
+Route::post('/clonarHorarios', 'horarioController@clonarHorarios');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');
