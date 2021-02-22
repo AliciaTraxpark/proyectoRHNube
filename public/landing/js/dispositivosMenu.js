@@ -526,7 +526,7 @@ function reenviarSMS(idDis){
                     },
                     success: function (data) {
                     $.notifyClose();
-                    if(data!=null || data!=''){
+                    if(data!=null || data!='' || !data){
                         $.notify(
                             {
                                 message: data,
