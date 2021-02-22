@@ -1788,7 +1788,7 @@ class horarioController extends Controller
                 }
 
             }
-            
+
 
         //******************************************* */
 
@@ -1842,8 +1842,11 @@ class horarioController extends Controller
                         ->where('he.empleado_emple_id', '=', $empleadosCl)
                         ->get();
 
+                        $conRepeticion=0;
+
                         //*SI ENCONTRAMOS HORARIOS DE EMPLEADO
                         if($horario_empleadoVer->isNotEmpty()){
+
                             //OBTENEMOS DIAS
                             foreach ($horario_empleadoVer as $horario_empleadoVerDi) {
                                 /* OBTENER FECHA ACTUAL Y DE MAÑANA EN FORMATO DATE */
@@ -1876,13 +1879,17 @@ class horarioController extends Controller
 
                                     //*VALIDAMOS QUE NO SE CRUZEN
                                     if ($horaIEmp->gt($horaIClonar)  && $horaFEmp->lt($horaFClonar) && $horaIEmp->lt($horaFClonar)) {
+                                        $conRepeticion=1;
                                         $horario_empleado->pull($key);
 
                                     } elseif (($horaIEmp->gt($horaIClonar) && $horaIEmp->lt($horaFClonar)) || ($horaFEmp->gt($horaIClonar) && $horaFEmp->lt($horaFClonar))) {
+                                        $conRepeticion=1;
                                         $horario_empleado->pull($key);
                                     } elseif ($horaIEmp == $horaIClonar || $horaFEmp == $horaFClonar) {
+                                        $conRepeticion=1;
                                         $horario_empleado->pull($key);
                                     } elseif ($horaIClonar->gt($horaIEmp) && $horaFClonar->lt($horaFEmp)) {
+                                        $conRepeticion=1;
                                         $horario_empleado->pull($key);
                                     }
 
@@ -1924,6 +1931,8 @@ class horarioController extends Controller
 
                             }
                         }
+
+                        return  $conRepeticion;
 
                     }
 

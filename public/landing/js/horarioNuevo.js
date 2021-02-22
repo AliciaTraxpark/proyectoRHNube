@@ -4342,6 +4342,14 @@ function registrarClonacionH(){
     success: function (data) {
        calendar.refetchEvents();
        $('#modalHorarioClonar').modal('hide');
+       if(asigNuevo==1){
+        if(data==1){
+            bootbox.alert({
+                message: "Hubo cruces en algunos horarios",
+
+            })
+        }
+       }
     },
     error: function (data) {
         alert('Ocurrio un error');
