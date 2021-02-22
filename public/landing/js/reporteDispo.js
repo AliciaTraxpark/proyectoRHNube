@@ -4241,6 +4241,18 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colSobreTNocturno').visible(false);
     }
+    // ? HORAS EXTRAS 25% NOCTURNAS
+    if ($('#colHE25N').is(":checked")) {
+        dataT.api().columns('.colHE25N').visible(true);
+    } else {
+        dataT.api().columns('.colHE25N').visible(false);
+    }
+    // ? HORAS EXTRAS 35% NOCTURNAS
+    if ($('#colHE35N').is(":checked")) {
+        dataT.api().columns('.colHE35N').visible(true);
+    } else {
+        dataT.api().columns('.colHE35N').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
