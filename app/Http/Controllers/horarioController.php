@@ -1747,4 +1747,195 @@ class horarioController extends Controller
        }
 
     }
+
+    //*FUNCION PARA CLONAR HORARIOS DE EMPLEADO***************
+    public function clonarHorarios(Request $request){
+
+        //**recibir paramentros
+        $empleadosaClonar=$request->empleadosaClonar;
+        $empleadoCLonar=$request->empleadoCLonar;
+        $diaI=Carbon::create($request->diaI);
+        $diaF=Carbon::create($request->diaF);
+        $asigNuevo=$request->asigNuevo;
+        $reempExistente=$request->reempExistente;
+
+        //*OBTENGO HORARIOS DEL EMPLEADO A CLONAR******
+        $horario_empleado = DB::table('horario_empleado as he')
+        ->select(['he.horarioEmp_id as id','he.horario_horario_id', 'he.horario_dias_id', 'he.fuera_horario',
+         'textColor', 'start', 'end','he.estado', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario',
+          'horasObliga', 'nHoraAdic', 'h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF',
+          'horaI', 'horaF'])
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('he.estado', '=', 1)
+            ->whereBetween(DB::raw('DATE(hd.start)'), [$diaI, $diaF])
+            ->where('he.empleado_emple_id', '=', $empleadoCLonar)
+            ->get();
+            foreach ($horario_empleado as $horario_empleadoDia) {
+                /* OBTENER FECHA ACTUAL Y DE MAÑANA EN FORMATO DATE */
+                $fecha = Carbon::create($horario_empleadoDia->start);
+                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                $despues = $fecha->addDays(1);
+                $fechaMan = $despues->isoFormat('YYYY-MM-DD');
+
+                if (Carbon::parse($horario_empleadoDia->horaF)->lt(Carbon::parse($horario_empleadoDia->horaI))) {
+
+                    $horario_empleadoDia->horaI = $fechaHoy . " " . $horario_empleadoDia->horaI;
+                    $horario_empleadoDia->horaF = $fechaMan . " " . $horario_empleadoDia->horaF;
+                } else {
+                    $horario_empleadoDia->horaI = $fechaHoy . " " . $horario_empleadoDia->horaI;
+                    $horario_empleadoDia->horaF = $fechaHoy . " " . $horario_empleadoDia->horaF;
+                }
+
+            }
+            
+
+        //******************************************* */
+
+        //*verifico si hay horarios encontrado******************
+        if($horario_empleado->isNotEmpty()){
+
+            //*COPIO O REEMPLAZO HORARIOS A LOS EMPLEADOS SELECCIONADOS***************************
+                //RECORRO LOS HORARIOS A CLOONAR y empleados
+                foreach($empleadosaClonar as $empleadosCl){
+
+                    //*si reemplaza primero borro los otros horarios que tenga en esas fechas
+                    if($reempExistente==1){
+                        $horario_empleadoBorrar = DB::table('horario_empleado as he')
+                        ->select(['he.horarioEmp_id as id','he.horario_horario_id', 'he.horario_dias_id', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
+                        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                        ->where('he.estado', '=', 1)
+                        ->whereBetween(DB::raw('DATE(hd.start)'), [$diaI, $diaF])
+                        ->where('he.empleado_emple_id', '=', $empleadosCl)
+                        ->update(['he.estado'=>0]);
+
+                        foreach($horario_empleado as $horario_empleados){
+
+                            $horarioClonando=new horario_empleado();
+                            $horarioClonando->horario_horario_id=$horario_empleados->horario_horario_id;
+                            $horarioClonando->empleado_emple_id=$empleadosCl;
+                            $horarioClonando->horario_dias_id=$horario_empleados->horario_dias_id;
+                            $horarioClonando->fuera_horario=$horario_empleados->fuera_horario;
+                            $horarioClonando->borderColor=$horario_empleados->borderColor;
+                            $horarioClonando->laborable=$horario_empleados->laborable;
+                            $horarioClonando->horaAdic=$horario_empleados->horaAdic;
+                            $horarioClonando->nHoraAdic=$horario_empleados->nHoraAdic;
+                            $horarioClonando->estado=$horario_empleados->estado;
+                            $horarioClonando->save();
+
+                        }
+
+                    } else{
+
+
+                        //*OBTENEOS HORARIO DE EMPLEADO
+                        $horario_empleadoVer = DB::table('horario_empleado as he')
+                        ->select(['he.horarioEmp_id as id','he.horario_horario_id', 'he.horario_dias_id',
+                         'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable',
+                          'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic','h.horario_tolerancia as toleranciaI',
+                          'h.horario_toleranciaF as toleranciaF'])
+                        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                        ->where('he.estado', '=', 1)
+                        ->whereBetween(DB::raw('DATE(hd.start)'), [$diaI, $diaF])
+                        ->where('he.empleado_emple_id', '=', $empleadosCl)
+                        ->get();
+
+                        //*SI ENCONTRAMOS HORARIOS DE EMPLEADO
+                        if($horario_empleadoVer->isNotEmpty()){
+                            //OBTENEMOS DIAS
+                            foreach ($horario_empleadoVer as $horario_empleadoVerDi) {
+                                /* OBTENER FECHA ACTUAL Y DE MAÑANA EN FORMATO DATE */
+                                $fecha = Carbon::create($horario_empleadoVerDi->start);
+                                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                                $despues = $fecha->addDays(1);
+                                $fechaMan = $despues->isoFormat('YYYY-MM-DD');
+
+                                if (Carbon::parse($horario_empleadoVerDi->horaF)->lt(Carbon::parse($horario_empleadoVerDi->horaI))) {
+
+                                    $horario_empleadoVerDi->horaI = $fechaHoy . " " . $horario_empleadoVerDi->horaI;
+                                    $horario_empleadoVerDi->horaF = $fechaMan . " " . $horario_empleadoVerDi->horaF;
+                                } else {
+                                    $horario_empleadoVerDi->horaI = $fechaHoy . " " . $horario_empleadoVerDi->horaI;
+                                    $horario_empleadoVerDi->horaF = $fechaHoy . " " . $horario_empleadoVerDi->horaF;
+                                }
+
+                            }
+                            foreach($horario_empleadoVer as $horario_empleadoVerH){
+
+                                //*OBTENEMSO HORAR INICIAL Y FINAL CON TOLERANCIAS DE HORARIOS DE EMPLEADO
+                                $horaIEmp=Carbon::parse($horario_empleadoVerH->horaI)->subMinutes($horario_empleadoVerH->toleranciaI);
+                                $horaFEmp=Carbon::parse($horario_empleadoVerH->horaF)->addMinutes($horario_empleadoVerH->toleranciaF);
+
+                                foreach($horario_empleado as $key => $horario_empleados){
+
+                                    //*OBTENEMSO HORAR INICIAL Y FINAL CON TOLERANCIAS DE HORARIOS A CLONAR
+                                    $horaIClonar=Carbon::parse($horario_empleados->horaI)->subMinutes($horario_empleados->toleranciaI);
+                                    $horaFClonar=Carbon::parse($horario_empleados->horaF)->addMinutes($horario_empleados->toleranciaF);
+
+                                    //*VALIDAMOS QUE NO SE CRUZEN
+                                    if ($horaIEmp->gt($horaIClonar)  && $horaFEmp->lt($horaFClonar) && $horaIEmp->lt($horaFClonar)) {
+                                        $horario_empleado->pull($key);
+
+                                    } elseif (($horaIEmp->gt($horaIClonar) && $horaIEmp->lt($horaFClonar)) || ($horaFEmp->gt($horaIClonar) && $horaFEmp->lt($horaFClonar))) {
+                                        $horario_empleado->pull($key);
+                                    } elseif ($horaIEmp == $horaIClonar || $horaFEmp == $horaFClonar) {
+                                        $horario_empleado->pull($key);
+                                    } elseif ($horaIClonar->gt($horaIEmp) && $horaFClonar->lt($horaFEmp)) {
+                                        $horario_empleado->pull($key);
+                                    }
+
+                                }
+                            }
+
+                            foreach($horario_empleado as $horario_empleados){
+
+                                $horarioClonando=new horario_empleado();
+                                $horarioClonando->horario_horario_id=$horario_empleados->horario_horario_id;
+                                $horarioClonando->empleado_emple_id=$empleadosCl;
+                                $horarioClonando->horario_dias_id=$horario_empleados->horario_dias_id;
+                                $horarioClonando->fuera_horario=$horario_empleados->fuera_horario;
+                                $horarioClonando->borderColor=$horario_empleados->borderColor;
+                                $horarioClonando->laborable=$horario_empleados->laborable;
+                                $horarioClonando->horaAdic=$horario_empleados->horaAdic;
+                                $horarioClonando->nHoraAdic=$horario_empleados->nHoraAdic;
+                                $horarioClonando->estado=$horario_empleados->estado;
+                                $horarioClonando->save();
+
+                            }
+
+                        } else{
+
+                            //* SI NO TIENE HORARIOS SOLO COPIAMOS LOS CLONADOS
+                            foreach($horario_empleado as $horario_empleados){
+
+                                $horarioClonando=new horario_empleado();
+                                $horarioClonando->horario_horario_id=$horario_empleados->horario_horario_id;
+                                $horarioClonando->empleado_emple_id=$empleadosCl;
+                                $horarioClonando->horario_dias_id=$horario_empleados->horario_dias_id;
+                                $horarioClonando->fuera_horario=$horario_empleados->fuera_horario;
+                                $horarioClonando->borderColor=$horario_empleados->borderColor;
+                                $horarioClonando->laborable=$horario_empleados->laborable;
+                                $horarioClonando->horaAdic=$horario_empleados->horaAdic;
+                                $horarioClonando->nHoraAdic=$horario_empleados->nHoraAdic;
+                                $horarioClonando->estado=$horario_empleados->estado;
+                                $horarioClonando->save();
+
+                            }
+                        }
+
+                    }
+
+
+                }
+
+
+
+
+        }
+
+
+
+    }
 }

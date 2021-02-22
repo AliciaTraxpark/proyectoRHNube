@@ -4225,6 +4225,7 @@ function ClonarHorarios(){
             }
     //***************************************** */  */
     $('#divClonacionElegir').hide();
+    $('#alertReemplazar').hide();
     $('#modalHorarioClonar').modal('show');
 }
 //************************************* */
@@ -4273,6 +4274,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
 $("#asignarNuevoHorarioC").change(function (event) {
     if ($("#asignarNuevoHorarioC").prop("checked")) {
         $("#reemplazarNuevoHorarioC").prop("checked", false);
+        $("#alertReemplazar").hide();
     }
 });
 
@@ -4280,9 +4282,15 @@ $("#asignarNuevoHorarioC").change(function (event) {
 $("#reemplazarNuevoHorarioC").change(function (event) {
     if ($("#reemplazarNuevoHorarioC").prop("checked")) {
         $("#asignarNuevoHorarioC").prop("checked", false);
+        $("#alertReemplazar").show();
+    } else{
+        $("#alertReemplazar").hide();
     }
+
 });
 //********************************** */
+
+//* **********************FUNCION PARA REGISTRAR CLONACION DE HORARIOS****************************** */
 function registrarClonacionH(){
 
  //**VALIDAR QUE AL MENOS ESTE CHECK UNA OPCION */
@@ -4292,7 +4300,55 @@ function registrarClonacionH(){
  } else{
     $('#divClonacionElegir').hide();
  }
- //* **************************************************** */
-   alert('llegue');
+
+ //*RECOGER DATOS
+ let empleadosaClonar=$('#nombreEmpleado').val();
+ let empleadoCLonar= $('#nombreEmpleadoClonar').val();
+ let diaI=$("#ID_START").val();
+ let diaF=$("#ID_END").val();
+ let asigNuevo;
+ let reempExistente;
+
+ if ($("#asignarNuevoHorarioC").is(":checked")) {
+    asigNuevo=1;
+ } else{
+    asigNuevo=0;
+ }
+
+ if ($("#reemplazarNuevoHorarioC").is(":checked")) {
+    reempExistente=1;
+ } else{
+    reempExistente=0;
+ }
+
+  //*MANDAR AJAX
+  $.ajax({
+    type: "post",
+    url: "/clonarHorarios",
+    data: {
+        empleadosaClonar,
+        empleadoCLonar,diaI,diaF,
+        asigNuevo,reempExistente
+    },
+    statusCode: {
+
+        419: function () {
+            location.reload();
+        }
+    },
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+       calendar.refetchEvents();
+       $('#modalHorarioClonar').modal('hide');
+    },
+    error: function (data) {
+        alert('Ocurrio un error');
+    }
+
+
+});
 
 }
+//* ******************************************FIN DE FUNCION ****************************************** */
