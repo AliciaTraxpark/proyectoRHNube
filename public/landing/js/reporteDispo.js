@@ -299,6 +299,10 @@ $(function () {
         indeterminate: true,
         checked: false
     });
+    $('#porTotal').prop({
+        indeterminate: true,
+        checked: false
+    });
 });
 // * VARIABLES PARA EXCEL Y PDF
 var razonSocial;
@@ -3788,6 +3792,8 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoPausas').hide();
     $('#contenidoHorarios').hide();
     $('#contenidoIncidencias').hide();
+    $('#contenidoPorH').hide();
+    $('#contenidoPorT').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
@@ -3797,8 +3803,68 @@ $(document).on('click', '.allow-focus', function (e) {
 function toggleD() {
     $('#contenidoDetalle').toggle();
 }
+// * TOGGLE POR HORARIO
+function togglePorHorario() {
+    $('#contenidoPorH').toggle();
+}
+// * TOGGLE POR TOTALES
+function togglePorTotales() {
+    $('#contenidoPorT').toggle();
+}
 // * FUNCION DE CHECKBOX HIJOS DETALLES
+// $('.detalleHijo input[type=checkbox]').change(function () {
+//     var contenido = $(this).closest('ul');
+//     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+//         contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
+//             indeterminate: false,
+//             checked: true
+//         });
+//     } else {
+//         if (contenido.find('input[type=checkbox]:checked').length != 0) {
+//             contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
+//                 indeterminate: true,
+//                 checked: false
+//             });
+//         } else {
+//             contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
+//                 indeterminate: false,
+//                 checked: false
+//             });
+//         }
+//     }
+//     toggleColumnas();
+// });
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+// $('.detallePadre input[type=checkbox]').change(function () {
+//     $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
+//     toggleColumnas();
+// });
+// * HIJOS DE POR HORARIO Y TOTAL
+$('.detalleHijoDeHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.detalleHijo').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.detalleHijo').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.detalleHijo').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * PADRE DE HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijo input[type=checkbox]').change(function () {
+    $(this).closest('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     var contenido = $(this).closest('ul');
     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
         contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
@@ -3823,6 +3889,8 @@ $('.detalleHijo input[type=checkbox]').change(function () {
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.detallePadre input[type=checkbox]').change(function () {
     $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
+    var contenido = $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
+    console.log(contenido);
     toggleColumnas();
 });
 // : ************************************** COLUMNAS DE PAUSAS ***********************************************
