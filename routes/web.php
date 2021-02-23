@@ -641,3 +641,6 @@ Route::get('/agendaPersonalizada', 'AgendaController@verAgenda');
 
 Route::post('/partner', 'soportesPorCorreoController@envioPartner');
 
+
+/* horarioM */
+Route::get('/marcaArreglo', 'horarioController@horarioArreglando');

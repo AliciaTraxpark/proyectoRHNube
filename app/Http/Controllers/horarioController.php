@@ -2141,4 +2141,13 @@ class horarioController extends Controller
         }
 
     }
+
+    public function horarioArreglando(Request $request){
+        $marcacion_puertaVacio2 = DB::table('marcacion_puerta as mv')
+                                      
+                    ->whereDate('mv.marcaMov_fecha', '!=', 'mv.marcaMov_salida')
+                    ->get();
+                    return   $marcacion_puertaVacio2;
+
+    }
 }
