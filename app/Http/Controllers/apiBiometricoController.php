@@ -3785,7 +3785,7 @@ class apiBiometricoController extends Controller
                         $respuestaMarcacion = array(
                             'id' => $req['id'],
                             'error' => 'Fecha de marcacion de empleado ya registrada',
-                            'estado' => false);
+                            'estado' => true);
                     }
 
                 } else {
@@ -4130,7 +4130,7 @@ class apiBiometricoController extends Controller
                             $respuestaMarcacion = array(
                                 'id' => $req['id'],
                                 'error' => 'Fecha de marcacion de empleado ya registrada',
-                                'estado' => false);
+                                'estado' => true);
                         }
 
                     } else {
