@@ -363,7 +363,7 @@ function RegistraDispo() {
                         ),
                     },
                     success: function (data) {
-                        $("#tablaDips").DataTable().ajax.reload();
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                         $.notifyClose();
                         $.notify(
                             {
@@ -497,7 +497,7 @@ function enviarSMS(idDis) {
                             );
                         }
 
-                        $("#tablaDips").DataTable().ajax.reload();
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
@@ -584,7 +584,7 @@ function reenviarSMS(idDis) {
                             );
                         }
 
-                        $("#tablaDips").DataTable().ajax.reload();
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
@@ -704,7 +704,7 @@ function reditarDispo() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $("#tablaDips").DataTable().ajax.reload();
+            $("#tablaDips").DataTable().ajax.reload(null, false);
             $("#editarDispositivo").modal("hide");
             $.notifyClose();
             $.notify(
@@ -765,7 +765,7 @@ function desactivarDispo(idDisDesac) {
                         ),
                     },
                     success: function (data) {
-                        $("#tablaDips").DataTable().ajax.reload();
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
@@ -807,7 +807,7 @@ function activarDispo(idDisAct) {
                         ),
                     },
                     success: function (data) {
-                        $("#tablaDips").DataTable().ajax.reload();
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         alert("Ocurrio un error");

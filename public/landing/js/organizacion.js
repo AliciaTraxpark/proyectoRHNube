@@ -163,7 +163,7 @@ function activarO(id){
                         }
                     },
                     success: function (data) {
-                        $('#tablaOrgan').DataTable().ajax.reload();
+                        $('#tablaOrgan').DataTable().ajax.reload(null, false);
 
 
                     },
@@ -206,7 +206,7 @@ function desactivarO(id){
                         }
                     },
                     success: function (data) {
-                        $('#tablaOrgan').DataTable().ajax.reload();
+                        $('#tablaOrgan').DataTable().ajax.reload(null, false);
 
 
                     },

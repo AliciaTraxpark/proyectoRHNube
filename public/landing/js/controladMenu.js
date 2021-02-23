@@ -180,7 +180,7 @@ function RegistraContro(){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-             $('#tablaContr').DataTable().ajax.reload();
+             $('#tablaContr').DataTable().ajax.reload(null, false);
             $('#nuevoControlador').modal('hide');
         },
         error: function (data) {
@@ -243,7 +243,7 @@ function EditarContro(){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-             $('#tablaContr').DataTable().ajax.reload();
+             $('#tablaContr').DataTable().ajax.reload(null, false);
             $('#editarControlador').modal('hide');
         },
         error: function (data) {

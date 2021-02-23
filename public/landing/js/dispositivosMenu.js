@@ -347,7 +347,7 @@ function RegistraDispo(){
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                 },
                 success: function (data) {
-                    $('#tablaDips').DataTable().ajax.reload();
+                    $('#tablaDips').DataTable().ajax.reload(null, false);
                     $.notifyClose();
                     $.notify(
                         {
@@ -434,7 +434,7 @@ function enviarSMS(idDis){
                             spacing: 35,
                         }
                     );
-                        $('#tablaDips').DataTable().ajax.reload();
+                        $('#tablaDips').DataTable().ajax.reload(null, false);
 
                     },
                     error: function (data) {
@@ -498,7 +498,7 @@ function reenviarSMS(idDis){
                             spacing: 35,
                         }
                     );
-                        $('#tablaDips').DataTable().ajax.reload();
+                        $('#tablaDips').DataTable().ajax.reload(null, false);
 
                     },
                     error: function (data) {
@@ -704,7 +704,7 @@ function reditarDispo(){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $('#tablaDips').DataTable().ajax.reload();
+            $('#tablaDips').DataTable().ajax.reload(null, false);
             $('#editarDispositivo').modal('hide');
             $.notifyClose();
                     $.notify(
@@ -764,7 +764,7 @@ function desactivarDispo(idDisDesac){
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                 },
                 success: function (data) {
-                    $('#tablaDips').DataTable().ajax.reload();
+                    $('#tablaDips').DataTable().ajax.reload(null, false);
 
                 },
                 error: function (data) {
@@ -808,7 +808,7 @@ function activarDispo(idDisAct){
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
                     success: function (data) {
-                        $('#tablaDips').DataTable().ajax.reload();
+                        $('#tablaDips').DataTable().ajax.reload(null, false);
 
                     },
                     error: function (data) {
@@ -920,7 +920,7 @@ function RegistraBiome(){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $('#tablaDips').DataTable().ajax.reload();
+            $('#tablaDips').DataTable().ajax.reload(null, false);
             $('#nuevoBiometrico').modal('hide');
             $.notifyClose();
                     $.notify(
@@ -1044,7 +1044,7 @@ function EditaBiome(){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $('#tablaDips').DataTable().ajax.reload();
+            $('#tablaDips').DataTable().ajax.reload(null, false);
             $('#editarBiometrico').modal('hide');
             $.notifyClose();
                     $.notify(
