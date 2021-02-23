@@ -478,9 +478,13 @@ function cargartabla(fecha) {
                 razonSocial = data[index].organi_razonSocial;   // : -> VARIABLES PARA EXCEL Y PDF
                 direccion = data[index].organi_direccion;       // : -> VARIABLES PARA EXCEL Y PDF
                 ruc = data[index].organi_ruc;                   // : -> VARIABLES PARA EXCEL Y PDF
-                var valorEstado = 1;
-                if (data[index].data.length == 0) {
-                    valorEstado = 0;
+                var valorEstado = 0;
+                if (data[index].data.length != 0) {
+                    data[index].data.forEach(element => {
+                        if (element.marcaciones.length != 0) {
+                            valorEstado = 1;
+                        }
+                    });
                 }
                 tbody += `<tr data-estado="${valorEstado}">`;
                 if (permisoModificar == 1) {
@@ -1979,62 +1983,6 @@ function cargartabla(fecha) {
             $('#tbodyD').html(tbody);
             $('[data-toggle="tooltip"]').tooltip();
             $('.dropdown-toggle').dropdown();
-            // * PARA PODER MENUS CUANDO SOLO HAY UNA COLUMNA
-            if (data.length == 1) {
-                var tbodyTR = '';
-                tbodyTR += '<tr>';
-                if (permisoModificar == 1) {
-                    tbodyTR += `<td></td>`;
-                }
-                tbodyTR += `<td><br><br><br><br><br><br><br><br><br><br></td>
-                            <td></td>
-                            <td></td>
-                            <td name="colCodigo"></td>
-                            <td></td>
-                            <td name="colCargo"></td>`;
-                for (let m = 0; m < cantidadGruposHorario; m++) {
-                    tbodyTR += `<td name="descripcionHorario"></td>
-                                <td name="horarioHorario"></td>
-                                <td name="toleranciaIHorario"></td>
-                                <td name="toleranciaFHorario"></td>
-                                <td name="colTiempoEntreH"></td>
-                                <td name="colSobreTiempo"></td>
-                                <td name="colHoraNormal"></td>
-                                <td name="colSobreTNormal"></td>
-                                <td name="colHE25D"></td>
-                                <td name="colHE35D"></td>
-                                <td name="colHE100D"></td>
-                                <td name="colHoraNocturna"></td>
-                                <td name="colSobreTNocturno"></td>
-                                <td name="colHE25N"></td>
-                                <td name="colHE35N"></td>
-                                <td name="colHE100N"></td>
-                                <td name="colFaltaJornada"></td>
-                                <td name="colTardanza"></td>
-                                <td name="faltaHorario"></td>`;
-                    // ! MARCACIONES
-                    for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                        tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td>';
-                    }
-                    // ! PAUSAS
-                    for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                        tbodyTR += `<td name="descripcionPausa"></td>
-                                <td name="horarioPausa"></td>
-                                <td name="tiempoPausa"></td>
-                                <td name="excesoPausa"></td>`;
-                    }
-                }
-                tbodyTR += `<td name="colTiempoTotal"><br><br></td>
-                            <td name="colHoraNormalTotal"></td>
-                            <td name="colHoraNocturnaTotal"></td>
-                            <td name="colSobreTiempoTotal"></td>
-                            <td name="colFaltaJornadaTotal"></td>
-                            <td name="colTardanzaTotal"></td>
-                            <td name="faltaTotal"></td>
-                            <td name="incidencia"></td>
-                            </tr>`;
-                $('#tbodyD').append(tbodyTR);
-            }
             inicializarTabla();
             $(window).on('resize', function () {
                 $("#tablaReport").css('width', '100%');
@@ -4146,6 +4094,7 @@ $('.incidenciaPadre input[type=checkbox]').change(function () {
 $('#colEmpleadosCM').change(function (event) {
     // : ME COSTO CASI UN DIA COMPLETO GOOGLEANDO, CON UN GRACIAS GABY NO SERIA MALO JAJAJAJ
     if (event.target.checked) {
+        $.fn.dataTable.ext.search.pop();
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
                 return $(table.row(dataIndex).node()).attr('data-estado') == 1;
