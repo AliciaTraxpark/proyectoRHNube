@@ -49,7 +49,7 @@ function showNotificaciones() {
                         }); 
                         contador++;
                         if(data[i].data[0].mensaje=='Empleado no tiene registrado un correo electrónico.'){
-                           a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
+                           a = `<a class="dropdown-item notify-item border-bottom" style="background: #edf0f1;">
                                     <div class="badge float-right mt-0 mr-1">
                                         <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:agregarCorreoNotificacion('${data[i].data[0].idEmpleado}')">
                                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -66,7 +66,7 @@ function showNotificaciones() {
                                 </a>`;
                         } else{
                             if(data[i].data[0].asunto=='birthday'){
-                                a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
+                                a = `<a class="dropdown-item notify-item border-bottom" style="background: #edf0f1;">
                                     <div class="badge float-right mt-0 mr-1">
                                         <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:checkBirthday('${data[i].id}')" >
                                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -83,7 +83,7 @@ function showNotificaciones() {
                                 </a>`;
                             } else {
                                 if(data[i].data[0].asunto=='contract'){
-                                    a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
+                                    a = `<a class="dropdown-item notify-item border-bottom" style="background: #edf0f1;">
                                         <div class="badge float-right mt-0 mr-1">
                                             <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:checkBirthday('${data[i].id}')" >
                                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -99,7 +99,7 @@ function showNotificaciones() {
                                         </p>
                                     </a>`;
                                 } else {
-                                    a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
+                                    a = `<a class="dropdown-item notify-item border-bottom" style="background: #edf0f1;">
                                         <div class="badge float-right mt-0 mr-1">
                                             <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" >
                                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>

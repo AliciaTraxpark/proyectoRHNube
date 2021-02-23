@@ -78,22 +78,33 @@ class NotificacionController extends Controller
                     $aux = $notifi->data;
                     foreach ($aux as $ax) {
                         if ($ax["idOrgani"] == session('sesionidorg') && $ax["idEmpleado"] == $emple->emple_id  /* && $ax["mensaje"]=="Empleado no tiene registrado un correo electrónico." */ ) {
-                            $respuestaEmpleado = true;
-                            if ($emple->emple_Correo != '') {
-                                $notifi->read_at = Carbon::now();
-                                $notifi->save();
-                            }
-                            if ($emple->emple_departamento != '' && $emple->emple_distrito != '') {
-                                $notifi->read_at = Carbon::now();
-                                $notifi->save();
-                            }
-                            if ($emple->emple_departamentoN != '' && $emple->emple_distritoN != '') {
-                                $notifi->read_at = Carbon::now();
-                                $notifi->save();
-                            }
 
+                            // ID ORGANIZACIÓN
+                            // ID EMPLEADO
+                            if($ax["mensaje"] == "Empleado no tiene registrado un correo electrónico."){
+                                $respuestaEmpleado = true;
+                                if ($emple->emple_Correo != '') {
+                                    $notifi->read_at = Carbon::now();
+                                    $notifi->save();
+                                }
+                            } else {
+                                if($ax["mensaje"] == "Empleado no tiene asignado Departamento y provincia"){
+                                    $respuestaEmpleado = true;
+                                    if ($emple->emple_departamento != '' && $emple->emple_distrito != '') {
+                                        $notifi->read_at = Carbon::now();
+                                        $notifi->save();
+                                    }
+                                } else {
+                                    if($ax["mensaje"] == "Empleado no tiene asignado Departamento y provincia de Nacimiento"){
+                                        $respuestaEmpleado = true;
+                                        if ($emple->emple_departamentoN != '' && $emple->emple_distritoN != '') {
+                                            $notifi->read_at = Carbon::now();
+                                            $notifi->save();
+                                        }
+                                    }
+                                }
+                            }
                         }
-
                     }
                 }
                 if ($respuestaEmpleado === false) {
