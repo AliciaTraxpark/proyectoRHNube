@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,18 @@
       <link rel="shortcut icon" href="{{ asset('landing/home/images/Logo.png') }}">
       <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
       <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169261172-1"></script>
+      <script>
+           window.dataLayer = window.dataLayer || [];
+
+           function gtag() {
+               dataLayer.push(arguments);
+           }
+           gtag('js', new Date());
+
+           gtag('config', 'UA-169261172-1');
+
+      </script>
    </head>
    <body>
       <div class="div-general">
@@ -82,7 +94,9 @@
          </li>
       </ul>
       <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
-      <div class="bg img-fluid"></div>
+      <div class="bg img-fluid">
+         <img src="{{ asset('/landing/home/images/banner.png') }}" width="100%">
+      </div>
       <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
       <div class="container-fluid inicio p-10 text-center my-3" id="inicio">
          <div class="row mx-auto my-auto">
@@ -387,8 +401,8 @@
                   </fieldset>
                </form>
             </div>
-            <div class="col-sm-12 col-lg-6">
-               <img src="https://rhnube.com.pe/landing/images/career.gif" alt="" class="img-fluid pb-5 imgResp">
+            <div class="col-sm-12 col-lg-6 text-center">
+               <img src="{{ asset('landing/home/images/reunion.gif') }}" alt="" class="img-fluid pb-5 imgResp p-0" width="470">
             </div>
          </div>
       </div>
@@ -396,7 +410,7 @@
          
       </div>
 
-      <!-- MODAL FECHAS DISPONIBLES -->
+      {{-- MODAL FECHAS DISPONIBLES --}}
       <div class="modal fade" id="horarioDisponibles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -432,8 +446,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- FIN MODAL-->
+
+      {{-- FIN MODAL FECHAS DISPONIBLES --}}
       {{-- MODAL CONFIRMACIÓN DE AGENDA REUNIÓN --}}
        <div class="modal" tabindex="-1" id="confirmacion_correo">
          <div class="modal-dialog">
@@ -454,8 +468,8 @@
          </div>
        </div>
       {{-- FINALIZAR MODAL --}}
-      
-      </div>
+      {{-- MODAL DE ERROR DE LOGEO --}}
+
       @if (session('error'))
        <div class="modal" id="modal1" role="dialog" style="display:block;">
            <div class="modal-dialog" role="document">
@@ -477,8 +491,8 @@
            </div>
        </div>
        @endif
-
-
+      {{-- FIN DE MODAL DE ERROR DE LOGEO --}}
+      {{-- REGISTRAR PARTNER --}}
       <div class="modal fade" id="registrarPartner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -517,16 +531,40 @@
           </div>
         </div>
       </div>
-
-
-       <footer class="text-center">
+      {{-- FIN DE REGISTRAR PARTNER --}}
+      {{-- CONFIRMACIÓN DE CORREO --}}
+      <div class="modal" id="modalInv" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header"
+                    style="padding-top: 8px;padding-bottom: 5px;background-color:#163552;color:#ffffff">
+                    <h5 style="font-size: 14px" class="modal-title">CONFIRMACION</h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
+                    <p>Bien hecho, estas registrado! Te hemos enviado un correo de verificación.</p>
+                </div>
+                <div class="modal-footer" style="padding-top: 8px;padding-bottom: 8px;">
+                    <button type="button" class="btn btn-sm" data-dismiss="modal" style="background-color:#163552;color:#ffffff" onclick="cerrarModal()">
+                        OK
+                    </button>
+                </div>
+            </div>
+         </div>
+      </div>
+      {{-- FIN DE MODAL DE CONFIRMACIÓN --}}
+      {{-- PIE DE PÁGINA --}}
+      <footer class="text-center">
          <div>
             <span>© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
             <a style="color:#faf3f3;" href="/politicas">Política de privacidad | </a>
             <span>Central Perú: <a style="color:#faf3f3;" href="tel:017482415">017482415</a> | <a style="color:#faf3f3;" href="mailto:info@rhnube.com.pe">info@rhnube.com.pe</a></span>
          </div>
       </footer>
-
+      {{-- FIN DE PIE DE PÁGINA --}}
       <script src="{{ asset('landing/home/js/lib/jquery-3.4.1.min.js') }}"></script>
       <script src="{{ asset('landing/home/js/lib/popper.min.js') }}"></script>
       <script src="{{ asset('landing/home/js/lib/bootstrap.min.js') }}"></script>
@@ -534,8 +572,6 @@
       <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
       <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
       <script src="https://player.vimeo.com/api/player.js"></script>
-      <script type="text/javascript">
-         $('.dropdown-toggle').dropdown()
-      </script>
+      <script src="{{asset('landing/js/landingpage.js')}}"></script>
    </body>
 </html>

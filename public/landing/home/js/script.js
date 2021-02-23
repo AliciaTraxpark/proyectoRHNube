@@ -272,9 +272,10 @@ function cerrarModalAdvertencia(){
 }
 
 $(function () {
- $('[data-toggle="tooltip"]').tooltip()
- $('.collapse').collapse()
-})
+   $('[data-toggle="tooltip"]').tooltip();
+   $('.collapse').collapse();
+   $('.dropdown-toggle').dropdown();
+});
 
 function enviarPartner(){
   var data = $('#regirationPartner_form').serialize();
@@ -295,6 +296,11 @@ function enviarPartner(){
       $('#registrarPartner').modal('hide');
     }
   });
+}
+
+function cerrarModal() {
+    document.getElementById("modalInv").style.display = "none";
+    document.getElementById("modal").style.display = "none";
 }
 
 

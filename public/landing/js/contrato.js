@@ -1437,6 +1437,7 @@ function modalNuevaAltaReg() {
 }
 //* VALIDACION DE NUEVA ALTA
 function validacionNuevaAltaReg() {
+    $('.alertVencimiento').show();
     if ($('#contrato').val() != "") {
         $('#condicion').prop("disabled", false);
         $('#monto').prop("disabled", false);
