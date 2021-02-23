@@ -1825,6 +1825,7 @@ class horarioController extends Controller
                             $horarioClonando->save();
 
                         }
+                        return 1;
 
                     } else{
 
@@ -1896,7 +1897,8 @@ class horarioController extends Controller
                                 }
                             }
 
-                            foreach($horario_empleado as $horario_empleados){
+                            if($conRepeticion==0){
+                               foreach($horario_empleado as $horario_empleados){
 
                                 $horarioClonando=new horario_empleado();
                                 $horarioClonando->horario_horario_id=$horario_empleados->horario_horario_id;
@@ -1911,6 +1913,13 @@ class horarioController extends Controller
                                 $horarioClonando->save();
 
                             }
+                            return 1;
+                            } else{
+                                //* si $conRepeticion==1
+                                //* no se guarda datos
+                                return  0;
+                            }
+
 
                         } else{
 
@@ -1929,22 +1938,14 @@ class horarioController extends Controller
                                 $horarioClonando->estado=$horario_empleados->estado;
                                 $horarioClonando->save();
 
+
                             }
+                            return 1;
                         }
 
-                        return  $conRepeticion;
-
                     }
-
-
                 }
-
-
-
-
         }
-
-
 
     }
 }

@@ -4375,6 +4375,10 @@ function registrarClonacionH(){
  } else{
     $('#divClonacionElegir').hide();
  }
+ $('#modalHorarioClonar').modal('hide');
+ //*MOSTRAR ESPERA
+ $(".loader").show();
+ $(".img-load").show();
 
  //*RECOGER DATOS
  let empleadosaClonar=$('#nombreEmpleado').val();
@@ -4416,15 +4420,113 @@ function registrarClonacionH(){
     },
     success: function (data) {
        calendar.refetchEvents();
-       $('#modalHorarioClonar').modal('hide');
-       if(asigNuevo==1){
-        if(data==1){
-            bootbox.alert({
-                message: "Hubo cruces en algunos horarios",
 
-            })
+       //*SI SE ASIGNA NUEVO SE SUMA LOS HORARIOS
+       if(asigNuevo==1){
+
+        //*SE ENCONTRARON CRUCES, ASI QUE NO SE REGISTRA HORARIOS HASTA QUE CONFIRME SI REEMPLAZA
+        if(data==0){
+
+            $('#modalHorarioClonar').modal('show');
+            bootbox.confirm({
+                title: "Cruce de horarios",
+                message: "¿Algunos horarios se cruzan con los horarios existentes, desea reemplazarlos ?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-light'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        /* var tipoEliminar= $('#tipoHorario').val();
+                        $.ajax({
+                            type: "post",
+                            url: "/eliminarHora",
+                            data: {
+                                idHora: info.event.id,tipoEliminar
+                            },
+                            statusCode: {
+
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                                info.event.remove();
+                            },
+                            error: function (data) {
+                                alert('Ocurrio un error');
+                            }
+
+
+                        }); */
+                    }
+                    else{
+                        $('#modalHorarioClonar').modal('show');
+                    }
+                }
+            });
+        } else{
+            $.notifyClose();
+           $.notify(
+               {
+                   message: "\nCambios guardados.",
+                   icon: "admin/images/checked.svg",
+               },
+               {   element: $('#asignarHorario'),
+                   position: "fixed",
+                   icon_type: "image",
+                   newest_on_top: true,
+                   delay: 5000,
+                   template:
+                       '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                       '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                       '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                       '<span data-notify="title">{1}</span> ' +
+                       '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                       "</div>",
+                   spacing: 50,
+               }
+           );
+
         }
+       } else{
+           //* devuelve 1 en erreemplazar
+           //*SE REEMPLAZA LOS HORARIOS
+           $.notifyClose();
+           $.notify(
+               {
+                   message: "\nCambios guardados.",
+                   icon: "admin/images/checked.svg",
+               },
+               {   element: $('#asignarHorario'),
+                   position: "fixed",
+                   icon_type: "image",
+                   newest_on_top: true,
+                   delay: 5000,
+                   template:
+                       '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                       '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                       '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                       '<span data-notify="title">{1}</span> ' +
+                       '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                       "</div>",
+                   spacing: 50,
+               }
+           );
+
+
        }
+       $(".loader").hide();
+       $(".img-load").hide();
     },
     error: function (data) {
         alert('Ocurrio un error');
