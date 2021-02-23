@@ -4443,12 +4443,13 @@ function registrarClonacionH(){
                 },
                 callback: function (result) {
                     if (result == true) {
-                        /* var tipoEliminar= $('#tipoHorario').val();
+
                         $.ajax({
                             type: "post",
-                            url: "/eliminarHora",
+                            url: "/reemplazarHorariosClonacion",
                             data: {
-                                idHora: info.event.id,tipoEliminar
+                                empleadosaClonar,
+                                empleadoCLonar,diaI,diaF,
                             },
                             statusCode: {
 
@@ -4460,14 +4461,38 @@ function registrarClonacionH(){
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (data) {
-                                info.event.remove();
+                               calendar.refetchEvents();
+                               $('#modalHorarioClonar').modal('hide');
+                                $.notifyClose();
+                                $.notify(
+                                    {
+                                        message: "\nCambios guardados.",
+                                        icon: "admin/images/checked.svg",
+                                    },
+                                    {   element: $('#asignarHorario'),
+                                        position: "fixed",
+                                        icon_type: "image",
+                                        newest_on_top: true,
+                                        delay: 5000,
+                                        template:
+                                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                            '<span data-notify="title">{1}</span> ' +
+                                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                            "</div>",
+                                        spacing: 50,
+                                    }
+                                );
+
+
                             },
                             error: function (data) {
                                 alert('Ocurrio un error');
                             }
 
 
-                        }); */
+                        });
                     }
                     else{
                         $('#modalHorarioClonar').modal('show');
