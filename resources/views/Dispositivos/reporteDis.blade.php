@@ -259,6 +259,14 @@
         position: absolute;
     }
 
+    .dataTables_filter {
+        display: none;
+    }
+
+    div.dataTables_scrollBody.dropdown-visible {
+        min-height: 400px !important;
+    }
+
     @media (max-width: 767.98px) {
         .separacion {
             padding-right: 1em !important;
@@ -457,6 +465,12 @@
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
+                                        <input type="checkbox" id="colEmpleadosCM">
+                                        <label for="">Empleados solo con marcaciones</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
                                         <input type="checkbox" checked id="colMarcaciones">
                                         <label for="">Entradas y Salidas</label>
                                     </li>
@@ -569,7 +583,7 @@
                             <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                         </div>
                     </div>
-                    <div id="tableZoom" class="col-md-12">
+                    <div id="tableZoom" class="col-md-12 table-responsive">
                         <table id="tablaReport" class="table nowrap order-column" style="font-size: 12.8px;">
                             <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                                 <tr>

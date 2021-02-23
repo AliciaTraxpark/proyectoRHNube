@@ -18,7 +18,7 @@ var paginaGlobal = 10;
 var table;
 function inicializarTabla() {
     table = $("#tablaReport").DataTable({
-        "searching": false,
+        "searching": true,
         "scrollX": true,
         "ordering": false,
         "autoWidth": false,
@@ -36,7 +36,7 @@ function inicializarTabla() {
             sInfo: "Mostrando registros del _START_ al _END_ ",
             sInfoEmpty:
                 "Mostrando registros del 0 al 0 de un total de 0 registros",
-            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoFiltered: "",
             sInfoPostFix: "",
             sSearch: "Buscar:",
             sUrl: "",
@@ -264,9 +264,6 @@ function inicializarTabla() {
             var api = this.api();
             var len = api.page.len();
             paginaGlobal = len;
-        },
-        rowCallback: function (row, data, index) {
-            console.log($(this.api().row(index).node()).hasClass('prueba'), index);
         }
     }).draw();
 }
@@ -481,7 +478,11 @@ function cargartabla(fecha) {
                 razonSocial = data[index].organi_razonSocial;   // : -> VARIABLES PARA EXCEL Y PDF
                 direccion = data[index].organi_direccion;       // : -> VARIABLES PARA EXCEL Y PDF
                 ruc = data[index].organi_ruc;                   // : -> VARIABLES PARA EXCEL Y PDF
-                tbody += `<tr class="prueba">`;
+                var valorEstado = 1;
+                if (data[index].data.length == 0) {
+                    valorEstado = 0;
+                }
+                tbody += `<tr data-estado="${valorEstado}">`;
                 if (permisoModificar == 1) {
                     tbody += `<td class="noExport text-center">
                                 <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')" data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
@@ -4141,6 +4142,19 @@ $('.incidenciaPadre input[type=checkbox]').change(function () {
     $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
+// : ***************************************** FILAS CON SOLO MARCACIONES ***************************************
+$('#colEmpleadosCM').change(function (event) {
+    if (event.target.checked) {
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                return $(table.row(dataIndex).node()).attr('data-estado') == 1;
+            }
+        );
+    } else {
+        $.fn.dataTable.ext.search.pop();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(); }, 1);
+});
 // : ********************************* FINALIZACION *************************************************************
 // * FUNCION DE MOSTRAR COLUMNAS
 function toggleColumnas() {
@@ -4358,5 +4372,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.incidencia').visible(false);
     }
+    // ? SOLO MOSTRAR CON DATA
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
+$("#tablaReport").on('show.bs.dropdown', function () {
+    $('.dataTables_scrollBody').addClass('dropdown-visible');
+})
+    .on('hide.bs.dropdown', function () {
+        $('.dataTables_scrollBody').removeClass('dropdown-visible');
+    });
