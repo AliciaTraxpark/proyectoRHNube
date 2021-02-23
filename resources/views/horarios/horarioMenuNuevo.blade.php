@@ -232,9 +232,9 @@
         }
         .loader {
         position: fixed;
-         left: 25%;
+         left: 40%;
         top: 30%;
-        width: 50%;
+      /*   width: 50%; */
         height: 30%; 
         z-index: 9999;
         opacity: .8;
@@ -297,7 +297,7 @@
                         </div>
                         <div class="modal-body" style="font-size: 13x!important;padding-top: 4px;padding-bottom: 8px;">
 
-                            <div class="loader" class="text-center"  style="display: flex !important; justify-content: center !important; align-items: center;">
+                            <div class="loader" class="text-center"  >
                                 <img src="{{URL::asset('landing/images/logo_animado.gif') }}"  height="300" class="img-load" style="display: none">
                             </div>
                             <input type="hidden" id="horario1">
