@@ -269,6 +269,8 @@ $('#btnasignar').on('click', function (e) {
             alert('Ocurrio un error');
         }
     });
+    $(".loader").hide();
+    $(".img-load").hide();
 });
 //CALENDARIO//
 
@@ -1030,12 +1032,7 @@ function registrarIncidencia() {
 
     ;
 }
-function marcarAsignacion(data) {
-    $('input:checkbox').prop('checked', false);
 
-    $('input:checkbox[data-id=' + data + ']').prop('checked', true);
-    $('#btnasignar').click();
-}
 $('#cerrarHorario').click(function () {
     $('#tablaEmpleado').DataTable().ajax.reload(null, false);
     $('#verhorarioEmpleado').modal('toggle');
