@@ -3536,6 +3536,7 @@ class apiBiometricoController extends Controller
                         $marcacion_puertaVerifMayor = DB::table('marcacion_puerta as mv')
                             ->where('mv.marcaMov_salida', '>=', $req['fechaMarcacion'])
                             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                            ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null ,mv.marcaMov_salida, mv.marcaMov_fecha)'), '=', $fecha1V)
                             ->where(DB::raw('IF(mv.marcaMov_fecha is null,0,mv.marcaMov_fecha)'), '<=', $req['fechaMarcacion'])
                             ->where( function($query) use($conhorario){
                                 if($conhorario!=0){
@@ -3595,6 +3596,7 @@ class apiBiometricoController extends Controller
                                 $marcacion_puertaVerifMayor2 = DB::table('marcacion_puerta as mv')
                                 ->where('mv.marcaMov_fecha', '>=', $req['fechaMarcacion'])
                                 ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null ,mv.marcaMov_salida, mv.marcaMov_fecha)'), '=', $fecha1V)
                                 ->where(DB::raw('IF(mv.marcaMov_salida is null,0,mv.marcaMov_salida)'), '>=', $req['fechaMarcacion'])
                                  ->where( function($query) use($conhorario){
                                     if($conhorario!=0){
@@ -3642,6 +3644,7 @@ class apiBiometricoController extends Controller
                                     $marcacion_puertaVerimenorsalida = DB::table('marcacion_puerta as mv')
                                     ->where('mv.marcaMov_salida', '<=', $req['fechaMarcacion'])
                                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null ,mv.marcaMov_salida, mv.marcaMov_fecha)'), '=', $fecha1V)
                                     ->where('mv.marcaMov_fecha', '=',null)
                                     ->where( function($query) use($conhorario){
                                         if($conhorario!=0){
@@ -3673,6 +3676,7 @@ class apiBiometricoController extends Controller
                                         ->where('mv.marcaMov_fecha', '>=', $req['fechaMarcacion'])
                                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                         ->where('mv.marcaMov_salida', '=',null)
+                                        ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null ,mv.marcaMov_salida, mv.marcaMov_fecha)'), '=', $fecha1V)
                                         ->where( function($query) use($conhorario){
                                             if($conhorario!=0){
                                                 $query->where('mv.horarioEmp_id', '=', $conhorario);
