@@ -23,6 +23,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use App\marcacion_puerta;
 
 class horarioController extends Controller
 {
@@ -2147,7 +2148,30 @@ class horarioController extends Controller
                                       
                     ->where(DB::raw('DATE(marcaMov_fecha)'), '!=',DB::raw('DATE(marcaMov_salida)'))
                     ->get();
-                    dd( $marcacion_puertaVacio2)  ;
+
+        foreach($marcacion_puertaVacio2 as $marcacion_puertaVacio2s){
+            $marcacion_biometrico = new marcacion_puerta();
+
+            $marcacion_biometrico->marcaMov_fecha =$marcacion_puertaVacio2s->marcaMov_salida;
+            /* -------------------- */
+
+            $marcacion_biometrico->marcaMov_emple_id = $marcacion_puertaVacio2s->marcaMov_emple_id;
+            $marcacion_biometrico->dispositivoEntrada = $marcacion_puertaVacio2s->dispositivoSalida;
+
+            $marcacion_biometrico->organi_id = $marcacion_puertaVacio2s->organi_id;
+
+            $marcacion_biometrico->horarioEmp_id =$marcacion_puertaVacio2s->horarioEmp_id;
+
+            $marcacion_biometrico->tipoMarcacionB = 1;
+
+            $marcacion_biometrico->save();
+
+            $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVacio2s->marcaMov_id);
+            $marcacion_biometrico2->marcaMov_salida = null;
+            $marcacion_biometrico2->save();
+
+        }
+                    
 
     }
 }
