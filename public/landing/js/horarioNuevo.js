@@ -755,7 +755,7 @@ $('#guardarHorarioEventos').click(function () {
         success: function (data) {
 
             $('#guardarHorarioEventos').prop('disabled', false);
-            $('#tablaEmpleado').DataTable().ajax.reload();
+            $('#tablaEmpleado').DataTable().ajax.reload(null, false);
             $('#verhorarioEmpleado').modal('toggle');
             calendar.refetchEvents();
 
@@ -819,7 +819,7 @@ $('#guardarTodoHorario').click(function () {
         },
         success: function (data) {
             $('#tbodyExcel').empty();
-            $('#tablaEmpleado').DataTable().ajax.reload();
+            $('#tablaEmpleado').DataTable().ajax.reload(null, false);
             $('#guardarTodoHorario').prop('disabled', false);
 
            /*  $('#asignarHorario').modal('toggle'); */
@@ -1033,7 +1033,7 @@ function marcarAsignacion(data) {
     $('#btnasignar').click();
 }
 $('#cerrarHorario').click(function () {
-    $('#tablaEmpleado').DataTable().ajax.reload();
+    $('#tablaEmpleado').DataTable().ajax.reload(null, false);
     $('#verhorarioEmpleado').modal('toggle');
 });
 
@@ -2100,7 +2100,7 @@ function eliminarHorario(idhorario) {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: function (data) {
-                                    $('#tablaEmpleado').DataTable().ajax.reload();
+                                    $('#tablaEmpleado').DataTable().ajax.reload(null, false);
                                 },
                                 error: function (data) {
                                     alert('Ocurrio un error');
@@ -2976,7 +2976,7 @@ function registrarNuevoHorario() {
             }
             $('#horarioAgregar').modal('toggle');
             limpiarHorario();
-            $('#tablaEmpleado').DataTable().ajax.reload();
+            $('#tablaEmpleado').DataTable().ajax.reload(null, false);
         },
         error: function () { }
     });
@@ -3921,7 +3921,7 @@ async function editarHorarioDatos() {
         },
         success: function (data) {
             $('#horarioEditar').modal('toggle');
-            $('#tablaEmpleado').DataTable().ajax.reload();
+            $('#tablaEmpleado').DataTable().ajax.reload(null, false);
         },
         error: function () { }
     });
