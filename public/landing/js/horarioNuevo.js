@@ -222,8 +222,7 @@ $('#horaFen').flatpickr({
 });
 
 $('#btnasignar').on('click', function (e) {
-    $(".loader").hide();
-    $(".img-load").hide();
+   
     $('#guardarHorarioEventos').prop('disabled', false);
     $('#divOtrodia').hide();
     $('input[type=checkbox]').prop('checked', false);
@@ -262,7 +261,8 @@ $('#btnasignar').on('click', function (e) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-
+            $(".loader").hide();
+            $(".img-load").hide();
 
         },
         error: function (data) {
@@ -516,7 +516,7 @@ function calendario() {
         },
         events: function (info, successCallback, failureCallback) {
 
-
+            
             var idempleado = $('#nombreEmpleado').val();
             num=$('#nombreEmpleado').val().length;
 
@@ -540,6 +540,8 @@ function calendario() {
                     success: function (data) {
 
                         successCallback(data);
+                        $(".loader").hide();
+                        $(".img-load").hide();
 
                     },
                     error: function () {}
@@ -566,6 +568,8 @@ function calendario() {
                     success: function (data) {
 
                         successCallback(data);
+                        $(".loader").hide();
+                        $(".img-load").hide();
 
                     },
                     error: function () {}
@@ -2127,15 +2131,19 @@ $("#selectTodoCheck").click(function () {
     if ($("#selectTodoCheck").is(':checked')) {
         $("#nombreEmpleado > option").prop("selected", "selected");
         $("#nombreEmpleado").trigger("change");
+        $(".loader").hide();
+        $(".img-load").hide();
     } else {
         $("#nombreEmpleado > option").prop("selected", false);
         $("#nombreEmpleado").trigger("change");
+        $(".loader").hide();
+        $(".img-load").hide();
     }
 });
 
 //////////////////////
 //seleccionar por area, cargo, etc
-$('#selectEmpresarial').change(function (e) {
+$('#selectEmpresarial').on('select2:closing', function (e) {
     var idempresarial = [];
     idempresarial = $('#selectEmpresarial').val();
     textSelec = $('select[name="selectEmpresarial"] option:selected:last').text();
@@ -2144,6 +2152,8 @@ $('#selectEmpresarial').change(function (e) {
      alert(palabrasepara);
      return false; */
     palabraEmpresarial = textSelec.split(' ')[0];
+    $("#nombreEmpleado > option").prop("selected", false);
+    $("#nombreEmpleado").trigger("change");
     if (palabraEmpresarial == 'Area') {
         $.ajax({
             type: "post",
@@ -2161,12 +2171,13 @@ $('#selectEmpresarial').change(function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $("#nombreEmpleado > option").prop("selected", false);
-                $("#nombreEmpleado").trigger("change");
+               
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                    $("#nombreEmpleado").trigger("change");
+                   
                 });
+                $("#nombreEmpleado").trigger("change");
+
 
             },
             error: function (data) {
@@ -2191,12 +2202,13 @@ $('#selectEmpresarial').change(function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $("#nombreEmpleado > option").prop("selected", false);
-                $("#nombreEmpleado").trigger("change");
+              
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                    $("#nombreEmpleado").trigger("change");
+                   
                 });
+                $("#nombreEmpleado").trigger("change");
+
 
             },
             error: function (data) {
@@ -2222,12 +2234,13 @@ $('#selectEmpresarial').change(function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $("#nombreEmpleado > option").prop("selected", false);
-                $("#nombreEmpleado").trigger("change");
+           
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                    $("#nombreEmpleado").trigger("change");
+                   
                 });
+                $("#nombreEmpleado").trigger("change");
+
 
             },
             error: function (data) {
@@ -2235,7 +2248,7 @@ $('#selectEmpresarial').change(function (e) {
             }
         });
     }
-
+   
 })
 /////////////////////////////////
 
@@ -4022,6 +4035,8 @@ function actualizarConfigHorario_re() {
 /* ---------------------------------------------------------------------------- */
 //* select empleado cuando cambia
 $( "#nombreEmpleado" ).change(function() {
+    $(".loader").show();
+    $(".img-load").show();
     calendario();
   });
 //*
