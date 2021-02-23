@@ -2070,6 +2070,14 @@ class TardanzasController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
 
+        $path = "fotosUser/".Auth::user()->foto;
+        $dimensiones = getimagesize($path);
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $usuario_organizacion->imagen = $base64;
+
         $empleadoL = $request->idemp;
 
         /*      OBTENEMOS TODOS LOS EMPLEADOS SEGÚN EL USUARIO (ADMIN O INVITADO)        */
@@ -2370,6 +2378,7 @@ class TardanzasController extends Controller
                         'organi_razonSocial' => $usuario_organizacion->razonSocial,
                         'organi_direccion' => $usuario_organizacion->direccion,
                         'organi_ruc' => $usuario_organizacion->ruc,
+                        'imagen' => $usuario_organizacion->imagen,
                         'fecha' => now()->format('d-m-Y H:i:s'),
                         'fechaD' => $fecha1,
                         'fechaH' => $fecha2,

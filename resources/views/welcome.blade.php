@@ -32,10 +32,10 @@
             <div class="navbar-collapse collapse w-100 dual-collapse2 order-1 order-md-0">
                <ul class="navbar-nav ml-auto text-center">
                   <li class="nav-item active">
-                     <a class="nav-link informacion" href="#informacion">INFORMACIÓN</a>
+                     <a class="nav-link informacion" href="#informacion">Información</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link partner" href="#partner">PARTNER</a>
+                     <a class="nav-link partner" href="#partner">Partner</a>
                   </li>
                </ul>
             </div>
@@ -50,12 +50,12 @@
             <div class="navbar-collapse collapse w-100 dual-collapse2 order-2 order-md-2">
                <ul class="navbar-nav mr-auto text-center">
                   <li class="nav-item">
-                     <a class="nav-link agendar-reunion" href="#agendar-reunion">AGENDAR UNA REUNIÓN</a>
+                     <a class="nav-link agendar-reunion" href="#agendar-reunion">Agendar una reunión</a>
                   </li>
                   <li class="nav-item" style="display: grid; align-items: center;">
                      <!--<a class="nav-link" target="_blank" download="Brochure RH nube" href="documentacion/BrochureRHnube .pdf">BROCHURE</a>-->
                      <!-- <a class="nav-link login" href="#login">LOGIN</a> -->
-                     <a class="nav-link dropdown-toggle"  data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">LOGIN</a>
+                     <a class="nav-link dropdown-toggle"  data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
                       <div class="dropdown-menu justify-content-center" style="border-color: white;">
                        <form class="px-4 py-3" method="POST" action="{{ route('login') }}" >
                         @csrf
@@ -78,7 +78,7 @@
                          <button type="submit" class="btn btn-rh btn-block">Iniciar Sesión</button>
                        </form>
                        <div class="dropdown-divider"></div>
-                       <a class="dropdown-item text-center" href="{{ route('password.request') }}" style="font-size: 13px">¿Olvidaste tu contraseña?</a>
+                       <a class="dropdown-item text-center" href="{{ route('password.request') }}" style="font-size: 15px !important">¿Olvidaste tu contraseña?</a>
                      </div>
                   </li>
                </ul>
@@ -87,15 +87,15 @@
       </div>
       <ul class="nav justify-content-center">
          <li class="nav-item general">
-            <a class="nav-link active pc" href="#">PC</a>
+            <a class="nav-link active pc" style="padding-top: 3px" href="#">PC</a>
          </li>
          <li class="nav-item general">
-            <a class="nav-link movil" href="#">Móvil</a>
+            <a class="nav-link movil" style="padding-top: 3px" href="#">Móvil</a>
          </li>
       </ul>
       <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
       <div class="bg img-fluid">
-         <img src="{{ asset('/landing/home/images/banner.png') }}" width="100%">
+         <img src="{{ asset('/landing/home/images/banner4.jpg') }}" width="100%">
       </div>
       <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
       <div class="container-fluid inicio p-10 text-center my-3" id="inicio">
@@ -161,7 +161,7 @@
             <div class="col-sm-12 col-lg-4">
                <div class="col text-center">
                   <div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>
-                  <a href="{{route('registroPersona')}}" class="btn boton-enviar btn-default">¡Registrate en RH nube <b>GRATIS!</b> 
+                  <a href="{{route('registroPersona')}}" class="btn boton-enviar btn-default">¡Registrate <b>GRATIS!</b> 
                      <img class="imagen-personalizada" src="{{ asset('landing/home/images/recurso_flecha.png') }}">
                   </a>
                </div>
@@ -446,7 +446,6 @@
             </div>
           </div>
         </div>
-
       {{-- FIN MODAL FECHAS DISPONIBLES --}}
       {{-- MODAL CONFIRMACIÓN DE AGENDA REUNIÓN --}}
        <div class="modal" tabindex="-1" id="confirmacion_correo">
@@ -469,7 +468,6 @@
        </div>
       {{-- FINALIZAR MODAL --}}
       {{-- MODAL DE ERROR DE LOGEO --}}
-
       @if (session('error'))
        <div class="modal" id="modal1" role="dialog" style="display:block;">
            <div class="modal-dialog" role="document">
@@ -559,9 +557,9 @@
       {{-- PIE DE PÁGINA --}}
       <footer class="text-center">
          <div>
-            <span>© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
-            <a style="color:#faf3f3;" href="/politicas">Política de privacidad | </a>
-            <span>Central Perú: <a style="color:#faf3f3;" href="tel:017482415">017482415</a> | <a style="color:#faf3f3;" href="mailto:info@rhnube.com.pe">info@rhnube.com.pe</a></span>
+            <span style="font-size: 17px !important">© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
+            <a style="color:#faf3f3; font-size: 17px !important" href="/politicas">Política de privacidad | </a>
+            <span style="font-size: 17px !important">Central Perú: <a style="color:#faf3f3; font-size: 17px !important" href="tel:017482415">017482415</a> | <a style="color:#faf3f3; font-size: 17px !important" href="mailto:info@rhnube.com.pe">info@rhnube.com.pe</a></span>
          </div>
       </footer>
       {{-- FIN DE PIE DE PÁGINA --}}

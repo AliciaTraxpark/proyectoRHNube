@@ -155,7 +155,7 @@ class HappyBirthday extends Command
           foreach ($user->notifications as $notificacion) {
             $create = Carbon::parse($notificacion->created_at);
             $yesterdayD = now()->diffInDays($create);
-            if(($notificacion->data['0']['mensaje'] == "Mañana está de cumpleaños.") && $yesterdayD == 1){
+            if(($notificacion->data['0']['mensaje'] == "Mañana está de cumpleaños.")){
                  DB::table('notifications')->where('id', $notificacion->id)->delete();
             }
           }
