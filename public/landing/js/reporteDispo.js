@@ -4144,6 +4144,7 @@ $('.incidenciaPadre input[type=checkbox]').change(function () {
 });
 // : ***************************************** FILAS CON SOLO MARCACIONES ***************************************
 $('#colEmpleadosCM').change(function (event) {
+    // : ME COSTO CASI UN DIA COMPLETO GOOGLEANDO, CON UN GRACIAS GABY NO SERIA MALO JAJAJAJ
     if (event.target.checked) {
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
