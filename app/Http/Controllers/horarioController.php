@@ -792,8 +792,8 @@ class horarioController extends Controller
         $empleados = $request->empleados;
         $aniocalen = $request->aniocalen;
         $mescale = $request->mescale;
-
-        foreach ($empleados as $empleado) {
+        if($empleados){
+            foreach ($empleados as $empleado) {
 
             DB::table('horario_empleado as he')
                 ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
@@ -805,7 +805,9 @@ class horarioController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_id', '=', $empleado)
                 ->update(['he.estado' => 0]);
+            }
         }
+        
 
         return $temporal_evento;
     }
