@@ -1771,8 +1771,9 @@ class horarioController extends Controller
 
         //*COPIO O REEMPLAZO HORARIOS A LOS EMPLEADOS SELECCIONADOS***************************
         //RECORRO LOS HORARIOS A CLOONAR y empleados
+        $conRepeticion = 0;
         foreach ($empleadosaClonar as $empleadosCl) {
-
+            $empleadoCruce=0;
             //*si reemplaza primero borro los otros horarios que tenga en esas fechas
             if ($reempExistente == 1) {
                 $horario_empleadoBorrar = DB::table('horario_empleado as he')
@@ -1800,7 +1801,7 @@ class horarioController extends Controller
 
                     }
                 }
-                return 1;
+              /*   return 1; */
 
             } else {
 
@@ -1817,7 +1818,7 @@ class horarioController extends Controller
                     ->where('he.empleado_emple_id', '=', $empleadosCl)
                     ->get();
 
-                $conRepeticion = 0;
+
 
                 //*SI ENCONTRAMOS HORARIOS DE EMPLEADO
                 if ($horario_empleadoVer->isNotEmpty()) {
@@ -1856,24 +1857,28 @@ class horarioController extends Controller
                                 //*VALIDAMOS QUE NO SE CRUZEN
                                 if ($horaIEmp->gt($horaIClonar) && $horaFEmp->lt($horaFClonar) && $horaIEmp->lt($horaFClonar)) {
                                     $conRepeticion = 1;
-                                    $horario_empleado->pull($key);
+                                    $empleadoCruce=1;
+
 
                                 } elseif (($horaIEmp->gt($horaIClonar) && $horaIEmp->lt($horaFClonar)) || ($horaFEmp->gt($horaIClonar) && $horaFEmp->lt($horaFClonar))) {
                                     $conRepeticion = 1;
-                                    $horario_empleado->pull($key);
+                                    $empleadoCruce=1;
+
                                 } elseif ($horaIEmp == $horaIClonar || $horaFEmp == $horaFClonar) {
                                     $conRepeticion = 1;
-                                    $horario_empleado->pull($key);
+                                    $empleadoCruce=1;
+
                                 } elseif ($horaIClonar->gt($horaIEmp) && $horaFClonar->lt($horaFEmp)) {
                                     $conRepeticion = 1;
-                                    $horario_empleado->pull($key);
+                                    $empleadoCruce=1;
+
                                 }
 
                             }
                         }
                     }
 
-                    if ($conRepeticion == 0) {
+                    if ($empleadoCruce == 0) {
                         if ($horario_empleado->isNotEmpty()) {
                             foreach ($horario_empleado as $horario_empleados) {
 
@@ -1892,11 +1897,11 @@ class horarioController extends Controller
                             }
                         }
 
-                        return 1;
+
                     } else {
                         //* si $conRepeticion==1
                         //* no se guarda datos
-                        return 0;
+                       /*  return 0; */
                     }
 
                 } else {
@@ -1920,10 +1925,20 @@ class horarioController extends Controller
                         }
                     }
 
-                    return 1;
+                   /*  return 1; */
                 }
 
             }
+
+        } 
+        if($asigNuevo==1){
+          if($conRepeticion==1){
+            return 0;
+        } else{
+            return 1;
+        }
+        } else{
+            return 1;
         }
 
     }

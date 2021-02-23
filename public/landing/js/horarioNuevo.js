@@ -4443,7 +4443,10 @@ function registrarClonacionH(){
                 },
                 callback: function (result) {
                     if (result == true) {
-
+                        $('#modalHorarioClonar').modal('hide');
+                        //*MOSTRAR ESPERA
+                        $(".loader").show();
+                        $(".img-load").show();
                         $.ajax({
                             type: "post",
                             url: "/reemplazarHorariosClonacion",
@@ -4463,6 +4466,8 @@ function registrarClonacionH(){
                             success: function (data) {
                                calendar.refetchEvents();
                                $('#modalHorarioClonar').modal('hide');
+                               $(".loader").hide();
+                               $(".img-load").hide();
                                 $.notifyClose();
                                 $.notify(
                                     {
