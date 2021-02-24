@@ -238,7 +238,7 @@ class EmpleadoController extends Controller
                         $join->on('md.id', '=', 'v.idModo');
                         $join->orOn('md.id', '=', 'vr.idModo');
                     })
-                    ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                   
                     ->select(
                         'e.emple_nDoc',
                         'p.perso_nombre',
