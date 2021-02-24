@@ -222,6 +222,7 @@ $('#horaFen').flatpickr({
 });
 
 $('#btnasignar').on('click', function (e) {
+
     $('#guardarHorarioEventos').prop('disabled', false);
     $('#divOtrodia').hide();
     $('input[type=checkbox]').prop('checked', false);
@@ -233,6 +234,8 @@ $('#btnasignar').on('click', function (e) {
         $("#selectEmpresarial").trigger("change");
         $('#Datoscalendar').show();
         $('#Datoscalendar1').hide();
+        $(".loader").hide();
+        $(".img-load").hide();
         $('#asignarHorario').modal('toggle');
 
     });
@@ -245,28 +248,9 @@ $('#btnasignar').on('click', function (e) {
     $(".sub_chk:checked").each(function () {
         allVals.push($(this).attr('data-id'));
     });
-    $.ajax({
-        type: "post",
-        url: "/horarioVerTodEmp",
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-
-
-        },
-        error: function (data) {
-            alert('Ocurrio un error');
-        }
-    });
+    
+    $(".loader").hide();
+    $(".img-load").hide();
 });
 //CALENDARIO//
 
@@ -499,14 +483,14 @@ function calendario() {
         },
         customButtons: {
             borrarHorarios: {
-                text: "Borrar horarios.",
+                text: "Borrar horarios",
                 click: function () {
                     vaciarhor();
                 }
             },
 
             Clonar: {
-                text: "Clonar horarios.",
+                text: "Clonar horarios",
                 click: function () {
                     ClonarHorarios();
                 }
@@ -538,6 +522,8 @@ function calendario() {
                     success: function (data) {
 
                         successCallback(data);
+                        $(".loader").hide();
+                        $(".img-load").hide();
 
                     },
                     error: function () {}
@@ -564,6 +550,8 @@ function calendario() {
                     success: function (data) {
 
                         successCallback(data);
+                        $(".loader").hide();
+                        $(".img-load").hide();
 
                     },
                     error: function () {}
@@ -753,7 +741,7 @@ $('#guardarHorarioEventos').click(function () {
         success: function (data) {
 
             $('#guardarHorarioEventos').prop('disabled', false);
-            $('#tablaEmpleado').DataTable().ajax.reload();
+            $('#tablaEmpleado').DataTable().ajax.reload(null, false);
             $('#verhorarioEmpleado').modal('toggle');
             calendar.refetchEvents();
 
@@ -766,6 +754,9 @@ $('#guardarHorarioEventos').click(function () {
 });
 ////////////
 $('#guardarTodoHorario').click(function () {
+    $(".loader").show();
+    $(".img-load").show();
+    $('#guardarTodoHorario').prop('disabled', true);
     $('#tablaEmpleadoExcel').DataTable().destroy();
 
     /* if ($("*").hasClass("fc-highlight")) {
@@ -778,7 +769,7 @@ $('#guardarTodoHorario').click(function () {
         })
         return false;
     } */
-    $('#guardarTodoHorario').prop('disabled', true);
+  /*   $('#guardarTodoHorario').prop('disabled', true); */
     idemps = $('#nombreEmpleado').val();
 
     if (idemps == '') {
@@ -789,6 +780,8 @@ $('#guardarTodoHorario').click(function () {
 
         });
         $('#guardarTodoHorario').prop('disabled', false);
+        $(".loader").hide();
+        $(".img-load").hide();
         return false;
     }
     $.ajax({
@@ -812,11 +805,11 @@ $('#guardarTodoHorario').click(function () {
         },
         success: function (data) {
             $('#tbodyExcel').empty();
-            $('#tablaEmpleado').DataTable().ajax.reload();
+            $('#tablaEmpleado').DataTable().ajax.reload(null, false);
             $('#guardarTodoHorario').prop('disabled', false);
 
-            $('#asignarHorario').modal('toggle');
-            calendar.refetchEvents();
+           /*  $('#asignarHorario').modal('toggle'); */
+
             if (data.length > 0) {
 
                 var tbodyTabla = [];
@@ -899,6 +892,53 @@ $('#guardarTodoHorario').click(function () {
     });
 
 
+    $.ajax({
+
+        url: "/vaciartemporal",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            $('#guardarTodoHorario').prop('disabled', false);
+            calendar.refetchEvents();
+
+            $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nHorarios registrados a empleado(s).",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {   element: $('#asignarHorario'),
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 50,
+                    }
+                );
+
+                $(".loader").hide();
+                $(".img-load").hide();
+        },
+        error: function () { }
+    });
+
 })
 
 $('#customSwitch1').change(function (event) {
@@ -972,14 +1012,9 @@ function registrarIncidencia() {
 
     ;
 }
-function marcarAsignacion(data) {
-    $('input:checkbox').prop('checked', false);
 
-    $('input:checkbox[data-id=' + data + ']').prop('checked', true);
-    $('#btnasignar').click();
-}
 $('#cerrarHorario').click(function () {
-    $('#tablaEmpleado').DataTable().ajax.reload();
+    $('#tablaEmpleado').DataTable().ajax.reload(null, false);
     $('#verhorarioEmpleado').modal('toggle');
 });
 
@@ -1661,7 +1696,7 @@ function vaciarcalendario() {
 function vaciarhor() {
     bootbox.confirm({
         title: "Elminar horario",
-        message: "¿Esta seguro que desea eliminar horario(s) de este mes del calendario?",
+        message: "¿Esta seguro que desea borrar horario(s) de este mes del calendario?",
         buttons: {
             confirm: {
                 label: 'Aceptar',
@@ -1702,6 +1737,27 @@ function vaciarhor() {
                         var d = mesAg;
                         var fechasM = new Date(d);
                         calendar.refetchEvents();
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message: "\nHorarios borrados",
+                                icon: "admin/images/checked.svg",
+                            },
+                            {   element: $('#asignarHorario'),
+                                position: "fixed",
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 5000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 50,
+                            }
+                        );
 
                     },
                     error: function () {}
@@ -2046,7 +2102,7 @@ function eliminarHorario(idhorario) {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: function (data) {
-                                    $('#tablaEmpleado').DataTable().ajax.reload();
+                                    $('#tablaEmpleado').DataTable().ajax.reload(null, false);
                                 },
                                 error: function (data) {
                                     alert('Ocurrio un error');
@@ -2073,15 +2129,19 @@ $("#selectTodoCheck").click(function () {
     if ($("#selectTodoCheck").is(':checked')) {
         $("#nombreEmpleado > option").prop("selected", "selected");
         $("#nombreEmpleado").trigger("change");
+        $(".loader").hide();
+        $(".img-load").hide();
     } else {
         $("#nombreEmpleado > option").prop("selected", false);
         $("#nombreEmpleado").trigger("change");
+        $(".loader").hide();
+        $(".img-load").hide();
     }
 });
 
 //////////////////////
 //seleccionar por area, cargo, etc
-$('#selectEmpresarial').change(function (e) {
+$('#selectEmpresarial').on('select2:closing', function (e) {
     var idempresarial = [];
     idempresarial = $('#selectEmpresarial').val();
     textSelec = $('select[name="selectEmpresarial"] option:selected:last').text();
@@ -2090,6 +2150,8 @@ $('#selectEmpresarial').change(function (e) {
      alert(palabrasepara);
      return false; */
     palabraEmpresarial = textSelec.split(' ')[0];
+    $("#nombreEmpleado > option").prop("selected", false);
+    $("#nombreEmpleado").trigger("change");
     if (palabraEmpresarial == 'Area') {
         $.ajax({
             type: "post",
@@ -2107,12 +2169,13 @@ $('#selectEmpresarial').change(function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $("#nombreEmpleado > option").prop("selected", false);
-                $("#nombreEmpleado").trigger("change");
+
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                    $("#nombreEmpleado").trigger("change");
+
                 });
+                $("#nombreEmpleado").trigger("change");
+
 
             },
             error: function (data) {
@@ -2137,12 +2200,13 @@ $('#selectEmpresarial').change(function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $("#nombreEmpleado > option").prop("selected", false);
-                $("#nombreEmpleado").trigger("change");
+
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                    $("#nombreEmpleado").trigger("change");
+
                 });
+                $("#nombreEmpleado").trigger("change");
+
 
             },
             error: function (data) {
@@ -2168,12 +2232,13 @@ $('#selectEmpresarial').change(function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $("#nombreEmpleado > option").prop("selected", false);
-                $("#nombreEmpleado").trigger("change");
+
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                    $("#nombreEmpleado").trigger("change");
+
                 });
+                $("#nombreEmpleado").trigger("change");
+
 
             },
             error: function (data) {
@@ -2458,7 +2523,7 @@ function contenidoInput(id) {
                             <label>Tolerancia inicio</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="toleranciaIP${r_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59; if( this.value == '') this.value = 0"
                                     onchange="javascript:toleranciasValidacion()">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -2476,7 +2541,7 @@ function contenidoInput(id) {
                             <label>Tolerancia salida</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="ToleranciaFP${r_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;if( this.value == '') this.value = 0"
                                     onchange="javascript:toleranciasValidacion()">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -2922,7 +2987,7 @@ function registrarNuevoHorario() {
             }
             $('#horarioAgregar').modal('toggle');
             limpiarHorario();
-            $('#tablaEmpleado').DataTable().ajax.reload();
+            $('#tablaEmpleado').DataTable().ajax.reload(null, false);
         },
         error: function () { }
     });
@@ -3086,7 +3151,7 @@ function modalEditar(id) {
                                         <label>Tolerancia inicio</label>
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                             <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="${pausa.tolerancia_inicio}"
-                                               oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
+                                               oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;if( this.value == '') this.value = 0" onchange="javascript:e_toleranciasValidacion()">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                     min.
@@ -3103,7 +3168,7 @@ function modalEditar(id) {
                                         <label>Tolerancia salida</label>
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                             <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="${pausa.tolerancia_fin}"
-                                               oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
+                                               oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59; if( this.value == '') this.value = 0" onchange="javascript:e_toleranciasValidacion()">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                     min.
@@ -3355,7 +3420,7 @@ function e_contenidoInput(id) {
                             <label>Tolerancia inicio</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_toleranciaIPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59; if( this.value == '') this.value = 0"
                                     onchange="javascript:e_toleranciasValidacion()">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3373,7 +3438,7 @@ function e_contenidoInput(id) {
                             <label>Tolerancia salida</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59; if( this.value == '') this.value = 0"
                                     onchange="javascript:e_toleranciasValidacion()">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3667,7 +3732,7 @@ function pausasHorario(id) {
                                     <label>Tolerancia inicio</label>
                                     <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                         <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="0"
-                                           value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
+                                           value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59; if( this.value == '') this.value = 0">
                                         <div class="input-group-prepend  ">
                                             <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                 min.
@@ -3684,7 +3749,7 @@ function pausasHorario(id) {
                                     <label>Tolerancia salida</label>
                                     <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                         <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="0"
-                                           value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
+                                           value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59; if( this.value == '') this.value = 0">
                                         <div class="input-group-prepend  ">
                                             <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                 min.
@@ -3867,7 +3932,7 @@ async function editarHorarioDatos() {
         },
         success: function (data) {
             $('#horarioEditar').modal('toggle');
-            $('#tablaEmpleado').DataTable().ajax.reload();
+            $('#tablaEmpleado').DataTable().ajax.reload(null, false);
         },
         error: function () { }
     });
@@ -3968,6 +4033,8 @@ function actualizarConfigHorario_re() {
 /* ---------------------------------------------------------------------------- */
 //* select empleado cuando cambia
 $( "#nombreEmpleado" ).change(function() {
+    $(".loader").show();
+    $(".img-load").show();
     calendario();
   });
 //*
@@ -4054,52 +4121,116 @@ function verDatosHorario(idempleado,idHorarioEmp){
 }
 //**ELIMINAR HORARIOS EMPLEADOS MASIVOS */
 function eliminarMasivoHorarios(){
-    let valoresCheck = [];
-    let empleados=$('#nombreEmpleado').val();
-    let diadeHorario=$('#fechaSelectora').val();
-    $(".chechHoraEmp:checked").each(function(){
-        valoresCheck.push($(this).attr('data-id'));
-    });
-    if(valoresCheck.length<1){
-        alert('seleccione');
-        return false;
-    }
-    $.ajax({
-        type: "post",
-        url: "/elimarhoraEmps",
-        data:{
-            valoresCheck,empleados,diadeHorario
-        },
-        async:false,
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
+    bootbox.confirm({
+        title: "Elminar horario",
+        message: "¿Estás seguro que desea borrar los horarios seleccionados?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
             }
         },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            if(data!=0){
+        callback: function (result) {
+            if (result == true) {
 
-                /* ACTUALIZO LOS DATO DE MODAL */
-                datosModalHorarioEmpleado(diadeHorario,empleados);
-                /* ............................. */
+                let valoresCheck = [];
+                let empleados=$('#nombreEmpleado').val();
+                let diadeHorario=$('#fechaSelectora').val();
+                $(".chechHoraEmp:checked").each(function(){
+                    valoresCheck.push($(this).attr('data-id'));
+                });
+                if(valoresCheck.length<1){
+                    alert('seleccione');
+                    return false;
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/elimarhoraEmps",
+                    data:{
+                        valoresCheck,empleados,diadeHorario
+                    },
+                    async:false,
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if(data!=0){
 
-            } else{
-                console.log('no tengo datos');
-                $('#modalHorarioEmpleados').modal('hide');
-                calendar.refetchEvents();
+                            /* ACTUALIZO LOS DATO DE MODAL */
+                            datosModalHorarioEmpleado(diadeHorario,empleados);
+                            $.notifyClose();
+                        $.notify(
+                            {
+                                message: "\nHorarios borrados",
+                                icon: "admin/images/checked.svg",
+                            },
+                            {   element: $('#modalHorarioEmpleados'),
+                                position: "fixed",
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 5000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 50,
+                            }
+                        );
+                            /* ............................. */
+
+                        } else{
+                            console.log('no tengo datos');
+                            $('#modalHorarioEmpleados').modal('hide');
+                            calendar.refetchEvents();
+                            $.notifyClose();
+                        $.notify(
+                            {
+                                message: "\nHorarios borrados",
+                                icon: "admin/images/checked.svg",
+                            },
+                            {   element: $('#asignarHorario'),
+                                position: "fixed",
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 5000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 50,
+                            }
+                        );
+                        }
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+
+
             }
-
-        },
-        error: function (data) {
-            alert('Ocurrio un error');
         }
     });
+
 
 
 }
@@ -4139,7 +4270,7 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
             </div>
             <div class="col-md-6 text-right">
                 <button onclick="eliminarMasivoHorarios()" type="button" class="btn btn-soft-danger btn-sm"><i
-                        class="uil uil-trash-alt mr-1"></i>Eliminar seleccionados</button>
+                        class="uil uil-trash-alt mr-1"></i>Borrar seleccionados</button>
              </div>
                       </div>`;
 
@@ -4244,7 +4375,6 @@ var fechaValue = $("#fechaSelec").flatpickr({
     altInput: true,
     altFormat: "j F",
     locale: "es",
-    maxDate: "today",
     wrap: true,
     allowInput: true,
     conjunction: " a ",
@@ -4300,6 +4430,10 @@ function registrarClonacionH(){
  } else{
     $('#divClonacionElegir').hide();
  }
+ $('#modalHorarioClonar').modal('hide');
+ //*MOSTRAR ESPERA
+ $(".loader").show();
+ $(".img-load").show();
 
  //*RECOGER DATOS
  let empleadosaClonar=$('#nombreEmpleado').val();
@@ -4341,7 +4475,143 @@ function registrarClonacionH(){
     },
     success: function (data) {
        calendar.refetchEvents();
-       $('#modalHorarioClonar').modal('hide');
+
+       //*SI SE ASIGNA NUEVO SE SUMA LOS HORARIOS
+       if(asigNuevo==1){
+
+        //*SE ENCONTRARON CRUCES, ASI QUE NO SE REGISTRA HORARIOS HASTA QUE CONFIRME SI REEMPLAZA
+        if(data==0){
+
+            $('#modalHorarioClonar').modal('show');
+            bootbox.confirm({
+                title: "Cruce de horarios",
+                message: "¿Algunos horarios se cruzan con los horarios existentes, desea reemplazarlos ?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-light'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $('#modalHorarioClonar').modal('hide');
+                        //*MOSTRAR ESPERA
+                        $(".loader").show();
+                        $(".img-load").show();
+                        $.ajax({
+                            type: "post",
+                            url: "/reemplazarHorariosClonacion",
+                            data: {
+                                empleadosaClonar,
+                                empleadoCLonar,diaI,diaF,
+                            },
+                            statusCode: {
+
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                               calendar.refetchEvents();
+                               $('#modalHorarioClonar').modal('hide');
+                               $(".loader").hide();
+                               $(".img-load").hide();
+                                $.notifyClose();
+                                $.notify(
+                                    {
+                                        message: "\nCambios guardados.",
+                                        icon: "admin/images/checked.svg",
+                                    },
+                                    {   element: $('#asignarHorario'),
+                                        position: "fixed",
+                                        icon_type: "image",
+                                        newest_on_top: true,
+                                        delay: 5000,
+                                        template:
+                                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                            '<span data-notify="title">{1}</span> ' +
+                                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                            "</div>",
+                                        spacing: 50,
+                                    }
+                                );
+
+
+                            },
+                            error: function (data) {
+                                alert('Ocurrio un error');
+                            }
+
+
+                        });
+                    }
+                    else{
+                        $('#modalHorarioClonar').modal('show');
+                    }
+                }
+            });
+        } else{
+            $.notifyClose();
+           $.notify(
+               {
+                   message: "\nCambios guardados.",
+                   icon: "admin/images/checked.svg",
+               },
+               {   element: $('#asignarHorario'),
+                   position: "fixed",
+                   icon_type: "image",
+                   newest_on_top: true,
+                   delay: 5000,
+                   template:
+                       '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                       '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                       '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                       '<span data-notify="title">{1}</span> ' +
+                       '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                       "</div>",
+                   spacing: 50,
+               }
+           );
+
+        }
+       } else{
+           //* devuelve 1 en erreemplazar
+           //*SE REEMPLAZA LOS HORARIOS
+           $.notifyClose();
+           $.notify(
+               {
+                   message: "\nCambios guardados.",
+                   icon: "admin/images/checked.svg",
+               },
+               {   element: $('#asignarHorario'),
+                   position: "fixed",
+                   icon_type: "image",
+                   newest_on_top: true,
+                   delay: 5000,
+                   template:
+                       '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                       '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                       '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                       '<span data-notify="title">{1}</span> ' +
+                       '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                       "</div>",
+                   spacing: 50,
+               }
+           );
+
+
+       }
+       $(".loader").hide();
+       $(".img-load").hide();
     },
     error: function (data) {
         alert('Ocurrio un error');

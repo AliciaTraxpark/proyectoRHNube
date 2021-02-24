@@ -154,7 +154,11 @@ class DispositivoTareoController extends Controller
             ));
             $err = curl_error($curl);
             $response = curl_exec($curl);
+            if($response==false){
+                return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
+            }
         }
+
     }
 
     /**
@@ -400,6 +404,9 @@ class DispositivoTareoController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
+        if($response==false){
+            return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
+        }
     }
     public function reenviarmensaje(Request $request)
     {
@@ -433,6 +440,10 @@ class DispositivoTareoController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
+
+       if($response==false){
+           return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
+       }
     }
 
     public function desactivarDisposi(Request $request)

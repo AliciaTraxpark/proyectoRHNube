@@ -363,7 +363,7 @@ function RegistraDispo() {
                         ),
                     },
                     success: function (data) {
-                        $("#tablaDips").DataTable().ajax.reload();
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                         $.notifyClose();
                         $.notify(
                             {
@@ -385,6 +385,30 @@ function RegistraDispo() {
                                 spacing: 35,
                             }
                         );
+                        if(smsCh==1){
+                            if(data!=null || data!=''){
+                                $.notify(
+                                    {
+                                        message: data,
+                                        icon: "admin/images/warning.svg",
+                                    },
+                                    {
+                                        position: "fixed",
+                                        icon_type: "image",
+                                        newest_on_top: true,
+                                        delay: 5000,
+                                        template:
+                                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                        "</div>",
+                                        spacing: 35,
+                                    }
+                                );
+                            }
+                        }
                         $("#nuevoDispositivo").modal("hide");
                     },
                     error: function (data) {
@@ -429,27 +453,51 @@ function enviarSMS(idDis) {
                     },
                     success: function (data) {
                         $.notifyClose();
-                        $.notify(
-                            {
-                                message: "\nMensaje enviado.",
-                                icon: "admin/images/checked.svg",
-                            },
-                            {
-                                position: "fixed",
-                                icon_type: "image",
-                                newest_on_top: true,
-                                delay: 5000,
-                                template:
-                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        if(data!=null || data!=''){
+                            $.notify(
+                                {
+                                    message: data,
+                                    icon: "admin/images/warning.svg",
+                                },
+                                {
+                                    position: "fixed",
+                                    icon_type: "image",
+                                    newest_on_top: true,
+                                    delay: 5000,
+                                    template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
                                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                                     '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                                     '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
                                     "</div>",
-                                spacing: 35,
-                            }
-                        );
-                        $("#tablaDips").DataTable().ajax.reload();
+                                    spacing: 35,
+                                }
+                            );
+                        } else{
+                            $.notify(
+                                {
+                                    message: "\nMensaje enviado.",
+                                    icon: "admin/images/checked.svg",
+                                },
+                                {
+                                    position: "fixed",
+                                    icon_type: "image",
+                                    newest_on_top: true,
+                                    delay: 5000,
+                                    template:
+                                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                        "</div>",
+                                    spacing: 35,
+                                }
+                            );
+                        }
+
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
@@ -492,27 +540,51 @@ function reenviarSMS(idDis) {
                     },
                     success: function (data) {
                         $.notifyClose();
-                        $.notify(
-                            {
-                                message: "\nMensaje enviado.",
-                                icon: "admin/images/checked.svg",
-                            },
-                            {
-                                position: "fixed",
-                                icon_type: "image",
-                                newest_on_top: true,
-                                delay: 5000,
-                                template:
-                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        if(data!=null || data!=''){
+                            $.notify(
+                                {
+                                    message: data,
+                                    icon: "admin/images/warning.svg",
+                                },
+                                {
+                                    position: "fixed",
+                                    icon_type: "image",
+                                    newest_on_top: true,
+                                    delay: 5000,
+                                    template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
                                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                                     '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                                     '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
                                     "</div>",
-                                spacing: 35,
-                            }
-                        );
-                        $("#tablaDips").DataTable().ajax.reload();
+                                    spacing: 35,
+                                }
+                            );
+                        } else{
+                            $.notify(
+                                {
+                                    message: "\nMensaje enviado.",
+                                    icon: "admin/images/checked.svg",
+                                },
+                                {
+                                    position: "fixed",
+                                    icon_type: "image",
+                                    newest_on_top: true,
+                                    delay: 5000,
+                                    template:
+                                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                        "</div>",
+                                    spacing: 35,
+                                }
+                            );
+                        }
+
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
@@ -632,7 +704,7 @@ function reditarDispo() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $("#tablaDips").DataTable().ajax.reload();
+            $("#tablaDips").DataTable().ajax.reload(null, false);
             $("#editarDispositivo").modal("hide");
             $.notifyClose();
             $.notify(
@@ -693,7 +765,7 @@ function desactivarDispo(idDisDesac) {
                         ),
                     },
                     success: function (data) {
-                        $("#tablaDips").DataTable().ajax.reload();
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
@@ -735,7 +807,7 @@ function activarDispo(idDisAct) {
                         ),
                     },
                     success: function (data) {
-                        $("#tablaDips").DataTable().ajax.reload();
+                        $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         alert("Ocurrio un error");

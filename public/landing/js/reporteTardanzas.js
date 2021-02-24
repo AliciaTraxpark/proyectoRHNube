@@ -6,7 +6,8 @@ var ruc;
 var fecha;
 var fechaD;
 var fechaH;
-
+var imagen;
+var dimensiones;
 $("div.loader").hide(0);
 //* FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
@@ -87,6 +88,7 @@ function cargartablaRuta(fecha1,fecha2) {
                 fecha = data[0].fecha;
                 fechaD = data[0].fechaD;
                 fechaH = data[0].fechaH;
+                imagen = data[0].imagen;
 
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
@@ -355,7 +357,7 @@ function cargartablaRuta(fecha1,fecha2) {
                                         ],
                                         fontSize: 10,
                                         margin: [30, 10]
-                                    },
+                                    }
                                 ],
                                 margin: 20
                             };
