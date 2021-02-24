@@ -270,16 +270,7 @@ class horarioController extends Controller
         return $horario;
     }
 
-    public function tablaHorario()
-    {
-        $horario = horario::where('horario.organi_id', '=', session('sesionidorg'))
-            ->leftJoin('horario_empleado as he', 'horario.horario_id', '=', 'he.horario_horario_id')
-            ->where('he.estado', '=', 1)
-            ->groupBy('horario.horario_id')
-            ->get();
-
-        return view('horarios.tablaHorario', ['horario' => $horario]);
-    }
+   
 
     public function verDataEmpleado(Request $request)
     {

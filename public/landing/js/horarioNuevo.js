@@ -222,7 +222,7 @@ $('#horaFen').flatpickr({
 });
 
 $('#btnasignar').on('click', function (e) {
-   
+
     $('#guardarHorarioEventos').prop('disabled', false);
     $('#divOtrodia').hide();
     $('input[type=checkbox]').prop('checked', false);
@@ -234,6 +234,8 @@ $('#btnasignar').on('click', function (e) {
         $("#selectEmpresarial").trigger("change");
         $('#Datoscalendar').show();
         $('#Datoscalendar1').hide();
+        $(".loader").hide();
+        $(".img-load").hide();
         $('#asignarHorario').modal('toggle');
 
     });
@@ -246,29 +248,7 @@ $('#btnasignar').on('click', function (e) {
     $(".sub_chk:checked").each(function () {
         allVals.push($(this).attr('data-id'));
     });
-    $.ajax({
-        type: "post",
-        url: "/horarioVerTodEmp",
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            $(".loader").hide();
-            $(".img-load").hide();
-
-        },
-        error: function (data) {
-            alert('Ocurrio un error');
-        }
-    });
+    
     $(".loader").hide();
     $(".img-load").hide();
 });
@@ -518,7 +498,7 @@ function calendario() {
         },
         events: function (info, successCallback, failureCallback) {
 
-            
+
             var idempleado = $('#nombreEmpleado').val();
             num=$('#nombreEmpleado').val().length;
 
@@ -2189,10 +2169,10 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-               
+
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                   
+
                 });
                 $("#nombreEmpleado").trigger("change");
 
@@ -2220,10 +2200,10 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-              
+
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                   
+
                 });
                 $("#nombreEmpleado").trigger("change");
 
@@ -2252,10 +2232,10 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-           
+
                 $.each(data, function (index, value) {
                     $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
-                   
+
                 });
                 $("#nombreEmpleado").trigger("change");
 
@@ -2266,7 +2246,7 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
             }
         });
     }
-   
+
 })
 /////////////////////////////////
 
