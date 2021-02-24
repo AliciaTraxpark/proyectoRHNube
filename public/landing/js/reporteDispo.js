@@ -2110,6 +2110,7 @@ function cargartabla(fecha) {
                             </a>
                         </td>
                         <td name="colHE25DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <img src="landing/images/timer.svg" height="20" class="mr-2">
                             ${sumaHorasE25D.format("HH:mm:ss")}
                         </td>
                         <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
@@ -4401,6 +4402,12 @@ function toggleColumnas() {
         dataT.api().columns('.colHE100N').visible(true);
     } else {
         dataT.api().columns('.colHE100N').visible(false);
+    }
+    // ? HORAS EXTRAS 25% DIURNAS TOTALES
+    if ($('#colHE25DTotal').is(":checked")) {
+        dataT.api().columns('.colHE25DTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHE25DTotal').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA

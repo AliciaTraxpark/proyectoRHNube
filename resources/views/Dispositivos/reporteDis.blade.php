@@ -435,6 +435,10 @@
                                         </li>
                                         <ul class="ulHijoPadre" style="display: none" id="contenidoPorT">
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE25DTotal">
+                                                <label for="">H.E. 25% Diurnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNormalTotal">
                                                 <label for="">Horario normal</label>
                                             </li>
