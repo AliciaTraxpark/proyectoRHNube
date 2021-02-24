@@ -333,12 +333,13 @@ use Carbon\Carbon;
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
     <script src="{{ asset('landing/js/horario.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+
     <script src="{{ asset('admin/packages/core/main.js') }}"></script>
     <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>
     <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>

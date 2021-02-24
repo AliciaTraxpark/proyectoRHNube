@@ -329,8 +329,12 @@ use App\User;
                                     <div id="cargaCompleta" style="display: none"><br>
                                         <h4><img src="{{asset('landing/images/exito.svg')}}" height="22">&nbsp;¡Carga de
                                             empleados exitosa!</h4>
-
-                                        @if ($usuario==0)
+                                        @php
+                                           $organizacion=DB::table('organizacion')
+                                            ->where('organi_id','=',session('sesionidorg'))
+                                            ->get(); 
+                                        @endphp
+                                        @if ($organizacion[0]->organi_menu==0)
                                         <a href="{{('/empleado')}}">
                                             @else
                                             <a href="{{('/empleados')}}">

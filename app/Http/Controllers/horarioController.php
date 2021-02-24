@@ -23,7 +23,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use App\marcacion_puerta;
+use App\organizacion;
 
 class horarioController extends Controller
 {
@@ -477,6 +477,9 @@ class horarioController extends Controller
 
         $user = User::where('id', '=', Auth::user()->id)
             ->update(['user_estado' => 1]);
+        
+            $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))
+            ->update(['organi_menu' => 1]);
     }
 
     public function storeDescanso(Request $request)
