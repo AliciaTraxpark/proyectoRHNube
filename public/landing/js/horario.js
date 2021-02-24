@@ -506,6 +506,7 @@ function calendario() {
                 $.ajax({
                     type: "POST",
                     url: "/horario/horariosAsignar",
+                   /*  async:false, */
                     data: {
 
                         idempleado
@@ -522,9 +523,9 @@ function calendario() {
                     success: function (data) {
 
                         successCallback(data);
+                       
                         $(".loader").hide();
                         $(".img-load").hide();
-
                     },
                     error: function () {}
                 });
@@ -534,6 +535,7 @@ function calendario() {
                     $.ajax({
                     type: "POST",
                     url: "/horario/horariosVariosEmps",
+                   /*  async:false, */
                     data: {
 
                         idempleado
@@ -559,6 +561,7 @@ function calendario() {
                  }
 
             }
+           
 
         },
     }
@@ -2127,10 +2130,11 @@ function eliminarHorario(idhorario) {
 //select todo empleado
 $("#selectTodoCheck").click(function () {
     if ($("#selectTodoCheck").is(':checked')) {
+        $(".loader").show();
+        $(".img-load").show();
         $("#nombreEmpleado > option").prop("selected", "selected");
         $("#nombreEmpleado").trigger("change");
-        $(".loader").hide();
-        $(".img-load").hide();
+        
     } else {
         $("#nombreEmpleado > option").prop("selected", false);
         $("#nombreEmpleado").trigger("change");
@@ -2142,6 +2146,8 @@ $("#selectTodoCheck").click(function () {
 //////////////////////
 //seleccionar por area, cargo, etc
 $('#selectEmpresarial').on('select2:closing', function (e) {
+    $(".loader").show();
+    $(".img-load").show();
     var idempresarial = [];
     idempresarial = $('#selectEmpresarial').val();
     textSelec = $('select[name="selectEmpresarial"] option:selected:last').text();
@@ -4040,6 +4046,11 @@ $( "#nombreEmpleado" ).change(function() {
     $(".loader").show();
     $(".img-load").show();
     calendario();
+    }
+    else{
+        $(".loader").hide();
+        $(".img-load").hide();
+        calendario();
     }
     
   });
