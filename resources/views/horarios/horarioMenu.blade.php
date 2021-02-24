@@ -260,7 +260,7 @@
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('landing/js/horarioNuevo.js') }}"></script>
+    <script src="{{ asset('landing/js/horario.js') }}"></script>
     <script src="{{ asset('admin/packages/core/main.js') }}"></script>
     <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>
     <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>
