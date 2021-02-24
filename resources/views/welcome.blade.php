@@ -107,7 +107,7 @@
                         <div class="card card-body">
                            <h5 class="h5 text-center">¿Qué es Modo Control Remoto?</h5>
                            <div class="embed-responsive embed-responsive-16by9">
-                              <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/512111026?byline=0&portrait=0&title=0" allowfullscreen></iframe>
+                              <iframe src="https://player.vimeo.com/video/516390748" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                            </div>
                         </div>
                      </div>
@@ -117,7 +117,7 @@
                         <div class="card card-body">
                            <h5 class="h5 text-center">¿Qué es Modo Control en Ruta?</h5>
                            <div class="embed-responsive embed-responsive-16by9">
-                              <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/512111206?byline=0&portrait=0&title=0" allowfullscreen></iframe>
+                              <iframe src="https://player.vimeo.com/video/516392942" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                            </div>
                         </div>
                      </div>
@@ -127,7 +127,7 @@
                         <div class="card card-body">
                            <h5 class="h5 text-center">¿Qué es Modo Asistencia en Puerta?</h5>
                            <div class="embed-responsive embed-responsive-16by9">
-                              <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/514307168?byline=0&portrait=0&title=0" allowfullscreen></iframe>
+                              <iframe src="https://player.vimeo.com/video/516395205" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                            </div>
                         </div>
                      </div>
@@ -137,7 +137,7 @@
                         <div class="card card-body">
                            <h5 class="h5 text-center">¿Qué es Modo Control de Tareo?</h5>
                            <div class="embed-responsive embed-responsive-16by9">
-                              <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/512111271?byline=0&portrait=0&title=0" allowfullscreen></iframe>
+                              <iframe src="https://player.vimeo.com/video/516389300" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                            </div>
                         </div>
                      </div>
