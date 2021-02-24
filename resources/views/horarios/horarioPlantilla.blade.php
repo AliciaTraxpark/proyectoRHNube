@@ -150,7 +150,7 @@
                             <div class="row">
                                 <div class="col-md-12 text-right" style="padding-right: 0px;">
                                     <button type="button" id="" class="btn btn-light" data-dismiss="modal">
-                                        Cancelar
+                                        Cerrar
                                     </button>
                                     <button type="button" id="guardarTodoHorario" style="background-color: #163552;"
                                         class="btn">
