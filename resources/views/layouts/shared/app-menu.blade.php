@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 <style>
     .left-side-menu {
         background: #fafafa;
+        width: 260px;
     }
 
     #sidebar-menu>ul>li>a {
