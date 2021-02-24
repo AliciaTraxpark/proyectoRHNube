@@ -3554,33 +3554,60 @@ class apiBiometricoController extends Controller
                                  //*si tengo marcacion de entrada
 
                                 if($marcacion_puertaVerifMayor->marcaMov_fecha!=null){
-                                    $marcacion_biometrico = new marcacion_puerta();
+                                    //*VALIDANDO FECHA DE NUEVO
+                                    $marcacion_puertaVerifrepeticionNu = DB::table('marcacion_puerta as mv')
+                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                                    ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
+                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->get()->first();
+                                    if($marcacion_puertaVerifrepeticionNu){
+                                        $respuestaMarcacion = array(
+                                            'id' => $req['id'],
+                                            'error' => 'Fecha de marcacion de empleado ya registrada',
+                                            'estado' => true);
+                                    } else{
+                                            $marcacion_biometrico = new marcacion_puerta();
 
-                                    $marcacion_biometrico->marcaMov_fecha =$marcacion_puertaVerifMayor->marcaMov_salida;
-                                    /* -------------------- */
+                                            $marcacion_biometrico->marcaMov_fecha =$marcacion_puertaVerifMayor->marcaMov_salida;
+                                            /* -------------------- */
 
-                                    $marcacion_biometrico->marcaMov_emple_id = $marcacion_puertaVerifMayor->marcaMov_emple_id;
-                                    $marcacion_biometrico->dispositivoEntrada = $marcacion_puertaVerifMayor->dispositivoSalida;
+                                            $marcacion_biometrico->marcaMov_emple_id = $marcacion_puertaVerifMayor->marcaMov_emple_id;
+                                            $marcacion_biometrico->dispositivoEntrada = $marcacion_puertaVerifMayor->dispositivoSalida;
 
-                                    $marcacion_biometrico->organi_id = $marcacion_puertaVerifMayor->organi_id;
+                                            $marcacion_biometrico->organi_id = $marcacion_puertaVerifMayor->organi_id;
 
-                                    $marcacion_biometrico->horarioEmp_id =$marcacion_puertaVerifMayor->horarioEmp_id;
+                                            $marcacion_biometrico->horarioEmp_id =$marcacion_puertaVerifMayor->horarioEmp_id;
 
-                                    $marcacion_biometrico->tipoMarcacionB = 1;
+                                            $marcacion_biometrico->tipoMarcacionB = 1;
 
-                                    $marcacion_biometrico->save();
+                                            $marcacion_biometrico->save();
 
-                                    $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerifMayor->marcaMov_id);
-                                    $marcacion_biometrico2->marcaMov_salida = $req['fechaMarcacion'];
-                                    $marcacion_biometrico2->dispositivoSalida = $req['idDisposi'];
-                                    $marcacion_biometrico2->save();
+                                            $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerifMayor->marcaMov_id);
+                                            $marcacion_biometrico2->marcaMov_salida = $req['fechaMarcacion'];
+                                            $marcacion_biometrico2->dispositivoSalida = $req['idDisposi'];
+                                            $marcacion_biometrico2->save();
 
-                                    $respuestaMarcacion = array(
-                                        'id' => $req['id'],
-                                        'estado' => true);
+                                            $respuestaMarcacion = array(
+                                                'id' => $req['id'],
+                                                'estado' => true);
+                                    }
+                                    
                                 }
                                 else{
                                     //*tengo una marcacion donde solo tiene salida y es mayor a nueva marcacion
+                                    $marcacion_puertaVerifrepeticionNu = DB::table('marcacion_puerta as mv')
+                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                                    ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
+                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->get()->first();
+                                    if($marcacion_puertaVerifrepeticionNu){
+                                        $respuestaMarcacion = array(
+                                            'id' => $req['id'],
+                                            'error' => 'Fecha de marcacion de empleado ya registrada',
+                                            'estado' => true);
+                                    } else{
                                     $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerifMayor->marcaMov_id);
                                     $marcacion_biometrico2->marcaMov_fecha=$req['fechaMarcacion'];
 
@@ -3589,6 +3616,7 @@ class apiBiometricoController extends Controller
                                     $respuestaMarcacion = array(
                                         'id' => $req['id'],
                                         'estado' => true);
+                                    }
 
                                 }
                             } else {
@@ -3611,32 +3639,45 @@ class apiBiometricoController extends Controller
 
 
                                 if($marcacion_puertaVerifMayor2){
-                                    $marcacion_biometrico = new marcacion_puerta();
+                                    $marcacion_puertaVerifrepeticionNu = DB::table('marcacion_puerta as mv')
+                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                                    ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
+                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->get()->first();
+                                    if($marcacion_puertaVerifrepeticionNu){
+                                        $respuestaMarcacion = array(
+                                            'id' => $req['id'],
+                                            'error' => 'Fecha de marcacion de empleado ya registrada',
+                                            'estado' => true);
+                                    } else{
+                                       $marcacion_biometrico = new marcacion_puerta();
 
-                                $marcacion_biometrico->marcaMov_fecha =$marcacion_puertaVerifMayor2->marcaMov_salida;
-                                /* -------------------- */
+                                        $marcacion_biometrico->marcaMov_fecha =$marcacion_puertaVerifMayor2->marcaMov_salida;
+                                        /* -------------------- */
 
-                                $marcacion_biometrico->marcaMov_emple_id = $marcacion_puertaVerifMayor2->marcaMov_emple_id;
-                                $marcacion_biometrico->dispositivoEntrada = $marcacion_puertaVerifMayor2->dispositivoSalida;
+                                        $marcacion_biometrico->marcaMov_emple_id = $marcacion_puertaVerifMayor2->marcaMov_emple_id;
+                                        $marcacion_biometrico->dispositivoEntrada = $marcacion_puertaVerifMayor2->dispositivoSalida;
 
-                                $marcacion_biometrico->organi_id = $marcacion_puertaVerifMayor2->organi_id;
+                                        $marcacion_biometrico->organi_id = $marcacion_puertaVerifMayor2->organi_id;
 
-                                $marcacion_biometrico->horarioEmp_id =$marcacion_puertaVerifMayor2->horarioEmp_id;
+                                        $marcacion_biometrico->horarioEmp_id =$marcacion_puertaVerifMayor2->horarioEmp_id;
 
-                                $marcacion_biometrico->tipoMarcacionB = 1;
+                                        $marcacion_biometrico->tipoMarcacionB = 1;
 
-                                $marcacion_biometrico->save();
+                                        $marcacion_biometrico->save();
 
-                                $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerifMayor2->marcaMov_id);
-                                $marcacion_biometrico2->marcaMov_fecha = $req['fechaMarcacion'];
-                                $marcacion_biometrico2->marcaMov_salida = $marcacion_puertaVerifMayor2->marcaMov_fecha;
-                                $marcacion_biometrico2->dispositivoEntrada = $req['idDisposi'];
-                                $marcacion_biometrico2->dispositivoSalida = $marcacion_puertaVerifMayor2->dispositivoEntrada;
-                                $marcacion_biometrico2->save();
+                                        $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerifMayor2->marcaMov_id);
+                                        $marcacion_biometrico2->marcaMov_fecha = $req['fechaMarcacion'];
+                                        $marcacion_biometrico2->marcaMov_salida = $marcacion_puertaVerifMayor2->marcaMov_fecha;
+                                        $marcacion_biometrico2->dispositivoEntrada = $req['idDisposi'];
+                                        $marcacion_biometrico2->dispositivoSalida = $marcacion_puertaVerifMayor2->dispositivoEntrada;
+                                        $marcacion_biometrico2->save();
 
-                                $respuestaMarcacion = array(
-                                    'id' => $req['id'],
-                                    'estado' => true);
+                                        $respuestaMarcacion = array(
+                                            'id' => $req['id'],
+                                            'estado' => true);
+                                        }
                                 }
                                 else{
 
@@ -3658,6 +3699,18 @@ class apiBiometricoController extends Controller
                                     ->get()->first();
 
                                     if($marcacion_puertaVerimenorsalida){
+                                        $marcacion_puertaVerifrepeticionNu = DB::table('marcacion_puerta as mv')
+                                        ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                        ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                                        ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
+                                        ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                        ->get()->first();
+                                        if($marcacion_puertaVerifrepeticionNu){
+                                            $respuestaMarcacion = array(
+                                                'id' => $req['id'],
+                                                'error' => 'Fecha de marcacion de empleado ya registrada',
+                                                'estado' => true);
+                                        } else{
                                         $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerimenorsalida->marcaMov_id);
                                         $marcacion_biometrico2->marcaMov_fecha = $marcacion_puertaVerimenorsalida->marcaMov_salida;
                                         $marcacion_biometrico2->dispositivoEntrada = $marcacion_puertaVerimenorsalida->dispositivoSalida;
@@ -3667,6 +3720,7 @@ class apiBiometricoController extends Controller
                                         $respuestaMarcacion = array(
                                             'id' => $req['id'],
                                             'estado' => true);
+                                         }
 
 
                                     }
@@ -3689,6 +3743,18 @@ class apiBiometricoController extends Controller
                                         ->get()->first();
 
                                         if($marcacion_puertaVerimayorEntrada){
+                                            $marcacion_puertaVerifrepeticionNu = DB::table('marcacion_puerta as mv')
+                                            ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                            ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                                            ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
+                                            ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                            ->get()->first();
+                                            if($marcacion_puertaVerifrepeticionNu){
+                                                $respuestaMarcacion = array(
+                                                    'id' => $req['id'],
+                                                    'error' => 'Fecha de marcacion de empleado ya registrada',
+                                                    'estado' => true);
+                                            } else{
                                             $marcacion_biometrico2 = marcacion_puerta::find($marcacion_puertaVerimayorEntrada->marcaMov_id);
                                             $marcacion_biometrico2->marcaMov_fecha = $req['fechaMarcacion'];
                                             $marcacion_biometrico2->dispositivoEntrada =$req['idDisposi'];
@@ -3698,31 +3764,45 @@ class apiBiometricoController extends Controller
                                             $respuestaMarcacion = array(
                                                 'id' => $req['id'],
                                                 'estado' => true);
+                                            }
                                         }
                                         else{
-                                        $marcacion_biometrico = new marcacion_puerta();
+                                            $marcacion_puertaVerifrepeticionNu = DB::table('marcacion_puerta as mv')
+                                            ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                            ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                                            ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
+                                            ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                            ->get()->first();
+                                            if($marcacion_puertaVerifrepeticionNu){
+                                                $respuestaMarcacion = array(
+                                                    'id' => $req['id'],
+                                                    'error' => 'Fecha de marcacion de empleado ya registrada',
+                                                    'estado' => true);
+                                                } else{
+                                                    $marcacion_biometrico = new marcacion_puerta();
 
-                                        $marcacion_biometrico->marcaMov_fecha = $req['fechaMarcacion'];
-                                        /* -------------------- */
+                                                    $marcacion_biometrico->marcaMov_fecha = $req['fechaMarcacion'];
+                                                    /* -------------------- */
 
-                                        $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                        $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
+                                                    $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
+                                                    $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
-                                        $marcacion_biometrico->organi_id = $empleados->organi_id;
+                                                    $marcacion_biometrico->organi_id = $empleados->organi_id;
 
-                                        if ($conhorario == 0) {
-                                            $marcacion_biometrico->horarioEmp_id = null;
-                                        } else {
-                                            $marcacion_biometrico->horarioEmp_id = $conhorario;
-                                        }
+                                                    if ($conhorario == 0) {
+                                                        $marcacion_biometrico->horarioEmp_id = null;
+                                                    } else {
+                                                        $marcacion_biometrico->horarioEmp_id = $conhorario;
+                                                    }
 
-                                        $marcacion_biometrico->tipoMarcacionB = 1;
+                                                    $marcacion_biometrico->tipoMarcacionB = 1;
 
-                                        $marcacion_biometrico->save();
+                                                    $marcacion_biometrico->save();
 
-                                        $respuestaMarcacion = array(
-                                            'id' => $req['id'],
-                                            'estado' => true);
+                                                    $respuestaMarcacion = array(
+                                                        'id' => $req['id'],
+                                                        'estado' => true);
+                                                }
                                         }
 
                                         }
@@ -3771,14 +3851,30 @@ class apiBiometricoController extends Controller
                                 }
 
                                 if ($marcacion_puerta1) {
-                                    $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
-                                    $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
-                                    $marcacion_biometrico->dispositivoSalida = $req['idDisposi'];
-                                    $marcacion_biometrico->save();
+                                    $marcacion_puertaVerifrepeticionNu = DB::table('marcacion_puerta as mv')
+                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->where('mv.marcaMov_fecha', '=', $req['fechaMarcacion'])
+                                    ->orWhere('mv.marcaMov_salida', '=', $req['fechaMarcacion'])
+                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                    ->get()->first();
+                                    if($marcacion_puertaVerifrepeticionNu){
+                                        $respuestaMarcacion = array(
+                                            'id' => $req['id'],
+                                            'error' => 'Fecha de marcacion de empleado ya registrada',
+                                            'estado' => true);
+                                    } else{
+                                        $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
+                                        $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                        $marcacion_biometrico->dispositivoSalida = $req['idDisposi'];
+                                        $marcacion_biometrico->save();
 
-                                    $respuestaMarcacion = array(
-                                        'id' => $req['id'],
-                                        'estado' => true);
+                                        $respuestaMarcacion = array(
+                                            'id' => $req['id'],
+                                            'estado' => true);
+                                        }
+
+                                }
+                                else{
 
                                 }
 
@@ -3802,6 +3898,9 @@ class apiBiometricoController extends Controller
             }
 
             /* INSERTAMO A AARRAY  */
+            /* if($respuestaMarcacion){
+                
+            } */
             $arrayDatos->push($respuestaMarcacion);
             /* ---------------------------- */
 
