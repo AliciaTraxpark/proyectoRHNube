@@ -4419,6 +4419,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colHE25DTotal').visible(false);
     }
+    // ? HORAS EXTRAS 35% DIURNAS TOTALES
+    if ($('#colHE35DTotal').is(":checked")) {
+        dataT.api().columns('.colHE35DTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHE35DTotal').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
