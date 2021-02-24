@@ -116,11 +116,11 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                     return redirect()->back()->with('alert', 'numero de DNI ' . $row['numero_documento'] . ' invalido en la importacion(Debe tener 8 digitos)  .El proceso se interrumpio en la fila ' . $filas . ' de excel');
                 }
 
-                if ($stringtipo == 'Carnetextranjeria' && $length != 12) {
-                    return redirect()->back()->with('alert', 'numero de Carnet extranjeria ' . $row['numero_documento'] . ' invalido en la importacion(Debe tener 12 digitos)  .El proceso se interrumpio en la fila ' . $filas . ' de excel');
+                if ($stringtipo == 'Carnetextranjeria' && ($length > 12 || $length < 8)) {
+                    return redirect()->back()->with('alert', 'numero de Carnet extranjeria ' . $row['numero_documento'] . ' invalido en la importacion(Debe tener como max 12 digitos y como min 8 digitos )  .El proceso se interrumpio en la fila ' . $filas . ' de excel');
                 }
-                if ($stringtipo == 'Pasaporte' && $length != 12) {
-                    return redirect()->back()->with('alert', 'numero de Pasaporte ' . $row['numero_documento'] . ' invalido en la importacion(Debe tener 12 digitos)  .El proceso se interrumpio en la fila ' . $filas . ' de excel');
+                if ($stringtipo == 'Pasaporte' && ($length > 12 || $length < 8)) {
+                    return redirect()->back()->with('alert', 'numero de Pasaporte ' . $row['numero_documento'] . ' invalido en la importacion(Debe tener como max 12 digitos y como min 8 digitos)  .El proceso se interrumpio en la fila ' . $filas . ' de excel');
                 }
                 //correo
                 $filaCorreo = $this->numRows;

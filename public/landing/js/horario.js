@@ -510,7 +510,7 @@ function calendario() {
 
                         idempleado
                     },
-                    async:false,
+                   
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -538,7 +538,7 @@ function calendario() {
 
                         idempleado
                     },
-                    async:false,
+                   
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -2246,7 +2246,7 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
             }
         });
     }
-
+   
 })
 /////////////////////////////////
 
@@ -4033,9 +4033,15 @@ function actualizarConfigHorario_re() {
 /* ---------------------------------------------------------------------------- */
 //* select empleado cuando cambia
 $( "#nombreEmpleado" ).change(function() {
+    nempl=$( "#nombreEmpleado" ).val().length;
+    console.log(nempl);
+    if(nempl>0){
+        
     $(".loader").show();
     $(".img-load").show();
     calendario();
+    }
+    
   });
 //*
 
