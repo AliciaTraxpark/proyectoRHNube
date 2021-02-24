@@ -274,7 +274,6 @@ Route::post('/guardarEventos', 'horarioController@guardarEventos');
 Route::get('/eventosHorario', 'horarioController@eventos');
 Route::post('/guardarHorario', 'horarioController@guardarHorarioBD');
 Route::post('/nuevoHorario', 'horarioController@guardarNuevoHorario');
-Route::get('tablahorario/ver', 'horarioController@tablaHorario');
 Route::post('/verDataEmpleado', 'horarioController@verDataEmpleado');
 Route::get('/vaciartemporal', 'horarioController@vaciartemporal');
 Route::get('/copiarEventos', 'horarioController@copiarEventos');
