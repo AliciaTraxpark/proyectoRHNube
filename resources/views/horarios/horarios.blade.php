@@ -300,6 +300,11 @@ use Carbon\Carbon;
                 <div class="col-m-12 col-xl-12">
                     @include('horarios.horarioPlantilla')
                 </div>
+                <div class=" col-md-12 col-xl-12 text-right">
+                    &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-sm btn-primary" onclick="finalizar()"
+                        style="background-color: #183b5d;border-color:#62778c;font-size: 14px">Finalizar</button>
+                </div>
                
             </div>
            
