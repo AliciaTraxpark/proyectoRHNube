@@ -240,6 +240,10 @@
         overflow: auto;
         position: absolute;
     }
+
+    .dataTables_filter {
+        display: none;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -338,6 +342,18 @@
                                         </li>
                                         <ul class="ulHijoPadre" style="display: none" id="contenidoPorH">
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE25D">
+                                                <label for="">H.E. 25% Diurnas por horario</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE35D">
+                                                <label for="">H.E. 35% Diurnas por horario</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE100D">
+                                                <label for="">H.E. 100% Diurnas por horario</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNormal">
                                                 <label for="">Horario normal por horario</label>
                                             </li>
@@ -351,7 +367,7 @@
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colSobreTiempo">
-                                                <label for="">Sobretiempo por horario</label>
+                                                <label for="">Sobretiempo total por horario</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoEntreH">

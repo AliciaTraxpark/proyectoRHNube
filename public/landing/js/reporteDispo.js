@@ -18,7 +18,7 @@ var paginaGlobal = 10;
 var table;
 function inicializarTabla() {
     table = $("#tablaReport").DataTable({
-        "searching": false,
+        "searching": true,
         "scrollX": true,
         "ordering": false,
         "autoWidth": false,
@@ -36,7 +36,7 @@ function inicializarTabla() {
             sInfo: "Mostrando registros del _START_ al _END_ ",
             sInfoEmpty:
                 "Mostrando registros del 0 al 0 de un total de 0 registros",
-            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoFiltered: "",
             sInfoPostFix: "",
             sSearch: "Buscar:",
             sUrl: "",
@@ -259,9 +259,6 @@ function inicializarTabla() {
                 $("#tablaReport").DataTable().draw();
             }, 1);
             this.api().page.len(paginaGlobal).draw(false);
-            this.api().columns('.colHE25D').visible(false);
-            this.api().columns('.colHE35D').visible(false);
-            this.api().columns('.colHE100D').visible(false);
         },
         drawCallback: function () {
             var api = this.api();
@@ -399,28 +396,33 @@ function cargartabla(fecha) {
             for (let m = 0; m < cantidadGruposHorario; m++) {
                 // ************************************ DATOS DEL GRUPO HORARIO **************************************
                 // !HORARIO
-                theadTabla += `<th class="text-center descripcionHorario" style="border-left: 2px solid #383e56!important;font-weight: 600 !important" name="descripcionHorario">
+                theadTabla += `<th class="text-center descripcionHorario" style="border-left: 2px solid #383e56!important;border-right: 1px dashed #c8d4de!important;font-weight: 600 !important" name="descripcionHorario">
                                     <span>
                                         Descripción del horario <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${m + 1}</b>
                                     </span>
                                 </th>
-                                <th class="text-center horarioHorario" name="horarioHorario">
+                                <th class="text-center horarioHorario" name="horarioHorario" style="border-right: 1px dashed #c8d4de!important;">
                                     <span>
                                         Horario <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${m + 1}</b>
                                     </span>
                                 </th>
-                                <th name="toleranciaIHorario" class="toleranciaIHorario">Tolerancia en el ingreso</th>
-                                <th name="toleranciaFHorario" class="toleranciaFHorario">Tolerancia en la salida</th>
-                                <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo total</th>
-                                <th name="colHoraNormal" class="text-center colHoraNormal">Horario normal</th>
-                                <th name="colHoraNocturna" class="text-center colHoraNocturna">Horario nocturno</th>
-                                <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobretiempo</th>
-                                <th name="colFaltaJornada" class="text-center colFaltaJornada">Jornada incompleta</th>
-                                <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
-                                <th name="faltaHorario" class="faltaHorario">Falta</th>
-                                <th name="colHE25D" class="text-center colHE25D">H.E. 25% Diurnas</th>
-                                <th name="colHE35D" class="text-center colHE35D">H.E. 35% Diurnas</th>
-                                <th name="colHE100D" class="text-center colHE100D">H.E. 100% Diurnas</th>`;
+                                <th name="toleranciaIHorario" class="toleranciaIHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en el ingreso</th>
+                                <th name="toleranciaFHorario" class="toleranciaFHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en la salida</th>
+                                <th name="colTiempoEntreH" class="text-center colTiempoEntreH" style="border-right: 1px dashed #c8d4de!important;">Tiempo total</th>
+                                <th name="colSobreTiempo" class="text-center colSobreTiempo" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo</th>
+                                <th name="colHoraNormal" class="text-center colHoraNormal" style="border-right: 1px dashed #c8d4de!important;">Horario normal</th>
+                                <th name="colSobreTNormal" class="text-center colSobreTNormal" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo normal</th>
+                                <th name="colHE25D" class="text-center colHE25D" style="border-right: 1px dashed #c8d4de!important;">H.E. 25% Diurnas</th>
+                                <th name="colHE35D" class="text-center colHE35D" style="border-right: 1px dashed #c8d4de!important;">H.E. 35% Diurnas</th>
+                                <th name="colHE100D" class="text-center colHE100D" style="border-right: 1px dashed #c8d4de!important;">H.E. 100% Diurnas</th>
+                                <th name="colHoraNocturna" class="text-center colHoraNocturna" style="border-right: 1px dashed #c8d4de!important;">Horario nocturno</th>
+                                <th name="colSobreTNocturno" class="text-center colSobreTNocturno" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo nocturno</th>
+                                <th name="colHE25N" class="text-center colHE25N" style="border-right: 1px dashed #c8d4de!important;">H.E. 25% Nocturnas</th>
+                                <th name="colHE35N" class="text-center colHE35N" style="border-right: 1px dashed #c8d4de!important;">H.E. 35% Nocturnas</th>
+                                <th name="colHE100N" class="text-center colHE100N" style="border-right: 1px dashed #c8d4de!important;">H.E. 100% Nocturnas</th>
+                                <th name="colFaltaJornada" class="text-center colFaltaJornada" style="border-right: 1px dashed #c8d4de!important;">Jornada incompleta</th>
+                                <th name="colTardanza" class="text-center colTardanza" style="border-right: 1px dashed #c8d4de!important;">Tardanza</th>
+                                <th name="faltaHorario" class="faltaHorario" style="border-right: 1px dashed #c8d4de!important;">Falta</th>`;
                 // ! MARCACION
                 var cantidadColumnasM = arrayHorario[m].split(",")[0];
                 for (let j = 0; j < cantidadColumnasM; j++) {
@@ -461,6 +463,8 @@ function cargartabla(fecha) {
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNocturnaTotal" class="colHoraNocturnaTotal">Horario nocturno total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHE25DTotal" class="colHE25DTotal">H.E. 25% Diurnas total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHE35DTotal" class="colHE35DTotal">H.E. 35% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Jornada incompleta total</th>  
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta total</th>
@@ -476,7 +480,15 @@ function cargartabla(fecha) {
                 razonSocial = data[index].organi_razonSocial;   // : -> VARIABLES PARA EXCEL Y PDF
                 direccion = data[index].organi_direccion;       // : -> VARIABLES PARA EXCEL Y PDF
                 ruc = data[index].organi_ruc;                   // : -> VARIABLES PARA EXCEL Y PDF
-                tbody += `<tr>`;
+                var valorEstado = 0;
+                if (data[index].data.length != 0) {
+                    data[index].data.forEach(element => {
+                        if (element.marcaciones.length != 0) {
+                            valorEstado = 1;
+                        }
+                    });
+                }
+                tbody += `<tr data-estado="${valorEstado}">`;
                 if (permisoModificar == 1) {
                     tbody += `<td class="noExport text-center">
                                 <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')" data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
@@ -501,6 +513,8 @@ function cargartabla(fecha) {
                 var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
                 var sumaHorasNormalesT = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS NORMALES
                 var sumaHorasNocturnasT = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS NOCTURNAS
+                var sumaHorasE25D = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS EXTRAS DE 25% DIURNAS
+                var sumaHorasE35D = moment("00:00:00", "HH:mm:ss");  //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% DIURNAS
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -532,12 +546,18 @@ function cargartabla(fecha) {
                     var horasFaltaJ = "00";
                     // * HORARIO NORMAL
                     var sumaHorasNormales = moment("00:00:00", "HH:mm:ss");
+                    var sobretiempoNormales = moment("00:00:00", "HH:mm:ss");
                     // * HORARIO NOCTURNO
                     var sumaHorasNocturnas = moment("00:00:00", "HH:mm:ss");
-                    // * HORAS EXTRAS
-                    var diurnas25 = 0;
-                    var diurnas35 = 0;
-                    var diurnas100 = 0;
+                    var sobretiempoNocturnos = moment("00:00:00", "HH:mm:ss");
+                    // * HORAS EXTRAS - DIURNAS
+                    var diurnas25 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    var diurnas35 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    var diurnas100 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    // * HORAS EXTRAS - NOCTURNAS
+                    var nocturnas25 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    var nocturnas35 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    var nocturnas100 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
                     if (data[index].data[m] != undefined) {
                         // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                         var horarioData = data[index].data[m].horario;
@@ -579,6 +599,8 @@ function cargartabla(fecha) {
                                 }
                             }
                         }
+                        // * VARIABLE QUE GUARDARA QUE TIPO DE MARCACIÓN FUE PRIMERO
+                        var primeraM = undefined;
                         // * DATA PARA ENTRE HORARIO
                         for (let res = 0; res < data[index].data[m].marcaciones.length; res++) {
                             var dataM = data[index].data[m].marcaciones[res];
@@ -590,6 +612,7 @@ function cargartabla(fecha) {
                                     // * HORAS NORMALES
                                     var entradaNormal = horaInicialData.clone().format("HH:mm");
                                     if (entradaNormal > "06:00" && entradaNormal < "22:00") {
+                                        if (primeraM == undefined) primeraM = 0;
                                         var tiempoNormal = horaFinalData - horaInicialData;
                                         var segundosNormal = moment.duration(tiempoNormal).seconds();
                                         var minutosNormal = moment.duration(tiempoNormal).minutes();
@@ -597,6 +620,7 @@ function cargartabla(fecha) {
                                         sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
                                         sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
                                     } else {
+                                        if (primeraM == undefined) primeraM = 1;
                                         // * HORAS NOCTURNAS
                                         var tiempoNocturno = horaFinalData - horaInicialData;
                                         var segundosNocturno = moment.duration(tiempoNocturno).seconds();
@@ -661,45 +685,257 @@ function cargartabla(fecha) {
                                 }
                                 sumaFaltaJornada = sumaFaltaJornada.add({ "hours": horasFaltaJ, "minutes": minutosFaltaJ, "seconds": segundosFaltaJ });
                             }
-                            if (sumaHorasNormales > horasObligadas) {
-                                // * HORAS EXTRAS
-                                var tiempoExtraResta = sumaHorasNormales - horasObligadas;
-                                var segundosExtra = moment.duration(tiempoExtraResta).seconds();
-                                var minutosExtra = moment.duration(tiempoExtraResta).minutes();
-                                var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
-                                var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
-                                var tiempoSobrante = {};
-                                if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                    diurnas25++;
-                                    var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                    var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
-                                    var minutosDe25 = moment.duration(restaDe25).minutes();
-                                    var segundosDe25 = moment.duration(restaDe25).seconds();
-                                    tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
-                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                        diurnas35++;
-                                        var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                        var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
-                                        var minutosDe35 = moment.duration(restaDe35).minutes();
-                                        var segundosDe35 = moment.duration(restaDe35).seconds();
-                                        tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
-                                        if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                            diurnas100++;
+                            if (primeraM != undefined) {
+                                if (primeraM == 0) {
+                                    var nuevaHorasO = {};
+                                    if (sumaHorasNormales > horasObligadas) {
+                                        nuevaHorasO = moment("00:00:00", ["HH:mm:ss"]);
+                                        // : ********************************* HORAS EXTRAS NORMALES *****************************
+                                        var tiempoExtraResta = sumaHorasNormales - horasObligadas;
+                                        var segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                        var minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                        var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                        var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                        sobretiempoNormales = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                        var tiempoSobrante = {};
+                                        if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                            diurnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
+                                            var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                            var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
+                                            var minutosDe25 = moment.duration(restaDe25).minutes();
+                                            var segundosDe25 = moment.duration(restaDe25).seconds();
+                                            tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
+                                            if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                diurnas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
+                                                var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
+                                                var minutosDe35 = moment.duration(restaDe35).minutes();
+                                                var segundosDe35 = moment.duration(restaDe35).seconds();
+                                                tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
+                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                    diurnas100 = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
+                                                }
+                                            } else {
+                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                    diurnas35 = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
+                                                    sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                }
+                                            }
+                                        } else {
+                                            diurnas25 = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                        }
+                                        // : ********************************** HORAS EXTRAS NOCTURNAS ******************************
+                                        if (sumaHorasNocturnas > nuevaHorasO) {
+                                            // * HORAS EXTRAS
+                                            var tiempoExtraRestaN = sumaHorasNocturnas - nuevaHorasO;
+                                            var segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                            var minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                            var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                            var tiempoExtraN = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            sobretiempoNocturnos = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            var tiempoSobranteN = {};
+                                            if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                nocturnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
+                                                var minutosDe25N = moment.duration(restaDe25N).minutes();
+                                                var segundosDe25N = moment.duration(restaDe25N).seconds();
+                                                tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                    nocturnas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                    var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                    var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
+                                                    var minutosDe35N = moment.duration(restaDe35N).minutes();
+                                                    var segundosDe35N = moment.duration(restaDe35N).seconds();
+                                                    tiempoSobranteN = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        nocturnas100 = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                                    }
+                                                } else {
+                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        nocturnas35 = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                                    }
+                                                }
+                                            } else {
+                                                nocturnas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            }
                                         }
                                     } else {
-                                        if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                            diurnas35++;
+                                        var restaHorasO = horasObligadas - sumaHorasNormales;
+                                        nuevaHorasO = moment({
+                                            "hours": Math.trunc(moment.duration(restaHorasO).asHours()),
+                                            "minutes": moment.duration(restaHorasO).minutes(),
+                                            "seconds": moment.duration(restaHorasO).seconds()
+                                        });
+                                        // : ****************************************  HORAS NOCTURNAS ********************
+                                        if (sumaHorasNocturnas > nuevaHorasO) {
+                                            // * HORAS EXTRAS
+                                            var tiempoExtraRestaN = sumaHorasNocturnas - nuevaHorasO;
+                                            var segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                            var minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                            var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                            var tiempoExtraN = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            sobretiempoNocturnos = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            var tiempoSobranteN = {};
+                                            if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                nocturnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
+                                                var minutosDe25N = moment.duration(restaDe25N).minutes();
+                                                var segundosDe25N = moment.duration(restaDe25N).seconds();
+                                                tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                    nocturnas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                    var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                    var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
+                                                    var minutosDe35N = moment.duration(restaDe35N).minutes();
+                                                    var segundosDe35N = moment.duration(restaDe35N).seconds();
+                                                    tiempoSobranteN = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        nocturnas100 = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                                    }
+                                                } else {
+                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        nocturnas35 = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                                    }
+                                                }
+                                            } else {
+                                                nocturnas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            }
                                         }
                                     }
                                 } else {
-                                    diurnas25++;
+                                    var nuevaHorasO = {};
+                                    // : ******************************************** HORAS NOCTURNAS ******************************
+                                    if (sumaHorasNocturnas > horasObligadas) {
+                                        nuevaHorasO = moment("00:00:00", ["HH:mm:ss"]);
+                                        // : ************************************** HORAS EXTRAS NOCTURNAS *******************
+                                        var tiempoExtraRestaN = sumaHorasNocturnas - horasObligadas;
+                                        var segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                        var minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                        var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                        var tiempoExtraN = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                        sobretiempoNocturnos = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                        var tiempoSobranteN = {};
+                                        if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                            nocturnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                            var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                            var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
+                                            var minutosDe25N = moment.duration(restaDe25N).minutes();
+                                            var segundosDe25N = moment.duration(restaDe25N).seconds();
+                                            tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                            if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                nocturnas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
+                                                var minutosDe35N = moment.duration(restaDe35N).minutes();
+                                                var segundosDe35N = moment.duration(restaDe35N).seconds();
+                                                tiempoSobranteN = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                    nocturnas100 = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                                }
+                                            } else {
+                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                    nocturnas35 = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                                }
+                                            }
+                                        } else {
+                                            nocturnas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                        }
+                                        // : *************************************** HORAS NORMALES ********************************
+                                        if (sumaHorasNormales > nuevaHorasO) {
+                                            // * HORAS EXTRAS
+                                            var tiempoExtraResta = sumaHorasNormales - nuevaHorasO;
+                                            var segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                            var minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                            var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                            var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                            sobretiempoNormales = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                            var tiempoSobrante = {};
+                                            if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                diurnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
+                                                var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
+                                                var minutosDe25 = moment.duration(restaDe25).minutes();
+                                                var segundosDe25 = moment.duration(restaDe25).seconds();
+                                                tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
+                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                    diurnas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                    sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
+                                                    var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                    var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
+                                                    var minutosDe35 = moment.duration(restaDe35).minutes();
+                                                    var segundosDe35 = moment.duration(restaDe35).seconds();
+                                                    tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
+                                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        diurnas100 = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
+                                                    }
+                                                } else {
+                                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        diurnas35 = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
+                                                        sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                    }
+                                                }
+                                            } else {
+                                                diurnas25 = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                            }
+                                        }
+                                    } else {
+                                        var restaHorasO = horasObligadas - sumaHorasNormales;
+                                        nuevaHorasO = moment({
+                                            "hours": Math.trunc(moment.duration(restaHorasO).asHours()),
+                                            "minutes": moment.duration(restaHorasO).minutes(),
+                                            "seconds": moment.duration(restaHorasO).seconds()
+                                        });
+                                        // : ******************************************* HORAS EXTRAS NOCTURNAS **************************
+                                        if (sumaHorasNocturnas > nuevaHorasO) {
+                                            // * HORAS EXTRAS
+                                            var tiempoExtraRestaN = sumaHorasNocturnas - nuevaHorasO;
+                                            var segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                            var minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                            var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                            var tiempoExtraN = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            sobretiempoNocturnos = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            var tiempoSobranteN = {};
+                                            if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                nocturnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
+                                                var minutosDe25N = moment.duration(restaDe25N).minutes();
+                                                var segundosDe25N = moment.duration(restaDe25N).seconds();
+                                                tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                    nocturnas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                    var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                    var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
+                                                    var minutosDe35N = moment.duration(restaDe35N).minutes();
+                                                    var segundosDe35N = moment.duration(restaDe35N).seconds();
+                                                    tiempoSobranteN = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        nocturnas100 = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
+                                                    }
+                                                } else {
+                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        nocturnas35 = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
+                                                    }
+                                                }
+                                            } else {
+                                                nocturnas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                         if (permisoModificar == 1) {
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;border-right: 1px dashed #c8d4de!important;background: #fafafa;" class="text-center" name="descripcionHorario">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -724,7 +960,7 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td name="horarioHorario" style="background: #f0f0f0;">
+                                                    <td name="horarioHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -747,39 +983,57 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
-                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
-                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${horarioData.toleranciaI} min.</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${horarioData.toleranciaF} min.</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #f0f0f0;">
-                                                        <a class="badge badge-soft-warning mr-2">
-                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
-                                                            ${moment(sumaHorasNormales).format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                    <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #f0f0f0;">
-                                                        <a class="badge badge-soft-info mr-2">
-                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                                            ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                         </a>
                                                     </td>
-                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                    <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas25}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
+                                                    <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                         </a>
                                                     </td>
-                                                    <td name="colTardanza" style="background: #f0f0f0;">
+                                                    <td name="colTardanza" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -787,19 +1041,16 @@ function cargartabla(fecha) {
                                                     </td>`;
                                     if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                         sumaFaltas++;
-                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                 Falta
                                                             </span>
                                                         </td>`;
                                     } else {
-                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
-                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                                 } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -825,7 +1076,7 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td name="horarioHorario" style="background: #f0f0f0;">
+                                                    <td name="horarioHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -849,39 +1100,57 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
-                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
-                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${horarioData.toleranciaI} min.</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${horarioData.toleranciaF} min.</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #f0f0f0;">
-                                                        <a class="badge badge-soft-warning mr-2">
-                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
-                                                            ${moment(sumaHorasNormales).format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                    <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #f0f0f0;">
-                                                        <a class="badge badge-soft-info mr-2">
-                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                                            ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                         </a>
                                                     </td>
-                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                    <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas25}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
+                                                    <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                         </a>
                                                     </td>
-                                                    <td name="colTardanza" style="background: #f0f0f0;">
+                                                    <td name="colTardanza" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -889,20 +1158,17 @@ function cargartabla(fecha) {
                                                     </td>`;
                                     if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                         sumaFaltas++;
-                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                 Falta
                                                             </span>
                                                         </td>`;
                                     } else {
-                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
-                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                                 }
                             } else {
-                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                     <div class="dropdown">
                                                         <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -927,7 +1193,7 @@ function cargartabla(fecha) {
                                                         </ul>
                                                     </div>
                                                 </td>
-                                                <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">
+                                                <td class="text-center" name="horarioHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <div class="dropdown">
                                                         <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -952,39 +1218,57 @@ function cargartabla(fecha) {
                                                         </ul>
                                                     </div>
                                                 </td>
-                                                <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
-                                                <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
-                                                <td class="text-center" name="colTiempoEntreH" style="background: #f0f0f0;">
+                                                <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                                <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                                <td class="text-center" name="colTiempoEntreH" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                         ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                     </a>
                                                 </td>
-                                                <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #f0f0f0;">
-                                                    <a class="badge badge-soft-warning mr-2">
-                                                        <img src="landing/images/sun.svg" height="12" class="mr-2">
-                                                        ${moment(sumaHorasNormales).format("HH:mm:ss")}
-                                                    </a>
-                                                </td>
-                                                <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #f0f0f0;">
-                                                    <a class="badge badge-soft-info mr-2">
-                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                                        ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
-                                                    </a>
-                                                </td>
-                                                <td class="text-center" name="colSobreTiempo" style="background: #f0f0f0;">
+                                                <td class="text-center" name="colSobreTiempo" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                         ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                     </a>
                                                 </td>
-                                                <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-warning mr-2">
+                                                        <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                        ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-warning mr-2">
+                                                        <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                        ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas25}</td>
+                                                <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
+                                                <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-info mr-2">
+                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                        ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-info mr-2">
+                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                        ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
+                                                <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-danger mr-2">
                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                         ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                     </a>
                                                 </td>
-                                                <td class="text-center" name="colTardanza" style="background: #f0f0f0;">
+                                                <td class="text-center" name="colTardanza" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-danger mr-2">
                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -992,64 +1276,79 @@ function cargartabla(fecha) {
                                                 </td>`;
                                 if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                     sumaFaltas++;
-                                    grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                    grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <span class="badge badge-soft-danger mr-2" class="text-center">
                                                             Falta
                                                         </span>
                                                     </td>`;
                                 } else {
-                                    grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                 }
-                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
-                                                <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
-                                                <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                             }
                         } else {
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                             <span class="badge badge-soft-primary mr-2" class="text-center">
                                                                  ${horarioData.horario}
                                                             </span>
                                                         </a>
                                                     </td>
-                                                    <td name="horarioHorario" style="background: #f0f0f0;">
+                                                    <td name="horarioHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                     </td>
-                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
-                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
-                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${horarioData.toleranciaI} min.</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${horarioData.toleranciaF} min.</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #f0f0f0;">
-                                                        <a class="badge badge-soft-warning mr-2">
-                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
-                                                            ${moment(sumaHorasNormales).format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                    <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #f0f0f0;">
-                                                        <a class="badge badge-soft-info mr-2">
-                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                                            ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                         </a>
                                                     </td>
-                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                    <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas25}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
+                                                    <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                         </a>
                                                     </td>
-                                                    <td name="colTardanza" style="background: #f0f0f0;">
+                                                    <td name="colTardanza" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -1058,61 +1357,76 @@ function cargartabla(fecha) {
                                                     `;
                                     if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                         sumaFaltas++;
-                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                 Falta
                                                             </span>
                                                         </td>`;
                                     } else {
-                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
-                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                                 } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                  ${horarioData.horario}
                                                             </span>
                                                         </a>
                                                     </td>
-                                                    <td name="horarioHorario" style="background: #f0f0f0;">
+                                                    <td name="horarioHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                     </td>
-                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
-                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
-                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${horarioData.toleranciaI} min.</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${horarioData.toleranciaF} min.</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                         </a>
                                                     </td>
-                                                    <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #f0f0f0;">
-                                                        <a class="badge badge-soft-warning mr-2">
-                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
-                                                            ${moment(sumaHorasNormales).format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                    <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #f0f0f0;">
-                                                        <a class="badge badge-soft-info mr-2">
-                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                                            ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
-                                                        </a>
-                                                    </td>
-                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                         </a>
                                                     </td>
-                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                    <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas25}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
+                                                    <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                    <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                         </a>
                                                     </td>
-                                                    <td name="colTardanza" style="background: #f0f0f0;">
+                                                    <td name="colTardanza" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                             ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -1120,66 +1434,81 @@ function cargartabla(fecha) {
                                                     </td>`;
                                     if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                         sumaFaltas++;
-                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                 Falta
                                                             </span>
                                                         </td>`;
                                     } else {
-                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                        grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                     }
-                                    grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
-                                                    <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                                 }
                             } else {
-                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                     <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                         <span class="badge badge-soft-danger mr-2" class="text-center">
                                                              Sin horario
                                                         </span>
                                                     </a>
                                                 </td>
-                                                <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">
+                                                <td class="text-center" name="horarioHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                         <span class="badge badge-soft-danger mr-2" class="text-center">
                                                              Sin horario
                                                         </span>
                                                     </a>
                                                 </td>
-                                                <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
-                                                <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
-                                                <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
+                                                <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                                <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                                <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                         ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                     </a>
                                                 </td>
-                                                <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #f0f0f0;">
-                                                    <a class="badge badge-soft-warning mr-2">
-                                                        <img src="landing/images/sun.svg" height="12" class="mr-2">
-                                                        ${moment(sumaHorasNormales).format("HH:mm:ss")}
-                                                    </a>
-                                                </td>
-                                                <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #f0f0f0;">
-                                                    <a class="badge badge-soft-info mr-2">
-                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                                        ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
-                                                    </a>
-                                                </td>
-                                                <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
+                                                <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                         ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                     </a>
                                                 </td>
-                                                <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-warning mr-2">
+                                                        <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                        ${moment(sumaHorasNormales).format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-warning mr-2">
+                                                        <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                        ${moment(sobretiempoNormales, "HH:mm:ss").format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas25}</td>
+                                                <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
+                                                <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-info mr-2">
+                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                        ${moment(sumaHorasNocturnas).format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-info mr-2">
+                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                        ${moment(sobretiempoNocturnos, "HH:mm:ss").format("HH:mm:ss")}
+                                                    </a>
+                                                </td>
+                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
+                                                <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
+                                                <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-danger mr-2">
                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                         ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                     </a>
                                                 </td>
-                                                <td name="colTardanza" class="text-center" style="background: #f0f0f0;">
+                                                <td name="colTardanza" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-danger mr-2">
                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -1187,17 +1516,14 @@ function cargartabla(fecha) {
                                                 </td>`;
                                 if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                     sumaFaltas++;
-                                    grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
+                                    grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <span class="badge badge-soft-danger mr-2" class="text-center">
                                                             Falta
                                                         </span>
                                                     </td>`;
                                 } else {
-                                    grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
+                                    grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                                 }
-                                grupoHorario += `<td name="colHE25D" class="text-center colHE25D" style="background: #f0f0f0;">${diurnas25}</td>
-                                                <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">${diurnas35}</td>
-                                                <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">${diurnas100}</td>`;
                             }
                         }
                         // ! MARCACIONES
@@ -1723,22 +2049,27 @@ function cargartabla(fecha) {
                         }
                         grupoHorario += tbodyPausas;
                     } else {
-                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
+                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background:#fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                             ----
                                         </td>
-                                        <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">---</td>
-                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
-                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
-                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
-                                        <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #f0f0f0;">---</td>
-                                        <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #f0f0f0;">---</td>
-                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
-                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">---</td>
-                                        <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
-                                        <td name="faltaHorario" class="text-center" style="background: #f0f0f0;">---</td>
-                                        <td name="colHE25D" class="text-center" style="background: #f0f0f0;">---</td>
-                                        <td name="colHE35D" class="text-center colHE35D" style="background: #f0f0f0;">---</td>
-                                        <td name="colHE100D" class="text-center colHE100D" style="background: #f0f0f0;">---</td>`;
+                                        <td class="text-center" name="horarioHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHE25D" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHE25N" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHE35N" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHE100N" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colTardanza" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="faltaHorario" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                         // ! MARCACIONES
                         var tbodyEntradaySalida = "";
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
@@ -1783,6 +2114,14 @@ function cargartabla(fecha) {
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${sumaSobreTiempo.format("HH:mm:ss")}
                             </a>
+                        </td>
+                        <td name="colHE25DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <img src="landing/images/timer.svg" height="20" class="mr-2">
+                            ${sumaHorasE25D.format("HH:mm:ss")}
+                        </td>
+                        <td name="colHE35DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <img src="landing/images/timer.svg" height="20" class="mr-2">
+                            ${sumaHorasE35D.format("HH:mm:ss")}
                         </td>
                         <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-danger mr-2">
@@ -1834,57 +2173,6 @@ function cargartabla(fecha) {
             $('#tbodyD').html(tbody);
             $('[data-toggle="tooltip"]').tooltip();
             $('.dropdown-toggle').dropdown();
-            // * PARA PODER MENUS CUANDO SOLO HAY UNA COLUMNA
-            if (data.length == 1) {
-                var tbodyTR = '';
-                tbodyTR += '<tr>';
-                if (permisoModificar == 1) {
-                    tbodyTR += `<td></td>`;
-                }
-                tbodyTR += `<td><br><br><br><br><br><br><br><br><br><br></td>
-                            <td></td>
-                            <td></td>
-                            <td name="colCodigo"></td>
-                            <td></td>
-                            <td name="colCargo"></td>`;
-                for (let m = 0; m < cantidadGruposHorario; m++) {
-                    tbodyTR += `<td name="descripcionHorario"></td>
-                                <td name="horarioHorario"></td>
-                                <td name="toleranciaIHorario"></td>
-                                <td name="toleranciaFHorario"></td>
-                                <td name="colTiempoEntreH"></td>
-                                <td name="colHoraNormal"></td>
-                                <td name="colHoraNocturna"></td>
-                                <td name="colSobreTiempo"></td>
-                                <td name="colFaltaJornada"></td>
-                                <td name="colTardanza"></td>
-                                <td name="faltaHorario"></td>
-                                <td name="colHE25D"></td>
-                                <td name="colHE35D"></td>
-                                <td name="colHE100D"></td>`;
-                    // ! MARCACIONES
-                    for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                        tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td>';
-                    }
-                    // ! PAUSAS
-                    for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                        tbodyTR += `<td name="descripcionPausa"></td>
-                                <td name="horarioPausa"></td>
-                                <td name="tiempoPausa"></td>
-                                <td name="excesoPausa"></td>`;
-                    }
-                }
-                tbodyTR += `<td name="colTiempoTotal"><br><br></td>
-                            <td name="colHoraNormalTotal"></td>
-                            <td name="colHoraNocturnaTotal"></td>
-                            <td name="colSobreTiempoTotal"></td>
-                            <td name="colFaltaJornadaTotal"></td>
-                            <td name="colTardanzaTotal"></td>
-                            <td name="faltaTotal"></td>
-                            <td name="incidencia"></td>
-                            </tr>`;
-                $('#tbodyD').append(tbodyTR);
-            }
             inicializarTabla();
             $(window).on('resize', function () {
                 $("#tablaReport").css('width', '100%');
@@ -3796,6 +4084,8 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoPausas').hide();
     $('#contenidoHorarios').hide();
     $('#contenidoIncidencias').hide();
+    $('#contenidoPorH').hide();
+    $('#contenidoPorT').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
@@ -3990,6 +4280,21 @@ $('.incidenciaPadre input[type=checkbox]').change(function () {
     $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
+// : ***************************************** FILAS CON SOLO MARCACIONES ***************************************
+$('#colEmpleadosCM').change(function (event) {
+    // : ME COSTO CASI UN DIA COMPLETO GOOGLEANDO, CON UN GRACIAS GABY NO SERIA MALO JAJAJAJ
+    if (event.target.checked) {
+        $.fn.dataTable.ext.search.pop();
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                return $(table.row(dataIndex).node()).attr('data-estado') == 1;
+            }
+        );
+    } else {
+        $.fn.dataTable.ext.search.pop();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(); }, 1);
+});
 // : ********************************* FINALIZACION *************************************************************
 // * FUNCION DE MOSTRAR COLUMNAS
 function toggleColumnas() {
@@ -4059,6 +4364,66 @@ function toggleColumnas() {
         dataT.api().columns('.colHoraNocturnaTotal').visible(true);
     } else {
         dataT.api().columns('.colHoraNocturnaTotal').visible(false);
+    }
+    // ? HORAS EXTRAS 25% DIURNAS
+    if ($('#colHE25D').is(":checked")) {
+        dataT.api().columns('.colHE25D').visible(true);
+    } else {
+        dataT.api().columns('.colHE25D').visible(false);
+    }
+    // ? HORAS EXTRAS 35% DIURNAS
+    if ($('#colHE35D').is(":checked")) {
+        dataT.api().columns('.colHE35D').visible(true);
+    } else {
+        dataT.api().columns('.colHE35D').visible(false);
+    }
+    // ? HORAS EXTRAS 100% DIURNAS
+    if ($('#colHE100D').is(":checked")) {
+        dataT.api().columns('.colHE100D').visible(true);
+    } else {
+        dataT.api().columns('.colHE100D').visible(false);
+    }
+    // ? SOBRETIEMPO NORMAL POR HORARIO
+    if ($('#colSobreTNormal').is(":checked")) {
+        dataT.api().columns('.colSobreTNormal').visible(true);
+    } else {
+        dataT.api().columns('.colSobreTNormal').visible(false);
+    }
+    // ? SOBRETIEMPO NOCTURNO POR HORARIO
+    if ($('#colSobreTNocturno').is(":checked")) {
+        dataT.api().columns('.colSobreTNocturno').visible(true);
+    } else {
+        dataT.api().columns('.colSobreTNocturno').visible(false);
+    }
+    // ? HORAS EXTRAS 25% NOCTURNAS
+    if ($('#colHE25N').is(":checked")) {
+        dataT.api().columns('.colHE25N').visible(true);
+    } else {
+        dataT.api().columns('.colHE25N').visible(false);
+    }
+    // ? HORAS EXTRAS 35% NOCTURNAS
+    if ($('#colHE35N').is(":checked")) {
+        dataT.api().columns('.colHE35N').visible(true);
+    } else {
+        dataT.api().columns('.colHE35N').visible(false);
+    }
+    // ? HORAS EXTRAS 100% DIURNAS
+    if ($('#colHE100N').is(":checked")) {
+        dataT.api().columns('.colHE100N').visible(true);
+    } else {
+        dataT.api().columns('.colHE100N').visible(false);
+    }
+    // ? HORAS EXTRAS 25% DIURNAS TOTALES
+    if ($('#colHE25DTotal').is(":checked")) {
+        dataT.api().columns('.colHE25DTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHE25DTotal').visible(false);
+    }
+    // ? HORAS EXTRAS 35% DIURNAS TOTALES
+    if ($('#colHE35DTotal').is(":checked")) {
+        dataT.api().columns('.colHE35DTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHE35DTotal').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
@@ -4159,5 +4524,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.incidencia').visible(false);
     }
+    // ? SOLO MOSTRAR CON DATA
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
+$("#tablaReport").on('show.bs.dropdown', function () {
+    $('.dataTables_scrollBody').addClass('dropdown-visible');
+})
+    .on('hide.bs.dropdown', function () {
+        $('.dataTables_scrollBody').removeClass('dropdown-visible');
+    });

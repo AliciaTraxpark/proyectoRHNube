@@ -259,6 +259,14 @@
         position: absolute;
     }
 
+    .dataTables_filter {
+        display: none;
+    }
+
+    div.dataTables_scrollBody.dropdown-visible {
+        min-height: 400px !important;
+    }
+
     @media (max-width: 767.98px) {
         .separacion {
             padding-right: 1em !important;
@@ -362,24 +370,56 @@
                                         </li>
                                         <ul class="ulHijoPadre" style="display: none" id="contenidoPorH">
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE25D">
+                                                <label for="">H.E. 25% Diurnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE35D">
+                                                <label for="">H.E. 35% Diurnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE100D">
+                                                <label for="">H.E. 100% Diurnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE25N">
+                                                <label for="">H.E. 25% Nocturnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE35N">
+                                                <label for="">H.E. 35% Nocturnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE100N">
+                                                <label for="">H.E. 100% Nocturnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNormal">
-                                                <label for="">Horario normal por horario</label>
+                                                <label for="">Horario normal</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNocturna">
-                                                <label for="">Horario nocturno por horario</label>
+                                                <label for="">Horario nocturno</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colFaltaJornada">
-                                                <label for="">Jornada incompleta por horario</label>
+                                                <label for="">Jornada incompleta</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colSobreTiempo">
-                                                <label for="">Sobretiempo por horario</label>
+                                                <label for="">Sobretiempo total</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colSobreTNormal">
+                                                <label for="">Sobretiempo normal</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colSobreTNocturno">
+                                                <label for="">Sobretiempo nocturno</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoEntreH">
-                                                <label for="">Tiempo por horario</label>
+                                                <label for="">Tiempo total</label>
                                             </li>
                                         </ul>
                                         <li class="liContenido detalleHijo">
@@ -395,20 +435,28 @@
                                         </li>
                                         <ul class="ulHijoPadre" style="display: none" id="contenidoPorT">
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE25DTotal">
+                                                <label for="">H.E. 25% Diurnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE35DTotal">
+                                                <label for="">H.E. 35% Diurnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNormalTotal">
-                                                <label for="">Horario normal total</label>
+                                                <label for="">Horario normal</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNocturnaTotal">
-                                                <label for="">Horario nocturno total</label>
+                                                <label for="">Horario nocturno</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colFaltaJornadaTotal">
-                                                <label for="">Jornada incompleta total</label>
+                                                <label for="">Jornada incompleta</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colSobreTiempoTotal" checked>
-                                                <label for="">Sobretiempo total</label>
+                                                <label for="">Sobretiempo</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoTotal" checked>
@@ -421,6 +469,12 @@
                                     <li class="liContenido">
                                         <input type="checkbox" id="colCodigo">
                                         <label for="">Código de trabajador</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="colEmpleadosCM">
+                                        <label for="">Empleados solo con marcaciones</label>
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
@@ -537,7 +591,7 @@
                             <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                         </div>
                     </div>
-                    <div id="tableZoom" class="col-md-12">
+                    <div id="tableZoom" class="col-md-12 table-responsive">
                         <table id="tablaReport" class="table nowrap order-column" style="font-size: 12.8px;">
                             <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                                 <tr>
