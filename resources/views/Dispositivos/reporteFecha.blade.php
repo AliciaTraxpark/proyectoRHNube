@@ -240,6 +240,10 @@
         overflow: auto;
         position: absolute;
     }
+
+    .dataTables_filter {
+        display: none;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">

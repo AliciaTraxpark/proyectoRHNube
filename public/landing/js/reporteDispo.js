@@ -463,6 +463,7 @@ function cargartabla(fecha) {
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNocturnaTotal" class="colHoraNocturnaTotal">Horario nocturno total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHE25DTotal" class="colHE25DTotal">H.E. 25% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Jornada incompleta total</th>  
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta total</th>
@@ -511,6 +512,7 @@ function cargartabla(fecha) {
                 var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
                 var sumaHorasNormalesT = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS NORMALES
                 var sumaHorasNocturnasT = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS NOCTURNAS
+                var sumaHorasE25D = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS EXTRAS DE 25% DIURNAS
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -696,6 +698,7 @@ function cargartabla(fecha) {
                                         var tiempoSobrante = {};
                                         if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                             diurnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
                                             var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                             var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
                                             var minutosDe25 = moment.duration(restaDe25).minutes();
@@ -718,6 +721,7 @@ function cargartabla(fecha) {
                                             }
                                         } else {
                                             diurnas25 = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                         }
                                         // : ********************************** HORAS EXTRAS NOCTURNAS ******************************
                                         if (sumaHorasNocturnas > nuevaHorasO) {
@@ -849,6 +853,7 @@ function cargartabla(fecha) {
                                             var tiempoSobrante = {};
                                             if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                                 diurnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
                                                 var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                 var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
                                                 var minutosDe25 = moment.duration(restaDe25).minutes();
@@ -871,6 +876,7 @@ function cargartabla(fecha) {
                                                 }
                                             } else {
                                                 diurnas25 = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                             }
                                         }
                                     } else {
@@ -2102,6 +2108,9 @@ function cargartabla(fecha) {
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${sumaSobreTiempo.format("HH:mm:ss")}
                             </a>
+                        </td>
+                        <td name="colHE25DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            ${sumaHorasE25D.format("HH:mm:ss")}
                         </td>
                         <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-danger mr-2">
