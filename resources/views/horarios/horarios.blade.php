@@ -150,9 +150,10 @@ use Carbon\Carbon;
             background-color: #f8f8f8;
         }
 
-        .flatpickr-calendar {
+        .hasTime {
             width: 125px !important;
         }
+
 
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             background-color: #52565b;
@@ -268,7 +269,7 @@ use Carbon\Carbon;
          left: 40%;
         top: 30%;
       /*   width: 50%; */
-        height: 30%; 
+        height: 30%;
         z-index: 9999;
         opacity: .8;
         background: rgb(252,252,252);
@@ -308,9 +309,9 @@ use Carbon\Carbon;
                     <button class="btn btn-sm btn-primary" onclick="finalizar()"
                         style="background-color: #183b5d;border-color:#62778c;font-size: 14px">Finalizar</button>
                 </div>
-               
+
             </div>
-           
+
         </div>
     </div>
     <footer class="border-top"
@@ -335,6 +336,7 @@ use Carbon\Carbon;
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
     <script src="{{ asset('landing/js/horario.js') }}"></script>
@@ -342,7 +344,7 @@ use Carbon\Carbon;
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
+
     <script src="{{ asset('admin/packages/core/main.js') }}"></script>
     <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>
     <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>
@@ -356,7 +358,7 @@ use Carbon\Carbon;
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 
     <script>
-        
+
 
     </script>
     <script>
@@ -396,7 +398,7 @@ use Carbon\Carbon;
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-   
+
 
     @if (Auth::user())
         <script>
