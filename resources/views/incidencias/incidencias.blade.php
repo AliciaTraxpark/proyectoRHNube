@@ -32,17 +32,7 @@
 
 
 @section('content')
-<style>
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
 
-    input[type=number] {
-        -moz-appearance: textfield;
-    }
-</style>
     <style>
         body {
             background-color: #ffffff;
@@ -105,16 +95,11 @@
                 text-align: center !important;
             }
 
-            #nuevoDispositivo{
-                max-width: 400px!important;
-            }
-            #classMo, #modalEditarClass{
-                max-width: 400px!important;
-            }
-            .fullscreen-modal .modal-dialog .modal-lg {
-    width: 400px!important;
 
-  }
+            .fullscreen-modal .modal-dialog .modal-lg {
+                width: 400px!important;
+
+            }
      }
     </style>
     <style>
@@ -141,7 +126,7 @@
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                     <div class="row">
                         <div id="btnNDis" class=" col-md-6 col-12 text-left">
-                            <button class="btn btn-sm btn-primary" onclick="NuevoDispo()"
+                            <button class="btn btn-sm btn-primary" onclick="registrarIncidencia()"
                                 style="background-color: #183b5d;border-color:#62778c">+ Nueva incidencia</button>
 
                             {{-- <button class="btn btn-sm btn-primary"
