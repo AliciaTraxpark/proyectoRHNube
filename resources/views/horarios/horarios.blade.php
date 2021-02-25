@@ -43,6 +43,9 @@ use Carbon\Carbon;
         type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet"
         type="text/css" />
+        <link href="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet" />
+        <link href="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}" rel="stylesheet"
+            type="text/css" />
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
@@ -339,7 +342,7 @@ use Carbon\Carbon;
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-
+    <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
     <script src="{{ asset('admin/packages/core/main.js') }}"></script>
     <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>
     <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>
@@ -348,6 +351,9 @@ use Carbon\Carbon;
     <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 
     <script>
         
