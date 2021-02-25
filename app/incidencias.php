@@ -13,7 +13,7 @@ class incidencias extends Model
                            'idtipo_incidencia',
                            'inciden_codigo',
                             'inciden_descripcion',
-                            'inciden_descuento',
+                            'inciden_pagado',
                             'inciden_hora',
                             'users_id',
                             'organi_id',

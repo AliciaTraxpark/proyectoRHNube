@@ -13,6 +13,7 @@ class tipo_incidencia extends Model
                            'tipoInc_codigo',
                            'tipoInc_descripcion',
                            'tipoInc_activo',
-                           'sistema'];
+                           'sistema',
+                            'organi_id'];
     public $timestamps = false;
 }

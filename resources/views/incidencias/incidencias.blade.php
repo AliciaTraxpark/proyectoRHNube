@@ -84,11 +84,7 @@
             zoom: 85%;
         }
 
-        .col-md-6 .select2-container .select2-selection {
-            height: 20px!important;
-            font-size: 12.2px;
 
-        }
         @media (max-width: 767px) {
 
             #btnNDis {
@@ -126,7 +122,7 @@
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                     <div class="row">
                         <div id="btnNDis" class=" col-md-6 col-12 text-left">
-                            <button class="btn btn-sm btn-primary" onclick="registrarIncidencia()"
+                            <button class="btn btn-sm btn-primary" onclick="nuevaIncidencia()"
                                 style="background-color: #183b5d;border-color:#62778c">+ Nueva incidencia</button>
 
                             {{-- <button class="btn btn-sm btn-primary"
@@ -172,14 +168,14 @@
             </div> <!-- end card -->
 
 
-            {{-- Modal nuevoDispositivo --}}
-            <div id="nuevoDispositivo" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+            {{-- Modal registro incidencia --}}
+            <div id="registroIncidencia" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static">
                 <div id="classMo" class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
 
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
-                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Nuevo Dispositivo
+                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Nueva incidencia
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -189,29 +185,36 @@
                             <div class="row">
 
                                 <div class="col-md-12 col-12">
-                                    <form id="frmHorNuevo" action="javascript:RegistraDispo()">
+                                    <form id="frmHorNuevo" action="javascript">
                                         <div class="row">
-                                            <div class="col-md-12 col-12">
+                                            <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label for="">Descripción de ubicación:</label>
+                                                    <label for="">Seleccione tipo de incidencia:</label>
+                                                    <select data-plugin="customselect"  id="selecttipoIncide"
+                                                    class="form-control" data-placeholder="seleccione"  required>
+                                                    @foreach ($tipo_incidencia as $tipoI)
+                                                    <option value=""></option>
+                                                    <option value="{{$tipoI->idtipo_incidencia}}">{{$tipoI->tipoInc_descripcion}}</option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="">Descripción:</label>
                                                     <input type="text" class="form-control form-control-sm"
-                                                        id="descripcionDis" maxlength="80" required>
+                                                        id="descripcionIncid" maxlength="80" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 col-12">
+                                            <div class="col-md-6 col-12">
                                                 <div class="form-group">
-
-                                                    <label for="">Móvil vinculado:</label> <span id="errorMovil" style="color: #690f0f;display: none;">Movil ya registrado.</span>
-
-                                                        <div class="input-group form-control-sm" style="bottom: 4px;
-                                                        padding-left: 0px;">
-                                                            <div class="input-group-prepend ">
-                                                                <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 2px);" >+51</div>
-                                                            </div>
-                                                            <input type="number" required class="form-control form-control-sm" id="numeroMovil" maxlength="9"  onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" onblur="comprobarMovil()">
-                                                        </div>
+                                                    <label for="">Código:</label>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="codigoIncid" >
                                                 </div>
                                             </div>
+
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="">Tiempo de sincronización(Min):</label> <span id="errorSincro" style="color: #690f0f;display: none">El valor min es 15.</span>
@@ -273,98 +276,7 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
 
-            {{-- Modal editarDispositivo --}}
-            <div id="editarDispositivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                aria-hidden="true" data-backdrop="static">
-                <div id="modalEditarClass" class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
 
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color:#163552;">
-                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar Dispositivo
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" style="font-size:12px!important">
-                            <div class="row">
-                                <input type="hidden" id="idDisposi">
-                                <div class="col-md-12">
-                                    <form id="" action="javascript:reditarDispo()">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="">Descripción de ubicación:</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="descripcionDis_ed" maxlength="80" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Móvil vinculado:</label>
-                                                        <div class="input-group form-control-sm" style="bottom: 4px;
-                                                        padding-left: 0px;">
-                                                            <div class="input-group-prepend ">
-                                                                <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 2px);" >+51</div>
-                                                            </div>
-                                                            <input type="number" required class="form-control form-control-sm" id="numeroMovil_ed" maxlength="9"  disabled>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Tiempo de sincronización(Min):</label> <span id="errorSincro_ed" style="color: #690f0f;display: none">El valor min es 15.</span>
-                                                    <input type="number" id="tiempoSin_ed" min="15"   required class="form-control form-control-sm"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-
-                                                <div class="form-group">
-                                                    <label for="">Siguiente marcación(Min):</label> <span id="errorMarca_ed" style="color: #690f0f;display: none">El valor min es 5.</span>
-                                                    <input type="number" id="smarcacion_ed" min="5"  required class="form-control form-control-sm"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Mantener data por(Hr):</label> <span id="errorData_ed" style="color: #690f0f;display: none">El valor min es 24.</span>
-                                                    <input type="number" id="tiempoData_ed" min="24"  required class="form-control form-control-sm"
-                                                        required>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="">Seleccione tipo de lectura:</label>
-                                                    <select data-plugin="customselect" multiple="multiple" id="selectLectura_ed"
-                                                    class="form-control form-control-sm"  required>
-                                                    <option class="" value="1">Manual</option>
-                                                    <option class="" value="2">Escáner</option>
-                                                    <option class="" value="3">Cámara</option>
-                                                </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <button type="button" class="btn btn-light btn-sm "
-                                            data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" name="" style="background-color: #163552;"
-                                            class="btn btn-sm ">Guardar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
 
 
 
@@ -378,7 +290,7 @@
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="{{ asset('landing/js/dispositivosMenu.js') }}"></script>
+    <script src="{{ asset('landing/js/incidencias.js') }}"></script>
 
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 

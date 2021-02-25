@@ -149,6 +149,8 @@ $(document).ready(function () {
         .draw();
 });
 
-
+function nuevaIncidencia(){
+    $('#registroIncidencia').modal('show');
+}
 
 

@@ -1608,7 +1608,7 @@ class EmpleadoController extends Controller
         else{
             $incidencia = new incidencias();
             $incidencia->inciden_descripcion = $request->get('title');
-            $incidencia->inciden_descuento = $request->get('descuentoI');
+            $incidencia->inciden_pagado = $request->get('descuentoI');
             $incidencia->inciden_hora = $request->get('horaIn');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
@@ -1800,7 +1800,7 @@ class EmpleadoController extends Controller
         $idempleado = $request->idempleado;
         $incidencias = DB::table('incidencias as i')
             ->select([
-                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
+                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_pagado as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
                 'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
             ])
@@ -1850,7 +1850,7 @@ class EmpleadoController extends Controller
             ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_pagado as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $request->get('idempleado'))
             ->union($horario_empleado);
@@ -1907,7 +1907,7 @@ class EmpleadoController extends Controller
 
         $incidencias = DB::table('incidencias as i')
             ->select([
-                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
+                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_pagado as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
                 'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
             ])
@@ -2015,7 +2015,7 @@ class EmpleadoController extends Controller
             else{
                 $incidencia = new incidencias();
                 $incidencia->inciden_descripcion = $request->get('title');
-                $incidencia->inciden_descuento = $request->get('descuentoI');
+                $incidencia->inciden_pagado = $request->get('descuentoI');
                 $incidencia->inciden_hora = $request->get('horaIn');
                 $incidencia->users_id = Auth::user()->id;
                 $incidencia->organi_id = session('sesionidorg');

@@ -135,7 +135,7 @@ class registroEmpresaController extends Controller
             foreach ($incidencias as $inci) {
                 $incidencia = new incidencias();
                 $incidencia->inciden_descripcion = $inci;
-                $incidencia->inciden_descuento = 0;
+                $incidencia->inciden_pagado = 0;
                 $incidencia->users_id = $request->get('iduser');
                 $incidencia->organi_id =  $idorgani;
                 $incidencia->save();

@@ -367,7 +367,7 @@ class horarioController extends Controller
                 ->union($eventos_empleado);
 
             $incidencias = DB::table('incidencias as i')
-                ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+                ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
                 ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
                 ->where('i.emple_id', '=', $idsEm)
                 ->union($horario_empleado)
@@ -431,7 +431,7 @@ class horarioController extends Controller
         foreach ($idempl as $idempls) {
             $incidencia = new incidencias();
             $incidencia->inciden_descripcion = $request->descripcionI;
-            $incidencia->inciden_descuento = $request->descuentoI;
+            $incidencia->inciden_pagado = $request->descuentoI;
             $incidencia->inciden_dias_id = $inc_dias->inciden_dias_id;
             $incidencia->emple_id = $idempls;
             $incidencia->save();
@@ -827,7 +827,7 @@ class horarioController extends Controller
                 foreach ($idemps as $idempleados) {
                     $incidencia = new incidencias();
                     $incidencia->inciden_descripcion = $temporal_eventoIncs->title;
-                    $incidencia->inciden_descuento = $temporal_eventoIncs->temp_horaF;
+                    $incidencia->inciden_pagado = $temporal_eventoIncs->temp_horaF;
                     $incidencia->inciden_dias_id = $inc_dias->inciden_dias_id;
                     $incidencia->emple_id = $idempleados;
                     $incidencia->save();
@@ -949,7 +949,7 @@ class horarioController extends Controller
 
         $incidencia = new incidencias();
         $incidencia->inciden_descripcion = $title;
-        $incidencia->inciden_descuento = $descuentoI;
+        $incidencia->inciden_pagado = $descuentoI;
         $incidencia->inciden_dias_id = $inc_dias->inciden_dias_id;
         $incidencia->emple_id = $idempl;
         $incidencia->save();
@@ -968,7 +968,7 @@ class horarioController extends Controller
             ->union($eventos_empleado);
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
             ->where('i.emple_id', '=', $idempl)
             ->union($horario_empleado)
@@ -1014,7 +1014,7 @@ class horarioController extends Controller
             ->union($eventos_empleado);
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
             ->where('i.emple_id', '=', $idempl)
             ->union($horario_empleado)
@@ -1055,7 +1055,7 @@ class horarioController extends Controller
             ->union($eventos_empleado1);
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
             ->where('i.emple_id', '=', $idempl)
             ->union($horario_empleado)
@@ -1096,7 +1096,7 @@ class horarioController extends Controller
             ->union($eventos_empleado1);
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
             ->where('i.emple_id', '=', $idempl)
             ->union($horario_empleado)
@@ -1591,7 +1591,7 @@ class horarioController extends Controller
 
         $incidencias = DB::table('incidencias as i')
             ->select([
-                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descripcion as textColor',
+                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_descripcion as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
                 'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
             ])
@@ -1650,7 +1650,7 @@ class horarioController extends Controller
         /*   foreach($idempleados as $idempleado){
         $incidencias2 = DB::table('incidencias as i')
         ->select([
-        'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
+        'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_pagado as textColor',
         'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
         'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
         ])

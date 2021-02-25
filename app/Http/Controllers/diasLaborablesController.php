@@ -85,7 +85,7 @@ class diasLaborablesController extends Controller
         $idempleado=$request->get('idempleado');
         $incidencia = new incidencias();
         $incidencia->inciden_descripcion =  $request->get('title');
-        $incidencia->inciden_descuento = $request->get('descuentoI');
+        $incidencia->inciden_pagado = $request->get('descuentoI');
         $incidencia->inciden_hora =  $request->get('horaIn');
         $incidencia->users_id = Auth::user()->id;
         $incidencia->organi_id=session('sesionidorg');
