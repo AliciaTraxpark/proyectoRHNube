@@ -304,6 +304,8 @@ Route::post('/horario/eliminarHorario', 'horarioController@eliminarHorario');
 Route::post('/horario/empleArea', 'horarioController@empleArea');
 Route::post('/horario/empleCargo', 'horarioController@empleCargo');
 Route::post('/horario/empleLocal', 'horarioController@empleLocal');
+Route::post('/horario/empleNivel', 'horarioController@empleNivel');
+Route::post('/horario/empleCentro', 'horarioController@empleCentroc');
 Route::post('/horario/copiarferiados', 'horarioController@copiarferiados');
 Route::post('/horario/borrarferiados', 'horarioController@borrarferiados');
 Route::post('/horario/listar', 'horarioController@horarioListar');

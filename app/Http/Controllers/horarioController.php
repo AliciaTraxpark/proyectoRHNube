@@ -37,8 +37,7 @@ class horarioController extends Controller
         if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
         } else {
-            $paises = paises::all();
-            $departamento = ubigeo_peru_departments::all();
+
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
@@ -54,17 +53,54 @@ class horarioController extends Controller
                 ->where('h.organi_id', '=', session('sesionidorg'))
                 ->whereNull('he.horario_horario_id')
                 ->get();
-            $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
-                ->select('area_id as idarea', 'area_descripcion as descripcion')
-                ->get();
-            $cargo = DB::table('cargo')
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
-                ->get();
-            $local = DB::table('local')
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->select('local_id as idlocal', 'local_descripcion as descripcion')
-                ->get();
+
+            //*AREA CUADNO TIENE ASIGNADO EMPLEADOS
+            $area = DB::table('area as ar')
+            ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+            ->where('ar.organi_id','=',session('sesionidorg'))
+            ->select(
+                'ar.area_id as idarea',
+                'area_descripcion as descripcion'
+            )
+            ->groupBy('ar.area_id')
+            ->get();
+
+            //*CARGO CUADNO TIENE ASIGNADO EMPLEADO
+            $cargo = DB::table('cargo as c')
+            ->join('empleado as em', 'c.cargo_id', '=', 'em.emple_cargo')
+            ->where('c.organi_id', '=', session('sesionidorg'))
+            ->select('cargo_id as idcargo',
+                'cargo_descripcion as descripcion')
+            ->groupBy('c.cargo_id')
+            ->get();
+
+            //*LOCAL CUADNO TIENE ASIGNADO EMPLEADO
+            $local = DB::table('local as l')
+            ->join('empleado as em', 'l.local_id', '=', 'em.emple_local')
+            ->where('l.organi_id', '=', session('sesionidorg'))
+            ->select('local_id as idlocal',
+               'local_descripcion as descripcion')
+            ->groupBy('l.local_id')
+            ->get();
+
+            //*NIVEL CUADNO TIENE ASIGNADO EMPLEADO
+            $nivel = DB::table('nivel as n')
+            ->join('empleado as em', 'n.nivel_id', '=', 'em.emple_nivel')
+            ->where('n.organi_id', '=', session('sesionidorg'))
+            ->select('nivel_id as idnivel',
+               'nivel_descripcion as descripcion')
+            ->groupBy('n.nivel_id')
+            ->get();
+
+            //*CENTRO DE COSTOS CUANDO TIENE ASIGNADO EMPLEADOS
+            $centroc = DB::table('centro_costo as cc')
+            ->join('centrocosto_empleado as ce', 'cc.centroC_id', '=', 'ce.idCentro')
+            ->where('cc.organi_id', '=', session('sesionidorg'))
+            ->where('ce.estado', '=', 1)
+            ->select('cc.centroC_id as idcentro',
+               'cc.centroC_descripcion as descripcion')
+            ->groupBy('cc.centroC_id')
+            ->get();
 
             $invitadod = DB::table('invitado')
                 ->where('user_Invitado', '=', Auth::user()->id)
@@ -76,14 +112,16 @@ class horarioController extends Controller
                     return redirect('/dashboard');
                 } else {
                     return view('horarios.horarios', [
-                        'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                        'area' => $area, 'cargo' => $cargo, 'local' => $local,
+                         'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                        'area' => $area, 'cargo' => $cargo, 'local' => $local, 'nivel'=>$nivel,
+                        'centroc'=>$centroc
                     ]);
                 }
             } else {
                 return view('horarios.horarios', [
-                    'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                    'area' => $area, 'cargo' => $cargo, 'local' => $local,
+                    'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                    'area' => $area, 'cargo' => $cargo, 'local' => $local,  'nivel'=>$nivel,
+                    'centroc'=>$centroc
                 ]);
             }
         }
@@ -270,7 +308,7 @@ class horarioController extends Controller
         return $horario;
     }
 
-   
+
 
     public function verDataEmpleado(Request $request)
     {
@@ -404,8 +442,7 @@ class horarioController extends Controller
         if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
         } else {
-            $paises = paises::all();
-            $departamento = ubigeo_peru_departments::all();
+
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
@@ -422,17 +459,53 @@ class horarioController extends Controller
                 ->where('h.organi_id', '=', session('sesionidorg'))
                 ->whereNull('he.horario_horario_id')
                 ->get();
-            $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
-                ->select('area_id as idarea', 'area_descripcion as descripcion')
-                ->get();
-            $cargo = DB::table('cargo')
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
-                ->get();
-            $local = DB::table('local')
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->select('local_id as idlocal', 'local_descripcion as descripcion')
-                ->get();
+            //*AREA CUADNO TIENE ASIGNADO EMPLEADOS
+            $area = DB::table('area as ar')
+            ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+            ->where('ar.organi_id','=',session('sesionidorg'))
+            ->select(
+                'ar.area_id as idarea',
+                'area_descripcion as descripcion'
+            )
+            ->groupBy('ar.area_id')
+            ->get();
+
+            //*CARGO CUADNO TIENE ASIGNADO EMPLEADO
+            $cargo = DB::table('cargo as c')
+            ->join('empleado as em', 'c.cargo_id', '=', 'em.emple_cargo')
+            ->where('c.organi_id', '=', session('sesionidorg'))
+            ->select('cargo_id as idcargo',
+                'cargo_descripcion as descripcion')
+            ->groupBy('c.cargo_id')
+            ->get();
+
+            //*LOCAL CUADNO TIENE ASIGNADO EMPLEADO
+            $local = DB::table('local as l')
+            ->join('empleado as em', 'l.local_id', '=', 'em.emple_local')
+            ->where('l.organi_id', '=', session('sesionidorg'))
+            ->select('local_id as idlocal',
+               'local_descripcion as descripcion')
+            ->groupBy('l.local_id')
+            ->get();
+
+            //*NIVEL CUADNO TIENE ASIGNADO EMPLEADO
+            $nivel = DB::table('nivel as n')
+            ->join('empleado as em', 'n.nivel_id', '=', 'em.emple_nivel')
+            ->where('n.organi_id', '=', session('sesionidorg'))
+            ->select('nivel_id as idnivel',
+               'nivel_descripcion as descripcion')
+            ->groupBy('n.nivel_id')
+            ->get();
+
+            //*CENTRO DE COSTOS CUANDO TIENE ASIGNADO EMPLEADOS
+            $centroc = DB::table('centro_costo as cc')
+            ->join('centrocosto_empleado as ce', 'cc.centroC_id', '=', 'ce.idCentro')
+            ->where('cc.organi_id', '=', session('sesionidorg'))
+            ->where('ce.estado', '=', 1)
+            ->select('cc.centroC_id as idcentro',
+               'cc.centroC_descripcion as descripcion')
+            ->groupBy('cc.centroC_id')
+            ->get();
 
             $invitadod = DB::table('invitado')
                 ->where('user_Invitado', '=', Auth::user()->id)
@@ -444,14 +517,16 @@ class horarioController extends Controller
                     return redirect('/dashboard');
                 } else {
                     return view('horarios.horarioMenu', [
-                        'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                        'area' => $area, 'cargo' => $cargo, 'local' => $local,
+                         'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                        'area' => $area, 'cargo' => $cargo, 'local' => $local,'nivel'=>$nivel,
+                        'centroc'=>$centroc
                     ]);
                 }
             } else {
                 return view('horarios.horarioMenu', [
-                    'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                    'area' => $area, 'cargo' => $cargo, 'local' => $local,
+                     'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                    'area' => $area, 'cargo' => $cargo, 'local' => $local,'nivel'=>$nivel,
+                    'centroc'=>$centroc
                 ]);
             }
         }
@@ -477,7 +552,7 @@ class horarioController extends Controller
 
         $user = User::where('id', '=', Auth::user()->id)
             ->update(['user_estado' => 1]);
-        
+
             $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))
             ->update(['organi_menu' => 1]);
     }
@@ -802,7 +877,7 @@ class horarioController extends Controller
                 ->update(['he.estado' => 0]);
             }
         }
-        
+
 
         return $temporal_evento;
     }
@@ -1201,6 +1276,32 @@ class horarioController extends Controller
             ->where('emple_estado', '=', 1)
             ->get();
         return $empleadosidLocal;
+    }
+
+    public function empleNivel(Request $request)
+    {
+        $idnivel = $request->idnivel;
+        $empleadosidNivel = DB::table('empleado')
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->where('emple_nivel', '=', $idnivel)
+            ->where('emple_estado', '=', 1)
+            ->get();
+        return $empleadosidNivel;
+    }
+
+    public function empleCentroc(Request $request)
+    {
+        $idcentro = $request->idcentro;
+        $empleadoscentro = DB::table('empleado')
+            ->join('centrocosto_empleado as ccemple','empleado.emple_id','=','ccemple.idEmpleado')
+            ->where('ccemple.estado', '=', 1)
+            ->where('empleado.organi_id', '=', session('sesionidorg'))
+            ->where('ccemple.idCentro', '=', $idcentro)
+            ->where('empleado.emple_estado', '=', 1)
+            ->groupBy('empleado.emple_id')
+            ->select('empleado.emple_id')
+            ->get();
+        return $empleadoscentro;
     }
 
     public function copiarferiados(Request $request)
@@ -1927,7 +2028,7 @@ class horarioController extends Controller
 
             }
 
-        } 
+        }
         if($asigNuevo==1){
           if($conRepeticion==1){
             return 0;
@@ -2137,5 +2238,5 @@ class horarioController extends Controller
 
     }
 
-    
+
 }

@@ -94,6 +94,16 @@
                                                         {{ $locales->descripcion }}.
                                                     </option>
                                                 @endforeach
+                                                @foreach ($nivel as $niveles)
+                                                    <option value="{{ $niveles->idnivel }}">Nivel :
+                                                        {{ $niveles->descripcion }}.
+                                                    </option>
+                                                @endforeach
+                                                @foreach ($centroc as $centrocs)
+                                                    <option value="{{ $centrocs->idcentro }}">Centro costo :
+                                                        {{ $centrocs->descripcion }}.
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

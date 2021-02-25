@@ -248,7 +248,7 @@ $('#btnasignar').on('click', function (e) {
     $(".sub_chk:checked").each(function () {
         allVals.push($(this).attr('data-id'));
     });
-    
+
     $(".loader").hide();
     $(".img-load").hide();
 });
@@ -511,7 +511,7 @@ function calendario() {
 
                         idempleado
                     },
-                   
+
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -523,7 +523,7 @@ function calendario() {
                     success: function (data) {
 
                         successCallback(data);
-                       
+
                         $(".loader").hide();
                         $(".img-load").hide();
                     },
@@ -540,7 +540,7 @@ function calendario() {
 
                         idempleado
                     },
-                   
+
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -561,7 +561,7 @@ function calendario() {
                  }
 
             }
-           
+
 
         },
     }
@@ -2134,7 +2134,7 @@ $("#selectTodoCheck").click(function () {
         $(".img-load").show();
         $("#nombreEmpleado > option").prop("selected", "selected");
         $("#nombreEmpleado").trigger("change");
-        
+
     } else {
         $("#nombreEmpleado > option").prop("selected", false);
         $("#nombreEmpleado").trigger("change");
@@ -2252,7 +2252,74 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
             }
         });
     }
-   
+
+    //*nivel
+    if (palabraEmpresarial == 'Nivel') {
+        $.ajax({
+            type: "post",
+            url: "/horario/empleNivel",
+            data: {
+                idnivel: idempresarial
+            },
+            statusCode: {
+
+                419: function () {
+                    location.reload();
+                }
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+
+                $.each(data, function (index, value) {
+                    $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
+
+                });
+                $("#nombreEmpleado").trigger("change");
+
+
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+        });
+    }
+
+    //*centro costo
+    if (palabraEmpresarial == 'Centro') {
+        $.ajax({
+            type: "post",
+            url: "/horario/empleCentro",
+            data: {
+                idcentro: idempresarial
+            },
+            statusCode: {
+
+                419: function () {
+                    location.reload();
+                }
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+
+                $.each(data, function (index, value) {
+                    $("#nombreEmpleado > option[value='" + value.emple_id + "']").prop("selected", "selected");
+
+                });
+                $("#nombreEmpleado").trigger("change");
+
+
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+        });
+    }
+
+
 })
 /////////////////////////////////
 
@@ -4042,7 +4109,7 @@ $( "#nombreEmpleado" ).change(function() {
     nempl=$( "#nombreEmpleado" ).val().length;
     console.log(nempl);
     if(nempl>0){
-        
+
     $(".loader").show();
     $(".img-load").show();
     calendario();
@@ -4052,7 +4119,7 @@ $( "#nombreEmpleado" ).change(function() {
         $(".img-load").hide();
         calendario();
     }
-    
+
   });
 //*
 
