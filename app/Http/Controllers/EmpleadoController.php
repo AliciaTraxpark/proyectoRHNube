@@ -238,7 +238,7 @@ class EmpleadoController extends Controller
                         $join->on('md.id', '=', 'v.idModo');
                         $join->orOn('md.id', '=', 'vr.idModo');
                     })
-                   
+
                     ->select(
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -831,7 +831,7 @@ class EmpleadoController extends Controller
         if ($objEmpleado['area'] != '') {
             $empleado->emple_area = $objEmpleado['area'];
         }
-        if (!is_null($objEmpleado['centroc'])) {
+        if (!empty($objEmpleado['centroc'])) {
             foreach ($objEmpleado['centroc'] as $centro) {
                 $newCentroEmpleado = new centrocosto_empleado();
                 $newCentroEmpleado->idCentro = $centro;
@@ -1201,7 +1201,7 @@ class EmpleadoController extends Controller
         }
         // : CENTRO DE COSTOS
         $centroE = centrocosto_empleado::where('idEmpleado', '=', $idE)->where('estado', '=', 1)->get();
-        if (is_null($objEmpleado['centroc_v'])) {
+        if (empty($objEmpleado['centroc_v'])) {
             foreach ($centroE as $ce) {
                 $ce->fecha_baja = Carbon::now();
                 $ce->estado = 0;
