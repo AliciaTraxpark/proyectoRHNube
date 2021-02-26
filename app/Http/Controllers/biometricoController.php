@@ -313,9 +313,11 @@ class biometricoController extends Controller
             ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
             ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
             ->join('dispositivos as dis', 'map.dispositivoEntrada', '=', 'dis.idDispositivos')
+            ->join('empleado as e', 'map.marcaMov_emple_id', '=', 'e.emple_id')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select(
                 'map.tipoMarcacionB',
-
+                DB::raw('CONCAT(p.perso_nombre as nombre, " ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
                 'dis.tipoDispositivo',
                 'dis.dispo_descripUbicacion',
                 'map.marcaMov_id as idMarcacion',
@@ -335,9 +337,11 @@ class biometricoController extends Controller
             ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
             ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
             ->join('dispositivos as dis', 'map.dispositivoEntrada', '=', 'dis.idDispositivos')
+            ->join('empleado as e', 'map.marcaMov_emple_id', '=', 'e.emple_id')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select(
                 'map.tipoMarcacionB',
-
+                DB::raw('CONCAT(p.perso_nombre as nombre, " ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
                 'dis.tipoDispositivo',
                 'dis.dispo_descripUbicacion',
                 'map.marcaMov_id as idMarcacion',
