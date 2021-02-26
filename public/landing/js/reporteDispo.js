@@ -439,6 +439,9 @@ function cargartabla(fecha) {
                                             Salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
                                     </th>
+                                    <th class="text-center colDispositivoS" name="colDispositivoS">
+                                        Dispositivo de salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                    </th>
                                     <th id="tSitio" name="colTiempoS" class="colTiempoS">
                                         <span>
                                             Tiempo total <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
@@ -2095,12 +2098,13 @@ function cargartabla(fecha) {
                                                                         </ul>
                                                                     </div>
                                                                 </td>`;
+                                        tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`;
                                     } else {
                                         tbodyEntradaySalida += `<td name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Fecha:${moment(marcacionData.salida).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoSalida}">
                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                     ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                 </td>`;
-
+                                        tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`;
                                     }
                                     // * CALCULAR TIEMPO TOTAL
                                     var horaFinal = moment(marcacionData.salida);
@@ -2158,6 +2162,7 @@ function cargartabla(fecha) {
                                                                         </ul>
                                                                     </div>
                                                                 </td>`;
+                                        tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">---</td>`;
                                     }
                                     else {
                                         tbodyEntradaySalida += `<td name="colMarcaciones">
@@ -2165,6 +2170,7 @@ function cargartabla(fecha) {
                                                                         No tiene salida
                                                                     </span>
                                                                 </td>`;
+                                        tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">---</td>`;
                                     }
 
                                     tbodyEntradaySalida += `<td name="colTiempoS">
@@ -2206,6 +2212,7 @@ function cargartabla(fecha) {
                                                                         </ul>
                                                                     </div>
                                                                 </td>`;
+                                        tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
                                     }
                                     else {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
@@ -2214,6 +2221,7 @@ function cargartabla(fecha) {
                                                                                 No tiene entrada
                                                                             </span>
                                                                         </td>`;
+                                        tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
                                     }
 
                                     //* COLUMNA DE SALIDA
@@ -2268,11 +2276,13 @@ function cargartabla(fecha) {
                                                                                 </ul>
                                                                             </div>
                                                                         </td>`;
+                                        tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`
                                     } else {
                                         tbodyEntradaySalida += `<td name="colMarcaciones" title="Fecha:${moment(marcacionData.salida).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoSalida}">
                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                     ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                 </td>`;
+                                        tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`;
                                     }
 
                                     tbodyEntradaySalida += `<td name="colTiempoS">
@@ -2288,8 +2298,9 @@ function cargartabla(fecha) {
                         }
                         for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
-                                                    <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
+                                                    <td class="text-center" name="colMarcaciones">---</td>
+                                                    <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
                                                     <td name="colTiempoS" class="text-center">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
@@ -2495,8 +2506,9 @@ function cargartabla(fecha) {
                         var tbodyEntradaySalida = "";
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
-                                                    <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
+                                                    <td class="text-center" name="colMarcaciones">---</td>
+                                                    <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
                                                     <td name="colTiempoS" class="text-center">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
