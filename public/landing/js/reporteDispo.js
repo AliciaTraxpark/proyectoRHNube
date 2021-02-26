@@ -509,7 +509,7 @@ function cargartabla(fecha) {
                 var grupoHorario = "";
                 //* ARMAR Y ORDENAR MARCACIONES
                 var sumaTiempos = moment.duration(0);       //: SUMANDO LOS TIEMPOS
-                var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
+                var sumaTardanzas = moment.duration(0);     //: SUMANDO TARDANZAS
                 var sumaSobreTiempo = moment.duration(0);   //: SUMANDO SOBRE TIEMPO
                 var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
                 var sumaHorasNormalesT = moment.duration(0); //: SUMANDO TOTALES DE HORAS NORMALES
@@ -2264,6 +2264,19 @@ function cargartabla(fecha) {
                 if (segundoSumaHorasNormalesT < 10) {
                     segundoSumaHorasNormalesT = "0" + segundoSumaHorasNormalesT;
                 }
+                // : SUMA DE TARDANZAS
+                var horaSumaTardanzas = Math.trunc(moment.duration(sumaTardanzas).asHours());
+                var minutoSumaTardanzas = moment.duration(sumaTardanzas).minutes();
+                var segundoSumaTardanzas = moment.duration(sumaTardanzas).seconds();
+                if (horaSumaTardanzas < 10) {
+                    horaSumaTardanzas = "0" + horaSumaTardanzas;
+                }
+                if (minutoSumaTardanzas < 10) {
+                    minutoSumaTardanzas = "0" + minutoSumaTardanzas;
+                }
+                if (segundoSumaTardanzas < 10) {
+                    segundoSumaTardanzas = "0" + segundoSumaTardanzas;
+                }
                 // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
                 tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
                             <a class="badge badge-soft-primary mr-2">
@@ -2306,7 +2319,7 @@ function cargartabla(fecha) {
                         <td name="colTardanzaTotal" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-danger mr-2">
                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                ${sumaTardanzas.format("HH:mm:ss")}
+                                ${horaSumaTardanzas}:${minutoSumaTardanzas}:${segundoSumaTardanzas}
                             </a>
                         </td>`;
                 // ******************************* CANTIDAD DE FALTAS **************************
