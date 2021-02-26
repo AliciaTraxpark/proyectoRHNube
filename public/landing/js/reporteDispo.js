@@ -511,7 +511,7 @@ function cargartabla(fecha) {
                 var sumaTiempos = moment.duration(0);       //: SUMANDO LOS TIEMPOS
                 var sumaTardanzas = moment.duration(0);     //: SUMANDO TARDANZAS
                 var sumaSobreTiempo = moment.duration(0);   //: SUMANDO SOBRE TIEMPO
-                var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
+                var sumaFaltaJornada = moment.duration(0);  //: SUMANDO FALTA JORNADA
                 var sumaHorasNormalesT = moment.duration(0); //: SUMANDO TOTALES DE HORAS NORMALES
                 var sumaHorasNocturnasT = moment.duration(0); //: SUMANDO TOTALES DE HORAS NOCTURNAS
                 var sumaHorasE25D = moment("00:00:00", "HH:mm:ss"); //: SUMANDO TOTALES DE HORAS EXTRAS DE 25% DIURNAS
@@ -2277,6 +2277,19 @@ function cargartabla(fecha) {
                 if (segundoSumaTardanzas < 10) {
                     segundoSumaTardanzas = "0" + segundoSumaTardanzas;
                 }
+                // : SUMA FALTA JORNADA
+                var horaSumaFaltaJornada = Math.trunc(moment.duration(sumaFaltaJornada).asHours());
+                var minutoSumaFaltaJornada = moment.duration(sumaFaltaJornada).minutes();
+                var segundoSumaFaltaJornada = moment.duration(sumaFaltaJornada).seconds();
+                if (horaSumaFaltaJornada < 10) {
+                    horaSumaFaltaJornada = "0" + horaSumaFaltaJornada;
+                }
+                if (minutoSumaFaltaJornada < 10) {
+                    minutoSumaFaltaJornada = "0" + minutoSumaFaltaJornada;
+                }
+                if (segundoSumaFaltaJornada < 10) {
+                    segundoSumaFaltaJornada = "0" + segundoSumaFaltaJornada;
+                }
                 // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
                 tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
                             <a class="badge badge-soft-primary mr-2">
@@ -2313,7 +2326,7 @@ function cargartabla(fecha) {
                         <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-danger mr-2">
                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                ${sumaFaltaJornada.format("HH:mm:ss")}
+                                ${horaSumaFaltaJornada}:${minutoSumaFaltaJornada}:${segundoSumaFaltaJornada}
                             </a>
                         </td>
                         <td name="colTardanzaTotal" style="border-left: 1px dashed #aaaaaa!important">
