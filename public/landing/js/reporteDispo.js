@@ -2026,7 +2026,7 @@ function cargartabla(fecha) {
                                                                 <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                 ${moment(marcacionData.entrada).format("HH:mm:ss")}
                                                             </td>
-                                                            <td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
+                                                            <td class="text-center colDispositivoE" name="colDispositivoE">${marcacionData.dispositivoEntrada}</td>`;
                                 }
                                 if (marcacionData.salida != 0) {
                                     if (permisoModificar == 1) {
