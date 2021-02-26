@@ -5230,10 +5230,17 @@ function toggleColumnas() {
         dataT.api().columns('.incidencia').visible(false);
     }
     // * *********************** DISPOSITIVOS **************************
+    // ? ENTRADA
     if ($('#colDispositivoE').is(":checked")) {
         dataT.api().columns('.colDispositivoE').visible(true);
     } else {
         dataT.api().columns('.colDispositivoE').visible(false);
+    }
+    // ? SALIDA
+    if ($('#colDispositivoS').is(":checked")) {
+        dataT.api().columns('.colDispositivoS').visible(true);
+    } else {
+        dataT.api().columns('.colDispositivoS').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

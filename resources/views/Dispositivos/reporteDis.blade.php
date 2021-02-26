@@ -507,6 +507,10 @@
                                             <input type="checkbox" id="colDispositivoE">
                                             <label for="">Entreda</label>
                                         </li>
+                                        <li class="liContenido dispositivoHijo">
+                                            <input type="checkbox" id="colDispositivoS">
+                                            <label for="">Salida</label>
+                                        </li>
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
