@@ -109,7 +109,7 @@
                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                             <tr>
                                 <th class="text-center">#</th>
-                                <th class="text-center">Tipo de marcacion</th>
+                                <th class="text-center">Empleado</th>
                                 <th class="text-center">Hora de inicio</th>
                                 <th class="text-center">Hora de fin</th>
                                 <th class="text-center">Horario</th>

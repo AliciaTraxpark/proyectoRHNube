@@ -317,7 +317,7 @@ class biometricoController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select(
                 'map.tipoMarcacionB',
-                DB::raw('CONCAT(p.perso_nombre as nombre, " ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                DB::raw('CONCAT(p.perso_nombre, " ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
                 'dis.tipoDispositivo',
                 'dis.dispo_descripUbicacion',
                 'map.marcaMov_id as idMarcacion',
@@ -341,7 +341,7 @@ class biometricoController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select(
                 'map.tipoMarcacionB',
-                DB::raw('CONCAT(p.perso_nombre as nombre, " ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                DB::raw('CONCAT(p.perso_nombre, " ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
                 'dis.tipoDispositivo',
                 'dis.dispo_descripUbicacion',
                 'map.marcaMov_id as idMarcacion',
