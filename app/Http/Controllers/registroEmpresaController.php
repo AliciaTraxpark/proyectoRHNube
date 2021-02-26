@@ -141,6 +141,12 @@ class registroEmpresaController extends Controller
                         ->where('organi_id','=', $idorgani)
                         ->get()->first();
 
+            //*OBTENER ID DE TIPO_INCIDENCIA DE SITEMA
+            $tipoDescanso=DB::table('tipo_incidencia')
+                        ->where('tipoInc_descripcion','=','Descanso')
+                        ->where('organi_id','=', $idorgani)
+                        ->get()->first();
+
             //*INCIDENCIAS POR ORGANIZACION
             $incidencias = [
                 'Permiso o licencia concedidos por el empleador',
@@ -174,6 +180,18 @@ class registroEmpresaController extends Controller
                 $incidencia->sistema =  1;
                 $incidencia->save();
             }
+
+            //*incidencia de descanso
+            $incidenciaDes = new incidencias();
+            $incidenciaDes->idtipo_incidencia = $tipoDescanso->idtipo_incidencia;
+            $incidenciaDes->inciden_descripcion = 'Descanso remunerado';
+            $incidenciaDes->inciden_pagado = 1;
+            $incidenciaDes->users_id = $request->get('iduser');
+            $incidenciaDes->organi_id =  $idorgani;
+            $incidenciaDes->estado =  1;
+            $incidenciaDes->sistema =  1;
+            $incidenciaDes->save();
+
             //******************************* */
             //
             $usuario_organizacion = new usuario_organizacion();

@@ -536,6 +536,10 @@ Route::post('/ubicacionesPersonalizadasSP', 'controlRutaController@obtenerUbicac
 
 //INCIDENCIAS
 Route::get('/incidencias', 'incidenciasController@index');
+Route::post('/verificaCodIncidencia', 'incidenciasController@verificaCodIncidencia');
+Route::post('/registIncidencia', 'incidenciasController@registIncidencia');
+Route::post('/tablaIncidencias', 'incidenciasController@tablaIncidencias');
+Route::post('/dataIncidencia', 'incidenciasController@dataIncidencia');
 
 //* PUNTOS DE CONTROL
 Route::get('/puntoControl', 'PuntosControlController@index');
