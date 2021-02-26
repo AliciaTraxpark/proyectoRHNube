@@ -478,6 +478,10 @@
                                                 <label for="">Sobretiempo</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colSobretiempoNormalT">
+                                                <label for="">Sobretiempo normal</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoTotal" checked>
                                                 <label for="">Tiempo total</label>
                                             </li>

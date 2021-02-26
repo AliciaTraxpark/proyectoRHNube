@@ -5047,6 +5047,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colHE100NTotal').visible(false);
     }
+    // ? SOBRETIEMPO NORMAL TOTAL
+    if ($('#colSobretiempoNormalT').is(":checked")) {
+        dataT.api().columns('.colSobretiempoNormalT').visible(true);
+    } else {
+        dataT.api().columns('.colSobretiempoNormalT').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
