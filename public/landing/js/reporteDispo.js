@@ -553,7 +553,7 @@ function cargartabla(fecha) {
                     var sobretiempoNocturnos = moment.duration(0);
                     // * HORAS EXTRAS - DIURNAS
                     var diurnas25 = moment.duration(0);
-                    var diurnas35 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    var diurnas35 = moment.duration(0);
                     var diurnas100 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
                     // * HORAS EXTRAS - NOCTURNAS
                     var nocturnas25 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
@@ -771,7 +771,7 @@ function cargartabla(fecha) {
                                             var segundosDe25 = moment.duration(restaDe25).seconds();
                                             tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
                                             if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                diurnas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                diurnas35 = moment.duration("02:00:00");
                                                 sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
                                                 var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                 var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
@@ -783,7 +783,7 @@ function cargartabla(fecha) {
                                                 }
                                             } else {
                                                 if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                    diurnas35 = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
+                                                    diurnas35 = moment.duration(restaDe25);
                                                     sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
                                                 }
                                             }
@@ -924,7 +924,7 @@ function cargartabla(fecha) {
                                                 var segundosDe25 = moment.duration(restaDe25).seconds();
                                                 tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
                                                 if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                    diurnas35 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                    diurnas35 = moment.duration("02:00:00");
                                                     sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
                                                     var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                     var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
@@ -936,7 +936,7 @@ function cargartabla(fecha) {
                                                     }
                                                 } else {
                                                     if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        diurnas35 = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
+                                                        diurnas35 = moment.duration(restaDe25);
                                                         sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
                                                     }
                                                 }
@@ -1066,6 +1066,19 @@ function cargartabla(fecha) {
                         if (segundoDiurna25 < 10) {
                             segundoDiurna25 = "0" + segundoDiurna25;
                         }
+                        // : DIURNAS 35
+                        var horaDiurna35 = Math.trunc(moment.duration(diurnas35).asHours());
+                        var minutoDiurna35 = moment.duration(diurnas35).minutes();
+                        var segundoDiurna35 = moment.duration(diurnas35).seconds();
+                        if (horaDiurna35 < 10) {
+                            horaDiurna35 = "0" + horaDiurna35;
+                        }
+                        if (minutoDiurna35 < 10) {
+                            minutoDiurna35 = "0" + minutoDiurna35;
+                        }
+                        if (segundoDiurna35 < 10) {
+                            segundoDiurna35 = "0" + segundoDiurna35;
+                        }
                         if (permisoModificar == 1) {
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
@@ -1146,7 +1159,9 @@ function cargartabla(fecha) {
                                                     <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                     </td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
+                                                    </td>
                                                     <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-info mr-2">
@@ -1265,7 +1280,9 @@ function cargartabla(fecha) {
                                                     <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                     </td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
+                                                    </td>
                                                     <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-info mr-2">
@@ -1385,7 +1402,9 @@ function cargartabla(fecha) {
                                                 <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                 </td>
-                                                <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
+                                                </td>
                                                 <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
                                                 <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-info mr-2">
@@ -1467,7 +1486,9 @@ function cargartabla(fecha) {
                                                     <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                     </td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
+                                                    </td>
                                                     <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-info mr-2">
@@ -1547,7 +1568,9 @@ function cargartabla(fecha) {
                                                     <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                     </td>
-                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                    <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
+                                                    </td>
                                                     <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-info mr-2">
@@ -1631,7 +1654,9 @@ function cargartabla(fecha) {
                                                 <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                 </td>
-                                                <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas35}</td>
+                                                <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
+                                                </td>
                                                 <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${diurnas100}</td>
                                                 <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-info mr-2">
