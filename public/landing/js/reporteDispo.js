@@ -1331,12 +1331,15 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
                                                     </td>
                                                     <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna35}:${minutoNocturna35}:${segundoNocturna35}
                                                     </td>
                                                     <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna100}:${minutoNocturna100}:${segundoNocturna100}
                                                     </td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1463,12 +1466,15 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
                                                     </td>
                                                     <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna35}:${minutoNocturna35}:${segundoNocturna35}
                                                     </td>
                                                     <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna100}:${minutoNocturna100}:${segundoNocturna100}
                                                     </td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1596,12 +1602,15 @@ function cargartabla(fecha) {
                                                     </a>
                                                 </td>
                                                 <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                     ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
                                                 </td>
                                                 <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                     ${horaNocturna35}:${minutoNocturna35}:${segundoNocturna35}
                                                 </td>
                                                 <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                     ${horaNocturna100}:${minutoNocturna100}:${segundoNocturna100}
                                                 </td>
                                                 <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1691,12 +1700,15 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
                                                     </td>
                                                     <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna35}:${minutoNocturna35}:${segundoNocturna35}
                                                     </td>
                                                     <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna100}:${minutoNocturna100}:${segundoNocturna100}
                                                     </td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1784,12 +1796,15 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
                                                     </td>
                                                     <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna35}:${minutoNocturna35}:${segundoNocturna35}
                                                     </td>
                                                     <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                         ${horaNocturna100}:${minutoNocturna100}:${segundoNocturna100}
                                                     </td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1881,12 +1896,15 @@ function cargartabla(fecha) {
                                                     </a>
                                                 </td>
                                                 <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                     ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
                                                 </td>
                                                 <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                     ${horaNocturna35}:${minutoNocturna35}:${segundoNocturna35}
                                                 </td>
                                                 <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timer.svg" height="20" class="mr-2">
                                                     ${horaNocturna100}:${minutoNocturna100}:${segundoNocturna100}
                                                 </td>
                                                 <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
