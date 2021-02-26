@@ -495,6 +495,21 @@
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido dispositivoPadre">
+                                        <input type="checkbox">
+                                        <label for="">Dispositivos</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleDisp()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoDispositivos">
+                                        <li class="liContenido dispositivoHijo">
+                                            <input type="checkbox" id="colDispositivoE">
+                                            <label for="">Entreda</label>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
                                         <input type="checkbox" checked id="colMarcaciones">
                                         <label for="">Entradas y Salidas</label>

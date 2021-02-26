@@ -2019,7 +2019,7 @@ function cargartabla(fecha) {
                                                                 </div>
                                                             </div>
                                                         </ul></div></td>`;
-                                    tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
+                                    tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">${marcacionData.dispositivoEntrada}</td>`;
                                 }
                                 else {
                                     tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Fecha:${moment(marcacionData.entrada).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoEntrada}">
@@ -4717,6 +4717,7 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoIncidencias').hide();
     $('#contenidoPorH').hide();
     $('#contenidoPorT').hide();
+    $('#contenidoDispositivos').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
@@ -4908,6 +4909,38 @@ $('.incidenciaHijo input[type=checkbox]').change(function () {
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.incidenciaPadre input[type=checkbox]').change(function () {
     $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
+// : ***************************************** COLUMNA DISPOSITIVO **********************************************
+function toggleDisp() {
+    $('#contenidoDispositivos').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS DE DISPOSITIVO
+$('.dispositivoHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.dispositivoPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.dispositivoPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.dispositivoPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DISPOSITIVO
+$('.dispositivoPadre input[type=checkbox]').change(function () {
+    $(this).closest('.dispositivoPadre').next('ul').find('.dispositivoHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
 // : ***************************************** FILAS CON SOLO MARCACIONES ***************************************
@@ -5184,7 +5217,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.incidencia').visible(false);
     }
-    // ? SOLO MOSTRAR CON DATA
+    // * *********************** DISPOSITIVOS **************************
+    if ($('#colDispositivoE').is(":checked")) {
+        dataT.api().columns('.colDispositivoE').visible(true);
+    } else {
+        dataT.api().columns('.colDispositivoE').visible(false);
+    }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
 $("#tablaReport").on('show.bs.dropdown', function () {
