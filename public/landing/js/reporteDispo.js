@@ -1307,12 +1307,15 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                     </td>
                                                     <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
                                                     </td>
                                                     <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna100}:${minutoDiurna100}:${segundoDiurna100}
                                                     </td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1436,12 +1439,15 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                     </td>
                                                     <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
                                                     </td>
                                                     <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna100}:${minutoDiurna100}:${segundoDiurna100}
                                                     </td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1566,12 +1572,15 @@ function cargartabla(fecha) {
                                                     </a>
                                                 </td>
                                                 <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                     ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                 </td>
                                                 <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                     ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
                                                 </td>
                                                 <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                     ${horaDiurna100}:${minutoDiurna100}:${segundoDiurna100}
                                                 </td>
                                                 <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1658,12 +1667,15 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                     </td>
                                                     <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
                                                     </td>
                                                     <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna100}:${minutoDiurna100}:${segundoDiurna100}
                                                     </td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1748,12 +1760,15 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                     </td>
                                                     <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
                                                     </td>
                                                     <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                         ${horaDiurna100}:${minutoDiurna100}:${segundoDiurna100}
                                                     </td>
                                                     <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1842,12 +1857,15 @@ function cargartabla(fecha) {
                                                     </a>
                                                 </td>
                                                 <td name="colHE25D" class="text-center colHE25D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                     ${horaDiurna25}:${minutoDiurna25}:${segundoDiurna25}
                                                 </td>
                                                 <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                     ${horaDiurna35}:${minutoDiurna35}:${segundoDiurna35}
                                                 </td>
                                                 <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/timerD.svg" height="20" class="mr-2">
                                                     ${horaDiurna100}:${minutoDiurna100}:${segundoDiurna100}
                                                 </td>
                                                 <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -2635,15 +2653,15 @@ function cargartabla(fecha) {
                             </a>
                         </td>
                         <td name="colHE25DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
-                            <img src="landing/images/timer.svg" height="20" class="mr-2">
+                            <img src="landing/images/timerD.svg" height="20" class="mr-2">
                             ${horaSumaHorasE25D}:${minutoSumaHorasE25D}:${segundoSumaHorasE25D}
                         </td>
                         <td name="colHE35DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
-                            <img src="landing/images/timer.svg" height="20" class="mr-2">
+                            <img src="landing/images/timerD.svg" height="20" class="mr-2">
                             ${horaSumaHorasE35D}:${minutoSumaHorasE35D}:${segundoSumaHorasE35D}
                         </td>
                         <td name="colHE100DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
-                            <img src="landing/images/timer.svg" height="20" class="mr-2">
+                            <img src="landing/images/timerD.svg" height="20" class="mr-2">
                             ${horaSumaHorasE100D}:${minutoSumaHorasE100D}:${segundoSumaHorasE100D}
                         </td>
                         <td name="colHoraNocturnaTotal" class="text-center colHoraNocturnaTotal" style="border-left: 1px dashed #aaaaaa!important">
