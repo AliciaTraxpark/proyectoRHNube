@@ -1612,6 +1612,8 @@ class EmpleadoController extends Controller
             $incidencia->inciden_hora = $request->get('horaIn');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
+            $incidencia->estado =  1;
+            $incidencia->sistema =  0;
             $incidencia->save();
 
             $eventos_empleado_tempSave = new eventos_empleado_temp();
@@ -2019,6 +2021,8 @@ class EmpleadoController extends Controller
                 $incidencia->inciden_hora = $request->get('horaIn');
                 $incidencia->users_id = Auth::user()->id;
                 $incidencia->organi_id = session('sesionidorg');
+                $incidencia->estado =  1;
+                $incidencia->sistema =  0;
                 $incidencia->save();
 
                 $incidencia_dias = new incidencia_dias();
