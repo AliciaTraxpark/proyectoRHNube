@@ -556,7 +556,7 @@ function cargartabla(fecha) {
                     var diurnas35 = moment.duration(0);
                     var diurnas100 = moment.duration(0);
                     // * HORAS EXTRAS - NOCTURNAS
-                    var nocturnas25 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
+                    var nocturnas25 = moment.duration(0);
                     var nocturnas35 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
                     var nocturnas100 = moment("00:00:00", "HH:mm:ss").format("HH:mm:ss");
                     if (data[index].data[m] != undefined) {
@@ -680,7 +680,7 @@ function cargartabla(fecha) {
                                                     }
                                                 }
                                                 contadorDias++;
-                                                debugger;
+                                                // debugger;
                                             }
                                         }
                                     } else {
@@ -802,7 +802,7 @@ function cargartabla(fecha) {
                                             sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
                                             var tiempoSobranteN = {};
                                             if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                nocturnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                nocturnas25 = moment.duration("02:00:00");
                                                 var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                 var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
                                                 var minutosDe25N = moment.duration(restaDe25N).minutes();
@@ -824,7 +824,7 @@ function cargartabla(fecha) {
                                                     }
                                                 }
                                             } else {
-                                                nocturnas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                                nocturnas25 = moment.duration(tiempoExtraRestaN);
                                             }
                                         }
                                     } else {
@@ -841,7 +841,7 @@ function cargartabla(fecha) {
                                             sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
                                             var tiempoSobranteN = {};
                                             if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                nocturnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                nocturnas25 = moment.duration("02:00:00");
                                                 var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                 var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
                                                 var minutosDe25N = moment.duration(restaDe25N).minutes();
@@ -863,7 +863,7 @@ function cargartabla(fecha) {
                                                     }
                                                 }
                                             } else {
-                                                nocturnas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                                nocturnas25 = moment.duration(tiempoExtraRestaN);
                                             }
                                         }
                                     }
@@ -881,7 +881,7 @@ function cargartabla(fecha) {
                                         sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
                                         var tiempoSobranteN = {};
                                         if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                            nocturnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                            nocturnas25 = moment.duration("02:00:00");
                                             var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                             var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
                                             var minutosDe25N = moment.duration(restaDe25N).minutes();
@@ -903,7 +903,7 @@ function cargartabla(fecha) {
                                                 }
                                             }
                                         } else {
-                                            nocturnas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            nocturnas25 = moment.duration(tiempoExtraRestaN);
                                         }
                                         // : *************************************** HORAS NORMALES ********************************
                                         if (sumaHorasNormales > nuevaHorasO) {
@@ -959,7 +959,7 @@ function cargartabla(fecha) {
                                             sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
                                             var tiempoSobranteN = {};
                                             if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                nocturnas25 = moment("02:00:00", "HH:mm:ss").format("HH:mm:ss");
+                                                nocturnas25 = moment.duration("02:00:00");
                                                 var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                 var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
                                                 var minutosDe25N = moment.duration(restaDe25N).minutes();
@@ -981,7 +981,7 @@ function cargartabla(fecha) {
                                                     }
                                                 }
                                             } else {
-                                                nocturnas25 = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                                nocturnas25 = moment.duration(tiempoExtraRestaN);
                                             }
                                         }
                                     }
@@ -1092,6 +1092,19 @@ function cargartabla(fecha) {
                         if (segundoDiurna100 < 10) {
                             segundoDiurna100 = "0" + segundoDiurna100;
                         }
+                        // : NOCTURNA 25
+                        var horaNocturna25 = Math.trunc(moment.duration(nocturnas25).asHours());
+                        var minutoNocturna25 = moment.duration(nocturnas25).minutes();
+                        var segundoNocturna25 = moment.duration(nocturnas25).seconds();
+                        if (horaNocturna25 < 10) {
+                            horaNocturna25 = "0" + horaNocturna25;
+                        }
+                        if (minutoNocturna25 < 10) {
+                            minutoNocturna25 = "0" + minutoNocturna25;
+                        }
+                        if (segundoNocturna25 < 10) {
+                            segundoNocturna25 = "0" + segundoNocturna25;
+                        }
                         if (permisoModificar == 1) {
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
@@ -1190,7 +1203,9 @@ function cargartabla(fecha) {
                                                             ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                                                         </a>
                                                     </td>
-                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
+                                                    </td>
                                                     <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
                                                     <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1313,7 +1328,9 @@ function cargartabla(fecha) {
                                                             ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                                                         </a>
                                                     </td>
-                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
+                                                    </td>
                                                     <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
                                                     <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1437,7 +1454,9 @@ function cargartabla(fecha) {
                                                         ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                                                     </a>
                                                 </td>
-                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
+                                                </td>
                                                 <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
                                                 <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                 <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1523,7 +1542,9 @@ function cargartabla(fecha) {
                                                             ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                                                         </a>
                                                     </td>
-                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
+                                                    </td>
                                                     <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
                                                     <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1607,7 +1628,9 @@ function cargartabla(fecha) {
                                                             ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                                                         </a>
                                                     </td>
-                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                    <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
+                                                    </td>
                                                     <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
                                                     <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                     <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1695,7 +1718,9 @@ function cargartabla(fecha) {
                                                         ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                                                     </a>
                                                 </td>
-                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas25}</td>
+                                                <td name="colHE25N" class="text-center colHE25N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    ${horaNocturna25}:${minutoNocturna25}:${segundoNocturna25}
+                                                </td>
                                                 <td name="colHE35N" class="text-center colHE35N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas35}</td>
                                                 <td name="colHE100N" class="text-center colHE100N" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">${nocturnas100}</td>
                                                 <td name="colFaltaJornada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
