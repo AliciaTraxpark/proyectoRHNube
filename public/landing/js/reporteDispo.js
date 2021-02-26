@@ -4887,6 +4887,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colHE35DTotal').visible(false);
     }
+    // ? HORAS EXTRAS 100% DIURNAS TOTALES
+    if ($('#colHE100DTotal').is(":checked")) {
+        dataT.api().columns('.colHE100DTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHE100DTotal').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
