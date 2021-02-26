@@ -306,8 +306,10 @@ class biometricoController extends Controller
     {
         $idEmpleado = $request->get('idEmpleado');
         $fecha = $request->get('fecha');
+        $idOrganizacionR = $request->get('idOrganizacionR');
 
-        $marcaciones = DB::table('marcacion_puerta as map')
+        if($idEmpleado){
+            $marcaciones = DB::table('marcacion_puerta as map')
             ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
             ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
             ->join('dispositivos as dis', 'map.dispositivoEntrada', '=', 'dis.idDispositivos')
@@ -327,6 +329,30 @@ class biometricoController extends Controller
             ->where('map.marcaMov_emple_id', '=', $idEmpleado)
             ->where('dis.tipoDispositivo', '=', 3)
             ->get();
+
+        } else{
+            $marcaciones = DB::table('marcacion_puerta as map')
+            ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
+            ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
+            ->join('dispositivos as dis', 'map.dispositivoEntrada', '=', 'dis.idDispositivos')
+            ->select(
+                'map.tipoMarcacionB',
+
+                'dis.tipoDispositivo',
+                'dis.dispo_descripUbicacion',
+                'map.marcaMov_id as idMarcacion',
+                'map.marcaMov_emple_id',
+                DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
+                DB::raw('IF(map.horarioEmp_id is null, 0 , horM.horario_descripcion) as horario'),
+                DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida')
+            )
+            ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
+            ->whereDate(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'), '=', $fecha)
+            ->where('map.organi_id', '=',$idOrganizacionR)
+            ->where('dis.tipoDispositivo', '=', 3)
+            ->get();
+
+        }
 
         return $marcaciones;
 

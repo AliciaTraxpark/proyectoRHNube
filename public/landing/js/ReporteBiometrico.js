@@ -133,13 +133,14 @@ function buscarReporteBio() {
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
+    var idOrganizacionR = $('#empresa :selected').val();
     $('#datos').empty();
     $.ajax({
         async: false,
         url: "/MarcacionesReporteBio",
         method: "GET",
         data: {
-            idEmpleado: idEmpleado,
+            idEmpleado: idEmpleado,idOrganizacionR,
             fecha: fecha,
         },
         headers: {
