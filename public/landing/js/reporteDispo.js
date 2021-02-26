@@ -431,6 +431,9 @@ function cargartabla(fecha) {
                                             Entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
                                     </th>
+                                    <th class="text-center colDispositivoE" name="colDispositivoE">
+                                        Dispositivo de entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                    </th>
                                     <th class="text-center colMarcaciones" name="colMarcaciones">
                                         <span>
                                             Salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
@@ -2016,12 +2019,14 @@ function cargartabla(fecha) {
                                                                 </div>
                                                             </div>
                                                         </ul></div></td>`;
+                                    tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
                                 }
                                 else {
                                     tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Fecha:${moment(marcacionData.entrada).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoEntrada}">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
-                                                                        ${moment(marcacionData.entrada).format("HH:mm:ss")}
-                                                                    </td>`;
+                                                                <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
+                                                                ${moment(marcacionData.entrada).format("HH:mm:ss")}
+                                                            </td>
+                                                            <td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
                                 }
                                 if (marcacionData.salida != 0) {
                                     if (permisoModificar == 1) {
@@ -2284,6 +2289,7 @@ function cargartabla(fecha) {
                         for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center" name="colMarcaciones">---</td>
+                                                    <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
                                                     <td name="colTiempoS" class="text-center">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
@@ -2490,6 +2496,7 @@ function cargartabla(fecha) {
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center" name="colMarcaciones">---</td>
+                                                    <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
                                                     <td name="colTiempoS" class="text-center">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
