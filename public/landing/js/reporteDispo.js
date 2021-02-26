@@ -515,7 +515,7 @@ function cargartabla(fecha) {
                 var sumaHorasNormalesT = moment.duration(0); //: SUMANDO TOTALES DE HORAS NORMALES
                 var sumaHorasNocturnasT = moment.duration(0); //: SUMANDO TOTALES DE HORAS NOCTURNAS
                 var sumaHorasE25D = moment.duration(0); //: SUMANDO TOTALES DE HORAS EXTRAS DE 25% DIURNAS
-                var sumaHorasE35D = moment("00:00:00", "HH:mm:ss");  //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% DIURNAS
+                var sumaHorasE35D = moment.duration(0);  //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% DIURNAS
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -2452,6 +2452,19 @@ function cargartabla(fecha) {
                 if (segundoSumaHorasE25D < 10) {
                     segundoSumaHorasE25D = "0" + segundoSumaHorasE25D;
                 }
+                // : SUMA DE HORAS EXTRAS DE 35% DIURNO
+                var horaSumaHorasE35D = Math.trunc(moment.duration(sumaHorasE35D).asHours());
+                var minutoSumaHorasE35D = moment.duration(sumaHorasE35D).minutes();
+                var segundoSumaHorasE35D = moment.duration(sumaHorasE35D).seconds();
+                if (horaSumaHorasE35D < 10) {
+                    horaSumaHorasE35D = "0" + horaSumaHorasE35D;
+                }
+                if (minutoSumaHorasE35D < 10) {
+                    minutoSumaHorasE35D = "0" + minutoSumaHorasE35D;
+                }
+                if (segundoSumaHorasE35D < 10) {
+                    segundoSumaHorasE35D = "0" + segundoSumaHorasE35D;
+                }
                 // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
                 tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
                             <a class="badge badge-soft-primary mr-2">
@@ -2483,7 +2496,7 @@ function cargartabla(fecha) {
                         </td>
                         <td name="colHE35DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <img src="landing/images/timer.svg" height="20" class="mr-2">
-                            ${sumaHorasE35D.format("HH:mm:ss")}
+                            ${horaSumaHorasE35D}:${minutoSumaHorasE35D}:${segundoSumaHorasE35D}
                         </td>
                         <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-danger mr-2">
