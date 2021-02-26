@@ -462,6 +462,7 @@ function cargartabla(fecha) {
             theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colSobretiempoNormalT" class="colSobretiempoNormalT">Sobretiempo normal total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE25DTotal" class="colHE25DTotal">H.E. 25% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE35DTotal" class="colHE35DTotal">H.E. 35% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE100DTotal" class="colHE100DTotal">H.E. 100% Diurnas total</th>
@@ -516,6 +517,7 @@ function cargartabla(fecha) {
                 var sumaSobreTiempo = moment.duration(0);                       //: SUMANDO SOBRE TIEMPO
                 var sumaFaltaJornada = moment.duration(0);                      //: SUMANDO FALTA JORNADA
                 var sumaHorasNormalesT = moment.duration(0);                    //: SUMANDO TOTALES DE HORAS NORMALES
+                var sumaSobreTiempoNormalesT = moment.duration(0);
                 var sumaHorasNocturnasT = moment.duration(0);                   //: SUMANDO TOTALES DE HORAS NOCTURNAS
                 var sumaHorasE25D = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 25% DIURNAS
                 var sumaHorasE35D = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% DIURNAS
@@ -837,6 +839,7 @@ function cargartabla(fecha) {
                                         var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
                                         var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
                                         sobretiempoNormales = moment.duration(tiempoExtraResta);
+                                        sumaSobreTiempoNormalesT = sumaSobreTiempoNormalesT.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                         var tiempoSobrante = {};
                                         if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                             diurnas25 = moment.duration("02:00:00");
@@ -1006,6 +1009,7 @@ function cargartabla(fecha) {
                                             var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
                                             var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
                                             sobretiempoNormales = moment.duration(tiempoExtraResta);
+                                            sumaSobreTiempoNormalesT = sumaSobreTiempoNormalesT.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                             var tiempoSobrante = {};
                                             if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                                 diurnas25 = moment.duration("02:00:00");
@@ -2547,6 +2551,19 @@ function cargartabla(fecha) {
                 if (segundoSumaHorasNormalesT < 10) {
                     segundoSumaHorasNormalesT = "0" + segundoSumaHorasNormalesT;
                 }
+                // : SOBRETIEMPO NORMAL TOTAL
+                var horaSumaSobretiempoNormalesT = Math.trunc(moment.duration(sumaSobreTiempoNormalesT).asHours());
+                var minutoSumaSobretiempoNormalesT = moment.duration(sumaSobreTiempoNormalesT).minutes();
+                var segundoSumaSobretiempoNormalesT = moment.duration(sumaSobreTiempoNormalesT).seconds();
+                if (horaSumaSobretiempoNormalesT < 10) {
+                    horaSumaSobretiempoNormalesT = "0" + horaSumaSobretiempoNormalesT;
+                }
+                if (minutoSumaSobretiempoNormalesT < 10) {
+                    minutoSumaSobretiempoNormalesT = "0" + minutoSumaSobretiempoNormalesT;
+                }
+                if (segundoSumaSobretiempoNormalesT < 10) {
+                    segundoSumaSobretiempoNormalesT = "0" + segundoSumaSobretiempoNormalesT;
+                }
                 // : SUMA DE TARDANZAS
                 var horaSumaTardanzas = Math.trunc(moment.duration(sumaTardanzas).asHours());
                 var minutoSumaTardanzas = moment.duration(sumaTardanzas).minutes();
@@ -2668,6 +2685,12 @@ function cargartabla(fecha) {
                             <a class="badge badge-soft-warning mr-2">
                                 <img src="landing/images/sun.svg" height="12" class="mr-2">
                                 ${horaSumaHorasNormalesT}:${minutoSumaHorasNormalesT}:${segundoSumaHorasNormalesT}
+                            </a>
+                        </td>
+                        <td name="colSobretiempoNormalT" class="text-center colSobretiempoNormalT" style="border-left: 1px dashed #aaaaaa!important">
+                            <a class="badge badge-soft-warning mr-2">
+                                <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                ${horaSumaSobretiempoNormalesT}:${minutoSumaSobretiempoNormalesT}:${segundoSumaSobretiempoNormalesT}
                             </a>
                         </td>
                         <td name="colHE25DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
