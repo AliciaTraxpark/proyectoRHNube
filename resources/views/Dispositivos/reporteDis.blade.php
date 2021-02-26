@@ -5,6 +5,8 @@
 
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/datatables/fixedHeader.dataTables.min.css') }}" rel="stylesheet"
+    type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
@@ -325,14 +327,15 @@
                     </div>
                 </div>
                 <div class="row justify-content-left">
-                    <div class="col-md-4 pb-2">
+                    <div class="col-md-4 pb-1">
                         <div class="dropdown" id="dropSelector">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="cursor: pointer">
                                 <div class="custom-control custom-switch mb-2">
                                     <input type="checkbox" class="custom-control-input" id="switchO" checked
                                         style="cursor: pointer">
-                                    <label class="custom-control-label" for="switchO" style="font-weight: bold">
+                                    <label class="custom-control-label" for="switchO"
+                                        style="font-weight: bold;font-size:12px">
                                         <img src="{{asset('landing/images/insert.svg')}}" height="18">
                                         Selector de columnas
                                     </label>
@@ -419,7 +422,7 @@
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoEntreH">
-                                                <label for="">Tiempo total</label>
+                                                <label for="">Tiempo entre horario</label>
                                             </li>
                                         </ul>
                                         <li class="liContenido detalleHijo">
@@ -469,12 +472,6 @@
                                     <li class="liContenido">
                                         <input type="checkbox" id="colCodigo">
                                         <label for="">Código de trabajador</label>
-                                    </li>
-                                </ul>
-                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
-                                    <li class="liContenido">
-                                        <input type="checkbox" id="colEmpleadosCM">
-                                        <label for="">Empleados solo con marcaciones</label>
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
@@ -581,6 +578,18 @@
                                     </ul>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-left">
+                    <div class="col-md-4 pb-2">
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="colEmpleadosCM">
+                            <label class="custom-control-label" for="colEmpleadosCM"
+                                style="font-weight: bold;font-size:12px">
+                                <img src="{{asset('landing/images/escaneoM.svg')}}" height="18">
+                                Empleados solo con marcaciones
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -1177,6 +1186,7 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/dataTables.fixedColumns.min.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/dataTables.fixedHeader.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>

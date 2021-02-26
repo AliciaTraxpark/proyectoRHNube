@@ -258,7 +258,6 @@ function inicializarTabla() {
             setTimeout(function () {
                 $("#tablaReport").DataTable().draw();
             }, 1);
-            this.api().page.len(paginaGlobal).draw(false);
         },
         drawCallback: function () {
             var api = this.api();
