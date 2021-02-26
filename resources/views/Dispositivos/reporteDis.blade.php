@@ -454,6 +454,10 @@
                                                 <label for="">H.E. 25% Nocturnas</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colHE35NTotal">
+                                                <label for="">H.E. 35% Nocturnas</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colHoraNormalTotal">
                                                 <label for="">Horario normal</label>
                                             </li>

@@ -467,6 +467,7 @@ function cargartabla(fecha) {
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE35DTotal" class="colHE35DTotal">H.E. 35% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE100DTotal" class="colHE100DTotal">H.E. 100% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE25NTotal" class="colHE25NTotal">H.E. 25% Nocturnas total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHE35NTotal" class="colHE35NTotal">H.E. 35% Nocturnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Jornada incompleta total</th>  
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta total</th>
@@ -519,6 +520,7 @@ function cargartabla(fecha) {
                 var sumaHorasE35D = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% DIURNAS
                 var sumaHorasE100D = moment.duration(0);                        //: SUMANDO TOTALES DE HORAS EXTRAS DE 100% DIURNAS
                 var sumaHorasE25N = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 25% NOCTURNAS
+                var sumaHorasE35N = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% NOCTURNAS
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -884,6 +886,7 @@ function cargartabla(fecha) {
                                                 tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
                                                 if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                                     nocturnas35 = moment.duration("02:00:00");
+                                                    sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
                                                     var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                     var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
                                                     var minutosDe35N = moment.duration(restaDe35N).minutes();
@@ -894,6 +897,7 @@ function cargartabla(fecha) {
                                                     }
                                                 } else {
                                                     if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                        sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
                                                         nocturnas35 = moment.duration(restaDe25N);
                                                     }
                                                 }
@@ -925,6 +929,7 @@ function cargartabla(fecha) {
                                                 tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
                                                 if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                                     nocturnas35 = moment.duration("02:00:00");
+                                                    sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
                                                     var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                     var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
                                                     var minutosDe35N = moment.duration(restaDe35N).minutes();
@@ -936,6 +941,7 @@ function cargartabla(fecha) {
                                                 } else {
                                                     if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
                                                         nocturnas35 = moment.duration(restaDe25N);
+                                                        sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
                                                     }
                                                 }
                                             } else {
@@ -967,6 +973,7 @@ function cargartabla(fecha) {
                                             tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
                                             if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                                 nocturnas35 = moment.duration("02:00:00");
+                                                sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
                                                 var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                 var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
                                                 var minutosDe35N = moment.duration(restaDe35N).minutes();
@@ -978,6 +985,7 @@ function cargartabla(fecha) {
                                             } else {
                                                 if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
                                                     nocturnas35 = moment.duration(restaDe25N);
+                                                    sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
                                                 }
                                             }
                                         } else {
@@ -1048,6 +1056,7 @@ function cargartabla(fecha) {
                                                 tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
                                                 if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
                                                     nocturnas35 = moment.duration("02:00:00");
+                                                    sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
                                                     var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
                                                     var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
                                                     var minutosDe35N = moment.duration(restaDe35N).minutes();
@@ -1059,6 +1068,7 @@ function cargartabla(fecha) {
                                                 } else {
                                                     if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
                                                         nocturnas35 = moment.duration(restaDe25N);
+                                                        sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
                                                     }
                                                 }
                                             } else {
@@ -2573,6 +2583,19 @@ function cargartabla(fecha) {
                 if (segundoSumaHorasE25N < 10) {
                     segundoSumaHorasE25N = "0" + segundoSumaHorasE25N;
                 }
+                // : SUMA DE HORAS EXTRAS DE 35% NOCTURNAS 
+                var horaSumaHorasE35N = Math.trunc(moment.duration(sumaHorasE35N).asHours());
+                var minutoSumaHorasE35N = moment.duration(sumaHorasE35N).minutes();
+                var segundoSumaHorasE35N = moment.duration(sumaHorasE35N).seconds();
+                if (horaSumaHorasE35N < 10) {
+                    horaSumaHorasE35N = "0" + horaSumaHorasE35N;
+                }
+                if (minutoSumaHorasE35N < 10) {
+                    minutoSumaHorasE35N = "0" + minutoSumaHorasE35N;
+                }
+                if (segundoSumaHorasE35N < 10) {
+                    segundoSumaHorasE35N = "0" + segundoSumaHorasE35N;
+                }
                 // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
                 tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
                             <a class="badge badge-soft-primary mr-2">
@@ -2613,6 +2636,10 @@ function cargartabla(fecha) {
                         <td name="colHE25NTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <img src="landing/images/timer.svg" height="20" class="mr-2">
                             ${horaSumaHorasE25N}:${minutoSumaHorasE25N}:${segundoSumaHorasE25N}
+                        </td>
+                        <td name="colHE35NTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <img src="landing/images/timer.svg" height="20" class="mr-2">
+                            ${horaSumaHorasE35N}:${minutoSumaHorasE35N}:${segundoSumaHorasE35N}
                         </td>
                         <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-danger mr-2">
@@ -4925,6 +4952,12 @@ function toggleColumnas() {
         dataT.api().columns('.colHE25NTotal').visible(true);
     } else {
         dataT.api().columns('.colHE25NTotal').visible(false);
+    }
+    // ? HORAS EXTRAS 35% NOCTURNAS TOTALES
+    if ($('#colHE35NTotal').is(":checked")) {
+        dataT.api().columns('.colHE35NTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHE35NTotal').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
