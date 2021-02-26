@@ -3311,6 +3311,8 @@ class apiBiometricoController extends Controller
 
             //*FECHA DE MARCACION
             $fecha1V = Carbon::create($req['fechaMarcacion'])->toDateString();
+            $fecha1Vdespues = Carbon::create($fecha1V)->addDays(1)->format('Y-m-d');
+            $diaAnt=Carbon::create($fecha1V)->subDays(1)->format('Y-m-d');
 
             /* --------------------------------------------------------------- */
 
@@ -3327,11 +3329,11 @@ class apiBiometricoController extends Controller
                     'hd.start'
                 )
                 ->where('he.empleado_emple_id', '=', $req['idEmpleado'])
-                ->where(DB::raw('DATE(hd.start)'), '=', $fecha1V)
+                ->whereBetween(DB::raw('DATE(hd.start)'),  [$diaAnt,$fecha1Vdespues])
                 ->where('he.estado', '=', 1)
                 ->orderBy('h.horaI', 'ASC')
                 ->get();
-
+                    
             //* SI NO TIENE HORARIO
             if ($horarioEmpleado->isEmpty()) {
                 $conhorario = 0;
@@ -3445,7 +3447,7 @@ class apiBiometricoController extends Controller
                 $marcacion_puertaVacio = DB::table('marcacion_puerta as mv')
                     ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
-                    ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1V)
+                   /*  ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1V) */
                     ->where('mv.horarioEmp_id', '=', $conhorario)
                     ->get();
 
@@ -3453,7 +3455,7 @@ class apiBiometricoController extends Controller
                 $marcacion_puertaVerif = DB::table('marcacion_puerta as mv')
                     ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
-                    ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1V)
+                   /*  ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1V) */
                     ->where('mv.horarioEmp_id', '=', $conhorario)
                     ->orderby(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), 'ASC')
                     ->get()->last();
@@ -3463,7 +3465,7 @@ class apiBiometricoController extends Controller
                     ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                     ->where('mv.marcaMov_salida', '=', null)
-                    ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
+                    /* ->whereDate('mv.marcaMov_fecha', '=', $fecha1V) */
                     ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                     ->where('mv.horarioEmp_id', '=', $conhorario)
                     ->orderby('marcaMov_fecha', 'ASC')
@@ -3592,7 +3594,7 @@ class apiBiometricoController extends Controller
                                                 'id' => $req['id'],
                                                 'estado' => true);
                                     }
-                                    
+
                                 }
                                 else{
                                     //*tengo una marcacion donde solo tiene salida y es mayor a nueva marcacion
@@ -3843,7 +3845,7 @@ class apiBiometricoController extends Controller
                                         ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                         ->where('mv.marcaMov_salida', '=', null)
-                                        ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
+                                       /*  ->whereDate('mv.marcaMov_fecha', '=', $fecha1) */
                                         ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                         ->where('mv.horarioEmp_id', '=', $conhorario)
                                         ->orderby('marcaMov_fecha', 'ASC')
@@ -3899,7 +3901,7 @@ class apiBiometricoController extends Controller
 
             /* INSERTAMO A AARRAY  */
             /* if($respuestaMarcacion){
-                
+
             } */
             $arrayDatos->push($respuestaMarcacion);
             /* ---------------------------- */
