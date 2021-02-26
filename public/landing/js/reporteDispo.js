@@ -460,12 +460,12 @@ function cargartabla(fecha) {
                 }
             }
             theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
-                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
-                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNocturnaTotal" class="colHoraNocturnaTotal">Horario nocturno total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE25DTotal" class="colHE25DTotal">H.E. 25% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE35DTotal" class="colHE35DTotal">H.E. 35% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE100DTotal" class="colHE100DTotal">H.E. 100% Diurnas total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNocturnaTotal" class="colHoraNocturnaTotal">Horario nocturno total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE25NTotal" class="colHE25NTotal">H.E. 25% Nocturnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE35NTotal" class="colHE35NTotal">H.E. 35% Nocturnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE100NTotal" class="colHE100NTotal">H.E. 100% Nocturnas total</th>
@@ -2622,22 +2622,16 @@ function cargartabla(fecha) {
                                 ${horaTiempoTotal}:${minutoTiempoTotal}:${segundoTiempoTotal}
                             </a>
                         </td>
-                        <td name="colHoraNormalTotal" class="text-center colHoraNormalTotal" style="border-left: 1px dashed #aaaaaa!important">
-                            <a class="badge badge-soft-warning mr-2">
-                                <img src="landing/images/sun.svg" height="12" class="mr-2">
-                                ${horaSumaHorasNormalesT}:${minutoSumaHorasNormalesT}:${segundoSumaHorasNormalesT}
-                            </a>
-                        </td>
-                        <td name="colHoraNocturnaTotal" class="text-center colHoraNocturnaTotal" style="border-left: 1px dashed #aaaaaa!important">
-                            <a class="badge badge-soft-info mr-2">
-                                <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                ${horaSumaHorasNocturnasTotal}:${minutoSumaHorasNocturnasTotal}:${segundoSumaHorasNocturnasTotal}
-                            </a>
-                        </td>
                         <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${horaSumaSobreTiempo}:${minutoSumaSobreTiempo}:${segundoSumaSobreTiempo}
+                            </a>
+                        </td>
+                        <td name="colHoraNormalTotal" class="text-center colHoraNormalTotal" style="border-left: 1px dashed #aaaaaa!important">
+                            <a class="badge badge-soft-warning mr-2">
+                                <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                ${horaSumaHorasNormalesT}:${minutoSumaHorasNormalesT}:${segundoSumaHorasNormalesT}
                             </a>
                         </td>
                         <td name="colHE25DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
@@ -2651,6 +2645,12 @@ function cargartabla(fecha) {
                         <td name="colHE100DTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <img src="landing/images/timer.svg" height="20" class="mr-2">
                             ${horaSumaHorasE100D}:${minutoSumaHorasE100D}:${segundoSumaHorasE100D}
+                        </td>
+                        <td name="colHoraNocturnaTotal" class="text-center colHoraNocturnaTotal" style="border-left: 1px dashed #aaaaaa!important">
+                            <a class="badge badge-soft-info mr-2">
+                                <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                ${horaSumaHorasNocturnasTotal}:${minutoSumaHorasNocturnasTotal}:${segundoSumaHorasNocturnasTotal}
+                            </a>
                         </td>
                         <td name="colHE25NTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <img src="landing/images/timer.svg" height="20" class="mr-2">
