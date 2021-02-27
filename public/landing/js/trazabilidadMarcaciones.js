@@ -506,6 +506,21 @@ function cargarDatos() {
                                 }
                             });
                         }
+                    } else {
+                        var estado = true;
+                        value["dataMarcaciones"].forEach(function (element, index) {
+                            // : BUSCAR DATA EN TIEMPOS NORMALES
+                            if (element.entrada != null) {
+                                estado = false;
+                            }
+                            if (index == 0 && element.entrada != null) {
+                                entradaMenor = moment.duration(element.entrada);
+                            }
+                        });
+                        if (!estado) {
+                            // : DIAS TRABAJADOS
+                            diasTrabajdos++;
+                        }
                     }
                 });
                 // // ! *************************** NORMAL **************************************
@@ -691,6 +706,7 @@ function cargarDatos() {
                 //     });
                 // }
             }
+            console.log(horasNormales);
             tbody += `<tr>
                         <td>${index + 1}</td>
                         <td>${data.marcaciones[index].emple_nDoc}</td>
