@@ -241,8 +241,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                 <ul class="nav-third-level" aria-expanded="false">
                     <li>
-                        <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
-                        <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
+                        <a href="/ReporteFecha">Asistencia por fecha</a>
+                        <a href="/ReporteEmpleado">Asistencia por empleado</a>
                         <a href="/indexTrazabilidad">Asistencia consolidada</a>
                         <a href="/reporteTardanzasPuerta">Tardanzas</a>
                         <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
@@ -472,8 +472,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 </a>
                 <ul class="nav-third-level" aria-expanded="false">
                     <li>
-                        <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
-                        <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
+                        <a href="/ReporteFecha">Asistencia por fecha</a>
+                        <a href="/ReporteEmpleado">Asistencia por empleado</a>
                         <a href="/indexTrazabilidad">Asistencia consolidada</a>
                         <a href="/reporteTardanzasPuerta">Tardanzas</a>
                         <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
