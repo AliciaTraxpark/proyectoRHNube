@@ -105,7 +105,7 @@ $(document).ready(function () {
                 data: "organi_razonSocial",
                 "render": function (data, type, row) {
 
-                    return '<label class="font-weight-bold mb-1">'+row.organi_razonSocial+'</label>';
+                    return row.organi_razonSocial;
 
                 }
             },

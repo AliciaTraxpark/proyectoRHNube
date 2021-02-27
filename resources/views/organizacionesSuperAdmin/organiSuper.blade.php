@@ -54,7 +54,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="table-responsive-xl">
-                            <table id="tablaOrgan" class="table dt-responsive nowrap" style="font-size: 12.8px;">
+                            <table id="tablaOrgan" class="table dt-responsive nowrap" style="font-size: 13px!important;width:100%;">
                                 <thead style=" background: #edf0f1;color: #6c757d;">
                                     <tr>
                                         <th></th>
