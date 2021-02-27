@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\organizacion;
 use App\persona;
 use App\tipo_contrato;
+use App\tipo_incidencia;
 use App\ubigeo_peru_departments;
 use App\ubigeo_peru_provinces;
 use App\ubigeo_peru_districts;
@@ -113,6 +114,39 @@ class registroEmpresaController extends Controller
                 $contrato->save();
             }
 
+            //*TIPO DE INCIDENCIA
+            $tipoIncidencia=[
+                'Feriado',
+                'Incidencia',
+                'Descanso',
+                'De sistema'
+            ];
+            foreach ($tipoIncidencia as $tipoinci) {
+                $tipoincidencia = new tipo_incidencia();
+                $tipoincidencia->tipoInc_descripcion = $tipoinci;
+                $tipoincidencia->tipoInc_activo = 1;
+                if($tipoinci=='De sistema'){
+                    $tipoincidencia->sistema = 1;
+                } else{
+                    $tipoincidencia->sistema = 0;
+                }
+
+                $tipoincidencia->organi_id =  $idorgani;
+                $tipoincidencia->save();
+            }
+
+            //*OBTENER ID DE TIPO_INCIDENCIA DE SITEMA
+            $tipoSistema=DB::table('tipo_incidencia')
+                        ->where('tipoInc_descripcion','=','De sistema')
+                        ->where('organi_id','=', $idorgani)
+                        ->get()->first();
+
+            //*OBTENER ID DE TIPO_INCIDENCIA DE SITEMA
+            $tipoDescanso=DB::table('tipo_incidencia')
+                        ->where('tipoInc_descripcion','=','Descanso')
+                        ->where('organi_id','=', $idorgani)
+                        ->get()->first();
+
             //*INCIDENCIAS POR ORGANIZACION
             $incidencias = [
                 'Permiso o licencia concedidos por el empleador',
@@ -130,16 +164,34 @@ class registroEmpresaController extends Controller
                 'Reuniones con entidades externas',
                 'Vacaciones',
                 'Descanso médico',
-                'Suspensión'
+                'Suspensión',
+                'Falta',
+                'Tardanza',
+                'Jornada incompleta'
             ];
             foreach ($incidencias as $inci) {
                 $incidencia = new incidencias();
+                $incidencia->idtipo_incidencia = $tipoSistema->idtipo_incidencia;
                 $incidencia->inciden_descripcion = $inci;
-                $incidencia->inciden_descuento = 0;
+                $incidencia->inciden_pagado = 0;
                 $incidencia->users_id = $request->get('iduser');
                 $incidencia->organi_id =  $idorgani;
+                $incidencia->estado =  1;
+                $incidencia->sistema =  1;
                 $incidencia->save();
             }
+
+            //*incidencia de descanso
+            $incidenciaDes = new incidencias();
+            $incidenciaDes->idtipo_incidencia = $tipoDescanso->idtipo_incidencia;
+            $incidenciaDes->inciden_descripcion = 'Descanso remunerado';
+            $incidenciaDes->inciden_pagado = 1;
+            $incidenciaDes->users_id = $request->get('iduser');
+            $incidenciaDes->organi_id =  $idorgani;
+            $incidenciaDes->estado =  1;
+            $incidenciaDes->sistema =  1;
+            $incidenciaDes->save();
+
             //******************************* */
             //
             $usuario_organizacion = new usuario_organizacion();

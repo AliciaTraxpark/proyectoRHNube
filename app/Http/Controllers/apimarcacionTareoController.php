@@ -659,7 +659,7 @@ class apimarcacionTareoController extends Controller
             foreach ($incidencias as $inci) {
                 $incidencia = new incidencias();
                 $incidencia->inciden_descripcion = $inci;
-                $incidencia->inciden_descuento = 0;
+                $incidencia->inciden_pagado = 0;
                 $incidencia->users_id = $organizacion->user_id;
                 $incidencia->organi_id =  $organizacion->organi_id;
                 $incidencia->save();

@@ -133,13 +133,14 @@ function buscarReporteBio() {
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
+    var idOrganizacionR = $('#empresa :selected').val();
     $('#datos').empty();
     $.ajax({
         async: false,
         url: "/MarcacionesReporteBio",
         method: "GET",
         data: {
-            idEmpleado: idEmpleado,
+            idEmpleado: idEmpleado,idOrganizacionR,
             fecha: fecha,
         },
         headers: {
@@ -160,16 +161,11 @@ function buscarReporteBio() {
                 var html_tr = '';
                 for (var i = 0; i < data.length; i++) {
                     html_tr += '<tr><td class="text-center">'+(i+1)+'</td>';
-                     if(data[i].tipoMarcacionB=='1'){
-                        html_tr += '<td class="text-center"> <span class="badge badge-soft-warning">'+
-                        ''+
-                       'Normal </span></td>';
-                    } else{
-                        html_tr += '<td class="text-center"> <span class="badge badge-soft-warning">'+
-                        ''+
-                       ' Pausa </span></td>';
-                    }
-                  /*   html_tr += '<td class="text-center">'+data[i].tipoMarcacionB+'</td>'; */
+
+                    html_tr += '<td class="text-center"> <span class="badge badge-soft-warning">'
+                    +data[i].nombre+'</span></td>';
+
+
                     if(data[i].entrada==0){
                         html_tr += '<td class="text-center"> <span class="badge badge-soft-secondary">'+
                         '<img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>'+

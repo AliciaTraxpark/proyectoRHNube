@@ -6,10 +6,12 @@
 <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')
     }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')
     }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -52,11 +54,12 @@
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="table-responsive-xl">
-                            <table id="tablaOrgan" class="table dt-responsive nowrap" style="font-size: 12.8px;">
+                            <table id="tablaOrgan" class="table dt-responsive nowrap" style="font-size: 13px!important;width:100%;">
                                 <thead style=" background: #edf0f1;color: #6c757d;">
                                     <tr>
                                         <th></th>
                                         <th>Organizacion</th>
+                                        <th>RUC</th>
                                         <th>Tipo</th>
                                         <th>F. de creacion</th>
                                         <th>Emp. teóric.</th>
@@ -124,5 +127,9 @@
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js')
     }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
+}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 
 @endsection

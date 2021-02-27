@@ -54,7 +54,7 @@
                     <div class="modal-body" style="font-size: 13x!important;padding-top: 4px;padding-bottom: 8px;">
 
                         <div class="loader" class="text-center">
-                            <img src="{{ URL::asset('landing/images/logo_animado.gif') }}" height="300"
+                            <img src="{{ URL::asset('landing/images/logo_animado.gif') }}" height="200"
                                 class="img-load" style="display: none">
                         </div>
                         <input type="hidden" id="horario1">
@@ -92,6 +92,16 @@
                                                 @foreach ($local as $locales)
                                                     <option value="{{ $locales->idlocal }}">Local :
                                                         {{ $locales->descripcion }}.
+                                                    </option>
+                                                @endforeach
+                                                @foreach ($nivel as $niveles)
+                                                    <option value="{{ $niveles->idnivel }}">Nivel :
+                                                        {{ $niveles->descripcion }}.
+                                                    </option>
+                                                @endforeach
+                                                @foreach ($centroc as $centrocs)
+                                                    <option value="{{ $centrocs->idcentro }}">Centro costo :
+                                                        {{ $centrocs->descripcion }}.
                                                     </option>
                                                 @endforeach
                                             </select>
