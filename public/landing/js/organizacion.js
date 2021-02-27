@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     var table = $("#tablaOrgan").DataTable({
         "searching": true,
@@ -36,6 +37,50 @@ $(document).ready(function () {
                 colvis: "Visibilidad",
             },
         },
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excel',
+            className: 'btn btn-sm mt-1',
+            text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+            customize: function (xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            },
+            sheetName: 'Exported data',
+            autoFilter: false,
+            exportOptions: {
+                columns: [1,2,3,4,5,6]
+            }
+        }, {
+            extend: "pdfHtml5",
+            className: 'btn btn-sm mt-1',
+            text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            title: 'ORGANIZACIONES',
+            exportOptions: {
+                columns: [1,2,3,4,5,6]
+            },
+            customize: function (doc) {
+                doc['styles'] = {
+                    userTable: {
+                        margin: [0, 15, 0, 15]
+                    },
+                    title: {
+                        color: '#163552',
+                        fontSize: '20',
+                        alignment: 'center'
+                    },
+                    tableHeader: {
+                        bold: !0,
+                        fontSize: 11,
+                        color: '#FFFFFF',
+                        fillColor: '#163552',
+                        alignment: 'center'
+                    }
+                };
+            }
+        }],
+        paging: true,
 
         ajax: {
             type: "post",
@@ -60,7 +105,15 @@ $(document).ready(function () {
                 data: "organi_razonSocial",
                 "render": function (data, type, row) {
 
-                    return '<label class="font-weight-bold mb-1">'+row.organi_razonSocial+'</label>' + '<br><a class="badge badge-soft-primary mr-2">'+row.organi_ruc+'</a>';
+                    return '<label class="font-weight-bold mb-1">'+row.organi_razonSocial+'</label>';
+
+                }
+            },
+            {
+                data: "organi_razonSocial",
+                "render": function (data, type, row) {
+
+                    return '<a class="badge badge-soft-primary mr-2">'+row.organi_ruc+'</a>';
 
                 }
             },
@@ -125,11 +178,18 @@ $(document).ready(function () {
 
     });
 
-    table.on('order.dt search.dt', function () {
-        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1;
+
+    table.on('draw', function () {
+        table.rows({ search: 'applied', order: 'applied', filter: 'applied' }).data().each(function (d, i) {
+            d[0] = i + 1;
         });
-    }).draw();
+    });
+
+table.on('order.dt search.dt', function () {
+    table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+         cell.innerHTML = i + 1;
+    });
+}).draw(false);
 });
 function activarO(id){
     bootbox.confirm({
