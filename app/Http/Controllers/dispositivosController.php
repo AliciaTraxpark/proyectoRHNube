@@ -3629,15 +3629,11 @@ class dispositivosController extends Controller
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"])) {
                     $resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"] = array();
                 }
-                if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"][$empleado->tipoHora])) {
-                    $resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"][$empleado->tipoHora] = array();
-                }
                 $arrayDataMarcaciones =  (object) array(
                     "entrada" => $empleado->entrada,
-                    "salida" => $empleado->salida,
-                    "totalT" => $empleado->totalT == null ? "00:00:00" : $empleado->totalT
+                    "salida" => $empleado->salida
                 );
-                array_push($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"][$empleado->tipoHora], $arrayDataMarcaciones);
+                array_push($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"], $arrayDataMarcaciones);
             }
             return array_values($resultado);
         }
@@ -3836,11 +3832,9 @@ class dispositivosController extends Controller
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
             ->select(
                 'e.emple_id',
-                DB::raw('IF(mp.marcaMov_fecha is null, IF(TIME(mp.marcaMov_salida) BETWEEN "06:01" AND "22:00", "normal", "nocturno"), IF(TIME(mp.marcaMov_fecha) BETWEEN "06:01" AND "22:00", "normal", "nocturno")) as tipoHora'),
                 DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start)) as fecha'),
                 DB::raw('IF(hor.horario_id is null, 0 , horario_id) as idHorario'),
                 DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
-                DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(mp.marcaMov_salida,mp.marcaMov_fecha)))) as totalT'),
                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                 DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
@@ -3944,24 +3938,10 @@ class dispositivosController extends Controller
                             $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"] = array();
                         }
                         $dataArrayM = (object)array(
-                            "totalT" => "00:00:00",
                             "entrada" => NULL,
                             "salida" => NULL
                         );
-                        if (
-                            Carbon::parse($he->horarioIni)->isoFormat("HH:mm") >= "06:01" ||
-                            Carbon::parse($he->horarioIni)->isoFormat("HH:mm") <= "22:00"
-                        ) {
-                            if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["normal"])) {
-                                $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["normal"] = array();
-                            }
-                            array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["normal"], $dataArrayM);
-                        } else {
-                            if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["nocturno"])) {
-                                $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["nocturno"] = array();
-                            }
-                            array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["nocturno"], $dataArrayM);
-                        }
+                        array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"], $dataArrayM);
                     }
                     // * TABLA INCIDENCIAS DIA
                     $incidencias = DB::table('incidencia_dias as id')
@@ -4008,24 +3988,10 @@ class dispositivosController extends Controller
                                 $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"] = array();
                             }
                             $dataArrayM = (object)array(
-                                "totalT" => "00:00:00",
                                 "entrada" => NULL,
                                 "salida" => NULL
                             );
-                            if (
-                                Carbon::parse($he->horarioIni)->isoFormat("HH:mm") >= "06:01" ||
-                                Carbon::parse($he->horarioIni)->isoFormat("HH:mm") <= "22:00"
-                            ) {
-                                if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["normal"])) {
-                                    $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["normal"] = array();
-                                }
-                                array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["normal"], $dataArrayM);
-                            } else {
-                                if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["nocturno"])) {
-                                    $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["nocturno"] = array();
-                                }
-                                array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"]["nocturno"], $dataArrayM);
-                            }
+                            array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"], $dataArrayM);
                         }
                         // * TABLA INCIDENCIAS DIA
                         $incidencias = DB::table('incidencia_dias as id')
