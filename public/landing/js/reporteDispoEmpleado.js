@@ -434,6 +434,7 @@ function cargartabla(fecha1, fecha2) {
                                 </th>`;
             }
             theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;">Tiempo total</th>
+                            <th>Sobretiempo</th>
                             <th>Horario normal</th>
                             <th>Horario nocturno</th>
                             <th>Tardanza total</th>
@@ -465,6 +466,7 @@ function cargartabla(fecha1, fecha2) {
                 var sumaTardanzas = moment.duration(0);
                 var sumaHorariosNormales = moment.duration(0);
                 var sumaHorariosNocturnas = moment.duration(0);
+                var sumaSobretiempo = moment.duration(0);
                 // * VARIABLE QUE GUARDARA QUE TIPO DE MARCACIÓN FUE PRIMERO
                 var primeraM = undefined;
                 // * TIEMPO DE PAUSA
@@ -511,7 +513,7 @@ function cargartabla(fecha1, fecha2) {
                         }
                     }
                 }
-                // ! ********************************************** SOBRE TIEMPO TOTAL DE MARCACIONES *****************
+                // ! ********************************************** TIEMPO TOTAL, TIEMPO NORMAL Y TIEMPO NCOTURNO *****************
                 for (let item = 0; item < contenidoData.marcaciones.length; item++) {
                     var element = contenidoData.marcaciones[item];
                     if (element.entrada != 0 && element.salida) {
@@ -664,6 +666,14 @@ function cargartabla(fecha1, fecha2) {
                                 }
                             }
                         }
+                    }
+                }
+                // ! ************************************************* SOBRE TIEMPO EN MARCACIONES **********************************
+                if (contenidoData.idHorario != 0) {
+                    var horasObligadas = moment.duration(contenidoData.horasO);
+                    if (tiempoTotal > horasObligadas) {
+                        var sobretiempoHorario = tiempoTotal - horasObligadas;
+                        sumaSobretiempo = sumaSobretiempo.add(sobretiempoHorario);
                     }
                 }
                 // ! ********************************************** FINALIZACION ************************************** 
@@ -971,10 +981,29 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoSumaHorariosNocturnos < 10) {
                     segundoSumaHorariosNocturnos = "0" + segundoSumaHorariosNocturnos;
                 }
+                // : SOBRETIEMPO
+                var horaSumaSobretiempo = Math.trunc(moment.duration(sumaSobretiempo).asHours());
+                var minutoSumaSobretiempo = moment.duration(sumaSobretiempo).minutes();
+                var segundoSumaSobretiempo = moment.duration(sumaSobretiempo).seconds();
+                if (horaSumaSobretiempo < 10) {
+                    horaSumaSobretiempo = "0" + horaSumaSobretiempo;
+                }
+                if (minutoSumaSobretiempo < 10) {
+                    minutoSumaSobretiempo = "0" + minutoSumaSobretiempo;
+                }
+                if (segundoSumaSobretiempo < 10) {
+                    segundoSumaSobretiempo = "0" + segundoSumaSobretiempo;
+                }
                 tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${horaTiempoTotal}:${minutoTiempoTotal}:${segundoTiempoTotal}
+                            </a>
+                        </td>
+                        <td>
+                            <a class="badge badge-soft-primary mr-2">
+                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                ${horaSumaSobretiempo}:${minutoSumaSobretiempo}:${segundoSumaSobretiempo}
                             </a>
                         </td>
                         <td class="text-center">

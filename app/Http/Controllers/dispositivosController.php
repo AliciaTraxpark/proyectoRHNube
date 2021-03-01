@@ -1165,7 +1165,8 @@ class dispositivosController extends Controller
                         "fecha" => $empleado->entradaModif,
                         "tolerancia" => $empleado->tolerancia,
                         "horarioIni" => $empleado->horarioIni,
-                        "horarioFin" => $empleado->horarioFin
+                        "horarioFin" => $empleado->horarioFin,
+                        "horasO" => $empleado->horasO
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->datos[$empleado->entradaModif][$empleado->idhorario]->incidencias)) {
@@ -1228,7 +1229,8 @@ class dispositivosController extends Controller
                         'mp.marcaMov_id as idMarcacion',
                         'hor.horario_tolerancia as tolerancia',
                         DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                        DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
+                        DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                        'hor.horasObliga as horasO'
                     )
                     ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start))'), [$fecha, $fechaF])
                     ->where('e.emple_id', $idemp)
@@ -1296,7 +1298,8 @@ class dispositivosController extends Controller
                             'mp.marcaMov_id as idMarcacion',
                             'hor.horario_tolerancia as tolerancia',
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
+                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                            'hor.horasObliga as horasO'
                         )
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
@@ -1351,7 +1354,8 @@ class dispositivosController extends Controller
                             'mp.marcaMov_id as idMarcacion',
                             'hor.horario_tolerancia as tolerancia',
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
+                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                            'hor.horasObliga as horasO'
                         )
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
@@ -1406,7 +1410,8 @@ class dispositivosController extends Controller
                     'mp.marcaMov_id as idMarcacion',
                     'hor.horario_tolerancia as tolerancia',
                     DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                    DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
+                    DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                    'hor.horasObliga as horasO'
                 )
                 ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start))'), [$fecha, $fechaF])
                 ->where('e.emple_id', $idemp)
@@ -1458,7 +1463,8 @@ class dispositivosController extends Controller
                             DB::raw('DATE(hd.start) as fecha'),
                             'h.horario_tolerancia as tolerancia',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
-                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin")
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
+                            "h.horasObliga as horasO"
                         )
                         ->where(DB::raw('DATE(hd.start)'), '=', $d)
                         ->where('he.empleado_emple_id', '=', $idemp)
@@ -1480,7 +1486,8 @@ class dispositivosController extends Controller
                             DB::raw('DATE(hd.start) as fecha'),
                             'h.horario_tolerancia as tolerancia',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
-                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin")
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
+                            "h.horasObliga as horasO"
                         )
                         ->where(DB::raw('DATE(hd.start)'), '=', $d)
                         ->where('he.empleado_emple_id', '=', $idemp)
@@ -1541,6 +1548,7 @@ class dispositivosController extends Controller
                             "tolerancia" => NULL,
                             "horarioIni" => 0,
                             "horarioFin" => 0,
+                            "horasO" => 0,
                             "marcaciones" => array(),
                             "incidencias" => array(),
                             "pausas" => array()
