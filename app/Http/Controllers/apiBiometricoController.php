@@ -3326,14 +3326,14 @@ class apiBiometricoController extends Controller
                     'h.horaF as horaF',
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
-                    'hd.start'
+                    'hd.start','h.horario_id'
                 )
                 ->where('he.empleado_emple_id', '=', $req['idEmpleado'])
                 ->whereBetween(DB::raw('DATE(hd.start)'),  [$diaAnt,$fecha1Vdespues])
                 ->where('he.estado', '=', 1)
                 ->orderBy('h.horaI', 'ASC')
                 ->get();
-                    
+
             //* SI NO TIENE HORARIO
             if ($horarioEmpleado->isEmpty()) {
                 $conhorario = 0;
@@ -3358,6 +3358,7 @@ class apiBiometricoController extends Controller
                     }
                 }
 
+
                 //*verificamos si esta dentro de horario
 
                 foreach ($horarioEmpleado as $horarioDentro) {
@@ -3366,6 +3367,8 @@ class apiBiometricoController extends Controller
                     if ($fechaHorahoy->gte($horarioDentro->horaI) && $fechaHorahoy->lte($horarioDentro->horaF)) {
                         //*se encontro 1 horario y se detiene foreach
                         $conhorario = $horarioDentro->idHorarioEmpleado;
+                        $idhorario = $horarioDentro->horario_id;
+                        $inicioH= ($horarioDentro->horaI)->format("H:i:s");
                         break;
                     } else {
                         //*NO SE ENCONTRO HORARIO
@@ -3374,6 +3377,8 @@ class apiBiometricoController extends Controller
                     }
 
                 }
+
+
             }
             /* --------------------CALCULAMOS EL TIPO DE MARCACION----------------------- */
             /* ----------------------SI RECIBO SIN HORARIO----------------------------- */
@@ -3883,6 +3888,109 @@ class apiBiometricoController extends Controller
                             }
 
                         }
+
+                          //*********************VERIFICACION PAUSAS AUTOMATICA***********************/
+                    if($conhorario != 0){
+
+                        //*VERIFICO QUE SEA LA PRIMERA VEZ CON ESTE HORARIO, tener en cuenta que ya se marco la 1 vez
+
+                            $marcacion_puertaPr = DB::table('marcacion_puerta as mv')
+                            ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+                            ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                            ->where('mv.horarioEmp_id', '=', $conhorario)
+                            ->orderby('marcaMov_fecha', 'ASC')
+                            ->get();
+
+                            //*SOLO SE REALIZA LA PRIMERA VEEZ
+                            if($marcacion_puertaPr->count()==1  &&  $marcacion_puertaPr[0]->marcaMov_salida==null){
+                                /* BUSCO PAUSAS CON DESCONTAR AUTOM*/
+                                $pausas_horario = DB::table('pausas_horario as pauh')
+                                ->select('idpausas_horario as idpausa', 'pausH_descripcion as descripcion', 'pausH_Inicio as horaI',
+                                    'pausH_Fin as horaF', 'pauh.tolerancia_inicio as toleranciaI', 'pauh.tolerancia_fin as toleranciaF',
+                                    'inactivar as inhabilitar','descontar')
+                                ->where('pauh.horario_id', '=', $idhorario)
+                                ->where('descontar', '=',1)
+                                ->distinct('pauh.idpausas_horario')
+                                ->get();
+                                if($pausas_horario->isNotEmpty()){
+
+                                    //* PONEMOS HORA DE INICIO Y HORA FIN
+                                    foreach ($pausas_horario as $pausasDescontar) {
+                                            $fechaMarcaRecib = Carbon::create($fecha1V);
+                                            $fechaRecibP=$fechaMarcaRecib->isoFormat('YYYY-MM-DD');
+                                        if (Carbon::parse($pausasDescontar->horaF)->lt(Carbon::parse($pausasDescontar->horaI))) {
+
+
+                                            $despues = $fechaMarcaRecib->addDays(1);
+                                            $fechaMan = $despues->isoFormat('YYYY-MM-DD');
+                                            $pausasDescontar->horaI = $fechaRecibP . " " . $pausasDescontar->horaI;
+                                            $pausasDescontar->horaF = $fechaMan . " " . $pausasDescontar->horaF;
+                                        } else {
+                                            if (Carbon::parse($pausasDescontar->horaI)->lt(Carbon::parse($inicioH))) {
+                                                $pausasDescontar->horaI = $fechaMan . " " . $pausasDescontar->horaI;
+                                            } else {
+                                                $pausasDescontar->horaI = $fechaRecibP . " " . $pausasDescontar->horaI;
+                                            }
+
+                                            if (Carbon::parse($pausasDescontar->horaF)->lt(Carbon::parse($inicioH))) {
+                                                $pausasDescontar->horaF = $fechaMan . " " . $pausasDescontar->horaF;
+                                            } else {
+                                                $pausasDescontar->horaF = $fechaRecibP . " " . $pausasDescontar->horaF;
+                                            }
+                                        }
+
+                                    }
+
+                                    //*INSERTAMOS MARCACION AUTOMATICA
+                                    foreach($pausas_horario as $pausasDescontar){
+
+                                        //* ultima marcacion sin salida con el mismo id de horario
+                                        $marcacion_puertaPausa = DB::table('marcacion_puerta as mv')
+                                        ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                        ->where('mv.horarioEmp_id', '=', $conhorario)
+                                        ->where('mv.marcaMov_salida', '=',null)
+                                        ->orderby('marcaMov_fecha', 'ASC')
+                                        ->get()->last();
+
+                                        if($marcacion_puertaPausa->marcaMov_fecha < $pausasDescontar->horaI){
+                                        //*pausa inicio sera la salida de la marcacion
+                                        $marcacion_automaticaI = marcacion_puerta::find($marcacion_puertaPausa->marcaMov_id);
+                                        $marcacion_automaticaI->marcaMov_salida = $pausasDescontar->horaI;
+                                        $marcacion_automaticaI->save();
+
+                                        } else{
+                                            //*se crea marcacion con salida
+                                            $marcacion_automaticaF = new marcacion_puerta();
+                                            $marcacion_automaticaF->marcaMov_salida = $pausasDescontar->horaI;
+                                            $marcacion_automaticaF->marcaMov_emple_id = $req['idEmpleado'];
+                                            $marcacion_automaticaF->organi_id = $empleados->organi_id;
+                                            $marcacion_automaticaF->horarioEmp_id = $conhorario;
+                                            $marcacion_automaticaF->tipoMarcacionB = 1;
+                                            $marcacion_automaticaF->save();
+                                        }
+
+                                        //*Pausa salida sera nueva entrada de marcacion
+                                        $marcacion_automaticaF = new marcacion_puerta();
+                                        $marcacion_automaticaF->marcaMov_fecha = $pausasDescontar->horaF;
+                                        $marcacion_automaticaF->marcaMov_emple_id = $req['idEmpleado'];
+                                        $marcacion_automaticaF->organi_id = $empleados->organi_id;
+                                        $marcacion_automaticaF->horarioEmp_id = $conhorario;
+                                        $marcacion_automaticaF->tipoMarcacionB = 1;
+                                        $marcacion_automaticaF->save();
+
+                                    }
+
+                                }
+
+                            }
+
+
+
+
+
+
+                        }
+                    //**************************FIN VERIFICACION**************** *****************/
                     } else {
                         $respuestaMarcacion = array(
                             'id' => $req['id'],
