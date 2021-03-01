@@ -600,7 +600,8 @@ Route::post('/listaControladoresTa', 'controladores_tareoController@show');
 Route::post('/controladTaStore', 'controladores_tareoController@store');
 Route::post('/datosControTaEditar', 'controladores_tareoController@edit');
 Route::post('/controladTarUpdate', 'controladores_tareoController@update');
-
+Route::post('/controladDesactTare', 'controladores_tareoController@desactivarControl');
+Route::post('/controladActtivTare', 'controladores_tareoController@activarControl');
 //Vista reporte fecha
 Route::get('/reporteTareo', 'marcacionTareoController@index');
 Route::get('/tablaTareo', 'marcacionTareoController@show');
