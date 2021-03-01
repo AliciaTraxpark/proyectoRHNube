@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\dispositivo_area;
 use App\dispositivo_controlador;
+use App\controladores;
 use App\dispositivo_empleado;
 use App\dispositivos;
 use App\eventos_empleado;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\correoVinculacionPuerta;
 
 class dispositivosController extends Controller
 {
@@ -178,6 +181,13 @@ class dispositivosController extends Controller
                 $dispositivo_controlador->idControladores = $contros;
                 $dispositivo_controlador->organi_id = session('sesionidorg');
                 $dispositivo_controlador->save();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // ENVIO DE CÓDIGO POR CORREO
+                $controlador = controladores::find($contros)->first();
+                $email = $controlador->cont_correo;
+                $numero = $request->numeroM;
+                $envio = Mail::to($email)->queue(new correoVinculacionPuerta($codigo, $numero));
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
 
@@ -269,7 +279,16 @@ class dispositivosController extends Controller
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $codigo = $dispositivosAc->dispo_codigo;
         $nroCel = substr($dispositivosAc->dispo_movil, 2);
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // ENVIO DE CÓDIGO POR CORREO
+        $dispoControls = dispositivo_controlador::where('idDispositivos', '=', $request->idDis)->get();
+        foreach ($dispoControls as $dispoControl) {
+            $controlador = controladores::find($dispoControl->idControladores)->first();
+            $email = $controlador->cont_correo;
+            $numero = $request->numeroM;
+            $envio = Mail::to($email)->queue(new correoVinculacionPuerta($codigo, $numero));
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(

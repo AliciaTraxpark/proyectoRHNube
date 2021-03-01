@@ -156,7 +156,7 @@
             <div class="container">
                 <div class="col-md-3 pl-5 colResp">
                     <div class="navbar-brand-wrapper d-flex w-100 colResp">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
+                        <img src="{{asset('landing/home/images/logo_animado.gif')}}" height="79">
                     </div>
                 </div>
                 <div class="col-md-9 text-left pt-2 textResp">

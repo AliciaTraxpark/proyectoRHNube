@@ -30,10 +30,10 @@ use App\persona;
     .dropdown-item{
         padding: 0.15rem 1.5rem!important;
     }
- .dropdown-menu-right> a:hover{
-  background: rgb(236, 236, 236)!important;
+     .dropdown-menu-right> a:hover{
+      background: rgb(236, 236, 236)!important;
+    }
 
-}
 
 </style>
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom" style="padding-left: 0px;">
@@ -50,10 +50,10 @@ use App\persona;
         <!-- LOGO -->
         <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
             <span class="logo-lg text-center">
-                <img src="{{asset('landing/home/images/logo_animado_blanco.gif')}}" alt="" height="65" />
+                <img src="{{asset('landing/home/images/logo_animado.gif')}}" alt="" height="65" />
             </span>
             <span class="logo-sm">
-                <img src="{{asset('landing/home/images/logo_animado_blanco.gif')}}" alt="" height="45">
+                <img src="{{asset('landing/home/images/logo_animado.gif')}}" alt="" height="45">
             </span>
         </a>
 
@@ -78,6 +78,15 @@ use App\persona;
         <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu
             float-right mb-0">
 
+            <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar de modo">
+                <div class="btn-group mt-3">
+                    <button type="button" class="btn" data-toggle="modal" data-target="#modos" style="font-size: 14px!important; font-weight: 700;     color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;">
+                        <span class="badge badge-pill" style="background-color: #617be3;color: #ffffff;font-size: 12px;font-weight: normal"><img
+                            src="{{asset('landing/images/seleccione.png')}}" height="20" class="mr-1">Selección de modos</span></button>
+
+                </div><!-- /btn-group -->
+            </li>
+
             @if (count($istaOrganizacion) > 0)
                 <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar organización">
                     <div class="btn-group mt-3">
@@ -91,15 +100,6 @@ use App\persona;
                     </div><!-- /btn-group -->
                 </li>
             @endif
-
-            <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar de modo">
-                <div class="btn-group mt-3">
-                    <button type="button" class="btn" data-toggle="modal" data-target="#modos" style="font-size: 14px!important; font-weight: 700;     color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;">
-                        <span class="badge badge-pill" style="background-color: #617be3;color: #ffffff;font-size: 12px;font-weight: normal"><img
-                            src="{{asset('landing/images/seleccione.png')}}" height="20" class="mr-1">Selección de modos</span></button>
-
-                </div><!-- /btn-group -->
-            </li>
 
             <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="">
 
@@ -210,7 +210,7 @@ use App\persona;
                     <span>cambiar organización</span>
                 </a>
                     <!-- item-->
-                    <a href="#" id="chatJivo" class="dropdown-item notify-item">
+                    <a href="#" id="chatJivo" data-toggle="modal" data-target="#exampleModal" class="dropdown-item notify-item">
                         <i data-feather="message-square" class="icon-dual icon-xs mr-2" style="color: #163552"></i>
                             <span>Chatear con nosotros</span>
                     </a>
@@ -276,6 +276,7 @@ use App\persona;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- end Topbar -->
+{{-- MODAL DE SELECCIÓN DE MODOS --}}
 <div class="modal fade show" id="modos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog" style="font-family: poppins">
     <div class="modal-content">
@@ -283,12 +284,12 @@ use App\persona;
         <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Elige los modos a usar</h5>
       </div>
       <div class="modal-body">
-        <div style="font-size: 13px; color: red; margin-bottom: 15px">
+        <div id="msj" style="font-size: 13px; color: red; margin-bottom: 15px">
           • Debes elegir almenos un modo para continuar.
         </div>
         <div class="row">
               @if(colorLi()->Mremoto == 1)
-                <div class="col-12">
+                <div class="col-sm-6">
                     <div class="card sombra" id="cardSelect1">
                       <div class="card-body text-center">
                         <h5 class="card-title"><small>MODO:</small><br><strong>Control remoto</strong></h5>
@@ -302,7 +303,7 @@ use App\persona;
                     </div>
                 </div>
               @else 
-                <div class="col-12">
+                <div class="col-sm-6">
                     <div class="card" id="cardSelect1">
                       <div class="card-body text-center">
                         <h5 class="card-title"><small>MODO:</small><br><strong>Control remoto</strong></h5>
@@ -317,7 +318,7 @@ use App\persona;
                 </div>
               @endif
               @if(colorLi()->Mruta == 1)
-                <div class="col-12">
+                <div class="col-sm-6">
                     <div class="card sombra" id="cardSelect2">
                       <div class="card-body text-center">
                         <h5 class="card-title"><small>MODO:</small><br><strong>Control en ruta</strong></h5>
@@ -331,7 +332,7 @@ use App\persona;
                     </div>
                 </div>
               @else 
-                <div class="col-12">
+                <div class="col-sm-6">
                     <div class="card" id="cardSelect2">
                       <div class="card-body text-center">
                         <h5 class="card-title"><small>MODO:</small><br><strong>Control en ruta</strong></h5>
@@ -349,7 +350,7 @@ use App\persona;
 
             <div class="row">
                 @if(colorLi()->Mpuerta == 1)
-                  <div class="col-12">
+                  <div class="col-sm-6">
                     <div class="card sombra" id="cardSelect3">
                       <div class="card-body text-center">
                         <h5 class="card-title"><small>MODO:</small><br><strong>Asistencia en puerta</strong></h5>
@@ -363,7 +364,7 @@ use App\persona;
                     </div>
                   </div>
                 @else 
-                    <div class="col-12">
+                    <div class="col-sm-6">
                         <div class="card" id="cardSelect3">
                           <div class="card-body text-center">
                             <h5 class="card-title"><small>MODO:</small><br><strong>Asistencia en puerta</strong></h5>
@@ -378,7 +379,7 @@ use App\persona;
                     </div>
                 @endif
             @if(colorLi()->Mtareo == 1)
-              <div class="col-12">
+              <div class="col-sm-6">
                 <div class="card sombra" id="cardSelect4">
                   <div class="card-body text-center">
                     <h5 class="card-title"><small>MODO:</small><br><strong>Tareo</strong></h5>
@@ -392,7 +393,7 @@ use App\persona;
                 </div>
               </div>
             @else 
-                <div class="col-12">
+                <div class="col-sm-6">
                     <div class="card" id="cardSelect4">
                       <div class="card-body text-center">
                         <h5 class="card-title"><small>MODO:</small><br><strong>Tareo</strong></h5>
@@ -414,6 +415,7 @@ use App\persona;
     </div>
   </div>
 </div>
+{{-- FIN DE SELECCIÓN DE MODOS --}}
 <script>
     function ingresarOrganiza(idorganiza){
     $.ajax({

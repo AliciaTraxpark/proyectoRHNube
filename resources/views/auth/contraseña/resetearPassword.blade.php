@@ -75,7 +75,9 @@
             <div class="container pb-2 pt-2" style="color: #ffffff;">
                 <div class="col-md-2 col-xl-2 mr-4 pl-5">
                     <div class="navbar-brand-wrapper d-flex w-100 colResp">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
+                        <a href="/">
+                            <img src="{{asset('landing/home/images/logo_animado.gif')}}" height="79">
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-6 pt-2 pl-0 text-left textResp">
