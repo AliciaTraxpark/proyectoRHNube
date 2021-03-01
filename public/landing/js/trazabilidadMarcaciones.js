@@ -408,7 +408,7 @@ function cargarDatos() {
                                 estado = false;
                             }
                             if (index == 0 && element.entrada != null) {
-                                entradaMenor = moment.duration(element.entrada);
+                                entradaMenor = moment.duration(moment(element.entrada));
                             }
                         });
                         if (estado) {                // : FALTAS
@@ -417,7 +417,7 @@ function cargarDatos() {
                             }
                         } else {
                             // : CONTANDOR DE TARDANZA
-                            var entradaHorario = moment.duration(value["dataHorario"].horarioIni).add({ "minutes": value["dataHorario"].toleranciaI });
+                            var entradaHorario = moment.duration(moment(value["dataHorario"].horarioIni)).add({ "minutes": value["dataHorario"].toleranciaI });
                             if (entradaMenor != 0) {
                                 if (entradaMenor > entradaHorario) {
                                     tardanza++;
