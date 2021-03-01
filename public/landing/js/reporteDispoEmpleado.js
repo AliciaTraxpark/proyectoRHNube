@@ -460,7 +460,7 @@ function cargartabla(fecha1, fecha2) {
                 // * ARMAR MARCACIONES
                 var tbodyEntradaySalida = "";
                 var tiempoTotal = moment.duration(0);
-                var sumaTardanzas = moment("00:00:00", "HH:mm:ss");
+                var sumaTardanzas = moment.duration(0);
                 // * TIEMPO DE PAUSA
                 var tiempoHoraPausa = "00";
                 var tiempoMinutoPausa = "00";
@@ -783,6 +783,19 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoTiempoTotal < 10) {
                     segundoTiempoTotal = "0" + segundoTiempoTotal;
                 }
+                // : SUMA TARDANZA
+                var horaSumaTardanzas = Math.trunc(moment.duration(sumaTardanzas).asHours());
+                var minutoSumaTardanzas = moment.duration(sumaTardanzas).minutes();
+                var segundoSumaTardanzas = moment.duration(sumaTardanzas).seconds();
+                if (horaSumaTardanzas < 10) {
+                    horaSumaTardanzas = "0" + horaSumaTardanzas;
+                }
+                if (minutoSumaTardanzas < 10) {
+                    minutoSumaTardanzas = "0" + minutoSumaTardanzas;
+                }
+                if (segundoSumaTardanzas < 10) {
+                    segundoSumaTardanzas = "0" + segundoSumaTardanzas;
+                }
                 tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -792,7 +805,7 @@ function cargartabla(fecha1, fecha2) {
                         <td>
                             <a class="badge badge-soft-danger mr-2">
                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                ${sumaTardanzas.format("HH:mm:ss")}
+                                ${horaSumaTardanzas}:${minutoSumaTardanzas}:${segundoSumaTardanzas}
                             </a>
                         </td>`;
                 if (contenidoData.marcaciones.length == 0 && contenidoData.incidencias.length == 0) {
