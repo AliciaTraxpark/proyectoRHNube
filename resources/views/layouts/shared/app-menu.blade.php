@@ -149,51 +149,100 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
-    <li>
-        <a href="/puntoControl">
-            <img src="{{asset('landing/images/vectorpaint.svg')}}" height="18" style="margin: 0 10px 0 3px;">
-            <span>Puntos de Control</span>
-        </a>
-    </li>
-    <li>
-        <a href="/centroCosto">
-            <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
-            <span>Centro de costo</span>
-        </a>
-    </li>
-    <li>
+    @if(colorLi()->Mruta == 1 || colorLi()->Mpuerta == 1 || colorLi()->Mtareo == 1)
+        <li>
+            <a href="/puntoControl">
+                <img src="{{asset('landing/images/vectorpaint.svg')}}" height="18" style="margin: 0 10px 0 3px;">
+                <span>Puntos de Control</span>
+            </a>
+        </li>
+    @else 
+        <li style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste el modo tareo o asistencia en puerta.">
+            <a href="#" data-toggle="modal" data-target="#modos">
+                <img src="{{asset('landing/images/vectorpaint.svg')}}" height="18" style="margin: 0 10px 0 3px;">
+                <span>Puntos de Control</span>
+            </a>
+        </li>
+    @endif
+    @if(colorLi()->Mtareo == 1 || colorLi()->Mpuerta == 1)
+        <li>
+            <a href="/centroCosto">
+                <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
+                <span>Centro de costo</span>
+            </a>
+        </li>
+    @else 
+        <li style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste el modo tareo, ni asistencia en puerta ni control en ruta.">
+            <a href="#" data-toggle="modal" data-target="#modos">
+                <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
+                <span>Centro de costo</span>
+            </a>
+        </li>
+    @endif
+    @if(colorLi()->Mremoto == 1)
+        <li id="li_remoto">
+            <a href="javascript: void(0);">
+                <i data-feather="activity"></i>
+                <span>Modo: Control Remoto</span>
+                <span class="menu-arrow"></span>
+            </a>
 
-        <a href="javascript: void(0);">
-            <i data-feather="activity"></i>
-            <span>Modo: Control Remoto</span>
-            <span class="menu-arrow"></span>
-        </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    <a href="/controlRemoto">Dashboard</a>
+                    <a href="/tareas">Detalle Diario</a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);">
+                        <span>Reportes</span>
+                        <span class="menu-arrow"></span>
+                    </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
-            <li>
-                <a href="/controlRemoto">Dashboard</a>
-                <a href="/tareas">Detalle Diario</a>
-            </li>
-            <li>
-                <a href="javascript: void(0);">
-                    <span>Reportes</span>
-                    <span class="menu-arrow"></span>
-                </a>
+                    <ul class="nav-third-level" aria-expanded="false">
+                        <li>
+                            <a href="/reporteSemanal">Tiempos por semana</a>
+                            <a href="/reporteMensual">Tiempos por mes</a>
+                            <a href="/reporteTardanzas">Tardanzas</a>
+                            <a href="/reporteMatrizTardanzas">Matriz de tardanzas</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    @else 
+        <li id="li_remoto" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste este modo.">
+            <a href="javascript: void(0);">
+                <i data-feather="activity"></i>
+                <span>Modo: Control Remoto</span>
+                <span class="menu-arrow"></span>
+            </a>
 
-                <ul class="nav-third-level" aria-expanded="false">
-                    <li>
-                        <a href="/reporteSemanal">Tiempos por semana</a>
-                        <a href="/reporteMensual">Tiempos por mes</a>
-                        <a href="/reporteTardanzas">Tardanzas</a>
-                        <a href="/reporteMatrizTardanzas">Matriz de tardanzas</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#modos">Dashboard</a>
+                    <a href="#" data-toggle="modal" data-target="#modos">Detalle Diario</a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);">
+                        <span>Reportes</span>
+                        <span class="menu-arrow"></span>
+                    </a>
 
-    <li>
-
+                    <ul class="nav-third-level" aria-expanded="false">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#modos">Tiempos por semana</a>
+                            <a href="#" data-toggle="modal" data-target="#modos">Tiempos por mes</a>
+                            <a href="#" data-toggle="modal" data-target="#modos">Tardanzas</a>
+                            <a href="#" data-toggle="modal" data-target="#modos">Matriz de tardanzas</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    @endif
+    
+    @if(colorLi()->Mruta == 1)
+    <li id="li_ruta" >
         <a href="javascript: void(0);">
             <i data-feather="map-pin"></i>
             <span>Modo: Control en Ruta</span>
@@ -209,15 +258,31 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
+    @else 
+    <li id="li_ruta" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste este modo.">
+        <a href="javascript: void(0);">
+            <i data-feather="map-pin"></i>
+            <span>Modo: Control en Ruta</span>
+            <span class="menu-arrow"></span>
+        </a>
 
-    <li>
-
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="#" data-toggle="modal" data-target="#modos">Detalle Diario</a>
+                <a href="#" data-toggle="modal" data-target="#modos">Reporte Semanal</a>
+                <a href="#" data-toggle="modal" data-target="#modos">Tardanzas</a>
+                <a href="#" data-toggle="modal" data-target="#modos">Matriz de tardanzas</a>
+            </li>
+        </ul>
+    </li>
+    @endif
+    @if(colorLi()->Mpuerta == 1)
+    <li id="li_puerta">
         <a href="javascript: void(0);">
             <i data-feather="check-circle"></i>
             <span>Modo: Asistencia en puerta</span>
             <span class="menu-arrow"></span>
         </a>
-
         <ul class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="javascript: void(0);">
@@ -251,9 +316,50 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
+    @else 
+    <li id="li_puerta" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste este modo.">
+        <a href="javascript: void(0);">
+            <i data-feather="check-circle"></i>
+            <span>Modo: Asistencia en puerta</span>
+            <span class="menu-arrow"></span>
+        </a>
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="javascript: void(0);">
+                    <span>Configuración</span>
+                    <span class="menu-arrow"></span>
+                </a>
 
-    <li>
+                <ul class="nav-third-level" aria-expanded="false">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#modos">Dispositivos</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Controladores</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#" data-toggle="modal" data-target="#modos">Detalle de asistencia</a></li>
+            <li>
+                <a href="javascript: void(0);">
+                    <span>Reportes e informes</span>
+                    <span class="menu-arrow"></span>
+                </a>
 
+                <ul class="nav-third-level" aria-expanded="false">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#modos">Asistencia por fecha</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Asistencia por empleado</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Asistencia consolidada</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Tardanzas</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Matriz de tardanzas</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    @endif
+
+    @if(colorLi()->Mtareo == 1)
+    <li id="li_tareo">
         <a href="javascript: void(0);">
             <i data-feather="pocket"></i>
             <span>Modo: Tareo</span>
@@ -272,6 +378,27 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
+    @else 
+    <li id="li_tareo" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste este modo.">
+        <a href="javascript: void(0);">
+            <i data-feather="pocket"></i>
+            <span>Modo: Tareo</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="#" data-toggle="modal" data-target="#modos">Dispositivos</a>
+                <a href="#" data-toggle="modal" data-target="#modos">Controladores</a>
+                <a href="#" data-toggle="modal" data-target="#modos">Detalle de tareo</a>
+                <a href="#" data-toggle="modal" data-target="#modos">Reporte de tareo por fecha</a>
+                <a href="#" data-toggle="modal" data-target="#modos">Reporte de tareo por empleado</a>
+
+
+            </li>
+        </ul>
+    </li>
+    @endif
 
     <li style="display: none">
         <a href="javascript: void(0);">
@@ -386,131 +513,254 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </a>
     </li> -->
     @if ($invitadod->modoCR==1)
-    <li>
-
-        <a href="javascript: void(0);">
-            <i data-feather="activity"></i>
-            <span>Modo: Control Remoto</span>
-            <span class="menu-arrow"></span>
-        </a>
-
-        <ul class="nav-second-level" aria-expanded="false">
-            <li>
-                <a href="/controlRemoto">Dashboard</a>
-                <a href="/tareas">Detalle Diario</a>
-            </li>
-            <li>
+        @if(colorLi()->Mremoto == 1)
+            <li id="li_remotoInv">
                 <a href="javascript: void(0);">
-                    <span>Reportes</span>
+                    <i data-feather="activity"></i>
+                    <span>Modo: Control Remoto</span>
                     <span class="menu-arrow"></span>
                 </a>
-
-                <ul class="nav-third-level" aria-expanded="false">
+                <ul class="nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="/reporteSemanal">Tiempos por semana</a>
-                        <a href="/reporteMensual">Tiempos por mes</a>
-                        <a href="/reporteTardanzas">Tardanzas</a>
-                        <a href="/reporteMatrizTardanzas">Matriz de tardanzas</a>
+                        <a href="/controlRemoto">Dashboard</a>
+                        <a href="/tareas">Detalle Diario</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);">
+                            <span>Reportes</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+
+                        <ul class="nav-third-level" aria-expanded="false">
+                            <li>
+                                <a href="/reporteSemanal">Tiempos por semana</a>
+                                <a href="/reporteMensual">Tiempos por mes</a>
+                                <a href="/reporteTardanzas">Tardanzas</a>
+                                <a href="/reporteMatrizTardanzas">Matriz de tardanzas</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
-        </ul>
-    </li>
+        @else 
+            <li id="li_remotoInv" style="background-color: #D3D3D3">
+                <a href="javascript: void(0);">
+                    <i data-feather="activity"></i>
+                    <span>Modo: Control Remoto</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#modos">Dashboard</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Detalle Diario</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);">
+                            <span>Reportes</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+
+                        <ul class="nav-third-level" aria-expanded="false">
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#modos">Tiempos por semana</a>
+                                <a href="#" data-toggle="modal" data-target="#modos">Tiempos por mes</a>
+                                <a href="#" data-toggle="modal" data-target="#modos">Tardanzas</a>
+                                <a href="#" data-toggle="modal" data-target="#modos">Matriz de tardanzas</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        @endif
+    
     @endif
 
     @if ($invitadod->ControlRuta==1)
-
-    <li>
-        <a href="javascript: void(0);">
-            <i data-feather="map-pin"></i>
-            <span>Modo: Control en Ruta</span>
-            <span class="menu-arrow"></span>
-        </a>
-
-        <ul class="nav-second-level" aria-expanded="false">
-            <li>
-                <a href="/ruta">Detalle Diario</a>
-                <a href="/rutaReporte">Reporte Semanal</a>
-                <a href="/reporteTardanzasRuta">Tardanzas</a>
-                <a href="/reporteMatrizTardanzasRuta">Matriz de tardanzas</a>
+        @if(colorLi()->Mruta == 1)
+            <li id="li_rutaInv">
+                <a href="javascript: void(0);">
+                    <i data-feather="map-pin"></i>
+                    <span>Modo: Control en Ruta</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="/ruta">Detalle Diario</a>
+                        <a href="/rutaReporte">Reporte Semanal</a>
+                        <a href="/reporteTardanzasRuta">Tardanzas</a>
+                        <a href="/reporteMatrizTardanzasRuta">Matriz de tardanzas</a>
+                    </li>
+                </ul>
             </li>
-        </ul>
-    </li>
+        @else 
+            <li id="li_rutaInv" style="background-color: #D3D3D3">
+                <a href="javascript: void(0);">
+                    <i data-feather="map-pin"></i>
+                    <span>Modo: Control en Ruta</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#modos">Detalle Diario</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Reporte Semanal</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Tardanzas</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Matriz de tardanzas</a>
+                    </li>
+                </ul>
+            </li>
+        @endif
+    
     @endif
 
     @if ($invitadod->asistePuerta==1)
-    <li>
-        <a href="javascript: void(0);">
-            <i data-feather="check-circle"></i>
-            <span>Modo: Asistencia en puerta</span>
-            <span class="menu-arrow"></span>
-        </a>
+    @if(colorLi()->Mpuerta == 1)
+        <li id="li_puertaInv">
+            <a href="javascript: void(0);">
+                <i data-feather="check-circle"></i>
+                <span>Modo: Asistencia en puerta</span>
+                <span class="menu-arrow"></span>
+            </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
-            @if ($permiso_invitado->verPuerta==1)
-            <li>
-                <a href="javascript: void(0);">
-                    <span>Configuración</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="nav-third-level" aria-expanded="false">
-                    <li>
-                        <a href="/dispositivos">Dispositivos</a>
-                        <a href="/controladores">Controladores</a>
-                    </li>
-                </ul>
-            </li>
-            @endif
-            @if ($invitadod->ModificarReportePuerta==1)
-            <li><a href="/reporteAsistencia">Detalle de asistencia</a></li>
-            @endif
-            @if ($invitadod->reporteAsisten==1)
-            <li>
-                <a href="javascript: void(0);">
-                    <span>Reportes e informes</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="nav-third-level" aria-expanded="false">
-                    <li>
-                        <a href="/ReporteFecha">Asistencia por fecha</a>
-                        <a href="/ReporteEmpleado">Asistencia por empleado</a>
-                        <a href="/indexTrazabilidad">Asistencia consolidada</a>
-                        <a href="/reporteTardanzasPuerta">Tardanzas</a>
-                        <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
-                    </li>
-                </ul>
-            </li>
-            @endif
-        </ul>
-    </li>
+            <ul class="nav-second-level" aria-expanded="false">
+                @if ($permiso_invitado->verPuerta==1)
+                <li>
+                    <a href="javascript: void(0);">
+                        <span>Configuración</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-third-level" aria-expanded="false">
+                        <li>
+                            <a href="/dispositivos">Dispositivos</a>
+                            <a href="/controladores">Controladores</a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                @if ($invitadod->ModificarReportePuerta==1)
+                <li><a href="/reporteAsistencia">Detalle de asistencia</a></li>
+                @endif
+                @if ($invitadod->reporteAsisten==1)
+                <li>
+                    <a href="javascript: void(0);">
+                        <span>Reportes e informes</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-third-level" aria-expanded="false">
+                        <li>
+                            <a href="/ReporteFecha">Asistencia por fecha</a>
+                            <a href="/ReporteEmpleado">Asistencia por empleado</a>
+                            <a href="/indexTrazabilidad">Asistencia consolidada</a>
+                            <a href="/reporteTardanzasPuerta">Tardanzas</a>
+                            <a href="/reporteMatrizTardanzasPuerta">Matriz de tardanzas</a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+            </ul>
+        </li>
+    @else 
+        <li id="li_puertaInv" style="background-color: #D3D3D3">
+            <a href="javascript: void(0);">
+                <i data-feather="check-circle"></i>
+                <span>Modo: Asistencia en puerta</span>
+                <span class="menu-arrow"></span>
+            </a>
+
+            <ul class="nav-second-level" aria-expanded="false">
+                @if ($permiso_invitado->verPuerta==1)
+                <li>
+                    <a href="javascript: void(0);">
+                        <span>Configuración</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-third-level" aria-expanded="false">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#modos">Dispositivos</a>
+                            <a href="#" data-toggle="modal" data-target="#modos">Controladores</a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                @if ($invitadod->ModificarReportePuerta==1)
+                <li><a href="#" data-toggle="modal" data-target="#modos">Detalle de asistencia</a></li>
+                @endif
+                @if ($invitadod->reporteAsisten==1)
+                <li>
+                    <a href="javascript: void(0);">
+                        <span>Reportes e informes</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-third-level" aria-expanded="false">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#modos">Asistencia por fecha</a>
+                            <a href="#" data-toggle="modal" data-target="#modos">Asistencia por empleado</a>
+                            <a href="#" data-toggle="modal" data-target="#modos">Asistencia consolidada</a>
+                            <a href="#" data-toggle="modal" data-target="#modos">Tardanzas</a>
+                            <a href="#" data-toggle="modal" data-target="#modos">Matriz de tardanzas</a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+            </ul>
+        </li>
+    @endif
+    
 
     @endif
 
     @if ($invitadod->modoTareo==1)
-    <li>
-        <a href="javascript: void(0);">
-            <i data-feather="pocket"></i>
-            <span>Modo: Tareo</span>
-            <span class="menu-arrow"></span>
-        </a>
+        @if(colorLi()->Mtareo == 1)
+            <li id="li_tareoInv">
+                <a href="javascript: void(0);">
+                    <i data-feather="pocket"></i>
+                    <span>Modo: Tareo</span>
+                    <span class="menu-arrow"></span>
+                </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
-            <li>
-                @if ($permiso_invitado->verModoTareo==1)
-                <a href="/dispositivosTareo">Dispositivos</a>
-                <a href="/controladoresTareo">Controladores</a>
-                @endif
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        @if ($permiso_invitado->verModoTareo==1)
+                        <a href="/dispositivosTareo">Dispositivos</a>
+                        <a href="/controladoresTareo">Controladores</a>
+                        @endif
 
-                @if ($permiso_invitado->modifModoTareo==1)
-                <a href="/reporteTareo">Detalle de tareo</a>
-                @endif
-                @if ($permiso_invitado->verModoTareo==1)
-                <a href="/reporteFechaTareo">Reporte de tareo por fecha</a>
-                <a href="/reporteEmpleadoTareo">Reporte de tareo por empleado</a>
-                @endif
+                        @if ($permiso_invitado->modifModoTareo==1)
+                        <a href="/reporteTareo">Detalle de tareo</a>
+                        @endif
+                        @if ($permiso_invitado->verModoTareo==1)
+                        <a href="/reporteFechaTareo">Reporte de tareo por fecha</a>
+                        <a href="/reporteEmpleadoTareo">Reporte de tareo por empleado</a>
+                        @endif
+                    </li>
+                </ul>
             </li>
-        </ul>
-    </li>
+        @else
+            <li id="li_tareoInv" style="background-color: #D3D3D3">
+                <a href="javascript: void(0);">
+                    <i data-feather="pocket"></i>
+                    <span>Modo: Tareo</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        @if ($permiso_invitado->verModoTareo==1)
+                        <a href="#" data-toggle="modal" data-target="#modos">Dispositivos</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Controladores</a>
+                        @endif
+
+                        @if ($permiso_invitado->modifModoTareo==1)
+                        <a href="#" data-toggle="modal" data-target="#modos">Detalle de tareo</a>
+                        @endif
+                        @if ($permiso_invitado->verModoTareo==1)
+                        <a href="#" data-toggle="modal" data-target="#modos">Reporte de tareo por fecha</a>
+                        <a href="#" data-toggle="modal" data-target="#modos">Reporte de tareo por empleado</a>
+                        @endif
+                    </li>
+                </ul>
+            </li>
+        @endif
+    
     @endif
 
     <li>

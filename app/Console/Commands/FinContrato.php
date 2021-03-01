@@ -60,13 +60,23 @@ class FinContrato extends Command
         $admins = DB::table('usuario_organizacion')
                 ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
                 ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')
-                ->where('usuario_organizacion.organi_id', $organizacion->organi_id)
+                ->select('usuario_organizacion.user_id', 'usuario_organizacion.rol_id')
+                ->where('usuario_organizacion.organi_id', '=', $organizacion->organi_id)
                 ->where(function ($query) {
                     $query->where('invitado.gestionContract', '<>', 0) // DIFERENTE DE CERO
                           ->orWhereNull('invitado.gestionContract'); // IGUAL A NULL, PORQUE EL CREADOR DE LA ORGANIZACIÓN TIENE NULL
                     })
-                ->select('usuario_organizacion.user_id', 'usuario_organizacion.rol_id')
+                ->where(function ($estadoInv) {
+                    $estadoInv->where('invitado.estado', '=', 1) // DIFERENTE DE CERO
+                          ->orWhereNull('invitado.estado'); // IGUAL A NULL, PORQUE EL CREADOR DE LA ORGANIZACIÓN TIENE NULL
+                    })
+                ->where(function ($estadoUs) {
+                    $estadoUs->where('users.user_estado', '=', 1) // DIFERENTE DE CERO
+                          ->orWhereNull('users.user_estado'); // IGUAL A NULL, PORQUE EL CREADOR DE LA ORGANIZACIÓN TIENE NULL
+                    })
                 ->get();
+        $admins = $admins->unique()->all();
+        
         // RECORREMOS CADA COLECCIÓN DE ADMIS
         foreach($admins as $admin){
           if ($admin->rol_id == 3) {

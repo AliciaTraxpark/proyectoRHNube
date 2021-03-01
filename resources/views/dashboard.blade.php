@@ -134,8 +134,13 @@
             padding-right: 30px !important;
         }
     }
+    
 </style>
 {{-- FINALIZACION --}}
+
+
+
+
 <div class="row justify-content-center ml-3">
     {{-- CIUDAD DOMICILIARIA --}}
     <div class="col-md-6" id="divdepartamento" style="min-height: 460px">

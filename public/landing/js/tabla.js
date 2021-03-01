@@ -19,11 +19,15 @@ function RefreshTablaEmpleadoArea() {
     }
     $("#tbodyr").empty();
     var areaselect = $('#selectarea').val();
+
+    let textSelec = $('select[id="selectarea"] option:selected:last').text();
+    let selector = textSelec.split(' ');
+    console.log("Selector "+selector[1]+" "+selector[3]);
     $.ajax({
         async: false,
         type: "post",
         url: "tablaempleado/refreshArea",
-        data: { idarea: areaselect },
+        data: { idarea: areaselect, selector: selector},
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
@@ -452,10 +456,11 @@ function RefreshTablaEmpleadoArea() {
                 responsive: true,
                 retrieve: true,
                 searching: true,
-                lengthChange: false,
                 scrollCollapse: false,
                 pageLength: 30,
                 bAutoWidth: true,
+                "pageLength": 10,
+                "lengthMenu": [ 10, 25, 50, 75, 100 ],
                 language: {
                     sProcessing: "Procesando...",
                     sLengthMenu: "Mostrar _MENU_ registros",
@@ -991,10 +996,11 @@ function RefreshTablaEmpleado() {
                 responsive: true,
                 retrieve: true,
                 searching: true,
-                lengthChange: false,
                 scrollCollapse: false,
                 pageLength: 30,
                 bAutoWidth: true,
+                "pageLength": 10,
+                "lengthMenu": [ 10, 25, 50, 75, 100 ],
                 language: {
                     sProcessing: "Procesando...",
                     sLengthMenu: "Mostrar _MENU_ registros",

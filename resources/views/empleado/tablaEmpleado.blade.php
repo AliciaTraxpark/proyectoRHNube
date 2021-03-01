@@ -801,9 +801,9 @@ function verDEmpleado(idempleadoVer){
             responsive:true,
             retrieve: true,
             "searching": true,
-            "lengthChange": false,
             scrollCollapse : false,
-            "pageLength": 30,
+            "pageLength": 10,
+            "lengthMenu": [ 10, 25, 50, 75, 100 ],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",

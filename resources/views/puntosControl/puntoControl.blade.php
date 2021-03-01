@@ -151,6 +151,7 @@
                             <th>#</th>
                             <th>Punto control</th>
                             <th>Código</th>
+                            <th>Descripción</th>
                             <th class="text-center">Control en ruta</th>
                             <th class="text-center">Asistencia en puerta</th>
                             <th class="text-center">Modo tareo</th>

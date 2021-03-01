@@ -4,6 +4,7 @@ use App\usuario_organizacion;
 use App\persona;
 @endphp
 <!-- Topbar Start -->
+<link href="{{ URL::asset('landing/home/css/modos.css') }}" rel="stylesheet" type="text/css" />
 <style>
     .navbar-custom .topnav-menu .nav-link:hover svg,
     .navbar-custom .topnav-menu .nav-link:focus svg,
@@ -49,10 +50,10 @@ use App\persona;
         <!-- LOGO -->
         <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
             <span class="logo-lg text-center">
-                <img src="{{asset('landing/images/NUBE_SOLA.png')}}" alt="" height="60" />
+                <img src="{{asset('landing/home/images/logo_animado_blanco.gif')}}" alt="" height="65" />
             </span>
             <span class="logo-sm">
-                <img src="{{asset('landing/images/NUBE_SOLA.png')}}" alt="" height="45">
+                <img src="{{asset('landing/home/images/logo_animado_blanco.gif')}}" alt="" height="45">
             </span>
         </a>
 
@@ -78,37 +79,37 @@ use App\persona;
             float-right mb-0">
 
             @if (count($istaOrganizacion) > 0)
-             <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar organización">
-                <div class="btn-group mt-3">
-                <button type="button" class="btn  dropdown-toggle" style="font-size: 14px!important;
-                font-weight: 700;     color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;"
-                    data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">{{$organizacion->organi_razonSocial}} <i class="icon"><span data-feather="chevron-down"></span></i></button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    @foreach ($istaOrganizacion as $istaOrganizaciones)
-                    <a class="dropdown-item" style="font-size: 12px;cursor: pointer;" onclick="ingresarOrganiza({{$istaOrganizaciones->organi_id}})">
-                        {{$istaOrganizaciones->organi_razonSocial}}</a>
-                    @endforeach
-                </div>
-            </div><!-- /btn-group -->
-
-            </li>
-
-            
+                <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar organización">
+                    <div class="btn-group mt-3">
+                        <button type="button" class="btn  dropdown-toggle" style="font-size: 14px!important; font-weight: 700;     color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$organizacion->organi_razonSocial}} <i class="icon"><span data-feather="chevron-down"></span></i></button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            @foreach ($istaOrganizacion as $istaOrganizaciones)
+                            <a class="dropdown-item" style="font-size: 12px;cursor: pointer;" onclick="ingresarOrganiza({{$istaOrganizaciones->organi_id}})">
+                                {{$istaOrganizaciones->organi_razonSocial}}</a>
+                            @endforeach
+                        </div>
+                    </div><!-- /btn-group -->
+                </li>
             @endif
 
+            <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar de modo">
+                <div class="btn-group mt-3">
+                    <button type="button" class="btn" data-toggle="modal" data-target="#modos" style="font-size: 14px!important; font-weight: 700;     color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;">
+                        <span class="badge badge-pill" style="background-color: #617be3;color: #ffffff;font-size: 12px;font-weight: normal"><img
+                            src="{{asset('landing/images/seleccione.png')}}" height="20" class="mr-1">Selección de modos</span></button>
+
+                </div><!-- /btn-group -->
+            </li>
 
             <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="">
 
-                <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
-                    aria-haspopup="false" aria-expanded="false">
-                    <span style="color: aliceblue;font-size:
-                    12px" ;></span>&nbsp;  @if (count($istaOrganizacion) == 0) <strong id="strongOrganizacion" style="color:
-                    rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</strong>
-                        @else  <strong style="color:
-                        rgb(255, 255, 255)"> |</strong>
-                         @endif
+                <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                    <span style="color: aliceblue;font-size: 12px" ;></span>&nbsp;  
+                    @if (count($istaOrganizacion) == 0) 
+                        <strong id="strongOrganizacion" style="color: rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</strong>
+                    @else  
+                        <strong style="color: rgb(255, 255, 255)"> |</strong>
+                    @endif
 
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span class="badge badge-pill"
@@ -209,6 +210,10 @@ use App\persona;
                     <span>cambiar organización</span>
                 </a>
                     <!-- item-->
+                    <a href="#" id="chatJivo" class="dropdown-item notify-item">
+                        <i data-feather="message-square" class="icon-dual icon-xs mr-2" style="color: #163552"></i>
+                            <span>Chatear con nosotros</span>
+                    </a>
                     <a href="{{ route('logout') }}" class="dropdown-item
                         notify-item">
                         <i data-feather="log-out" class="icon-dual icon-xs
@@ -271,6 +276,144 @@ use App\persona;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- end Topbar -->
+<div class="modal fade show" id="modos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" style="font-family: poppins">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #163652;">
+        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Elige los modos a usar</h5>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 13px; color: red; margin-bottom: 15px">
+          • Debes elegir almenos un modo para continuar.
+        </div>
+        <div class="row">
+              @if(colorLi()->Mremoto == 1)
+                <div class="col-12">
+                    <div class="card sombra" id="cardSelect1">
+                      <div class="card-body text-center">
+                        <h5 class="card-title"><small>MODO:</small><br><strong>Control remoto</strong></h5>
+                        <div id="imgSelect1">
+                            <img src="/landing/home/images/home-office-lila.png" width="80" class="p-1">
+                        </div>
+                        <button type="button" id="btnSelec1" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
+                          <img src='landing/images/check.svg' width='16'> Seleccionado
+                        </button>
+                      </div>
+                    </div>
+                </div>
+              @else 
+                <div class="col-12">
+                    <div class="card" id="cardSelect1">
+                      <div class="card-body text-center">
+                        <h5 class="card-title"><small>MODO:</small><br><strong>Control remoto</strong></h5>
+                        <div id="imgSelect1">
+                            <img src="/landing/home/images/home-office-lila.png" width="80" class="p-1">
+                        </div>
+                        <button type="button" id="btnSelec1" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
+                          Seleccionar
+                        </button>
+                      </div>
+                    </div>
+                </div>
+              @endif
+              @if(colorLi()->Mruta == 1)
+                <div class="col-12">
+                    <div class="card sombra" id="cardSelect2">
+                      <div class="card-body text-center">
+                        <h5 class="card-title"><small>MODO:</small><br><strong>Control en ruta</strong></h5>
+                        <div id="imgSelect2">
+                            <img src="/landing/home/images/control-en-ruta-lila.png" width="80" class="p-1">
+                        </div>
+                        <button type="button" id="btnSelec2" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
+                          <img src='landing/images/check.svg' width='16'> Seleccionado
+                        </button>
+                      </div>
+                    </div>
+                </div>
+              @else 
+                <div class="col-12">
+                    <div class="card" id="cardSelect2">
+                      <div class="card-body text-center">
+                        <h5 class="card-title"><small>MODO:</small><br><strong>Control en ruta</strong></h5>
+                        <div id="imgSelect2">
+                            <img src="/landing/home/images/control-en-ruta-lila.png" width="80" class="p-1">
+                        </div>
+                        <button type="button" id="btnSelec2" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
+                          Seleccionar
+                        </button>
+                      </div>
+                    </div>
+                </div>
+              @endif
+            </div>
+
+            <div class="row">
+                @if(colorLi()->Mpuerta == 1)
+                  <div class="col-12">
+                    <div class="card sombra" id="cardSelect3">
+                      <div class="card-body text-center">
+                        <h5 class="card-title"><small>MODO:</small><br><strong>Asistencia en puerta</strong></h5>
+                        <div id="imgSelect3">
+                            <img src="/landing/home/images/asistencia-en-puerta-lila.png" width="80" class="p-1">
+                        </div>
+                        <button type="button" id="btnSelec3" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
+                          <img src='landing/images/check.svg' width='16'> Seleccionado
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                @else 
+                    <div class="col-12">
+                        <div class="card" id="cardSelect3">
+                          <div class="card-body text-center">
+                            <h5 class="card-title"><small>MODO:</small><br><strong>Asistencia en puerta</strong></h5>
+                            <div id="imgSelect3">
+                                <img src="/landing/home/images/asistencia-en-puerta-lila.png" width="80" class="p-1">
+                            </div>
+                            <button type="button" id="btnSelec3" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
+                              Seleccionar
+                            </button>
+                          </div>
+                        </div>
+                    </div>
+                @endif
+            @if(colorLi()->Mtareo == 1)
+              <div class="col-12">
+                <div class="card sombra" id="cardSelect4">
+                  <div class="card-body text-center">
+                    <h5 class="card-title"><small>MODO:</small><br><strong>Tareo</strong></h5>
+                    <div id="imgSelect4">
+                        <img src="/landing/home/images/Tareo-lila.png" width="80" class="p-1">
+                    </div>
+                    <button type="button" id="btnSelec4" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
+                      <img src='landing/images/check.svg' width='16'> Seleccionado
+                    </button>
+                  </div>
+                </div>
+              </div>
+            @else 
+                <div class="col-12">
+                    <div class="card" id="cardSelect4">
+                      <div class="card-body text-center">
+                        <h5 class="card-title"><small>MODO:</small><br><strong>Tareo</strong></h5>
+                        <div id="imgSelect4">
+                            <img src="/landing/home/images/Tareo-lila.png" width="80" class="p-1">
+                        </div>
+                        <button type="button" id="btnSelec4" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
+                          Seleccionar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+            @endif
+            </div>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-rh" id="btnSelected">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
     function ingresarOrganiza(idorganiza){
     $.ajax({
@@ -295,6 +438,17 @@ use App\persona;
 
 }
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    let a =  {{ getLastActivity() }}
+    
+    $( document ).ready(function() {
+        if(a == 1){
+            $('#modos').modal('show');
+        }
+    });
+</script>
+<script src="{{asset('landing/home/js/modos.js')}}"></script>
 @section('script')
 <script src="{{asset('landing/js/editarPerfil.js')}}"></script>
 @endsection

@@ -501,6 +501,8 @@ Route::post('/listaControladores', 'controladoresController@tablaControladores')
 Route::post('/disposiControladores', 'controladoresController@disposiControladores');
 Route::post('/datosControEditar', 'controladoresController@datosControEditar');
 Route::post('/controladUpdate', 'controladoresController@controladUpdate');
+Route::post('/controladDesact', 'controladoresController@desactivarControl');
+Route::post('/controladActtiv', 'controladoresController@activarControl');
 // PRECIOS
 Route::get('/planes', 'PrecioPlanesController@vistaPrecios');
 Route::get('/plan', 'PrecioPlanesController@vistaMovil');
@@ -540,6 +542,7 @@ Route::post('/verificaCodIncidencia', 'incidenciasController@verificaCodIncidenc
 Route::post('/registIncidencia', 'incidenciasController@registIncidencia');
 Route::post('/tablaIncidencias', 'incidenciasController@tablaIncidencias');
 Route::post('/dataIncidencia', 'incidenciasController@dataIncidencia');
+Route::post('/updateIncidencia','incidenciasController@updateIncidencia');
 
 //* PUNTOS DE CONTROL
 Route::get('/puntoControl', 'PuntosControlController@index');
@@ -597,7 +600,8 @@ Route::post('/listaControladoresTa', 'controladores_tareoController@show');
 Route::post('/controladTaStore', 'controladores_tareoController@store');
 Route::post('/datosControTaEditar', 'controladores_tareoController@edit');
 Route::post('/controladTarUpdate', 'controladores_tareoController@update');
-
+Route::post('/controladDesactTare', 'controladores_tareoController@desactivarControl');
+Route::post('/controladActtivTare', 'controladores_tareoController@activarControl');
 //Vista reporte fecha
 Route::get('/reporteTareo', 'marcacionTareoController@index');
 Route::get('/tablaTareo', 'marcacionTareoController@show');
@@ -645,6 +649,6 @@ Route::get('/agendaPersonalizada', 'AgendaController@verAgenda');
 /*-----------------------------------------------------------------------*/
 
 Route::post('/partner', 'soportesPorCorreoController@envioPartner');
-
+Route::post('selectModos', 'dashboardController@selectModos');
 
 

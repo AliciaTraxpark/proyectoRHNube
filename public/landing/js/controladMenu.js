@@ -122,12 +122,34 @@ $(document).ready(function () {
      { data: "cont_correo" },
      { data: "cont_estado",
      "render": function (data, type, row) {
-        if (row.cont_estado ==0) {
-             return '<span class="badge badge-soft-danger">Inactivo</span>';
-        }
-        if (row.cont_estado ==1) {
-            return '<span class="badge badge-soft-info">Activo</span>';
-       }
+       
+       var variablePermiso2=$('#modifContPer').val();
+        if(variablePermiso2==1){
+            if(row.cont_estado==1){
+                return '<div class="custom-control custom-switch">'+
+                '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idControladores+'" checked>'+
+                '<label class="custom-control-label" for="customSwitDetalles'+row.idControladores+'" onclick="switchEleg('+row.idControladores+')" style="font-weight: bold"></label>'+
+            '</div>';
+            } else{
+                return '<div class="custom-control custom-switch">'+
+                '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idControladores+'" >'+
+                '<label class="custom-control-label" for="customSwitDetalles'+row.idControladores+'" onclick="switchEleg('+row.idControladores+')" style="font-weight: bold"></label>'+
+            '</div>';
+            }
+           }
+           else{
+            if(row.cont_estado==1){
+                return '<div class="custom-control custom-switch">'+
+                '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idControladores+'" checked disabled>'+
+                '<label class="custom-control-label" for="customSwitDetalles'+row.idControladores+'"  style="font-weight: bold"></label>'+
+            '</div>';
+            } else{
+                return '<div class="custom-control custom-switch">'+
+                '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idControladores+'" disabled>'+
+                '<label class="custom-control-label" for="customSwitDetalles'+row.idControladores+'"  style="font-weight: bold"></label>'+
+            '</div>';
+            }
+           }
 
 
      } },
@@ -250,5 +272,103 @@ function EditarContro(){
             alert("Ocurrio un error");
         },
     });
+
+}
+//*ACTIVAR O DESACTIVAR CONTROLADOR
+function switchEleg(id){
+    if( $('#customSwitDetalles'+id+'').is(':checked')) {
+        $('#customSwitDetalles'+id+'').prop('checked',false);
+        desactivarControlador(id);
+    }
+    else{
+        $('#customSwitDetalles'+id+'').prop('checked',true);
+        activarControlador(id);
+    }
+}
+
+//desactivar controlador
+function desactivarControlador(id){
+    bootbox.confirm({
+        message: "¿Desea desactivar controlador?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+            $.ajax({
+                type: "post",
+                url: "/controladDesact",
+                data: {
+                    id
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    },
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                success: function (data) {
+                    $('#tablaContr').DataTable().ajax.reload(null, false);
+
+                },
+                error: function (data) {
+                    alert("Ocurrio un error");
+                },
+            });
+
+        } }
+    });
+
+}
+function activarControlador(id){
+    bootbox.confirm({
+        message: "¿Desea volver activar controlador?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/controladActtiv",
+                    data: {
+                        id
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaContr').DataTable().ajax.reload(null, false);
+
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            }
+        }
+    });
+
 
 }

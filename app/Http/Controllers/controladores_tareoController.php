@@ -228,4 +228,21 @@ class controladores_tareoController extends Controller
     {
         //
     }
+
+    public function desactivarControl(Request $request)
+    {
+
+        $controladores = controladores_tareo::findOrFail($request->id);
+        $controladores->contrT_estado = 0;
+        $controladores->save();
+    }
+
+    public function activarControl(Request $request)
+    {
+
+        $controladores = controladores_tareo::findOrFail($request->id);
+        $controladores->contrT_estado = 1;
+        $controladores->save();
+    }
+
 }

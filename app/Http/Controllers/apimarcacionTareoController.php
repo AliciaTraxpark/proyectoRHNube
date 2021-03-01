@@ -225,8 +225,13 @@ class apimarcacionTareoController extends Controller
         $idDispo = $request->idDispo;
         /* ----------------------- */
 
-        /* OBTENEMOS DISPOSITIVOS QUE TENGAN  CONTROLADORES */
-        $dispositivo_Controlador = DB::table('dispositivo_controlador_tareo as dc')
+        //*ver estado
+        $dispositivo1 = dispositivos_tareo::where('iddispositivos_tareo', '=', $idDispo)
+        ->get()->first();
+
+        if($dispositivo1->dispoT_estadoActivo==1){
+            /* OBTENEMOS DISPOSITIVOS QUE TENGAN  CONTROLADORES */
+            $dispositivo_Controlador = DB::table('dispositivo_controlador_tareo as dc')
             ->join('controladores_tareo as con', 'dc.idcontroladores_tareo', '=', 'con.idcontroladores_tareo')
             ->join('dispositivos_tareo as dis', 'dc.iddispositivos_tareo', '=', 'dis.iddispositivos_tareo')
             ->select('con.idcontroladores_tareo', 'con.contrT_codigo', 'con.contrT_nombres',
@@ -237,14 +242,20 @@ class apimarcacionTareoController extends Controller
             ->where('con.contrT_estado', '=', 1)
             ->get();
         /* ------------------------------------------------------------------ */
-
-        /* VERIFIACMOS SI EXISTEN */
-        if ($dispositivo_Controlador != null) {
-            return response()->json(array('status' => 200, "controladores" => $dispositivo_Controlador));
-        } else {
-            return response()->json(array('status' => 400, 'title' => 'Controladores no encontrados',
-                'detail' => 'No se encontro controladores relacionados con este dispositivo'), 400);
+         /* VERIFIACMOS SI EXISTEN */
+            if ($dispositivo_Controlador != null) {
+                return response()->json(array('status' => 200, "controladores" => $dispositivo_Controlador));
+            } else {
+                return response()->json(array('status' => 400, 'title' => 'Controladores no encontrados',
+                    'detail' => 'No se encontro controladores relacionados con este dispositivo'), 400);
+            }
+        } else{
+            return response()->json(array(
+                'status' => 400, 'title' => 'Dispositivo no activo',
+                'detail' => 'Dispositivo no activo',
+            ), 400);
         }
+        
 
     }
 

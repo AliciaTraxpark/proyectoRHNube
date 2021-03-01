@@ -79,7 +79,8 @@ function puntosControlOrganizacion() {
                     tbody += `<tr onclick="return cambiarEstadoPunto('${data[index].id}')">
                                 <td>${(index + 1)}</td>
                                 <td>${data[index].descripcion}</td>
-                                <td>${data[index].codigoP}</td>`;
+                                <td>${data[index].codigoP}</td>
+                                <td>${data[index].descripcionPcd}</td>`;
                     // * SWITCH DE CONTROL RUTA
                     if (data[index].controlRuta == 1) {
                         tbody += `<td class="text-center">
