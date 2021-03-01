@@ -165,4 +165,20 @@ class controladoresController extends Controller
 
     }
 
+    public function desactivarControl(Request $request)
+    {
+
+        $controladores = controladores::findOrFail($request->id);
+        $controladores->cont_estado = 0;
+        $controladores->save();
+    }
+
+    public function activarControl(Request $request)
+    {
+
+        $controladores = controladores::findOrFail($request->id);
+        $controladores->cont_estado = 1;
+        $controladores->save();
+    }
+
 }

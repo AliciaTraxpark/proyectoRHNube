@@ -204,33 +204,44 @@ class apimovilController extends Controller
         $idDispo = $request->idDispo;
         /* ----------------------- */
 
-        /* OBTENEMOS DISPOSITIVOS QUE TENGAN  CONTROLADORES */
-        $dispositivo_Controlador = DB::table('dispositivo_controlador as dc')
-            ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
-            ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
-            ->select(
-                'con.idControladores',
-                'con.cont_codigo',
-                'con.cont_nombres',
-                'con.cont_ApPaterno',
-                'con.cont_ApMaterno',
-                'con.cont_estado'
-            )
-            ->where('dis.idDispositivos', '=', $idDispo)
-            ->where('dis.organi_id', '=', $organi_id)
-            ->where('con.cont_estado', '=', 1)
-            ->get();
-        /* ------------------------------------------------------------------ */
+        //*ver estado
+        $dispositivo1 = dispositivos::where('idDispositivos', '=', $idDispo)
+        ->get()->first();
+        if($dispositivo1->dispo_estadoActivo==1){
+             /* OBTENEMOS DISPOSITIVOS QUE TENGAN  CONTROLADORES */
+                $dispositivo_Controlador = DB::table('dispositivo_controlador as dc')
+                ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
+                ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
+                ->select(
+                    'con.idControladores',
+                    'con.cont_codigo',
+                    'con.cont_nombres',
+                    'con.cont_ApPaterno',
+                    'con.cont_ApMaterno',
+                    'con.cont_estado'
+                )
+                ->where('dis.idDispositivos', '=', $idDispo)
+                ->where('dis.organi_id', '=', $organi_id)
+                ->where('con.cont_estado', '=', 1)
+                ->get();
+            /* ------------------------------------------------------------------ */
 
-        /* VERIFIACMOS SI EXISTEN */
-        if ($dispositivo_Controlador != null) {
-            return response()->json(array('status' => 200, "controladores" => $dispositivo_Controlador));
-        } else {
+            /* VERIFIACMOS SI EXISTEN */
+            if ($dispositivo_Controlador != null) {
+                return response()->json(array('status' => 200, "controladores" => $dispositivo_Controlador));
+            } else {
+                return response()->json(array(
+                    'status' => 400, 'title' => 'Controladores no encontrados',
+                    'detail' => 'No se encontro controladores relacionados con este dispositivo',
+                ), 400);
+            }
+        } else{
             return response()->json(array(
-                'status' => 400, 'title' => 'Controladores no encontrados',
-                'detail' => 'No se encontro controladores relacionados con este dispositivo',
+                'status' => 400, 'title' => 'Dispositivo no activo',
+                'detail' => 'Dispositivo no activo',
             ), 400);
         }
+       
     }
 
     /* MARCACIONES EN PUERTA  */

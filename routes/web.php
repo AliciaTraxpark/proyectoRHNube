@@ -501,6 +501,8 @@ Route::post('/listaControladores', 'controladoresController@tablaControladores')
 Route::post('/disposiControladores', 'controladoresController@disposiControladores');
 Route::post('/datosControEditar', 'controladoresController@datosControEditar');
 Route::post('/controladUpdate', 'controladoresController@controladUpdate');
+Route::post('/controladDesact', 'controladoresController@desactivarControl');
+Route::post('/controladActtiv', 'controladoresController@activarControl');
 // PRECIOS
 Route::get('/planes', 'PrecioPlanesController@vistaPrecios');
 Route::get('/plan', 'PrecioPlanesController@vistaMovil');
@@ -540,6 +542,7 @@ Route::post('/verificaCodIncidencia', 'incidenciasController@verificaCodIncidenc
 Route::post('/registIncidencia', 'incidenciasController@registIncidencia');
 Route::post('/tablaIncidencias', 'incidenciasController@tablaIncidencias');
 Route::post('/dataIncidencia', 'incidenciasController@dataIncidencia');
+Route::post('/updateIncidencia','incidenciasController@updateIncidencia');
 
 //* PUNTOS DE CONTROL
 Route::get('/puntoControl', 'PuntosControlController@index');
