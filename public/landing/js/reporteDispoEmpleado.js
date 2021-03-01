@@ -459,8 +459,7 @@ function cargartabla(fecha1, fecha2) {
                 }
                 // * ARMAR MARCACIONES
                 var tbodyEntradaySalida = "";
-                var sumaTiempos = moment("00:00:00", "HH:mm:ss");
-                var tiempoTotal = moment("00:00:00", "HH:mm:ss");
+                var tiempoTotal = moment.duration(0);
                 var sumaTardanzas = moment("00:00:00", "HH:mm:ss");
                 // * TIEMPO DE PAUSA
                 var tiempoHoraPausa = "00";
@@ -506,6 +505,19 @@ function cargartabla(fecha1, fecha2) {
                         }
                     }
                 }
+                // ! ********************************************** SOBRE TIEMPO TOTAL DE MARCACIONES *****************
+                for (let item = 0; item < contenidoData.marcaciones.length; item++) {
+                    var element = contenidoData.marcaciones[item];
+                    if (element.entrada != 0 && element.salida) {
+                        var entradaMoment = moment.duration(moment(element.entrada));
+                        var salidaMoment = moment.duration(moment(element.salida));
+                        if (salidaMoment >= entradaMoment) {
+                            var tiempoEntreMarcaciones = salidaMoment - entradaMoment;
+                            tiempoTotal = tiempoTotal.add(tiempoEntreMarcaciones);
+                        }
+                    }
+                }
+                // ! ********************************************** FINALIZACION ************************************** 
                 for (let i = 0; i < contenidoData.marcaciones.length; i++) {
                     // * TIEMPO EN SITIO
                     var segundosTiempo = "00";
@@ -542,8 +554,6 @@ function cargartabla(fecha1, fecha2) {
                                 if (segundosTiempo < 10) {
                                     segundosTiempo = '0' + segundosTiempo;
                                 }
-                                sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
-                                tiempoTotal = tiempoTotal.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
                             }
                         } else {
                             tbodyEntradaySalida += `<td>
@@ -760,10 +770,23 @@ function cargartabla(fecha1, fecha2) {
                                     <td name="datosPausa" class="text-center">------</td>`;
                 }
                 tbody += tbodyPausas;
+                // : TIEMPO TOTAL
+                var horaTiempoTotal = Math.trunc(moment.duration(tiempoTotal).asHours());
+                var minutoTiempoTotal = moment.duration(tiempoTotal).minutes();
+                var segundoTiempoTotal = moment.duration(tiempoTotal).seconds();
+                if (horaTiempoTotal < 10) {
+                    horaTiempoTotal = "0" + horaTiempoTotal;
+                }
+                if (minutoTiempoTotal < 10) {
+                    minutoTiempoTotal = "0" + minutoTiempoTotal;
+                }
+                if (segundoTiempoTotal < 10) {
+                    segundoTiempoTotal = "0" + segundoTiempoTotal;
+                }
                 tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                ${sumaTiempos.format("HH:mm:ss")}
+                                ${horaTiempoTotal}:${minutoTiempoTotal}:${segundoTiempoTotal}
                             </a>
                         </td>
                         <td>
