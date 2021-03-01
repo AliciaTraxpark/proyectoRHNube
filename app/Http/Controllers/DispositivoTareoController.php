@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\dispositivos_tareo;
 use App\dispositivo_controlador_tareo;
+use App\controladores_tareo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\correoVinculacionTareo;
 
 class DispositivoTareoController extends Controller
 {
@@ -117,6 +120,13 @@ class DispositivoTareoController extends Controller
                 $dispositivo_controlador->idcontroladores_tareo = $contros;
                 $dispositivo_controlador->organi_id = session('sesionidorg');
                 $dispositivo_controlador->save();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // ENVIO DE CÓDIGO POR CORREO
+                $controlador = controladores_tareo::find($contros)->first();
+                $email = $controlador->contrT_correo;
+                $numero = $request->numeroM;
+                $envio = Mail::to($email)->queue(new correoVinculacionTareo($codigo, $numero));
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
 
@@ -414,7 +424,16 @@ class DispositivoTareoController extends Controller
         $dispositivosAc = dispositivos_tareo::findOrFail($request->idDis);
         $codigo = $dispositivosAc->dispoT_codigo;
         $nroCel = substr($dispositivosAc->dispoT_movil, 2);
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // ENVIO DE CÓDIGO POR CORREO
+        $dispoControls = dispositivo_controlador_tareo::where('iddispositivos_tareo', '=', $request->idDis)->get();
+        foreach ($dispoControls as $dispoControl) {
+            $controlador = controladores_tareo::find($dispoControl->idcontroladores_tareo)->first();
+            $email = $controlador->contrT_correo;
+            $numero = $request->numeroM;
+            $envio = Mail::to($email)->queue(new correoVinculacionTareo($codigo, $numero));
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Tareo, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(

@@ -69,6 +69,7 @@ class OrganizacionesController extends Controller
 
         ->get();
 
+        $organizaciones = $organizaciones->sortBy('created_at')->values();
 
         return json_encode($organizaciones);
     }
