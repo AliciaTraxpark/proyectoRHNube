@@ -1053,8 +1053,13 @@ use App\proyecto_empleado;
                                 <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm"
                                     multiple="multiple" data-placeholder="Seleccionar áreas">
                                     @foreach ($area as $areas)
-                                    <option value="{{ $areas->area_id }}">
-                                        {{ $areas->area_descripcion }}</option>
+                                    <option value="{{ $areas->area_id }}"> Área : {{ $areas->area_descripcion }}</option>
+                                    @endforeach
+                                    @foreach ($cargo as $cargos)
+                                    <option value="{{ $cargos->cargo_id }}"> Cargo : {{ $cargos->cargo_descripcion }}</option>
+                                    @endforeach
+                                    @foreach ($local as $locales)
+                                    <option value="{{ $locales->local_id }}"> Local : {{ $locales->local_descripcion }}</option>
                                     @endforeach
                                 </select>
                             </div>

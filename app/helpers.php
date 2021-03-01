@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 // * FUNCION DE AGRUPAR HORAS MINUTOS
 function horasRemotoRutaJson($array)
@@ -445,4 +446,31 @@ function tiempoMarcacionesPorHorarioEmpleado($idEmpleado, $fecha, $idHorarioEmpl
         ->where(DB::raw('DATE(marcaMov_fecha)'), '=', $fecha)
         ->where('m.horarioEmp_id', '=', $idHorarioEmpleado)
         ->get();
+}
+
+function getLastActivity(){
+    $band = false;
+    $now = Carbon::now()->subSeconds(5)->addHours(5)->settings([
+        'locale' => 'pe_PE',
+        'timezone' => 'America/Lima',
+    ]);;
+    $inicio = Carbon::create(1970, 01, 1, 0, 0, 0);
+    $secondsNow = $inicio->diffInSeconds($now);
+    $activity = DB::table('sessions')
+    ->select('last_activity')
+    ->where('user_id', Auth::user()->id)
+    ->first();
+
+    $modos = DB::table('usuario_organizacion')->select('Mremoto', 'Mruta', 'Mpuerta', 'Mtareo')->where('user_id', Auth::user()->id)->where('organi_id', session('sesionidorg'))->first();
+
+    if ($modos->Mremoto == 0 && $modos->Mruta == 0 && $modos->Mpuerta == 0 && $modos->Mtareo == 0) {
+        $band = true;
+    }
+
+    return $band;
+}
+
+function colorLi(){
+    $modos = DB::table('usuario_organizacion')->select('Mremoto', 'Mruta', 'Mpuerta', 'Mtareo')->where('user_id', Auth::user()->id)->where('organi_id', session('sesionidorg'))->first();
+    return $modos;
 }

@@ -645,6 +645,6 @@ Route::get('/agendaPersonalizada', 'AgendaController@verAgenda');
 /*-----------------------------------------------------------------------*/
 
 Route::post('/partner', 'soportesPorCorreoController@envioPartner');
-
+Route::post('selectModos', 'dashboardController@selectModos');
 
 

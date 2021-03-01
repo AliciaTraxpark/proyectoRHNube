@@ -57,13 +57,24 @@ class HappyBirthday extends Command
             $admins = DB::table('usuario_organizacion')
                     ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
                     ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')
+                    ->select('usuario_organizacion.user_id', 'usuario_organizacion.rol_id')
                     ->where('usuario_organizacion.organi_id', $organizacion->organi_id)
                     ->where(function ($query) {
                         $query->where('invitado.gestionHb', '<>', 0) // VALOR 0 -> NO TIENE PERMISO PARA RECIBIR NOTIFICACIONES DE CUMPLEAÑOS
                               ->orWhereNull('invitado.gestionHb'); // EL CREADOR DE LA ORGANIZACIÓN TIENE VALOR NULL
                     })
-                    ->select('usuario_organizacion.user_id', 'usuario_organizacion.rol_id')
+                    ->where(function($estadoInv){
+                        $estadoInv->where('invitado.estado', '=', 1)
+                                  ->orWhereNull('invitado.estado');
+                    })
+                    ->where(function($estadoUs){
+                        $estadoUs->where('users.user_estado', '=', 1)
+                                 ->orWhereNull('users.user_estado');
+                    })
                     ->get();
+
+            $admins = $admins->unique()->all();
+            
             // RECORREMOS CADA ADMIN
             foreach($admins as $admin){
               if ($admin->rol_id == 3) {

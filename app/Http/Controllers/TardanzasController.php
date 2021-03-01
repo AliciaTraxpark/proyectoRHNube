@@ -2070,13 +2070,15 @@ class TardanzasController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
 
-        $path = "fotosUser/".Auth::user()->foto;
-        $dimensiones = getimagesize($path);
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        //$path = "fotosUser/".Auth::user()->foto;
+        //$path = "/landing/images/logoRHn_nuevo.png";
+        //$dimensiones = getimagesize($path);
+        //$type = pathinfo($path, PATHINFO_EXTENSION);
+        //$data = file_get_contents($path);
+        //$base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
-        $usuario_organizacion->imagen = $base64;
+        //$usuario_organizacion->imagen = $base64;
+        $usuario_organizacion->imagen = "imagen";
 
         $empleadoL = $request->idemp;
 

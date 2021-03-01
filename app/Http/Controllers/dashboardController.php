@@ -1550,4 +1550,36 @@ class dashboardController extends Controller
 
         return response()->json($respuesta, 200);
     }
+
+    public function selectModos(Request $request){
+        $uo = usuario_organizacion::where('user_id', '=', Auth::user()->id)->where('organi_id', '=', session('sesionidorg'))->first();
+        if($request->valueBtn1 == "true"){
+            $uo->Mremoto = 1;
+            $uo->save();
+        } else {
+            $uo->Mremoto = 0;
+            $uo->save();
+        }
+        if($request->valueBtn2 == "true"){
+            $uo->Mruta = 1;
+            $uo->save();
+        } else {
+            $uo->Mruta = 0;
+            $uo->save();
+        }
+        if($request->valueBtn3 == "true"){
+            $uo->Mpuerta = 1;
+            $uo->save();
+        } else {
+            $uo->Mpuerta = 0;
+            $uo->save();
+        }
+        if($request->valueBtn4 == "true"){
+            $uo->Mtareo = 1;
+            $uo->save();
+        } else {
+            $uo->Mtareo = 0;
+            $uo->save();
+        }
+    }
 }

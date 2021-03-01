@@ -9,6 +9,7 @@ use App\punto_control_empleado;
 use App\punto_control_geo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class PuntosControlController extends Controller
 {
@@ -30,20 +31,45 @@ class PuntosControlController extends Controller
     public function puntosControlOrganizacion()
     {
         $puntosC = DB::table('punto_control as pc')
+        ->leftJoin('punto_control_detalle as pcd', 'pcd.idPuntoControl', '=', 'pc.id')
             ->select(
                 'pc.id',
                 'pc.descripcion',
                 'pc.controlRuta',
                 'pc.asistenciaPuerta',
                 'pc.ModoTareo',
-                DB::raw("CASE WHEN(pc.codigoControl) IS NULL THEN 'No definido' ELSE pc.codigoControl END AS codigoP")
+                DB::raw("CASE WHEN(pc.codigoControl) IS NULL THEN 'No definido' ELSE pc.codigoControl END AS codigoP"),
+                'pcd.descripcion as descripcionPcd'
             )
             ->where('pc.organi_id', '=', session('sesionidorg'))
             ->where('pc.estado', '=', 1)
-            ->groupBy('pc.id')
+            
             ->get();
+        $puntosC = $puntosC->groupBy('id');
+        $datos = new Collection();
+        $des = "";
+        foreach ($puntosC as $puntoC) {
+            $cant = $puntoC->count();
+            foreach ($puntoC as $key => $punto) {
+                $des = $des." ".$punto->descripcionPcd;
+                if ($cant-1 > $key){
+                    $des = $des.", ";
+                }
+            }
+            $obj = (object) array(
+                'id' => $puntoC[0]->id,
+                'descripcion' => $puntoC[0]->descripcion,
+                'controlRuta' => $puntoC[0]->controlRuta,
+                'asistenciaPuerta' => $puntoC[0]->asistenciaPuerta,
+                'ModoTareo' => $puntoC[0]->ModoTareo,
+                'codigoP' => $puntoC[0]->codigoP,
+                'descripcionPcd' => $des."."
+            );
+            $datos->push($obj);
+            $des = "";
+        }
 
-        return response()->json($puntosC, 200);
+        return response()->json($datos, 200);
     }
 
     // * DATOS PARA UN PUNTO DE CONTROL

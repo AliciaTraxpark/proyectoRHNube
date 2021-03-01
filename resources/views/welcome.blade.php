@@ -530,6 +530,33 @@
         </div>
       </div>
       {{-- FIN DE REGISTRAR PARTNER --}}
+      {{-- MODAL CON MENSAJE DE REGISTRO EXITOSO --}}
+      @if (session('mensaje'))
+      <div class="modal" id="modal" role="dialog" style="display: block;">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header"
+                       style="padding-top: 8px;padding-bottom: 5px;background-color:#163552;color:#ffffff">
+                       <h5 style="font-size: 14px" class="modal-title">CONFIRMACION</h5>
+                       <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                       </button>
+                   </div>
+                   <div class="modal-body text-center">
+                       <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
+                       <p>{{ session('mensaje') }}</p>
+                   </div>
+                   <div class="modal-footer" style="padding-top: 8px;padding-bottom: 8px;">
+                       <button type="button" class="btn btn-sm" style="background-color:#163552;color:#ffffff"
+                           onclick="cerrarModal()">
+                           OK
+                       </button>
+                   </div>
+               </div>
+           </div>
+      </div>
+      @endif
+      {{-- FIN DE MODAL --}}
       {{-- CONFIRMACIÓN DE CORREO --}}
       <div class="modal" id="modalInv" role="dialog">
         <div class="modal-dialog" role="document">
@@ -557,9 +584,11 @@
       {{-- PIE DE PÁGINA --}}
       <footer class="text-center">
          <div>
-            <span style="font-size: 17px !important">© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
-            <a style="color:#faf3f3; font-size: 17px !important" href="/politicas">Política de privacidad | </a>
-            <span style="font-size: 17px !important">Central Perú: <a style="color:#faf3f3; font-size: 17px !important" href="tel:017482415">017482415</a> | <a style="color:#faf3f3; font-size: 17px !important" href="mailto:info@rhnube.com.pe">info@rhnube.com.pe</a></span>
+            <span class="footer_rh">© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
+            <a class="footer_rh" style="color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span class="footer_rh">Central Perú: 
+               <a class="footer_rh" style="color:#faf3f3;" href="tel:017482415">017482415</a> | <a class="footer_rh" style="color:#faf3f3;" href="mailto:info@rhnube.com.pe">info@rhnube.com.pe</a>
+            </span>
          </div>
       </footer>
       {{-- FIN DE PIE DE PÁGINA --}}
