@@ -97,6 +97,7 @@ class incidenciasController extends Controller
         ->select('in.inciden_id','in.idtipo_incidencia','tipI.tipoInc_descripcion','in.inciden_codigo',
         'in.inciden_descripcion','in.inciden_pagado','in.estado','in.sistema')
         ->where('in.organi_id','=',session('sesionidorg'))
+        ->where('in.estado','=',1)
         ->get();
 
         foreach($incidencias as $incidencia){
@@ -181,7 +182,42 @@ class incidenciasController extends Controller
         $incidencia->save();
         return response()->json(array("estado" => 1), 200);
         
-        
+    }
 
+    public function eliminarIncidencia(Request $request){
+        $idIncidencia=$request->idInc;
+
+        //*VERIFICAMOS SI ACTUALMETNE ESTA EN USO****************************
+        $incidencia=DB::table('incidencias as in')
+        ->leftJoin('tipo_incidencia as tipI','in.idtipo_incidencia','=','tipI.idtipo_incidencia')
+        ->select('in.inciden_id','in.idtipo_incidencia','tipI.tipoInc_descripcion','in.inciden_codigo',
+        'in.inciden_descripcion','in.inciden_pagado','in.estado','in.sistema')
+        ->where('in.organi_id','=',session('sesionidorg'))
+        ->where('in.inciden_id','=',$idIncidencia)
+        ->get()->first();
+
+
+        $incidencias_dias = DB::table('incidencia_dias as id')
+            ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+            ->where('id.id_incidencia', '=', $incidencia->inciden_id)
+            ->get();
+
+            if($incidencias_dias->isNotEmpty()){
+                $incidencia->uso=1;
+            }
+            else{
+                $incidencia->uso=0;
+            }
+        
+        if($incidencia->uso==1){
+            return 1;
+        } else{
+            $incidencia=incidencias::findOrfail($idIncidencia);
+            $incidencia->estado=0;
+       
+            $incidencia->save();
+            return 0;
+        }
+        
     }
 }

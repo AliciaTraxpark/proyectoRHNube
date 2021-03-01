@@ -10,6 +10,8 @@
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}" rel="stylesheet"/>
+    <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -124,7 +126,49 @@
         .form-control:disabled {
             background-color: #fcfcfc !important;
         }
+        /* MODIFICAR ESTILOS DE ALERTIFY */
+    .alertify .ajs-header {
+        font-weight: normal;
+    }
 
+    .ajs-body {
+        padding: 0px !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-height: 28px;
+        min-width: 75px;
+    }
+
+    .ajs-cancel {
+        font-size: 12px !important;
+    }
+
+    .ajs-ok {
+        font-size: 12px !important;
+    }
+
+    .alertify .ajs-dialog {
+        max-width: 450px;
+    }
+
+    .ajs-footer {
+        padding: 12px !important;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+        text-transform: none;
+    }
+
+    .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+        text-transform: none;
+    }
+
+    /* FINALIZACION */
     </style>
     <div class="row row-divided">
         <div class="col-md-12 col-xl-12">
@@ -154,7 +198,6 @@
                                     <th>Descripcion</th>
                                     <th>Pagado</th>
                                     <th>En uso</th>
-                                    <th>Estado</th>
                                     <th></th>
 
                                 </tr>
@@ -360,7 +403,7 @@
     <script src="{{ asset('landing/js/incidencias.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
-
+    <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>

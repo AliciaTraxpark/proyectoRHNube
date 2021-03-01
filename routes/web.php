@@ -543,6 +543,7 @@ Route::post('/registIncidencia', 'incidenciasController@registIncidencia');
 Route::post('/tablaIncidencias', 'incidenciasController@tablaIncidencias');
 Route::post('/dataIncidencia', 'incidenciasController@dataIncidencia');
 Route::post('/updateIncidencia','incidenciasController@updateIncidencia');
+Route::get('/eliminarIncidencia','incidenciasController@eliminarIncidencia');
 
 //* PUNTOS DE CONTROL
 Route::get('/puntoControl', 'PuntosControlController@index');
