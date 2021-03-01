@@ -156,7 +156,7 @@
                                     <th>En uso</th>
                                     <th>Estado</th>
                                     <th></th>
-                                    
+
                                 </tr>
                             </thead>
                             {{-- <tbody>
@@ -272,15 +272,30 @@
                      </div>
                      <div class="modal-body" style="font-size:12px!important">
                          <div class="row">
-
+                            <input type="hidden" id="idIncidencia_ed">
                              <div class="col-md-12 col-12">
-                                 <form id="frmHorNuevo" action="javascript:UpdateIncidencia();">
+                                 <form id="frmHorNuevo_ed" action="javascript:UpdateIncidencia();">
                                      <div class="row">
                                          <div class="col-md-6 col-12">
-                                             <div class="form-group">
-                                                 <label for="">Tipo de incidencia:</label>
-                                                 <input type="text" class="form-control form-control-sm"
-                                                     id="selectTipoIncide_ed" disabled >
+                                             <div class="form-group">                                          
+                                                     <label for="">Seleccione tipo de incidencia:</label>
+                                                     <div id="selectTipo_ed">
+                                                        <select data-plugin="customselect" id="selectTipoIncide_ed"
+                                                        name="selectTipoIncide_ed" class="form-control"
+                                                        data-placeholder="seleccione" required>
+                                                        @foreach ($tipo_incidencia as $tipoI)
+                                                            <option value=""></option>
+                                                            <option value="{{ $tipoI->idtipo_incidencia }}">
+                                                                {{ $tipoI->tipoInc_descripcion }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                     </div>
+                                                    
+                                                    <input type="text" class="form-control form-control-sm"
+                                                    id="selectTipoIncide_edSis"   ><input type="hidden" id="idTipoInci">
+
+
+
                                              </div>
                                          </div>
                                          <div class="col-md-6"></div>

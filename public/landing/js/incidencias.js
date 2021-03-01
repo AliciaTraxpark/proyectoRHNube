@@ -1,3 +1,4 @@
+var idIncidencia;
 $.fn.dataTable.ext.errMode = "throw";
 $(document).ready(function () {
     var table = $("#tablaIncidencias").DataTable({
@@ -336,6 +337,10 @@ function IncidenEditar(idIncidencia){
     $('#codigoIncid_ed').prop('disabled',false);
     $('#pagadoCheck_ed').prop('disabled',false);
 
+    //*tipoInci
+      $('#selectTipo_ed').show();
+    $('#selectTipoIncide_edSis').hide(); 
+
     $.ajax({
         type: "post",
         url: "/dataIncidencia",
@@ -356,44 +361,71 @@ function IncidenEditar(idIncidencia){
         success: function (data) {
 
             //*seteando datos
-            $('#selectTipoIncide_ed').val(data[0].tipoInc_descripcion);
-            $('#descripcionIncid_ed').val(data[0].inciden_descripcion);
-            $('#codigoIncid_ed').val(data[0].inciden_codigo);
-
-            if(data[0].inciden_pagado == 1){
+            $('#idIncidencia_ed').val(data.inciden_id);
+            $('#selectTipoIncide_ed').val(data.idtipo_incidencia);
+            $("#selectTipoIncide_ed").trigger("change");
+            $('#descripcionIncid_ed').val(data.inciden_descripcion);
+            $('#codigoIncid_ed').val(data.inciden_codigo);
+            $('#selectTipoIncide_ed').prop('required',true);
+            if(data.inciden_pagado == 1){
                 $('#pagadoCheck_ed').prop('checked',true);
             } else{
                 $('#pagadoCheck_ed').prop('checked',false);
             }
-
-            //**************SI ES DE SISTEMA******************
-            if(data[0].sistema==1){
+            $('#selectTipo_ed').show();
+            //*si esta en uso
+            if(data.uso==1){
                 $('#descripcionIncid_ed').prop('disabled',true);
+                $('#pagadoCheck_ed').prop('disabled',true);
+                $('#selectTipoIncide_ed').prop('disabled',true);
+            } else{
+                $('#pagadoCheck_ed').prop('disabled',false);
+            }
+            //**************SI ES DE SISTEMA******************
+            if(data.sistema==1){
+                $('#descripcionIncid_ed').prop('disabled',true);
+                //*tipo incidencia de sistema
+                if(data.tipoInc_descripcion=='De sistema'){
+                    $('#selectTipoIncide_edSis').show();
+                    $('#selectTipoIncide_edSis').val('De sistema');
+                    $('#selectTipoIncide_edSis').prop('disabled',true);
+                    $('#selectTipoIncide_ed').prop('required',false);
+                    $('#idTipoInci').val(data.idtipo_incidencia);
+                    $('#selectTipo_ed').hide();
+                } else{
+                    $('#selectTipo_ed').show();
+                    $('#selectTipoIncide_edSis').hide();
+                }
+                
 
                 //si tiene codigo
-                if(data[0].inciden_codigo){
+                if(data.inciden_codigo){
                     $('#codigoIncid_ed').prop('disabled',true);
                 } else{
                     $('#codigoIncid_ed').prop('disabled',false);
                 }
+
+                
             }
             //**************************************************
             else{
-
+                //*tipo incidencia
+                $('#selectTipo_ed').show();
+                $('#selectTipoIncide_edSis').hide();
                 //*SI NO ES DE SISTEMA, PRIMERO SE VERIFICA SI TIENE USO
-                if(data[0].uso==1){
-
+                if(data.uso==1){
+                    $('#selectTipoIncide_ed').prop('disabled',true);
                     $('#descripcionIncid_ed').prop('disabled',true);
                     $('#pagadoCheck_ed').prop('disabled',true);
 
                     //VERIFICO SI TIENE CODIGO
-                    if(data[0].inciden_codigo){
+                    if(data.inciden_codigo){
                         $('#codigoIncid_ed').prop('disabled',true);
                     } else{
                         $('#codigoIncid_ed').prop('disabled',false);
                     }
                 } else{
-
+                    $('#selectTipoIncide_ed').prop('disabled',false);
                     //SI NO ESTA EN USO PUEDO MODIFICAR TODO
                     $('#descripcionIncid_ed').prop('disabled',false);
                     $('#codigoIncid_ed').prop('disabled',false);
@@ -406,9 +438,111 @@ function IncidenEditar(idIncidencia){
 
         },
         error: function (data) {
-            alert('Ocurrio un error');
+
         }
 
 
     });
+}
+//********************************************************************************** */
+
+//* FUNCION ACTUALIZAR INCIDENCIA**********************************************
+function UpdateIncidencia(){
+let tipoInUpdate;
+    if($('#selectTipo_ed').is(':visible')){
+        tipoInUpdate=$('#selectTipoIncide_ed').val();
+    } else{
+        tipoInUpdate=$('#idTipoInci').val();
+    }
+let descripUp=$('#descripcionIncid_ed').val();
+let codigoUp=$('#codigoIncid_ed').val();
+let pagadoUp;
+
+if($('#pagadoCheck_ed').is(':checked')){
+    pagadoUp=1;
+} else{
+    pagadoUp=0;
+}
+let idInc= $('#idIncidencia_ed').val();
+$.ajax({
+    type: "post",
+        url: "/updateIncidencia",
+        async:false,
+        data: {
+            tipoInUpdate, idInc,descripUp,codigoUp,pagadoUp
+
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            //*si datos no son validos
+            if(data.estado==0){
+                $.notifyClose();
+                $.notify(
+                    {
+                        message:
+                            "\nYa existe una incidencia con este código.",
+                        icon: "admin/images/warning.svg",
+                    },
+                    {
+                        element: $("#editarIncidencia"),
+                        position: "fixed",
+                        mouse_over: "pause",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 2000,
+                        template:
+                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else{
+                $('#tablaIncidencias').DataTable().ajax.reload(null, false);
+                $('#editarIncidencia').modal('hide');
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nIncidencia actualizada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 50,
+                    }
+                );
+            }
+            
+        },
+        error: function (data) {
+
+        }
+
+
+})
 }
