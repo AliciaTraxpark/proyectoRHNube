@@ -452,6 +452,10 @@
                                                 <label for="">Sobretiempo normal</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colSobretiempoNocturnoT">
+                                                <label for="">Sobretiempo nocturno</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoTotal" checked>
                                                 <label for="">Tiempo total</label>
                                             </li>
@@ -463,6 +467,25 @@
                                         <input type="checkbox" id="colCodigo">
                                         <label for="">Código de trabajador</label>
                                     </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido dispositivoPadre">
+                                        <input type="checkbox">
+                                        <label for="">Dispositivos</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleDisp()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoDispositivos">
+                                        <li class="liContenido dispositivoHijo">
+                                            <input type="checkbox" id="colDispositivoE">
+                                            <label for="">Entreda</label>
+                                        </li>
+                                        <li class="liContenido dispositivoHijo">
+                                            <input type="checkbox" id="colDispositivoS">
+                                            <label for="">Salida</label>
+                                        </li>
+                                    </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">

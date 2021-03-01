@@ -482,6 +482,10 @@
                                                 <label for="">Sobretiempo normal</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colSobretiempoNocturnoT">
+                                                <label for="">Sobretiempo nocturno</label>
+                                            </li>
+                                            <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoTotal" checked>
                                                 <label for="">Tiempo total</label>
                                             </li>
