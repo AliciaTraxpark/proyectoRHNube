@@ -631,100 +631,92 @@ function cargartabla(fecha) {
                                         if (horarioData.tiempoMuertoIngreso == 1) {
                                             console.log(horarioData.horarioIni);
                                             if (horaInicialData.clone().isBefore(moment(horarioData.horarioIni))) {
-                                                var tiempoMuerto = moment(horarioData.horarioIni) - horaInicialData.clone();
-                                                tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
-                                                horaInicialData = moment(horarioData.horarioIni);
+                                                if (horaFinalData.clone().isAfter(moment(horarioData.horarioIni))) {
+                                                    var tiempoMuerto = moment(horarioData.horarioIni) - horaInicialData.clone();
+                                                    tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
+                                                    horaInicialData = moment(horarioData.horarioIni);
+                                                } else {
+                                                    var tiempoMuerto = horaFinalData.clone() - horaInicialData.clone();
+                                                    tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
+                                                    horaInicialData = moment.duration(0);
+                                                    horaFinalData = moment.duration(0);
+                                                }
                                             }
                                         }
                                     }
-                                    // : GUARDAR EL TIEMPO ENTE MARCACIONES
-                                    var tiempoEntreM = moment.duration(horaFinalData.diff(horaInicialData));
-                                    // : ACUMULAR TIEMPO CALCULADOS
-                                    var acumuladorEntreM = moment.duration(0);
-                                    // : TIEMPOS MAXIMOS DE DIURNOS Y NOCTURNOS 
-                                    var tiempoMaximoDiurno = moment(horaInicialData.clone().format("YYYY-MM-DD") + " " + "22:00:00");
-                                    var tiempoMaximoNocturno = moment(horaInicialData.clone().format("YYYY-MM-DD") + " " + "06:00:00");
-                                    // : HORAS NORMALES
-                                    if (horaInicialData.isAfter(tiempoMaximoNocturno) && horaInicialData.isSameOrBefore(tiempoMaximoDiurno)) {
-                                        if (primeraM == undefined) primeraM = 0;
-                                        if (horaFinalData.clone().isSameOrBefore(tiempoMaximoDiurno)) {
-                                            var tiempoNormal = horaFinalData - horaInicialData;
-                                            var segundosNormal = moment.duration(tiempoNormal).seconds();
-                                            var minutosNormal = moment.duration(tiempoNormal).minutes();
-                                            var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
-                                            sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                            sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                        } else {
-                                            var minuendoResta = tiempoMaximoDiurno.clone();
-                                            var sustraendoResta = horaInicialData.clone();
-                                            var contadorDias = 1;
-                                            while (acumuladorEntreM < tiempoEntreM) {
-                                                // : ************************************************* HORAS NORMALES *************************************************
-                                                var tiempoNormal = minuendoResta - sustraendoResta;
+                                    if (horaInicialData != 0 && horaFinalData != 0) {
+                                        // : GUARDAR EL TIEMPO ENTE MARCACIONES
+                                        var tiempoEntreM = moment.duration(horaFinalData.diff(horaInicialData));
+                                        // : ACUMULAR TIEMPO CALCULADOS
+                                        var acumuladorEntreM = moment.duration(0);
+                                        // : TIEMPOS MAXIMOS DE DIURNOS Y NOCTURNOS 
+                                        var tiempoMaximoDiurno = moment(horaInicialData.clone().format("YYYY-MM-DD") + " " + "22:00:00");
+                                        var tiempoMaximoNocturno = moment(horaInicialData.clone().format("YYYY-MM-DD") + " " + "06:00:00");
+                                        // : HORAS NORMALES
+                                        if (horaInicialData.isAfter(tiempoMaximoNocturno) && horaInicialData.isSameOrBefore(tiempoMaximoDiurno)) {
+                                            if (primeraM == undefined) primeraM = 0;
+                                            if (horaFinalData.clone().isSameOrBefore(tiempoMaximoDiurno)) {
+                                                var tiempoNormal = horaFinalData - horaInicialData;
                                                 var segundosNormal = moment.duration(tiempoNormal).seconds();
                                                 var minutosNormal = moment.duration(tiempoNormal).minutes();
                                                 var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
                                                 sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
                                                 sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                // : ************************************************* FINALIZACION *****************************************************
-                                                var tiempoMaximoDiurnoAnterior = tiempoMaximoDiurno;
-                                                tiempoMaximoDiurno = tiempoMaximoDiurno.clone().add("day", contadorDias);
-                                                tiempoMaximoNocturno = tiempoMaximoNocturno.clone().add("day", contadorDias);
-                                                if (acumuladorEntreM < tiempoEntreM) {
-                                                    if (horaFinalData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
-                                                        // : HORA NOCTURNA
-                                                        sustraendoResta = minuendoResta;
-                                                        minuendoResta = horaFinalData;
-                                                        var tiempoNocturno = minuendoResta - sustraendoResta;
-                                                        var segundosNocturno = moment.duration(tiempoNocturno).seconds();
-                                                        var minutosNocturno = moment.duration(tiempoNocturno).minutes();
-                                                        var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
-                                                        sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                    } else {
-                                                        minuendoResta = tiempoMaximoNocturno;
-                                                        sustraendoResta = tiempoMaximoDiurnoAnterior;
-                                                        // : HORA NOCTURNA
-                                                        var tiempoNocturno = minuendoResta - sustraendoResta;
-                                                        var segundosNocturno = moment.duration(tiempoNocturno).seconds();
-                                                        var minutosNocturno = moment.duration(tiempoNocturno).minutes();
-                                                        var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
-                                                        sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        if (horaFinalData.clone().isSameOrBefore(tiempoMaximoDiurno)) {
-                                                            minuendoResta = horaFinalData.clone();
-                                                            sustraendoResta = tiempoMaximoNocturno;
+                                            } else {
+                                                var minuendoResta = tiempoMaximoDiurno.clone();
+                                                var sustraendoResta = horaInicialData.clone();
+                                                var contadorDias = 1;
+                                                while (acumuladorEntreM < tiempoEntreM) {
+                                                    // : ************************************************* HORAS NORMALES *************************************************
+                                                    var tiempoNormal = minuendoResta - sustraendoResta;
+                                                    var segundosNormal = moment.duration(tiempoNormal).seconds();
+                                                    var minutosNormal = moment.duration(tiempoNormal).minutes();
+                                                    var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
+                                                    sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                    sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                    acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                    // : ************************************************* FINALIZACION *****************************************************
+                                                    var tiempoMaximoDiurnoAnterior = tiempoMaximoDiurno;
+                                                    tiempoMaximoDiurno = tiempoMaximoDiurno.clone().add("day", contadorDias);
+                                                    tiempoMaximoNocturno = tiempoMaximoNocturno.clone().add("day", contadorDias);
+                                                    if (acumuladorEntreM < tiempoEntreM) {
+                                                        if (horaFinalData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
+                                                            // : HORA NOCTURNA
+                                                            sustraendoResta = minuendoResta;
+                                                            minuendoResta = horaFinalData;
+                                                            var tiempoNocturno = minuendoResta - sustraendoResta;
+                                                            var segundosNocturno = moment.duration(tiempoNocturno).seconds();
+                                                            var minutosNocturno = moment.duration(tiempoNocturno).minutes();
+                                                            var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
+                                                            sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                                         } else {
-                                                            minuendoResta = tiempoMaximoDiurno;
-                                                            sustraendoResta = tiempoMaximoNocturno;
+                                                            minuendoResta = tiempoMaximoNocturno;
+                                                            sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                            // : HORA NOCTURNA
+                                                            var tiempoNocturno = minuendoResta - sustraendoResta;
+                                                            var segundosNocturno = moment.duration(tiempoNocturno).seconds();
+                                                            var minutosNocturno = moment.duration(tiempoNocturno).minutes();
+                                                            var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
+                                                            sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            if (horaFinalData.clone().isSameOrBefore(tiempoMaximoDiurno)) {
+                                                                minuendoResta = horaFinalData.clone();
+                                                                sustraendoResta = tiempoMaximoNocturno;
+                                                            } else {
+                                                                minuendoResta = tiempoMaximoDiurno;
+                                                                sustraendoResta = tiempoMaximoNocturno;
+                                                            }
                                                         }
                                                     }
+                                                    contadorDias++;
+                                                    // debugger;
                                                 }
-                                                contadorDias++;
-                                                // debugger;
                                             }
-                                        }
-                                    } else {
-                                        if (primeraM == undefined) primeraM = 1;
-                                        if (horaFinalData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
-                                            // : HORAS NOCTURNAS
-                                            var tiempoNocturno = horaFinalData - horaInicialData;
-                                            var segundosNocturno = moment.duration(tiempoNocturno).seconds();
-                                            var minutosNocturno = moment.duration(tiempoNocturno).minutes();
-                                            var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
-                                            sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                            sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                         } else {
-                                            if (moment.duration(horaInicialData.clone().format("HH:mm:ss")) < moment.duration("06:00:00")) {
-                                                tiempoMaximoDiurno = moment(horaInicialData.clone().format("YYYY-MM-DD") + " " + "22:00:00");
-                                                tiempoMaximoNocturno = moment(horaInicialData.clone().format("YYYY-MM-DD") + " " + "06:00:00");
-                                            } else {
-                                                tiempoMaximoDiurno = moment(horaInicialData.clone().add("day", 1).format("YYYY-MM-DD") + " " + "22:00:00");
-                                                tiempoMaximoNocturno = moment(horaInicialData.clone().add("day", 1).format("YYYY-MM-DD") + " " + "06:00:00");
-                                            }
+                                            if (primeraM == undefined) primeraM = 1;
                                             if (horaFinalData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
                                                 // : HORAS NOCTURNAS
                                                 var tiempoNocturno = horaFinalData - horaInicialData;
@@ -734,77 +726,94 @@ function cargartabla(fecha) {
                                                 sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                                 sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                             } else {
-                                                var minuendoResta = tiempoMaximoNocturno.clone();
-                                                var sustraendoResta = horaInicialData.clone();
-                                                var contadorDias = 1;
-                                                while (acumuladorEntreM < tiempoEntreM) {
+                                                if (moment.duration(horaInicialData.clone().format("HH:mm:ss")) < moment.duration("06:00:00")) {
+                                                    tiempoMaximoDiurno = moment(horaInicialData.clone().format("YYYY-MM-DD") + " " + "22:00:00");
+                                                    tiempoMaximoNocturno = moment(horaInicialData.clone().format("YYYY-MM-DD") + " " + "06:00:00");
+                                                } else {
+                                                    tiempoMaximoDiurno = moment(horaInicialData.clone().add("day", 1).format("YYYY-MM-DD") + " " + "22:00:00");
+                                                    tiempoMaximoNocturno = moment(horaInicialData.clone().add("day", 1).format("YYYY-MM-DD") + " " + "06:00:00");
+                                                }
+                                                if (horaFinalData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
                                                     // : HORAS NOCTURNAS
-                                                    var tiempoNocturno = minuendoResta - sustraendoResta;
+                                                    var tiempoNocturno = horaFinalData - horaInicialData;
                                                     var segundosNocturno = moment.duration(tiempoNocturno).seconds();
                                                     var minutosNocturno = moment.duration(tiempoNocturno).minutes();
                                                     var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
                                                     sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                                     sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                    acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                    // : CALCULOS DE TIEMPO
-                                                    var tiempoMaximoDiurnoAnterior = tiempoMaximoDiurno;
-                                                    tiempoMaximoDiurno = moment(tiempoMaximoDiurno.clone().add("day", contadorDias));
-                                                    tiempoMaximoNocturno = moment(tiempoMaximoNocturno.clone().add("day", contadorDias));
-                                                    if (acumuladorEntreM < tiempoEntreM) {
-                                                        if (horaFinalData.clone().isSameOrBefore(tiempoMaximoDiurnoAnterior)) {
-                                                            sustraendoResta = minuendoResta;
-                                                            minuendoResta = horaFinalData.clone();
-                                                            // : HORAS NORMALES
-                                                            var tiempoNormal = minuendoResta - sustraendoResta;
-                                                            var segundosNormal = moment.duration(tiempoNormal).seconds();
-                                                            var minutosNormal = moment.duration(tiempoNormal).minutes();
-                                                            var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
-                                                            sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                        } else {
-                                                            sustraendoResta = minuendoResta;
-                                                            minuendoResta = tiempoMaximoDiurnoAnterior;
-                                                            // : HORAS NORMALES
-                                                            var tiempoNormal = minuendoResta - sustraendoResta;
-                                                            var segundosNormal = moment.duration(tiempoNormal).seconds();
-                                                            var minutosNormal = moment.duration(tiempoNormal).minutes();
-                                                            var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
-                                                            sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            if (horaFinalData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
+                                                } else {
+                                                    var minuendoResta = tiempoMaximoNocturno.clone();
+                                                    var sustraendoResta = horaInicialData.clone();
+                                                    var contadorDias = 1;
+                                                    while (acumuladorEntreM < tiempoEntreM) {
+                                                        // : HORAS NOCTURNAS
+                                                        var tiempoNocturno = minuendoResta - sustraendoResta;
+                                                        var segundosNocturno = moment.duration(tiempoNocturno).seconds();
+                                                        var minutosNocturno = moment.duration(tiempoNocturno).minutes();
+                                                        var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
+                                                        sumaHorasNocturnas = sumaHorasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                        sumaHorasNocturnasT = sumaHorasNocturnasT.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                        acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                        // : CALCULOS DE TIEMPO
+                                                        var tiempoMaximoDiurnoAnterior = tiempoMaximoDiurno;
+                                                        tiempoMaximoDiurno = moment(tiempoMaximoDiurno.clone().add("day", contadorDias));
+                                                        tiempoMaximoNocturno = moment(tiempoMaximoNocturno.clone().add("day", contadorDias));
+                                                        if (acumuladorEntreM < tiempoEntreM) {
+                                                            if (horaFinalData.clone().isSameOrBefore(tiempoMaximoDiurnoAnterior)) {
+                                                                sustraendoResta = minuendoResta;
                                                                 minuendoResta = horaFinalData.clone();
-                                                                sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                                // : HORAS NORMALES
+                                                                var tiempoNormal = minuendoResta - sustraendoResta;
+                                                                var segundosNormal = moment.duration(tiempoNormal).seconds();
+                                                                var minutosNormal = moment.duration(tiempoNormal).minutes();
+                                                                var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
+                                                                sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
                                                             } else {
-                                                                minuendoResta = tiempoMaximoNocturno;
-                                                                sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                                sustraendoResta = minuendoResta;
+                                                                minuendoResta = tiempoMaximoDiurnoAnterior;
+                                                                // : HORAS NORMALES
+                                                                var tiempoNormal = minuendoResta - sustraendoResta;
+                                                                var segundosNormal = moment.duration(tiempoNormal).seconds();
+                                                                var minutosNormal = moment.duration(tiempoNormal).minutes();
+                                                                var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
+                                                                sumaHorasNormales = sumaHorasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                sumaHorasNormalesT = sumaHorasNormalesT.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                if (horaFinalData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
+                                                                    minuendoResta = horaFinalData.clone();
+                                                                    sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                                } else {
+                                                                    minuendoResta = tiempoMaximoNocturno;
+                                                                    sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                                }
                                                             }
                                                         }
+                                                        contadorDias++;
+                                                        // debugger;
                                                     }
-                                                    contadorDias++;
-                                                    // debugger;
                                                 }
                                             }
                                         }
+                                        // * TIEMPO TOTAL TRABAJADA
+                                        var tiempoRestanteD = horaFinalData - horaInicialData;
+                                        var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
+                                        var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
+                                        var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
+                                        if (horasTiempoD < 10) {
+                                            horasTiempoD = '0' + horasTiempoD;
+                                        }
+                                        if (minutosTiempo < 10) {
+                                            minutosTiempoD = '0' + minutosTiempoD;
+                                        }
+                                        if (segundosTiempoD < 10) {
+                                            segundosTiempoD = '0' + segundosTiempoD;
+                                        }
+                                        sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
+                                        // : SUMA DE TIEMPO TOTAL
+                                        sumaTiempos = sumaTiempos.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                     }
-                                    // * TIEMPO TOTAL TRABAJADA
-                                    var tiempoRestanteD = horaFinalData - horaInicialData;
-                                    var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
-                                    var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
-                                    var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
-                                    if (horasTiempoD < 10) {
-                                        horasTiempoD = '0' + horasTiempoD;
-                                    }
-                                    if (minutosTiempo < 10) {
-                                        minutosTiempoD = '0' + minutosTiempoD;
-                                    }
-                                    if (segundosTiempoD < 10) {
-                                        segundosTiempoD = '0' + segundosTiempoD;
-                                    }
-                                    sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
-                                    // : SUMA DE TIEMPO TOTAL
-                                    sumaTiempos = sumaTiempos.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                 }
                             }
                         }
@@ -1256,6 +1265,19 @@ function cargartabla(fecha) {
                         if (segundoNocturna100 < 10) {
                             segundoNocturna100 = "0" + segundoNocturna100;
                         }
+                        // : TIEMPO MUERTO EN ENTRADA
+                        var horaTiempoMuertoEntrada = Math.trunc(moment.duration(tiempoMuertoEntrada).asHours());
+                        var minutoTiempoMuertoEntrada = moment.duration(tiempoMuertoEntrada).minutes();
+                        var segundoTiempoMuertoEntrada = moment.duration(tiempoMuertoEntrada).seconds();
+                        if (horaTiempoMuertoEntrada < 10) {
+                            horaTiempoMuertoEntrada = "0" + horaTiempoMuertoEntrada;
+                        }
+                        if (minutoTiempoMuertoEntrada < 10) {
+                            minutoTiempoMuertoEntrada = "0" + minutoTiempoMuertoEntrada;
+                        }
+                        if (segundoTiempoMuertoEntrada < 10) {
+                            segundoTiempoMuertoEntrada = "0" + segundoTiempoMuertoEntrada;
+                        }
                         if (permisoModificar == 1) {
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
@@ -1316,7 +1338,8 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        ${tiempoMuertoEntrada}
+                                                        <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1454,7 +1477,8 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        ${tiempoMuertoEntrada}
+                                                        <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1593,7 +1617,8 @@ function cargartabla(fecha) {
                                                     </a>
                                                 </td>
                                                 <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                    ${tiempoMuertoEntrada}
+                                                    <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                    ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
                                                 </td>
                                                 <td class="text-center" name="colSobreTiempo" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
@@ -1694,7 +1719,8 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        ${tiempoMuertoEntrada}
+                                                        <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1793,7 +1819,8 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        ${tiempoMuertoEntrada}
+                                                        <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1896,7 +1923,8 @@ function cargartabla(fecha) {
                                                     </a>
                                                 </td>
                                                 <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                    ${tiempoMuertoEntrada}
+                                                    <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                    ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
                                                 </td>
                                                 <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
@@ -2516,7 +2544,7 @@ function cargartabla(fecha) {
                                         <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
-                                        <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;"></td>
+                                        <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
