@@ -442,6 +442,7 @@ function cargartabla(fecha1, fecha2) {
                             <th class="text-center">H.E. 100% Diurnas</th>
                             <th class="text-center">Horario nocturno</th>
                             <th class="text-center">Sobretiempo nocturno</th>
+                            <th class="text-center">H.E. 25% Nocturnas</th>
                             <th class="text-center">Tardanza total</th>
                             <th class="text-center">Faltas total</th>
                             <th class="text-center">Incidencias total</th>
@@ -1227,6 +1228,19 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoTiempoDiurnas100 < 10) {
                     segundoTiempoDiurnas100 = "0" + segundoTiempoDiurnas100;
                 }
+                // : HORAS EXTRAS NOCTURNAS 25%
+                var horaTiempoNocturnas25 = Math.trunc(moment.duration(tiempoNocturnas25).asHours());
+                var minutoTiempoNocturnas25 = moment.duration(tiempoNocturnas25).minutes();
+                var segundoTiempoNocturnas25 = moment.duration(tiempoNocturnas25).seconds();
+                if (horaTiempoNocturnas25 < 10) {
+                    horaTiempoNocturnas25 = "0" + horaTiempoNocturnas25;
+                }
+                if (minutoTiempoNocturnas25 < 10) {
+                    minutoTiempoNocturnas25 = "0" + minutoTiempoNocturnas25;
+                }
+                if (segundoTiempoNocturnas25 < 10) {
+                    segundoTiempoNocturnas25 = "0" + segundoTiempoNocturnas25;
+                }
                 tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="text-center">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1263,7 +1277,7 @@ function cargartabla(fecha1, fecha2) {
                             <img src="landing/images/timerD.svg" height="20" class="mr-2">
                             ${horaTiempoDiurnas100}:${minutoTiempoDiurnas100}:${segundoTiempoDiurnas100}
                         </td>
-                        <td>
+                        <td class="text-center">
                             <a class="badge badge-soft-info mr-2">
                                 <img src="landing/images/moon.svg" height="12" class="mr-2">
                                 ${horaSumaHorariosNocturnos}:${minutoSumaHorariosNocturnos}:${segundoSumaHorariosNocturnos}
@@ -1274,6 +1288,10 @@ function cargartabla(fecha1, fecha2) {
                                 <img src="landing/images/moon.svg" height="12" class="mr-2">
                                 ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                             </a>
+                        </td>
+                        <td class="text-center">
+                            <img src="landing/images/timer.svg" height="20" class="mr-2">
+                            ${horaTiempoNocturnas25}:${minutoTiempoNocturnas25}:${segundoTiempoNocturnas25}
                         </td>
                         <td class="text-center">
                             <a class="badge badge-soft-danger mr-2">
