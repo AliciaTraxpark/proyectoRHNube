@@ -451,8 +451,7 @@ class dispositivosController extends Controller
                         "toleranciaF" => $empleado->toleranciaF,
                         "idHorarioE" => $empleado->idHorarioE,
                         "estado" => $empleado->estado,
-                        "horasObligadas" => $empleado->horasObligadas,
-                        "llenar35" => $empleado->llenar35
+                        "horasObligadas" => $empleado->horasObligadas
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["pausas"])) {
