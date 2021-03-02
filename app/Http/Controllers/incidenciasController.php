@@ -40,10 +40,10 @@ class incidenciasController extends Controller
 
             if($incidencias->isNotEmpty()){
                 //*HAY REPETICION
-                return 1;
+                return response()->json(array("estado" => 0, "incidencia" => $incidencias->first()), 200);
             } else{
                 //*NO HAY RPETICCION
-                return 0;
+                return response()->json(array("estado" => 1), 200);
             }
 
          } else{
@@ -57,10 +57,10 @@ class incidenciasController extends Controller
 
              if($incidencias->isNotEmpty()){
                 //*HAY REPETICION
-                return 1;
+                return response()->json(array("estado" => 0, "incidencia" => $incidencias->first()), 200);
              } else{
                  //*NO HAY RPETICCION
-                 return 0;
+                 return response()->json(array("estado" => 1), 200);
              }
 
          }
@@ -219,5 +219,13 @@ class incidenciasController extends Controller
             return 0;
         }
         
+    }
+
+    public function recuperarInci(Request $request){
+        $idIncidencia=$request->id;
+        $incidencia=incidencias::findOrfail($idIncidencia);
+        $incidencia->estado=1;
+        $incidencia->save();
+
     }
 }

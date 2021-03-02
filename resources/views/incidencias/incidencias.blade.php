@@ -307,7 +307,7 @@
 
                  <div class="modal-content">
                      <div class="modal-header" style="background-color:#163552;">
-                         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Nueva incidencia
+                         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar incidencia
                          </h5>
                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                              <span aria-hidden="true">&times;</span>
