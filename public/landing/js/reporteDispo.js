@@ -406,6 +406,7 @@ function cargartabla(fecha) {
                                 <th name="toleranciaIHorario" class="toleranciaIHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en el ingreso</th>
                                 <th name="toleranciaFHorario" class="toleranciaFHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en la salida</th>
                                 <th name="colTiempoEntreH" class="text-center colTiempoEntreH" style="border-right: 1px dashed #c8d4de!important;">Tiempo total</th>
+                                <th name="colTiempoMuertoEntrada" class="text-center colTiempoMuertoEntrada" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto entrada</th>
                                 <th name="colSobreTiempo" class="text-center colSobreTiempo" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo</th>
                                 <th name="colHoraNormal" class="text-center colHoraNormal" style="border-right: 1px dashed #c8d4de!important;">Horario normal</th>
                                 <th name="colSobreTNormal" class="text-center colSobreTNormal" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo normal</th>
@@ -441,7 +442,7 @@ function cargartabla(fecha) {
                                     </th>
                                     <th id="tSitio" name="colTiempoS" class="colTiempoS">
                                         <span>
-                                            Tiempo total <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                            Tiempo <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
                                     </th>`;
                 }
@@ -573,6 +574,8 @@ function cargartabla(fecha) {
                     var nocturnas25 = moment.duration(0);
                     var nocturnas35 = moment.duration(0);
                     var nocturnas100 = moment.duration(0);
+                    // * TIEMPO MUERTO ENTRADA
+                    var tiempoMuertoEntrada = moment.duration(0);
                     if (data[index].data[m] != undefined) {
                         // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                         var horarioData = data[index].data[m].horario;
@@ -624,6 +627,16 @@ function cargartabla(fecha) {
                                 var horaFinalData = moment(dataM.salida);
                                 var horaInicialData = moment(dataM.entrada);
                                 if (horaFinalData.isSameOrAfter(horaInicialData)) {
+                                    if (horarioData.idHorario != 0) {
+                                        if (horarioData.tiempoMuertoIngreso == 1) {
+                                            console.log(horarioData.horarioIni);
+                                            if (horaInicialData.clone().isBefore(moment(horarioData.horarioIni))) {
+                                                var tiempoMuerto = moment(horarioData.horarioIni) - horaInicialData.clone();
+                                                tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
+                                                horaInicialData = moment(horarioData.horarioIni);
+                                            }
+                                        }
+                                    }
                                     // : GUARDAR EL TIEMPO ENTE MARCACIONES
                                     var tiempoEntreM = moment.duration(horaFinalData.diff(horaInicialData));
                                     // : ACUMULAR TIEMPO CALCULADOS
@@ -790,6 +803,8 @@ function cargartabla(fecha) {
                                         segundosTiempoD = '0' + segundosTiempoD;
                                     }
                                     sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
+                                    // : SUMA DE TIEMPO TOTAL
+                                    sumaTiempos = sumaTiempos.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                 }
                             }
                         }
@@ -1300,6 +1315,9 @@ function cargartabla(fecha) {
                                                             ${horaSumaTiemposEntreHorario}:${minutoSumaTiemposEntreHorario}:${segundoSumaTiemposEntreHorario}
                                                         </a>
                                                     </td>
+                                                    <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${tiempoMuertoEntrada}
+                                                    </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1434,6 +1452,9 @@ function cargartabla(fecha) {
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${horaSumaTiemposEntreHorario}:${minutoSumaTiemposEntreHorario}:${segundoSumaTiemposEntreHorario}
                                                         </a>
+                                                    </td>
+                                                    <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${tiempoMuertoEntrada}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1571,6 +1592,9 @@ function cargartabla(fecha) {
                                                         ${horaSumaTiemposEntreHorario}:${minutoSumaTiemposEntreHorario}:${segundoSumaTiemposEntreHorario}
                                                     </a>
                                                 </td>
+                                                <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    ${tiempoMuertoEntrada}
+                                                </td>
                                                 <td class="text-center" name="colSobreTiempo" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1669,6 +1693,9 @@ function cargartabla(fecha) {
                                                             ${horaSumaTiemposEntreHorario}:${minutoSumaTiemposEntreHorario}:${segundoSumaTiemposEntreHorario}
                                                         </a>
                                                     </td>
+                                                    <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${tiempoMuertoEntrada}
+                                                    </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1764,6 +1791,9 @@ function cargartabla(fecha) {
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${horaSumaTiemposEntreHorario}:${minutoSumaTiemposEntreHorario}:${segundoSumaTiemposEntreHorario}
                                                         </a>
+                                                    </td>
+                                                    <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        ${tiempoMuertoEntrada}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1864,6 +1894,9 @@ function cargartabla(fecha) {
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                         ${horaSumaTiemposEntreHorario}:${minutoSumaTiemposEntreHorario}:${segundoSumaTiemposEntreHorario}
                                                     </a>
+                                                </td>
+                                                <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    ${tiempoMuertoEntrada}
                                                 </td>
                                                 <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
@@ -2120,7 +2153,6 @@ function cargartabla(fecha) {
                                         if (segundosTiempo < 10) {
                                             segundosTiempo = '0' + segundosTiempo;
                                         }
-                                        sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
                                     }
                                     // * FINALIZACION
                                     tbodyEntradaySalida += `<td name="colTiempoS">
@@ -2484,6 +2516,7 @@ function cargartabla(fecha) {
                                         <td class="text-center" name="toleranciaIHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;"></td>
                                         <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
@@ -2816,7 +2849,7 @@ function cargartabla(fecha) {
             inicializarTabla();
             $(window).on('resize', function () {
                 $("#tablaReport").css('width', '100%');
-                table.draw(true);
+                table.draw(false);
             });
             // * SWITCH DE MOSTRAR DETALLES
             toggleColumnas();
