@@ -252,6 +252,10 @@
                                     </li>
                                     <ul class="ulHijo" style="display: none" id="contenidoTiempos">
                                         <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colHorarioNormal">
+                                            <label for="">Horario normal</label>
+                                        </li>
+                                        <li class="liContenido tiemposHijo">
                                             <input type="checkbox" id="colTiempoTotal" checked>
                                             <label for="">Tiempo total</label>
                                         </li>
