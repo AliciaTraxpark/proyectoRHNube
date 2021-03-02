@@ -1512,6 +1512,15 @@ $('.tiemposPadre input[type=checkbox]').change(function () {
     $(this).closest('.tiemposPadre').next('ul').find('.tiemposHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
+// * TIEMPO EN SITIO
+$('#tiempoSitHi').change(function (event) {
+    if (event.target.checked) {
+        dataT.api().columns('.tiempoSitHi').visible(true);
+    } else {
+        dataT.api().columns('.tiempoSitHi').visible(false);
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
+});
 function toggleColumnas() {
     // * COLUMNA DE MARCACIONES
     if ($('#colMarcaciones').is(":checked")) {
@@ -1590,6 +1599,12 @@ function toggleColumnas() {
         dataT.api().columns('.colNocturnas100').visible(true);
     } else {
         dataT.api().columns('.colNocturnas100').visible(false);
+    }
+    // * COLUMNA TIEMPOE ENTRE MARCACIONES
+    if ($('#tiempoSitHi').is(":checked")) {
+        dataT.api().columns('.tiempoSitHi').visible(true);
+    } else {
+        dataT.api().columns('.tiempoSitHi').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

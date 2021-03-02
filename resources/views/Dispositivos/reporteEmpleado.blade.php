@@ -301,20 +301,17 @@
                                         </li>
                                     </ul>
                                 </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="tiempoSitHi">
+                                        <label for="">Tiempo entre marcaciones</label>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-md-12 pb-2">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
-                                onclick="javascript:cambiartabla()">
-                            <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">
-                                Mostrar detalles
-                            </label>
-                        </div>
-                    </div>
                     <div class="col-md-12 pb-2">
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="switPausas"
