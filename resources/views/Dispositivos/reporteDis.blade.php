@@ -257,6 +257,10 @@
         padding-left: 1em
     }
 
+    .separacionInsertar {
+        padding-right: 4em;
+    }
+
     .flatpickr-calendar {
         width: auto !important;
     }
@@ -282,6 +286,10 @@
         .separacion {
             padding-right: 1em !important;
             padding-left: 1em !important;
+        }
+
+        .separacionInsertar {
+            padding-right: 1em;
         }
     }
 </style>
@@ -840,7 +848,7 @@
 {{-- MODAL DE INSERTAR SALIDA --}}
 <div id="insertarSalida" class="modal fade" role="dialog" aria-labelledby="insertarSalida" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+    <div class="modal-dialog modal-lg d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
                 <h6 class="modal-title" style="color:#ffffff;">
@@ -867,12 +875,18 @@
                                 <div class="table-responsive">
                                     <table cellpadding="8">
                                         <tr>
+                                            {{-- ENCABEZADO --}}
                                             <th style="color:#383e56;">
                                                 Entrada
                                                 <img src="{{asset('landing/images/entradaD.svg') }}" height="12"
                                                     class="ml-1" />
                                             </th>
+                                            {{-- FECHA --}}
                                             <td>
+                                                <span id="i_fecha" style="font-weight: bold"></span>
+                                            </td>
+                                            {{-- HORA --}}
+                                            <td class="separacionInsertar">
                                                 <span id="i_hora" style="font-weight: bold"></span>
                                             </td>
                                             <th style="color:#383e56;">
@@ -880,6 +894,10 @@
                                                 <img src="{{asset('landing/images/salidaD.svg') }}" height="12"
                                                     class="ml-1" />
                                             </th>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm" id="fechaSalida"
+                                                    data-input>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control form-control-sm horasEntrada"
                                                     onchange="$(this).removeClass('borderColor');" id="horaSalidaNueva">
