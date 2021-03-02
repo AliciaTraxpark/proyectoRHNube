@@ -730,8 +730,7 @@ class dispositivosController extends Controller
                 'hor.horario_toleranciaF as toleranciaF',
                 'mp.marcaMov_id as idMarcacion',
                 'hor.horasObliga as horasObligadas',
-                'hoe.estado',
-                'rh.35_lleno as llenar35'
+                'hoe.estado'
             )
             ->where(DB::raw('IF(hoe.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start))'), '=', $fecha)
             ->where('mp.organi_id', '=', session('sesionidorg'))
