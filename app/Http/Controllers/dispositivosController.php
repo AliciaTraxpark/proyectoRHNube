@@ -452,7 +452,11 @@ class dispositivosController extends Controller
                         "idHorarioE" => $empleado->idHorarioE,
                         "estado" => $empleado->estado,
                         "horasObligadas" => $empleado->horasObligadas,
-                        "tiempoMuertoIngreso" => $empleado->tiempoMuertoIngreso
+                        "tiempoMuertoIngreso" => $empleado->tiempoMuertoIngreso,
+                        "tipoHorarioExtra" => $empleado->tipoHorarioExtra,
+                        "estado25" => $empleado->estado25,
+                        "estado35" => $empleado->estado35,
+                        "estado100" => $empleado->estado100
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["pausas"])) {
@@ -707,6 +711,7 @@ class dispositivosController extends Controller
             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+            ->leftJoin('reglas_horasextras as rh', 'rh.idreglas_horasExtras', '=', 'hor.idreglas_horasExtras')
             ->leftJoinSub($tipoDispositivo, 'entrada', function ($join) {
                 $join->on('mp.dispositivoEntrada', '=', 'entrada.idDispositivos');
             })
@@ -731,7 +736,11 @@ class dispositivosController extends Controller
                 'mp.marcaMov_id as idMarcacion',
                 'hor.horasObliga as horasObligadas',
                 'hoe.estado',
-                'hor.tiempoMingreso as tiempoMuertoIngreso'
+                'hor.tiempoMingreso as tiempoMuertoIngreso',
+                DB::raw('IF(rh.tipo_regla is null, null, IF(rh.tipo_regla = "Normal", 0, 1)) as tipoHorarioExtra'),
+                'rh.lleno25 as estado25',
+                'rh.lleno35 as estado35',
+                'rh.lleno100 as estado100'
             )
             ->where(DB::raw('IF(hoe.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start))'), '=', $fecha)
             ->where('mp.organi_id', '=', session('sesionidorg'))
