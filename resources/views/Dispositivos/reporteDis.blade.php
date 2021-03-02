@@ -441,6 +441,10 @@
                                                 <input type="checkbox" id="colTiempoEntreH">
                                                 <label for="">Tiempo entre horario</label>
                                             </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colTiempoMuertoEntrada">
+                                                <label for="">Tiempo muerto entrada</label>
+                                            </li>
                                         </ul>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colTiempoSitio">
