@@ -1185,13 +1185,13 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoSobretiempoNocturnos < 10) {
                     segundoSobretiempoNocturnos = "0" + segundoSobretiempoNocturnos;
                 }
-                tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="text-center">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${horaTiempoTotal}:${minutoTiempoTotal}:${segundoTiempoTotal}
                             </a>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${horaSumaSobretiempo}:${minutoSumaSobretiempo}:${segundoSumaSobretiempo}
@@ -1203,7 +1203,7 @@ function cargartabla(fecha1, fecha2) {
                                 ${horaSumaHorariosNormales}:${minutoSumaHorarioNormales}:${segundoSumaHorarioNormales}
                             </a>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <a class="badge badge-soft-warning mr-2">
                                 <img src="landing/images/sun.svg" height="12" class="mr-2">
                                 ${horaSobretiempoNormales}:${minutoSobretiempoNormales}:${segundoSobretiempoNormales}
@@ -1215,13 +1215,13 @@ function cargartabla(fecha1, fecha2) {
                                 ${horaSumaHorariosNocturnos}:${minutoSumaHorariosNocturnos}:${segundoSumaHorariosNocturnos}
                             </a>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <a class="badge badge-soft-info mr-2">
                                 <img src="landing/images/moon.svg" height="12" class="mr-2">
                                 ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                             </a>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <a class="badge badge-soft-danger mr-2">
                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                 ${horaSumaTardanzas}:${minutoSumaTardanzas}:${segundoSumaTardanzas}
