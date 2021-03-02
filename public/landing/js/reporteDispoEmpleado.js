@@ -445,9 +445,9 @@ function cargartabla(fecha1, fecha2) {
                             <th class="text-center colNocturnas25">H.E. 25% Nocturnas</th>
                             <th class="text-center colNocturnas35">H.E. 35% Nocturnas</th>
                             <th class="text-center colNocturnas100">H.E. 100% Nocturnas</th>
-                            <th class="text-center">Tardanza total</th>
-                            <th class="text-center">Faltas total</th>
-                            <th class="text-center">Incidencias total</th>
+                            <th class="text-center colTardanza">Tardanza total</th>
+                            <th class="text-center faltaHorario">Faltas total</th>
+                            <th class="text-center incidencia">Incidencias total</th>
                         </tr>`;
             //* DIBUJAMOS CABEZERA
             $('#theadD').html(theadTabla);
@@ -1521,6 +1521,38 @@ $('#tiempoSitHi').change(function (event) {
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 });
+// : ********************************* COLUMNA DE INCIDENCIAS ********************************************************
+function toggleI() {
+    $('#contenidoIncidencias').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS DE HORARIO
+$('.incidenciaHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.incidenciaPadre input[type=checkbox]').change(function () {
+    $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
 function toggleColumnas() {
     // * COLUMNA DE MARCACIONES
     if ($('#colMarcaciones').is(":checked")) {
@@ -1605,6 +1637,24 @@ function toggleColumnas() {
         dataT.api().columns('.tiempoSitHi').visible(true);
     } else {
         dataT.api().columns('.tiempoSitHi').visible(false);
+    }
+    // * TARDANZA ENTRE HORARIOS
+    if ($('#colTardanza').is(":checked")) {
+        dataT.api().columns('.colTardanza').visible(true);
+    } else {
+        dataT.api().columns('.colTardanza').visible(false);
+    }
+    // * FALTA ENTRE HORARIOS
+    if ($('#faltaHorario').is(":checked")) {
+        dataT.api().columns('.faltaHorario').visible(true);
+    } else {
+        dataT.api().columns('.faltaHorario').visible(false);
+    }
+    // * INCIDENCIAS
+    if ($('#incidencia').is(":checked")) {
+        dataT.api().columns('.incidencia').visible(true);
+    } else {
+        dataT.api().columns('.incidencia').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

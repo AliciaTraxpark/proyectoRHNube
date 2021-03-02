@@ -302,6 +302,29 @@
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido incidenciaPadre">
+                                        <input type="checkbox" checked>
+                                        <label for="">Incidencias</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleI()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoIncidencias">
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="colTardanza" checked>
+                                            <label for="">Tardanza</label>
+                                        </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="faltaHorario" checked>
+                                            <label for="">Falta</label>
+                                        </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="incidencia" checked>
+                                            <label for="">Incidencias</label>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
                                         <input type="checkbox" id="tiempoSitHi">
                                         <label for="">Tiempo entre marcaciones</label>
