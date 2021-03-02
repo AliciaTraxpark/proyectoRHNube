@@ -97,6 +97,7 @@ class incidenciasController extends Controller
         ->select('in.inciden_id','in.idtipo_incidencia','tipI.tipoInc_descripcion','in.inciden_codigo',
         'in.inciden_descripcion','in.inciden_pagado','in.estado','in.sistema')
         ->where('in.organi_id','=',session('sesionidorg'))
+        ->where('in.estado','=',1)
         ->get();
 
         foreach($incidencias as $incidencia){
@@ -125,12 +126,12 @@ class incidenciasController extends Controller
         'in.inciden_descripcion','in.inciden_pagado','in.estado','in.sistema')
         ->where('in.organi_id','=',session('sesionidorg'))
         ->where('in.inciden_id','=',$idIncidencia)
-        ->get();
+        ->get()->first();
 
 
         $incidencias_dias = DB::table('incidencia_dias as id')
             ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
-            ->where('id.id_incidencia', '=', $incidencia[0]->inciden_id)
+            ->where('id.id_incidencia', '=', $incidencia->inciden_id)
             ->get();
 
             if($incidencias_dias->isNotEmpty()){
@@ -140,7 +141,83 @@ class incidenciasController extends Controller
                 $incidencia->uso=0;
             }
 
-        return ($incidencia);
+        return response()->json($incidencia);
 
+    }
+
+    public function updateIncidencia(Request $request){
+
+        //*parametros
+        $idIncidencia=$request->idInc;
+        $descripUp=$request->descripUp;
+        $codigoUp=$request->codigoUp;
+        $pagadoUp=$request->pagadoUp;
+        $tipoInUpdate=$request->tipoInUpdate;
+
+        //*OBTENER ID DE TIPO_INCIDENCIA FERIADO
+        $tipoFeriado=DB::table('tipo_incidencia')
+        ->where('tipoInc_descripcion','=','Feriado')
+        ->where('organi_id','=', session('sesionidorg'))
+        ->get()->first();
+
+        if($tipoInUpdate!=$tipoFeriado->idtipo_incidencia){
+            $incidenciaBuscar = incidencias::where('inciden_codigo', '=', $codigoUp)->where('organi_id', '=', session('sesionidorg'))
+            ->where('inciden_id', '!=', $idIncidencia) ->whereNotNull('inciden_codigo')->get()->first();
+            
+        }
+        else{
+            $incidenciaBuscar = incidencias::where('inciden_codigo', '=', $codigoUp)->where('organi_id', '=', session('sesionidorg'))
+            ->where('inciden_id', '!=', $idIncidencia)
+            ->where('idtipo_incidencia','!=',$tipoFeriado->idtipo_incidencia) ->whereNotNull('inciden_codigo')->get()->first();
+        }
+
+        if ($incidenciaBuscar) {
+            return response()->json(array("estado" => 0, "incidencia" => $incidenciaBuscar), 200);
+        }
+
+        $incidencia=incidencias::findOrfail($idIncidencia);
+        $incidencia->inciden_descripcion=$descripUp;
+        $incidencia->inciden_codigo=$codigoUp;
+        $incidencia->inciden_pagado=$pagadoUp;
+        $incidencia->save();
+        return response()->json(array("estado" => 1), 200);
+        
+    }
+
+    public function eliminarIncidencia(Request $request){
+        $idIncidencia=$request->idInc;
+
+        //*VERIFICAMOS SI ACTUALMETNE ESTA EN USO****************************
+        $incidencia=DB::table('incidencias as in')
+        ->leftJoin('tipo_incidencia as tipI','in.idtipo_incidencia','=','tipI.idtipo_incidencia')
+        ->select('in.inciden_id','in.idtipo_incidencia','tipI.tipoInc_descripcion','in.inciden_codigo',
+        'in.inciden_descripcion','in.inciden_pagado','in.estado','in.sistema')
+        ->where('in.organi_id','=',session('sesionidorg'))
+        ->where('in.inciden_id','=',$idIncidencia)
+        ->get()->first();
+
+
+        $incidencias_dias = DB::table('incidencia_dias as id')
+            ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+            ->where('id.id_incidencia', '=', $incidencia->inciden_id)
+            ->get();
+
+            if($incidencias_dias->isNotEmpty()){
+                $incidencia->uso=1;
+            }
+            else{
+                $incidencia->uso=0;
+            }
+        
+        if($incidencia->uso==1){
+            return 1;
+        } else{
+            $incidencia=incidencias::findOrfail($idIncidencia);
+            $incidencia->estado=0;
+       
+            $incidencia->save();
+            return 0;
+        }
+        
     }
 }

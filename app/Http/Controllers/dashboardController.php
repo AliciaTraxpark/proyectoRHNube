@@ -1582,4 +1582,9 @@ class dashboardController extends Controller
             $uo->save();
         }
     }
+
+    public function getModos(){
+        $uo = usuario_organizacion::where('user_id', '=', Auth::user()->id)->where('organi_id', '=', session('sesionidorg'))->first();
+        return response()->json($uo, 200);
+    }
 }

@@ -35,10 +35,10 @@ use App\invitado;
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
-                <div class="col-2 text-left">
-                    <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" class="" height="69"></a>
+                <div class="col-2 text-left p-0">
+                    <a href="{{ route('principal') }}"><img src="{{asset('landing/home/images/logo_animado.gif')}}" class="" height="79"></a>
                 </div>   
-                <div class="col-7 text-left">
+                <div class="col-7 text-center text-sm-left">
                     <strong id="" style="color:rgb(255, 255, 255)">Política de privacidad</strong>
                 </div>   
                 <div class="col-3 text-right">
@@ -158,9 +158,9 @@ use App\invitado;
 
     <footer class="text-center">
          <div>
-            <span style="font-size: 17px !important">© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
-            <a style="color:#faf3f3; font-size: 17px !important" href="/politicas">Política de privacidad | </a>
-            <span style="font-size: 17px !important">Central Perú: <a style="color:#faf3f3; font-size: 17px !important" href="tel:017482415">017482415</a> | <a style="color:#faf3f3; font-size: 17px !important" href="mailto:info@rhnube.com.pe">info@rhnube.com.pe</a></span>
+            <span class="footer_rh">© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
+            <a style="color:#faf3f3;" class="footer_rh" href="/politicas">Política de privacidad | </a>
+            <span class="footer_rh">Central Perú: <a style="color:#faf3f3;" class="footer_rh" href="tel:017482415">017482415</a> | <a style="color:#faf3f3;" class="footer_rh" href="mailto:info@rhnube.com.pe">info@rhnube.com.pe</a></span>
          </div>
       </footer>
     <script src="{{ asset('landing/home/js/lib/jquery-3.4.1.min.js') }}"></script>

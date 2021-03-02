@@ -1048,10 +1048,10 @@ use App\proyecto_empleado;
                     </div>
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 inputResponsive">
                         <div class="form-group row">
-                            <label class="col-lg-2 col-md-3 col-sm-3 col-form-label">Área:</label>
+                            <label class="col-lg-2 col-md-3 col-sm-3 col-form-label">Buscar:</label>
                             <div class="col-lg-10 col-md-9 col-sm-9 text-left">
                                 <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm"
-                                    multiple="multiple" data-placeholder="Seleccionar áreas">
+                                    multiple="multiple" data-placeholder="Seleccionar">
                                     @foreach ($area as $areas)
                                     <option value="{{ $areas->area_id }}"> Área : {{ $areas->area_descripcion }}</option>
                                     @endforeach

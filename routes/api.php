@@ -53,7 +53,7 @@ Route::get("logoutLogin", "apiVersionDosController@logoutNewToken")->middleware(
 Route::post("verificacionMovil", "apimovilController@apiActivacion")->middleware('apilogger');
 Route::post("EmpleadoMovil", "apimovilController@EmpleadoMovil")->middleware('token')->middleware('apilogger');
 Route::post("ActividadesMovil", "apimovilController@ActivMovil")->middleware('token')->middleware('apilogger');
-Route::post("controladoresAct", "apimovilController@controladoresAct")->middleware('token')->middleware('apilogger');
+Route::post("controladoresAct", "apimovilController@controladoresAct");
 Route::post("marcacionMovil", "apimovilController@marcacionMovilActual")->middleware('token')->middleware('apilogger');
 Route::post("pruebaRegistroM", "apimovilController@registroMarcaciones")->middleware('token')->middleware('apilogger');
 Route::post("empleadoHorario", "apimovilController@empleadoHorario")->middleware('token')->middleware('apilogger');
@@ -91,7 +91,7 @@ Route::post("importarJS", "apiBiometricoController@importarJS");
 Route::post("verificacionTareo", "apimarcacionTareoController@apiActivacion")->middleware('apilogger');
 Route::post("EmpleadoTareo", "apimarcacionTareoController@EmpleadoTareo")->middleware('token')->middleware('apilogger');
 Route::post("ActividadesTareo", "apimarcacionTareoController@ActivTareo")->middleware('token')->middleware('apilogger');
-Route::post("controladoresTareo", "apimarcacionTareoController@controladoresActTareo")->middleware('token')->middleware('apilogger');
+Route::post("controladoresTareo", "apimarcacionTareoController@controladoresActTareo");
 Route::post("marcacionTareo", "apimarcacionTareoController@marcacionTareo")->middleware('token')->middleware('apilogger');
 Route::post("empleadoHorarioTareo", "apimarcacionTareoController@empleadoHorarioTareo")->middleware('token')->middleware('apilogger');
 Route::post("ticketSoporteTareo", "apimarcacionTareoController@ticketSoporteTareo")->middleware('token')->middleware('apilogger');
