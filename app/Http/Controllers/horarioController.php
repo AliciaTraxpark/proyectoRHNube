@@ -1360,6 +1360,8 @@ class horarioController extends Controller
         $horario->organi_id = session('sesionidorg');
         $horario->horario_toleranciaF = $request->get('toleranciaF');
         $horario->horasObliga = $request->get('horasO');
+        $horario->tiempoMingreso = $request->get('tmIngreso');
+        $horario->tiempoMsalida = $request->get('tmSalida');
         $horario->save();
 
         $idHorario = $horario->horario_id;
@@ -1404,6 +1406,8 @@ class horarioController extends Controller
         $horario->horaF = $request->get('horaFin');
         $horario->horario_toleranciaF = $request->get('toleranciaF');
         $horario->horasObliga = $request->get('horasO');
+        $horario->tiempoMingreso = $request->get('tmIngreso');
+        $horario->tiempoMsalida = $request->get('tmSalida');
         $horario->save();
 
         $idHorario = $horario->horario_id;

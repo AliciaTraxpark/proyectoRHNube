@@ -25,6 +25,7 @@ use App\actividad;
 use App\actividad_area;
 use App\actividad_empleado;
 use App\calendario;
+use App\calendario_empleado;
 use App\centrocosto_empleado;
 use App\eventos_usuario;
 use App\eventos_empleado;
@@ -504,6 +505,10 @@ class excelEmpleadoController extends Controller
                 $calendario = calendario::where('calendario_nombre', '=', 'Perú')
                     ->where('organi_id', '=', session('sesionidorg'))->get()->first();
                 $idcalendario = $calendario->calen_id;
+                $calendario_empleado=new calendario_empleado();
+                $calendario_empleado->emple_id=$empleadoId->emple_id;
+                $calendario_empleado->calen_id=$calendario->calen_id;
+                $calendario_empleado->save();
                 $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
                     ->where('id_calendario', '=', $idcalendario)->get();
                 if ($eventos_usuario) {

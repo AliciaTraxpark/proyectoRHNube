@@ -634,7 +634,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3" id="" >
+                                            <div class="form-check mt-4 mb-4">
+                                                <input type="checkbox"  class="form-check-input"
+                                                    id="tmIngreso" >
+                                                <label class="form-check-label" for="tmIngreso"
+                                                    style="margin-top: 2px;">
+                                                    Tiempo muerto para ingreso
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Tolerancia al ingreso(Min):</label>
                                                 <div class="input-group form-control-sm "
@@ -652,7 +662,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3" id="" >
+                                            <div class="form-check mt-4 mb-4">
+                                                <input type="checkbox"  class="form-check-input"
+                                                    id="tmSalida" >
+                                                <label class="form-check-label" for="tmSalida"
+                                                    style="margin-top: 2px;">
+                                                    Tiempo muerto para salida
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Tolerancia a la salida(Min):</label>
                                                 <div class="input-group form-control-sm "
@@ -793,7 +813,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3" id="" >
+                                            <div class="form-check mt-4 mb-4">
+                                                <input type="checkbox"  class="form-check-input"
+                                                    id="tmIngreso_ed" >
+                                                <label class="form-check-label" for="tmIngreso_ed"
+                                                    style="margin-top: 2px;">
+                                                    Tiempo muerto para ingreso
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Tolerancia al ingreso(Min):</label>
                                                 <div class="input-group form-control-sm "
@@ -811,7 +841,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3" id="" >
+                                            <div class="form-check mt-4 mb-4">
+                                                <input type="checkbox"  class="form-check-input"
+                                                    id="tmSalida_ed" >
+                                                <label class="form-check-label" for="tmSalida_ed"
+                                                    style="margin-top: 2px;">
+                                                    Tiempo muerto para salida
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Tolerancia a la salida(Min):</label>
                                                 <div class="input-group form-control-sm"

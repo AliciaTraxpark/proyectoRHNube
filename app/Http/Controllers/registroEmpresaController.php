@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\organizacion;
 use App\persona;
+use App\reglas_horasextras;
 use App\tipo_contrato;
 use App\tipo_incidencia;
 use App\ubigeo_peru_departments;
@@ -113,6 +114,44 @@ class registroEmpresaController extends Controller
                 $contrato->organi_id =  $idorgani;
                 $contrato->save();
             }
+
+            //*ARRAY DE REGLAS
+            //* 0 es lleno
+            //* 1 es todo 
+            //* 2 es vacio
+            $arrayReglas=[
+                1 => ['idTipoRegla'=>'1', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
+                     'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1, 'activo'=>1,'organi_id'=> $idorgani],
+    
+                2 =>['idTipoRegla'=>'2', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25% y 35%)',
+                    'lleno25'=>0, 'lleno35'=>1,'lleno100'=>2,'activo'=>1,'organi_id'=>$idorgani],
+    
+                3 =>['idTipoRegla'=>'3', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(35%)',
+                'lleno25'=>2, 'lleno35'=>1,'lleno100'=>2,'activo'=>1,'organi_id'=> $idorgani],
+                
+                4 =>['idTipoRegla'=>'4', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
+                'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1,'activo'=>1,'organi_id'=> $idorgani],
+                
+                5 =>['idTipoRegla'=>'5', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(100%)',
+                'lleno25'=>2, 'lleno35'=>2,'lleno100'=>1,'activo'=>1,'organi_id'=>$idorgani]
+    
+            ];
+
+            //REGLAS DE HORAS EXTRAS INSERTAR
+            foreach($arrayReglas as $arrayRegla){
+                $reglas=new reglas_horasextras();
+                $reglas->idTipoRegla=$arrayRegla['idTipoRegla'];
+                $reglas->tipo_regla=$arrayRegla['tipo_regla'];
+                $reglas->reglas_descripcion=$arrayRegla['reglas_descripcion'];
+                $reglas->lleno25=$arrayRegla['lleno25'];
+                $reglas->lleno35=$arrayRegla['lleno35'];
+                $reglas->lleno100=$arrayRegla['lleno100'];
+                $reglas->activo=$arrayRegla['activo'];
+                $reglas->organi_id=$arrayRegla['organi_id'];
+                $reglas->save();
+            }
+           
+
 
             //*TIPO DE INCIDENCIA
             $tipoIncidencia=[

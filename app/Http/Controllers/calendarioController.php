@@ -51,21 +51,7 @@ class calendarioController extends Controller
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
-                 foreach ($evento as $eventos) {
-                    $eventos_usuario = new eventos_usuario();
-                    $eventos_usuario->organi_id = session('sesionidorg');
-                    $eventos_usuario->users_id = Auth::user()->id;
-                    $eventos_usuario->title =$eventos->title;
-                    $eventos_usuario->color =$eventos->color;
-                    $eventos_usuario->textColor =$eventos->textColor;
-                    $eventos_usuario->start =$eventos->start;
-                    $eventos_usuario->end =$eventos->end;
-                    $eventos_usuario->tipo =$eventos->tipo;
-                    $eventos_usuario->id_calendario =$calendarioR->calen_id;
-                    $eventos_usuario->laborable =$eventos->laborable;
-                   /*  $eventos_usuario->backgroundColor =$calendarioR->backgroundColor; */
-                    $eventos_usuario->save();
-                }
+                
 
                   ///
 
@@ -196,21 +182,7 @@ class calendarioController extends Controller
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
-                 foreach ($evento as $eventos) {
-                    $eventos_usuario = new eventos_usuario();
-                    $eventos_usuario->organi_id = session('sesionidorg');
-                    $eventos_usuario->users_id = Auth::user()->id;
-                    $eventos_usuario->title =$eventos->title;
-                    $eventos_usuario->color =$eventos->color;
-                    $eventos_usuario->textColor =$eventos->textColor;
-                    $eventos_usuario->start =$eventos->start;
-                    $eventos_usuario->end =$eventos->end;
-                    $eventos_usuario->tipo =$eventos->tipo;
-                    $eventos_usuario->id_calendario =$calendarioR->calen_id;
-                    $eventos_usuario->laborable =$eventos->laborable;
-                   /*  $eventos_usuario->backgroundColor =$calendarioR->backgroundColor; */
-                    $eventos_usuario->save();
-                }
+                
 
                   ///
 
@@ -321,20 +293,7 @@ class calendarioController extends Controller
         $calendarioR->fin_fecha=$fincale;
         $calendarioR->save();
 
-            foreach ($evento as $eventos) {
-            $eventos_usuario = new eventos_usuario();
-            $eventos_usuario->organi_id = session('sesionidorg');
-            $eventos_usuario->users_id = Auth::user()->id;
-            $eventos_usuario->title =$eventos->title;
-            $eventos_usuario->color =$eventos->color;
-            $eventos_usuario->textColor =$eventos->textColor;
-            $eventos_usuario->start =$eventos->start;
-            $eventos_usuario->end =$eventos->end;
-            $eventos_usuario->tipo =$eventos->tipo;
-            $eventos_usuario->id_calendario =$calendarioR->calen_id;
-            $eventos_usuario->laborable =$eventos->laborable;
-            $eventos_usuario->save();
-        }
+        
 
        
 

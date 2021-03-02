@@ -3013,6 +3013,25 @@ function registrarNuevoHorario() {
     var toleranciaI = $('#toleranciaH').val();
     var toleranciaF = $('#toleranciaSalida').val();
     var horasO = $('#horaOblig').val();
+
+    //*Tiempos muertos
+    var tmIngreso;
+    var tmSalida;
+
+    //tm ingreso
+    if ($('#tmIngreso').is(":checked")) {
+        tmIngreso = 1;
+    } else {
+        tmIngreso = 0;
+    }
+
+    //tm salida
+    if ($('#tmSalida').is(":checked")) {
+        tmSalida = 1;
+    } else {
+        tmSalida= 0;
+    }
+
     var pausas = obtenerPausas();
     var validarInput = validarInputs();
     if (!validarInput) {
@@ -3040,7 +3059,7 @@ function registrarNuevoHorario() {
             horaInicio: horaInicio,
             horaFin: horaFin,
             horasO: horasO,
-            pausas: pausas
+            pausas: pausas,tmIngreso,tmSalida
         },
         statusCode: {
             401: function () {
@@ -3195,6 +3214,23 @@ function modalEditar(id) {
             e_horaOb.setDate(data.horario[0].horasObliga);
             $('#toleranciaH_ed').val(data.horario[0].horario_tolerancia);
             $('#toleranciaSalida_ed').val(data.horario[0].horario_toleranciaF);
+
+            //tiempo muerto ingreso
+            if(data.horario[0].tiempoMingreso==1){
+                $('#tmIngreso_ed').prop('checked',true);
+            } else{
+                $('#tmIngreso_ed').prop('checked',false);
+            }
+
+            //tiempo muerto salida
+            if(data.horario[0].tiempoMsalida==1){
+                $('#tmSalida_ed').prop('checked',true);
+            } else{
+                $('#tmSalida_ed').prop('checked',false);
+            }
+           
+
+
             // ************************************** PAUSAS ***********************
             if (data.pausas.length != 0) {
                 $('#SwitchPausa_ed').prop("checked", true);
@@ -3962,6 +3998,23 @@ async function editarHorarioDatos() {
     var toleranciaI = $('#toleranciaH_ed').val();
     var toleranciaF = $('#toleranciaSalida_ed').val();
     var horasO = $('#horaOblig_ed').val();
+    //*Tiempos muertos
+    var tmIngreso;
+    var tmSalida;
+
+    //tm ingreso
+    if ($('#tmIngreso_ed').is(":checked")) {
+        tmIngreso = 1;
+    } else {
+        tmIngreso = 0;
+    }
+
+    //tm salida
+    if ($('#tmSalida_ed').is(":checked")) {
+        tmSalida = 1;
+    } else {
+        tmSalida= 0;
+    }
     var pausas = e_obtenerPausas();
     var validarInput = await e_validarInputs();
     if (!validarInput) {
@@ -3990,7 +4043,9 @@ async function editarHorarioDatos() {
             horaInicio: horaInicio,
             horaFin: horaFin,
             horasO: horasO,
-            pausas: pausas
+            pausas: pausas,
+            tmIngreso,
+            tmSalida
         },
         statusCode: {
             401: function () {

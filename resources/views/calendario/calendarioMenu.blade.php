@@ -112,6 +112,12 @@ background-color: #ffffff;
         color: #fff;
         font-size: 15px!important;
     }
+    .botonesD{
+    padding-bottom: 10px!important;
+    padding-top: 10px!important;
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+    }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-7">
@@ -139,21 +145,7 @@ background-color: #ffffff;
     <div class="col-md-9" id="calendar">
 
     </div>
-    &nbsp;&nbsp;&nbsp;<div class="col-md-1" style="top:86px">
-        <div class="row">
-            <div class="col-md-6" style="  background: #f9e9e9;
-            height: 35px;"><h1>&nbsp;</h1></div>
-            <div class="col-md-6"><label style="font-size: 12px" for="">Días no laborales</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6" style="  background: #ffffff;border: 1px solid #d4d4d4;
-            height: 35px;"><h1>&nbsp;</h1></div>
-              <div class="col-md-6"><label style="font-size: 12px" for="">Días laborables</label></div>
-        </div><br><br>
-
-
-
-    </div>
+    &nbsp;&nbsp;&nbsp;
     <div class="col-md-12"><br></div>
         <div class="col-md-1"></div>
         <div class="col-md-5">
@@ -671,7 +663,7 @@ background-color: #ffffff;
 
 
     <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 720px;  margin-top: 185px; left: 94px;" >
+        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 400px;  margin-top: 185px; left: 94px;" >
 
         <div class="modal-content">
            <div class="modal-header" style="background-color:#163552; padding-bottom: 4px;
@@ -683,16 +675,31 @@ background-color: #ffffff;
            </div>
            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                <div class="row">
-                   <br>
-                   <div class="col-md-4">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDdescanso()" ><img src="{{asset('admin/images/dormir.svg')}}" height="20"> Día de descanso</button>
-                   </div>
-                   <div class="col-md-4">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')" ><img src="{{asset('admin/images/calendario.svg')}}" height="20">  Día feriado</button>
-                   </div>
-                   <div class="col-md-4">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDnlaborables()" ><img src="{{asset('admin/images/evento.svg')}}" height="20">  Día no laborable</button>
-                   </div>
+                  
+                   <div class="col-md-5" style="cursor: pointer" onclick="registrarDdescanso()">
+                    <div class="card">
+                      <div class="card-body text-center botonesD">
+                        <h5 class="card-title"><strong>Descanso</strong></h5>
+                        <div class="text-center">
+                            <img src="{{asset('admin/images/dormir.svg')}}" width="100" height="30">
+                        </div>
+                        
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5" style="cursor: pointer" onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')" >
+                    <div class="card">
+                      <div class="card-body text-center botonesD">
+                        <h5 class="card-title"><strong>Feriado</strong></h5>
+                        <div class="text-center">
+                            <img src="{{asset('admin/images/calendario.svg')}}" width="100" height="30">
+                        </div>
+                        
+                      </div>
+                    </div>
+                </div>
+                      
                </div>
            </div>
           {{--  <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">

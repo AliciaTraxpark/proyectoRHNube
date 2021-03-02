@@ -206,7 +206,12 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
         font-size: 10px !important;
       }
     }
-
+    .botonesD{
+    padding-bottom: 10px!important;
+    padding-top: 10px!important;
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+    }
 </style>
 
   <header id="header-section">
@@ -655,23 +660,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
         </div>
 
-        <div class="col-md-1 col-3" style="top:86px">
-          <div class="row">
-            <div class="col-md-6 col-8 col-sm-4" style="  background: #f9e9e9; height: 35px;">
-              <h1>&nbsp;</h1>
-            </div>
-            <div class="col-md-6 col-12">
-              <label class="" style="font-size: 12px" for="">Días no laborales</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 col-8 col-sm-4" style="  background: #ffffff;border: 1px solid #d4d4d4; height: 35px;"><h1>&nbsp;</h1></div>
-            <div class="col-md-6 col-12">
-              <label class="" style="font-size: 12px" for="">Días laborables</label>
-            </div>
-          </div>
-          <br><br>
-        </div>
+       
 
 
         <div class="col-md-12"><br></div>
@@ -692,41 +681,58 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
         <input type="hidden" id="pruebaEnd">
 
         <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-          <div class="modal-dialog  modal-lg d-flex justify-content-center " style="max-width: 720px;  margin-top: 185px;" >
+            <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 400px;  margin-top: 185px; left: 94px;" >
+    
             <div class="modal-content">
-              <div class="modal-header" style="background-color:#163552; padding-bottom: 4px; padding-top: 4px;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar día a calendario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-                <div class="row text-center">
-                  <br>
-                  <div class="col-md-4 mb-1" >
-                    <button type="button" class="btn btn-secondary btn-sm" style="width: 170px;" onclick="registrarDdescanso()" ><img src="{{asset('admin/images/dormir.svg')}}" height="20"> Día de descanso</button>
-                  </div>
-                  <div class="col-md-4 mb-1">
-                    <button type="button" class="btn btn-secondary btn-sm" style="width: 170px;" onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')" ><img src="{{asset('admin/images/calendario.svg')}}" height="20">  Día feriado</button>
-                  </div>
-                  <div class="col-md-4 mb-1">
-                    <button type="button" class="btn btn-secondary btn-sm" style="width: 170px;" onclick="registrarDnlaborables()" ><img src="{{asset('admin/images/evento.svg')}}" height="20">  Día no laborable</button>
-                  </div>
-                </div>
-              </div>
-            {{--  <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                 <div class="col-md-12">
-                     <div class="row">
-                         <div class="col-md-12 text-right" >
-                          <button type="button"  class="btn btn-soft-primary btn-sm " data-dismiss="modal">Cancelar</button>
-
-                      </form>
-                         </div>
-                     </div>
-                 </div>
-             </div> --}}
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
+               <div class="modal-header" style="background-color:#163552; padding-bottom: 4px;
+               padding-top: 4px;">
+                   <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar día a calendario</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+               <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+                   <div class="row">
+                      
+                       <div class="col-md-5" style="cursor: pointer" onclick="registrarDdescanso()">
+                        <div class="card">
+                          <div class="card-body text-center botonesD">
+                            <h5 class="card-title"><strong>Descanso</strong></h5>
+                            <div class="text-center">
+                                <img src="{{asset('admin/images/dormir.svg')}}" width="100" height="30">
+                            </div>
+                            
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5" style="cursor: pointer" onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')" >
+                        <div class="card">
+                          <div class="card-body text-center botonesD">
+                            <h5 class="card-title"><strong>Feriado</strong></h5>
+                            <div class="text-center">
+                                <img src="{{asset('admin/images/calendario.svg')}}" width="100" height="30">
+                            </div>
+                            
+                          </div>
+                        </div>
+                    </div>
+                          
+                   </div>
+               </div>
+              {{--  <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                   <div class="col-md-12">
+                       <div class="row">
+                           <div class="col-md-12 text-right" >
+                            <button type="button"  class="btn btn-soft-primary btn-sm " data-dismiss="modal">Cancelar</button>
+    
+                        </form>
+                           </div>
+                       </div>
+                   </div>
+               </div> --}}
+           </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
         <div class="col-md-12 text-right btn_rh">
