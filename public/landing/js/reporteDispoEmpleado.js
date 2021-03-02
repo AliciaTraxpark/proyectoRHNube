@@ -438,8 +438,8 @@ function cargartabla(fecha1, fecha2) {
                             <th class="text-center colHorarioNormal">Horario normal</th>
                             <th class="text-center colSobretiempoNormal">Sobretiempo normal</th>
                             <th class="text-center colDiurnas25">H.E. 25% Diurnas</th>
-                            <th class="text-center">H.E. 35% Diurnas</th>
-                            <th class="text-center">H.E. 100% Diurnas</th>
+                            <th class="text-center colDiurnas35">H.E. 35% Diurnas</th>
+                            <th class="text-center colDiurnas100">H.E. 100% Diurnas</th>
                             <th class="text-center">Horario nocturno</th>
                             <th class="text-center">Sobretiempo nocturno</th>
                             <th class="text-center">H.E. 25% Nocturnas</th>
@@ -1548,6 +1548,18 @@ function toggleColumnas() {
         dataT.api().columns('.colDiurnas25').visible(true);
     } else {
         dataT.api().columns('.colDiurnas25').visible(false);
+    }
+    // * COLUMNA H.E. DIURNAS 35%
+    if ($('#colDiurnas35').is(":checked")) {
+        dataT.api().columns('.colDiurnas35').visible(true);
+    } else {
+        dataT.api().columns('.colDiurnas35').visible(false);
+    }
+    // * COLUMNA H.E. DIURNAS 100%
+    if ($('#colDiurnas100').is(":checked")) {
+        dataT.api().columns('.colDiurnas100').visible(true);
+    } else {
+        dataT.api().columns('.colDiurnas100').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

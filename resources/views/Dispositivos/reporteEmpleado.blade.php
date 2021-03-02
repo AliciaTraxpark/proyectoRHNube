@@ -256,6 +256,14 @@
                                             <label for="">H.E. 25% Diurnas</label>
                                         </li>
                                         <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colDiurnas35">
+                                            <label for="">H.E. 35% Diurnas</label>
+                                        </li>
+                                        <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colDiurnas100">
+                                            <label for="">H.E. 100% Diurnas</label>
+                                        </li>
+                                        <li class="liContenido tiemposHijo">
                                             <input type="checkbox" id="colHorarioNormal">
                                             <label for="">Horario normal</label>
                                         </li>
