@@ -229,7 +229,34 @@ function registrarIncidencia(){
         success: function (data) {
 
             //*verificamos si ya existe codigo, 1 existe
-            if(data==1){
+            if(data.estado==0){
+                if(data.incidencia.estado==0){
+                    alertify
+            .confirm(
+                "Ya existe una incidencia inactiva con este código. ¿Desea recuperarla si o no?",
+                function (e) {
+                    if (e) {
+                        recuperarIncidencia(
+                            data.incidencia.inciden_id
+                        );
+                    }
+                }
+            )
+            .setting({
+                title: "Modificar Incidencia",
+                labels: {
+                    ok: "Si",
+                    cancel: "No",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {},
+            });
+            } else{
                 $.notifyClose();
                 $.notify(
                     {
@@ -238,7 +265,7 @@ function registrarIncidencia(){
                         icon: "admin/images/warning.svg",
                     },
                     {
-                        element: $("#registroIncidencia"),
+                        element: $("#editarIncidencia"),
                         position: "fixed",
                         mouse_over: "pause",
                         placement: {
@@ -258,6 +285,7 @@ function registrarIncidencia(){
                         spacing: 35,
                     }
                 );
+            }
             } else{
                 //*SI NO EXISTE ENTONCES REGISTRAMOS
                 $.ajax({
@@ -479,34 +507,63 @@ $.ajax({
         success: function (data) {
             //*si datos no son validos
             if(data.estado==0){
-                $.notifyClose();
-                $.notify(
-                    {
-                        message:
-                            "\nYa existe una incidencia con este código.",
-                        icon: "admin/images/warning.svg",
-                    },
-                    {
-                        element: $("#editarIncidencia"),
-                        position: "fixed",
-                        mouse_over: "pause",
-                        placement: {
-                            from: "top",
-                            align: "center",
-                        },
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 2000,
-                        template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
+                if(data.incidencia.estado==0){
+                        alertify
+                .confirm(
+                    "Ya existe una incidencia inactiva con este código. ¿Desea recuperarla si o no?",
+                    function (e) {
+                        if (e) {
+                            recuperarIncidencia(
+                                data.incidencia.inciden_id
+                            );
+                        }
                     }
-                );
+                )
+                .setting({
+                    title: "Modificar Incidencia",
+                    labels: {
+                        ok: "Si",
+                        cancel: "No",
+                    },
+                    modal: true,
+                    startMaximized: false,
+                    reverseButtons: true,
+                    resizable: false,
+                    closable: false,
+                    transition: "zoom",
+                    oncancel: function (closeEvent) {},
+                });
+                } else{
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message:
+                                "\nYa existe una incidencia con este código.",
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $("#editarIncidencia"),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+               
             } else{
                 $('#tablaIncidencias').DataTable().ajax.reload(null, false);
                 $('#editarIncidencia').modal('hide');
@@ -637,3 +694,32 @@ function eliminarIncidencia(idInc){
         },
     });
 }
+/* FUNCION PARA RECUERAR INCIDENCIA */
+function recuperarIncidencia(id) {
+    $.ajax({
+        type: "GET",
+        url: "/recuperarInci",
+        data: {
+            id: id,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            $('#tablaIncidencias').DataTable().ajax.reload(null, false);
+            $("#registroIncidencia").modal("hide");
+          
+            IncidenEditar(id);
+        },
+        error: function () {},
+    });
+}
+/*  */
