@@ -135,8 +135,16 @@
     }
 
     div.dataTables_processing {
+        position: fixed !important;
+        margin-bottom: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: -26px;
+        margin-left: 0px !important;
+        text-align: center;
+        padding: 1em 0;
         z-index: 1;
-        top: 20% !important;
     }
 
     .dataTables_wrapper .dataTables_processing {

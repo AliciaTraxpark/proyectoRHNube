@@ -185,13 +185,13 @@ class dispositivosController extends Controller
                 $dispositivo_controlador->idControladores = $contros;
                 $dispositivo_controlador->organi_id = session('sesionidorg');
                 $dispositivo_controlador->save();
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // ENVIO DE CÓDIGO POR CORREO
                 $controlador = controladores::find($contros)->first();
                 $email = $controlador->cont_correo;
                 $numero = $request->numeroM;
                 $envio = Mail::to($email)->queue(new correoVinculacionPuerta($codigo, $numero));
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
 
@@ -283,7 +283,7 @@ class dispositivosController extends Controller
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $codigo = $dispositivosAc->dispo_codigo;
         $nroCel = substr($dispositivosAc->dispo_movil, 2);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ENVIO DE CÓDIGO POR CORREO
         $dispoControls = dispositivo_controlador::where('idDispositivos', '=', $request->idDis)->get();
         foreach ($dispoControls as $dispoControl) {
@@ -292,7 +292,7 @@ class dispositivosController extends Controller
             $numero = $request->numeroM;
             $envio = Mail::to($email)->queue(new correoVinculacionPuerta($codigo, $numero));
         }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -2416,6 +2416,7 @@ class dispositivosController extends Controller
 
         $marcacion = marcacion_puerta::findOrFail($id);
         $entrada = Carbon::parse($marcacion->marcaMov_fecha);
+        $salida = Carbon::parse($tiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
         // * COMPROBAR SI TIENE HORARIO EMPLEADO
         if ($idhorarioE != 0) {
             $horario = DB::table('horario_empleado as he')
@@ -2437,20 +2438,6 @@ class dispositivosController extends Controller
             // * OBTENER TIEMPO DE HORARIOS
             $horarioInicio = Carbon::parse($horario->horaI);
             $horarioFin = Carbon::parse($horario->horaF);
-            if ($horarioFin->lt($horarioInicio)) {
-                $nuevoTiempo = $horarioInicio->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-            } else {
-                $inicioHora = $horarioInicio->copy()->isoFormat('HH:mm:ss');
-                if ($tiempo < $inicioHora) {
-                    $nuevaFecha = $horarioInicio->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
-                    $nuevoTiempo = $nuevaFecha . " " . $tiempo;
-                } else {
-                    $nuevoTiempo = $horarioInicio->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-                }
-            }
-            $salida = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
-        } else {
-            $salida = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
         }
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {
@@ -2562,6 +2549,7 @@ class dispositivosController extends Controller
 
         $marcacion = marcacion_puerta::findOrFail($id);
         $salida = Carbon::parse($marcacion->marcaMov_salida);
+        $entrada = Carbon::parse($tiempo);   //: OBTENEMOS EL TIEMPO DE ENTRADA
         // * COMPROBAR SI TIENE HORARIO EMPLEADO
         if ($idhorarioE != 0) {
             $horario = DB::table('horario_empleado as he')
@@ -2583,20 +2571,6 @@ class dispositivosController extends Controller
             // * OBTENER TIEMPO DE HORARIOS
             $horarioInicio = Carbon::parse($horario->horaI);
             $horarioFin = Carbon::parse($horario->horaF);
-            if ($horarioFin->lt($horarioInicio)) {
-                $nuevoTiempo = $horarioInicio->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-            } else {
-                $inicioHora = $horarioInicio->copy()->isoFormat('HH:mm:ss');
-                if ($tiempo < $inicioHora) {
-                    $nuevaFecha = $horarioInicio->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
-                    $nuevoTiempo = $nuevaFecha . " " . $tiempo;
-                } else {
-                    $nuevoTiempo = $horarioInicio->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-                }
-            }
-            $entrada = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
-        } else {
-            $entrada = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
         }
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {
