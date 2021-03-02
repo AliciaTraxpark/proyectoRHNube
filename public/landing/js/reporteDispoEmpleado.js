@@ -402,12 +402,12 @@ function cargartabla(fecha1, fecha2) {
                                `;
             // * MARCACIONES
             for (let j = 0; j < cantidadColumnasHoras; j++) {
-                theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                theadTabla += `<th class="colMarcaciones" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                                     <span>
                                         Entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600">${j + 1}</b>
                                     </span>
                                 </th>
-                                <th>
+                                <th class="colMarcaciones">
                                     <span>
                                      Salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600">${j + 1}</b>
                                     </span>
@@ -433,8 +433,8 @@ function cargartabla(fecha1, fecha2) {
                                     <span>Exceso pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>`;
             }
-            theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="text-center">Tiempo total</th>
-                            <th class="text-center">Sobretiempo</th>
+            theadTabla += `<th class="text-center colTiempoTotal" style="border-left-color: #c8d4de!important;border-left: 2px solid;">Tiempo total</th>
+                            <th class="text-center colSobretiempo">Sobretiempo</th>
                             <th class="text-center">Horario normal</th>
                             <th class="text-center">Sobretiempo normal</th>
                             <th class="text-center">H.E. 25% Diurnas</th>
@@ -846,7 +846,6 @@ function cargartabla(fecha1, fecha2) {
                         }
                     }
                 }
-
                 // ! ********************************************** FINALIZACION ************************************** 
                 for (let i = 0; i < contenidoData.marcaciones.length; i++) {
                     // * TIEMPO EN SITIO
@@ -856,13 +855,13 @@ function cargartabla(fecha1, fecha2) {
                     var contenidoMarcacion = contenidoData.marcaciones[i];
                     // * SI TIENE TIEMPO DE ENTRADA
                     if (contenidoMarcacion.entrada != 0) {
-                        tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                        tbodyEntradaySalida += `<td class="colMarcaciones" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                                                     <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                     ${moment(contenidoMarcacion.entrada).format("HH:mm:ss")}
                                                 </td>`;
                         // * SI TIENE TIEMPO DE SALIDA
                         if (contenidoMarcacion.salida != 0) {
-                            tbodyEntradaySalida += `<td>
+                            tbodyEntradaySalida += `<td class="colMarcaciones">
                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                         ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
                                                     </td>`;
@@ -886,7 +885,7 @@ function cargartabla(fecha1, fecha2) {
                                 }
                             }
                         } else {
-                            tbodyEntradaySalida += `<td>
+                            tbodyEntradaySalida += `<td class="colMarcaciones">
                                                         <span class="badge badge-soft-secondary">
                                                             <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                             No tiene salida
@@ -895,13 +894,13 @@ function cargartabla(fecha1, fecha2) {
                         }
                     } else {
                         if (contenidoMarcacion.salida != 0) {
-                            tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                            tbodyEntradaySalida += `<td class="colMarcaciones" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                                                         <span class="badge badge-soft-warning">
                                                             <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
                                                             No tiene entrada
                                                         </span>
                                                     </td>`;
-                            tbodyEntradaySalida += `<td>
+                            tbodyEntradaySalida += `<td class="colMarcaciones">
                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                         ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
                                                     </td>`;
@@ -1269,7 +1268,7 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoTiempoNocturnas100 < 10) {
                     segundoTiempoNocturnas100 = "0" + segundoTiempoNocturnas100;
                 }
-                tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="text-center">
+                tbody += `<td class="text-center colTiempoTotal" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${horaTiempoTotal}:${minutoTiempoTotal}:${segundoTiempoTotal}
@@ -1358,6 +1357,7 @@ function cargartabla(fecha1, fecha2) {
             }
             $('#tbodyD').html(tbody);
             inicializarTabla();
+            toggleColumnas();
             $(window).on('resize', function () {
                 $("#tablaReport").css('width', '100%');
                 table.draw(true);
@@ -1467,3 +1467,69 @@ function vistasDeTabla() {
 $('#tablaReport tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
 });
+// *********************************** SELECTOR DE COLUMNAS ****************************
+$(document).on('click', '.allow-focus', function (e) {
+    e.stopPropagation();
+});
+function toggleTiempos() {
+    $('#contenidoTiempos').toggle();
+}
+// : ************************** COLUMNAS DE MARCACIONES *************************************************************
+$('#colMarcaciones').change(function (event) {
+    if (event.target.checked) {
+        dataT.api().columns('.colMarcaciones').visible(true);
+    } else {
+        dataT.api().columns('.colMarcaciones').visible(false);
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
+});
+// : *************************** COLUMNAS DE CÁLCULOS DE TIEMPO *******************************************************
+// * FUNCION DE CHECKBOX HIJOS TIEMPOS
+$('.tiemposHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.tiemposPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.tiemposPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.tiemposPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE TIEMPOS
+$('.tiemposPadre input[type=checkbox]').change(function () {
+    $(this).closest('.tiemposPadre').next('ul').find('.tiemposHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
+function toggleColumnas() {
+    // * COLUMNA DE MARCACIONES
+    if ($('#colMarcaciones').is(":checked")) {
+        dataT.api().columns('.colMarcaciones').visible(true);
+    } else {
+        dataT.api().columns('.colMarcaciones').visible(false);
+    }
+    // * COLUMNA DE TIEMPO TOTAL
+    if ($('#colTiempoTotal').is(":checked")) {
+        dataT.api().columns('.colTiempoTotal').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoTotal').visible(false);
+    }
+    // * COLUMNA DE SOBRE TIEMPO
+    if ($('#colSobretiempo').is(":checked")) {
+        dataT.api().columns('.colSobretiempo').visible(true);
+    } else {
+        dataT.api().columns('.colSobretiempo').visible(false);
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
+}

@@ -141,6 +141,24 @@
     .dataTables_wrapper .dataTables_processing {
         box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
     }
+
+    .allow-focus {
+        padding: 0rem 0;
+        min-width: 19em !important;
+        height: auto;
+        max-height: 250px;
+        overflow: auto;
+        position: absolute;
+    }
+
+    .liContenido {
+        list-style: none;
+    }
+
+    .dropdown-itemSelector {
+        padding: 0.1rem 1rem !important;
+        margin: 0.1rem 0 !important;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -193,6 +211,58 @@
                             style="background-color: #163552;" onclick="javascript:cambiarF()">
                             <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
                         </button>
+                    </div>
+                </div>
+                <div class="row justify-content-left">
+                    <div class="col-md-4 pb-1">
+                        <div class="dropdown" id="dropSelector">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="cursor: pointer">
+                                <div class="custom-control custom-switch mb-2">
+                                    <input type="checkbox" class="custom-control-input" id="switchO" checked
+                                        style="cursor: pointer">
+                                    <label class="custom-control-label" for="switchO"
+                                        style="font-weight: bold;font-size:12px">
+                                        <img src="{{asset('landing/images/insert.svg')}}" height="18">
+                                        Selector de columnas
+                                    </label>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu allow-focus">
+                                <h6 class="dropdown-header text-left"
+                                    style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                    <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"
+                                        height="12" />
+                                    Opciones
+                                </h6>
+                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked id="colMarcaciones">
+                                        <label for="">Entradas y Salidas</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido tiemposPadre">
+                                        <input type="checkbox">
+                                        <label for="">Cálculos de tiempos</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleTiempos()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoTiempos">
+                                        <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colTiempoTotal" checked>
+                                            <label for="">Tiempo total</label>
+                                        </li>
+                                        <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colSobretiempo">
+                                            <label for="">Sobretiempo</label>
+                                        </li>
+                                    </ul>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
