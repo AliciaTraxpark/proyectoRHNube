@@ -321,9 +321,11 @@ $(document).ready(function () {
             }
             if (isStepValid == true) {
                 if ($("#estadoPC").val() == "true") {
+
                     idE = $("#idEmpleado").val();
                     objEmpleado = datosCalendarioEmpleado("POST");
                     enviarCalendarioEmpleado("/" + idE, objEmpleado);
+                    calendarioValid=1;
                     $("#estadoPC").val("false");
                 }
             }

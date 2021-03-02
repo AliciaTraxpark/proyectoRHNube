@@ -40,7 +40,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use App\calendario_empleado;
+use App\reglas_horasextras;
 class EmpleadoController extends Controller
 {
     /**
@@ -899,6 +900,20 @@ class EmpleadoController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->where('id_horario', '=', null)->where('color', '!=', '#9E9E9E')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
+
+        $calendarioBuscar=DB::table('calendario_empleado')
+        ->where('emple_id','=',$idE)->get();
+        if($calendarioBuscar->isEmpty()){
+            $calendario_empleado=new calendario_empleado();
+            $calendario_empleado->emple_id=$idE;
+            $calendario_empleado->calen_id=$objEmpleado['idca'];
+            $calendario_empleado->save();
+        } else{
+            $calendario_empleado=calendario_empleado::find( $calendarioBuscar[0]->idcalendario_empleado);
+            $calendario_empleado->calen_id=$objEmpleado['idca'];
+            $calendario_empleado->save();
+        }
+       
 
         $eventos_empleadoVerif = eventos_empleado::where('id_empleado', '=', $idempleado)
             ->get();
@@ -1885,6 +1900,22 @@ class EmpleadoController extends Controller
         $eventos_empleado = eventos_empleado::where('id_empleado', '=', $idempleado)
             ->get();
 
+        if (is_numeric($idcalendario)) {
+            $calendarioBuscar=DB::table('calendario_empleado')
+            ->where('emple_id','=',$idempleado)->get();
+            if($calendarioBuscar->isEmpty()){
+                $calendario_empleado=new calendario_empleado();
+                $calendario_empleado->emple_id=$idempleado;
+                $calendario_empleado->calen_id=$idcalendario;
+                $calendario_empleado->save();
+            } else{
+                $calendario_empleado=calendario_empleado::find( $calendarioBuscar[0]->idcalendario_empleado);
+                $calendario_empleado->calen_id=$idcalendario;
+                $calendario_empleado->save();
+            }
+        }    
+       
+        
         if ($eventos_empleado->isEmpty()) {
             $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
@@ -3210,5 +3241,87 @@ class EmpleadoController extends Controller
         ->where('organi_id', '=', session('sesionidorg'))
         ->get();
         return $incidencias;
+    }
+
+    //para llenar de calendario  solo eject 1 vez
+    public function asignarCalEmp(Request $request){
+
+        $eventos_empleado=DB::table('eventos_empleado')
+        ->where('id_calendario','!=',null)
+        ->groupBy('id_empleado')->get();
+        
+        foreach($eventos_empleado as $eventos_empleados){
+            $calendarioBuscar=DB::table('calendario_empleado')
+            ->where('emple_id','=',$eventos_empleados->id_empleado)
+            ->get();
+            if($calendarioBuscar->isEmpty()){
+                $calendario_empleado=new calendario_empleado();
+                $calendario_empleado->emple_id=$eventos_empleados->id_empleado;
+                $calendario_empleado->calen_id=$eventos_empleados->id_calendario;
+                $calendario_empleado->save();
+            }
+        }
+    }
+
+    //*llenar regla de  rogani
+
+    public function agregarReglas(Request $reques){
+
+        $Organizaciones=DB::table('organizacion')->get();
+        //*ARRAY DE REGLAS
+            //* 0 es lleno
+            //* 1 es todo 
+            //* 2 es vacio
+            $arrayReglas=[
+                1 => ['idTipoRegla'=>'1', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
+                     'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1, 'activo'=>1],
+    
+                2 =>['idTipoRegla'=>'2', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25% y 35%)',
+                    'lleno25'=>0, 'lleno35'=>1,'lleno100'=>2,'activo'=>1],
+    
+                3 =>['idTipoRegla'=>'3', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(35%)',
+                'lleno25'=>2, 'lleno35'=>1,'lleno100'=>2,'activo'=>1],
+                
+                4 =>['idTipoRegla'=>'4', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
+                'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1,'activo'=>1],
+                
+                5 =>['idTipoRegla'=>'5', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(100%)',
+                'lleno25'=>2, 'lleno35'=>2,'lleno100'=>1,'activo'=>1]
+    
+            ];
+
+            foreach($Organizaciones as $Organizacion){
+                //REGLAS DE HORAS EXTRAS INSERTAR
+                foreach($arrayReglas as $arrayRegla){
+                    $reglas=new reglas_horasextras;
+                    $reglas->idTipoRegla=$arrayRegla['idTipoRegla'];
+                    $reglas->tipo_regla=$arrayRegla['tipo_regla'];
+                    $reglas->reglas_descripcion=$arrayRegla['reglas_descripcion'];
+                    $reglas->lleno25=$arrayRegla['lleno25'];
+                    $reglas->lleno35=$arrayRegla['lleno35'];
+                    $reglas->lleno100=$arrayRegla['lleno100'];
+                    $reglas->activo=$arrayRegla['activo'];
+                    $reglas->organi_id=$Organizacion->organi_id;
+                    $reglas->save();
+                }
+            }
+            
+    }
+
+    //*genrar regla de horario
+
+    public function generarReglaHorario(Request $request){
+        $horario=DB::table('horario') ->where('idreglas_horasExtras','=',null)->get();
+        foreach($horario as $horarios){
+
+            //*obtener id de regla
+            $reglas=DB::table('reglas_horasextras')
+            ->where('organi_id','=',$horarios->organi_id)
+            ->where('idTipoRegla','=',1)->get()->first();
+
+            $horarioAct=horario::find($horarios->horario_id);
+            $horarioAct->idreglas_horasExtras=$reglas->idreglas_horasExtras;
+            $horarioAct->save();
+        }
     }
 }

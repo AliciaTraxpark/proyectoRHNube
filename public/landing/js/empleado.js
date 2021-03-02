@@ -1326,7 +1326,7 @@ $("#selectCalendario").change(function () {
     $("#detallehorario").empty();
     idca = $("#selectCalendario").val();
     if(idca!="Asignar calendario"){
-        calendarioValid=1;
+       
     }
     $.ajax({
         type: "post",

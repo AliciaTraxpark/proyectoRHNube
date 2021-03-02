@@ -18,7 +18,10 @@ class horario extends Model
         'horaF',
         'organi_id',
         'horario_toleranciaF',
-        'horasObliga'
+        'horasObliga',
+        'tiempoMingreso',
+        'tiempoMsalida',
+        'idreglas_horasExtras'
     ];
     public $timestamps = false;
 }

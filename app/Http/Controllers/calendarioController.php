@@ -51,63 +51,10 @@ class calendarioController extends Controller
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
-                 foreach ($evento as $eventos) {
-                    $eventos_usuario = new eventos_usuario();
-                    $eventos_usuario->organi_id = session('sesionidorg');
-                    $eventos_usuario->users_id = Auth::user()->id;
-                    $eventos_usuario->title =$eventos->title;
-                    $eventos_usuario->color =$eventos->color;
-                    $eventos_usuario->textColor =$eventos->textColor;
-                    $eventos_usuario->start =$eventos->start;
-                    $eventos_usuario->end =$eventos->end;
-                    $eventos_usuario->tipo =$eventos->tipo;
-                    $eventos_usuario->id_calendario =$calendarioR->calen_id;
-                    $eventos_usuario->laborable =$eventos->laborable;
-                   /*  $eventos_usuario->backgroundColor =$calendarioR->backgroundColor; */
-                    $eventos_usuario->save();
-                }
+                
 
                   ///
 
-
-                 $dates = [];
-                 $sundays = [];
-                /*        para todos lo disd
-                                while ($comienzo->lte($final)) {
-                                $dates[] = $comienzo->copy()->format('Y-m-d');
-
-                                    $comienzo->addDay();
-
-
-                                } */
-
-                 //para domigos
-                 $oneDay     = 60*60*24;
-                 for($i = strtotime($comienzo); $i <= strtotime($final); $i += $oneDay) {
-                     $day = date('N', $i);
-                     if($day == 7) {
-
-                         $sundays[] = date('Y-m-d', $i);
-
-                         $i += 6 * $oneDay;
-                     }
-                 }
-
-
-                 foreach ($sundays as $dates2) {
-                    $eventos_usuario2 = new eventos_usuario();
-                    $eventos_usuario2->organi_id = session('sesionidorg');
-                    $eventos_usuario2->users_id = Auth::user()->id;
-                    $eventos_usuario2->title ='Descanso';
-                    $eventos_usuario2->color ='#e6bdbd';
-                    $eventos_usuario2->textColor =  '#504545';
-                    $eventos_usuario2->start =$dates2;
-                    $eventos_usuario2->tipo =1;
-                    $eventos_usuario2->id_calendario =$calendarioR->calen_id;
-                    $eventos_usuario2->laborable =0;
-
-                    $eventos_usuario2->save();
-                     }
 
 
 
@@ -235,63 +182,10 @@ class calendarioController extends Controller
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
-                 foreach ($evento as $eventos) {
-                    $eventos_usuario = new eventos_usuario();
-                    $eventos_usuario->organi_id = session('sesionidorg');
-                    $eventos_usuario->users_id = Auth::user()->id;
-                    $eventos_usuario->title =$eventos->title;
-                    $eventos_usuario->color =$eventos->color;
-                    $eventos_usuario->textColor =$eventos->textColor;
-                    $eventos_usuario->start =$eventos->start;
-                    $eventos_usuario->end =$eventos->end;
-                    $eventos_usuario->tipo =$eventos->tipo;
-                    $eventos_usuario->id_calendario =$calendarioR->calen_id;
-                    $eventos_usuario->laborable =$eventos->laborable;
-                   /*  $eventos_usuario->backgroundColor =$calendarioR->backgroundColor; */
-                    $eventos_usuario->save();
-                }
+                
 
                   ///
 
-
-                 $dates = [];
-                 $sundays = [];
-                /*        para todos lo disd
-                                while ($comienzo->lte($final)) {
-                                $dates[] = $comienzo->copy()->format('Y-m-d');
-
-                                    $comienzo->addDay();
-
-
-                                } */
-
-                 //para domigos
-                 $oneDay     = 60*60*24;
-                 for($i = strtotime($comienzo); $i <= strtotime($final); $i += $oneDay) {
-                     $day = date('N', $i);
-                     if($day == 7) {
-
-                         $sundays[] = date('Y-m-d', $i);
-
-                         $i += 6 * $oneDay;
-                     }
-                 }
-
-
-                 foreach ($sundays as $dates2) {
-                    $eventos_usuario2 = new eventos_usuario();
-                    $eventos_usuario2->organi_id = session('sesionidorg');
-                    $eventos_usuario2->users_id = Auth::user()->id;
-                    $eventos_usuario2->title ='Descanso';
-                    $eventos_usuario2->color ='#e6bdbd';
-                    $eventos_usuario2->textColor =  '#504545';
-                    $eventos_usuario2->start =$dates2;
-                    $eventos_usuario2->tipo =1;
-                    $eventos_usuario2->id_calendario =$calendarioR->calen_id;
-                    $eventos_usuario2->laborable =0;
-
-                    $eventos_usuario2->save();
-                     }
 
             }
             $calendarioSel = calendario::where('organi_id', '=', session('sesionidorg'))->get();
@@ -399,47 +293,9 @@ class calendarioController extends Controller
         $calendarioR->fin_fecha=$fincale;
         $calendarioR->save();
 
-            foreach ($evento as $eventos) {
-            $eventos_usuario = new eventos_usuario();
-            $eventos_usuario->organi_id = session('sesionidorg');
-            $eventos_usuario->users_id = Auth::user()->id;
-            $eventos_usuario->title =$eventos->title;
-            $eventos_usuario->color =$eventos->color;
-            $eventos_usuario->textColor =$eventos->textColor;
-            $eventos_usuario->start =$eventos->start;
-            $eventos_usuario->end =$eventos->end;
-            $eventos_usuario->tipo =$eventos->tipo;
-            $eventos_usuario->id_calendario =$calendarioR->calen_id;
-            $eventos_usuario->laborable =$eventos->laborable;
-            $eventos_usuario->save();
-        }
+        
 
-       $dates = [];
-       $sundays = [];
-
-       //para domigos
-       $oneDay     = 60*60*24;
-       for($i = strtotime($comienzo); $i <= strtotime($final); $i += $oneDay) {
-           $day = date('N', $i);
-           if($day == 7) {
-               $sundays[] = date('Y-m-d', $i);
-               $i += 6 * $oneDay;
-           }
-       }
-       foreach ($sundays as $dates2) {
-          $eventos_usuario2 = new eventos_usuario();
-          $eventos_usuario2->organi_id = session('sesionidorg');
-          $eventos_usuario2->users_id = Auth::user()->id;
-          $eventos_usuario2->title ='Descanso';
-          $eventos_usuario2->color ='#e6bdbd';
-          $eventos_usuario2->textColor =  '#504545';
-          $eventos_usuario2->start =$dates2;
-          $eventos_usuario2->tipo =1;
-          $eventos_usuario2->id_calendario =$calendarioR->calen_id;
-          $eventos_usuario2->laborable =0;
-
-          $eventos_usuario2->save();
-           }
+       
 
         return $calendarioR;
 
@@ -553,17 +409,9 @@ class calendarioController extends Controller
 
     $final=Carbon::create($añoFinc.'-12-31');
 
-    $sundays = [];
+  
 
-       //para domigos
-       $oneDay     = 60*60*24;
-       for($i = strtotime($comienzo); $i <= strtotime($final); $i += $oneDay) {
-           $day = date('N', $i);
-           if($day == 7) {
-               $sundays[] = date('Y-m-d', $i);
-               $i += 6 * $oneDay;
-           }
-       }
+     
        ////////////////////////////////////
        $añoCale=$añoFinc+1;
        $fechaCal=Carbon::create($añoCale.'-01-01');
@@ -627,20 +475,7 @@ class calendarioController extends Controller
         $eventos_usuario3->save();
          }
 
-         /* AÑADIR DESCANSOS DE DOMINGO */
-       foreach ($sundays as $dates2) {
-          $eventos_usuario2 = new eventos_usuario();
-          $eventos_usuario2->organi_id = session('sesionidorg');
-          $eventos_usuario2->users_id = Auth::user()->id;
-          $eventos_usuario2->title ='Descanso';
-          $eventos_usuario2->color ='#e6bdbd';
-          $eventos_usuario2->textColor =  '#504545';
-          $eventos_usuario2->start =$dates2;
-          $eventos_usuario2->tipo =1;
-          $eventos_usuario2->id_calendario =$idcalenda;
-          $eventos_usuario2->laborable =0;
-          $eventos_usuario2->save();
-           }
+      
 
 
 
@@ -711,20 +546,7 @@ class calendarioController extends Controller
               $eventos_usuario31->save();
                }
 
-             foreach ($sundays as $dates2) {
-                $eventos_usuario21 = new eventos_empleado();
-
-
-                $eventos_usuario21->title ='Descanso';
-                $eventos_usuario21->color ='#e6bdbd';
-                $eventos_usuario21->textColor =  '#504545';
-                $eventos_usuario21->start =$dates2;
-                $eventos_usuario21->tipo_ev =1;
-                $eventos_usuario21->id_calendario =$idcalenda;
-                $eventos_usuario21->laborable =0;
-                $eventos_usuario21->id_empleado=$emp->emple_id;
-                $eventos_usuario21->save();
-                 }
+          
                 }
 
   }
