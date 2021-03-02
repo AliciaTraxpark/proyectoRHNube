@@ -252,6 +252,10 @@
                                     </li>
                                     <ul class="ulHijo" style="display: none" id="contenidoTiempos">
                                         <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colDiurnas25">
+                                            <label for="">H.E. 25% Diurnas</label>
+                                        </li>
+                                        <li class="liContenido tiemposHijo">
                                             <input type="checkbox" id="colHorarioNormal">
                                             <label for="">Horario normal</label>
                                         </li>
@@ -262,6 +266,10 @@
                                         <li class="liContenido tiemposHijo">
                                             <input type="checkbox" id="colSobretiempo">
                                             <label for="">Sobretiempo</label>
+                                        </li>
+                                        <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colSobretiempoNormal">
+                                            <label for="">Sobretiempo normal</label>
                                         </li>
                                     </ul>
                                 </ul>
