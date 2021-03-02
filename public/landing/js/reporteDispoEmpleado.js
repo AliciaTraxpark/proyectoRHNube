@@ -1172,6 +1172,19 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoSobretiempoNormales < 10) {
                     segundoSobretiempoNormales = "0" + segundoSobretiempoNormales;
                 }
+                // : SOBRETIEMPO NOCTURNO
+                var horaSobretiempoNocturnos = Math.trunc(moment.duration(sumaSobretiempoNocturno).asHours());
+                var minutoSobretiempoNocturnos = moment.duration(sumaSobretiempoNocturno).minutes();
+                var segundoSobretiempoNocturnos = moment.duration(sumaSobretiempoNocturno).seconds();
+                if (horaSobretiempoNocturnos < 10) {
+                    horaSobretiempoNocturnos = "0" + horaSobretiempoNocturnos;
+                }
+                if (minutoSobretiempoNocturnos < 10) {
+                    minutoSobretiempoNocturnos = "0" + minutoSobretiempoNocturnos;
+                }
+                if (segundoSobretiempoNocturnos < 10) {
+                    segundoSobretiempoNocturnos = "0" + segundoSobretiempoNocturnos;
+                }
                 tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1205,7 +1218,7 @@ function cargartabla(fecha1, fecha2) {
                         <td>
                             <a class="badge badge-soft-info mr-2">
                                 <img src="landing/images/moon.svg" height="12" class="mr-2">
-                                ${sumaSobretiempoNocturno}
+                                ${horaSobretiempoNocturnos}:${minutoSobretiempoNocturnos}:${segundoSobretiempoNocturnos}
                             </a>
                         </td>
                         <td>
