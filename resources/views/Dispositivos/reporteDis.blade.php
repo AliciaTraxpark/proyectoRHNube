@@ -928,7 +928,7 @@
 {{-- MODAL DE INSERTAR ENTRADA --}}
 <div id="insertarEntrada" class="modal fade" role="dialog" aria-labelledby="insertarEntrada" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+    <div class="modal-dialog modal-lg d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
                 <h6 class="modal-title" style="color:#ffffff;">
@@ -961,6 +961,10 @@
                                                     class="ml-1" />
                                             </th>
                                             <td>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="fechaEntrada" data-input>
+                                            </td>
+                                            <td class="separacionInsertar">
                                                 <input type="text" class="form-control form-control-sm horasEntrada"
                                                     onchange="$(this).removeClass('borderColor');"
                                                     id="horasEntradaNueva">
@@ -970,6 +974,9 @@
                                                 <img src="{{asset('landing/images/salidaD.svg') }}" height="12"
                                                     class="ml-1" />
                                             </th>
+                                            <td>
+                                                <span id="ie_fecha" style="font-weight: bold"></span>
+                                            </td>
                                             <td>
                                                 <span id="ie_hora" style="font-weight: bold"></span>
                                             </td>

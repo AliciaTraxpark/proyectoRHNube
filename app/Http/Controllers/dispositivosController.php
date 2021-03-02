@@ -707,7 +707,6 @@ class dispositivosController extends Controller
             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
-            ->leftJoin('reglas_horasextras as rh', 'hor.idreglas_horasExtras', '=', 'rh.idreglas_horasExtras')
             ->leftJoinSub($tipoDispositivo, 'entrada', function ($join) {
                 $join->on('mp.dispositivoEntrada', '=', 'entrada.idDispositivos');
             })
@@ -2552,6 +2551,7 @@ class dispositivosController extends Controller
 
         $marcacion = marcacion_puerta::findOrFail($id);
         $salida = Carbon::parse($marcacion->marcaMov_salida);
+        $entrada = Carbon::parse($tiempo);   //: OBTENEMOS EL TIEMPO DE ENTRADA
         // * COMPROBAR SI TIENE HORARIO EMPLEADO
         if ($idhorarioE != 0) {
             $horario = DB::table('horario_empleado as he')
@@ -2573,20 +2573,6 @@ class dispositivosController extends Controller
             // * OBTENER TIEMPO DE HORARIOS
             $horarioInicio = Carbon::parse($horario->horaI);
             $horarioFin = Carbon::parse($horario->horaF);
-            if ($horarioFin->lt($horarioInicio)) {
-                $nuevoTiempo = $horarioInicio->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-            } else {
-                $inicioHora = $horarioInicio->copy()->isoFormat('HH:mm:ss');
-                if ($tiempo < $inicioHora) {
-                    $nuevaFecha = $horarioInicio->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
-                    $nuevoTiempo = $nuevaFecha . " " . $tiempo;
-                } else {
-                    $nuevoTiempo = $horarioInicio->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-                }
-            }
-            $entrada = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
-        } else {
-            $entrada = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
         }
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {

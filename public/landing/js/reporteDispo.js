@@ -2199,7 +2199,7 @@ function cargartabla(fecha) {
                                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                             <div class="dropdown-item dropdown-itemM noExport">
                                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                                    <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}','${moment(marcacionData.salida).format("YYYY-MM-DD")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
                                                                                         Insertar entrada
                                                                                     </a>
@@ -3956,7 +3956,7 @@ function insertarSalidaModal(hora, fecha, id, idH) {
         var maxDat = moment(fechaGlobal).add("day", 1).format("YYYY-MM-DD");
     }
     var defaultDat = moment(fechaGlobal).format("YYYY-MM-DD");
-    // * FECHA DE ENTRADA
+    // * FECHA DE SALIDA
     fechaS = $('#fechaSalida').flatpickr({
         mode: "single",
         dateFormat: "Y-m-d",
@@ -4058,7 +4058,8 @@ $('#formInsertarSalida').submit(function (e) {
 // ! ********************************* INSERTAR ENTRADA ********************************************************
 // * HORAS PARA INSERTAR ENTRADA
 var horasE = {};
-function insertarEntradaModal(hora, id, idH) {
+var fechaE = {};
+function insertarEntradaModal(hora, fecha, id, idH) {
     $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
@@ -4073,6 +4074,7 @@ function insertarEntradaModal(hora, id, idH) {
     if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     $('#idMarcacionIE').val(id);
     $('#ie_hora').text(hora);
+    $('#ie_fecha').text(fecha);
     $('#idHorarioIE').val(idH);
     $('#insertarEntrada').modal();
     horasE = $('#horasEntradaNueva').flatpickr({
@@ -4086,13 +4088,32 @@ function insertarEntradaModal(hora, id, idH) {
         allowInput: false,
         disableMobile: true
     });
+    var minDat = moment(fechaGlobal).format("YYYY-MM-DD");
+    if (idH == 0) {
+        var maxDat = moment(fechaGlobal).format("YYYY-MM-DD");
+    } else {
+        var maxDat = moment(fechaGlobal).add("day", 1).format("YYYY-MM-DD");
+    }
+    var defaultDat = moment(fechaGlobal).format("YYYY-MM-DD");
+    // * FECHA DE ENTRADA
+    fechaE = $('#fechaEntrada').flatpickr({
+        mode: "single",
+        dateFormat: "Y-m-d",
+        locale: "es",
+        defaultDate: defaultDat,
+        maxDate: maxDat,
+        minDate: minDat,
+        enableTime: false,
+        allowInput: false,
+        disableMobile: true
+    });
     $('a').css('pointer-events', 'auto');
     sent = false;
 }
 // * INSERTAR SALIDA
 function insertarEntrada() {
     var id = $('#idMarcacionIE').val();
-    var entrada = $('#horasEntradaNueva').val();
+    var entrada = $('#fechaEntrada').val() + " " + $('#horasEntradaNueva').val();
     var horario = $('#idHorarioIE').val();
     $.ajax({
         async: false,
