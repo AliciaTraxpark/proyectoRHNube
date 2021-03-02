@@ -44,7 +44,7 @@ class dispositivosController extends Controller
             ->get();
 
         $tipo_biometrico = DB::table('tipo_biometrico')
-        ->get();
+            ->get();
 
         $area = DB::table('area as ar')
             ->where('ar.organi_id', '=', session('sesionidorg'))
@@ -114,15 +114,17 @@ class dispositivosController extends Controller
                     return view('Dispositivos.dispositivos', [
                         'verPuerta' => $permiso_invitado->verPuerta, 'agregarPuerta' => $permiso_invitado->agregarPuerta,
                         'modifPuerta' => $permiso_invitado->modifPuerta, 'controladores' => $controladores, 'area' => $area, 'empleado' => $empleados,
-                        'tipo_biometrico'=>$tipo_biometrico
+                        'tipo_biometrico' => $tipo_biometrico
                     ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.dispositivos', ['controladores' => $controladores, 'area' => $area, 'empleado' => $empleados,
-                'tipo_biometrico'=>$tipo_biometrico]);
+                return view('Dispositivos.dispositivos', [
+                    'controladores' => $controladores, 'area' => $area, 'empleado' => $empleados,
+                    'tipo_biometrico' => $tipo_biometrico
+                ]);
             }
         } else {
 
@@ -134,8 +136,10 @@ class dispositivosController extends Controller
                 ->where('e.asistencia_puerta', '=', 1)
                 ->get();
 
-            return view('Dispositivos.dispositivos', ['controladores' => $controladores, 'area' => $area, 'empleado' => $empleados,
-            'tipo_biometrico'=>$tipo_biometrico]);
+            return view('Dispositivos.dispositivos', [
+                'controladores' => $controladores, 'area' => $area, 'empleado' => $empleados,
+                'tipo_biometrico' => $tipo_biometrico
+            ]);
         }
     }
     public function store(Request $request)
@@ -145,7 +149,7 @@ class dispositivosController extends Controller
 
         //*ENCRIPTAMOS ID DE ORG
         $idorEncrip = base64_encode(session('sesionidorg'));
-        $codigo = STR::random(4).$idorEncrip;
+        $codigo = STR::random(4) . $idorEncrip;
 
         /* dd($idorEncrip,base64_decode($idorEncrip)); */
         $dispositivos = new dispositivos();
@@ -228,7 +232,7 @@ class dispositivosController extends Controller
             ));
             $err = curl_error($curl);
             $response = curl_exec($curl);
-            if($response==false){
+            if ($response == false) {
                 return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
             }
         }
@@ -236,7 +240,7 @@ class dispositivosController extends Controller
     public function enviarmensaje(Request $request)
     {
         $idorEncrip = base64_encode(session('sesionidorg'));
-        $codigo = STR::random(4).$idorEncrip;
+        $codigo = STR::random(4) . $idorEncrip;
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $dispositivosAc->dispo_estado = 1;
         $dispositivosAc->dispo_codigo = $codigo;
@@ -268,7 +272,7 @@ class dispositivosController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
-        if($response==false){
+        if ($response == false) {
             return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
         }
     }
@@ -314,8 +318,8 @@ class dispositivosController extends Controller
         ));
         $err = curl_error($curl);
         $response = curl_exec($curl);
-      
-        if($response==false){
+
+        if ($response == false) {
             return 'Hubo un error en el servidor de mensajeria, no se pudo enviar el SMS';
         }
     }
@@ -330,7 +334,7 @@ class dispositivosController extends Controller
     {
 
         $dispositivos = dispositivos::where('dispo_movil', '=', $request->numeroM)
-        ->where('organi_id','=',session('sesionidorg'))->get()->first();
+            ->where('organi_id', '=', session('sesionidorg'))->get()->first();
 
         if ($dispositivos != null) {
             return 1;
@@ -1180,7 +1184,8 @@ class dispositivosController extends Controller
                         "fecha" => $empleado->entradaModif,
                         "tolerancia" => $empleado->tolerancia,
                         "horarioIni" => $empleado->horarioIni,
-                        "horarioFin" => $empleado->horarioFin
+                        "horarioFin" => $empleado->horarioFin,
+                        "horasO" => $empleado->horasO
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->datos[$empleado->entradaModif][$empleado->idhorario]->incidencias)) {
@@ -1243,7 +1248,8 @@ class dispositivosController extends Controller
                         'mp.marcaMov_id as idMarcacion',
                         'hor.horario_tolerancia as tolerancia',
                         DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                        DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
+                        DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                        'hor.horasObliga as horasO'
                     )
                     ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start))'), [$fecha, $fechaF])
                     ->where('e.emple_id', $idemp)
@@ -1311,7 +1317,8 @@ class dispositivosController extends Controller
                             'mp.marcaMov_id as idMarcacion',
                             'hor.horario_tolerancia as tolerancia',
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
+                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                            'hor.horasObliga as horasO'
                         )
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
@@ -1366,7 +1373,8 @@ class dispositivosController extends Controller
                             'mp.marcaMov_id as idMarcacion',
                             'hor.horario_tolerancia as tolerancia',
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
+                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                            'hor.horasObliga as horasO'
                         )
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
@@ -1421,7 +1429,8 @@ class dispositivosController extends Controller
                     'mp.marcaMov_id as idMarcacion',
                     'hor.horario_tolerancia as tolerancia',
                     DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                    DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
+                    DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                    'hor.horasObliga as horasO'
                 )
                 ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start))'), [$fecha, $fechaF])
                 ->where('e.emple_id', $idemp)
@@ -1473,7 +1482,8 @@ class dispositivosController extends Controller
                             DB::raw('DATE(hd.start) as fecha'),
                             'h.horario_tolerancia as tolerancia',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
-                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin")
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
+                            "h.horasObliga as horasO"
                         )
                         ->where(DB::raw('DATE(hd.start)'), '=', $d)
                         ->where('he.empleado_emple_id', '=', $idemp)
@@ -1495,7 +1505,8 @@ class dispositivosController extends Controller
                             DB::raw('DATE(hd.start) as fecha'),
                             'h.horario_tolerancia as tolerancia',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
-                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin")
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
+                            "h.horasObliga as horasO"
                         )
                         ->where(DB::raw('DATE(hd.start)'), '=', $d)
                         ->where('he.empleado_emple_id', '=', $idemp)
@@ -1556,6 +1567,7 @@ class dispositivosController extends Controller
                             "tolerancia" => NULL,
                             "horarioIni" => 0,
                             "horarioFin" => 0,
+                            "horasO" => 0,
                             "marcaciones" => array(),
                             "incidencias" => array(),
                             "pausas" => array()
@@ -3610,34 +3622,45 @@ class dispositivosController extends Controller
             $resultado = array();
 
             foreach ($array as $empleado) {
+                // : CREAR ARRAY POR ID EMPLEADO
                 if (!isset($resultado[$empleado->emple_id])) {
                     $resultado[$empleado->emple_id] = (object) array(
                         "emple_id" => $empleado->emple_id
                     );
                 }
+                // : CREAR ARRAY DE DATA PARA CADA EMPLEADO
                 if (!isset($resultado[$empleado->emple_id]->data)) {
                     $resultado[$empleado->emple_id]->data = array();
                 }
+                // : CREAR ARRAY POR FECHA
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha])) {
                     $resultado[$empleado->emple_id]->data[$empleado->fecha] = array();
                 }
-                if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha][$empleado->tipoHora][$empleado->idHorarioE])) {
-                    $resultado[$empleado->emple_id]->data[$empleado->fecha][$empleado->tipoHora][$empleado->idHorarioE] = array();
+                // : CREAR ARRAY DE MARCACIONES PARA TENER TODA LA DATA
+                if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"])) {
+                    $resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"] = array();
                 }
-                if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha][$empleado->tipoHora][$empleado->idHorarioE]["dataHorario"])) {
-                    $resultado[$empleado->emple_id]->data[$empleado->fecha][$empleado->tipoHora][$empleado->idHorarioE]["dataHorario"] =  (object) array(
+                // : CREAR ARRAY DE DATA DE HORARIOS
+                if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataHorario"])) {
+                    $resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataHorario"] = (object) array(
                         "horarioIni" => $empleado->horarioIni,
                         "idHorario" => $empleado->idHorario,
                         "toleranciaI" => $empleado->toleranciaI,
                         "idHorarioE" => $empleado->idHorarioE,
                         "estado" => $empleado->estado,
                         "horasObligadas" => $empleado->horasObligadas  == null ? 0 : $empleado->horasObligadas,
-                        "horasAdicionales" => $empleado->horasAdicionales == null ? 0 : $empleado->horasAdicionales,
-                        "entrada" => $empleado->entrada,
-                        "salida" => $empleado->salida,
-                        "totalT" => $empleado->totalT == null ? "00:00:00" : $empleado->totalT
+                        "horasAdicionales" => $empleado->horasAdicionales == null ? 0 : $empleado->horasAdicionales
                     );
                 }
+                // : CREAR ARRAY DE DATA DE MARCACIONES
+                if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"])) {
+                    $resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"] = array();
+                }
+                $arrayDataMarcaciones =  (object) array(
+                    "entrada" => $empleado->entrada,
+                    "salida" => $empleado->salida
+                );
+                array_push($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataMarcaciones"], $arrayDataMarcaciones);
             }
             return array_values($resultado);
         }
@@ -3836,14 +3859,11 @@ class dispositivosController extends Controller
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
             ->select(
                 'e.emple_id',
-                DB::raw('IF(mp.marcaMov_fecha is null, IF(TIME(mp.marcaMov_salida) BETWEEN "06:01" AND "22:00", "normal", "nocturno"), IF(TIME(mp.marcaMov_fecha) BETWEEN "06:01" AND "22:00", "normal", "nocturno")) as tipoHora'),
                 DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start)) as fecha'),
                 DB::raw('IF(hor.horario_id is null, 0 , horario_id) as idHorario'),
                 DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
-                DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(mp.marcaMov_salida,mp.marcaMov_fecha)))) as totalT'),
-                // DB::raw('MIN(IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)) as entrada'),
                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                DB::raw('MAX(mp.marcaMov_salida) as salida'),
+                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                 DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
                 'hor.horario_tolerancia as toleranciaI',
                 'mp.marcaMov_id as idMarcacion',
@@ -3853,13 +3873,15 @@ class dispositivosController extends Controller
             )
             ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start))'), [$fechaInicio, $fechaFin])
             ->where('mp.organi_id', '=', session('sesionidorg'))
-            ->orderBy('mp.marcaMov_fecha', 'ASC')
-            ->groupBy(
-                DB::raw('IF(mp.marcaMov_fecha is null, IF(TIME(mp.marcaMov_salida) BETWEEN "06:01" AND "22:00", 0, 1), IF(TIME(mp.marcaMov_fecha) BETWEEN "06:01" AND "22:00", 0, 1))'),
-                DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start))'),
-                'hoe.horarioEmp_id',
-                'e.emple_id'
+            ->orderBy(
+                DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),
+                'ASC'
             )
+            ->orderBy(
+                DB::raw('IF(mp.marcaMov_fecha is null, TIME(mp.marcaMov_salida) , TIME(mp.marcaMov_fecha))'),
+                'ASC'
+            )
+            ->groupBy('mp.marcaMov_id')
             ->get();
         $data = agruparEmpleadosMData($data);  //: CONVERTIR UN SOLO EMPLEADO CON VARIOS MARCACIONES
         // * UNIR EMPLEADOS CON DATA DE MARCACIONES
@@ -3908,13 +3930,7 @@ class dispositivosController extends Controller
                 // : BUSCAMOS SI YA EXISTE LA FECHA EN EL ARRAY
                 if (array_key_exists($d, $m->data)) {
                     $horarios = [];
-                    if (array_key_exists("normal", $m->data[$d])) {
-                        $horarios = array_keys($m->data[$d]["normal"]);   // : OBTENEMOS TODOS LOS HORARIOS DE ESA FECHA
-                    }
-                    if (array_key_exists("nocturno", $m->data[$d])) {
-                        array_push($horarios, array_keys($m->data[$d]["nocturno"]));   // : OBTENEMOS TODOS LOS HORARIOS DE ESA FECHA
-                    }
-                    $horarios = Arr::flatten($horarios);
+                    $horarios = array_keys($m->data[$d]["marcaciones"]);
                     $clave = array_search(0, $horarios);     // : BUSCAMOS HORARIOS CON ID 0
                     if (!is_bool($clave)) {
                         unset($horarios[$clave]);            // : DESCARTAMOS LOS HORARIOS CON ID 0
@@ -3938,25 +3954,35 @@ class dispositivosController extends Controller
                         ->get();
                     foreach ($horarioEmpleado as $he) {
                         // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
-                        $he->totalT = "00:00:00";
                         $he->horasAdicionales = $he->horasAdicionales == null ? 0 : $he->horasAdicionales;
-                        $he->entrada = NULL;
-                        $he->salida = NULL;
-                        if (
-                            Carbon::parse($he->horarioIni)->isoFormat("HH:mm") >= "06:01" ||
-                            Carbon::parse($he->horarioIni)->isoFormat("HH:mm") <= "22:00"
-                        ) {
-                            if (!isset($marcaciones[$key]->data[$d]["normal"])) {
-                                $marcaciones[$key]->data[$d]["normal"] = array();
-                            }
-                            $marcaciones[$key]->data[$d]["normal"][$he->idHorarioE]["dataHorario"] = $he;
-                        } else {
-                            if (!isset($marcaciones[$key]->data[$d]["nocturno"])) {
-                                $marcaciones[$key]->data[$d]["nocturno"] = array();
-                            }
-                            $marcaciones[$key]->data[$d]["nocturno"][$he->idHorarioE]["dataHorario"] = $he;
+                        if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE])) {
+                            $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE] = array();
                         }
+                        if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataHorario"])) {
+                            $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataHorario"] = $he;
+                        }
+                        if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"])) {
+                            $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"] = array();
+                        }
+                        $dataArrayM = (object)array(
+                            "entrada" => NULL,
+                            "salida" => NULL
+                        );
+                        array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"], $dataArrayM);
                     }
+                    // * TABLA INCIDENCIAS DIA
+                    $incidencias = DB::table('incidencia_dias as id')
+                        ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                        ->select(DB::raw('COUNT(i.inciden_id) as cantidad'))
+                        ->where('id.id_empleado', '=', $idEmpleado)
+                        ->whereBetween('id.inciden_dias_fechaI', [$d, $d])
+                        ->orWhere(function ($query) use ($d, $idEmpleado) {
+                            $query->where('id.id_empleado', '=', $idEmpleado);
+                            $query->where('id.inciden_dias_fechaI', '<=', $d);
+                            $query->where('id.inciden_dias_fechaF', '>', $d);
+                        })
+                        ->get();
+                    $marcaciones[$key]->data[$d]["incidencias"] = $incidencias[0]->cantidad;
                 } else {
                     $horarioEmpleado = DB::table('horario_empleado as he')
                         ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
@@ -3979,24 +4005,34 @@ class dispositivosController extends Controller
                         foreach ($horarioEmpleado as $he) {
                             // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
                             $he->horasAdicionales = $he->horasAdicionales == null ? 0 : $he->horasAdicionales;
-                            $he->totalT = "00:00:00";
-                            $he->entrada = NULL;
-                            $he->salida = NULL;
-                            if (
-                                Carbon::parse($he->horarioIni)->isoFormat("HH:mm") >= "06:01" ||
-                                Carbon::parse($he->horarioIni)->isoFormat("HH:mm") <= "22:00"
-                            ) {
-                                if (!isset($marcaciones[$key]->data[$d]["normal"])) {
-                                    $marcaciones[$key]->data[$d]["normal"] = array();
-                                }
-                                $marcaciones[$key]->data[$d]["normal"][$he->idHorarioE]["dataHorario"] = $he;
-                            } else {
-                                if (!isset($marcaciones[$key]->data[$d]["nocturno"])) {
-                                    $marcaciones[$key]->data[$d]["nocturno"] = array();
-                                }
-                                $marcaciones[$key]->data[$d]["nocturno"][$he->idHorarioE]["dataHorario"] = $he;
+                            if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE])) {
+                                $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE] = array();
                             }
+                            if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataHorario"])) {
+                                $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataHorario"] = $he;
+                            }
+                            if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"])) {
+                                $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"] = array();
+                            }
+                            $dataArrayM = (object)array(
+                                "entrada" => NULL,
+                                "salida" => NULL
+                            );
+                            array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"], $dataArrayM);
                         }
+                        // * TABLA INCIDENCIAS DIA
+                        $incidencias = DB::table('incidencia_dias as id')
+                            ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                            ->select(DB::raw('COUNT(i.inciden_id) as cantidad'))
+                            ->where('id.id_empleado', '=', $idEmpleado)
+                            ->whereBetween('id.inciden_dias_fechaI', [$d, $d])
+                            ->orWhere(function ($query) use ($d, $idEmpleado) {
+                                $query->where('id.id_empleado', '=', $idEmpleado);
+                                $query->where('id.inciden_dias_fechaI', '<=', $d);
+                                $query->where('id.inciden_dias_fechaF', '>', $d);
+                            })
+                            ->get();
+                        $marcaciones[$key]->data[$d]["incidencias"] = $incidencias[0]->cantidad;
                     }
                 }
                 ksort($m->data);
@@ -4007,7 +4043,6 @@ class dispositivosController extends Controller
             $marcaciones[$key]->incidencias = array();
             $idEmpleado = $m->emple_id;
             // * *********************** INCIDENCIAS ***********************
-            // : TABLA INCIDENCIAS DIA
             // DB::enableQueryLog();
             $incidencias = DB::table('incidencia_dias as id')
                 ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
@@ -4022,12 +4057,7 @@ class dispositivosController extends Controller
                 array_push($marcaciones[$key]->incidencias, $i);
             }
             foreach ($m->data as $item => $data) {
-                if (array_key_exists("normal", $data)) {
-                    $m->data[$item]["normal"] = Arr::flatten($m->data[$item]["normal"]);
-                }
-                if (array_key_exists("nocturno", $data)) {
-                    $m->data[$item]["nocturno"] = Arr::flatten($m->data[$item]["nocturno"]);
-                }
+                $m->data[$item]["marcaciones"] = array_values($m->data[$item]["marcaciones"]);
             }
         }
         return response()->json(array("marcaciones" => $marcaciones, "organizacion" => $organizacion, "incidencias" => $incidenciasOrganizacion), 200);
