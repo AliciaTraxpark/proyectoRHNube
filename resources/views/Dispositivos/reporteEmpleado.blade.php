@@ -268,6 +268,10 @@
                                             <label for="">Horario normal</label>
                                         </li>
                                         <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colHorarioNocturno">
+                                            <label for="">Horario nocturno</label>
+                                        </li>
+                                        <li class="liContenido tiemposHijo">
                                             <input type="checkbox" id="colTiempoTotal" checked>
                                             <label for="">Tiempo total</label>
                                         </li>
