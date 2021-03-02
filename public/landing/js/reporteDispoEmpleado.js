@@ -280,13 +280,14 @@ function inicializarTabla() {
         initComplete: function (settings, data, dataIndex) {
             dataT = this;
             setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
-            vistasDeTabla();
             if (this.api().data().length == 0) {
                 $('.buttons-page-length').prop("disabled", true);
                 $('.buttons-html5').prop("disabled", true);
+                $('#switchO').prop("disabled", true);
             } else {
                 $('.buttons-page-length').prop("disabled", false);
                 $('.buttons-html5').prop("disabled", false);
+                $('#switchO').prop("disabled", false);
             }
             this.api().page.len(paginaGlobal).draw(false);
         },
@@ -317,8 +318,7 @@ $(function () {
     $('#ID_START').val(fAyer);
     $('#ID_END').val(fHoy);
 });
-$('#customSwitDetalles').prop("disabled", true);
-$('#switPausas').prop("disabled", true);
+$('#switchO').prop("disabled", true);
 inicializarTabla();
 function cargartabla(fecha1, fecha2) {
 
@@ -368,8 +368,7 @@ function cargartabla(fecha1, fecha2) {
         $('div.dataTables_processing').hide();
         $("#tablaReport").css('opacity', 1);
         if (data.length != 0) {
-            $('#customSwitDetalles').prop("disabled", false);
-            $('#switPausas').prop("disabled", false);
+            $('#switchO').prop("disabled", false);
             razonSocial = data.organi_razonSocial;
             direccion = data.organi_direccion;
             ruc = data.organi_ruc;
@@ -1363,8 +1362,7 @@ function cargartabla(fecha1, fecha2) {
                 table.draw(true);
             });
         } else {
-            $('#customSwitDetalles').prop("disabled", true);
-            $('#switPausas').prop("disabled", true);
+            $('#switchO').prop("disabled", true);
             if ($.fn.DataTable.isDataTable("#tablaReport")) {
                 $("#tablaReport").DataTable().destroy();
             }
@@ -1430,46 +1428,18 @@ function cambiarF() {
     }
 
 }
-// * FUNCION DE MOSTRAR DETALLES
-function cambiartabla() {
-    if ($('#customSwitDetalles').is(':checked')) {
-        dataT.api().columns('.tiempoSitHi').visible(true);
-    }
-    else {
-        dataT.api().columns('.tiempoSitHi').visible(false);
-    }
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
-}
-// * FUNCION DE SWITCH DE MOSTRAR PAUSAS
-function togglePausas() {
-    if ($('#switPausas').is(':checked')) {
-        dataT.api().columns('.datosPausa').visible(true);
-    } else {
-        dataT.api().columns('.datosPausa').visible(false);
-    }
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
-}
-// * FUNCION DE TABLAS OCULTAS
-function vistasDeTabla() {
-    if ($('#customSwitDetalles').is(':checked')) {
-        dataT.api().columns('.tiempoSitHi').visible(true);
-    }
-    else {
-        dataT.api().columns('.tiempoSitHi').visible(false);
-    }
-    if ($('#switPausas').is(':checked')) {
-        dataT.api().columns('.datosPausa').visible(true);
-    } else {
-        dataT.api().columns('.datosPausa').visible(false);
-    }
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
-}
 $('#tablaReport tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
 });
 // *********************************** SELECTOR DE COLUMNAS ****************************
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
+});
+// * FUNCION PARA QUE NO SE CIERRE DROPDOWN
+$('#dropSelector').on('hidden.bs.dropdown', function () {
+    $('#contenidoTiempos').hide();
+    $('#contenidoIncidencias').hide();
+    $('#contenidoPausas').hide();
 });
 function toggleTiempos() {
     $('#contenidoTiempos').toggle();
