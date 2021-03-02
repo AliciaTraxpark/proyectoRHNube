@@ -34,7 +34,26 @@ use App\persona;
       background: rgb(236, 236, 236)!important;
     }
 
+    jdiv#jvlabelWrap {
+      display: none !important;
+    }
 
+    .wrap_12d7._orientationRight_ac72.__jivoMobileButton{
+        display: none;
+    }
+
+    .button_b0cc{
+        display: none;
+    }
+
+    .wrap_b0c8._orientationRight_3898.__jivoMobileButton {
+        display: none;
+    }
+    @media(max-width: 767px){
+        .modos_header{
+            margin-top: 8px !important;
+        }
+    }
 </style>
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom" style="padding-left: 0px;">
     <div class="container-fluid pb-3 pt-3 contResponsive">
@@ -78,9 +97,9 @@ use App\persona;
         <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu
             float-right mb-0">
 
-            <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar de modo">
-                <div class="btn-group mt-3">
-                    <button type="button" class="btn" data-toggle="modal" data-target="#modos" style="font-size: 14px!important; font-weight: 700;     color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;">
+            <li class="dropdown d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar de modo">
+                <div class="btn-group mt-3  modos_header">
+                    <button type="button" class="btn" data-toggle="modal" data-target="#modos" style="font-size: 14px!important; font-weight: 700; color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;">
                         <span class="badge badge-pill" style="background-color: #617be3;color: #ffffff;font-size: 12px;font-weight: normal"><img
                             src="{{asset('landing/images/seleccione.png')}}" height="20" class="mr-1">Selección de modos</span></button>
 
@@ -133,8 +152,7 @@ use App\persona;
                 </a>
             </li>
             <li class="dropdown notification-list">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-                    aria-expanded="false">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <i data-feather="bell"></i>
                     <span class="noti-icon-badge"></span>
                 </a>
@@ -448,6 +466,9 @@ use App\persona;
         if(a == 1){
             $('#modos').modal('show');
         }
+    });
+    $('#chatJivo').addClass('enabled').click(function() {
+        jivo_api.open();  
     });
 </script>
 <script src="{{asset('landing/home/js/modos.js')}}"></script>

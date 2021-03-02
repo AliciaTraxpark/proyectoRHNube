@@ -57,6 +57,7 @@
 
     div.dataTables_processing {
         z-index: 1;
+        top: 20% !important;
     }
 
     .dataTables_wrapper .dataTables_processing {
@@ -145,7 +146,8 @@
                                     Opciones
                                 </h6>
                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px" id="menuIncidencias">
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px"
+                                    id="menuIncidencias">
                                     <li class="liContenido">
                                         <input type="checkbox" checked id="colCargo">
                                         <label for="">Cargo</label>
