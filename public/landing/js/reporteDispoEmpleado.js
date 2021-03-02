@@ -433,13 +433,14 @@ function cargartabla(fecha1, fecha2) {
                                     <span>Exceso pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>`;
             }
-            theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;">Tiempo total</th>
-                            <th>Sobretiempo</th>
-                            <th>Horario normal</th>
-                            <th>Sobretiempo normal</th>
-                            <th>Horario nocturno</th>
-                            <th>Sobretiempo nocturno</th>
-                            <th>Tardanza total</th>
+            theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="text-center">Tiempo total</th>
+                            <th class="text-center">Sobretiempo</th>
+                            <th class="text-center">Horario normal</th>
+                            <th class="text-center">Sobretiempo normal</th>
+                            <th class="text-center">H.E. 25% Diurnas</th>
+                            <th class="text-center">Horario nocturno</th>
+                            <th class="text-center">Sobretiempo nocturno</th>
+                            <th class="text-center">Tardanza total</th>
                             <th class="text-center">Faltas total</th>
                             <th class="text-center">Incidencias total</th>
                         </tr>`;
@@ -1185,6 +1186,19 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoSobretiempoNocturnos < 10) {
                     segundoSobretiempoNocturnos = "0" + segundoSobretiempoNocturnos;
                 }
+                // : HORAS EXTRAS DIURNAS 25%
+                var horaTiempoDiurnas25 = Math.trunc(moment.duration(tiempoDiurnas25).asHours());
+                var minutoTiempoDiurnas25 = moment.duration(tiempoDiurnas25).minutes();
+                var segundoTiempoDiurnas25 = moment.duration(tiempoDiurnas25).seconds();
+                if (horaTiempoDiurnas25 < 10) {
+                    horaTiempoDiurnas25 = "0" + horaTiempoDiurnas25;
+                }
+                if (minutoTiempoDiurnas25 < 10) {
+                    minutoTiempoDiurnas25 = "0" + minutoTiempoDiurnas25;
+                }
+                if (segundoTiempoDiurnas25 < 10) {
+                    segundoTiempoDiurnas25 = "0" + segundoTiempoDiurnas25;
+                }
                 tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="text-center">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1208,6 +1222,10 @@ function cargartabla(fecha1, fecha2) {
                                 <img src="landing/images/sun.svg" height="12" class="mr-2">
                                 ${horaSobretiempoNormales}:${minutoSobretiempoNormales}:${segundoSobretiempoNormales}
                             </a>
+                        </td>
+                        <td class="text-center">
+                            <img src="landing/images/timerD.svg" height="20" class="mr-2">
+                            ${horaTiempoDiurnas25}:${minutoTiempoDiurnas25}:${segundoTiempoDiurnas25}
                         </td>
                         <td>
                             <a class="badge badge-soft-info mr-2">
