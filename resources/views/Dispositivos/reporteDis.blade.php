@@ -236,6 +236,7 @@
 
     div.dataTables_processing {
         z-index: 1;
+        top: 20% !important;
     }
 
     .dataTables_wrapper .dataTables_processing {
