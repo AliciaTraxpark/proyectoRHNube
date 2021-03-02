@@ -3247,12 +3247,13 @@ class EmpleadoController extends Controller
     public function asignarCalEmp(Request $request){
 
         $eventos_empleado=DB::table('eventos_empleado')
+        ->where('id_calendario','!=',null)
         ->groupBy('id_empleado')->get();
         
         foreach($eventos_empleado as $eventos_empleados){
             $calendarioBuscar=DB::table('calendario_empleado')
             ->where('emple_id','=',$eventos_empleados->id_empleado)
-            ->where('id_calendario','!=',null)->get();
+            ->get();
             if($calendarioBuscar->isEmpty()){
                 $calendario_empleado=new calendario_empleado();
                 $calendario_empleado->emple_id=$eventos_empleados->id_empleado;
