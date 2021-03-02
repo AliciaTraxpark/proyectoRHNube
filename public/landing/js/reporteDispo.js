@@ -629,7 +629,6 @@ function cargartabla(fecha) {
                                 if (horaFinalData.isSameOrAfter(horaInicialData)) {
                                     if (horarioData.idHorario != 0) {
                                         if (horarioData.tiempoMuertoIngreso == 1) {
-                                            console.log(horarioData.horarioIni);
                                             if (horaInicialData.clone().isBefore(moment(horarioData.horarioIni))) {
                                                 if (horaFinalData.clone().isAfter(moment(horarioData.horarioIni))) {
                                                     var tiempoMuerto = moment(horarioData.horarioIni) - horaInicialData.clone();
@@ -2168,18 +2167,54 @@ function cargartabla(fecha) {
                                     var horaInicial = moment(marcacionData.entrada);
                                     if (horaFinal.isSameOrAfter(horaInicial)) {
                                         // * TIEMPO TOTAL TRABAJADA
-                                        var tiempoRestante = horaFinal - horaInicial;
-                                        segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                        minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                        horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                        if (horasTiempo < 10) {
-                                            horasTiempo = '0' + horasTiempo;
-                                        }
-                                        if (minutosTiempo < 10) {
-                                            minutosTiempo = '0' + minutosTiempo;
-                                        }
-                                        if (segundosTiempo < 10) {
-                                            segundosTiempo = '0' + segundosTiempo;
+                                        if (horarioData.idHorario != 0) {
+                                            if (horarioData.tiempoMuertoIngreso == 1) {
+                                                if (horaInicial.clone().isBefore(moment(horarioData.horarioIni))) {
+                                                    if (horaFinal.clone().isAfter(moment(horarioData.horarioIni))) {
+                                                        var tiempoRestante = horaFinal - moment(horarioData.horarioIni);
+                                                        segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                                        minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                                        horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                                        if (horasTiempo < 10) {
+                                                            horasTiempo = '0' + horasTiempo;
+                                                        }
+                                                        if (minutosTiempo < 10) {
+                                                            minutosTiempo = '0' + minutosTiempo;
+                                                        }
+                                                        if (segundosTiempo < 10) {
+                                                            segundosTiempo = '0' + segundosTiempo;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                var tiempoRestante = horaFinal - horaInicial;
+                                                segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                                minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                                horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                                if (horasTiempo < 10) {
+                                                    horasTiempo = '0' + horasTiempo;
+                                                }
+                                                if (minutosTiempo < 10) {
+                                                    minutosTiempo = '0' + minutosTiempo;
+                                                }
+                                                if (segundosTiempo < 10) {
+                                                    segundosTiempo = '0' + segundosTiempo;
+                                                }
+                                            }
+                                        } else {
+                                            var tiempoRestante = horaFinal - horaInicial;
+                                            segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                            minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                            horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                            if (horasTiempo < 10) {
+                                                horasTiempo = '0' + horasTiempo;
+                                            }
+                                            if (minutosTiempo < 10) {
+                                                minutosTiempo = '0' + minutosTiempo;
+                                            }
+                                            if (segundosTiempo < 10) {
+                                                segundosTiempo = '0' + segundosTiempo;
+                                            }
                                         }
                                     }
                                     // * FINALIZACION
