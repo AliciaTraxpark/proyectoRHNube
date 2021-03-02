@@ -441,7 +441,7 @@ function cargartabla(fecha1, fecha2) {
                             <th class="text-center colDiurnas35">H.E. 35% Diurnas</th>
                             <th class="text-center colDiurnas100">H.E. 100% Diurnas</th>
                             <th class="text-center colHorarioNocturno">Horario nocturno</th>
-                            <th class="text-center">Sobretiempo nocturno</th>
+                            <th class="text-center colSobretiempoNocturno">Sobretiempo nocturno</th>
                             <th class="text-center">H.E. 25% Nocturnas</th>
                             <th class="text-center">H.E. 35% Nocturnas</th>
                             <th class="text-center">H.E. 100% Nocturnas</th>
@@ -1566,6 +1566,12 @@ function toggleColumnas() {
         dataT.api().columns('.colHorarioNocturno').visible(true);
     } else {
         dataT.api().columns('.colHorarioNocturno').visible(false);
+    }
+    // * COLUMNA DE SOBRETIEMPO NOCTURNO
+    if ($('#colSobretiempoNocturno').is(":checked")) {
+        dataT.api().columns('.colSobretiempoNocturno').visible(true);
+    } else {
+        dataT.api().columns('.colSobretiempoNocturno').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

@@ -283,6 +283,10 @@
                                             <input type="checkbox" id="colSobretiempoNormal">
                                             <label for="">Sobretiempo normal</label>
                                         </li>
+                                        <li class="liContenido tiemposHijo">
+                                            <input type="checkbox" id="colSobretiempoNocturno">
+                                            <label for="">Sobretiempo nocturno</label>
+                                        </li>
                                     </ul>
                                 </ul>
                             </div>
