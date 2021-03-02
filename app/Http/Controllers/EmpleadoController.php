@@ -40,7 +40,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use App\calendario_empleado;
 class EmpleadoController extends Controller
 {
     /**
@@ -899,6 +899,20 @@ class EmpleadoController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->where('id_horario', '=', null)->where('color', '!=', '#9E9E9E')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
+
+        $calendarioBuscar=DB::table('calendario_empleado')
+        ->where('emple_id','=',$idE)->get();
+        if($calendarioBuscar->isEmpty()){
+            $calendario_empleado=new calendario_empleado();
+            $calendario_empleado->emple_id=$idE;
+            $calendario_empleado->calen_id=$objEmpleado['idca'];
+            $calendario_empleado->save();
+        } else{
+            $calendario_empleado=calendario_empleado::find( $calendarioBuscar[0]->idcalendario_empleado);
+            $calendario_empleado->calen_id=$objEmpleado['idca'];
+            $calendario_empleado->save();
+        }
+       
 
         $eventos_empleadoVerif = eventos_empleado::where('id_empleado', '=', $idempleado)
             ->get();
@@ -1885,6 +1899,22 @@ class EmpleadoController extends Controller
         $eventos_empleado = eventos_empleado::where('id_empleado', '=', $idempleado)
             ->get();
 
+        if (is_numeric($idcalendario)) {
+            $calendarioBuscar=DB::table('calendario_empleado')
+            ->where('emple_id','=',$idempleado)->get();
+            if($calendarioBuscar->isEmpty()){
+                $calendario_empleado=new calendario_empleado();
+                $calendario_empleado->emple_id=$idempleado;
+                $calendario_empleado->calen_id=$idcalendario;
+                $calendario_empleado->save();
+            } else{
+                $calendario_empleado=calendario_empleado::find( $calendarioBuscar[0]->idcalendario_empleado);
+                $calendario_empleado->calen_id=$idcalendario;
+                $calendario_empleado->save();
+            }
+        }    
+       
+        
         if ($eventos_empleado->isEmpty()) {
             $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
@@ -3210,5 +3240,22 @@ class EmpleadoController extends Controller
         ->where('organi_id', '=', session('sesionidorg'))
         ->get();
         return $incidencias;
+    }
+
+    public function asignarCalEmp(Request $request){
+        $eventos_empleado=DB::table('eventos_empleado')
+        ->groupBy('id_empleado')->get();
+        
+        foreach($eventos_empleado as $eventos_empleados){
+            $calendarioBuscar=DB::table('calendario_empleado')
+            ->where('emple_id','=',$eventos_empleados->id_empleado)
+            ->where('id_calendario','!=',null)->get();
+            if($calendarioBuscar->isEmpty()){
+                $calendario_empleado=new calendario_empleado();
+                $calendario_empleado->emple_id=$eventos_empleados->id_empleado;
+                $calendario_empleado->calen_id=$eventos_empleados->id_calendario;
+                $calendario_empleado->save();
+            }
+        }
     }
 }
