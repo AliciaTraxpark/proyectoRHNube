@@ -317,6 +317,11 @@ $(function () {
     $("#fechaInput").change();
     $('#ID_START').val(fAyer);
     $('#ID_END').val(fHoy);
+    // * CALCULO DE TIEMPOS PADRE
+    $('.tiemposPadre').find('input[type=checkbox]').prop({
+        indeterminate: true,
+        checked: false
+    });
 });
 $('#switchO').prop("disabled", true);
 inicializarTabla();
