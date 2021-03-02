@@ -138,12 +138,6 @@ class LoginController extends Controller
 
     public function logout()
     {
-        $uo = usuario_organizacion::where('user_id', Auth::user()->id)->first();
-            $uo->Mremoto = 0;
-            $uo->Mruta = 0;
-            $uo->Mpuerta = 0;
-            $uo->Mtareo = 0;
-            $uo->save();
         Auth::logout();
         session()->forget('sesionidorg');
         session()->flush();
