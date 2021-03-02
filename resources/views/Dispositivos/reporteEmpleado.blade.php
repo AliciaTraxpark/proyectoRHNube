@@ -325,6 +325,33 @@
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido pausaPadre">
+                                        <input type="checkbox">
+                                        <label for="">Pausas</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleP()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoPausas">
+                                        <li class="liContenido pausaHijo">
+                                            <input type="checkbox" id="descripcionPausa">
+                                            <label for="">Pausa</label>
+                                        </li>
+                                        <li class="liContenido pausaHijo">
+                                            <input type="checkbox" id="horarioPausa">
+                                            <label for="">Horario de pausa</label>
+                                        </li>
+                                        <li class="liContenido pausaHijo">
+                                            <input type="checkbox" id="tiempoPausa">
+                                            <label for="">Tiempo de pausa</label>
+                                        </li>
+                                        <li class="liContenido pausaHijo">
+                                            <input type="checkbox" id="excesoPausa">
+                                            <label for="">Exceso de pausa</label>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
                                         <input type="checkbox" id="tiempoSitHi">
                                         <label for="">Tiempo entre marcaciones</label>
@@ -335,15 +362,6 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-md-12 pb-2">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="switPausas"
-                                onclick="javascript:togglePausas()">
-                            <label class="custom-control-label" for="switPausas" style="font-weight: bold">
-                                Mostrar pausas
-                            </label>
-                        </div>
-                    </div>
                     {{-- GIF DE ESPERA --}}
                     <div id="espera" class="text-center" style="display: none">
                         <img src="{{ asset('landing/images/loading.gif') }}" height="100">

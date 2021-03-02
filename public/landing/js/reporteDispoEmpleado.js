@@ -420,16 +420,16 @@ function cargartabla(fecha1, fecha2) {
             }
             // * PAUSAS
             for (let p = 0; p < cantidadColumnasPausas; p++) {
-                theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;" name="datosPausa" class="datosPausa">
+                theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="descripcionPausa">
                                     <span>Pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>
-                                <th name="datosPausa" class="datosPausa">
+                                <th class="horarioPausa">
                                     <span>Horario pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>
-                                <th name="datosPausa" class="datosPausa">
+                                <th class="tiempoPausa">
                                     <span>Tiempo pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>
-                                <th name="datosPausa" class="datosPausa">
+                                <th class="excesoPausa">
                                     <span>Exceso pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>`;
             }
@@ -1553,6 +1553,38 @@ $('.incidenciaPadre input[type=checkbox]').change(function () {
     $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
+// : ************************************** COLUMNAS DE PAUSAS ***********************************************
+function toggleP() {
+    $('#contenidoPausas').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS PAUSAS
+$('.pausaHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.pausaPadre input[type=checkbox]').change(function () {
+    $(this).closest('.pausaPadre').next('ul').find('.pausaHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
 function toggleColumnas() {
     // * COLUMNA DE MARCACIONES
     if ($('#colMarcaciones').is(":checked")) {
@@ -1655,6 +1687,30 @@ function toggleColumnas() {
         dataT.api().columns('.incidencia').visible(true);
     } else {
         dataT.api().columns('.incidencia').visible(false);
+    }
+    // * DESCRION PAUSA
+    if ($('#descripcionPausa').is(":checked")) {
+        dataT.api().columns('.descripcionPausa').visible(true);
+    } else {
+        dataT.api().columns('.descripcionPausa').visible(false);
+    }
+    // * HORARIO PAUSA
+    if ($('#horarioPausa').is(":checked")) {
+        dataT.api().columns('.horarioPausa').visible(true);
+    } else {
+        dataT.api().columns('.horarioPausa').visible(false);
+    }
+    // * TIEMPO DE PAUSA
+    if ($('#tiempoPausa').is(":checked")) {
+        dataT.api().columns('.tiempoPausa').visible(true);
+    } else {
+        dataT.api().columns('.tiempoPausa').visible(false);
+    }
+    // * EXCESO DE PAUSA
+    if ($('#excesoPausa').is(":checked")) {
+        dataT.api().columns('.excesoPausa').visible(true);
+    } else {
+        dataT.api().columns('.excesoPausa').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
