@@ -443,6 +443,7 @@ function cargartabla(fecha1, fecha2) {
                             <th class="text-center">Horario nocturno</th>
                             <th class="text-center">Sobretiempo nocturno</th>
                             <th class="text-center">H.E. 25% Nocturnas</th>
+                            <th class="text-center">H.E. 35% Nocturnas</th>
                             <th class="text-center">Tardanza total</th>
                             <th class="text-center">Faltas total</th>
                             <th class="text-center">Incidencias total</th>
@@ -1241,6 +1242,19 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoTiempoNocturnas25 < 10) {
                     segundoTiempoNocturnas25 = "0" + segundoTiempoNocturnas25;
                 }
+                // : HORAS EXTRAS NOCTURNAS 35%
+                var horaTiempoNocturnas35 = Math.trunc(moment.duration(tiempoNocturnas35).asHours());
+                var minutoTiempoNocturnas35 = moment.duration(tiempoNocturnas35).minutes();
+                var segundoTiempoNocturnas35 = moment.duration(tiempoNocturnas35).seconds();
+                if (horaTiempoNocturnas35 < 10) {
+                    horaTiempoNocturnas35 = "0" + horaTiempoNocturnas35;
+                }
+                if (minutoTiempoNocturnas35 < 10) {
+                    minutoTiempoNocturnas35 = "0" + minutoTiempoNocturnas35;
+                }
+                if (segundoTiempoNocturnas35 < 10) {
+                    segundoTiempoNocturnas35 = "0" + segundoTiempoNocturnas35;
+                }
                 tbody += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="text-center">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1292,6 +1306,10 @@ function cargartabla(fecha1, fecha2) {
                         <td class="text-center">
                             <img src="landing/images/timer.svg" height="20" class="mr-2">
                             ${horaTiempoNocturnas25}:${minutoTiempoNocturnas25}:${segundoTiempoNocturnas25}
+                        </td>
+                        <td class="text-center">
+                            <img src="landing/images/timer.svg" height="20" class="mr-2">
+                            ${horaTiempoNocturnas35}:${minutoTiempoNocturnas35}:${segundoTiempoNocturnas35}
                         </td>
                         <td class="text-center">
                             <a class="badge badge-soft-danger mr-2">
