@@ -2096,7 +2096,6 @@ function cargartabla(fecha) {
                                                             segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
                                                             minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
                                                             horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
-                                                            console.log(horasMuertosS, minutosMuertosS, segundosMuertosS);
                                                             if (horasMuertosS < 10) {
                                                                 horasMuertosS = "0" + horasMuertosS;
                                                             }
@@ -2137,8 +2136,6 @@ function cargartabla(fecha) {
                                                         segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
                                                         minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
                                                         horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
-                                                        console.log(tiempoMuertoM );
-                                                        console.log(horasMuertosS, minutosMuertosS, segundosMuertosS);
                                                         if (horasMuertosS < 10) {
                                                             horasMuertosS = "0" + horasMuertosS;
                                                         }
@@ -2162,7 +2159,6 @@ function cargartabla(fecha) {
                                                     segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
                                                     minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
                                                     horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
-                                                    console.log(horasMuertosS, minutosMuertosS, segundosMuertosS);
                                                     if (horasMuertosS < 10) {
                                                         horasMuertosS = "0" + horasMuertosS;
                                                     }
