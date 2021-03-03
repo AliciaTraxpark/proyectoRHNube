@@ -2114,7 +2114,7 @@ function cargartabla(fecha) {
                                 var horaFinal = moment(marcacionData.salida);
                                 var horaInicial = moment(marcacionData.entrada);
                                 if (horaFinal.isSameOrAfter(horaInicial)) {
-                                    // * TIEMPO TOTAL TRABAJADA
+                                    // * TIEMPO ENTRE MARCACIONES
                                     if (horarioData.idHorario != 0) {
                                         if (horarioData.tiempoMuertoI == 1) {
                                             if (horaInicial.clone().isBefore(moment(horarioData.horarioIni))) {

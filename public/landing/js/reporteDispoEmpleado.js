@@ -907,7 +907,142 @@ function cargartabla(fecha1, fecha2) {
                     var segundosTiempo = "00";
                     var minutosTiempo = "00";
                     var horasTiempo = "00";
+                    // * TIEMPO MUERTO DE ENTRADA
+                    var segundosMuertosE = "00";
+                    var minutosMuertosE = "00";
+                    var horasMuertosE = "00";
+                    // * TIEMPO MUERTO DE SALIDA
+                    var segundosMuertosS = "00";
+                    var minutosMuertosS = "00";
+                    var horasMuertosS = "00";
                     var contenidoMarcacion = contenidoData.marcaciones[i];
+                    if (contenidoData.entrada != 0 && contenidoData.salida != 0) {
+                        // * TIEMPO ENTRE MARCACIONES
+                        var horaFinal = moment(contenidoMarcacion.salida);
+                        var horaInicial = moment(contenidoMarcacion.entrada);
+                        if (horaFinal.isSameOrAfter(horaInicial)) {
+                            // * TIEMPOS MUERTOS DE ENTRADA Y SALIDA
+                            if (contenidoData.idHorario != 0) {
+                                if (contenidoData.tiempoMuertoI == 1) {
+                                    if (horaInicial.clone().isBefore(moment(contenidoData.horarioIni))) {
+                                        if (horaFinal.clone().isAfter(moment(contenidoData.horarioIni))) {
+                                            // : TIEMPO MUERTO ENTRADA
+                                            var tiempoMuertoM = moment(contenidoData.horarioIni) - horaInicial;
+                                            segundosMuertosE = moment.duration(tiempoMuertoM).seconds();
+                                            minutosMuertosE = moment.duration(tiempoMuertoM).minutes();
+                                            horasMuertosE = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                            if (horasMuertosE < 10) {
+                                                horasMuertosE = "0" + horasMuertosE;
+                                            }
+                                            if (minutosMuertosE < 10) {
+                                                minutosMuertosE = "0" + minutosMuertosE;
+                                            }
+                                            if (segundosMuertosE < 10) {
+                                                segundosMuertosE = "0" + segundosMuertosE;
+                                            }
+                                            // : HORA DE ENTRADA
+                                            horaInicial = moment(contenidoData.horarioIni);
+                                            // : HORA DE SALIDA
+                                            if (contenidoData.tiempoMuertoS == 1) {
+                                                if (horaFinal.clone().isAfter(moment(contenidoData.horarioFin))) {
+                                                    // : TIEMPO MUERTO SALIDA
+                                                    var tiempoMuertoM = moment.duration(parseInt(contenidoData.toleranciaF), "minutes");
+                                                    segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                                    minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                                    horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                    if (horasMuertosS < 10) {
+                                                        horasMuertosS = "0" + horasMuertosS;
+                                                    }
+                                                    if (minutosMuertosS < 10) {
+                                                        minutosMuertosS = "0" + minutosMuertosS;
+                                                    }
+                                                    if (segundosMuertosS < 10) {
+                                                        segundosMuertosS = "0" + segundosMuertosS;
+                                                    }
+                                                    var NuevaSalida = horaFinal.clone().subtract(contenidoData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                    horaFinal = moment(NuevaSalida);
+                                                }
+                                            }
+                                        } else {
+                                            // : TIEMPO MUERTO
+                                            var tiempoMuertoM = horaFinal - horaInicial;
+                                            segundosMuertosE = moment.duration(tiempoMuertoM).seconds();
+                                            minutosMuertosE = moment.duration(tiempoMuertoM).minutes();
+                                            horasMuertosE = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                            if (horasMuertosE < 10) {
+                                                horasMuertosE = "0" + horasMuertosE;
+                                            }
+                                            if (minutosMuertosE < 10) {
+                                                minutosMuertosE = "0" + minutosMuertosE;
+                                            }
+                                            if (segundosMuertosE < 10) {
+                                                segundosMuertosE = "0" + segundosMuertosE;
+                                            }
+                                            horaInicial = moment.duration(0);
+                                            horaFinal = moment.duration(0);
+                                        }
+                                    } else {
+                                        // : HORA DE SALIDA
+                                        if (contenidoData.tiempoMuertoS == 1) {
+                                            if (horaFinal.clone().isAfter(moment(contenidoData.horarioFin))) {
+                                                // : TIEMPO MUERTO SALIDA
+                                                var tiempoMuertoM = moment.duration(parseInt(contenidoData.toleranciaF), "minutes");
+                                                segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                                minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                                horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                if (horasMuertosS < 10) {
+                                                    horasMuertosS = "0" + horasMuertosS;
+                                                }
+                                                if (minutosMuertosS < 10) {
+                                                    minutosMuertosS = "0" + minutosMuertosS;
+                                                }
+                                                if (segundosMuertosS < 10) {
+                                                    segundosMuertosS = "0" + segundosMuertosS;
+                                                }
+                                                var NuevaSalida = horaFinal.clone().subtract(contenidoData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                horaFinal = moment(NuevaSalida);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    // : HORA DE SALIDA
+                                    if (contenidoData.tiempoMuertoS == 1) {
+                                        if (horaFinal.clone().isAfter(moment(contenidoData.horarioFin))) {
+                                            // : TIEMPO MUERTO SALIDA
+                                            var tiempoMuertoM = moment.duration(parseInt(contenidoData.toleranciaF), "minutes");
+                                            segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                            minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                            horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                            if (horasMuertosS < 10) {
+                                                horasMuertosS = "0" + horasMuertosS;
+                                            }
+                                            if (minutosMuertosS < 10) {
+                                                minutosMuertosS = "0" + minutosMuertosS;
+                                            }
+                                            if (segundosMuertosS < 10) {
+                                                segundosMuertosS = "0" + segundosMuertosS;
+                                            }
+                                            var NuevaSalida = horaFinal.clone().subtract(contenidoData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                            horaFinal = moment(NuevaSalida);
+                                        }
+                                    }
+                                }
+                            }
+                            var tiempoRestante = horaFinal - horaInicial;
+                            segundosTiempo = moment.duration(tiempoRestante).seconds();
+                            minutosTiempo = moment.duration(tiempoRestante).minutes();
+                            horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                            if (horasTiempo < 10) {
+                                horasTiempo = '0' + horasTiempo;
+                            }
+                            if (minutosTiempo < 10) {
+                                minutosTiempo = '0' + minutosTiempo;
+                            }
+                            if (segundosTiempo < 10) {
+                                segundosTiempo = '0' + segundosTiempo;
+                            }
+                        }
+                    }
                     // * SI TIENE TIEMPO DE ENTRADA
                     if (contenidoMarcacion.entrada != 0) {
                         tbodyEntradaySalida += `<td class="colMarcaciones" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
@@ -920,25 +1055,6 @@ function cargartabla(fecha1, fecha2) {
                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                         ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
                                                     </td>`;
-                            // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
-                            var horaFinal = moment(contenidoMarcacion.salida);
-                            var horaInicial = moment(contenidoMarcacion.entrada);
-                            if (horaFinal.isSameOrAfter(horaInicial)) {
-                                // * TIEMPO TOTAL TRABAJADA
-                                var tiempoRestante = horaFinal - horaInicial;
-                                segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                if (horasTiempo < 10) {
-                                    horasTiempo = '0' + horasTiempo;
-                                }
-                                if (minutosTiempo < 10) {
-                                    minutosTiempo = '0' + minutosTiempo;
-                                }
-                                if (segundosTiempo < 10) {
-                                    segundosTiempo = '0' + segundosTiempo;
-                                }
-                            }
                         } else {
                             tbodyEntradaySalida += `<td class="colMarcaciones">
                                                         <span class="badge badge-soft-secondary">
