@@ -448,12 +448,12 @@ function cargartabla(fecha) {
                                     </th>
                                     <th class="text-center colTiempoMuertoEXM">
                                         <span>
-                                            Tiempo muerto entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                            Tiempo muerto - entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
                                     </th>
                                     <th class="text-center colTiempoMuertoSXM">
                                         <span>
-                                            Tiempo muerto salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                            Tiempo muerto - salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
                                     </th>`;
                 }
@@ -475,6 +475,7 @@ function cargartabla(fecha) {
                 }
             }
             theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colTiempoMuertoTotalE" class="colTiempoMuertoTotalE">Tiempo muerto total - entrada</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobretiempoNormalT" class="colSobretiempoNormalT">Sobretiempo normal total</th>
@@ -542,6 +543,7 @@ function cargartabla(fecha) {
                 var sumaHorasE25N = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 25% NOCTURNAS
                 var sumaHorasE35N = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% NOCTURNAS
                 var sumaHorasE100N = moment.duration(0);                        //: SUMANDO TOTALES DE HORAS EXTRAS DE 100% NOCTURNAS
+                var sumaMuertosEntrada = moment.duration(0);                    //: SUMANDO LOS TIEMPOS MUERTOS TOTALES DE LA ENTRADA
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -648,6 +650,7 @@ function cargartabla(fecha) {
                                                     // : HORA DE ENTRADA
                                                     var tiempoMuerto = moment(horarioData.horarioIni) - horaInicialData.clone();
                                                     tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
+                                                    sumaMuertosEntrada = sumaMuertosEntrada.add(tiempoMuerto);
                                                     horaInicialData = moment(horarioData.horarioIni);
                                                     // : HORA DE SALIDA
                                                     if (horarioData.tiempoMuertoS == 1) {
@@ -661,6 +664,7 @@ function cargartabla(fecha) {
                                                 } else {
                                                     var tiempoMuerto = horaFinalData.clone() - horaInicialData.clone();
                                                     tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
+                                                    sumaMuertosEntrada = sumaMuertosEntrada.add(tiempoMuerto);
                                                     horaInicialData = moment.duration(0);
                                                     horaFinalData = moment.duration(0);
                                                 }
@@ -2990,12 +2994,29 @@ function cargartabla(fecha) {
                 if (segundoSumaHorasE100N < 10) {
                     segundoSumaHorasE100N = "0" + segundoSumaHorasE100N;
                 }
+                // : SUMA DE TIEMPOS MUERTOS EN ENTRADA
+                var horaSumaTiemposMuertosTE = Math.trunc(moment.duration(sumaMuertosEntrada).asHours());
+                var minutoSumaTiemposMuertosTE = moment.duration(sumaMuertosEntrada).minutes();
+                var segundoSumaTiemposMuertosTE = moment.duration(sumaMuertosEntrada).seconds();
+                if (horaSumaTiemposMuertosTE < 10) {
+                    horaSumaTiemposMuertosTE = "0" + horaSumaTiemposMuertosTE;
+                }
+                if (minutoSumaTiemposMuertosTE < 10) {
+                    minutoSumaTiemposMuertosTE = "0" + minutoSumaTiemposMuertosTE;
+                }
+                if (segundoSumaTiemposMuertosTE < 10) {
+                    segundoSumaTiemposMuertosTE = "0" + segundoSumaTiemposMuertosTE;
+                }
                 // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
                 tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${horaTiempoTotal}:${minutoTiempoTotal}:${segundoTiempoTotal}
                             </a>
+                        </td>
+                        <td name="colTiempoMuertoTotalE" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                            ${horaSumaTiemposMuertosTE}:${minutoSumaTiemposMuertosTE}:${segundoSumaTiemposMuertosTE}
                         </td>
                         <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-primary mr-2">
