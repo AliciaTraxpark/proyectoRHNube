@@ -24,7 +24,7 @@ class soportesPorCorreoController extends Controller
 
     public function soporte()
     {
-        $correoAdministrativo = env('MAIL_FROM_ADDRESS');
+        $correoAdministrativo = "info@rhnube.com.pe";
         return view('correosA.soporte', ["correo" => $correoAdministrativo]);
     }
 
@@ -32,7 +32,7 @@ class soportesPorCorreoController extends Controller
     {
         $valor = $request->get('contenido');
         $asunto = $request->get('asunto');
-        $email = env('MAIL_FROM_ADDRESS');
+        $email = "info@rhnube.com.pe";
         $idOrganizacion = session('sesionidorg');
         $organizacion = organizacion::find($idOrganizacion);
         $idEmpleado = Auth::user()->id;
@@ -43,7 +43,7 @@ class soportesPorCorreoController extends Controller
     }
 
     public function envioAgendaReunion(Request $request)
-    {   
+    {
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $today = Carbon::now();
         $año= $today->year;
@@ -85,7 +85,7 @@ class soportesPorCorreoController extends Controller
 
     public function sugerencia()
     {
-        $correoAdministrativo = env('MAIL_FROM_ADDRESS');
+        $correoAdministrativo = "info@rhnube.com.pe";
         return view('correosA.sugerencia', ["correo" => $correoAdministrativo]);
     }
 
@@ -93,7 +93,7 @@ class soportesPorCorreoController extends Controller
     {
         $valor = $request->get('contenido');
         $asunto = $request->get('asunto');
-        $email = env('MAIL_FROM_ADDRESS');
+        $email = "info@rhnube.com.pe";
         $idOrganizacion = session('sesionidorg');
         $organizacion = organizacion::find($idOrganizacion);
         $idEmpleado = Auth::user()->id;
