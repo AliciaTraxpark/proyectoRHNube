@@ -440,14 +440,14 @@ function cargartabla(fecha) {
                                     <th class="text-center colDispositivoS" name="colDispositivoS">
                                         Dispositivo de salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                     </th>
-                                    <th class="text-center colTiempoMuertoEXM">
-                                        <span>
-                                            Tiempo muerto entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
-                                        </span>
-                                    </th>
                                     <th id="tSitio" name="colTiempoS" class="colTiempoS">
                                         <span>
                                             Tiempo <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                        </span>
+                                    </th>
+                                    <th class="text-center colTiempoMuertoEXM">
+                                        <span>
+                                            Tiempo muerto entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
                                     </th>`;
                 }
@@ -2274,16 +2274,16 @@ function cargartabla(fecha) {
                                                                 </td>`;
                                         tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`;
                                     }
-                                    tbodyEntradaySalida += `<td class="text-center colTiempoMuertoEXM">
-                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
-                                                            </td>
-                                                            <td name="colTiempoS">
+                                    tbodyEntradaySalida += `<td name="colTiempoS">
                                                                 <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                 <a class="badge badge-soft-primary mr-2">
                                                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                     ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                 </a>
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
                                                             </td>`;
                                 } else {
                                     if (permisoModificar == 1) {
@@ -2324,16 +2324,16 @@ function cargartabla(fecha) {
                                         tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">---</td>`;
                                     }
 
-                                    tbodyEntradaySalida += `<td class="text-center colTiempoMuertoEXM">
-                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
-                                                            </td>
-                                                            <td name="colTiempoS">
+                                    tbodyEntradaySalida += `<td name="colTiempoS">
                                                                 <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                 <a class="badge badge-soft-primary mr-2">
                                                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                     ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                 </a>
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
                                                             </td>`;
                                 }
 
@@ -2440,16 +2440,16 @@ function cargartabla(fecha) {
                                         tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`;
                                     }
 
-                                    tbodyEntradaySalida += `<td class="text-center colTiempoMuertoEXM">
-                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
-                                                            </td>
-                                                            <td name="colTiempoS">
+                                    tbodyEntradaySalida += `<td name="colTiempoS">
                                                                 <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                 <a class="badge badge-soft-primary mr-2">
                                                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                     ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                 </a>
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
                                                             </td>`;
 
                                 }
@@ -2460,8 +2460,8 @@ function cargartabla(fecha) {
                                                     <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
                                                     <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
-                                                    <td class="text-center colTiempoMuertoEXM">---</td>
-                                                    <td name="colTiempoS" class="text-center">---</td>`;
+                                                    <td name="colTiempoS" class="text-center">---</td>
+                                                    <td class="text-center colTiempoMuertoEXM">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
                         // ! PAUSAS
@@ -2670,8 +2670,8 @@ function cargartabla(fecha) {
                                                     <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
                                                     <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
-                                                    <td class="text-center colTiempoMuertoEXM">---</td>
-                                                    <td name="colTiempoS" class="text-center">---</td>`;
+                                                    <td name="colTiempoS" class="text-center">---</td>
+                                                    <td class="text-center colTiempoMuertoEXM">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
                         // ! PAUSAS
