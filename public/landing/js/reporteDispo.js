@@ -5489,6 +5489,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colTiempoMuertoEXM').visible(false);
     }
+    // ? TIEMPO MUERTO EN SALIDA POR HORARIO
+    if ($('#colTiempoMuertoSXM').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoSXM').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoSXM').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
