@@ -5477,6 +5477,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colTiempoMuertoEntrada').visible(false);
     }
+    // ? TIEMPO MUERTO EN SALIDA
+    if ($('#colTiempoMuertoSalida').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoSalida').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoSalida').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {

@@ -454,6 +454,10 @@
                                                 <input type="checkbox" id="colTiempoMuertoEntrada">
                                                 <label for="">Por horario - entrada</label>
                                             </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colTiempoMuertoSalida">
+                                                <label for="">Por horario - salida</label>
+                                            </li>
                                         </ul>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colTiempoSitio">
