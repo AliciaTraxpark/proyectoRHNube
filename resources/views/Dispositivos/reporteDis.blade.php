@@ -466,6 +466,10 @@
                                                 <input type="checkbox" id="colTiempoMuertoSXM">
                                                 <label for="">Por marcación - salida</label>
                                             </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colTiempoMuertoTotalE">
+                                                <label for="">Por total - entrada</label>
+                                            </li>
                                         </ul>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colTiempoSitio">

@@ -5545,6 +5545,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colTiempoMuertoSXM').visible(false);
     }
+    // : TIEMPO MUERTO EN ENTRADA POR TOTAL
+    if ($('#colTiempoMuertoTotalE').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoTotalE').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoTotalE').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
