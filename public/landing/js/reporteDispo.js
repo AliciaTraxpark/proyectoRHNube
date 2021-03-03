@@ -586,6 +586,8 @@ function cargartabla(fecha) {
                     var nocturnas100 = moment.duration(0);
                     // * TIEMPO MUERTO ENTRADA
                     var tiempoMuertoEntrada = moment.duration(0);
+                    // * TIEMPO MUERTO SALIDA
+                    var tiempoMuertoSalida = moment.duration(0);
                     if (data[index].data[m] != undefined) {
                         // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                         var horarioData = data[index].data[m].horario;
@@ -638,17 +640,38 @@ function cargartabla(fecha) {
                                 var horaInicialData = moment(dataM.entrada);
                                 if (horaFinalData.isSameOrAfter(horaInicialData)) {
                                     if (horarioData.idHorario != 0) {
-                                        if (horarioData.tiempoMuertoIngreso == 1) {
+                                        if (horarioData.tiempoMuertoI == 1) {
+                                            // : SI ENTRADA ES MENOR A LA HORA DE INICIO DE HORARIO
                                             if (horaInicialData.clone().isBefore(moment(horarioData.horarioIni))) {
                                                 if (horaFinalData.clone().isAfter(moment(horarioData.horarioIni))) {
+                                                    // : HORA DE ENTRADA
                                                     var tiempoMuerto = moment(horarioData.horarioIni) - horaInicialData.clone();
                                                     tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
                                                     horaInicialData = moment(horarioData.horarioIni);
+                                                    // : HORA DE SALIDA
+                                                    if (horarioData.tiempoMuertoS == 1) {
+                                                        if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                            var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                            tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                            var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                            horaFinalData = moment(NuevaSalida);
+                                                        }
+                                                    }
                                                 } else {
                                                     var tiempoMuerto = horaFinalData.clone() - horaInicialData.clone();
                                                     tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
                                                     horaInicialData = moment.duration(0);
                                                     horaFinalData = moment.duration(0);
+                                                }
+                                            } else {
+                                                // : HORA DE SALIDA
+                                                if (horarioData.tiempoMuertoS == 1) {
+                                                    if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                        var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                        tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                        var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                        horaFinalData = moment(NuevaSalida);
+                                                    }
                                                 }
                                             }
                                         }
@@ -2108,7 +2131,6 @@ function cargartabla(fecha) {
                                             if (segundosTiempo < 10) {
                                                 segundosTiempo = '0' + segundosTiempo;
                                             }
-                                            console.log(horasTiempo, minutosTiempo, segundosTiempo);
                                         }
                                     } else {
                                         var tiempoRestante = horaFinal - horaInicial;
