@@ -449,6 +449,11 @@ function cargartabla(fecha) {
                                         <span>
                                             Tiempo muerto entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
+                                    </th>
+                                    <th class="text-center colTiempoMuertoSXM">
+                                        <span>
+                                            Tiempo muerto salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                        </span>
                                     </th>`;
                 }
                 // ! PAUSAS
@@ -2284,6 +2289,10 @@ function cargartabla(fecha) {
                                                             <td class="text-center colTiempoMuertoEXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
                                                                 ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoSXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
                                                             </td>`;
                                 } else {
                                     if (permisoModificar == 1) {
@@ -2332,6 +2341,10 @@ function cargartabla(fecha) {
                                                                 </a>
                                                             </td>
                                                             <td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoSXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
                                                                 ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
                                                             </td>`;
@@ -2450,6 +2463,10 @@ function cargartabla(fecha) {
                                                             <td class="text-center colTiempoMuertoEXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
                                                                 ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoSXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
                                                             </td>`;
 
                                 }
@@ -2461,7 +2478,8 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
                                                     <td name="colTiempoS" class="text-center">---</td>
-                                                    <td class="text-center colTiempoMuertoEXM">---</td>`;
+                                                    <td class="text-center colTiempoMuertoEXM">---</td>
+                                                    <td class="text-center colTiempoMuertoSXM">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
                         // ! PAUSAS
@@ -2671,7 +2689,8 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
                                                     <td name="colTiempoS" class="text-center">---</td>
-                                                    <td class="text-center colTiempoMuertoEXM">---</td>`;
+                                                    <td class="text-center colTiempoMuertoEXM">---</td>
+                                                    <td class="text-center colTiempoMuertoSXM">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
                         // ! PAUSAS
