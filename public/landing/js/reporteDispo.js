@@ -5060,6 +5060,7 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoPorH').hide();
     $('#contenidoPorT').hide();
     $('#contenidoDispositivos').hide();
+    $('#contenidoPorTM').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
