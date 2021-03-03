@@ -5077,6 +5077,10 @@ function togglePorHorario() {
 function togglePorTotales() {
     $('#contenidoPorT').toggle();
 }
+// * TOGGLE POR TIEMPOS MUERTOS
+function togglePorTiemposMuertos() {
+    $('#contenidoPorTM').toggle();
+}
 // * HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
     var contenido = $(this).closest('ul');

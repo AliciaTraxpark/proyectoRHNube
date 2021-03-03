@@ -441,9 +441,18 @@
                                                 <input type="checkbox" id="colTiempoEntreH">
                                                 <label for="">Tiempo entre horario</label>
                                             </li>
+                                        </ul>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" name="porTiemposMuertos" id="porTiemposMuertos">
+                                            <label for="">Tiempos muertos</label>
+                                            <img class="float-right mt-1 ml-2" height="9" style="cursor: pointer;"
+                                                src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                                onclick="javascript:togglePorTiemposMuertos()">
+                                        </li>
+                                        <ul class="ulHijoPadre" style="display: none" id="contenidoPorTM">
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoMuertoEntrada">
-                                                <label for="">Tiempo muerto entrada</label>
+                                                <label for="">Por horario - entrada</label>
                                             </li>
                                         </ul>
                                         <li class="liContenido detalleHijo">
