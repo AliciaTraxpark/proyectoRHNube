@@ -358,6 +358,8 @@ function cargarDatos() {
                         <th class="text-center">Días Trabajados</th>
                         <th class="text-center">Horario normal</th>
                         <th class="text-center">Horario nocturno</th>
+                        <th class="text-center tiempoMuertoE">Tiempo muerto - entrada</th>
+                        <th class="text-center tiempoMuertoS">Tiempo muerto - salida</th>
                         <th class="text-center">Faltas</th>`;
         for (let item = 0; item < data.incidencias.length; item++) {
             thead += `<th class="text-center incidencia${data.incidencias[item].id}">${data.incidencias[item].descripcion}</th>`;
@@ -976,6 +978,32 @@ function cargarDatos() {
             if (segundoHorasNocturnas < 10) {
                 segundoHorasNocturnas = "0" + segundoHorasNocturnas;
             }
+            // : TIEMPO MUERTO - ENTRADA
+            var horaTiempoMuertoEntrada = Math.trunc(moment.duration(sumaMuertosEntrada).asHours());
+            var minutoTiempoMuertoEntrada = moment.duration(sumaMuertosEntrada).minutes();
+            var segundoTiempoMuertoEntrada = moment.duration(sumaMuertosEntrada).seconds();
+            if (horaTiempoMuertoEntrada < 10) {
+                horaTiempoMuertoEntrada = "0" + horaTiempoMuertoEntrada;
+            }
+            if (minutoTiempoMuertoEntrada < 10) {
+                minutoTiempoMuertoEntrada = "0" + minutoTiempoMuertoEntrada;
+            }
+            if (segundoTiempoMuertoEntrada < 10) {
+                segundoTiempoMuertoEntrada = "0" + segundoTiempoMuertoEntrada;
+            }
+            // : TIEMPO MUERTO - SALIDA
+            var horaTiempoMuertoSalida = Math.trunc(moment.duration(sumaMuertosSalida).asHours());
+            var minutoTiempoMuertoSalida = moment.duration(sumaMuertosSalida).minutes();
+            var segundoTiempoMuertoSalida = moment.duration(sumaMuertosSalida).seconds();
+            if (horaTiempoMuertoSalida < 10) {
+                horaTiempoMuertoSalida = "0" + horaTiempoMuertoSalida;
+            }
+            if (minutoTiempoMuertoSalida < 10) {
+                minutoTiempoMuertoSalida = "0" + minutoTiempoMuertoSalida;
+            }
+            if (segundoTiempoMuertoSalida < 10) {
+                segundoTiempoMuertoSalida = "0" + segundoTiempoMuertoSalida;
+            }
             tbody += `<tr>
                         <td>${index + 1}</td>
                         <td>${data.marcaciones[index].emple_nDoc}</td>
@@ -985,6 +1013,8 @@ function cargarDatos() {
                         <td class="text-center">${diasTrabajdos}</td>
                         <td class="text-center">${horaHorasNormales}:${minutoHorasNormales}:${segundoHorasNormales}</td>
                         <td class="text-center">${horaHorasNocturnas}:${minutoHorasNocturnas}:${segundoHorasNocturnas}</td>
+                        <td class="text-center">${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}</td>
+                        <td class="text-center">${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}</td>
                         <td class="text-center">${faltas}</td>`;
             for (let i = 0; i < data.incidencias.length; i++) {
                 var respuestaI = 0;
@@ -1007,6 +1037,7 @@ function cargarDatos() {
         }
         $('#tbodyT').append(tbody);
         inicializarTabla();
+        toggleColumnas();
         $(window).on('resize', function () {
             $("#tablaTrazabilidad").css('width', '100%');
             table.draw(false);
@@ -1043,7 +1074,7 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
 });
-// * MENU DE INCIDENCIAS
+// : ***************************** MENU DE INCIDENCIAS ***********************************
 function toggleI() {
     $('#menuIncidencias').toggle();
 }
@@ -1075,12 +1106,44 @@ function menuIncidencias(id) {
             }
         }
     });
+    toggleColumnas();
 }
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.incidenciaPadre input[type=checkbox]').change(function () {
     $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
     $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo').click();
 });
+// : ***************************** TIEMPO MUERTO ENTRADA *********************************
+$('#tiempoMuertoE').on("change", function (event) {
+    if (event.target.checked) {
+        dataT.api().columns('.tiempoMuertoE').visible(true);
+    } else {
+        dataT.api().columns('.tiempoMuertoE').visible(false);
+    }
+});
+// : ***************************** TIEMPO MUERTO SALIDA *********************************
+$('#tiempoMuertoS').on("change", function (event) {
+    if (event.target.checked) {
+        dataT.api().columns('.tiempoMuertoS').visible(true);
+    } else {
+        dataT.api().columns('.tiempoMuertoS').visible(false);
+    }
+});
+function toggleColumnas() {
+    // : TIEMPO MUERTO ENTRADA
+    if ($('#tiempoMuertoE').is(":checked")) {
+        dataT.api().columns('.tiempoMuertoE').visible(true);
+    } else {
+        dataT.api().columns('.tiempoMuertoE').visible(false);
+    }
+    // : TIEMPO MUERTO SALIDA
+    if ($('#tiempoMuertoS').is(":checked")) {
+        dataT.api().columns('.tiempoMuertoS').visible(true);
+    } else {
+        dataT.api().columns('.tiempoMuertoS').visible(false);
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
+}
 // * FINALIZACION
 $('#tablaTrazabilidad tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');

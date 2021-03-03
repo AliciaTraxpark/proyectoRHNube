@@ -164,6 +164,18 @@
                                     </li>
                                     <ul class="ulHijo" style="display: none" id="menuIncidencias"></ul>
                                 </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="tiempoMuertoE">
+                                        <label for="">Tiempo muerto - entrada</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="tiempoMuertoS">
+                                        <label for="">Tiempo muerto - salida</label>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
