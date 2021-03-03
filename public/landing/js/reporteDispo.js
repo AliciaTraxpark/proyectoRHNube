@@ -406,8 +406,8 @@ function cargartabla(fecha) {
                                 <th name="toleranciaIHorario" class="toleranciaIHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en el ingreso</th>
                                 <th name="toleranciaFHorario" class="toleranciaFHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en la salida</th>
                                 <th name="colTiempoEntreH" class="text-center colTiempoEntreH" style="border-right: 1px dashed #c8d4de!important;">Tiempo total</th>
-                                <th name="colTiempoMuertoEntrada" class="text-center colTiempoMuertoEntrada" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto entrada</th>
-                                <th name="colTiempoMuertoSalida" class="text-center colTiempoMuertoSalida" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto salida</th>
+                                <th name="colTiempoMuertoEntrada" class="text-center colTiempoMuertoEntrada" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto - entrada</th>
+                                <th name="colTiempoMuertoSalida" class="text-center colTiempoMuertoSalida" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto - salida</th>
                                 <th name="colSobreTiempo" class="text-center colSobreTiempo" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo</th>
                                 <th name="colHoraNormal" class="text-center colHoraNormal" style="border-right: 1px dashed #c8d4de!important;">Horario normal</th>
                                 <th name="colSobreTNormal" class="text-center colSobreTNormal" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo normal</th>
@@ -476,6 +476,7 @@ function cargartabla(fecha) {
             }
             theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colTiempoMuertoTotalE" class="colTiempoMuertoTotalE">Tiempo muerto total - entrada</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colTiempoMuertoTotalS" class="colTiempoMuertoTotalS">Tiempo muerto total - salida</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobretiempoNormalT" class="colSobretiempoNormalT">Sobretiempo normal total</th>
@@ -544,6 +545,7 @@ function cargartabla(fecha) {
                 var sumaHorasE35N = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% NOCTURNAS
                 var sumaHorasE100N = moment.duration(0);                        //: SUMANDO TOTALES DE HORAS EXTRAS DE 100% NOCTURNAS
                 var sumaMuertosEntrada = moment.duration(0);                    //: SUMANDO LOS TIEMPOS MUERTOS TOTALES DE LA ENTRADA
+                var sumaMuertosSalida = moment.duration(0);                     //: SUMANDO LOS TIEMPOS MUERTOS TOTALES DE LA SALIDA
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -655,10 +657,12 @@ function cargartabla(fecha) {
                                                     // : HORA DE SALIDA
                                                     if (horarioData.tiempoMuertoS == 1) {
                                                         if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
-                                                            var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                            var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
                                                             tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                            sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
                                                             var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                             horaFinalData = moment(NuevaSalida);
+                                                            console.log(sumaMuertosSalida);
                                                         }
                                                     }
                                                 } else {
@@ -672,10 +676,12 @@ function cargartabla(fecha) {
                                                 // : HORA DE SALIDA
                                                 if (horarioData.tiempoMuertoS == 1) {
                                                     if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
-                                                        var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                        var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
                                                         tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                        sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
                                                         var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                         horaFinalData = moment(NuevaSalida);
+                                                        console.log(sumaMuertosSalida);
                                                     }
                                                 }
                                             }
@@ -683,10 +689,12 @@ function cargartabla(fecha) {
                                             // : HORA DE SALIDA
                                             if (horarioData.tiempoMuertoS == 1) {
                                                 if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
-                                                    var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                    var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
                                                     tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                    sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
                                                     var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                     horaFinalData = moment(NuevaSalida);
+                                                    console.log(sumaMuertosSalida);
                                                 }
                                             }
                                         }
@@ -3007,6 +3015,19 @@ function cargartabla(fecha) {
                 if (segundoSumaTiemposMuertosTE < 10) {
                     segundoSumaTiemposMuertosTE = "0" + segundoSumaTiemposMuertosTE;
                 }
+                // : SUMA DE TIEMPOS MUERTOS EN SALIDA
+                var horaSumaTiemposMuertosTS = Math.trunc(moment.duration(sumaMuertosSalida).asHours());
+                var minutoSumaTiemposMuertosTS = moment.duration(sumaMuertosSalida).minutes();
+                var segundoSumaTiemposMuertosTS = moment.duration(sumaMuertosSalida).seconds();
+                if (horaSumaTiemposMuertosTS < 10) {
+                    horaSumaTiemposMuertosTS = "0" + horaSumaTiemposMuertosTS;
+                }
+                if (minutoSumaTiemposMuertosTS < 10) {
+                    minutoSumaTiemposMuertosTS = "0" + minutoSumaTiemposMuertosTS;
+                }
+                if (segundoSumaTiemposMuertosTS < 10) {
+                    segundoSumaTiemposMuertosTS = "0" + segundoSumaTiemposMuertosTS;
+                }
                 // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
                 tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
                             <a class="badge badge-soft-primary mr-2">
@@ -3017,6 +3038,10 @@ function cargartabla(fecha) {
                         <td name="colTiempoMuertoTotalE" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
                             ${horaSumaTiemposMuertosTE}:${minutoSumaTiemposMuertosTE}:${segundoSumaTiemposMuertosTE}
+                        </td>
+                        <td name="colTiempoMuertoTotalS" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                            ${horaSumaTiemposMuertosTS}:${minutoSumaTiemposMuertosTS}:${segundoSumaTiemposMuertosTS}
                         </td>
                         <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-primary mr-2">
