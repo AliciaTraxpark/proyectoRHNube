@@ -674,9 +674,20 @@ function cargartabla(fecha) {
                                                     }
                                                 }
                                             }
+                                        } else {
+                                            // : HORA DE SALIDA
+                                            if (horarioData.tiempoMuertoS == 1) {
+                                                if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                    var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                    tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                    var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                    horaFinalData = moment(NuevaSalida);
+                                                }
+                                            }
                                         }
                                     }
                                     if (horaInicialData != 0 && horaFinalData != 0) {
+                                        console.log(horaInicialData, horaFinalData);
                                         // : GUARDAR EL TIEMPO ENTE MARCACIONES
                                         var tiempoEntreM = moment.duration(horaFinalData.diff(horaInicialData));
                                         // : ACUMULAR TIEMPO CALCULADOS
@@ -845,6 +856,7 @@ function cargartabla(fecha) {
                                         sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                         // : SUMA DE TIEMPO TOTAL
                                         sumaTiempos = sumaTiempos.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
+                                        console.log();
                                     }
                                 }
                             }
