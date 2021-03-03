@@ -2088,15 +2088,15 @@ function cargartabla(fecha) {
                                                     }
                                                     // : HORA DE ENTRADA
                                                     horaInicial = moment(horarioData.horarioIni);
-                                                    console.log(horasMuertosE, minutosMuertosE);
                                                     // : HORA DE SALIDA
                                                     if (horarioData.tiempoMuertoS == 1) {
                                                         if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
                                                             // : TIEMPO MUERTO SALIDA
-                                                            var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                            var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
                                                             segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
                                                             minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
                                                             horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                            console.log(horasMuertosS, minutosMuertosS, segundosMuertosS);
                                                             if (horasMuertosS < 10) {
                                                                 horasMuertosS = "0" + horasMuertosS;
                                                             }
@@ -2108,7 +2108,6 @@ function cargartabla(fecha) {
                                                             }
                                                             var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                             horaFinal = moment(NuevaSalida);
-                                                            console.log(horasMuertosS, minutosMuertosS);
                                                         }
                                                     }
                                                 } else {
@@ -2128,17 +2127,18 @@ function cargartabla(fecha) {
                                                     }
                                                     horaInicial = moment.duration(0);
                                                     horaFinal = moment.duration(0);
-                                                    console.log(horasMuertosE, minutosMuertosE);
                                                 }
                                             } else {
                                                 // : HORA DE SALIDA
                                                 if (horarioData.tiempoMuertoS == 1) {
                                                     if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
                                                         // : TIEMPO MUERTO SALIDA
-                                                        var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                        var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
                                                         segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
                                                         minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
                                                         horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                        console.log(tiempoMuertoM );
+                                                        console.log(horasMuertosS, minutosMuertosS, segundosMuertosS);
                                                         if (horasMuertosS < 10) {
                                                             horasMuertosS = "0" + horasMuertosS;
                                                         }
@@ -2150,7 +2150,6 @@ function cargartabla(fecha) {
                                                         }
                                                         var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                         horaFinal = moment(NuevaSalida);
-                                                        console.log(horasMuertosS, minutosMuertosS);
                                                     }
                                                 }
                                             }
@@ -2159,10 +2158,11 @@ function cargartabla(fecha) {
                                             if (horarioData.tiempoMuertoS == 1) {
                                                 if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
                                                     // : TIEMPO MUERTO SALIDA
-                                                    var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                    var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
                                                     segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
                                                     minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
                                                     horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                    console.log(horasMuertosS, minutosMuertosS, segundosMuertosS);
                                                     if (horasMuertosS < 10) {
                                                         horasMuertosS = "0" + horasMuertosS;
                                                     }
@@ -2174,7 +2174,6 @@ function cargartabla(fecha) {
                                                     }
                                                     var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                     horaFinal = moment(NuevaSalida);
-                                                    console.log(horasMuertosS, minutosMuertosS);
                                                 }
                                             }
                                         }
@@ -2357,11 +2356,11 @@ function cargartabla(fecha) {
                                                             </td>
                                                             <td class="text-center colTiempoMuertoEXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                                ${horasMuertosE}:${minutosMuertosE}:${segundosMuertosE}
                                                             </td>
                                                             <td class="text-center colTiempoMuertoSXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                                ${horasMuertosS}:${minutosMuertosS}:${segundosMuertosS}
                                                             </td>`;
                                 } else {
                                     if (permisoModificar == 1) {
@@ -2411,11 +2410,11 @@ function cargartabla(fecha) {
                                                             </td>
                                                             <td class="text-center colTiempoMuertoEXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                                ${horasMuertosE}:${minutosMuertosE}:${segundosMuertosE}
                                                             </td>
                                                             <td class="text-center colTiempoMuertoSXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                                ${horasMuertosS}:${minutosMuertosS}:${segundosMuertosS}
                                                             </td>`;
                                 }
 
@@ -2531,11 +2530,11 @@ function cargartabla(fecha) {
                                                             </td>
                                                             <td class="text-center colTiempoMuertoEXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                                ${horasMuertosE}:${minutosMuertosE}:${segundosMuertosE}
                                                             </td>
                                                             <td class="text-center colTiempoMuertoSXM">
                                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                                ${horasMuertosS}:${minutosMuertosE}:${segundosMuertosS}
                                                             </td>`;
 
                                 }
