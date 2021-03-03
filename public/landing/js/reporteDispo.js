@@ -662,7 +662,6 @@ function cargartabla(fecha) {
                                                             sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
                                                             var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                             horaFinalData = moment(NuevaSalida);
-                                                            console.log(sumaMuertosSalida);
                                                         }
                                                     }
                                                 } else {
@@ -681,7 +680,6 @@ function cargartabla(fecha) {
                                                         sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
                                                         var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                         horaFinalData = moment(NuevaSalida);
-                                                        console.log(sumaMuertosSalida);
                                                     }
                                                 }
                                             }
@@ -694,7 +692,6 @@ function cargartabla(fecha) {
                                                     sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
                                                     var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                     horaFinalData = moment(NuevaSalida);
-                                                    console.log(sumaMuertosSalida);
                                                 }
                                             }
                                         }
