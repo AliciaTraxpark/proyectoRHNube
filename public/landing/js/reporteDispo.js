@@ -2057,6 +2057,10 @@ function cargartabla(fecha) {
                             var segundosMuertosE = "00";
                             var minutosMuertosE = "00";
                             var horasMuertosE = "00";
+                            // * TIEMPO MUERTO SALIDA
+                            var segundosMuertosS = "00";
+                            var minutosMuertosS = "00";
+                            var horasMuertosS = "00";
                             var marcacionData = data[index].data[m].marcaciones[j];
                             if (marcacionData.entrada != 0 && marcacionData.salida) {
                                 // * CALCULAR TIEMPO TOTAL
@@ -2065,24 +2069,14 @@ function cargartabla(fecha) {
                                 if (horaFinal.isSameOrAfter(horaInicial)) {
                                     // * TIEMPO TOTAL TRABAJADA
                                     if (horarioData.idHorario != 0) {
-                                        if (horarioData.tiempoMuertoIngreso == 1) {
+                                        if (horarioData.tiempoMuertoI == 1) {
                                             if (horaInicial.clone().isBefore(moment(horarioData.horarioIni))) {
+                                                console.log(horaFinal, moment(horarioData.horarioIni));
+                                                console.log(horaFinal.clone().isAfter(moment(horarioData.horarioIni)));
                                                 if (horaFinal.clone().isAfter(moment(horarioData.horarioIni))) {
-                                                    // : TIEMPO ENTRE MARCACION
-                                                    var tiempoRestante = horaFinal - moment(horarioData.horarioIni);
-                                                    segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                                    minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                                    horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                                    if (horasTiempo < 10) {
-                                                        horasTiempo = '0' + horasTiempo;
-                                                    }
-                                                    if (minutosTiempo < 10) {
-                                                        minutosTiempo = '0' + minutosTiempo;
-                                                    }
-                                                    if (segundosTiempo < 10) {
-                                                        segundosTiempo = '0' + segundosTiempo;
-                                                    }
-                                                    // : TIEMPO MUERTO
+                                                    // : HORA DE ENTRADA
+                                                    horaInicial = moment(horarioData.horarioIni);
+                                                    // : TIEMPO MUERTO ENTRADA
                                                     var tiempoMuertoM = moment(horarioData.horarioIni) - horaInicial;
                                                     segundosMuertosE = moment.duration(tiempoMuertoM).seconds();
                                                     minutosMuertosE = moment.duration(tiempoMuertoM).minutes();
@@ -2095,6 +2089,27 @@ function cargartabla(fecha) {
                                                     }
                                                     if (segundosMuertosE < 10) {
                                                         segundosMuertosE = "0" + segundosMuertosE;
+                                                    }
+                                                    // : HORA DE SALIDA
+                                                    if (horarioData.tiempoMuertoS == 1) {
+                                                        if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                            // : TIEMPO MUERTO SALIDA
+                                                            var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                            segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                                            minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                                            horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                            if (horasMuertosS < 10) {
+                                                                horasMuertosS = "0" + horasMuertosS;
+                                                            }
+                                                            if (minutosMuertosS < 10) {
+                                                                minutosMuertosS = "0" + minutosMuertosS;
+                                                            }
+                                                            if (segundosMuertosS < 10) {
+                                                                segundosMuertosS = "0" + segundosMuertosS;
+                                                            }
+                                                            var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                            horaFinal = moment(NuevaSalida);
+                                                        }
                                                     }
                                                 } else {
                                                     // : TIEMPO MUERTO
@@ -2111,38 +2126,58 @@ function cargartabla(fecha) {
                                                     if (segundosMuertosE < 10) {
                                                         segundosMuertosE = "0" + segundosMuertosE;
                                                     }
+                                                    horaInicial = moment.duration(0);
+                                                    horaFinal = moment.duration(0);
+                                                    console.log(horaInicial, horaFinal);
                                                 }
                                             } else {
-                                                var tiempoRestante = horaFinal - horaInicial;
-                                                segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                                minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                                horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                                if (horasTiempo < 10) {
-                                                    horasTiempo = '0' + horasTiempo;
-                                                }
-                                                if (minutosTiempo < 10) {
-                                                    minutosTiempo = '0' + minutosTiempo;
-                                                }
-                                                if (segundosTiempo < 10) {
-                                                    segundosTiempo = '0' + segundosTiempo;
+                                                // : HORA DE SALIDA
+                                                if (horarioData.tiempoMuertoS == 1) {
+                                                    if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                        // : TIEMPO MUERTO SALIDA
+                                                        var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                        segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                                        minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                                        horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                        if (horasMuertosS < 10) {
+                                                            horasMuertosS = "0" + horasMuertosS;
+                                                        }
+                                                        if (minutosMuertosS < 10) {
+                                                            minutosMuertosS = "0" + minutosMuertosS;
+                                                        }
+                                                        if (segundosMuertosS < 10) {
+                                                            segundosMuertosS = "0" + segundosMuertosS;
+                                                        }
+                                                        var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                        horaFinal = moment(NuevaSalida);
+                                                    }
                                                 }
                                             }
                                         } else {
-                                            var tiempoRestante = horaFinal - horaInicial;
-                                            segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                            minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                            horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                            if (horasTiempo < 10) {
-                                                horasTiempo = '0' + horasTiempo;
-                                            }
-                                            if (minutosTiempo < 10) {
-                                                minutosTiempo = '0' + minutosTiempo;
-                                            }
-                                            if (segundosTiempo < 10) {
-                                                segundosTiempo = '0' + segundosTiempo;
+                                            // : HORA DE SALIDA
+                                            if (horarioData.tiempoMuertoS == 1) {
+                                                if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                    // : TIEMPO MUERTO SALIDA
+                                                    var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF, "minutes"));
+                                                    segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                                    minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                                    horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                    if (horasMuertosS < 10) {
+                                                        horasMuertosS = "0" + horasMuertosS;
+                                                    }
+                                                    if (minutosMuertosS < 10) {
+                                                        minutosMuertosS = "0" + minutosMuertosS;
+                                                    }
+                                                    if (segundosMuertosS < 10) {
+                                                        segundosMuertosS = "0" + segundosMuertosS;
+                                                    }
+                                                    var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                    horaFinal = moment(NuevaSalida);
+                                                }
                                             }
                                         }
-                                    } else {
+                                    }
+                                    if (horaInicial != 0 && horaFinal != 0) {
                                         var tiempoRestante = horaFinal - horaInicial;
                                         segundosTiempo = moment.duration(tiempoRestante).seconds();
                                         minutosTiempo = moment.duration(tiempoRestante).minutes();
