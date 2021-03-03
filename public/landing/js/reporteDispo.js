@@ -2058,6 +2058,21 @@ function cargartabla(fecha) {
                                                     if (segundosMuertosE < 10) {
                                                         segundosMuertosE = "0" + segundosMuertosE;
                                                     }
+                                                } else {
+                                                    // : TIEMPO MUERTO
+                                                    var tiempoMuertoM = horaFinal - horaInicial;
+                                                    segundosMuertosE = moment.duration(tiempoMuertoM).seconds();
+                                                    minutosMuertosE = moment.duration(tiempoMuertoM).minutes();
+                                                    horasMuertosE = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                    if (horasMuertosE < 10) {
+                                                        horasMuertosE = "0" + horasMuertosE;
+                                                    }
+                                                    if (minutosMuertosE < 10) {
+                                                        minutosMuertosE = "0" + minutosMuertosE;
+                                                    }
+                                                    if (segundosMuertosE < 10) {
+                                                        segundosMuertosE = "0" + segundosMuertosE;
+                                                    }
                                                 }
                                             }
                                         } else {
