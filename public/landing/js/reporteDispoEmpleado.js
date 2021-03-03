@@ -448,6 +448,8 @@ function cargartabla(fecha1, fecha2) {
                                 </th>`;
             }
             theadTabla += `<th class="text-center colTiempoTotal" style="border-left-color: #c8d4de!important;border-left: 2px solid;">Tiempo total</th>
+                            <th class="text-center totalTiempoMuertoE">Tiempo muerto - entrada</th>
+                            <th class="text-center totalTiempoMuertoS">Tiempo muerto - salida</th>
                             <th class="text-center colSobretiempo">Sobretiempo</th>
                             <th class="text-center colHorarioNormal">Horario normal</th>
                             <th class="text-center colSobretiempoNormal">Sobretiempo normal</th>
@@ -1459,11 +1461,45 @@ function cargartabla(fecha1, fecha2) {
                 if (segundoTiempoNocturnas100 < 10) {
                     segundoTiempoNocturnas100 = "0" + segundoTiempoNocturnas100;
                 }
+                // : TIEMPO MUERTO ENTRADA TOTAL
+                var horaTiempoMuertoE = Math.trunc(moment.duration(sumaMuertosEntrada).asHours());
+                var minutoTiempoMuertoE = moment.duration(sumaMuertosEntrada).minutes();
+                var segundoTiempoMuertoE = moment.duration(sumaMuertosEntrada).seconds();
+                if (horaTiempoMuertoE < 10) {
+                    horaTiempoMuertoE = "0" + horaTiempoMuertoE;
+                }
+                if (minutoTiempoMuertoE < 10) {
+                    minutoTiempoMuertoE = "0" + minutoTiempoMuertoE;
+                }
+                if (segundoTiempoMuertoE < 10) {
+                    segundoTiempoMuertoE = "0" + segundoTiempoMuertoE;
+                }
+                // : TIEMPO MUERTO SALIDA TOTAL
+                var horaTiempoMuertoS = Math.trunc(moment.duration(sumaMuertosSalida).asHours());
+                var minutoTiempoMuertoS = moment.duration(sumaMuertosSalida).minutes();
+                var segundoTiempoMuertoS = moment.duration(sumaMuertosSalida).seconds();
+                if (horaTiempoMuertoS < 10) {
+                    horaTiempoMuertoS = "0" + horaTiempoMuertoS;
+                }
+                if (minutoTiempoMuertoS < 10) {
+                    minutoTiempoMuertoS = "0" + minutoTiempoMuertoS;
+                }
+                if (segundoTiempoMuertoS < 10) {
+                    segundoTiempoMuertoS = "0" + segundoTiempoMuertoS;
+                }
                 tbody += `<td class="text-center colTiempoTotal" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${horaTiempoTotal}:${minutoTiempoTotal}:${segundoTiempoTotal}
                             </a>
+                        </td>
+                        <td class="text-center totalTiempoMuertoE">
+                            <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                            ${horaTiempoMuertoE}:${minutoTiempoMuertoE}:${segundoTiempoMuertoE}
+                        </td>
+                        <td class="text-center totalTiempoMuertoS">
+                            <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                            ${horaTiempoMuertoS}:${minutoTiempoMuertoS}:${segundoTiempoMuertoS}
                         </td>
                         <td class="text-center">
                             <a class="badge badge-soft-primary mr-2">
@@ -1924,6 +1960,18 @@ function toggleColumnas() {
         dataT.api().columns('.tiempoMuertoS').visible(true);
     } else {
         dataT.api().columns('.tiempoMuertoS').visible(false);
+    }
+    // * TIEMPO MUERTO ENTRADA ENTRE HORARIO
+    if ($('#totalTiempoMuertoE').is(":checked")) {
+        dataT.api().columns('.totalTiempoMuertoE').visible(true);
+    } else {
+        dataT.api().columns('.totalTiempoMuertoE').visible(false);
+    }
+    // * TIEMPO MUERTO SALIDA ENTRE HORARIO
+    if ($('#totalTiempoMuertoS').is(":checked")) {
+        dataT.api().columns('.totalTiempoMuertoS').visible(true);
+    } else {
+        dataT.api().columns('.totalTiempoMuertoS').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

@@ -376,11 +376,11 @@
                                     </li>
                                     <ul class="ulHijo" style="display: none" id="contenidoPorTM">
                                         <li class="liContenido tiemposMHijo">
-                                            <input type="checkbox" id="colTiempoMuertoEntrada">
+                                            <input type="checkbox" id="totalTiempoMuertoE">
                                             <label for="">Por horario - entrada</label>
                                         </li>
                                         <li class="liContenido tiemposMHijo">
-                                            <input type="checkbox" id="colTiempoMuertoSalida">
+                                            <input type="checkbox" id="totalTiempoMuertoS">
                                             <label for="">Por horario - salida</label>
                                         </li>
                                         <li class="liContenido tiemposMHijo">
