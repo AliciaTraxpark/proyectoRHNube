@@ -5471,17 +5471,23 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colSobretiempoNocturnoT').visible(false);
     }
-    // ? TIEMPO MUERTO EN ENTRADA
+    // ? TIEMPO MUERTO EN ENTRADA POR HORARIO
     if ($('#colTiempoMuertoEntrada').is(":checked")) {
         dataT.api().columns('.colTiempoMuertoEntrada').visible(true);
     } else {
         dataT.api().columns('.colTiempoMuertoEntrada').visible(false);
     }
-    // ? TIEMPO MUERTO EN SALIDA
+    // ? TIEMPO MUERTO EN SALIDA POR HORARIO
     if ($('#colTiempoMuertoSalida').is(":checked")) {
         dataT.api().columns('.colTiempoMuertoSalida').visible(true);
     } else {
         dataT.api().columns('.colTiempoMuertoSalida').visible(false);
+    }
+    // ? TIEMPO MUERTO EN ENTRADA POR MARCACION
+    if ($('#colTiempoMuertoEXM').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoEXM').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoEXM').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA

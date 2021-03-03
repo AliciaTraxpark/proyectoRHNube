@@ -458,6 +458,10 @@
                                                 <input type="checkbox" id="colTiempoMuertoSalida">
                                                 <label for="">Por horario - salida</label>
                                             </li>
+                                            <li class="liContenido detalleHijoDeHijo">
+                                                <input type="checkbox" id="colTiempoMuertoEXM">
+                                                <label for="">Por marcación - entrada</label>
+                                            </li>
                                         </ul>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colTiempoSitio">
