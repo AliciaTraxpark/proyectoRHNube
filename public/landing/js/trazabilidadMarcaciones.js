@@ -341,7 +341,7 @@ function cargarDatos() {
         $('#menuIncidencias').empty();
         var listaI = "";
         for (let item = 0; item < data.incidencias.length; item++) {
-            listaI += `<li class="liContenido" onclick="javascript:menuIncidencias(${data.incidencias[item].id})">
+            listaI += `<li class="liContenido incidenciaHijo" onclick="javascript:menuIncidencias(${data.incidencias[item].id})">
                             <input type="checkbox" checked id="incidencia${data.incidencias[item].id}">
                             <label for="">${data.incidencias[item].descripcion}</label>
                         </li>`;
@@ -1035,14 +1035,52 @@ function cargarDatos() {
 $('#idsEmpleado').on("change", function () {
     cargarDatos();
 });
+// : ********************************* SELECTOR DE COLUMNAS *****************************
+// * FUNCION PARA QUE NO SE CIERRE DROPDOWN
+$('#dropSelector').on('hidden.bs.dropdown', function () {
+    $('#menuIncidencias').hide();
+});
+$(document).on('click', '.allow-focus', function (e) {
+    e.stopPropagation();
+});
 // * MENU DE INCIDENCIAS
+function toggleI() {
+    $('#menuIncidencias').toggle();
+}
 function menuIncidencias(id) {
     if ($('#incidencia' + id).is(":checked")) {
         dataT.api().columns('.incidencia' + id).visible(true);
     } else {
         dataT.api().columns('.incidencia' + id).visible(false);
     }
+    // * FUNCION DE CHECKBOX HIJOS DE HORARIO
+    $('.incidenciaHijo input[type=checkbox]').change(function () {
+        var contenido = $(this).closest('ul');
+        if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+            contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: true
+            });
+        } else {
+            if (contenido.find('input[type=checkbox]:checked').length != 0) {
+                contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    });
 }
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.incidenciaPadre input[type=checkbox]').change(function () {
+    $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
+    $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo').click();
+});
 // * FINALIZACION
 $('#tablaTrazabilidad tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');

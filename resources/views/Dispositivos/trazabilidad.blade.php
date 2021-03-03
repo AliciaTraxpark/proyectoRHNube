@@ -154,12 +154,15 @@
                                     Opciones
                                 </h6>
                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px"
-                                    id="menuIncidencias">
-                                    <li class="liContenido">
-                                        <input type="checkbox" checked id="colCargo">
-                                        <label for="">Cargo</label>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido incidenciaPadre">
+                                        <input type="checkbox" checked>
+                                        <label for="">Incidencias</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleI()">
                                     </li>
+                                    <ul class="ulHijo" style="display: none" id="menuIncidencias"></ul>
                                 </ul>
                             </div>
                         </div>
