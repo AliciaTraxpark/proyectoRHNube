@@ -366,6 +366,10 @@
                                     Opciones
                                 </h6>
                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                <form class="px-4 py-2">
+                                    <input type="search" class="form-control" id="searchSelector" placeholder="Buscar"
+                                        autofocus="autofocus">
+                                </form>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
                                         <input type="checkbox" checked id="colCargo">

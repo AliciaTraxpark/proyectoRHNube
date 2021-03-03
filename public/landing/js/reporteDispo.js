@@ -5309,187 +5309,191 @@ $('#colEmpleadosCM').change(function (event) {
 // * FUNCION DE MOSTRAR COLUMNAS
 function toggleColumnas() {
     // * ***************** COLUMNAS DE CALCULOS DE TIEMPO ****************
+    // ! ---------------- TIEMPO POR MARCACIONES -------------------------
     // ? TIEMPO ENTRE MARCACIONES
     if ($('#colTiempoSitio').is(":checked")) {
         dataT.api().columns('.colTiempoS').visible(true);
     } else {
         dataT.api().columns('.colTiempoS').visible(false);
     }
-    // ? TIEMPO TOTAL
-    if ($('#colTiempoTotal').is(":checked")) {
-        dataT.api().columns('.colTiempoTotal').visible(true);
-    } else {
-        dataT.api().columns('.colTiempoTotal').visible(false);
-    }
-    // ? TIEMPO ENTRE HORARIOS
+    // ! ----------------- POR HORARIO -----------------------------------
+    // : TIEMPO ENTRE HORARIO
     if ($('#colTiempoEntreH').is(":checked")) {
         dataT.api().columns('.colTiempoEntreH').visible(true);
     } else {
         dataT.api().columns('.colTiempoEntreH').visible(false);
     }
-    // ? SOBRE TIEMPO ENTRE HORARIOS
+    // : SOBRE TIEMPO ENTRE HORARIOS
     if ($('#colSobreTiempo').is(":checked")) {
         dataT.api().columns('.colSobreTiempo').visible(true);
     } else {
         dataT.api().columns('.colSobreTiempo').visible(false);
     }
-    // ? SOBRE TIEMPO TOTAL
-    if ($('#colSobreTiempoTotal').is(":checked")) {
-        dataT.api().columns('.colSobreTiempoTotal').visible(true);
-    } else {
-        dataT.api().columns('.colSobreTiempoTotal').visible(false);
-    }
-    // ? FALTA JORNADA ENTRE HORARIOS
+    // : FALTA JORNADA ENTRE HORARIOS
     if ($('#colFaltaJornada').is(":checked")) {
         dataT.api().columns('.colFaltaJornada').visible(true);
     } else {
         dataT.api().columns('.colFaltaJornada').visible(false);
     }
-    // ? FALTA JORNADA TOTAL
-    if ($('#colFaltaJornadaTotal').is(":checked")) {
-        dataT.api().columns('.colFaltaJornadaTotal').visible(true);
-    } else {
-        dataT.api().columns('.colFaltaJornadaTotal').visible(false);
-    }
-    // ? HORARIO NORMAL
+    // : HORARIO NORMAL
     if ($('#colHoraNormal').is(":checked")) {
         dataT.api().columns('.colHoraNormal').visible(true);
     } else {
         dataT.api().columns('.colHoraNormal').visible(false);
     }
-    // ? HORARIO NOCTURNO
+    // : HORARIO NOCTURNO
     if ($('#colHoraNocturna').is(":checked")) {
         dataT.api().columns('.colHoraNocturna').visible(true);
     } else {
         dataT.api().columns('.colHoraNocturna').visible(false);
     }
-    // ? HORARIO NORMAL TOTAL
-    if ($('#colHoraNormalTotal').is(":checked")) {
-        dataT.api().columns('.colHoraNormalTotal').visible(true);
-    } else {
-        dataT.api().columns('.colHoraNormalTotal').visible(false);
-    }
-    // ? HORARIO NOCTURNO TOTAL
-    if ($('#colHoraNocturnaTotal').is(":checked")) {
-        dataT.api().columns('.colHoraNocturnaTotal').visible(true);
-    } else {
-        dataT.api().columns('.colHoraNocturnaTotal').visible(false);
-    }
-    // ? HORAS EXTRAS 25% DIURNAS
+    // : HORAS EXTRAS 25% DIURNAS
     if ($('#colHE25D').is(":checked")) {
         dataT.api().columns('.colHE25D').visible(true);
     } else {
         dataT.api().columns('.colHE25D').visible(false);
     }
-    // ? HORAS EXTRAS 35% DIURNAS
+    // : HORAS EXTRAS 35% DIURNAS
     if ($('#colHE35D').is(":checked")) {
         dataT.api().columns('.colHE35D').visible(true);
     } else {
         dataT.api().columns('.colHE35D').visible(false);
     }
-    // ? HORAS EXTRAS 100% DIURNAS
+    // : HORAS EXTRAS 100% DIURNAS
     if ($('#colHE100D').is(":checked")) {
         dataT.api().columns('.colHE100D').visible(true);
     } else {
         dataT.api().columns('.colHE100D').visible(false);
     }
-    // ? SOBRETIEMPO NORMAL POR HORARIO
+    // : SOBRETIEMPO NORMAL POR HORARIO
     if ($('#colSobreTNormal').is(":checked")) {
         dataT.api().columns('.colSobreTNormal').visible(true);
     } else {
         dataT.api().columns('.colSobreTNormal').visible(false);
     }
-    // ? SOBRETIEMPO NOCTURNO POR HORARIO
+    // : SOBRETIEMPO NOCTURNO POR HORARIO
     if ($('#colSobreTNocturno').is(":checked")) {
         dataT.api().columns('.colSobreTNocturno').visible(true);
     } else {
         dataT.api().columns('.colSobreTNocturno').visible(false);
     }
-    // ? HORAS EXTRAS 25% NOCTURNAS
+    // : HORAS EXTRAS 25% NOCTURNAS
     if ($('#colHE25N').is(":checked")) {
         dataT.api().columns('.colHE25N').visible(true);
     } else {
         dataT.api().columns('.colHE25N').visible(false);
     }
-    // ? HORAS EXTRAS 35% NOCTURNAS
+    // : HORAS EXTRAS 35% NOCTURNAS
     if ($('#colHE35N').is(":checked")) {
         dataT.api().columns('.colHE35N').visible(true);
     } else {
         dataT.api().columns('.colHE35N').visible(false);
     }
-    // ? HORAS EXTRAS 100% DIURNAS
+    // : HORAS EXTRAS 100% DIURNAS
     if ($('#colHE100N').is(":checked")) {
         dataT.api().columns('.colHE100N').visible(true);
     } else {
         dataT.api().columns('.colHE100N').visible(false);
     }
-    // ? HORAS EXTRAS 25% DIURNAS TOTALES
+    // ! ----------------- POR TOTALES ------------------------------------
+    // : TIEMPO TOTAL
+    if ($('#colTiempoTotal').is(":checked")) {
+        dataT.api().columns('.colTiempoTotal').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoTotal').visible(false);
+    }
+    // : SOBRE TIEMPO TOTAL
+    if ($('#colSobreTiempoTotal').is(":checked")) {
+        dataT.api().columns('.colSobreTiempoTotal').visible(true);
+    } else {
+        dataT.api().columns('.colSobreTiempoTotal').visible(false);
+    }
+    // : FALTA JORNADA TOTAL
+    if ($('#colFaltaJornadaTotal').is(":checked")) {
+        dataT.api().columns('.colFaltaJornadaTotal').visible(true);
+    } else {
+        dataT.api().columns('.colFaltaJornadaTotal').visible(false);
+    }
+    // : HORARIO NORMAL TOTAL
+    if ($('#colHoraNormalTotal').is(":checked")) {
+        dataT.api().columns('.colHoraNormalTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNormalTotal').visible(false);
+    }
+    // : HORARIO NOCTURNO TOTAL
+    if ($('#colHoraNocturnaTotal').is(":checked")) {
+        dataT.api().columns('.colHoraNocturnaTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNocturnaTotal').visible(false);
+    }
+    // : HORAS EXTRAS 25% DIURNAS TOTALES
     if ($('#colHE25DTotal').is(":checked")) {
         dataT.api().columns('.colHE25DTotal').visible(true);
     } else {
         dataT.api().columns('.colHE25DTotal').visible(false);
     }
-    // ? HORAS EXTRAS 35% DIURNAS TOTALES
+    // : HORAS EXTRAS 35% DIURNAS TOTALES
     if ($('#colHE35DTotal').is(":checked")) {
         dataT.api().columns('.colHE35DTotal').visible(true);
     } else {
         dataT.api().columns('.colHE35DTotal').visible(false);
     }
-    // ? HORAS EXTRAS 100% DIURNAS TOTALES
+    // : HORAS EXTRAS 100% DIURNAS TOTALES
     if ($('#colHE100DTotal').is(":checked")) {
         dataT.api().columns('.colHE100DTotal').visible(true);
     } else {
         dataT.api().columns('.colHE100DTotal').visible(false);
     }
-    // ? HORAS EXTRAS 25% NOCTURNAS TOTALES
+    // : HORAS EXTRAS 25% NOCTURNAS TOTALES
     if ($('#colHE25NTotal').is(":checked")) {
         dataT.api().columns('.colHE25NTotal').visible(true);
     } else {
         dataT.api().columns('.colHE25NTotal').visible(false);
     }
-    // ? HORAS EXTRAS 35% NOCTURNAS TOTALES
+    // : HORAS EXTRAS 35% NOCTURNAS TOTALES
     if ($('#colHE35NTotal').is(":checked")) {
         dataT.api().columns('.colHE35NTotal').visible(true);
     } else {
         dataT.api().columns('.colHE35NTotal').visible(false);
     }
-    // ? HORAS EXTRAS 100% NOCTURNAS TOTALES
+    // : HORAS EXTRAS 100% NOCTURNAS TOTALES
     if ($('#colHE100NTotal').is(":checked")) {
         dataT.api().columns('.colHE100NTotal').visible(true);
     } else {
         dataT.api().columns('.colHE100NTotal').visible(false);
     }
-    // ? SOBRETIEMPO NORMAL TOTAL
+    // : SOBRETIEMPO NORMAL TOTAL
     if ($('#colSobretiempoNormalT').is(":checked")) {
         dataT.api().columns('.colSobretiempoNormalT').visible(true);
     } else {
         dataT.api().columns('.colSobretiempoNormalT').visible(false);
     }
-    // ? SOBRETIEMPO NOCTURNO TOTAL
+    // : SOBRETIEMPO NOCTURNO TOTAL
     if ($('#colSobretiempoNocturnoT').is(":checked")) {
         dataT.api().columns('.colSobretiempoNocturnoT').visible(true);
     } else {
         dataT.api().columns('.colSobretiempoNocturnoT').visible(false);
     }
-    // ? TIEMPO MUERTO EN ENTRADA POR HORARIO
+    // ! ----------------- POR TIEMPOS MUERTOS ----------------------------
+    // : TIEMPO MUERTO EN ENTRADA POR HORARIO
     if ($('#colTiempoMuertoEntrada').is(":checked")) {
         dataT.api().columns('.colTiempoMuertoEntrada').visible(true);
     } else {
         dataT.api().columns('.colTiempoMuertoEntrada').visible(false);
     }
-    // ? TIEMPO MUERTO EN SALIDA POR HORARIO
+    // : TIEMPO MUERTO EN SALIDA POR HORARIO
     if ($('#colTiempoMuertoSalida').is(":checked")) {
         dataT.api().columns('.colTiempoMuertoSalida').visible(true);
     } else {
         dataT.api().columns('.colTiempoMuertoSalida').visible(false);
     }
-    // ? TIEMPO MUERTO EN ENTRADA POR MARCACION
+    // : TIEMPO MUERTO EN ENTRADA POR MARCACION
     if ($('#colTiempoMuertoEXM').is(":checked")) {
         dataT.api().columns('.colTiempoMuertoEXM').visible(true);
     } else {
         dataT.api().columns('.colTiempoMuertoEXM').visible(false);
     }
-    // ? TIEMPO MUERTO EN SALIDA POR HORARIO
+    // : TIEMPO MUERTO EN SALIDA POR HORARIO
     if ($('#colTiempoMuertoSXM').is(":checked")) {
         dataT.api().columns('.colTiempoMuertoSXM').visible(true);
     } else {
