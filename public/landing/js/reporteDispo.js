@@ -429,6 +429,11 @@ function cargartabla(fecha) {
                                             Entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
                                     </th>
+                                    <th class="text-center colTiempoMuertoEXM">
+                                        <span>
+                                            Tiempo muerto entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                        </span>
+                                    </th>
                                     <th class="text-center colDispositivoE" name="colDispositivoE">
                                         Dispositivo de entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                     </th>
@@ -2010,7 +2015,75 @@ function cargartabla(fecha) {
                             var segundosTiempo = "00";
                             var minutosTiempo = "00";
                             var horasTiempo = "00";
+                            // * TIEMPO MUERTO ENTRADA
+                            var segundosMuertosE = "00";
+                            var minutosMuertosE = "00";
+                            var horasMuertosE = "00";
                             var marcacionData = data[index].data[m].marcaciones[j];
+                            if (marcacionData.entrada != 0 && marcacionData.salida) {
+                                // * CALCULAR TIEMPO TOTAL
+                                var horaFinal = moment(marcacionData.salida);
+                                var horaInicial = moment(marcacionData.entrada);
+                                if (horaFinal.isSameOrAfter(horaInicial)) {
+                                    // * TIEMPO TOTAL TRABAJADA
+                                    if (horarioData.idHorario != 0) {
+                                        if (horarioData.tiempoMuertoIngreso == 1) {
+                                            if (horaInicial.clone().isBefore(moment(horarioData.horarioIni))) {
+                                                if (horaFinal.clone().isAfter(moment(horarioData.horarioIni))) {
+                                                    // : TIEMPO ENTRE MARCACION
+                                                    var tiempoRestante = horaFinal - moment(horarioData.horarioIni);
+                                                    segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                                    minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                                    horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                                    if (horasTiempo < 10) {
+                                                        horasTiempo = '0' + horasTiempo;
+                                                    }
+                                                    if (minutosTiempo < 10) {
+                                                        minutosTiempo = '0' + minutosTiempo;
+                                                    }
+                                                    if (segundosTiempo < 10) {
+                                                        segundosTiempo = '0' + segundosTiempo;
+                                                    }
+                                                    // : TIEMPO MUERTO
+                                                    var tiempoMuertoM = moment(horarioData.horarioIni) - horaInicial;
+                                                    segundosMuertosE = moment.duration(tiempoMuertoM).seconds();
+                                                    minutosMuertosE = moment.duration(tiempoMuertoM).minutes();
+                                                    horasMuertosE = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                }
+                                            }
+                                        } else {
+                                            var tiempoRestante = horaFinal - horaInicial;
+                                            segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                            minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                            horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                            if (horasTiempo < 10) {
+                                                horasTiempo = '0' + horasTiempo;
+                                            }
+                                            if (minutosTiempo < 10) {
+                                                minutosTiempo = '0' + minutosTiempo;
+                                            }
+                                            if (segundosTiempo < 10) {
+                                                segundosTiempo = '0' + segundosTiempo;
+                                            }
+                                        }
+                                    } else {
+                                        var tiempoRestante = horaFinal - horaInicial;
+                                        segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                        minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                        horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                        if (horasTiempo < 10) {
+                                            horasTiempo = '0' + horasTiempo;
+                                        }
+                                        if (minutosTiempo < 10) {
+                                            minutosTiempo = '0' + minutosTiempo;
+                                        }
+                                        if (segundosTiempo < 10) {
+                                            segundosTiempo = '0' + segundosTiempo;
+                                        }
+                                    }
+                                }
+                                // * FINALIZACION
+                            }
                             if (marcacionData.entrada != 0) {
                                 if (permisoModificar == 1) {
                                     tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
@@ -2078,12 +2151,20 @@ function cargartabla(fecha) {
                                                                 </div>
                                                             </div>
                                                         </ul></div></td>`;
-                                    tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">${marcacionData.dispositivoEntrada}</td>`;
+                                    tbodyEntradaySalida += `<td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                            </td>
+                                                            <td class="text-center colDispositivoE" name="colDispositivoE">${marcacionData.dispositivoEntrada}</td>`;
                                 }
                                 else {
                                     tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Fecha:${moment(marcacionData.entrada).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoEntrada}">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                 ${moment(marcacionData.entrada).format("HH:mm:ss")}
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
                                                             </td>
                                                             <td class="text-center colDispositivoE" name="colDispositivoE">${marcacionData.dispositivoEntrada}</td>`;
                                 }
@@ -2162,62 +2243,6 @@ function cargartabla(fecha) {
                                                                 </td>`;
                                         tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`;
                                     }
-                                    // * CALCULAR TIEMPO TOTAL
-                                    var horaFinal = moment(marcacionData.salida);
-                                    var horaInicial = moment(marcacionData.entrada);
-                                    if (horaFinal.isSameOrAfter(horaInicial)) {
-                                        // * TIEMPO TOTAL TRABAJADA
-                                        if (horarioData.idHorario != 0) {
-                                            if (horarioData.tiempoMuertoIngreso == 1) {
-                                                if (horaInicial.clone().isBefore(moment(horarioData.horarioIni))) {
-                                                    if (horaFinal.clone().isAfter(moment(horarioData.horarioIni))) {
-                                                        var tiempoRestante = horaFinal - moment(horarioData.horarioIni);
-                                                        segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                                        minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                                        horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                                        if (horasTiempo < 10) {
-                                                            horasTiempo = '0' + horasTiempo;
-                                                        }
-                                                        if (minutosTiempo < 10) {
-                                                            minutosTiempo = '0' + minutosTiempo;
-                                                        }
-                                                        if (segundosTiempo < 10) {
-                                                            segundosTiempo = '0' + segundosTiempo;
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-                                                var tiempoRestante = horaFinal - horaInicial;
-                                                segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                                minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                                horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                                if (horasTiempo < 10) {
-                                                    horasTiempo = '0' + horasTiempo;
-                                                }
-                                                if (minutosTiempo < 10) {
-                                                    minutosTiempo = '0' + minutosTiempo;
-                                                }
-                                                if (segundosTiempo < 10) {
-                                                    segundosTiempo = '0' + segundosTiempo;
-                                                }
-                                            }
-                                        } else {
-                                            var tiempoRestante = horaFinal - horaInicial;
-                                            segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                            minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                            horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                            if (horasTiempo < 10) {
-                                                horasTiempo = '0' + horasTiempo;
-                                            }
-                                            if (minutosTiempo < 10) {
-                                                minutosTiempo = '0' + minutosTiempo;
-                                            }
-                                            if (segundosTiempo < 10) {
-                                                segundosTiempo = '0' + segundosTiempo;
-                                            }
-                                        }
-                                    }
-                                    // * FINALIZACION
                                     tbodyEntradaySalida += `<td name="colTiempoS">
                                                                 <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                 <a class="badge badge-soft-primary mr-2">
@@ -2303,15 +2328,23 @@ function cargartabla(fecha) {
                                                                         </ul>
                                                                     </div>
                                                                 </td>`;
-                                        tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
+                                        tbodyEntradaySalida += `<td class="text-center colTiempoMuertoEXM">
+                                                                    <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                    ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                                </td>
+                                                                <td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
                                     }
                                     else {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
-                                                                            <span class="badge badge-soft-warning noExport">
-                                                                                <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
-                                                                                No tiene entrada
-                                                                            </span>
-                                                                        </td>`;
+                                                                    <span class="badge badge-soft-warning noExport">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                                        No tiene entrada
+                                                                    </span>
+                                                                </td>
+                                                                <td class="text-center colTiempoMuertoEXM">
+                                                                    <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                    ${horasMuertosE}:${minutosMuertosE}:${horasMuertosE}
+                                                                </td>`;
                                         tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
                                     }
 
@@ -2389,6 +2422,7 @@ function cargartabla(fecha) {
                         }
                         for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
+                                                    <td class="text-center colTiempoMuertoEXM">---</td>
                                                     <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
                                                     <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
@@ -2598,6 +2632,7 @@ function cargartabla(fecha) {
                         var tbodyEntradaySalida = "";
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
+                                                    <td class="text-center colTiempoMuertoEXM">---</td>
                                                     <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
                                                     <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoS" name="colDispositivoS">---</td>

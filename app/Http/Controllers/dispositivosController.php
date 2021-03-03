@@ -737,7 +737,7 @@ class dispositivosController extends Controller
                 'hor.horasObliga as horasObligadas',
                 'hoe.estado',
                 'hor.tiempoMingreso as tiempoMuertoIngreso',
-                DB::raw('IF(rh.tipo_regla is null, null, IF(rh.tipo_regla = "Normal", 0, 1)) as tipoHorarioExtra'),
+                DB::raw("IF(rh.tipo_regla is null, null, IF(rh.tipo_regla = 'Normal', 0, 1)) as tipoHorarioExtra"),
                 'rh.lleno25 as estado25',
                 'rh.lleno35 as estado35',
                 'rh.lleno100 as estado100'
