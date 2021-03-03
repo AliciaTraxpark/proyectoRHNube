@@ -1633,9 +1633,6 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoIncidencias').hide();
     $('#contenidoPausas').hide();
 });
-function toggleTiempos() {
-    $('#contenidoTiempos').toggle();
-}
 // : ************************** COLUMNAS DE MARCACIONES *************************************************************
 $('#colMarcaciones').change(function (event) {
     if (event.target.checked) {
@@ -1646,6 +1643,14 @@ $('#colMarcaciones').change(function (event) {
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 });
 // : *************************** COLUMNAS DE CÁLCULOS DE TIEMPO *******************************************************
+// * TOGGLE POR CALCULOS DE TIEMPOS
+function toggleTiempos() {
+    $('#contenidoTiempos').toggle();
+}
+// * TOGGLE POR TIEMPOS MUERTOS
+function togglePorTiemposMuertos() {
+    $('#contenidoPorTM').toggle();
+}
 // * FUNCION DE CHECKBOX HIJOS TIEMPOS
 $('.tiemposHijo input[type=checkbox]').change(function () {
     var contenido = $(this).closest('ul');
@@ -1674,6 +1679,7 @@ $('.tiemposPadre input[type=checkbox]').change(function () {
     $(this).closest('.tiemposPadre').next('ul').find('.tiemposHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
+// : ************************************ COLUMNA DE TIEMPO EN SITIO ****************************************************
 // * TIEMPO EN SITIO
 $('#tiempoSitHi').change(function (event) {
     if (event.target.checked) {
@@ -1747,13 +1753,43 @@ $('.pausaPadre input[type=checkbox]').change(function () {
     $(this).closest('.pausaPadre').next('ul').find('.pausaHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
+// : ************************************** TIEMPOS MUERTOS ****************************************************
+// * FUNCION DE CHECKBOX HIJOS TIEMPOS
+$('.tiemposMHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.tiemposMPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.tiemposMPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.tiemposMPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE TIEMPOS
+$('.tiemposMPadre input[type=checkbox]').change(function () {
+    $(this).closest('.tiemposMPadre').next('ul').find('.tiemposMHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
 function toggleColumnas() {
-    // * COLUMNA DE MARCACIONES
+    // ! --------------------------------- COLUMNA DE MARCACIONES --------------------
     if ($('#colMarcaciones').is(":checked")) {
         dataT.api().columns('.colMarcaciones').visible(true);
     } else {
         dataT.api().columns('.colMarcaciones').visible(false);
     }
+    // ! -------------------------------  CÁLCULOS DE TIEMPO -----------------------
     // * COLUMNA DE TIEMPO TOTAL
     if ($('#colTiempoTotal').is(":checked")) {
         dataT.api().columns('.colTiempoTotal').visible(true);
@@ -1826,12 +1862,13 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colNocturnas100').visible(false);
     }
-    // * COLUMNA TIEMPOE ENTRE MARCACIONES
+    // ! ------------------------------  COLUMNA TIEMPOE ENTRE MARCACIONES -----------------
     if ($('#tiempoSitHi').is(":checked")) {
         dataT.api().columns('.tiempoSitHi').visible(true);
     } else {
         dataT.api().columns('.tiempoSitHi').visible(false);
     }
+    // ! ------------------------------ INCIDENCIAS ----------------------------------------
     // * TARDANZA ENTRE HORARIOS
     if ($('#colTardanza').is(":checked")) {
         dataT.api().columns('.colTardanza').visible(true);
@@ -1850,6 +1887,7 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.incidencia').visible(false);
     }
+    // ! -------------------------------- PAUSAS -------------------------------------
     // * DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
         dataT.api().columns('.descripcionPausa').visible(true);
@@ -1873,6 +1911,19 @@ function toggleColumnas() {
         dataT.api().columns('.excesoPausa').visible(true);
     } else {
         dataT.api().columns('.excesoPausa').visible(false);
+    }
+    // ! --------------------------- TIEMPOS MUERTOS ---------------------------------
+    // * TIEMPO MUERTO ENTRADA ENTRE MARCACIONES
+    if ($('#tiempoMuertoE').is(":checked")) {
+        dataT.api().columns('.tiempoMuertoE').visible(true);
+    } else {
+        dataT.api().columns('.tiempoMuertoE').visible(false);
+    }
+    // * TIEMPO MUERTO SALIDA ENTRE MARCACIONES
+    if ($('#tiempoMuertoS').is(":checked")) {
+        dataT.api().columns('.tiempoMuertoS').visible(true);
+    } else {
+        dataT.api().columns('.tiempoMuertoS').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

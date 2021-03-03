@@ -5175,7 +5175,7 @@ $('.detalleHijo input[type=checkbox]').change(function () {
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.detallePadre input[type=checkbox]').change(function () {
     $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
-    var contenido = $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
+     $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
 // : ************************************** COLUMNAS DE PAUSAS ***********************************************
