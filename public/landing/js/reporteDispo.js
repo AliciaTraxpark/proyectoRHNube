@@ -1321,6 +1321,19 @@ function cargartabla(fecha) {
                         if (segundoTiempoMuertoEntrada < 10) {
                             segundoTiempoMuertoEntrada = "0" + segundoTiempoMuertoEntrada;
                         }
+                        // : TIEMPO MUERTO EN SALIDA
+                        var horaTiempoMuertoSalida = Math.trunc(moment.duration(tiempoMuertoSalida).asHours());
+                        var minutoTiempoMuertoSalida = moment.duration(tiempoMuertoSalida).minutes();
+                        var segundoTiempoMuertoSalida = moment.duration(tiempoMuertoSalida).seconds();
+                        if (horaTiempoMuertoSalida < 10) {
+                            horaTiempoMuertoSalida = "0" + horaTiempoMuertoSalida;
+                        }
+                        if (minutoTiempoMuertoSalida < 10) {
+                            minutoTiempoMuertoSalida = "0" + minutoTiempoMuertoSalida;
+                        }
+                        if (segundoTiempoMuertoSalida < 10) {
+                            segundoTiempoMuertoSalida = "0" + segundoTiempoMuertoSalida;
+                        }
                         if (permisoModificar == 1) {
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
@@ -1386,7 +1399,7 @@ function cargartabla(fecha) {
                                                     </td>
                                                     <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
+                                                        ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1529,7 +1542,7 @@ function cargartabla(fecha) {
                                                     </td>
                                                     <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
+                                                        ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1672,9 +1685,9 @@ function cargartabla(fecha) {
                                                     ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
                                                 </td>
                                                 <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
-                                                        <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
-                                                    </td>
+                                                    <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                    ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
+                                                </td>
                                                 <td class="text-center" name="colSobreTiempo" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
@@ -1779,7 +1792,7 @@ function cargartabla(fecha) {
                                                     </td>
                                                     <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
+                                                        ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1883,7 +1896,7 @@ function cargartabla(fecha) {
                                                     </td>
                                                     <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
+                                                        ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
                                                     </td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-primary mr-2">
@@ -1991,7 +2004,7 @@ function cargartabla(fecha) {
                                                 </td>
                                                 <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
-                                                        ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
+                                                        ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
                                                     </td>
                                                 <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
