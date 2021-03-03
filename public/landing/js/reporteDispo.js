@@ -2071,11 +2071,7 @@ function cargartabla(fecha) {
                                     if (horarioData.idHorario != 0) {
                                         if (horarioData.tiempoMuertoI == 1) {
                                             if (horaInicial.clone().isBefore(moment(horarioData.horarioIni))) {
-                                                console.log(horaFinal, moment(horarioData.horarioIni));
-                                                console.log(horaFinal.clone().isAfter(moment(horarioData.horarioIni)));
                                                 if (horaFinal.clone().isAfter(moment(horarioData.horarioIni))) {
-                                                    // : HORA DE ENTRADA
-                                                    horaInicial = moment(horarioData.horarioIni);
                                                     // : TIEMPO MUERTO ENTRADA
                                                     var tiempoMuertoM = moment(horarioData.horarioIni) - horaInicial;
                                                     segundosMuertosE = moment.duration(tiempoMuertoM).seconds();
@@ -2090,6 +2086,9 @@ function cargartabla(fecha) {
                                                     if (segundosMuertosE < 10) {
                                                         segundosMuertosE = "0" + segundosMuertosE;
                                                     }
+                                                    // : HORA DE ENTRADA
+                                                    horaInicial = moment(horarioData.horarioIni);
+                                                    console.log(horasMuertosE, minutosMuertosE);
                                                     // : HORA DE SALIDA
                                                     if (horarioData.tiempoMuertoS == 1) {
                                                         if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
@@ -2109,6 +2108,7 @@ function cargartabla(fecha) {
                                                             }
                                                             var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                             horaFinal = moment(NuevaSalida);
+                                                            console.log(horasMuertosS, minutosMuertosS);
                                                         }
                                                     }
                                                 } else {
@@ -2128,7 +2128,7 @@ function cargartabla(fecha) {
                                                     }
                                                     horaInicial = moment.duration(0);
                                                     horaFinal = moment.duration(0);
-                                                    console.log(horaInicial, horaFinal);
+                                                    console.log(horasMuertosE, minutosMuertosE);
                                                 }
                                             } else {
                                                 // : HORA DE SALIDA
@@ -2150,6 +2150,7 @@ function cargartabla(fecha) {
                                                         }
                                                         var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                         horaFinal = moment(NuevaSalida);
+                                                        console.log(horasMuertosS, minutosMuertosS);
                                                     }
                                                 }
                                             }
@@ -2173,6 +2174,7 @@ function cargartabla(fecha) {
                                                     }
                                                     var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
                                                     horaFinal = moment(NuevaSalida);
+                                                    console.log(horasMuertosS, minutosMuertosS);
                                                 }
                                             }
                                         }
