@@ -388,7 +388,10 @@ function cargarDatos() {
             var nocturnas25 = 0;
             var nocturnas35 = 0;
             var nocturnas100 = 0;
-            // : ARRAY FECHA
+            // : SUMA MUERTOS ENTRADA
+            var sumaMuertosEntrada = moment.duration(0);
+            // : SUMA MUERTOS SALIDA
+            var sumaMuertosSalida = moment.duration(0);
             // : RECORRER DATA PARA CALCULAR DATOS
             for (let item = 0; item < data.marcaciones[index].data.length; item++) {
                 var dataCompleta = data.marcaciones[index].data[item]["marcaciones"];
@@ -433,92 +436,123 @@ function cargarDatos() {
                                 if (element.entrada != 0 && element.salida != 0) {
                                     var entradaData = moment(element.entrada);
                                     var salidaData = moment(element.salida);
-                                    // : TIEMPOS MÁXIMOS
-                                    var tiempoMaximoDiurno = moment(entradaData.clone().format("YYYY-MM-DD") + " " + "22:00:00");
-                                    var tiempoMaximoNocturno = moment(entradaData.clone().format("YYYY-MM-DD") + " " + "06:00:00");
-                                    // : ACUMULAR TIEMPO CALCULADOS
-                                    var acumuladorEntreM = moment.duration(0);
-                                    // : TIEMPO ENTRE MARCACIONES
-                                    var tiempoEntreM = moment.duration(salidaData.diff(entradaData));
-                                    if (entradaData.isAfter(tiempoMaximoNocturno) && entradaData.isSameOrBefore(tiempoMaximoDiurno)) {
-                                        if (primeraM == undefined) primeraM = 0;
-                                        if (salidaData.clone().isSameOrBefore(tiempoMaximoDiurno)) {
-                                            //: ************************************************** HORAS NORMALES **********************************************
-                                            var tiempoNormal = salidaData - entradaData;
-                                            var segundosNormal = moment.duration(tiempoNormal).seconds();
-                                            var minutosNormal = moment.duration(tiempoNormal).minutes();
-                                            var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
-                                            horasNormales = horasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                            horaNormalesPorHorario = horaNormalesPorHorario.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                    // : TIEMPOS MUERTOS
+                                    if (value["dataHorario"].tiempoMuertoI == 1) {
+                                        // : SI ENTRADA ES MENOR A LA HORA DE INICIO DE HORARIO
+                                        if (entradaData.clone().isBefore(moment(value["dataHorario"].horarioIni))) {
+                                            if (salidaData.clone().isAfter(moment(value["dataHorario"].horarioIni))) {
+                                                // : HORA DE ENTRADA
+                                                var tiempoMuerto = moment(value["dataHorario"].horarioIni) - entradaData.clone();
+                                                sumaMuertosEntrada = sumaMuertosEntrada.add(tiempoMuerto);
+                                                entradaData = moment(value["dataHorario"].horarioIni);
+                                                // : HORA DE SALIDA
+                                                if (value["dataHorario"].tiempoMuertoS == 1) {
+                                                    if (salidaData.clone().isAfter(moment(value["dataHorario"].horarioFin))) {
+                                                        var tiempoMuerto = moment.duration(parseInt(value["dataHorario"].toleranciaF), "minutes");
+                                                        sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
+                                                        var NuevaSalida = salidaData.clone().subtract(value["dataHorario"].toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                        salidaData = moment(NuevaSalida);
+                                                    }
+                                                }
+                                            } else {
+                                                var tiempoMuerto = salidaData.clone() - entradaData.clone();
+                                                sumaMuertosEntrada = sumaMuertosEntrada.add(tiempoMuerto);
+                                                entradaData = moment.duration(0);
+                                                salidaData = moment.duration(0);
+                                            }
                                         } else {
-                                            var minuendoResta = tiempoMaximoDiurno.clone();
-                                            var sustraendoResta = entradaData.clone();
-                                            var contadorDias = 1;
-                                            while (acumuladorEntreM < tiempoEntreM) {
+                                            // : HORA DE SALIDA
+                                            if (value["dataHorario"].tiempoMuertoS == 1) {
+                                                if (salidaData.clone().isAfter(moment(value["dataHorario"].horarioFin))) {
+                                                    var tiempoMuerto = moment.duration(parseInt(value["dataHorario"].toleranciaF), "minutes");
+                                                    sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
+                                                    var NuevaSalida = salidaData.clone().subtract(value["dataHorario"].toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                    salidaData = moment(NuevaSalida);
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        // : HORA DE SALIDA
+                                        if (value["dataHorario"].tiempoMuertoS == 1) {
+                                            if (salidaData.clone().isAfter(moment(value["dataHorario"].horarioFin))) {
+                                                var tiempoMuerto = moment.duration(parseInt(value["dataHorario"].toleranciaF), "minutes");
+                                                sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
+                                                var NuevaSalida = salidaData.clone().subtract(value["dataHorario"].toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                salidaData = moment(NuevaSalida);
+                                            }
+                                        }
+                                    }
+                                    if (entradaData != 0 && salidaData != 0) {
+                                        // : TIEMPOS MÁXIMOS
+                                        var tiempoMaximoDiurno = moment(entradaData.clone().format("YYYY-MM-DD") + " " + "22:00:00");
+                                        var tiempoMaximoNocturno = moment(entradaData.clone().format("YYYY-MM-DD") + " " + "06:00:00");
+                                        // : ACUMULAR TIEMPO CALCULADOS
+                                        var acumuladorEntreM = moment.duration(0);
+                                        // : TIEMPO ENTRE MARCACIONES
+                                        var tiempoEntreM = moment.duration(salidaData.diff(entradaData));
+                                        if (entradaData.isAfter(tiempoMaximoNocturno) && entradaData.isSameOrBefore(tiempoMaximoDiurno)) {
+                                            if (primeraM == undefined) primeraM = 0;
+                                            if (salidaData.clone().isSameOrBefore(tiempoMaximoDiurno)) {
                                                 //: ************************************************** HORAS NORMALES **********************************************
-                                                var tiempoNormal = minuendoResta - sustraendoResta;
+                                                var tiempoNormal = salidaData - entradaData;
                                                 var segundosNormal = moment.duration(tiempoNormal).seconds();
                                                 var minutosNormal = moment.duration(tiempoNormal).minutes();
                                                 var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
                                                 horasNormales = horasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
                                                 horaNormalesPorHorario = horaNormalesPorHorario.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                // : ************************************************* FINALIZACION *****************************************************
-                                                var tiempoMaximoDiurnoAnterior = tiempoMaximoDiurno;
-                                                tiempoMaximoDiurno = tiempoMaximoDiurno.clone().add("day", contadorDias);
-                                                tiempoMaximoNocturno = tiempoMaximoNocturno.clone().add("day", contadorDias);
-                                                if (acumuladorEntreM < tiempoEntreM) {
-                                                    if (salidaData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
-                                                        // : HORA NOCTURNA
-                                                        sustraendoResta = minuendoResta;
-                                                        minuendoResta = salidaData;
-                                                        var tiempoNocturno = minuendoResta - sustraendoResta;
-                                                        var segundosNocturno = moment.duration(tiempoNocturno).seconds();
-                                                        var minutosNocturno = moment.duration(tiempoNocturno).minutes();
-                                                        var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
-                                                        horasNocturnas = horasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        horaNocturnasPorHorario = horaNocturnasPorHorario.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                    } else {
-                                                        minuendoResta = tiempoMaximoNocturno;
-                                                        sustraendoResta = tiempoMaximoDiurnoAnterior;
-                                                        // : HORA NOCTURNA
-                                                        var tiempoNocturno = minuendoResta - sustraendoResta;
-                                                        var segundosNocturno = moment.duration(tiempoNocturno).seconds();
-                                                        var minutosNocturno = moment.duration(tiempoNocturno).minutes();
-                                                        var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
-                                                        horasNocturnas = horasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        horaNocturnasPorHorario = horaNocturnasPorHorario.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                        if (salidaData.clone().isSameOrBefore(tiempoMaximoDiurno)) {
-                                                            minuendoResta = salidaData.clone();
-                                                            sustraendoResta = tiempoMaximoNocturno;
+                                            } else {
+                                                var minuendoResta = tiempoMaximoDiurno.clone();
+                                                var sustraendoResta = entradaData.clone();
+                                                var contadorDias = 1;
+                                                while (acumuladorEntreM < tiempoEntreM) {
+                                                    //: ************************************************** HORAS NORMALES **********************************************
+                                                    var tiempoNormal = minuendoResta - sustraendoResta;
+                                                    var segundosNormal = moment.duration(tiempoNormal).seconds();
+                                                    var minutosNormal = moment.duration(tiempoNormal).minutes();
+                                                    var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
+                                                    horasNormales = horasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                    horaNormalesPorHorario = horaNormalesPorHorario.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                    acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                    // : ************************************************* FINALIZACION *****************************************************
+                                                    var tiempoMaximoDiurnoAnterior = tiempoMaximoDiurno;
+                                                    tiempoMaximoDiurno = tiempoMaximoDiurno.clone().add("day", contadorDias);
+                                                    tiempoMaximoNocturno = tiempoMaximoNocturno.clone().add("day", contadorDias);
+                                                    if (acumuladorEntreM < tiempoEntreM) {
+                                                        if (salidaData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
+                                                            // : HORA NOCTURNA
+                                                            sustraendoResta = minuendoResta;
+                                                            minuendoResta = salidaData;
+                                                            var tiempoNocturno = minuendoResta - sustraendoResta;
+                                                            var segundosNocturno = moment.duration(tiempoNocturno).seconds();
+                                                            var minutosNocturno = moment.duration(tiempoNocturno).minutes();
+                                                            var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
+                                                            horasNocturnas = horasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            horaNocturnasPorHorario = horaNocturnasPorHorario.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                                         } else {
-                                                            minuendoResta = tiempoMaximoDiurno;
-                                                            sustraendoResta = tiempoMaximoNocturno;
+                                                            minuendoResta = tiempoMaximoNocturno;
+                                                            sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                            // : HORA NOCTURNA
+                                                            var tiempoNocturno = minuendoResta - sustraendoResta;
+                                                            var segundosNocturno = moment.duration(tiempoNocturno).seconds();
+                                                            var minutosNocturno = moment.duration(tiempoNocturno).minutes();
+                                                            var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
+                                                            horasNocturnas = horasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            horaNocturnasPorHorario = horaNocturnasPorHorario.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                            if (salidaData.clone().isSameOrBefore(tiempoMaximoDiurno)) {
+                                                                minuendoResta = salidaData.clone();
+                                                                sustraendoResta = tiempoMaximoNocturno;
+                                                            } else {
+                                                                minuendoResta = tiempoMaximoDiurno;
+                                                                sustraendoResta = tiempoMaximoNocturno;
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        }
-                                    } else {
-                                        if (primeraM == undefined) primeraM = 1;
-                                        if (salidaData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
-                                            // : HORAS NOCTURNAS
-                                            var tiempoNocturno = salidaData - entradaData;
-                                            var segundosNocturno = moment.duration(tiempoNocturno).seconds();
-                                            var minutosNocturno = moment.duration(tiempoNocturno).minutes();
-                                            var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
-                                            horasNocturnas = horasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                            horaNocturnasPorHorario = horaNocturnasPorHorario.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                         } else {
-                                            if (moment.duration(entradaData.clone().format("HH:mm:ss")) < moment.duration("06:00:00")) {
-                                                tiempoMaximoDiurno = moment(entradaData.clone().format("YYYY-MM-DD") + " " + "22:00:00");
-                                                tiempoMaximoNocturno = moment(entradaData.clone().format("YYYY-MM-DD") + " " + "06:00:00");
-                                            } else {
-                                                tiempoMaximoDiurno = moment(entradaData.clone().add("day", 1).format("YYYY-MM-DD") + " " + "22:00:00");
-                                                tiempoMaximoNocturno = moment(entradaData.clone().add("day", 1).format("YYYY-MM-DD") + " " + "06:00:00");
-                                            }
+                                            if (primeraM == undefined) primeraM = 1;
                                             if (salidaData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
                                                 // : HORAS NOCTURNAS
                                                 var tiempoNocturno = salidaData - entradaData;
@@ -528,56 +562,73 @@ function cargarDatos() {
                                                 horasNocturnas = horasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                                 horaNocturnasPorHorario = horaNocturnasPorHorario.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                             } else {
-                                                var minuendoResta = tiempoMaximoNocturno.clone();
-                                                var sustraendoResta = entradaData.clone();
-                                                var contadorDias = 1;
-                                                while (acumuladorEntreM < tiempoEntreM) {
+                                                if (moment.duration(entradaData.clone().format("HH:mm:ss")) < moment.duration("06:00:00")) {
+                                                    tiempoMaximoDiurno = moment(entradaData.clone().format("YYYY-MM-DD") + " " + "22:00:00");
+                                                    tiempoMaximoNocturno = moment(entradaData.clone().format("YYYY-MM-DD") + " " + "06:00:00");
+                                                } else {
+                                                    tiempoMaximoDiurno = moment(entradaData.clone().add("day", 1).format("YYYY-MM-DD") + " " + "22:00:00");
+                                                    tiempoMaximoNocturno = moment(entradaData.clone().add("day", 1).format("YYYY-MM-DD") + " " + "06:00:00");
+                                                }
+                                                if (salidaData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
                                                     // : HORAS NOCTURNAS
-                                                    var tiempoNocturno = minuendoResta - sustraendoResta;
+                                                    var tiempoNocturno = salidaData - entradaData;
                                                     var segundosNocturno = moment.duration(tiempoNocturno).seconds();
                                                     var minutosNocturno = moment.duration(tiempoNocturno).minutes();
                                                     var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
                                                     horasNocturnas = horasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
                                                     horaNocturnasPorHorario = horaNocturnasPorHorario.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                    acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
-                                                    // : CALCULOS DE TIEMPO
-                                                    var tiempoMaximoDiurnoAnterior = tiempoMaximoDiurno;
-                                                    tiempoMaximoDiurno = moment(tiempoMaximoDiurno.clone().add("day", contadorDias));
-                                                    tiempoMaximoNocturno = moment(tiempoMaximoNocturno.clone().add("day", contadorDias));
-                                                    if (acumuladorEntreM < tiempoEntreM) {
-                                                        if (salidaData.clone().isSameOrBefore(tiempoMaximoDiurnoAnterior)) {
-                                                            sustraendoResta = minuendoResta;
-                                                            minuendoResta = salidaData.clone();
-                                                            // : HORAS NORMALES
-                                                            var tiempoNormal = minuendoResta - sustraendoResta;
-                                                            var segundosNormal = moment.duration(tiempoNormal).seconds();
-                                                            var minutosNormal = moment.duration(tiempoNormal).minutes();
-                                                            var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
-                                                            horasNormales = horasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            horaNormalesPorHorario = horaNormalesPorHorario.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                        } else {
-                                                            sustraendoResta = minuendoResta;
-                                                            minuendoResta = tiempoMaximoDiurnoAnterior;
-                                                            // : HORAS NORMALES
-                                                            var tiempoNormal = minuendoResta - sustraendoResta;
-                                                            var segundosNormal = moment.duration(tiempoNormal).seconds();
-                                                            var minutosNormal = moment.duration(tiempoNormal).minutes();
-                                                            var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
-                                                            horasNormales = horasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            horaNormalesPorHorario = horaNormalesPorHorario.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
-                                                            if (salidaData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
+                                                } else {
+                                                    var minuendoResta = tiempoMaximoNocturno.clone();
+                                                    var sustraendoResta = entradaData.clone();
+                                                    var contadorDias = 1;
+                                                    while (acumuladorEntreM < tiempoEntreM) {
+                                                        // : HORAS NOCTURNAS
+                                                        var tiempoNocturno = minuendoResta - sustraendoResta;
+                                                        var segundosNocturno = moment.duration(tiempoNocturno).seconds();
+                                                        var minutosNocturno = moment.duration(tiempoNocturno).minutes();
+                                                        var horasNocturno = Math.trunc(moment.duration(tiempoNocturno).asHours());
+                                                        horasNocturnas = horasNocturnas.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                        horaNocturnasPorHorario = horaNocturnasPorHorario.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                        acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNocturno, "minutes": minutosNocturno, "seconds": segundosNocturno });
+                                                        // : CALCULOS DE TIEMPO
+                                                        var tiempoMaximoDiurnoAnterior = tiempoMaximoDiurno;
+                                                        tiempoMaximoDiurno = moment(tiempoMaximoDiurno.clone().add("day", contadorDias));
+                                                        tiempoMaximoNocturno = moment(tiempoMaximoNocturno.clone().add("day", contadorDias));
+                                                        if (acumuladorEntreM < tiempoEntreM) {
+                                                            if (salidaData.clone().isSameOrBefore(tiempoMaximoDiurnoAnterior)) {
+                                                                sustraendoResta = minuendoResta;
                                                                 minuendoResta = salidaData.clone();
-                                                                sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                                // : HORAS NORMALES
+                                                                var tiempoNormal = minuendoResta - sustraendoResta;
+                                                                var segundosNormal = moment.duration(tiempoNormal).seconds();
+                                                                var minutosNormal = moment.duration(tiempoNormal).minutes();
+                                                                var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
+                                                                horasNormales = horasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                horaNormalesPorHorario = horaNormalesPorHorario.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
                                                             } else {
-                                                                minuendoResta = tiempoMaximoNocturno;
-                                                                sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                                sustraendoResta = minuendoResta;
+                                                                minuendoResta = tiempoMaximoDiurnoAnterior;
+                                                                // : HORAS NORMALES
+                                                                var tiempoNormal = minuendoResta - sustraendoResta;
+                                                                var segundosNormal = moment.duration(tiempoNormal).seconds();
+                                                                var minutosNormal = moment.duration(tiempoNormal).minutes();
+                                                                var horasNormal = Math.trunc(moment.duration(tiempoNormal).asHours());
+                                                                horasNormales = horasNormales.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                horaNormalesPorHorario = horaNormalesPorHorario.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                acumuladorEntreM = acumuladorEntreM.add({ "hours": horasNormal, "minutes": minutosNormal, "seconds": segundosNormal });
+                                                                if (salidaData.clone().isSameOrBefore(tiempoMaximoNocturno)) {
+                                                                    minuendoResta = salidaData.clone();
+                                                                    sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                                } else {
+                                                                    minuendoResta = tiempoMaximoNocturno;
+                                                                    sustraendoResta = tiempoMaximoDiurnoAnterior;
+                                                                }
                                                             }
                                                         }
+                                                        contadorDias++;
+                                                        // debugger;
                                                     }
-                                                    contadorDias++;
-                                                    // debugger;
                                                 }
                                             }
                                         }
