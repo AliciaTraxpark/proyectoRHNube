@@ -406,34 +406,44 @@ function cargartabla(fecha1, fecha2) {
                                `;
             // * MARCACIONES
             for (let j = 0; j < cantidadColumnasHoras; j++) {
-                theadTabla += `<th class="colMarcaciones" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                theadTabla += `<th class="colMarcaciones text-center" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                                     <span>
                                         Entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600">${j + 1}</b>
                                     </span>
                                 </th>
-                                <th class="colMarcaciones">
+                                <th class="colMarcaciones text-center">
                                     <span>
                                      Salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600">${j + 1}</b>
                                     </span>
                                 </th>
-                                <th id="tSitio" name="tiempoSitHi" class="tiempoSitHi">
+                                <th class="tiempoSitHi text-center">
                                     <span>
                                         Tiempo total <b style="font-size: 12px !important;color: #383e56;font-weight: 600">${j + 1}</b>
+                                    </span>
+                                </th>
+                                <th class="tiempoMuertoE text-center">
+                                    <span>
+                                        Tiempo muerto - entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600">${j + 1}</b>
+                                    </span>
+                                </th>
+                                <th class="tiempoMuertoS text-center">
+                                    <span>
+                                        Tiempo muerto - salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600">${j + 1}</b>
                                     </span>
                                 </th>`;
             }
             // * PAUSAS
             for (let p = 0; p < cantidadColumnasPausas; p++) {
-                theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="descripcionPausa">
+                theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;" class="descripcionPausa text-center">
                                     <span>Pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>
-                                <th class="horarioPausa">
+                                <th class="horarioPausa text-center">
                                     <span>Horario pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>
-                                <th class="tiempoPausa">
+                                <th class="tiempoPausa text-center">
                                     <span>Tiempo pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>
-                                <th class="excesoPausa">
+                                <th class="excesoPausa text-center">
                                     <span>Exceso pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                 </th>`;
             }
@@ -1045,18 +1055,18 @@ function cargartabla(fecha1, fecha2) {
                     }
                     // * SI TIENE TIEMPO DE ENTRADA
                     if (contenidoMarcacion.entrada != 0) {
-                        tbodyEntradaySalida += `<td class="colMarcaciones" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                        tbodyEntradaySalida += `<td class="colMarcaciones text-center" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                                                     <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                     ${moment(contenidoMarcacion.entrada).format("HH:mm:ss")}
                                                 </td>`;
                         // * SI TIENE TIEMPO DE SALIDA
                         if (contenidoMarcacion.salida != 0) {
-                            tbodyEntradaySalida += `<td class="colMarcaciones">
+                            tbodyEntradaySalida += `<td class="colMarcaciones text-center">
                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                         ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
                                                     </td>`;
                         } else {
-                            tbodyEntradaySalida += `<td class="colMarcaciones">
+                            tbodyEntradaySalida += `<td class="colMarcaciones text-center">
                                                         <span class="badge badge-soft-secondary">
                                                             <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                             No tiene salida
@@ -1065,31 +1075,41 @@ function cargartabla(fecha1, fecha2) {
                         }
                     } else {
                         if (contenidoMarcacion.salida != 0) {
-                            tbodyEntradaySalida += `<td class="colMarcaciones" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                            tbodyEntradaySalida += `<td class="colMarcaciones text-center" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                                                         <span class="badge badge-soft-warning">
                                                             <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
                                                             No tiene entrada
                                                         </span>
                                                     </td>`;
-                            tbodyEntradaySalida += `<td class="colMarcaciones">
+                            tbodyEntradaySalida += `<td class="colMarcaciones text-center">
                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                         ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
                                                     </td>`;
                         }
                     }
-                    tbodyEntradaySalida += `<td name="tiempoSitHi">
+                    tbodyEntradaySalida += `<td class="tiempoSitHi text-center">
                                                 <a class="badge badge-soft-primary mr-2">
                                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                     ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                 </a>
+                                            </td>
+                                            <td class="tiempoMuertoE text-center">
+                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                ${horasMuertosE}:${minutosMuertosE}:${segundosMuertosE}
+                                            </td>
+                                            <td class="tiempoMuertoS text-center">
+                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                ${horasMuertosS}:${minutosMuertosS}:${segundosMuertosS}
                                             </td>`;
                 }
                 for (let m = contenidoData.marcaciones.length; m < cantidadColumnasHoras; m++) {
-                    tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                    tbodyEntradaySalida += `<td class="text-center" style="border-left-color: #c8d4de!important;border-left: 2px solid;">
                                                 ---
                                             </td>
-                                            <td>---</td>
-                                            <td name="tiempoSitHi">---</td>`;
+                                            <td class="text-center">---</td>
+                                            <td class="tiempoSitHi text-center">---</td>
+                                            <td class="tiempoMuertoE text-center">---</td>
+                                            <td class="tiempoMuertoS text-center">---</td>`;
                 }
                 tbody += tbodyEntradaySalida;
                 // * ARMAR PAUSAS
@@ -1248,15 +1268,15 @@ function cargartabla(fecha1, fecha2) {
                             }
                         }
                     }
-                    tbodyPausas += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;" name="datosPausa">${pausaData.descripcion}</td>
-                            <td name="datosPausa">${pausaData.inicio} - ${pausaData.fin}</td>
-                            <td name="datosPausa">
+                    tbodyPausas += `<td class="text-center" style="border-left-color: #c8d4de!important;border-left: 2px solid;" name="datosPausa">${pausaData.descripcion}</td>
+                            <td class="datosPausa text-center">${pausaData.inicio} - ${pausaData.fin}</td>
+                            <td class="datosPausa text-center">
                                 <a class="badge badge-soft-primary mr-2">
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
                                 </a>
                             </td>
-                            <td name="datosPausa">
+                            <td class="datosPausa text-center">
                                 <a class="badge badge-soft-danger mr-2">
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                     ${tiempoHoraExceso}:${tiempoMinutoExceso}:${tiempoSegundoExceso}
