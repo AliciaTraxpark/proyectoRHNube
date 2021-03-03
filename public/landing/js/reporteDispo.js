@@ -2074,6 +2074,20 @@ function cargartabla(fecha) {
                                                         segundosMuertosE = "0" + segundosMuertosE;
                                                     }
                                                 }
+                                            } else {
+                                                var tiempoRestante = horaFinal - horaInicial;
+                                                segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                                minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                                horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                                if (horasTiempo < 10) {
+                                                    horasTiempo = '0' + horasTiempo;
+                                                }
+                                                if (minutosTiempo < 10) {
+                                                    minutosTiempo = '0' + minutosTiempo;
+                                                }
+                                                if (segundosTiempo < 10) {
+                                                    segundosTiempo = '0' + segundosTiempo;
+                                                }
                                             }
                                         } else {
                                             var tiempoRestante = horaFinal - horaInicial;
@@ -2089,6 +2103,7 @@ function cargartabla(fecha) {
                                             if (segundosTiempo < 10) {
                                                 segundosTiempo = '0' + segundosTiempo;
                                             }
+                                            console.log(horasTiempo, minutosTiempo, segundosTiempo);
                                         }
                                     } else {
                                         var tiempoRestante = horaFinal - horaInicial;
