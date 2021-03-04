@@ -3760,7 +3760,15 @@ class dispositivosController extends Controller
                         "horasAdicionales" => $empleado->horasAdicionales == null ? 0 : $empleado->horasAdicionales,
                         "toleranciaF" => $empleado->toleranciaF,
                         "tiempoMuertoI" => $empleado->tiempoMuertoI,
-                        "tiempoMuertoS" => $empleado->tiempoMuertoS
+                        "tiempoMuertoS" => $empleado->tiempoMuertoS,
+                        "idDiurna" => $empleado->idDiurna,
+                        "estado25D" => $empleado->estado25D,
+                        "estado35D" => $empleado->estado35D,
+                        "estado100D" => $empleado->estado100D,
+                        "idNocturna" => $empleado->idNocturna,
+                        "estado25N" => $empleado->estado25N,
+                        "estado35N" => $empleado->estado35N,
+                        "estado100N" => $empleado->estado100N
                     );
                 }
                 // : CREAR ARRAY DE DATA DE MARCACIONES
@@ -3963,11 +3971,25 @@ class dispositivosController extends Controller
             }
         }
         $marcaciones = [];
+        // * HORAS EXTRAS
+        $horasExtras = DB::table('reglas_horasextras as rh')
+            ->select(
+                'rh.idreglas_horasExtras',
+                'rh.lleno25',
+                'rh.lleno35',
+                'rh.lleno100'
+            );
         $data =  DB::table('empleado as e')
             ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+            ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+            })
+            ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
+            })
             ->select(
                 'e.emple_id',
                 DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start)) as fecha'),
@@ -3984,7 +4006,15 @@ class dispositivosController extends Controller
                 'hoe.nHoraAdic as horasAdicionales',
                 'hoe.estado',
                 'hor.tiempoMingreso as tiempoMuertoI',
-                'hor.tiempoMsalida as tiempoMuertoS'
+                'hor.tiempoMsalida as tiempoMuertoS',
+                'diurna.idreglas_horasExtras as idDiurna',
+                'diurna.lleno25 as estado25D',
+                'diurna.lleno35 as estado35D',
+                'diurna.lleno100 as estado100D',
+                'nocturna.idreglas_horasExtras as idNocturna',
+                'nocturna.lleno25 as estado25N',
+                'nocturna.lleno35 as estado35N',
+                'nocturna.lleno100 as estado100N'
             )
             ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start))'), [$fechaInicio, $fechaFin])
             ->where('mp.organi_id', '=', session('sesionidorg'))

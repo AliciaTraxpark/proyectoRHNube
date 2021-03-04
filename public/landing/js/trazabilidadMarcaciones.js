@@ -647,42 +647,151 @@ function cargarDatos() {
                                         nuevaHorasObligadas = moment.duration(0);
                                         var tiempoExtraResta = horaNormalesPorHorario - horasObligadasHorario;
                                         var tiempoSobrante = moment.duration(0);
-                                        if (tiempoExtraResta > moment.duration("02:00:00")) {
-                                            diurnas25++;
-                                            var restaDe25 = tiempoExtraResta - moment.duration("02:00:00");
-                                            tiempoSobrante = moment.duration(restaDe25);
-                                            if (tiempoSobrante > moment.duration("02:00:00")) {
-                                                diurnas35++;
-                                                var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
-                                                tiempoSobrante = moment.duration(restaDe35);
-                                                if (tiempoSobrante > moment.duration(0)) {
-                                                    diurnas100++;
+                                        if (value["dataHorario"].idDiurna == null) {
+                                            if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                diurnas25++;
+                                                var restaDe25 = tiempoExtraResta - moment.duration("02:00:00");
+                                                tiempoSobrante = moment.duration(restaDe25);
+                                                if (tiempoSobrante > moment.duration("02:00:00")) {
+                                                    diurnas35++;
+                                                    var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
+                                                    tiempoSobrante = moment.duration(restaDe35);
+                                                    if (tiempoSobrante > moment.duration(0)) {
+                                                        diurnas100++;
+                                                    }
+                                                } else {
+                                                    if (tiempoSobrante > moment.duration(0)) {
+                                                        diurnas35++;
+                                                    }
                                                 }
                                             } else {
-                                                diurnas35++;
+                                                diurnas25++;
                                             }
                                         } else {
-                                            diurnas25++;
+                                            // : CONDICIONAL DE 25% DIURNA
+                                            // ! QUE NO LLENE EN EL 25
+                                            if (!(value["dataHorario"].estado25D == 1)) {
+                                                // ! QUE NO SEA VACIO
+                                                if (value["dataHorario"].estado25D != 2) {
+                                                    if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                        diurnas25++;
+                                                        tiempoExtraResta = tiempoExtraResta - moment.duration("02:00:00");
+                                                    } else {
+                                                        diurnas25++;
+                                                        tiempoExtraResta = moment.duration(0);
+                                                    }
+                                                }
+                                                // : CONDICIONAL DE 35% DIURNA
+                                                // ! QUE NO LLENE EN EL 35
+                                                if (!(value["dataHorario"].estado35D == 1)) {
+                                                    if (value["dataHorario"].estado35D != 2) {
+                                                        if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                            diurnas35++;
+                                                            tiempoExtraResta = tiempoExtraResta - moment.duration("02:00:00");
+                                                        } else {
+                                                            if (tiempoExtraResta != 0) {
+                                                                diurnas35++;
+                                                                tiempoExtraResta = moment.duration(0);
+                                                            }
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 100% DIURNA
+                                                    // ! QUE NO LLENA
+                                                    if (!(value["dataHorario"].estado100D == 1)) {
+                                                        // ! QUE NO SEA VACIO
+                                                        if (value["dataHorario"].estado100D != 2) {
+                                                            if (tiempoExtraResta != 0) {
+                                                                diurnas100++;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (tiempoExtraResta != 0) {
+                                                            diurnas100++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (tiempoExtraResta != 0) {
+                                                        diurnas35++;
+                                                    }
+                                                }
+                                            } else {
+                                                diurnas25++;
+                                            }
                                         }
                                         // : HORARIO NOCTURNO
                                         if (horaNocturnasPorHorario > nuevaHorasObligadas) {
                                             var tiempoExtraRestaN = horaNocturnasPorHorario - nuevaHorasObligadas;
-                                            if (tiempoExtraRestaN > moment.duration("02:00:00")) {
-                                                nocturnas25++;
-                                                var restaDe25N = tiempoExtraRestaN - moment.duration("02:00:00");
-                                                tiempoSobranteN = moment.duration(restaDe25N);
-                                                if (tiempoSobranteN > moment.duration("02:00:00")) {
-                                                    nocturnas35++;
-                                                    var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
-                                                    tiempoSobranteN = moment.duration(restaDe35N);
-                                                    if (tiempoSobranteN > moment.duration(0)) {
-                                                        nocturnas100;
+                                            if (value["dataHorario"].idNocturna == null) {
+                                                if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                    nocturnas25++;
+                                                    var restaDe25N = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                    tiempoSobranteN = moment.duration(restaDe25N);
+                                                    if (tiempoSobranteN > moment.duration("02:00:00")) {
+                                                        nocturnas35++;
+                                                        var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
+                                                        tiempoSobranteN = moment.duration(restaDe35N);
+                                                        if (tiempoSobranteN > moment.duration(0)) {
+                                                            nocturnas100++;
+                                                        }
+                                                    } else {
+                                                        if (tiempoSobranteN > moment.duration(0)) {
+                                                            nocturnas35++;
+                                                        }
                                                     }
                                                 } else {
-                                                    nocturnas35++;
+                                                    nocturnas25++;
                                                 }
                                             } else {
-                                                nocturnas25++;
+                                                // : CONDICIONAL DE 25% NOCTURNA
+                                                // ! QUE NO LLENE EN EL 25
+                                                if (!(value["dataHorario"].estado25N == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (value["dataHorario"].estado25N != 2) {
+                                                        if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                            nocturnas25++;
+                                                            tiempoExtraRestaN = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                        } else {
+                                                            nocturnas25++;
+                                                            tiempoExtraRestaN = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 35% NOCTURNA
+                                                    // ! QUE NO LLENE 35%
+                                                    if (!(value["dataHorario"].estado35N == 1)) {
+                                                        // ! QUE NO SEA VACIO
+                                                        if (value["dataHorario"].estado35N != 2) {
+                                                            if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                                nocturnas35++;
+                                                                tiempoExtraRestaN = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                            } else {
+                                                                if (tiempoExtraRestaN != 0) {
+                                                                    nocturnas35++;
+                                                                    tiempoExtraRestaN = moment.duration(0);
+                                                                }
+                                                            }
+                                                        }
+                                                        // : CONDICIONAL DE 100% NOCTURNA
+                                                        // ! QUE NO LLENA
+                                                        if (!(value["dataHorario"].estado100N == 1)) {
+                                                            // ! QUE NO SEA VACIO
+                                                            if (value["dataHorario"].estado100D != 2) {
+                                                                if (tiempoExtraRestaN != 0) {
+                                                                    nocturnas100++;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            if (tiempoExtraRestaN != 0) {
+                                                                nocturnas100++;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (tiempoExtraRestaN != 0) {
+                                                            nocturnas35++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    nocturnas25++;
+                                                }
                                             }
                                         }
                                     } else {
@@ -692,22 +801,77 @@ function cargarDatos() {
                                         if (horaNocturnasPorHorario > nuevaHorasObligadas) {
                                             var tiempoExtraRestaN = horaNocturnasPorHorario - nuevaHorasObligadas;
                                             var tiempoSobranteN = {};
-                                            if (tiempoExtraRestaN > moment.duration("02:00:00")) {
-                                                nocturnas25++;
-                                                var restaDe25N = tiempoExtraRestaN - moment.duration("02:00:00");
-                                                tiempoSobranteN = moment.duration(restaDe25N);
-                                                if (tiempoSobranteN > moment.duration("02:00:00")) {
-                                                    nocturnas35++;
-                                                    var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
-                                                    tiempoSobranteN = moment.duration(restaDe35N);
-                                                    if (tiempoSobranteN > moment.duration(0)) {
-                                                        nocturnas100;
+                                            if (value["dataHorario"].idNocturna == null) {
+                                                if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                    nocturnas25++;
+                                                    var restaDe25N = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                    tiempoSobranteN = moment.duration(restaDe25N);
+                                                    if (tiempoSobranteN > moment.duration("02:00:00")) {
+                                                        nocturnas35++;
+                                                        var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
+                                                        tiempoSobranteN = moment.duration(restaDe35N);
+                                                        if (tiempoSobranteN > moment.duration(0)) {
+                                                            nocturnas100++;
+                                                        }
+                                                    } else {
+                                                        if (tiempoSobranteN > moment.duration(0)) {
+                                                            nocturnas35++;
+                                                        }
                                                     }
                                                 } else {
-                                                    nocturnas35++;
+                                                    nocturnas25++;
                                                 }
                                             } else {
-                                                nocturnas25++;
+                                                // : CONDICIONAL DE 25% NOCTURNA
+                                                // ! QUE NO LLENE EN EL 25
+                                                if (!(value["dataHorario"].estado25N == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (value["dataHorario"].estado25N != 2) {
+                                                        if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                            nocturnas25++;
+                                                            tiempoExtraRestaN = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                        } else {
+                                                            nocturnas25++;
+                                                            tiempoExtraRestaN = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 35% NOCTURNA
+                                                    // ! QUE NO LLENE 35%
+                                                    if (!(value["dataHorario"].estado35N == 1)) {
+                                                        // ! QUE NO SEA VACIO
+                                                        if (value["dataHorario"].estado35N != 2) {
+                                                            if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                                nocturnas35++;
+                                                                tiempoExtraRestaN = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                            } else {
+                                                                if (tiempoExtraRestaN != 0) {
+                                                                    nocturnas35++;
+                                                                    tiempoExtraRestaN = moment.duration(0);
+                                                                }
+                                                            }
+                                                        }
+                                                        // : CONDICIONAL DE 100% NOCTURNA
+                                                        // ! QUE NO LLENA
+                                                        if (!(value["dataHorario"].estado100N == 1)) {
+                                                            // ! QUE NO SEA VACIO
+                                                            if (value["dataHorario"].estado100D != 2) {
+                                                                if (tiempoExtraRestaN != 0) {
+                                                                    nocturnas100++;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            if (tiempoExtraRestaN != 0) {
+                                                                nocturnas100++;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (tiempoExtraRestaN != 0) {
+                                                            nocturnas35++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    nocturnas25++;
+                                                }
                                             }
                                         }
                                     }
@@ -717,69 +881,231 @@ function cargarDatos() {
                                         nuevaHorasObligadas = moment.duration(0);
                                         var tiempoExtraRestaN = horaNocturnasPorHorario - horasObligadasHorario;
                                         var tiempoSobranteN = {};
-                                        if (tiempoExtraRestaN > moment.duration("02:00:00")) {
-                                            nocturnas25++;
-                                            var restaDe25N = tiempoExtraRestaN - moment.duration("02:00:00");
-                                            tiempoSobranteN = moment.duration(restaDe25N);
-                                            if (tiempoSobranteN > moment.duration("02:00:00")) {
-                                                nocturnas35++;
-                                                var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
-                                                tiempoSobranteN = moment.duration(restaDe35N);
-                                                if (tiempoSobranteN > moment.duration(0)) {
-                                                    nocturnas100;
+                                        if (value["dataHorario"].idNocturna == null) {
+                                            if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                nocturnas25++;
+                                                var restaDe25N = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                tiempoSobranteN = moment.duration(restaDe25N);
+                                                if (tiempoSobranteN > moment.duration("02:00:00")) {
+                                                    nocturnas35++;
+                                                    var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
+                                                    tiempoSobranteN = moment.duration(restaDe35N);
+                                                    if (tiempoSobranteN > moment.duration(0)) {
+                                                        nocturnas100++;
+                                                    }
+                                                } else {
+                                                    if (tiempoSobranteN > moment.duration(0)) {
+                                                        nocturnas35++;
+                                                    }
                                                 }
                                             } else {
-                                                nocturnas35++;
+                                                nocturnas25++;
                                             }
                                         } else {
-                                            nocturnas25++;
+                                            // : CONDICIONAL DE 25% NOCTURNA
+                                            // ! QUE NO LLENE EN EL 25
+                                            if (!(value["dataHorario"].estado25N == 1)) {
+                                                // ! QUE NO SEA VACIO
+                                                if (value["dataHorario"].estado25N != 2) {
+                                                    if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                        nocturnas25++;
+                                                        tiempoExtraRestaN = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                    } else {
+                                                        nocturnas25++;
+                                                        tiempoExtraRestaN = moment.duration(0);
+                                                    }
+                                                }
+                                                // : CONDICIONAL DE 35% NOCTURNA
+                                                // ! QUE NO LLENE 35%
+                                                if (!(value["dataHorario"].estado35N == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (value["dataHorario"].estado35N != 2) {
+                                                        if (tiempoExtraRestaN > moment.duration("02:00:00")) {
+                                                            nocturnas35++;
+                                                            tiempoExtraRestaN = tiempoExtraRestaN - moment.duration("02:00:00");
+                                                        } else {
+                                                            if (tiempoExtraRestaN != 0) {
+                                                                nocturnas35++;
+                                                                tiempoExtraRestaN = moment.duration(0);
+                                                            }
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 100% NOCTURNA
+                                                    // ! QUE NO LLENA
+                                                    if (!(value["dataHorario"].estado100N == 1)) {
+                                                        // ! QUE NO SEA VACIO
+                                                        if (value["dataHorario"].estado100D != 2) {
+                                                            if (tiempoExtraRestaN != 0) {
+                                                                nocturnas100++;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (tiempoExtraRestaN != 0) {
+                                                            nocturnas100++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (tiempoExtraRestaN != 0) {
+                                                        nocturnas35++;
+                                                    }
+                                                }
+                                            } else {
+                                                nocturnas25++;
+                                            }
                                         }
                                         // : HORARIO NORMAL 
                                         if (horaNormalesPorHorario > nuevaHorasObligadas) {
                                             var tiempoExtraResta = horaNormalesPorHorario - nuevaHorasObligadas;
                                             var tiempoSobrante = moment.duration(0);
-                                            if (tiempoExtraResta > moment.duration("02:00:00")) {
-                                                diurnas25++;
-                                                var restaDe25 = tiempoExtraResta - moment.duration("02:00:00");
-                                                tiempoSobrante = moment.duration(restaDe25);
-                                                if (tiempoSobrante > moment.duration("02:00:00")) {
-                                                    diurnas35++;
-                                                    var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
-                                                    tiempoSobrante = moment.duration(restaDe35);
-                                                    if (tiempoSobrante > moment.duration(0)) {
-                                                        diurnas100++;
+                                            if (value["dataHorario"].idDiurna == null) {
+                                                if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                    diurnas25++;
+                                                    var restaDe25 = tiempoExtraResta - moment.duration("02:00:00");
+                                                    tiempoSobrante = moment.duration(restaDe25);
+                                                    if (tiempoSobrante > moment.duration("02:00:00")) {
+                                                        diurnas35++;
+                                                        var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
+                                                        tiempoSobrante = moment.duration(restaDe35);
+                                                        if (tiempoSobrante > moment.duration(0)) {
+                                                            diurnas100++;
+                                                        }
+                                                    } else {
+                                                        if (tiempoSobrante > moment.duration(0)) {
+                                                            diurnas35++;
+                                                        }
                                                     }
                                                 } else {
-                                                    diurnas35++;
+                                                    diurnas25++;
                                                 }
                                             } else {
-                                                diurnas25++;
+                                                // : CONDICIONAL DE 25% DIURNA
+                                                // ! QUE NO LLENE EN EL 25
+                                                if (!(value["dataHorario"].estado25D == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (value["dataHorario"].estado25D != 2) {
+                                                        if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                            diurnas25++;
+                                                            tiempoExtraResta = tiempoExtraResta - moment.duration("02:00:00");
+                                                        } else {
+                                                            diurnas25++;
+                                                            tiempoExtraResta = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 35% DIURNA
+                                                    // ! QUE NO LLENE EN EL 35
+                                                    if (!(value["dataHorario"].estado35D == 1)) {
+                                                        if (value["dataHorario"].estado35D != 2) {
+                                                            if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                                diurnas35++;
+                                                                tiempoExtraResta = tiempoExtraResta - moment.duration("02:00:00");
+                                                            } else {
+                                                                if (tiempoExtraResta != 0) {
+                                                                    diurnas35++;
+                                                                    tiempoExtraResta = moment.duration(0);
+                                                                }
+                                                            }
+                                                        }
+                                                        // : CONDICIONAL DE 100% DIURNA
+                                                        // ! QUE NO LLENA
+                                                        if (!(value["dataHorario"].estado100D == 1)) {
+                                                            // ! QUE NO SEA VACIO
+                                                            if (value["dataHorario"].estado100D != 2) {
+                                                                if (tiempoExtraResta != 0) {
+                                                                    diurnas100++;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            if (tiempoExtraResta != 0) {
+                                                                diurnas100++;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (tiempoExtraResta != 0) {
+                                                            diurnas35++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    diurnas25++;
+                                                }
                                             }
                                         }
                                     } else {
                                         var restaHorasO = horasObligadasHorario - horaNocturnasPorHorario;
                                         nuevaHorasObligadas = moment.duration(restaHorasO);
-                                        console.log();
                                         // : HOARIO NORMAL
                                         if (horaNormalesPorHorario > nuevaHorasObligadas) {
                                             var tiempoExtraResta = horaNormalesPorHorario - nuevaHorasObligadas;
                                             var tiempoSobrante = moment.duration(0);
-                                            if (tiempoExtraResta > moment.duration("02:00:00")) {
-                                                diurnas25++;
-                                                var restaDe25 = tiempoExtraResta - moment.duration("02:00:00");
-                                                tiempoSobrante = moment.duration(restaDe25);
-                                                if (tiempoSobrante > moment.duration("02:00:00")) {
-                                                    diurnas35++;
-                                                    var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
-                                                    tiempoSobrante = moment.duration(restaDe35);
-                                                    if (tiempoSobrante > moment.duration(0)) {
-                                                        diurnas100++;
+                                            if (value["dataHorario"].idDiurna == null) {
+                                                if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                    diurnas25++;
+                                                    var restaDe25 = tiempoExtraResta - moment.duration("02:00:00");
+                                                    tiempoSobrante = moment.duration(restaDe25);
+                                                    if (tiempoSobrante > moment.duration("02:00:00")) {
+                                                        diurnas35++;
+                                                        var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
+                                                        tiempoSobrante = moment.duration(restaDe35);
+                                                        if (tiempoSobrante > moment.duration(0)) {
+                                                            diurnas100++;
+                                                        }
+                                                    } else {
+                                                        if (tiempoSobrante > moment.duration(0)) {
+                                                            diurnas35++;
+                                                        }
                                                     }
                                                 } else {
-                                                    diurnas35++;
+                                                    diurnas25++;
                                                 }
                                             } else {
-                                                diurnas25++;
+                                                // : CONDICIONAL DE 25% DIURNA
+                                                // ! QUE NO LLENE EN EL 25
+                                                if (!(value["dataHorario"].estado25D == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (value["dataHorario"].estado25D != 2) {
+                                                        if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                            diurnas25++;
+                                                            tiempoExtraResta = tiempoExtraResta - moment.duration("02:00:00");
+                                                        } else {
+                                                            diurnas25++;
+                                                            tiempoExtraResta = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 35% DIURNA
+                                                    // ! QUE NO LLENE EN EL 35
+                                                    if (!(value["dataHorario"].estado35D == 1)) {
+                                                        if (value["dataHorario"].estado35D != 2) {
+                                                            if (tiempoExtraResta > moment.duration("02:00:00")) {
+                                                                diurnas35++;
+                                                                tiempoExtraResta = tiempoExtraResta - moment.duration("02:00:00");
+                                                            } else {
+                                                                if (tiempoExtraResta != 0) {
+                                                                    diurnas35++;
+                                                                    tiempoExtraResta = moment.duration(0);
+                                                                }
+                                                            }
+                                                        }
+                                                        // : CONDICIONAL DE 100% DIURNA
+                                                        // ! QUE NO LLENA
+                                                        if (!(value["dataHorario"].estado100D == 1)) {
+                                                            // ! QUE NO SEA VACIO
+                                                            if (value["dataHorario"].estado100D != 2) {
+                                                                if (tiempoExtraResta != 0) {
+                                                                    diurnas100++;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            if (tiempoExtraResta != 0) {
+                                                                diurnas100++;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (tiempoExtraResta != 0) {
+                                                            diurnas35++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    diurnas25++;
+                                                }
                                             }
                                         }
                                     }
