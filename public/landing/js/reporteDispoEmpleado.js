@@ -1885,11 +1885,8 @@ function cargartabla(fecha1, fecha2) {
     });
 }
 function cambiarF() {
-
     f1 = $("#ID_START").val();
-    f2 = moment(f1).format("YYYY-MM-DD");
-    $('#pasandoV').val(f2);
-    f3 = $("#ID_END").val();
+    f2 = $("#ID_END").val();
     if ($('#idempleado').val() == "" || $('#idempleado').val() == null) {
         $.notifyClose();
         $.notify(
@@ -1919,9 +1916,8 @@ function cambiarF() {
             }
         );
     } else {
-        cargartabla(f2, f3);
+        cargartabla(f1, f2);
     }
-
 }
 $('#tablaReport tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
