@@ -2497,6 +2497,10 @@ function modalRegistrar() {
     $('#errorenPausasCruzadas').hide();
     $('#toleranciaH').val(0);
     $('#toleranciaSalida').val(0);
+    $('#tmIngreso').prop('checked',false);
+    $('#tmSalida').prop('checked',false);
+    $('#idReglaHora').val('');
+    $('#idReglaHora').trigger('change');
 }
 // * SWITCH DE PAUSAS
 var r_cont = 0;
@@ -3013,6 +3017,7 @@ function registrarNuevoHorario() {
     var toleranciaI = $('#toleranciaH').val();
     var toleranciaF = $('#toleranciaSalida').val();
     var horasO = $('#horaOblig').val();
+    var idReglaHExtras=$('#idReglaHora').val();
 
     //*Tiempos muertos
     var tmIngreso;
@@ -3059,7 +3064,10 @@ function registrarNuevoHorario() {
             horaInicio: horaInicio,
             horaFin: horaFin,
             horasO: horasO,
-            pausas: pausas,tmIngreso,tmSalida
+            pausas: pausas,
+            tmIngreso,
+            tmSalida,
+            idReglaHExtras
         },
         statusCode: {
             401: function () {
@@ -3228,6 +3236,10 @@ function modalEditar(id) {
             } else{
                 $('#tmSalida_ed').prop('checked',false);
             }
+
+            //regla
+            $('#idReglaHora_ed').val(data.horario[0].idreglas_horasExtras);
+            $("#idReglaHora_ed").trigger("change");
            
 
 
@@ -3998,10 +4010,12 @@ async function editarHorarioDatos() {
     var toleranciaI = $('#toleranciaH_ed').val();
     var toleranciaF = $('#toleranciaSalida_ed').val();
     var horasO = $('#horaOblig_ed').val();
+    var idReglaHExtras=$('#idReglaHora_ed').val();
+
     //*Tiempos muertos
     var tmIngreso;
     var tmSalida;
-
+    
     //tm ingreso
     if ($('#tmIngreso_ed').is(":checked")) {
         tmIngreso = 1;
@@ -4045,7 +4059,8 @@ async function editarHorarioDatos() {
             horasO: horasO,
             pausas: pausas,
             tmIngreso,
-            tmSalida
+            tmSalida,
+            idReglaHExtras
         },
         statusCode: {
             401: function () {

@@ -107,6 +107,11 @@ class horarioController extends Controller
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
+            //*reglas
+            $reglasHExtras=DB::table('reglas_horasextras')
+            ->where('organi_id','=', session('sesionidorg'))
+            ->get();
+
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
                     return redirect('/dashboard');
@@ -114,14 +119,14 @@ class horarioController extends Controller
                     return view('horarios.horarios', [
                          'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                         'area' => $area, 'cargo' => $cargo, 'local' => $local, 'nivel'=>$nivel,
-                        'centroc'=>$centroc
+                        'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras
                     ]);
                 }
             } else {
                 return view('horarios.horarios', [
                     'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                     'area' => $area, 'cargo' => $cargo, 'local' => $local,  'nivel'=>$nivel,
-                    'centroc'=>$centroc
+                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras
                 ]);
             }
         }
@@ -507,6 +512,10 @@ class horarioController extends Controller
             ->groupBy('cc.centroC_id')
             ->get();
 
+            //*reglas
+            $reglasHExtras=DB::table('reglas_horasextras')
+            ->where('organi_id','=', session('sesionidorg'))
+            ->get();
             $invitadod = DB::table('invitado')
                 ->where('user_Invitado', '=', Auth::user()->id)
                 ->where('organi_id', '=', session('sesionidorg'))
@@ -519,14 +528,14 @@ class horarioController extends Controller
                     return view('horarios.horarioMenu', [
                          'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                         'area' => $area, 'cargo' => $cargo, 'local' => $local,'nivel'=>$nivel,
-                        'centroc'=>$centroc
+                        'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras
                     ]);
                 }
             } else {
                 return view('horarios.horarioMenu', [
                      'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                     'area' => $area, 'cargo' => $cargo, 'local' => $local,'nivel'=>$nivel,
-                    'centroc'=>$centroc
+                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras
                 ]);
             }
         }
@@ -1362,6 +1371,7 @@ class horarioController extends Controller
         $horario->horasObliga = $request->get('horasO');
         $horario->tiempoMingreso = $request->get('tmIngreso');
         $horario->tiempoMsalida = $request->get('tmSalida');
+        $horario->idreglas_horasExtras = $request->get('idReglaHExtras');
         $horario->save();
 
         $idHorario = $horario->horario_id;
@@ -1408,6 +1418,7 @@ class horarioController extends Controller
         $horario->horasObliga = $request->get('horasO');
         $horario->tiempoMingreso = $request->get('tmIngreso');
         $horario->tiempoMsalida = $request->get('tmSalida');
+        $horario->idreglas_horasExtras = $request->get('idReglaHExtras');
         $horario->save();
 
         $idHorario = $horario->horario_id;

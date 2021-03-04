@@ -690,6 +690,20 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="">Seleccione regla de horas extras:</label>
+                                                <select data-plugin="customselect" id="idReglaHora"
+                                                    name="idReglaHora" class="form-control"
+                                                    data-placeholder="seleccione" required>
+                                                    @foreach ($reglasHExtras as $regla)
+                                                        <option value=""></option>
+                                                        <option value="{{ $regla->idreglas_horasExtras }}">
+                                                            {{ $regla->reglas_descripcion }}({{$regla->tipo_regla}})</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-md-4" id="divOtrodia" style="display: none">
                                             <div class="form-check mt-4 mb-4">
                                                 <input type="checkbox" style="font-weight: 600" class="form-check-input"
@@ -867,6 +881,20 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="">Seleccione regla de horas extras:</label>
+                                                <select data-plugin="customselect" id="idReglaHora_ed"
+                                                    name="idReglaHora_ed" class="form-control"
+                                                    data-placeholder="seleccione" required>
+                                                    @foreach ($reglasHExtras as $regla)
+                                                        <option value=""></option>
+                                                        <option value="{{ $regla->idreglas_horasExtras }}">
+                                                            {{ $regla->reglas_descripcion }}({{$regla->tipo_regla}})</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4" id="divOtrodia_ed" style="display: none">
