@@ -1091,10 +1091,6 @@ function cargartabla(fecha) {
                                                                 sumaHorasE35N = sumaHorasE35N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                                                 tiempoExtraN = moment.duration(0);
                                                             }
-                                                        } else {
-                                                            nocturnas35 = tiempoExtraN;
-                                                            sumaHorasE35N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
-                                                            tiempoExtraN = moment.duration(0);
                                                         }
                                                         // : CONDICIONAL DE 100% NOCTURNA
                                                         // ! QUE NO LLENA
@@ -1201,10 +1197,6 @@ function cargartabla(fecha) {
                                                                 sumaHorasE35N = sumaHorasE35N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                                                 tiempoExtraN = moment.duration(0);
                                                             }
-                                                        } else {
-                                                            nocturnas35 = tiempoExtraN;
-                                                            sumaHorasE35N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
-                                                            tiempoExtraN = moment.duration(0);
                                                         }
                                                         // : CONDICIONAL DE 100% NOCTURNA
                                                         // ! QUE NO LLENA
@@ -1312,10 +1304,6 @@ function cargartabla(fecha) {
                                                             sumaHorasE35N = sumaHorasE35N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                                             tiempoExtraN = moment.duration(0);
                                                         }
-                                                    } else {
-                                                        nocturnas35 = tiempoExtraN;
-                                                        sumaHorasE35N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
-                                                        tiempoExtraN = moment.duration(0);
                                                     }
                                                     // : CONDICIONAL DE 100% NOCTURNA
                                                     // ! QUE NO LLENA
