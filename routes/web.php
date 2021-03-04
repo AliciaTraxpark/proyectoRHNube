@@ -46,7 +46,6 @@ Route::get('reenvioCorreo', 'VerifyMailController@verificarReenvio')->name('reen
 Route::get('comprobarCodigo', 'ComprobarSmsController@comprobar');
 //CALENDARIO
 Route::name('calendario')->get('calendario', 'calendarioController@index');
-Route::get('calendario/show', 'calendarioController@show')->name('calendarioShow');
 Route::get('calendario/showDep', 'calendarioController@showDep')->name('calendarioShowDep');
 Route::get('calendario/showDep/confirmar', 'calendarioController@showDepconfirmar')->name('calendarioShowDepc');
 Route::post('/calendarioe', 'calendarioController@destroy');
@@ -62,6 +61,8 @@ Route::post('/calendario/listaEmplCa', 'calendarioController@listaEmplCa');
 Route::post('/calendario/asignarCalendario', 'calendarioController@asignarCalendario');
 Route::post('/calendario/seleccionados', 'calendarioController@empSeleccionados');
 Route::post('/calendario/yearCale', 'calendarioController@yearCale');
+Route::get('/calendario/agregaFeriado', 'calendarioController@agregarSelectFeriado');
+Route::get('/calendario/agregaDescanso', 'calendarioController@agregarSelectDescanso');
 //PERSONA
 //persona
 Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
@@ -80,15 +81,15 @@ Route::POST('organizacion/create', 'registroEmpresaController@create')->name('re
 Route::POST('/organizacion/busquedaRuc', 'registroEmpresaController@busquedaRuc');
 
 //calendario_usuario
-Route::post('eventos_usuario/store', 'EventosUsuarioController@store');
-
+Route::post('eventos_calendario/store', 'EventosUsuarioController@store');
+Route::post('eventos_calendario/storeDescanso', 'EventosUsuarioController@storeDescanso');
 
 Route::get('/departamento', function () {
     return view('calendario.departamento');
 })->name('depas');
 
 /*
-Route::get('/eventos_usuario/store', 'EventosUsuarioController@store'); */
+Route::get('/eventos_calendario/store', 'EventosUsuarioController@store'); */
 
 //EMPLEADOS
 Route::post('/empleado/store', 'EmpleadoController@store');
@@ -115,6 +116,7 @@ Route::get('email', 'EmpleadoController@comprobarCorreo');
 Route::get('emailE', 'EmpleadoController@comprobarCorreoEditar');
 Route::post('/empleado/calendarioEmpTemp', 'EmpleadoController@calendarioEmpTemp');
 Route::post('/empleado/storeCalendarioTem', 'EmpleadoController@storeCalendarioTem');
+Route::post('/empleado/storeCalendarioTemFeriado', 'EmpleadoController@storeCalendarioTemFeriado');
 Route::post('/empleado/storeIncidTem', 'EmpleadoController@storeIncidTem');
 Route::get('/empleado/vaciarcalend', 'EmpleadoController@vaciarcalend');
 Route::post('/empleado/vaciarcalendId', 'EmpleadoController@vaciarcalendId');

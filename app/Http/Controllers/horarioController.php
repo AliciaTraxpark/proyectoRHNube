@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\eventos;
 use App\eventos_empleado;
-use App\eventos_usuario;
+use App\eventos_calendario;
 use App\historial_horarioempleado;
 use App\horario;
 use App\horario_dias;
@@ -395,14 +395,14 @@ class horarioController extends Controller
         } /* else {
     $eventos1 = DB::table('eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end']);
 
-    $eventos_usuario1 = DB::table('eventos_usuario')
+    $eventos_calendario1 = DB::table('eventos_calendario')
     ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
     ->where('Users_id', '=', Auth::user()->id)
     ->where('evento_departamento', '=', null)
     ->where('evento_pais', '=', 173)
     ->union($eventos1)
     ->get();
-    return [$eventos_usuario1, $eventos_usuario1];
+    return [$eventos_calendario1, $eventos_calendario1];
     } */
     }
     public function vaciartemporal()
@@ -1583,18 +1583,18 @@ class horarioController extends Controller
             ->get();
 
         if ($eventos_empleado->isEmpty()) {
-            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+            $eventos_calendario = eventos_calendario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
-            if ($eventos_usuario) {
-                foreach ($eventos_usuario as $eventos_usuarios) {
+            if ($eventos_calendario) {
+                foreach ($eventos_calendario as $eventos_calendarios) {
                     $eventos_empleado_r = new eventos_empleado();
                     $eventos_empleado_r->id_empleado = $idempleado;
-                    $eventos_empleado_r->title = $eventos_usuarios->title;
-                    $eventos_empleado_r->color = $eventos_usuarios->color;
-                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
-                    $eventos_empleado_r->start = $eventos_usuarios->start;
-                    $eventos_empleado_r->end = $eventos_usuarios->end;
-                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_r->title = $eventos_calendarios->title;
+                    $eventos_empleado_r->color = $eventos_calendarios->color;
+                    $eventos_empleado_r->textColor = $eventos_calendarios->textColor;
+                    $eventos_empleado_r->start = $eventos_calendarios->start;
+                    $eventos_empleado_r->end = $eventos_calendarios->end;
+                    $eventos_empleado_r->tipo_ev = $eventos_calendarios->tipo;
                     $eventos_empleado_r->id_calendario = $idcalendario;
                     $eventos_empleado_r->laborable = 0;
                     $eventos_empleado_r->save();

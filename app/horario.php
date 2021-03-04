@@ -21,7 +21,8 @@ class horario extends Model
         'horasObliga',
         'tiempoMingreso',
         'tiempoMsalida',
-        'idreglas_horasExtras'
+        'idreglas_horasExtras',
+        'idreglas_horasExtrasNoct'
     ];
     public $timestamps = false;
 }

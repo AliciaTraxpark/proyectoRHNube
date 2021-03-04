@@ -998,98 +998,126 @@ function agregarHorarioSe() {
 function laborableTem() {
     $("#calendarioAsignar").modal("hide");
 
-    title = "Descanso";
+    title =$("#inputNuevoDescanso").val();
     color = "#4673a0";
     textColor = "#ffffff";
     start = $("#pruebaStar").val();
     end = $("#pruebaEnd").val();
-    tipo = 3;
+    idDescanoInc=$("#nombreDescanso").val();
+    laborable = 0;
     id_calendario = $("#selectCalendario").val();
+    var tipoDes;   //tio 1 si es nuevo, tipo 0 si solo selleccione
+    if ($('#divDescansoSe').is(':visible')) {
+        tipoDes=0
+    } else{
+        tipoDes=1;
+    }
+    var tipoRegDescansoE=$("#NuevoOEdito").val(); //si es 1 registro nuevo empleado, 0 edito nada mas empleado
     //$('#myModal').modal('show');
-    $.ajax({
-        type: "POST",
-        url: "/empleado/storeCalendarioTem",
-        data: {
-            title,
-            color,
-            textColor,
-            start,
-            end,
-            tipo,
-            id_calendario,
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
+
+    if(tipoRegDescansoE==1){
+        $.ajax({
+            type: "POST",
+            url: "/empleado/storeCalendarioTem",
+            data: {
+                title,
+                color,
+                textColor,
+                start,
+                end,
+                idDescanoInc,
+                laborable,
+                id_calendario,
+                tipoDes
+
             },
-        },
-        success: function (data) {
-            //var date = calendar1.getDate();
-            //alert("The current date of the calendar is " + date.toISOString());
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                },
+            },
+            success: function (data) {
+                //var date = calendar1.getDate();
+                //alert("The current date of the calendar is " + date.toISOString());
 
 
-            if (data == 1) {
-                calendar.refetchEvents();
-                calendar2.refetchEvents();
-            }
-            else {
+                if (data == 1) {
+                    calendar.refetchEvents();
+                    calendar2.refetchEvents();
+                    $("#myModalDescanso").modal("hide");
 
-                //*SI NO REGISTRO
-                $.notifyClose();
-                $.notify({
-                    message: data,
-                    icon: '/landing/images/alert1.svg',
-                }, {
-                    element: $('#form-ver'),
-                    position: "fixed",
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
-            }
+                }
+                else {
+
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
 
 
 
-        },
-        error: function () { },
-    });
+            },
+            error: function () { },
+        });
+    } else{
+
+    }
+
 }
 //*FERIADO
 function diaferiadoTem() {
     $("#calendarioAsignar").modal("hide");
-    (title = $("#nombreFeriado").val()),
+    (title = $("#inputNuevoFeriado").val()),
         (color = "#e6bdbd"),
         (textColor = "#775555"),
         (start = $("#pruebaStar").val());
     end = $("#pruebaEnd").val();
-    tipo = 2;
+    idFeriadoInc=$("#nombreFeriado").val();
+    laborable = 0;
     id_calendario = $("#selectCalendario").val();
+    var tipoRegDescansoE=$("#NuevoOEdito").val(); //si es 1 registro nuevo empleado, 0 edito nada mas empleado
+    var tipoFeri;   //tio 1 si es nuevo, tipo 0 si solo selleccione
+    if ($('#divFeriadoSe').is(':visible')) {
+        tipoFeri=0
+    } else{
+        tipoFeri=1;
+    }
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
-        url: "/empleado/storeCalendarioTem",
+        url: "/empleado/storeCalendarioTemFeriado",
         data: {
             title,
             color,
             textColor,
             start,
             end,
-            tipo,
+            tipoFeri,
             id_calendario,
+            tipoRegDescansoE, idFeriadoInc
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1326,7 +1354,7 @@ $("#selectCalendario").change(function () {
     $("#detallehorario").empty();
     idca = $("#selectCalendario").val();
     if(idca!="Asignar calendario"){
-       
+
     }
     $.ajax({
         type: "post",
@@ -4424,6 +4452,7 @@ $("#formNuevoE").click(function () {
     $("#mf_mes_fecha").show();
     $("#mf_ano_fecha").show();
     $("#idContrato").val("");
+    $("#NuevoOEdito").val("1");
     calendarioInv();
     $("#calendarInv").show();
     $("#calendar").hide();
@@ -6142,3 +6171,108 @@ $("#descripcionInciCa_ed").select2({
 $("#descripcionInciCa").select2({
     tags: true
   });
+
+
+  //****************** REGISTRAR DESCANSO EN REGISTRAR EMPLEADO****************
+
+  //abrir modal descanso
+  function regModalDescanso(){
+    $("#nombreDescanso").empty();
+    $("#nombreDescanso").prop('required',true);
+    $("#inputNuevoDescanso").prop('required',false);
+    $("#inputNuevoDescanso").val('');
+    $("#divDescansoSe").show();
+    $("#divDescansoNuevo").hide();
+    $("#btnAgregaNDescanso").show();
+
+    //agregar feriados a select
+    $.ajax({
+        type: "get",
+        url: "/calendario/agregaDescanso",
+        async: false,
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+
+            var option = `<option value="" ></option>`;
+
+            /* PARA REGISTRO DE incid */
+            $.each(data, function (index, element) {
+                option += `<option value="${element.inciden_id}">${element.inciden_descripcion}</option>`;
+            });
+            console.log('op'+option);
+            $("#nombreDescanso").append(option);
+        },
+        error: function () {},
+    });
+    $("#calendarioAsignar").modal("hide");
+    $("#myModalDescanso").modal("show");
+  }
+
+// nuevo descanso boton
+function nuevoDescansoReg(){
+    $("#nombreDescanso").prop('required',false);
+    $("#inputNuevoDescanso").prop('required',true);
+    $("#divDescansoSe").hide();
+    $("#divDescansoNuevo").show();
+    $("#btnAgregaNDescanso").hide();
+ }
+//******************FIN REGISTRAR DESCANSO EN REGISTRAR EMPLEADO************ */
+
+//* ******************REGISTRO DE FERIADO******************************************  */
+
+//*abrir modal
+function agregarMFeriado() {
+    $("#nombreFeriado").empty();
+    $("#nombreFeriado").prop('required',true);
+    $("#inputNuevoFeriado").prop('required',false);
+    $("#inputNuevoFeriado").val('');
+    $("#divFeriadoSe").show();
+    $("#divFeriadoNuevo").hide();
+    $("#btnAgregaNFeri").show();
+
+    //agregar feriados a select
+    $.ajax({
+        type: "get",
+        url: "/calendario/agregaFeriado",
+        async: false,
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+
+            var option = `<option value="" ></option>`;
+
+            /* PARA REGISTRO DE SUBACTIVIDAD */
+            $.each(data, function (index, element) {
+                option += `<option value="${element.inciden_id}">${element.inciden_descripcion}</option>`;
+            });
+            console.log('op'+option);
+            $("#nombreFeriado").append(option);
+        },
+        error: function () {},
+    });
+    $("#calendarioAsignar").modal("hide");
+    $("#myModalFeriado").modal("show");
+}
+
+ //boton nuevo feriado
+ function nuevoFeriadoReg(){
+    $("#nombreFeriado").prop('required',false);
+    $("#inputNuevoFeriado").prop('required',true);
+    $("#divFeriadoSe").hide();
+    $("#divFeriadoNuevo").show();
+    $("#btnAgregaNFeri").hide();
+ }
+//* ******************FIN DE REGISTRO DE FERIADO***********************************  */
