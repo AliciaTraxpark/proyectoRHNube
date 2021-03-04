@@ -922,28 +922,28 @@ function cargartabla(fecha) {
                                         sumaSobreTiempoNormalesT = sumaSobreTiempoNormalesT.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                         var tiempoSobrante = {};
                                         if (horarioData.idDiurna == null) {
-                                            if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                            if (tiempoExtra > moment.duration("02:00:00")) {
                                                 diurnas25 = moment.duration("02:00:00");
                                                 sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
-                                                var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                var restaDe25 = tiempoExtra - moment.duration("02:00:00");
                                                 var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
                                                 var minutosDe25 = moment.duration(restaDe25).minutes();
                                                 var segundosDe25 = moment.duration(restaDe25).seconds();
-                                                tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
-                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
+                                                tiempoSobrante = moment.duration({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                if (tiempoSobrante > moment.duration("02:00:00")) {
                                                     diurnas35 = moment.duration("02:00:00");
                                                     sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
-                                                    var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
+                                                    var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
                                                     var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
                                                     var minutosDe35 = moment.duration(restaDe35).minutes();
                                                     var segundosDe35 = moment.duration(restaDe35).seconds();
-                                                    tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
-                                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                    tiempoSobrante = moment.duration({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                                    if (tiempoSobrante > moment.duration(0)) {
                                                         diurnas100 = moment.duration(restaDe35);
                                                         sumaHorasE100D = sumaHorasE100D.add({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
                                                     }
                                                 } else {
-                                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
+                                                    if (tiempoSobrante > moment.duration(0)) {
                                                         diurnas35 = moment.duration(restaDe25);
                                                         sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
                                                     }
