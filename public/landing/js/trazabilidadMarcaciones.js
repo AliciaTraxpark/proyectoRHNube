@@ -1438,7 +1438,6 @@ function menuIncidencias(id) {
         if (checkedIncidencias.length == lengthChecked) checkedIncidencias = [];
         checkedIncidencias.push({ "id": this.id, "valor": $(this).is(":checked") });
     });
-    console.log(checkedIncidencias);
     toggleColumnas();
 }
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES

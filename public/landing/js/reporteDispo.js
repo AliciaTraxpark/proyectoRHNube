@@ -1479,7 +1479,6 @@ function cargartabla(fecha) {
                                                 if (!(horarioData.estado25D == 1)) {
                                                     // ! QUE NO SEA VACIO
                                                     if (horarioData.estado25D != 2) {
-                                                        console.log(tiempoExtra);
                                                         if (tiempoExtra > moment.duration("02:00:00")) {
                                                             diurnas25 = moment.duration("02:00:00");
                                                             sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
@@ -1498,7 +1497,6 @@ function cargartabla(fecha) {
                                                     // ! QUE NO LLENE EN EL 35
                                                     if (!(horarioData.estado35D == 1)) {
                                                         if (horarioData.estado35D != 2) {
-                                                            console.log(tiempoExtra);
                                                             if (tiempoExtra > moment.duration("02:00:00")) {
                                                                 diurnas35 = moment.duration("02:00:00");
                                                                 sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
