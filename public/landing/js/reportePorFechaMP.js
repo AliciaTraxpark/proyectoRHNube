@@ -314,7 +314,7 @@ function cargartabla(fecha) {
     var idemp = $('#idempleado').val();
     $.ajax({
         type: "GET",
-        url: "/reporteTablaMarca",
+        url: "/datosReporteFecha",
         data: {
             fecha, idemp
         },
@@ -401,7 +401,8 @@ function cargartabla(fecha) {
                                 <th name="toleranciaIHorario" class="toleranciaIHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en el ingreso</th>
                                 <th name="toleranciaFHorario" class="toleranciaFHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en la salida</th>
                                 <th name="colTiempoEntreH" class="text-center colTiempoEntreH" style="border-right: 1px dashed #c8d4de!important;">Tiempo total</th>
-                                <th name="colTiempoMuertoEntrada" class="text-center colTiempoMuertoEntrada" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto entrada</th>
+                                <th name="colTiempoMuertoEntrada" class="text-center colTiempoMuertoEntrada" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto - entrada</th>
+                                <th name="colTiempoMuertoSalida" class="text-center colTiempoMuertoSalida" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto - salida</th>
                                 <th name="colSobreTiempo" class="text-center colSobreTiempo" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo</th>
                                 <th name="colHoraNormal" class="text-center colHoraNormal" style="border-right: 1px dashed #c8d4de!important;">Horario normal</th>
                                 <th name="colSobreTNormal" class="text-center colSobreTNormal" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo normal</th>
@@ -439,6 +440,16 @@ function cargartabla(fecha) {
                                         <span>
                                             Tiempo <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                         </span>
+                                    </th>
+                                    <th class="text-center colTiempoMuertoEXM">
+                                        <span>
+                                            Tiempo muerto - entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                        </span>
+                                    </th>
+                                    <th class="text-center colTiempoMuertoSXM">
+                                        <span>
+                                            Tiempo muerto - salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
+                                        </span>
                                     </th>`;
                 }
                 // ! PAUSAS
@@ -459,6 +470,8 @@ function cargartabla(fecha) {
                 }
             }
             theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colTiempoMuertoTotalE" class="colTiempoMuertoTotalE">Tiempo muerto total - entrada</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colTiempoMuertoTotalS" class="colTiempoMuertoTotalS">Tiempo muerto total - salida</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobretiempoNormalT" class="colSobretiempoNormalT">Sobretiempo normal total</th>
@@ -518,6 +531,8 @@ function cargartabla(fecha) {
                 var sumaHorasE25N = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 25% NOCTURNAS
                 var sumaHorasE35N = moment.duration(0);                         //: SUMANDO TOTALES DE HORAS EXTRAS DE 35% NOCTURNAS
                 var sumaHorasE100N = moment.duration(0);                        //: SUMANDO TOTALES DE HORAS EXTRAS DE 100% NOCTURNAS
+                var sumaMuertosEntrada = moment.duration(0);                    //: SUMANDO LOS TIEMPOS MUERTOS TOTALES DE LA ENTRADA
+                var sumaMuertosSalida = moment.duration(0);                     //: SUMANDO LOS TIEMPOS MUERTOS TOTALES DE LA SALIDA
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -563,6 +578,8 @@ function cargartabla(fecha) {
                     var nocturnas100 = moment.duration(0);
                     // * TIEMPO MUERTO ENTRADA
                     var tiempoMuertoEntrada = moment.duration(0);
+                    // * TIEMPO MUERTO SALIDA
+                    var tiempoMuertoSalida = moment.duration(0);
                     if (data[index].data[m] != undefined) {
                         // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                         var horarioData = data[index].data[m].horario;
@@ -615,17 +632,53 @@ function cargartabla(fecha) {
                                 var horaInicialData = moment(dataM.entrada);
                                 if (horaFinalData.isSameOrAfter(horaInicialData)) {
                                     if (horarioData.idHorario != 0) {
-                                        if (horarioData.tiempoMuertoIngreso == 1) {
+                                        if (horarioData.tiempoMuertoI == 1) {
+                                            // : SI ENTRADA ES MENOR A LA HORA DE INICIO DE HORARIO
                                             if (horaInicialData.clone().isBefore(moment(horarioData.horarioIni))) {
                                                 if (horaFinalData.clone().isAfter(moment(horarioData.horarioIni))) {
+                                                    // : HORA DE ENTRADA
                                                     var tiempoMuerto = moment(horarioData.horarioIni) - horaInicialData.clone();
                                                     tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
+                                                    sumaMuertosEntrada = sumaMuertosEntrada.add(tiempoMuerto);
                                                     horaInicialData = moment(horarioData.horarioIni);
+                                                    // : HORA DE SALIDA
+                                                    if (horarioData.tiempoMuertoS == 1) {
+                                                        if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                            var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
+                                                            tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                            sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
+                                                            var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                            horaFinalData = moment(NuevaSalida);
+                                                        }
+                                                    }
                                                 } else {
                                                     var tiempoMuerto = horaFinalData.clone() - horaInicialData.clone();
                                                     tiempoMuertoEntrada = tiempoMuertoEntrada.add(tiempoMuerto);
+                                                    sumaMuertosEntrada = sumaMuertosEntrada.add(tiempoMuerto);
                                                     horaInicialData = moment.duration(0);
                                                     horaFinalData = moment.duration(0);
+                                                }
+                                            } else {
+                                                // : HORA DE SALIDA
+                                                if (horarioData.tiempoMuertoS == 1) {
+                                                    if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                        var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
+                                                        tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                        sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
+                                                        var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                        horaFinalData = moment(NuevaSalida);
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            // : HORA DE SALIDA
+                                            if (horarioData.tiempoMuertoS == 1) {
+                                                if (horaFinalData.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                    var tiempoMuerto = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
+                                                    tiempoMuertoSalida = tiempoMuertoSalida.add(tiempoMuerto);
+                                                    sumaMuertosSalida = sumaMuertosSalida.add(tiempoMuerto);
+                                                    var NuevaSalida = horaFinalData.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                    horaFinalData = moment(NuevaSalida);
                                                 }
                                             }
                                         }
@@ -851,39 +904,99 @@ function cargartabla(fecha) {
                                         var segundosExtra = moment.duration(tiempoExtraResta).seconds();
                                         var minutosExtra = moment.duration(tiempoExtraResta).minutes();
                                         var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
-                                        var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                        var tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                         sobretiempoNormales = moment.duration(tiempoExtraResta);
                                         sumaSobreTiempoNormalesT = sumaSobreTiempoNormalesT.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                         var tiempoSobrante = {};
-                                        if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                            diurnas25 = moment.duration("02:00:00");
-                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
-                                            var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                            var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
-                                            var minutosDe25 = moment.duration(restaDe25).minutes();
-                                            var segundosDe25 = moment.duration(restaDe25).seconds();
-                                            tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
-                                            if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                diurnas35 = moment.duration("02:00:00");
-                                                sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
-                                                var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
-                                                var minutosDe35 = moment.duration(restaDe35).minutes();
-                                                var segundosDe35 = moment.duration(restaDe35).seconds();
-                                                tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
-                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                    diurnas100 = moment.duration(restaDe35);
-                                                    sumaHorasE100D = sumaHorasE100D.add({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                        if (horarioData.idDiurna == null) {
+                                            if (tiempoExtra > moment.duration("02:00:00")) {
+                                                diurnas25 = moment.duration("02:00:00");
+                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
+                                                var restaDe25 = tiempoExtra - moment.duration("02:00:00");
+                                                var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
+                                                var minutosDe25 = moment.duration(restaDe25).minutes();
+                                                var segundosDe25 = moment.duration(restaDe25).seconds();
+                                                tiempoSobrante = moment.duration({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                if (tiempoSobrante > moment.duration("02:00:00")) {
+                                                    diurnas35 = moment.duration("02:00:00");
+                                                    sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
+                                                    var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
+                                                    var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
+                                                    var minutosDe35 = moment.duration(restaDe35).minutes();
+                                                    var segundosDe35 = moment.duration(restaDe35).seconds();
+                                                    tiempoSobrante = moment.duration({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                                    if (tiempoSobrante > moment.duration(0)) {
+                                                        diurnas100 = moment.duration(restaDe35);
+                                                        sumaHorasE100D = sumaHorasE100D.add({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                                    }
+                                                } else {
+                                                    if (tiempoSobrante > moment.duration(0)) {
+                                                        diurnas35 = moment.duration(restaDe25);
+                                                        sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                    }
                                                 }
                                             } else {
-                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                    diurnas35 = moment.duration(restaDe25);
-                                                    sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
-                                                }
+                                                diurnas25 = moment.duration(tiempoExtraResta);
+                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                             }
                                         } else {
-                                            diurnas25 = moment.duration(tiempoExtraResta);
-                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                            // : CONDICIONAL DE 25% DIURNA
+                                            // ! QUE NO LLENE EN EL 25
+                                            if (!(horarioData.estado25D == 1)) {
+                                                // ! QUE NO SEA VACIO
+                                                if (horarioData.estado25D != 2) {
+                                                    if (tiempoExtra > moment.duration("02:00:00")) {
+                                                        diurnas25 = moment.duration("02:00:00");
+                                                        sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
+                                                        tiempoExtraResta = moment.duration(tiempoExtra) - moment.duration("02:00:00");
+                                                        horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                                        minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                                        segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                                        tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                    } else {
+                                                        diurnas25 = tiempoExtra;
+                                                        sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                        tiempoExtra = moment.duration(0);
+                                                    }
+                                                }
+                                                // : CONDICIONAL DE 35% DIURNA
+                                                // ! QUE NO LLENE EN EL 35
+                                                if (!(horarioData.estado35D == 1)) {
+                                                    if (horarioData.estado35D != 2) {
+                                                        if (tiempoExtra > moment.duration("02:00:00")) {
+                                                            diurnas35 = moment.duration("02:00:00");
+                                                            sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
+                                                            tiempoExtraResta = moment.duration(tiempoExtra) - moment.duration("02:00:00");
+                                                            horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                                            minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                                            segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                                            tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                        } else {
+                                                            diurnas35 = tiempoExtra;
+                                                            sumaHorasE35D = sumaHorasE35D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                            tiempoExtra = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 100% DIURNA
+                                                    // ! QUE NO LLENA
+                                                    if (!(horarioData.estado100D == 1)) {
+                                                        // ! QUE NO SEA VACIO
+                                                        if (horarioData.estado100D != 2) {
+                                                            diurnas100 = moment.duration(tiempoExtra);
+                                                            sumaHorasE100D = sumaHorasE100D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                        }
+                                                    } else {
+                                                        diurnas100 = moment.duration(tiempoExtra);
+                                                        sumaHorasE100D = sumaHorasE100D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                    }
+                                                } else {
+                                                    diurnas35 = moment.duration(tiempoExtra);
+                                                    sumaHorasE35D = sumaHorasE35D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                }
+                                            } else {
+                                                diurnas25 = moment.duration(tiempoExtra);
+                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                            }
                                         }
                                         // : ********************************** HORAS EXTRAS NOCTURNAS ******************************
                                         if (sumaHorasNocturnas > nuevaHorasO) {
@@ -892,39 +1005,100 @@ function cargartabla(fecha) {
                                             var segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
                                             var minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
                                             var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
-                                            var tiempoExtraN = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            var tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                             sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
                                             sumaSobreTiempoNocturnasT = sumaSobreTiempoNocturnasT.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                             var tiempoSobranteN = {};
-                                            if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                nocturnas25 = moment.duration("02:00:00");
-                                                sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
-                                                var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
-                                                var minutosDe25N = moment.duration(restaDe25N).minutes();
-                                                var segundosDe25N = moment.duration(restaDe25N).seconds();
-                                                tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
-                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                    nocturnas35 = moment.duration("02:00:00");
-                                                    sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
-                                                    var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                    var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
-                                                    var minutosDe35N = moment.duration(restaDe35N).minutes();
-                                                    var segundosDe35N = moment.duration(restaDe35N).seconds();
-                                                    tiempoSobranteN = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
-                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        nocturnas100 = moment.duration(restaDe35N);
-                                                        sumaHorasE100N = sumaHorasE100N.add({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                            if (horarioData.idNocturna == null) {
+                                                if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                    nocturnas25 = moment.duration("02:00:00");
+                                                    sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
+                                                    var restaDe25N = tiempoExtraN - moment.duration("02:00:00");
+                                                    var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
+                                                    var minutosDe25N = moment.duration(restaDe25N).minutes();
+                                                    var segundosDe25N = moment.duration(restaDe25N).seconds();
+                                                    tiempoSobranteN = moment.duration({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
+                                                    if (tiempoSobranteN > moment.duration("02:00:00")) {
+                                                        nocturnas35 = moment.duration("02:00:00");
+                                                        sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
+                                                        var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
+                                                        var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
+                                                        var minutosDe35N = moment.duration(restaDe35N).minutes();
+                                                        var segundosDe35N = moment.duration(restaDe35N).seconds();
+                                                        tiempoSobranteN = moment.duration({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                                        if (tiempoSobranteN > moment.duration(0)) {
+                                                            nocturnas100 = moment.duration(restaDe35N);
+                                                            sumaHorasE100N = sumaHorasE100N.add({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                                        }
+                                                    } else {
+                                                        if (tiempoSobranteN > moment.duration(0)) {
+                                                            sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
+                                                            nocturnas35 = moment.duration(restaDe25N);
+                                                        }
                                                     }
                                                 } else {
-                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
-                                                        nocturnas35 = moment.duration(restaDe25N);
-                                                    }
+                                                    nocturnas25 = moment.duration(tiempoExtraRestaN);
+                                                    sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                                 }
                                             } else {
-                                                nocturnas25 = moment.duration(tiempoExtraRestaN);
-                                                sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                // : CONDICIONAL DE 25% NOCTURNA
+                                                // ! QUE NO LLENE EN EL 25
+                                                if (!(horarioData.estado25N == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (horarioData.estado25N != 2) {
+                                                        if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                            nocturnas25 = moment.duration("02:00:00");
+                                                            sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
+                                                            tiempoExtraRestaN = tiempoExtraN - moment.duration("02:00:00");
+                                                            segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                                            minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                                            horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                                            tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                        } else {
+                                                            nocturnas25 = tiempoExtraN;
+                                                            sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                            tiempoExtraN = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 35% NOCTURNA
+                                                    // ! QUE NO LLENE 35%
+                                                    if (!(horarioData.estado35N == 1)) {
+                                                        // ! QUE NO SEA VACIO
+                                                        if (horarioData.estado35N != 2) {
+                                                            if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                                nocturnas35 = moment.duration("02:00:00");
+                                                                sumaHorasE35N = sumaHorasE25N.add({ "hours": 2 });
+                                                                tiempoExtraRestaN = tiempoExtraN - moment.duration("02:00:00");
+                                                                segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                                                minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                                                horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                                                tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                            } else {
+                                                                nocturnas35 = tiempoExtraN;
+                                                                sumaHorasE35N = sumaHorasE35N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                                tiempoExtraN = moment.duration(0);
+                                                            }
+                                                        }
+                                                        // : CONDICIONAL DE 100% NOCTURNA
+                                                        // ! QUE NO LLENA
+                                                        if (!(horarioData.estado100N == 1)) {
+                                                            // ! QUE NO SEA VACIO
+                                                            if (horarioData.estado100D != 2) {
+                                                                nocturnas100 = tiempoExtraN;
+                                                                sumaHorasE100N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                            }
+                                                        } else {
+                                                            nocturnas100 = tiempoExtraN;
+                                                            sumaHorasE100N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                        }
+                                                    } else {
+                                                        nocturnas35 = tiempoExtraN;
+                                                        sumaHorasE35N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                    }
+                                                } else {
+                                                    nocturnas25 = tiempoExtraN;
+                                                    sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                }
                                             }
                                         }
                                     } else {
@@ -937,39 +1111,100 @@ function cargartabla(fecha) {
                                             var segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
                                             var minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
                                             var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
-                                            var tiempoExtraN = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                            var tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                             sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
                                             sumaSobreTiempoNocturnasT = sumaSobreTiempoNocturnasT.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                             var tiempoSobranteN = {};
-                                            if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                nocturnas25 = moment.duration("02:00:00");
-                                                sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
-                                                var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
-                                                var minutosDe25N = moment.duration(restaDe25N).minutes();
-                                                var segundosDe25N = moment.duration(restaDe25N).seconds();
-                                                tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
-                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                    nocturnas35 = moment.duration("02:00:00");
-                                                    sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
-                                                    var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                    var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
-                                                    var minutosDe35N = moment.duration(restaDe35N).minutes();
-                                                    var segundosDe35N = moment.duration(restaDe35N).seconds();
-                                                    tiempoSobranteN = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
-                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        nocturnas100 = moment.duration(restaDe35N);
-                                                        sumaHorasE100N = sumaHorasE100N.add({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                            if (horarioData.idNocturna == null) {
+                                                if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                    nocturnas25 = moment.duration("02:00:00");
+                                                    sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
+                                                    var restaDe25N = tiempoExtraN - moment.duration("02:00:00");
+                                                    var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
+                                                    var minutosDe25N = moment.duration(restaDe25N).minutes();
+                                                    var segundosDe25N = moment.duration(restaDe25N).seconds();
+                                                    tiempoSobranteN = moment.duration({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
+                                                    if (tiempoSobranteN > moment.duration("02:00:00")) {
+                                                        nocturnas35 = moment.duration("02:00:00");
+                                                        sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
+                                                        var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
+                                                        var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
+                                                        var minutosDe35N = moment.duration(restaDe35N).minutes();
+                                                        var segundosDe35N = moment.duration(restaDe35N).seconds();
+                                                        tiempoSobranteN = moment.duration({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                                        if (tiempoSobranteN > moment.duration(0)) {
+                                                            nocturnas100 = moment.duration(restaDe35N);
+                                                            sumaHorasE100N = sumaHorasE100N.add({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                                        }
+                                                    } else {
+                                                        if (tiempoSobranteN > moment.duration(0)) {
+                                                            sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
+                                                            nocturnas35 = moment.duration(restaDe25N);
+                                                        }
                                                     }
                                                 } else {
-                                                    if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        nocturnas35 = moment.duration(restaDe25N);
-                                                        sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
-                                                    }
+                                                    nocturnas25 = moment.duration(tiempoExtraRestaN);
+                                                    sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                                 }
                                             } else {
-                                                nocturnas25 = moment.duration(tiempoExtraRestaN);
-                                                sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                // : CONDICIONAL DE 25% NOCTURNA
+                                                // ! QUE NO LLENE EN EL 25
+                                                if (!(horarioData.estado25N == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (horarioData.estado25N != 2) {
+                                                        if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                            nocturnas25 = moment.duration("02:00:00");
+                                                            sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
+                                                            tiempoExtraRestaN = tiempoExtraN - moment.duration("02:00:00");
+                                                            segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                                            minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                                            horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                                            tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                        } else {
+                                                            nocturnas25 = tiempoExtraN;
+                                                            sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                            tiempoExtraN = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 35% NOCTURNA
+                                                    // ! QUE NO LLENE 35%
+                                                    if (!(horarioData.estado35N == 1)) {
+                                                        // ! QUE NO SEA VACIO
+                                                        if (horarioData.estado35N != 2) {
+                                                            if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                                nocturnas35 = moment.duration("02:00:00");
+                                                                sumaHorasE35N = sumaHorasE25N.add({ "hours": 2 });
+                                                                tiempoExtraRestaN = tiempoExtraN - moment.duration("02:00:00");
+                                                                segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                                                minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                                                horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                                                tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                            } else {
+                                                                nocturnas35 = tiempoExtraN;
+                                                                sumaHorasE35N = sumaHorasE35N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                                tiempoExtraN = moment.duration(0);
+                                                            }
+                                                        }
+                                                        // : CONDICIONAL DE 100% NOCTURNA
+                                                        // ! QUE NO LLENA
+                                                        if (!(horarioData.estado100N == 1)) {
+                                                            // ! QUE NO SEA VACIO
+                                                            if (horarioData.estado100D != 2) {
+                                                                nocturnas100 = tiempoExtraN;
+                                                                sumaHorasE100N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                            }
+                                                        } else {
+                                                            nocturnas100 = tiempoExtraN;
+                                                            sumaHorasE100N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                        }
+                                                    } else {
+                                                        nocturnas35 = tiempoExtraN;
+                                                        sumaHorasE35N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                    }
+                                                } else {
+                                                    nocturnas25 = tiempoExtraN;
+                                                    sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                }
                                             }
                                         }
                                     }
@@ -983,39 +1218,100 @@ function cargartabla(fecha) {
                                         var segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
                                         var minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
                                         var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
-                                        var tiempoExtraN = moment({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN }).format("HH:mm:ss");
+                                        var tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                         sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
                                         sumaSobreTiempoNocturnasT = sumaSobreTiempoNocturnasT.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                         var tiempoSobranteN = {};
-                                        if (moment(tiempoExtraN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                            nocturnas25 = moment.duration("02:00:00");
-                                            sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
-                                            var restaDe25N = moment(tiempoExtraN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                            var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
-                                            var minutosDe25N = moment.duration(restaDe25N).minutes();
-                                            var segundosDe25N = moment.duration(restaDe25N).seconds();
-                                            tiempoSobranteN = moment({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N }).format("HH:mm:ss");
-                                            if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                nocturnas35 = moment.duration("02:00:00");
-                                                sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
-                                                var restaDe35N = moment(tiempoSobranteN, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
-                                                var minutosDe35N = moment.duration(restaDe35N).minutes();
-                                                var segundosDe35N = moment.duration(restaDe35N).seconds();
-                                                tiempoSobranteN = moment({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N }).format("HH:mm:ss");
-                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                    nocturnas100 = moment.duration(restaDe35N);
-                                                    sumaHorasE100N = sumaHorasE100N.add({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                        if (horarioData.idNocturna == null) {
+                                            if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                nocturnas25 = moment.duration("02:00:00");
+                                                sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
+                                                var restaDe25N = tiempoExtraN - moment.duration("02:00:00");
+                                                var horasDe25N = Math.trunc(moment.duration(restaDe25N).asHours());
+                                                var minutosDe25N = moment.duration(restaDe25N).minutes();
+                                                var segundosDe25N = moment.duration(restaDe25N).seconds();
+                                                tiempoSobranteN = moment.duration({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
+                                                if (tiempoSobranteN > moment.duration("02:00:00")) {
+                                                    nocturnas35 = moment.duration("02:00:00");
+                                                    sumaHorasE35N = sumaHorasE35N.add({ "hours": 2 });
+                                                    var restaDe35N = tiempoSobranteN - moment.duration("02:00:00");
+                                                    var horasDe35N = Math.trunc(moment.duration(restaDe35N).asHours());
+                                                    var minutosDe35N = moment.duration(restaDe35N).minutes();
+                                                    var segundosDe35N = moment.duration(restaDe35N).seconds();
+                                                    tiempoSobranteN = moment.duration({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                                    if (tiempoSobranteN > moment.duration(0)) {
+                                                        nocturnas100 = moment.duration(restaDe35N);
+                                                        sumaHorasE100N = sumaHorasE100N.add({ "hours": horasDe35N, "minutes": minutosDe35N, "seconds": segundosDe35N });
+                                                    }
+                                                } else {
+                                                    if (tiempoSobranteN > moment.duration(0)) {
+                                                        nocturnas35 = moment.duration(restaDe25N);
+                                                        sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
+                                                    }
                                                 }
                                             } else {
-                                                if (moment(tiempoSobranteN, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                    nocturnas35 = moment.duration(restaDe25N);
-                                                    sumaHorasE35N = sumaHorasE35N.add({ "hours": horasDe25N, "minutes": minutosDe25N, "seconds": segundosDe25N });
-                                                }
+                                                nocturnas25 = moment.duration(tiempoExtraRestaN);
+                                                sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                             }
                                         } else {
-                                            nocturnas25 = moment.duration(tiempoExtraRestaN);
-                                            sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                            // : CONDICIONAL DE 25% NOCTURNA
+                                            // ! QUE NO LLENE EN EL 25
+                                            if (!(horarioData.estado25N == 1)) {
+                                                // ! QUE NO SEA VACIO
+                                                if (horarioData.estado25N != 2) {
+                                                    if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                        nocturnas25 = moment.duration("02:00:00");
+                                                        sumaHorasE25N = sumaHorasE25N.add({ "hours": 2 });
+                                                        tiempoExtraRestaN = tiempoExtraN - moment.duration("02:00:00");
+                                                        segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                                        minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                                        horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                                        tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                    } else {
+                                                        nocturnas25 = tiempoExtraN;
+                                                        sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                        tiempoExtraN = moment.duration(0);
+                                                    }
+                                                }
+                                                // : CONDICIONAL DE 35% NOCTURNA
+                                                // ! QUE NO LLENE 35%
+                                                if (!(horarioData.estado35N == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (horarioData.estado35N != 2) {
+                                                        if (tiempoExtraN > moment.duration("02:00:00")) {
+                                                            nocturnas35 = moment.duration("02:00:00");
+                                                            sumaHorasE35N = sumaHorasE25N.add({ "hours": 2 });
+                                                            tiempoExtraRestaN = tiempoExtraN - moment.duration("02:00:00");
+                                                            segundosExtraN = moment.duration(tiempoExtraRestaN).seconds();
+                                                            minutosExtraN = moment.duration(tiempoExtraRestaN).minutes();
+                                                            horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
+                                                            tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                        } else {
+                                                            nocturnas35 = tiempoExtraN;
+                                                            sumaHorasE35N = sumaHorasE35N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                            tiempoExtraN = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 100% NOCTURNA
+                                                    // ! QUE NO LLENA
+                                                    if (!(horarioData.estado100N == 1)) {
+                                                        // ! QUE NO SEA VACIO
+                                                        if (horarioData.estado100D != 2) {
+                                                            nocturnas100 = tiempoExtraN;
+                                                            sumaHorasE100N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                        }
+                                                    } else {
+                                                        nocturnas100 = tiempoExtraN;
+                                                        sumaHorasE100N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                    }
+                                                } else {
+                                                    nocturnas35 = tiempoExtraN;
+                                                    sumaHorasE35N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                                }
+                                            } else {
+                                                nocturnas25 = tiempoExtraN;
+                                                sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
+                                            }
                                         }
                                         // : *************************************** HORAS NORMALES ********************************
                                         if (sumaHorasNormales > nuevaHorasO) {
@@ -1024,39 +1320,99 @@ function cargartabla(fecha) {
                                             var segundosExtra = moment.duration(tiempoExtraResta).seconds();
                                             var minutosExtra = moment.duration(tiempoExtraResta).minutes();
                                             var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
-                                            var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                            var tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                             sobretiempoNormales = moment.duration(tiempoExtraResta);
                                             sumaSobreTiempoNormalesT = sumaSobreTiempoNormalesT.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                             var tiempoSobrante = {};
-                                            if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                diurnas25 = moment.duration("02:00:00");
-                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
-                                                var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
-                                                var minutosDe25 = moment.duration(restaDe25).minutes();
-                                                var segundosDe25 = moment.duration(restaDe25).seconds();
-                                                tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
-                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                    diurnas35 = moment.duration("02:00:00");
-                                                    sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
-                                                    var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                    var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
-                                                    var minutosDe35 = moment.duration(restaDe35).minutes();
-                                                    var segundosDe35 = moment.duration(restaDe35).seconds();
-                                                    tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
-                                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        diurnas100 = moment.duration(restaDe35);
-                                                        sumaHorasE100D = sumaHorasE100D.add({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                            if (horarioData.idDiurna == null) {
+                                                if (tiempoExtra > moment.duration("02:00:00")) {
+                                                    diurnas25 = moment.duration("02:00:00");
+                                                    sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
+                                                    var restaDe25 = tiempoExtra - moment.duration("02:00:00");
+                                                    var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
+                                                    var minutosDe25 = moment.duration(restaDe25).minutes();
+                                                    var segundosDe25 = moment.duration(restaDe25).seconds();
+                                                    tiempoSobrante = moment.duration({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                    if (tiempoSobrante > moment.duration("02:00:00")) {
+                                                        diurnas35 = moment.duration("02:00:00");
+                                                        sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
+                                                        var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
+                                                        var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
+                                                        var minutosDe35 = moment.duration(restaDe35).minutes();
+                                                        var segundosDe35 = moment.duration(restaDe35).seconds();
+                                                        tiempoSobrante = moment.duration({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                                        if (tiempoSobrante > moment.duration(0)) {
+                                                            diurnas100 = moment.duration(restaDe35);
+                                                            sumaHorasE100D = sumaHorasE100D.add({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                                        }
+                                                    } else {
+                                                        if (tiempoSobrante > moment.duration(0)) {
+                                                            diurnas35 = moment.duration(restaDe25);
+                                                            sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                        }
                                                     }
                                                 } else {
-                                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        diurnas35 = moment.duration(restaDe25);
-                                                        sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
-                                                    }
+                                                    diurnas25 = moment.duration(tiempoExtraResta);
+                                                    sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                                 }
                                             } else {
-                                                diurnas25 = moment.duration(tiempoExtraResta);
-                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                // : CONDICIONAL DE 25% DIURNA
+                                                // ! QUE NO LLENE EN EL 25
+                                                if (!(horarioData.estado25D == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (horarioData.estado25D != 2) {
+                                                        if (tiempoExtra > moment.duration("02:00:00")) {
+                                                            diurnas25 = moment.duration("02:00:00");
+                                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
+                                                            tiempoExtraResta = moment.duration(tiempoExtra) - moment.duration("02:00:00");
+                                                            horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                                            minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                                            segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                                            tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                        } else {
+                                                            diurnas25 = tiempoExtra;
+                                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                            tiempoExtra = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 35% DIURNA
+                                                    // ! QUE NO LLENE EN EL 35
+                                                    if (!(horarioData.estado35D == 1)) {
+                                                        if (horarioData.estado35D != 2) {
+                                                            if (tiempoExtra > moment.duration("02:00:00")) {
+                                                                diurnas35 = moment.duration("02:00:00");
+                                                                sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
+                                                                tiempoExtraResta = moment.duration(tiempoExtra) - moment.duration("02:00:00");
+                                                                horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                                                minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                                                segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                                                tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                            } else {
+                                                                diurnas35 = tiempoExtra;
+                                                                sumaHorasE35D = sumaHorasE35D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                                tiempoExtra = moment.duration(0);
+                                                            }
+                                                        }
+                                                        // : CONDICIONAL DE 100% DIURNA
+                                                        // ! QUE NO LLENA
+                                                        if (!(horarioData.estado100D == 1)) {
+                                                            // ! QUE NO SEA VACIO
+                                                            if (horarioData.estado100D != 2) {
+                                                                diurnas100 = moment.duration(tiempoExtra);
+                                                                sumaHorasE100D = sumaHorasE100D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                            }
+                                                        } else {
+                                                            diurnas100 = moment.duration(tiempoExtra);
+                                                            sumaHorasE100D = sumaHorasE100D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                        }
+                                                    } else {
+                                                        diurnas35 = moment.duration(tiempoExtra);
+                                                        sumaHorasE35D = sumaHorasE35D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                    }
+                                                } else {
+                                                    diurnas25 = moment.duration(tiempoExtra);
+                                                    sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                }
                                             }
                                         }
                                     } else {
@@ -1069,39 +1425,99 @@ function cargartabla(fecha) {
                                             var segundosExtra = moment.duration(tiempoExtraResta).seconds();
                                             var minutosExtra = moment.duration(tiempoExtraResta).minutes();
                                             var horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
-                                            var tiempoExtra = moment({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra }).format("HH:mm:ss");
+                                            var tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                             sobretiempoNormales = moment.duration(tiempoExtraResta);
                                             sumaSobreTiempoNormalesT = sumaSobreTiempoNormalesT.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                             var tiempoSobrante = {};
-                                            if (moment(tiempoExtra, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                diurnas25 = moment.duration("02:00:00");
-                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
-                                                var restaDe25 = moment(tiempoExtra, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
-                                                var minutosDe25 = moment.duration(restaDe25).minutes();
-                                                var segundosDe25 = moment.duration(restaDe25).seconds();
-                                                tiempoSobrante = moment({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 }).format("HH:mm:ss");
-                                                if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("02:00:00", "HH:mm:ss"))) {
-                                                    diurnas35 = moment.duration("02:00:00");
-                                                    sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
-                                                    var restaDe35 = moment(tiempoSobrante, "HH:mm:ss") - moment("02:00:00", "HH:mm:ss");
-                                                    var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
-                                                    var minutosDe35 = moment.duration(restaDe35).minutes();
-                                                    var segundosDe35 = moment.duration(restaDe35).seconds();
-                                                    tiempoSobrante = moment({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 }).format("HH:mm:ss");
-                                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        diurnas100 = moment.duration(restaDe35);
-                                                        sumaHorasE100D = sumaHorasE100D.add({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                            if (horarioData.idDiurna == null) {
+                                                if (tiempoExtra > moment.duration("02:00:00")) {
+                                                    diurnas25 = moment.duration("02:00:00");
+                                                    sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
+                                                    var restaDe25 = tiempoExtra - moment.duration("02:00:00");
+                                                    var horasDe25 = Math.trunc(moment.duration(restaDe25).asHours());
+                                                    var minutosDe25 = moment.duration(restaDe25).minutes();
+                                                    var segundosDe25 = moment.duration(restaDe25).seconds();
+                                                    tiempoSobrante = moment.duration({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                    if (tiempoSobrante > moment.duration("02:00:00")) {
+                                                        diurnas35 = moment.duration("02:00:00");
+                                                        sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
+                                                        var restaDe35 = tiempoSobrante - moment.duration("02:00:00");
+                                                        var horasDe35 = Math.trunc(moment.duration(restaDe35).asHours());
+                                                        var minutosDe35 = moment.duration(restaDe35).minutes();
+                                                        var segundosDe35 = moment.duration(restaDe35).seconds();
+                                                        tiempoSobrante = moment.duration({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                                        if (tiempoSobrante > moment.duration(0)) {
+                                                            diurnas100 = moment.duration(restaDe35);
+                                                            sumaHorasE100D = sumaHorasE100D.add({ "hours": horasDe35, "minutes": minutosDe35, "seconds": segundosDe35 });
+                                                        }
+                                                    } else {
+                                                        if (tiempoSobrante > moment.duration(0)) {
+                                                            diurnas35 = moment.duration(restaDe25);
+                                                            sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
+                                                        }
                                                     }
                                                 } else {
-                                                    if (moment(tiempoSobrante, "HH:mm:ss").isAfter(moment("00:00:00", "HH:mm:ss"))) {
-                                                        diurnas35 = moment.duration(restaDe25);
-                                                        sumaHorasE35D = sumaHorasE35D.add({ "hours": horasDe25, "minutes": minutosDe25, "seconds": segundosDe25 });
-                                                    }
+                                                    diurnas25 = moment.duration(tiempoExtraResta);
+                                                    sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                                 }
                                             } else {
-                                                diurnas25 = moment.duration(tiempoExtraResta);
-                                                sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                // : CONDICIONAL DE 25% DIURNA
+                                                // ! QUE NO LLENE EN EL 25
+                                                if (!(horarioData.estado25D == 1)) {
+                                                    // ! QUE NO SEA VACIO
+                                                    if (horarioData.estado25D != 2) {
+                                                        if (tiempoExtra > moment.duration("02:00:00")) {
+                                                            diurnas25 = moment.duration("02:00:00");
+                                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": 2 });
+                                                            tiempoExtraResta = tiempoExtra - moment.duration("02:00:00");
+                                                            horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                                            minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                                            segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                                            tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                        } else {
+                                                            diurnas25 = tiempoExtra;
+                                                            sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                            tiempoExtra = moment.duration(0);
+                                                        }
+                                                    }
+                                                    // : CONDICIONAL DE 35% DIURNA
+                                                    // ! QUE NO LLENE EN EL 35
+                                                    if (!(horarioData.estado35D == 1)) {
+                                                        if (horarioData.estado35D != 2) {
+                                                            if (tiempoExtra > moment.duration("02:00:00")) {
+                                                                diurnas35 = moment.duration("02:00:00");
+                                                                sumaHorasE35D = sumaHorasE35D.add({ "hours": 2 });
+                                                                tiempoExtraResta = tiempoExtra - moment.duration("02:00:00");
+                                                                horasExtra = Math.trunc(moment.duration(tiempoExtraResta).asHours());
+                                                                minutosExtra = moment.duration(tiempoExtraResta).minutes();
+                                                                segundosExtra = moment.duration(tiempoExtraResta).seconds();
+                                                                tiempoExtra = moment.duration({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                            } else {
+                                                                diurnas35 = tiempoExtra;
+                                                                sumaHorasE35D = sumaHorasE35D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                                tiempoExtra = moment.duration(0);
+                                                            }
+                                                        }
+                                                        // : CONDICIONAL DE 100% DIURNA
+                                                        // ! QUE NO LLENA
+                                                        if (!(horarioData.estado100D == 1)) {
+                                                            // ! QUE NO SEA VACIO
+                                                            if (horarioData.estado100D != 2) {
+                                                                diurnas100 = tiempoExtra;
+                                                                sumaHorasE100D = sumaHorasE100D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                            }
+                                                        } else {
+                                                            diurnas100 = tiempoExtra;
+                                                            sumaHorasE100D = sumaHorasE100D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                        }
+                                                    } else {
+                                                        diurnas35 = tiempoExtra;
+                                                        sumaHorasE35D = sumaHorasE35D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                    }
+                                                } else {
+                                                    diurnas25 = tiempoExtra;
+                                                    sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
+                                                }
                                             }
                                         }
                                     }
@@ -1264,12 +1680,25 @@ function cargartabla(fecha) {
                         if (segundoTiempoMuertoEntrada < 10) {
                             segundoTiempoMuertoEntrada = "0" + segundoTiempoMuertoEntrada;
                         }
+                        // : TIEMPO MUERTO EN SALIDA
+                        var horaTiempoMuertoSalida = Math.trunc(moment.duration(tiempoMuertoSalida).asHours());
+                        var minutoTiempoMuertoSalida = moment.duration(tiempoMuertoSalida).minutes();
+                        var segundoTiempoMuertoSalida = moment.duration(tiempoMuertoSalida).seconds();
+                        if (horaTiempoMuertoSalida < 10) {
+                            horaTiempoMuertoSalida = "0" + horaTiempoMuertoSalida;
+                        }
+                        if (minutoTiempoMuertoSalida < 10) {
+                            minutoTiempoMuertoSalida = "0" + minutoTiempoMuertoSalida;
+                        }
+                        if (segundoTiempoMuertoSalida < 10) {
+                            segundoTiempoMuertoSalida = "0" + segundoTiempoMuertoSalida;
+                        }
                         if (horarioData.horario != null) {
                             if (horarioData.estado == 1) {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                     <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                         <span class="badge badge-soft-primary mr-2" class="text-center">
-                                                             ${horarioData.horario}
+                                                            ${horarioData.horario}
                                                         </span>
                                                     </a>
                                                 </td>
@@ -1287,6 +1716,10 @@ function cargartabla(fecha) {
                                                 <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
                                                     ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
+                                                </td>
+                                                <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                    ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
                                                 </td>
                                                 <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
@@ -1353,8 +1786,7 @@ function cargartabla(fecha) {
                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                     </a>
-                                                </td>
-                                                `;
+                                                </td>`;
                                 if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                     sumaFaltas++;
                                     grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1369,7 +1801,7 @@ function cargartabla(fecha) {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                     <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                         <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                             ${horarioData.horario}
+                                                            ${horarioData.horario}
                                                         </span>
                                                     </a>
                                                 </td>
@@ -1387,6 +1819,10 @@ function cargartabla(fecha) {
                                                 <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
                                                     ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
+                                                </td>
+                                                <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                    ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
                                                 </td>
                                                 <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-primary mr-2">
@@ -1469,14 +1905,14 @@ function cargartabla(fecha) {
                             grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #fafafa;border-right: 1px dashed #c8d4de!important;" class="text-center" name="descripcionHorario">
                                                 <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                     <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                         Sin horario
+                                                        Sin horario
                                                     </span>
                                                 </a>
                                             </td>
                                             <td class="text-center" name="horarioHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                 <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                     <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                         Sin horario
+                                                        Sin horario
                                                     </span>
                                                 </a>
                                             </td>
@@ -1491,6 +1927,10 @@ function cargartabla(fecha) {
                                             <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                 <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
                                                 ${horaTiempoMuertoEntrada}:${minutoTiempoMuertoEntrada}:${segundoTiempoMuertoEntrada}
+                                            </td>
+                                            <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                ${horaTiempoMuertoSalida}:${minutoTiempoMuertoSalida}:${segundoTiempoMuertoSalida}
                                             </td>
                                             <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                 <a class="badge badge-soft-primary mr-2">
@@ -1569,6 +2009,7 @@ function cargartabla(fecha) {
                                 grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>`;
                             }
                         }
+
                         // ! MARCACIONES
                         var tbodyEntradaySalida = "";
                         for (let j = 0; j < data[index].data[m].marcaciones.length; j++) {
@@ -1576,81 +2017,173 @@ function cargartabla(fecha) {
                             var segundosTiempo = "00";
                             var minutosTiempo = "00";
                             var horasTiempo = "00";
+                            // * TIEMPO MUERTO ENTRADA
+                            var segundosMuertosE = "00";
+                            var minutosMuertosE = "00";
+                            var horasMuertosE = "00";
+                            // * TIEMPO MUERTO SALIDA
+                            var segundosMuertosS = "00";
+                            var minutosMuertosS = "00";
+                            var horasMuertosS = "00";
                             var marcacionData = data[index].data[m].marcaciones[j];
+                            if (marcacionData.entrada != 0 && marcacionData.salida) {
+                                // * CALCULAR TIEMPO TOTAL
+                                var horaFinal = moment(marcacionData.salida);
+                                var horaInicial = moment(marcacionData.entrada);
+                                if (horaFinal.isSameOrAfter(horaInicial)) {
+                                    // * TIEMPO ENTRE MARCACIONES
+                                    if (horarioData.idHorario != 0) {
+                                        if (horarioData.tiempoMuertoI == 1) {
+                                            if (horaInicial.clone().isBefore(moment(horarioData.horarioIni))) {
+                                                if (horaFinal.clone().isAfter(moment(horarioData.horarioIni))) {
+                                                    // : TIEMPO MUERTO ENTRADA
+                                                    var tiempoMuertoM = moment(horarioData.horarioIni) - horaInicial;
+                                                    segundosMuertosE = moment.duration(tiempoMuertoM).seconds();
+                                                    minutosMuertosE = moment.duration(tiempoMuertoM).minutes();
+                                                    horasMuertosE = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                    if (horasMuertosE < 10) {
+                                                        horasMuertosE = "0" + horasMuertosE;
+                                                    }
+                                                    if (minutosMuertosE < 10) {
+                                                        minutosMuertosE = "0" + minutosMuertosE;
+                                                    }
+                                                    if (segundosMuertosE < 10) {
+                                                        segundosMuertosE = "0" + segundosMuertosE;
+                                                    }
+                                                    // : HORA DE ENTRADA
+                                                    horaInicial = moment(horarioData.horarioIni);
+                                                    // : HORA DE SALIDA
+                                                    if (horarioData.tiempoMuertoS == 1) {
+                                                        if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                            // : TIEMPO MUERTO SALIDA
+                                                            var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
+                                                            segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                                            minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                                            horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                            if (horasMuertosS < 10) {
+                                                                horasMuertosS = "0" + horasMuertosS;
+                                                            }
+                                                            if (minutosMuertosS < 10) {
+                                                                minutosMuertosS = "0" + minutosMuertosS;
+                                                            }
+                                                            if (segundosMuertosS < 10) {
+                                                                segundosMuertosS = "0" + segundosMuertosS;
+                                                            }
+                                                            var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                            horaFinal = moment(NuevaSalida);
+                                                        }
+                                                    }
+                                                } else {
+                                                    // : TIEMPO MUERTO
+                                                    var tiempoMuertoM = horaFinal - horaInicial;
+                                                    segundosMuertosE = moment.duration(tiempoMuertoM).seconds();
+                                                    minutosMuertosE = moment.duration(tiempoMuertoM).minutes();
+                                                    horasMuertosE = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                    if (horasMuertosE < 10) {
+                                                        horasMuertosE = "0" + horasMuertosE;
+                                                    }
+                                                    if (minutosMuertosE < 10) {
+                                                        minutosMuertosE = "0" + minutosMuertosE;
+                                                    }
+                                                    if (segundosMuertosE < 10) {
+                                                        segundosMuertosE = "0" + segundosMuertosE;
+                                                    }
+                                                    horaInicial = moment.duration(0);
+                                                    horaFinal = moment.duration(0);
+                                                }
+                                            } else {
+                                                // : HORA DE SALIDA
+                                                if (horarioData.tiempoMuertoS == 1) {
+                                                    if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                        // : TIEMPO MUERTO SALIDA
+                                                        var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
+                                                        segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                                        minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                                        horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                        if (horasMuertosS < 10) {
+                                                            horasMuertosS = "0" + horasMuertosS;
+                                                        }
+                                                        if (minutosMuertosS < 10) {
+                                                            minutosMuertosS = "0" + minutosMuertosS;
+                                                        }
+                                                        if (segundosMuertosS < 10) {
+                                                            segundosMuertosS = "0" + segundosMuertosS;
+                                                        }
+                                                        var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                        horaFinal = moment(NuevaSalida);
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            // : HORA DE SALIDA
+                                            if (horarioData.tiempoMuertoS == 1) {
+                                                if (horaFinal.clone().isAfter(moment(horarioData.horarioFin))) {
+                                                    // : TIEMPO MUERTO SALIDA
+                                                    var tiempoMuertoM = moment.duration(parseInt(horarioData.toleranciaF), "minutes");
+                                                    segundosMuertosS = moment.duration(tiempoMuertoM).seconds();
+                                                    minutosMuertosS = moment.duration(tiempoMuertoM).minutes();
+                                                    horasMuertosS = Math.trunc(moment.duration(tiempoMuertoM).asHours());
+                                                    if (horasMuertosS < 10) {
+                                                        horasMuertosS = "0" + horasMuertosS;
+                                                    }
+                                                    if (minutosMuertosS < 10) {
+                                                        minutosMuertosS = "0" + minutosMuertosS;
+                                                    }
+                                                    if (segundosMuertosS < 10) {
+                                                        segundosMuertosS = "0" + segundosMuertosS;
+                                                    }
+                                                    var NuevaSalida = horaFinal.clone().subtract(horarioData.toleranciaF, "minutes").format("YYYY-MM-DD HH:mm:ss");
+                                                    horaFinal = moment(NuevaSalida);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (horaInicial != 0 && horaFinal != 0) {
+                                        var tiempoRestante = horaFinal - horaInicial;
+                                        segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                        minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                        horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                        if (horasTiempo < 10) {
+                                            horasTiempo = '0' + horasTiempo;
+                                        }
+                                        if (minutosTiempo < 10) {
+                                            minutosTiempo = '0' + minutosTiempo;
+                                        }
+                                        if (segundosTiempo < 10) {
+                                            segundosTiempo = '0' + segundosTiempo;
+                                        }
+                                    }
+                                }
+                                // * FINALIZACION
+                            }
                             if (marcacionData.entrada != 0) {
                                 tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Fecha:${moment(marcacionData.entrada).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoEntrada}">
                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                             ${moment(marcacionData.entrada).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center colDispositivoE" name="colDispositivoE">${marcacionData.dispositivoEntrada}</td>`;
+
                                 if (marcacionData.salida != 0) {
                                     tbodyEntradaySalida += `<td name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Fecha:${moment(marcacionData.salida).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoSalida}">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                 ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                             </td>`;
                                     tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`;
-                                    // * CALCULAR TIEMPO TOTAL
-                                    var horaFinal = moment(marcacionData.salida);
-                                    var horaInicial = moment(marcacionData.entrada);
-                                    if (horaFinal.isSameOrAfter(horaInicial)) {
-                                        // * TIEMPO TOTAL TRABAJADA
-                                        if (horarioData.idHorario != 0) {
-                                            if (horarioData.tiempoMuertoIngreso == 1) {
-                                                if (horaInicial.clone().isBefore(moment(horarioData.horarioIni))) {
-                                                    if (horaFinal.clone().isAfter(moment(horarioData.horarioIni))) {
-                                                        var tiempoRestante = horaFinal - moment(horarioData.horarioIni);
-                                                        segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                                        minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                                        horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                                        if (horasTiempo < 10) {
-                                                            horasTiempo = '0' + horasTiempo;
-                                                        }
-                                                        if (minutosTiempo < 10) {
-                                                            minutosTiempo = '0' + minutosTiempo;
-                                                        }
-                                                        if (segundosTiempo < 10) {
-                                                            segundosTiempo = '0' + segundosTiempo;
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-                                                var tiempoRestante = horaFinal - horaInicial;
-                                                segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                                minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                                horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                                if (horasTiempo < 10) {
-                                                    horasTiempo = '0' + horasTiempo;
-                                                }
-                                                if (minutosTiempo < 10) {
-                                                    minutosTiempo = '0' + minutosTiempo;
-                                                }
-                                                if (segundosTiempo < 10) {
-                                                    segundosTiempo = '0' + segundosTiempo;
-                                                }
-                                            }
-                                        } else {
-                                            var tiempoRestante = horaFinal - horaInicial;
-                                            segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                            minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                            horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                            if (horasTiempo < 10) {
-                                                horasTiempo = '0' + horasTiempo;
-                                            }
-                                            if (minutosTiempo < 10) {
-                                                minutosTiempo = '0' + minutosTiempo;
-                                            }
-                                            if (segundosTiempo < 10) {
-                                                segundosTiempo = '0' + segundosTiempo;
-                                            }
-                                        }
-                                    }
-                                    // * FINALIZACION
+
                                     tbodyEntradaySalida += `<td name="colTiempoS">
                                                                 <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                 <a class="badge badge-soft-primary mr-2">
                                                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                     ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                 </a>
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${segundosMuertosE}
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoSXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosS}:${minutosMuertosS}:${segundosMuertosS}
                                                             </td>`;
                                 } else {
                                     tbodyEntradaySalida += `<td name="colMarcaciones">
@@ -1665,6 +2198,14 @@ function cargartabla(fecha) {
                                                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                     ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                 </a>
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${segundosMuertosE}
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoSXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosS}:${minutosMuertosS}:${segundosMuertosS}
                                                             </td>`;
                                 }
 
@@ -1690,8 +2231,15 @@ function cargartabla(fecha) {
                                                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                     ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                 </a>
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoEXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosE}:${minutosMuertosE}:${segundosMuertosE}
+                                                            </td>
+                                                            <td class="text-center colTiempoMuertoSXM">
+                                                                <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                                                                ${horasMuertosS}:${minutosMuertosE}:${segundosMuertosS}
                                                             </td>`;
-
                                 }
                             }
                         }
@@ -1700,7 +2248,9 @@ function cargartabla(fecha) {
                                                     <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
                                                     <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
-                                                    <td name="colTiempoS" class="text-center">---</td>`;
+                                                    <td name="colTiempoS" class="text-center">---</td>
+                                                    <td class="text-center colTiempoMuertoEXM">---</td>
+                                                    <td class="text-center colTiempoMuertoSXM">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
                         // ! PAUSAS
@@ -1888,6 +2438,7 @@ function cargartabla(fecha) {
                                         <td class="text-center" name="toleranciaFHorario" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colTiempoEntreH" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colTiempoMuertoEntrada" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
@@ -1909,7 +2460,9 @@ function cargartabla(fecha) {
                                                     <td class="text-center colDispositivoE" name="colDispositivoE">---</td>
                                                     <td class="text-center" name="colMarcaciones">---</td>
                                                     <td class="text-center colDispositivoS" name="colDispositivoS">---</td>
-                                                    <td name="colTiempoS" class="text-center">---</td>`;
+                                                    <td name="colTiempoS" class="text-center">---</td>
+                                                    <td class="text-center colTiempoMuertoEXM">---</td>
+                                                    <td class="text-center colTiempoMuertoSXM">---</td>`;
                         }
                         grupoHorario += tbodyEntradaySalida;
                         // ! PAUSAS
@@ -2106,12 +2659,46 @@ function cargartabla(fecha) {
                 if (segundoSumaHorasE100N < 10) {
                     segundoSumaHorasE100N = "0" + segundoSumaHorasE100N;
                 }
+                // : SUMA DE TIEMPOS MUERTOS EN ENTRADA
+                var horaSumaTiemposMuertosTE = Math.trunc(moment.duration(sumaMuertosEntrada).asHours());
+                var minutoSumaTiemposMuertosTE = moment.duration(sumaMuertosEntrada).minutes();
+                var segundoSumaTiemposMuertosTE = moment.duration(sumaMuertosEntrada).seconds();
+                if (horaSumaTiemposMuertosTE < 10) {
+                    horaSumaTiemposMuertosTE = "0" + horaSumaTiemposMuertosTE;
+                }
+                if (minutoSumaTiemposMuertosTE < 10) {
+                    minutoSumaTiemposMuertosTE = "0" + minutoSumaTiemposMuertosTE;
+                }
+                if (segundoSumaTiemposMuertosTE < 10) {
+                    segundoSumaTiemposMuertosTE = "0" + segundoSumaTiemposMuertosTE;
+                }
+                // : SUMA DE TIEMPOS MUERTOS EN SALIDA
+                var horaSumaTiemposMuertosTS = Math.trunc(moment.duration(sumaMuertosSalida).asHours());
+                var minutoSumaTiemposMuertosTS = moment.duration(sumaMuertosSalida).minutes();
+                var segundoSumaTiemposMuertosTS = moment.duration(sumaMuertosSalida).seconds();
+                if (horaSumaTiemposMuertosTS < 10) {
+                    horaSumaTiemposMuertosTS = "0" + horaSumaTiemposMuertosTS;
+                }
+                if (minutoSumaTiemposMuertosTS < 10) {
+                    minutoSumaTiemposMuertosTS = "0" + minutoSumaTiemposMuertosTS;
+                }
+                if (segundoSumaTiemposMuertosTS < 10) {
+                    segundoSumaTiemposMuertosTS = "0" + segundoSumaTiemposMuertosTS;
+                }
                 // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
                 tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
                             <a class="badge badge-soft-primary mr-2">
                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                 ${horaTiempoTotal}:${minutoTiempoTotal}:${segundoTiempoTotal}
                             </a>
+                        </td>
+                        <td name="colTiempoMuertoTotalE" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                            ${horaSumaTiemposMuertosTE}:${minutoSumaTiemposMuertosTE}:${segundoSumaTiemposMuertosTE}
+                        </td>
+                        <td name="colTiempoMuertoTotalS" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                            <img src="landing/images/tiempoMuerto.svg" height="18" class="mr-2">
+                            ${horaSumaTiemposMuertosTS}:${minutoSumaTiemposMuertosTS}:${segundoSumaTiemposMuertosTS}
                         </td>
                         <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
                             <a class="badge badge-soft-primary mr-2">
@@ -2256,6 +2843,7 @@ function cambiarF() {
     cargartabla(f2);
     setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
 }
+// TODO *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
 // ! ********************************* SELECTOR DE COLUMNAS ****************************************************
 // * FUNCION PARA QUE NO SE CIERRE DROPDOWN
 $('#dropSelector').on('hidden.bs.dropdown', function () {
@@ -2266,6 +2854,7 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoPorH').hide();
     $('#contenidoPorT').hide();
     $('#contenidoDispositivos').hide();
+    $('#contenidoPorTM').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
@@ -2282,6 +2871,10 @@ function togglePorHorario() {
 // * TOGGLE POR TOTALES
 function togglePorTotales() {
     $('#contenidoPorT').toggle();
+}
+// * TOGGLE POR TIEMPOS MUERTOS
+function togglePorTiemposMuertos() {
+    $('#contenidoPorTM').toggle();
 }
 // * HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
@@ -2333,7 +2926,7 @@ $('.detalleHijo input[type=checkbox]').change(function () {
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.detallePadre input[type=checkbox]').change(function () {
     $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
-    var contenido = $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
+    $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
 // : ************************************** COLUMNAS DE PAUSAS ***********************************************
@@ -2510,173 +3103,207 @@ $('#colEmpleadosCM').change(function (event) {
 // * FUNCION DE MOSTRAR COLUMNAS
 function toggleColumnas() {
     // * ***************** COLUMNAS DE CALCULOS DE TIEMPO ****************
+    // ! ---------------- TIEMPO POR MARCACIONES -------------------------
     // ? TIEMPO ENTRE MARCACIONES
     if ($('#colTiempoSitio').is(":checked")) {
         dataT.api().columns('.colTiempoS').visible(true);
     } else {
         dataT.api().columns('.colTiempoS').visible(false);
     }
-    // ? TIEMPO TOTAL
-    if ($('#colTiempoTotal').is(":checked")) {
-        dataT.api().columns('.colTiempoTotal').visible(true);
-    } else {
-        dataT.api().columns('.colTiempoTotal').visible(false);
-    }
-    // ? TIEMPO ENTRE HORARIOS
+    // ! ----------------- POR HORARIO -----------------------------------
+    // : TIEMPO ENTRE HORARIO
     if ($('#colTiempoEntreH').is(":checked")) {
         dataT.api().columns('.colTiempoEntreH').visible(true);
     } else {
         dataT.api().columns('.colTiempoEntreH').visible(false);
     }
-    // ? SOBRE TIEMPO ENTRE HORARIOS
+    // : SOBRE TIEMPO ENTRE HORARIOS
     if ($('#colSobreTiempo').is(":checked")) {
         dataT.api().columns('.colSobreTiempo').visible(true);
     } else {
         dataT.api().columns('.colSobreTiempo').visible(false);
     }
-    // ? SOBRE TIEMPO TOTAL
-    if ($('#colSobreTiempoTotal').is(":checked")) {
-        dataT.api().columns('.colSobreTiempoTotal').visible(true);
-    } else {
-        dataT.api().columns('.colSobreTiempoTotal').visible(false);
-    }
-    // ? FALTA JORNADA ENTRE HORARIOS
+    // : FALTA JORNADA ENTRE HORARIOS
     if ($('#colFaltaJornada').is(":checked")) {
         dataT.api().columns('.colFaltaJornada').visible(true);
     } else {
         dataT.api().columns('.colFaltaJornada').visible(false);
     }
-    // ? FALTA JORNADA TOTAL
-    if ($('#colFaltaJornadaTotal').is(":checked")) {
-        dataT.api().columns('.colFaltaJornadaTotal').visible(true);
-    } else {
-        dataT.api().columns('.colFaltaJornadaTotal').visible(false);
-    }
-    // ? HORARIO NORMAL
+    // : HORARIO NORMAL
     if ($('#colHoraNormal').is(":checked")) {
         dataT.api().columns('.colHoraNormal').visible(true);
     } else {
         dataT.api().columns('.colHoraNormal').visible(false);
     }
-    // ? HORARIO NOCTURNO
+    // : HORARIO NOCTURNO
     if ($('#colHoraNocturna').is(":checked")) {
         dataT.api().columns('.colHoraNocturna').visible(true);
     } else {
         dataT.api().columns('.colHoraNocturna').visible(false);
     }
-    // ? HORARIO NORMAL TOTAL
-    if ($('#colHoraNormalTotal').is(":checked")) {
-        dataT.api().columns('.colHoraNormalTotal').visible(true);
-    } else {
-        dataT.api().columns('.colHoraNormalTotal').visible(false);
-    }
-    // ? HORARIO NOCTURNO TOTAL
-    if ($('#colHoraNocturnaTotal').is(":checked")) {
-        dataT.api().columns('.colHoraNocturnaTotal').visible(true);
-    } else {
-        dataT.api().columns('.colHoraNocturnaTotal').visible(false);
-    }
-    // ? HORAS EXTRAS 25% DIURNAS
+    // : HORAS EXTRAS 25% DIURNAS
     if ($('#colHE25D').is(":checked")) {
         dataT.api().columns('.colHE25D').visible(true);
     } else {
         dataT.api().columns('.colHE25D').visible(false);
     }
-    // ? HORAS EXTRAS 35% DIURNAS
+    // : HORAS EXTRAS 35% DIURNAS
     if ($('#colHE35D').is(":checked")) {
         dataT.api().columns('.colHE35D').visible(true);
     } else {
         dataT.api().columns('.colHE35D').visible(false);
     }
-    // ? HORAS EXTRAS 100% DIURNAS
+    // : HORAS EXTRAS 100% DIURNAS
     if ($('#colHE100D').is(":checked")) {
         dataT.api().columns('.colHE100D').visible(true);
     } else {
         dataT.api().columns('.colHE100D').visible(false);
     }
-    // ? SOBRETIEMPO NORMAL POR HORARIO
+    // : SOBRETIEMPO NORMAL POR HORARIO
     if ($('#colSobreTNormal').is(":checked")) {
         dataT.api().columns('.colSobreTNormal').visible(true);
     } else {
         dataT.api().columns('.colSobreTNormal').visible(false);
     }
-    // ? SOBRETIEMPO NOCTURNO POR HORARIO
+    // : SOBRETIEMPO NOCTURNO POR HORARIO
     if ($('#colSobreTNocturno').is(":checked")) {
         dataT.api().columns('.colSobreTNocturno').visible(true);
     } else {
         dataT.api().columns('.colSobreTNocturno').visible(false);
     }
-    // ? HORAS EXTRAS 25% NOCTURNAS
+    // : HORAS EXTRAS 25% NOCTURNAS
     if ($('#colHE25N').is(":checked")) {
         dataT.api().columns('.colHE25N').visible(true);
     } else {
         dataT.api().columns('.colHE25N').visible(false);
     }
-    // ? HORAS EXTRAS 35% NOCTURNAS
+    // : HORAS EXTRAS 35% NOCTURNAS
     if ($('#colHE35N').is(":checked")) {
         dataT.api().columns('.colHE35N').visible(true);
     } else {
         dataT.api().columns('.colHE35N').visible(false);
     }
-    // ? HORAS EXTRAS 100% DIURNAS
+    // : HORAS EXTRAS 100% DIURNAS
     if ($('#colHE100N').is(":checked")) {
         dataT.api().columns('.colHE100N').visible(true);
     } else {
         dataT.api().columns('.colHE100N').visible(false);
     }
-    // ? HORAS EXTRAS 25% DIURNAS TOTALES
+    // ! ----------------- POR TOTALES ------------------------------------
+    // : TIEMPO TOTAL
+    if ($('#colTiempoTotal').is(":checked")) {
+        dataT.api().columns('.colTiempoTotal').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoTotal').visible(false);
+    }
+    // : SOBRE TIEMPO TOTAL
+    if ($('#colSobreTiempoTotal').is(":checked")) {
+        dataT.api().columns('.colSobreTiempoTotal').visible(true);
+    } else {
+        dataT.api().columns('.colSobreTiempoTotal').visible(false);
+    }
+    // : FALTA JORNADA TOTAL
+    if ($('#colFaltaJornadaTotal').is(":checked")) {
+        dataT.api().columns('.colFaltaJornadaTotal').visible(true);
+    } else {
+        dataT.api().columns('.colFaltaJornadaTotal').visible(false);
+    }
+    // : HORARIO NORMAL TOTAL
+    if ($('#colHoraNormalTotal').is(":checked")) {
+        dataT.api().columns('.colHoraNormalTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNormalTotal').visible(false);
+    }
+    // : HORARIO NOCTURNO TOTAL
+    if ($('#colHoraNocturnaTotal').is(":checked")) {
+        dataT.api().columns('.colHoraNocturnaTotal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNocturnaTotal').visible(false);
+    }
+    // : HORAS EXTRAS 25% DIURNAS TOTALES
     if ($('#colHE25DTotal').is(":checked")) {
         dataT.api().columns('.colHE25DTotal').visible(true);
     } else {
         dataT.api().columns('.colHE25DTotal').visible(false);
     }
-    // ? HORAS EXTRAS 35% DIURNAS TOTALES
+    // : HORAS EXTRAS 35% DIURNAS TOTALES
     if ($('#colHE35DTotal').is(":checked")) {
         dataT.api().columns('.colHE35DTotal').visible(true);
     } else {
         dataT.api().columns('.colHE35DTotal').visible(false);
     }
-    // ? HORAS EXTRAS 100% DIURNAS TOTALES
+    // : HORAS EXTRAS 100% DIURNAS TOTALES
     if ($('#colHE100DTotal').is(":checked")) {
         dataT.api().columns('.colHE100DTotal').visible(true);
     } else {
         dataT.api().columns('.colHE100DTotal').visible(false);
     }
-    // ? HORAS EXTRAS 25% NOCTURNAS TOTALES
+    // : HORAS EXTRAS 25% NOCTURNAS TOTALES
     if ($('#colHE25NTotal').is(":checked")) {
         dataT.api().columns('.colHE25NTotal').visible(true);
     } else {
         dataT.api().columns('.colHE25NTotal').visible(false);
     }
-    // ? HORAS EXTRAS 35% NOCTURNAS TOTALES
+    // : HORAS EXTRAS 35% NOCTURNAS TOTALES
     if ($('#colHE35NTotal').is(":checked")) {
         dataT.api().columns('.colHE35NTotal').visible(true);
     } else {
         dataT.api().columns('.colHE35NTotal').visible(false);
     }
-    // ? HORAS EXTRAS 100% NOCTURNAS TOTALES
+    // : HORAS EXTRAS 100% NOCTURNAS TOTALES
     if ($('#colHE100NTotal').is(":checked")) {
         dataT.api().columns('.colHE100NTotal').visible(true);
     } else {
         dataT.api().columns('.colHE100NTotal').visible(false);
     }
-    // ? SOBRETIEMPO NORMAL TOTAL
+    // : SOBRETIEMPO NORMAL TOTAL
     if ($('#colSobretiempoNormalT').is(":checked")) {
         dataT.api().columns('.colSobretiempoNormalT').visible(true);
     } else {
         dataT.api().columns('.colSobretiempoNormalT').visible(false);
     }
-    // ? SOBRETIEMPO NOCTURNO TOTAL
+    // : SOBRETIEMPO NOCTURNO TOTAL
     if ($('#colSobretiempoNocturnoT').is(":checked")) {
         dataT.api().columns('.colSobretiempoNocturnoT').visible(true);
     } else {
         dataT.api().columns('.colSobretiempoNocturnoT').visible(false);
     }
-    // ? TIEMPO MUERTO EN ENTRADA
+    // ! ----------------- POR TIEMPOS MUERTOS ----------------------------
+    // : TIEMPO MUERTO EN ENTRADA POR HORARIO
     if ($('#colTiempoMuertoEntrada').is(":checked")) {
         dataT.api().columns('.colTiempoMuertoEntrada').visible(true);
     } else {
         dataT.api().columns('.colTiempoMuertoEntrada').visible(false);
+    }
+    // : TIEMPO MUERTO EN SALIDA POR HORARIO
+    if ($('#colTiempoMuertoSalida').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoSalida').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoSalida').visible(false);
+    }
+    // : TIEMPO MUERTO EN ENTRADA POR MARCACION
+    if ($('#colTiempoMuertoEXM').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoEXM').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoEXM').visible(false);
+    }
+    // : TIEMPO MUERTO EN SALIDA POR HORARIO
+    if ($('#colTiempoMuertoSXM').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoSXM').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoSXM').visible(false);
+    }
+    // : TIEMPO MUERTO EN ENTRADA POR TOTAL
+    if ($('#colTiempoMuertoTotalE').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoTotalE').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoTotalE').visible(false);
+    }
+    // : TIEMPO MUERTO EN SALIDA POR TOTAL
+    if ($('#colTiempoMuertoTotalS').is(":checked")) {
+        dataT.api().columns('.colTiempoMuertoTotalS').visible(true);
+    } else {
+        dataT.api().columns('.colTiempoMuertoTotalS').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
@@ -2792,3 +3419,9 @@ function toggleColumnas() {
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
+$("#tablaReport").on('show.bs.dropdown', function () {
+    $('.dataTables_scrollBody').addClass('dropdown-visible');
+})
+    .on('hide.bs.dropdown', function () {
+        $('.dataTables_scrollBody').removeClass('dropdown-visible');
+    });

@@ -422,7 +422,7 @@ class dispositivosController extends Controller
         }
     }
 
-    // * DETALLE DE ASISTENCIA Y POR FECHA
+    // * DETALLE DE ASISTENCIA
     public function reporteTabla(Request $request)
     {
         $fechaR = $request->fecha;
@@ -788,6 +788,514 @@ class dispositivosController extends Controller
             )
             ->get();
         $data = agruparEmpleadosMarcaciones($data);  //: CONVERTIR UN SOLO EMPLEADO CON VARIOS MARCACIONES
+
+        // * UNIR EMPLEADOS CON MARCACIONES
+
+        for ($index = 0; $index < sizeof($empleados); $index++) {
+            $ingreso = true;
+            for ($element = 0; $element < sizeof($data); $element++) {
+                if ($empleados[$index]->emple_id == $data[$element]->emple_id) {    //: BUSCAMOS EL ID EMPLEADO IGUAL
+                    $ingreso = false;
+                    $arrayNuevo = (object) array(
+                        "emple_id" => $empleados[$index]->emple_id,
+                        "emple_nDoc" => $empleados[$index]->emple_nDoc,
+                        "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
+                        "perso_nombre" => $empleados[$index]->perso_nombre,
+                        "perso_apPaterno" => $empleados[$index]->perso_apPaterno,
+                        "perso_apMaterno" => $empleados[$index]->perso_apMaterno,
+                        "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
+                        "organi_id" => $data[$element]->organi_id,
+                        "organi_razonSocial" => $empleados[$index]->organi_razonSocial,
+                        "organi_direccion" =>  $empleados[$index]->organi_direccion,
+                        "organi_ruc" => $empleados[$index]->organi_ruc,
+                        "emple_estado" => $empleados[$index]->emple_estado,
+                        "data" => $data[$element]->data,
+                        "incidencias" => array()
+                    );
+                    array_push($marcaciones, $arrayNuevo);
+                }
+            }
+            if ($ingreso && $empleados[$index]->emple_estado == 1) {         //: VALIDAMOS PARA EMPLEADOS QUE NO TIENEN DATA DE ESA FECHA
+                $arrayNuevo = (object) array(
+                    "emple_id" => $empleados[$index]->emple_id,
+                    "emple_nDoc" => $empleados[$index]->emple_nDoc,
+                    "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
+                    "perso_nombre" => $empleados[$index]->perso_nombre,
+                    "perso_apPaterno" => $empleados[$index]->perso_apPaterno,
+                    "perso_apMaterno" => $empleados[$index]->perso_apMaterno,
+                    "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
+                    "organi_id" => $empleados[$index]->organi_id,
+                    "organi_razonSocial" => $empleados[$index]->organi_razonSocial,
+                    "organi_direccion" =>  $empleados[$index]->organi_direccion,
+                    "organi_ruc" => $empleados[$index]->organi_ruc,
+                    "emple_estado" => $empleados[$index]->emple_estado,
+                    "data" => array(),
+                    "incidencias" => array()
+                );
+                array_push($marcaciones, $arrayNuevo);
+            }
+        }
+        // * AGREGAR HORARIOS EMPLEADO ASIGNADO POR DIA PARA FALTAS
+        foreach ($marcaciones as $m) {
+            // * HORARIO EMPLEADO
+            $m->data = array_values($m->data);
+            $arrayHorarioE = [];
+            foreach ($m->data as $key => $horario) {
+                if ($horario["horario"]->idHorarioE != 0) {
+                    array_push($arrayHorarioE, $horario["horario"]->idHorarioE);
+                }
+            }
+            $horarioEmpleado = DB::table('horario_empleado as he')
+                ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->leftJoin('reglas_horasextras as rh', 'rh.idreglas_horasExtras', '=', 'h.idreglas_horasExtras')
+                ->select(
+                    'h.horario_descripcion as horario',
+                    DB::raw('CONCAT("' . $fecha . '" , " ",h.horaI) as horarioIni'),
+                    DB::raw('CONCAT("' . $fecha . '" , " ",h.horaF) as horarioFin'),
+                    'h.horario_id  as idHorario',
+                    'h.horario_tolerancia as toleranciaI',
+                    'h.horario_toleranciaF as toleranciaF',
+                    'he.estado as estado',
+                    'he.horarioEmp_id as idHorarioE',
+                    'h.horasObliga as horasObligadas',
+                    'h.tiempoMingreso as tiempoMuertoIngreso'
+                )
+                ->whereNotIn('he.horarioEmp_id', $arrayHorarioE)
+                ->where('empleado_emple_id', '=', $m->emple_id)
+                ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+                ->where('he.estado', '=', 1)
+                ->get();
+
+            foreach ($horarioEmpleado as $he) {
+                array_push($m->data, array("horario" => $he, "pausas" => array(), "marcaciones" => array()));
+            }
+        }
+        // * AGREGAR ATRIBUTOS DE HORARIO Y PAUSAS EN CADA HORARIO
+        foreach ($marcaciones as  $m) {
+            $m->data = array_values($m->data);
+            // * ********************* PAUSAS ********************
+            foreach ($m->data as $key => $d) {
+                if ($d["horario"]->idHorario != 0) {
+                    // * AÑADIR PAUSAS DEL HORARIO
+                    $pausas = DB::table('pausas_horario')->select(
+                        'idpausas_horario as id',
+                        'pausH_descripcion as descripcion',
+                        'pausH_Inicio as inicio',
+                        'pausH_Fin as fin',
+                        'tolerancia_inicio',
+                        'tolerancia_fin',
+                        'horario_id',
+                        'descontar'
+                    )
+                        ->where('horario_id', '=', $d["horario"]->idHorario)->get();
+                    foreach ($pausas as $p) {
+                        array_push($m->data[$key]["pausas"], $p);
+                    }
+                }
+            }
+            // * ******************* INCIDENCIAS *********************
+            $idEmpleado = $m->emple_id;
+            // * TABLA EVENTOS EMPLEADO
+            $eventos = eventos_empleado::select('title as descripcion')
+                ->where('id_empleado', '=', $idEmpleado)
+                ->whereBetween(DB::raw('DATE(eventos_empleado.start)'), [$fecha, $fecha])
+                ->orWhere(function ($query) use ($fecha, $idEmpleado) {
+                    $query->where('id_empleado', '=', $idEmpleado);
+                    $query->whereNotNull('eventos_empleado.end');
+                    $query->where(DB::raw('DATE(eventos_empleado.start)'), '<=', $fecha);
+                    $query->where(DB::raw('DATE(eventos_empleado.end)'), '>', $fecha);
+                })
+                ->get();
+            foreach ($eventos as $e) {
+                array_push($m->incidencias, $e);
+            }
+            // * TABLA INCIDENCIAS DIA
+            $incidencias = DB::table('incidencia_dias as id')
+                ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                ->select('i.inciden_descripcion as descripcion')
+                ->where('id.id_empleado', '=', $idEmpleado)
+                ->whereBetween('id.inciden_dias_fechaI', [$fecha, $fecha])
+                ->orWhere(function ($query) use ($fecha, $idEmpleado) {
+                    $query->where('id.id_empleado', '=', $idEmpleado);
+                    $query->where('id.inciden_dias_fechaI', '<=', $fecha);
+                    $query->where('id.inciden_dias_fechaF', '>', $fecha);
+                })
+                ->get();
+            foreach ($incidencias as $i) {
+                array_push($m->incidencias, $i);
+            }
+        }
+
+        return response()->json($marcaciones, 200);
+    }
+
+    // * REPORTE POR FECHA
+    public function reporteFechaMarcacion(Request $request)
+    {
+        $fechaR = $request->fecha;
+        $idemp = $request->idemp;
+        $fecha = Carbon::create($fechaR)->format('Y-m-d');
+
+        function agruparEmpleadosMarcacionesFecha($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $empleado) {
+                if (!isset($resultado[$empleado->emple_id])) {
+                    $resultado[$empleado->emple_id] = (object) array(
+                        "emple_id" => $empleado->emple_id,
+                        "organi_id" => $empleado->organi_id,
+                    );
+                }
+                if (!isset($resultado[$empleado->emple_id]->data)) {
+                    $resultado[$empleado->emple_id]->data = array();
+                }
+                if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["horario"])) {
+                    $resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["horario"] =  (object) array(
+                        "horario" => $empleado->detalleHorario,
+                        "horarioIni" => $empleado->horarioIni,
+                        "horarioFin" => $empleado->horarioFin,
+                        "idHorario" => $empleado->idHorario,
+                        "toleranciaI" => $empleado->toleranciaI,
+                        "toleranciaF" => $empleado->toleranciaF,
+                        "idHorarioE" => $empleado->idHorarioE,
+                        "estado" => $empleado->estado,
+                        "horasObligadas" => $empleado->horasObligadas,
+                        "tiempoMuertoI" => $empleado->tiempoMuertoIngreso,
+                        "tiempoMuertoS" => $empleado->tiempoMuertoSalida,
+                        "idDiurna" => $empleado->idDiurna,
+                        "estado25D" => $empleado->estado25D,
+                        "estado35D" => $empleado->estado35D,
+                        "estado100D" => $empleado->estado100D,
+                        "idNocturna" => $empleado->idNocturna,
+                        "estado25N" => $empleado->estado25N,
+                        "estado35N" => $empleado->estado35N,
+                        "estado100N" => $empleado->estado100N
+                    );
+                }
+                if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["pausas"])) {
+                    $resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["pausas"] = array();
+                }
+                if (!isset($resultado[$empleado->emple_id]->incidencias)) {
+                    $resultado[$empleado->emple_id]->incidencias = array();
+                }
+                if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["marcaciones"])) {
+                    $resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["marcaciones"] = array();
+                }
+                $arrayMarcacion = (object) array(
+                    "idMarcacion" => $empleado->idMarcacion,
+                    "entrada" => $empleado->entrada,
+                    "salida" => $empleado->salida,
+                    "idH" => $empleado->idHorario,
+                    "idHE" => $empleado->idHorarioE,
+                    "dispositivoEntrada" => ucfirst(strtolower($empleado->dispositivoEntrada)),
+                    "dispositivoSalida" => ucfirst(strtolower($empleado->dispositivoSalida))
+                );
+                array_push($resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["marcaciones"], $arrayMarcacion);
+            }
+            return array_values($resultado);
+        }
+
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->where('rol_id', '=', 3)
+            ->get()->first();
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                if ($idemp == 0 || $idemp == ' ') {
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_nDoc',
+                            'e.emple_codigo',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
+                            'e.emple_estado',
+                            'e.organi_id'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->orderBy('p.perso_nombre', 'ASC')
+                        ->get();
+                } else {
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_nDoc',
+                            'e.emple_codigo',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
+                            'e.emple_estado',
+                            'e.organi_id'
+                        )
+                        ->where('e.emple_id', $idemp)
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
+                }
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+                if ($invitado_empleadoIn != null) {
+                    if ($idemp == 0 || $idemp == ' ') {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_nDoc',
+                                'e.emple_codigo',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'o.organi_razonSocial',
+                                'o.organi_direccion',
+                                'o.organi_ruc',
+                                'e.emple_estado',
+                                'e.organi_id'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->orderBy('p.perso_nombre', 'ASC')
+                            ->get();
+                    } else {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_nDoc',
+                                'e.emple_codigo',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'o.organi_razonSocial',
+                                'o.organi_direccion',
+                                'o.organi_ruc',
+                                'e.emple_estado',
+                                'e.organi_id'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.emple_id', $idemp)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->get();
+                    }
+                } else {
+                    if ($idemp == 0 || $idemp == ' ') {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_nDoc',
+                                'e.emple_codigo',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'o.organi_razonSocial',
+                                'o.organi_direccion',
+                                'o.organi_ruc',
+                                'e.emple_estado',
+                                'e.organi_id'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->orderBy('p.perso_nombre', 'ASC')
+                            ->get();
+                    } else {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_nDoc',
+                                'e.emple_codigo',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'o.organi_razonSocial',
+                                'o.organi_direccion',
+                                'o.organi_ruc',
+                                'e.emple_estado',
+                                'e.organi_id'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.emple_id', $idemp)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->get();
+                    }
+                }
+            }
+        } else {
+            if ($idemp == 0 || $idemp == ' ') {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->select(
+                        'e.emple_id',
+                        'e.emple_nDoc',
+                        'e.emple_codigo',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'o.organi_razonSocial',
+                        'o.organi_direccion',
+                        'o.organi_ruc',
+                        'e.emple_estado',
+                        'e.organi_id'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->orderBy('p.perso_nombre', 'ASC')
+                    ->get();
+            } else {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->select(
+                        'e.emple_id',
+                        'e.emple_nDoc',
+                        'e.emple_codigo',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'o.organi_razonSocial',
+                        'o.organi_direccion',
+                        'o.organi_ruc',
+                        'e.emple_estado',
+                        'e.organi_id'
+                    )
+                    ->where('e.emple_id', $idemp)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->get();
+            }
+        }
+        $marcaciones = [];
+        // DB::enableQueryLog();
+        // * TIPO DISPOSITIVO
+        $tipoDispositivo = DB::table('dispositivos as d')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'd.tipoDispositivo')
+            ->select(
+                'd.idDispositivos',
+                'td.dispositivo_descripcion as dispositivo'
+            );
+        // * HORAS EXTRAS
+        $horasExtras = DB::table('reglas_horasextras as rh')
+            ->select(
+                'rh.idreglas_horasExtras',
+                'rh.lleno25',
+                'rh.lleno35',
+                'rh.lleno100'
+            );
+        $data =  DB::table('empleado as e')
+            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+            ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+            ->leftJoinSub($tipoDispositivo, 'entrada', function ($join) {
+                $join->on('mp.dispositivoEntrada', '=', 'entrada.idDispositivos');
+            })
+            ->leftJoinSub($tipoDispositivo, 'salida', function ($join) {
+                $join->on('mp.dispositivoSalida', '=', 'salida.idDispositivos');
+            })
+            ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+            })
+            ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
+            })
+            ->select(
+                'e.emple_id',
+                'mp.marcaMov_id',
+                'mp.organi_id',
+                DB::raw("IF(entrada.dispositivo is null, 'MANUAL' , entrada.dispositivo) as dispositivoEntrada"),
+                DB::raw("IF(salida.dispositivo is null, 'MANUAL' , salida.dispositivo) as dispositivoSalida"),
+                DB::raw('IF(hor.horario_id is null, 0 , horario_id) as idHorario'),
+                DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
+                DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
+                DB::raw("IF(hor.horaI is null , null , horario_descripcion) as detalleHorario"),
+                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
+                'hor.horario_tolerancia as toleranciaI',
+                'hor.horario_toleranciaF as toleranciaF',
+                'mp.marcaMov_id as idMarcacion',
+                'hor.horasObliga as horasObligadas',
+                'hoe.estado',
+                'hor.tiempoMingreso as tiempoMuertoIngreso',
+                'hor.tiempoMsalida as tiempoMuertoSalida',
+                'diurna.idreglas_horasExtras as idDiurna',
+                'diurna.lleno25 as estado25D',
+                'diurna.lleno35 as estado35D',
+                'diurna.lleno100 as estado100D',
+                'nocturna.idreglas_horasExtras as idNocturna',
+                'nocturna.lleno25 as estado25N',
+                'nocturna.lleno35 as estado35N',
+                'nocturna.lleno100 as estado100N'
+            )
+            ->where(DB::raw('IF(hoe.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start))'), '=', $fecha)
+            ->where('mp.organi_id', '=', session('sesionidorg'))
+            ->orderBy(
+                DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),
+                'ASC'
+            )
+            ->orderBy(
+                DB::raw('IF(mp.marcaMov_fecha is null, TIME(mp.marcaMov_salida) , TIME(mp.marcaMov_fecha))'),
+                'ASC'
+            )
+            ->get();
+        $data = agruparEmpleadosMarcacionesFecha($data);  //: CONVERTIR UN SOLO EMPLEADO CON VARIOS MARCACIONES
 
         // * UNIR EMPLEADOS CON MARCACIONES
 

@@ -453,7 +453,7 @@ Route::get('/capturasPersonalizadas', 'ControlController@retornarDatos');
 Route::get('/trazabilidadCapturas', 'ControlController@vistaTrazabilidad');
 Route::get('/datosCapturas', 'ControlController@capturasTrazabilidad');
 
-//DISPOSITIVOS
+// *-------------------------- MODO CONTROL EN ASISTENCIA EN PUERTA --------------------------*
 Route::get('/dispositivos', 'dispositivosController@index');
 Route::post('/enviarMensajePru', 'dispositivosController@enviarmensaje');
 Route::post('/dispoStore', 'dispositivosController@store');
@@ -462,19 +462,15 @@ Route::post('/actualizarBiometrico', 'biometricoController@actualizarBiometrico'
 Route::post('/tablaDisposito', 'dispositivosController@tablaDisposit');
 Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 Route::post('/comprobarMovil', 'dispositivosController@comprobarMovil');
-Route::get('/reporteAsistencia', 'dispositivosController@reporteMarcaciones');
-Route::get('/reporteTablaMarca', 'dispositivosController@reporteTabla');
 Route::post('/datosDispoEditar', 'dispositivosController@datosDispoEditar');
 Route::post('/actualizarDispos', 'dispositivosController@actualizarDispos');
 Route::post('/desactivarDisposi', 'dispositivosController@desactivarDisposi');
 Route::post('/activarDisposi', 'dispositivosController@activarDisposi');
+// : ***************************** DETALLE DE ASISTENCIA *******************************************
+Route::get('/reporteAsistencia', 'dispositivosController@reporteMarcaciones');
+Route::get('/reporteTablaMarca', 'dispositivosController@reporteTabla');
 Route::post('/registrarNEntrada', 'dispositivosController@registrarNEntrada');
 Route::post('/registrarNSalida', 'dispositivosController@registrarNSalida');
-Route::get('/ReporteEmpleado', 'dispositivosController@reporteMarcacionesEmp');
-Route::get('/ReporteFecha', 'dispositivosController@ReporteFecha');
-Route::get('/reporteTablaEmp', 'dispositivosController@reporteTablaEmp');
-Route::post('/registrarNTardanza', 'dispositivosController@registrarNTardanza');
-Route::post('/editarRowEntrada', 'dispositivosController@editarRowEntrada');
 Route::post('/busquedaMXE', 'dispositivosController@buscarMarcacionPorEmpleado');
 Route::post('/listaMarcacionS', 'dispositivosController@listaDeSalidasSinE');
 Route::post('/cambiarEM', 'dispositivosController@cambiarEntraMarcacion');
@@ -490,6 +486,12 @@ Route::post('/agregarM', 'dispositivosController@nuevaMarcacion');
 Route::post('/marcacionHorario', 'dispositivosController@marcacionesHorarioEmpleado');
 Route::post('/listaHorarioM', 'dispositivosController@horariosDeEmpleado');
 Route::post('/actualizarHorarioM', 'dispositivosController@actualizarHorarioMarcacion');
+// : *************************** REPORTE POR EMPLEADO **********************************
+Route::get('/ReporteEmpleado', 'dispositivosController@reporteMarcacionesEmp');
+Route::get('/reporteTablaEmp', 'dispositivosController@reporteTablaEmp');
+// : *************************** REPORTE POR FECHA **************************************
+Route::get('/ReporteFecha', 'dispositivosController@ReporteFecha');
+Route::get('/datosReporteFecha', 'dispositivosController@reporteFechaMarcacion');
 // : *********************** REPORTE DE TRAZABILIDAD ****************************
 Route::get('/indexTrazabilidad', 'dispositivosController@indexTrazabilidadM');
 Route::get('/dataTrazabilidad', 'dispositivosController@dataTrazabilidad');
@@ -542,9 +544,9 @@ Route::post('/verificaCodIncidencia', 'incidenciasController@verificaCodIncidenc
 Route::post('/registIncidencia', 'incidenciasController@registIncidencia');
 Route::post('/tablaIncidencias', 'incidenciasController@tablaIncidencias');
 Route::post('/dataIncidencia', 'incidenciasController@dataIncidencia');
-Route::post('/updateIncidencia','incidenciasController@updateIncidencia');
-Route::get('/eliminarIncidencia','incidenciasController@eliminarIncidencia');
-Route::get('/recuperarInci','incidenciasController@recuperarInci');
+Route::post('/updateIncidencia', 'incidenciasController@updateIncidencia');
+Route::get('/eliminarIncidencia', 'incidenciasController@eliminarIncidencia');
+Route::get('/recuperarInci', 'incidenciasController@recuperarInci');
 
 //* PUNTOS DE CONTROL
 Route::get('/puntoControl', 'PuntosControlController@index');
