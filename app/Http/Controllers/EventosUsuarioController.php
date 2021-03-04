@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
-use App\eventos_usuario;
+use App\eventos_calendario;
+use App\incidencias;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EventosUsuarioController extends Controller
 {
@@ -41,29 +43,97 @@ class EventosUsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $eventos_usuario=new eventos_usuario();
-        $eventos_usuario->title= $request->get('title');
-        $eventos_usuario->color= $request->get('color');
-        $eventos_usuario->textColor= $request->get('textColor');
-        $eventos_usuario->start= $request->get('start');
-        $eventos_usuario->end= $request->get('end');
-        $eventos_usuario->tipo= $request->get('tipo');
-        $eventos_usuario->id_calendario= $request->get('id_calendario');
-        $eventos_usuario->users_id=Auth::user()->id;
-        $eventos_usuario->organi_id=session('sesionidorg');
-        $eventos_usuario->laborable=$request->get('laborable');
-        $eventos_usuario->save();
-        return $eventos_usuario->id;
+        // 
+        //Verificamos el tipo, si es 1 se registra nuevo, si es cero solo se relaciona con su id
+        if( $request->get('tipoFeri')==1){
+            
+            //obtener tipo de incidencia
+            $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('tipoInc_descripcion','=','Feriado')
+            ->get()->first();
+
+            $incidencias=new incidencias();
+            $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
+            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_descripcion= $request->get('title');
+            $incidencias->inciden_pagado= 1;
+            $incidencias->users_id=Auth::user()->id;
+            $incidencias->organi_id=session('sesionidorg');
+            $incidencias->estado=1;
+            $incidencias->sistema=0;
+            $incidencias->save();
+          
+            $idIncidencia=$incidencias->inciden_id;
+
+        } else{
+            $idIncidencia=$request->get('idFeriadoInc');
+        }
+        $eventos_calendario=new eventos_calendario();
+        $eventos_calendario->color= $request->get('color');
+        $eventos_calendario->textColor= $request->get('textColor');
+        $eventos_calendario->start= $request->get('start');
+        $eventos_calendario->end= $request->get('end');
+        $eventos_calendario->id_calendario= $request->get('id_calendario');
+        $eventos_calendario->users_id=Auth::user()->id;
+        $eventos_calendario->organi_id=session('sesionidorg');
+        $eventos_calendario->laborable=$request->get('laborable');
+        $eventos_calendario->inciden_id=$idIncidencia;
+        $eventos_calendario->save();
+        
+        return $eventos_calendario->id;
+    }
+
+    public function storeDescanso(Request $request)
+    {
+        // 
+        //Verificamos el tipo, si es 1 se registra nuevo, si es cero solo se relaciona con su id
+        if( $request->get('tipoDes')==1){
+            
+            //obtener tipo de incidencia
+            $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('tipoInc_descripcion','=','Descanso')
+            ->get()->first();
+
+            $incidencias=new incidencias();
+            $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
+            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_descripcion= $request->get('title');
+            $incidencias->inciden_pagado= 1;
+            $incidencias->users_id=Auth::user()->id;
+            $incidencias->organi_id=session('sesionidorg');
+            $incidencias->estado=1;
+            $incidencias->sistema=0;
+            $incidencias->save();
+          
+            $idIncidencia=$incidencias->inciden_id;
+
+        } else{
+            $idIncidencia=$request->get('idDescanoInc');
+        }
+        $eventos_calendario=new eventos_calendario();
+        $eventos_calendario->color= $request->get('color');
+        $eventos_calendario->textColor= $request->get('textColor');
+        $eventos_calendario->start= $request->get('start');
+        $eventos_calendario->end= $request->get('end');
+        $eventos_calendario->id_calendario= $request->get('id_calendario');
+        $eventos_calendario->users_id=Auth::user()->id;
+        $eventos_calendario->organi_id=session('sesionidorg');
+        $eventos_calendario->laborable=$request->get('laborable');
+        $eventos_calendario->inciden_id=$idIncidencia;
+        $eventos_calendario->save();
+        
+        return $eventos_calendario->id;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\eventos_usuario  $eventos_usuario
+     * @param  \App\eventos_calendario  $eventos_calendario
      * @return \Illuminate\Http\Response
      */
-    public function show(eventos_usuario $eventos_usuario)
+    public function show(eventos_calendario $eventos_calendario)
     {
         //
     }
@@ -71,10 +141,10 @@ class EventosUsuarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\eventos_usuario  $eventos_usuario
+     * @param  \App\eventos_calendario  $eventos_calendario
      * @return \Illuminate\Http\Response
      */
-    public function edit(eventos_usuario $eventos_usuario)
+    public function edit(eventos_calendario $eventos_calendario)
     {
         //
     }
@@ -83,10 +153,10 @@ class EventosUsuarioController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\eventos_usuario  $eventos_usuario
+     * @param  \App\eventos_calendario  $eventos_calendario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, eventos_usuario $eventos_usuario)
+    public function update(Request $request, eventos_calendario $eventos_calendario)
     {
         //
     }
@@ -94,13 +164,13 @@ class EventosUsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\eventos_usuario  $eventos_usuario
+     * @param  \App\eventos_calendario  $eventos_calendario
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $eventos_usuario=eventos_usuario::findOrFail($id);
-        eventos_usuario::destroy($id);
+        $eventos_calendario=eventos_calendario::findOrFail($id);
+        eventos_calendario::destroy($id);
         return response()->json($id);
     }
 }

@@ -67,14 +67,11 @@ function calendario() {
             console.log(info.event.id);
             console.log(info.event.title);
             console.log(info.event.textColor);
-            if (info.event.title == "Descanso") {
+            if (info.event.textColor == "#504545") {
                 $("#myModalEliminarD").modal();
                 $("#idDescansoEl").val(id);
             }
-            if (info.event.title == "No laborable") {
-                $("#myModalEliminarN").modal();
-                $("#idnolabEliminar").val(id);
-            }
+           
             if (
                 info.event.textColor == "#775555" ||
                 info.event.textColor == "#945353"
@@ -193,10 +190,7 @@ function calendario() {
     calendar.setOption("locale", "Es");
     //DESCANSO
 
-    $("#eliminarDescanso").click(function () {
-        objEvento = datos("DELETE");
-        EnviarDescansoE("/" + id, objEvento);
-    });
+   
 
     function datos(method) {
         nuevoEvento = {
@@ -213,29 +207,7 @@ function calendario() {
         return nuevoEvento;
     }
 
-    function EnviarDescansoE(accion, objEvento) {
-        $.ajax({
-            type: "DELETE",
-            url: "/calendario" + accion,
-            data: objEvento,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            statusCode: {
-                /*401: function () {
-                    location.reload();
-                },*/
-                419: function () {
-                    location.reload();
-                },
-            },
-            success: function (msg) {
-                $("#myModalEliminarD").modal("toggle");
-                calendar.refetchEvents();
-            },
-            error: function () {},
-        });
-    }
+    
     ///
     //NO LABORABLE
 
@@ -267,37 +239,7 @@ function calendario() {
 
     //
 
-    function EnviarNoLE(accion, objEvento1) {
-        $.ajax({
-            type: "DELETE",
-            url: "/calendario" + accion,
-            data: objEvento1,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                statusCode: {
-                    /*401: function () {
-                        location.reload();
-                    },*/
-                    419: function () {
-                        location.reload();
-                    },
-                },
-            },
-            success: function (msg) {
-                $("#myModalEliminarN").modal("hide");
-                $("#myModalEliminarFeriado").modal("hide");
-                calendar.refetchEvents();
-            },
-            error: function () {
-                alert("error");
-            },
-        });
-    }
+    
     ////
 
     calendar.render();
@@ -306,27 +248,36 @@ function calendario() {
 function registrarDdescanso() {
     $("#calendarioAsignar").modal("hide");
     var idevento;
-    title = "Descanso";
+    title =$("#inputNuevoDescanso").val();
     color = "#e6bdbd";
     textColor = "#504545";
     start = $("#pruebaStar").val();
     end = $("#pruebaEnd").val();
-    tipo = 1;
+    idDescanoInc=$("#nombreDescanso").val();
     laborable = 0;
     id_calendario = $("#selectCalendario").val();
+
+    var tipoDes;   //tio 1 si es nuevo, tipo 0 si solo selleccione
+    if ($('#divDescansoSe').is(':visible')) {
+        tipoDes=0
+    } else{
+        tipoDes=1;
+    } 
+
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
-        url: "/eventos_usuario/store",
+        url: "/eventos_calendario/storeDescanso",
         data: {
             title,
             color,
             textColor,
             start,
             end,
-            tipo,
             id_calendario,
             laborable,
+            tipoDes,
+            idDescanoInc
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -345,6 +296,7 @@ function registrarDdescanso() {
             console.log(data);
             calendar.refetchEvents();
             idevento = data;
+            $("#myModalDescanso").modal("hide");
         },
         error: function () {},
     });
@@ -414,27 +366,35 @@ function registrarDdescanso() {
 function registrarDferiado() {
     $("#calendarioAsignar").modal("hide");
     var ideventoF;
-    (title = $("#nombreFeriado").val()),
+  
+    (title = $("#inputNuevoFeriado").val()),
         (color = "#e6bdbd"),
         (textColor = "#775555"),
         (start = $("#pruebaStar").val());
     end = $("#pruebaEnd").val();
-    tipo = 2;
     laborable = 0;
+
+    idFeriadoInc=$("#nombreFeriado").val();
+
     id_calendario = $("#selectCalendario").val();
-    //$('#myModal').modal('show');
+    
+    var tipoFeri;   //tio 1 si es nuevo, tipo 0 si solo selleccione
+    if ($('#divFeriadoSe').is(':visible')) {
+        tipoFeri=0
+    } else{
+        tipoFeri=1;
+    } 
     $.ajax({
         type: "POST",
-        url: "/eventos_usuario/store",
+        url: "/eventos_calendario/store",
         data: {
             title,
             color,
             textColor,
             start,
             end,
-            tipo,
             id_calendario,
-            laborable,
+            laborable,tipoFeri,idFeriadoInc
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -532,7 +492,7 @@ function registrarDnlaborables() {
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
-        url: "/eventos_usuario/store",
+        url: "/eventos_calendario/store",
         data: {
             title,
             color,
@@ -1294,3 +1254,100 @@ $("#selectClonar").change(function () {
         error: function () {},
     });
 });
+
+/*** BOTON NUEVO FERIADO */
+function agregarMFeriado() {
+    $("#nombreFeriado").empty();
+    $("#nombreFeriado").prop('required',true);
+    $("#inputNuevoFeriado").prop('required',false);
+    $("#inputNuevoFeriado").val('');
+    $("#divFeriadoSe").show();
+    $("#divFeriadoNuevo").hide();
+    $("#btnAgregaNFeri").show();
+
+    //agregar feriados a select
+    $.ajax({
+        type: "get",
+        url: "/calendario/agregaFeriado",
+        async: false,
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+           
+            var option = `<option value="" ></option>`;
+
+            /* PARA REGISTRO DE SUBACTIVIDAD */
+            $.each(data, function (index, element) {
+                option += `<option value="${element.inciden_id}">${element.inciden_descripcion}</option>`;
+            });
+            console.log('op'+option);
+            $("#nombreFeriado").append(option);
+        },
+        error: function () {},
+    });
+    $("#calendarioAsignar").modal("hide");
+    $("#myModalFeriado").modal("show");
+}
+ //* nuevo feriado
+ function nuevoFeriadoReg(){
+    $("#nombreFeriado").prop('required',false);
+    $("#inputNuevoFeriado").prop('required',true);
+    $("#divFeriadoSe").hide();
+    $("#divFeriadoNuevo").show();
+    $("#btnAgregaNFeri").hide();
+ }
+
+ /* **************************************************** */
+ /*** BOTON NUEVO DESCANSO*/
+function agregarMDescanso() {
+    $("#nombreDescanso").empty();
+    $("#nombreDescanso").prop('required',true);
+    $("#inputNuevoDescanso").prop('required',false);
+    $("#inputNuevoDescanso").val('');
+    $("#divDescansoSe").show();
+    $("#divDescansoNuevo").hide();
+    $("#btnAgregaNDescanso").show();
+
+    //agregar feriados a select
+    $.ajax({
+        type: "get",
+        url: "/calendario/agregaDescanso",
+        async: false,
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+           
+            var option = `<option value="" ></option>`;
+
+            /* PARA REGISTRO DE incid */
+            $.each(data, function (index, element) {
+                option += `<option value="${element.inciden_id}">${element.inciden_descripcion}</option>`;
+            });
+            console.log('op'+option);
+            $("#nombreDescanso").append(option);
+        },
+        error: function () {},
+    });
+    $("#calendarioAsignar").modal("hide");
+    $("#myModalDescanso").modal("show");
+}
+//* nuevo descanso
+function nuevoDescansoReg(){
+    $("#nombreDescanso").prop('required',false);
+    $("#inputNuevoDescanso").prop('required',true);
+    $("#divDescansoSe").hide();
+    $("#divDescansoNuevo").show();
+    $("#btnAgregaNDescanso").hide();
+ }

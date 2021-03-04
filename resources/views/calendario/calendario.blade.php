@@ -1,62 +1,68 @@
 @php
-    use Carbon\Carbon;
+use Carbon\Carbon;
 @endphp
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <title>Calendario</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
-  <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <!-- App favicon -->
-  <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
-  @php
-  $fecha=Auth::user()->created_at->toDateTimeString();
-       $dt=Carbon::create($fecha);
-      $dt->isoFormat('YYYY-MM-DD');
-      $actual=Carbon::now();
-      $actual->modify('-1 months')->isoFormat('YYYY-MM-DD');
-  @endphp
-  @if ($dt> $actual)
-  <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
-  @endif
 
-  <!-- Plugin css  CALENDAR-->
-  <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
-<link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
-<link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
-  <!-- App css -->
-  <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-  <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
-  <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-  <script src="{{asset('admin/assets/hopscotch/hopscotch.min.js')}}"></script>
-  <link  href="{{asset('admin/assets/hopscotch/hopscotch.min.css')}}" rel="stylesheet" type="text/css">
+<head>
+    <title>Calendario</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('landing/vendors/aos/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing/css/style.min.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('landing/images/ICONO-LOGO-NUBE-RH.ico') }}">
+    @php
+        $fecha = Auth::user()->created_at->toDateTimeString();
+        $dt = Carbon::create($fecha);
+        $dt->isoFormat('YYYY-MM-DD');
+        $actual = Carbon::now();
+        $actual->modify('-1 months')->isoFormat('YYYY-MM-DD');
+    @endphp
+    @if ($dt > $actual)
+        <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
+    @endif
+
+    <!-- Plugin css  CALENDAR-->
+    <link href="{{ asset('admin/packages/core/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('admin/packages/daygrid/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('admin/packages/timegrid/main.css') }}" rel="stylesheet" />
+    <!-- App css -->
+    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <script src="{{ asset('admin/assets/hopscotch/hopscotch.min.js') }}"></script>
+    <link href="{{ asset('admin/assets/hopscotch/hopscotch.min.css') }}" rel="stylesheet" type="text/css">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
-    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/notification.svg')}}" height="100" >
+                    <img src="{{ asset('landing/images/notification.svg') }}" height="100">
                     <h4 class="text-danger mt-4">Su sesión expiró</h4>
                     <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
                     <div class="mt-4">
-                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
+                        <a href="{{ '/' }}" class="btn btn-outline-primary btn-rounded width-md"><i
+                                class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-<style>
-   /*  body > div.bootbox.modal.fade.show > div > div > div{
+    <style>
+        /*  body > div.bootbox.modal.fade.show > div > div > div{
         background: #131313;
     color: #fbfbfb;
     }
@@ -65,734 +71,323 @@
     left: 75px;
     } */
 
-div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-mon, td.fc-day.fc-widget-content.fc-tue, td.fc-day.fc-widget-content.fc-wed,
-td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-day.fc-widget-content.fc-sat{
+        div.fc-bg>table>tbody>tr>td.fc-day.fc-widget-content.fc-mon,
+        td.fc-day.fc-widget-content.fc-tue,
+        td.fc-day.fc-widget-content.fc-wed,
+        td.fc-day.fc-widget-content.fc-thu,
+        td.fc-day.fc-widget-content.fc-fri,
+        td.fc-day.fc-widget-content.fc-sat {
 
-background-color: #ffffff;
-}
-    .fc-time{
-        display: none;
-    }
-    .fc-Descanso-button{
-    color: #fff;
-    background-color: #162029;
-    }
-    .fc-NoLaborales-button{
-    color: #fff;
-    background-color: #162029;
-    }
-    .fc-Feriado-button{
-    color: #fff;
-    background-color: #162029;
-    }
-    div.hopscotch-bubble .hopscotch-bubble-number {
-    background: #575daf;
-    padding: 0;
-    border-radius: 50%;}
-    div.hopscotch-bubble {
-    border: 5px solid  #788fa5;
-    border-radius: 5px;
-    margin-left: 63%;
-}
-@media(min-width: 525px){
-  div.hopscotch-bubble{
-    margin-left: 43% !important;
-  }
-}
-div.hopscotch-bubble .hopscotch-bubble-arrow-container.right .hopscotch-bubble-arrow-border{
-    border-left: 17px solid #788fa5;
-}
-div.hopscotch-bubble h3{
+            background-color: #ffffff;
+        }
 
-font-size: 14px;
-font-weight: 600;
-margin: -1px 1px 0 0;
-}
-div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-arrow-border{
-    border-right: 17px solid rgb(120, 143, 165);
-}
-.fc-nuevoAño-button{
-    left: 10px;
-    font-size: 12px;
-    padding-left: 6px;
-    padding-right: 6px;
+        .fc-time {
+            display: none;
+        }
 
-    }
-     .fc-Asignar-button{
-    left: 10px;
-    font-size: 12px;
-    padding-left: 6px;
-    padding-right: 6px;
-    padding-bottom: 7px;
-    padding-top: 8px;
+        .fc-Descanso-button {
+            color: #fff;
+            background-color: #162029;
+        }
 
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice{
-        background-color: #52565b;
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
-        color: #fdfdfd;
-    }
-    .col-md-6 .select2-container .select2-selection {
-    height: 50px;
-    font-size: 12.2px;
-    overflow-y: scroll;
-}
-.select2-container--default .select2-results__option[aria-selected=true]{
-        background: #ced0d3;
-    }
-    .table td{
-        padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
-    }
+        .fc-NoLaborales-button {
+            color: #fff;
+            background-color: #162029;
+        }
 
-    .fc-button{
-        background: #163552;
-        color: #ffffff;
-    }
-    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-primary.bootbox-accept{
-        background-color: #163552;
-        border-color: #163552;
-    }
-    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header{
-        background-color: #163552;
-    }
-    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header > h5{
-        color: #fff;
-        font-size: 15px!important;
-    }
-    footer {
-      font-size: 15px;
-      color: #555;
-      background: #eee;
-      text-align: center;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-      margin: 0;
-      padding: 0;
-      z-index: 100;
-    }
+        .fc-Feriado-button {
+            color: #fff;
+            background-color: #162029;
+        }
 
-    @media(max-width: 867px){
-      .btn_rh{
-        margin-bottom: 15px;
-      }
-    }
+        div.hopscotch-bubble .hopscotch-bubble-number {
+            background: #575daf;
+            padding: 0;
+            border-radius: 50%;
+        }
 
-    @media(max-width: 446px){
-      .btn_rh{
-        margin-bottom: 35px;
-      }
-    }
+        div.hopscotch-bubble {
+            border: 5px solid #788fa5;
+            border-radius: 5px;
+            margin-left: 63%;
+        }
 
-    @media(max-width: 306px){
-      .btn_rh{
-        margin-bottom: 55px;
-      }
-    }
+        @media(min-width: 525px) {
+            div.hopscotch-bubble {
+                margin-left: 43% !important;
+            }
+        }
 
-    @media(max-width: 767px){
-      .logo_rh{
-        justify-content: center !important;
-      }
-    }
-    @media(min-width: 768px){
-      .content_rh{
-        margin-left: 55px !important;
-        margin-right: 55px !important;
-      }
-      .text_rh{
-        font-size: 10px !important;
-      }
-    }
-    .botonesD{
-    padding-bottom: 10px!important;
-    padding-top: 10px!important;
-    padding-right: 10px!important;
-    padding-left: 10px!important;
-    }
-</style>
+        div.hopscotch-bubble .hopscotch-bubble-arrow-container.right .hopscotch-bubble-arrow-border {
+            border-left: 17px solid #788fa5;
+        }
 
-  <header id="header-section">
-    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-        <div class="container pb-3">
-            <div class="col-md-2 col-xl-2 p-0">
-                <div class="navbar-brand-wrapper d-flex w-200 logo_rh">
-                    <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69" ></a>
+        div.hopscotch-bubble h3 {
+
+            font-size: 14px;
+            font-weight: 600;
+            margin: -1px 1px 0 0;
+        }
+
+        div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-arrow-border {
+            border-right: 17px solid rgb(120, 143, 165);
+        }
+
+        .fc-nuevoAño-button {
+            left: 10px;
+            font-size: 12px;
+            padding-left: 6px;
+            padding-right: 6px;
+
+        }
+
+        .fc-Asignar-button {
+            left: 10px;
+            font-size: 12px;
+            padding-left: 6px;
+            padding-right: 6px;
+            padding-bottom: 7px;
+            padding-top: 8px;
+
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #52565b;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: #fdfdfd;
+        }
+
+        .col-md-6 .select2-container .select2-selection {
+            height: 50px;
+            font-size: 12.2px;
+            overflow-y: scroll;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background: #ced0d3;
+        }
+
+        .table td {
+            padding-top: 0.3rem;
+            padding-bottom: 0.3rem;
+        }
+
+        .fc-button {
+            background: #163552;
+            color: #ffffff;
+        }
+
+        body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-primary.bootbox-accept {
+            background-color: #163552;
+            border-color: #163552;
+        }
+
+        body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-header {
+            background-color: #163552;
+        }
+
+        body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-header>h5 {
+            color: #fff;
+            font-size: 15px !important;
+        }
+
+        footer {
+            font-size: 15px;
+            color: #555;
+            background: #eee;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            margin: 0;
+            padding: 0;
+            z-index: 100;
+        }
+
+        @media(max-width: 867px) {
+            .btn_rh {
+                margin-bottom: 15px;
+            }
+        }
+
+        @media(max-width: 446px) {
+            .btn_rh {
+                margin-bottom: 35px;
+            }
+        }
+
+        @media(max-width: 306px) {
+            .btn_rh {
+                margin-bottom: 55px;
+            }
+        }
+
+        @media(max-width: 767px) {
+            .logo_rh {
+                justify-content: center !important;
+            }
+        }
+
+        @media(min-width: 768px) {
+            .content_rh {
+                margin-left: 55px !important;
+                margin-right: 55px !important;
+            }
+
+            .text_rh {
+                font-size: 10px !important;
+            }
+        }
+
+        .botonesD {
+            padding-bottom: 10px !important;
+            padding-top: 10px !important;
+            padding-right: 10px !important;
+            padding-left: 10px !important;
+        }
+
+    </style>
+
+    <header id="header-section">
+        <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+            <div class="container pb-3">
+                <div class="col-md-2 col-xl-2 p-0">
+                    <div class="navbar-brand-wrapper d-flex w-200 logo_rh">
+                        <a href="{{ route('principal') }}"><img src="{{ asset('landing/images/NUBE_SOLA.png') }}"
+                                height="69"></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 text-center">
+                    <h5 style="color: #ffffff">Gestión de Calendarios</h5>
+                    <label for="" class="blanco font-italic">Calendario de Perú, puedes crear calendarios regionales o
+                        personalizados</label>
+                </div>
+
+
+
+                <div class="col-md-4 col-12">
+                    <div class="row text-center">
+                        <div class="col-md-6 col-6">
+                            <select name="" id="selectCalendario" class="form-control">
+                                @foreach ($calendario as $calendarios)
+                                    <option class="" value="{{ $calendarios->calen_id }}">
+                                        {{ $calendarios->calendario_nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6 text-left col-6">
+                            <button onclick="abrirNcalendario()" class="boton" style="font-size: 12px;padding: 4px">+
+                                Nuevo calendario</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6 bg-primary">
+
                 </div>
             </div>
+        </nav>
+    </header>
 
-            <div class="col-md-6 text-center">
-              <h5 style="color: #ffffff">Gestión de Calendarios</h5>
-              <label for="" class="blanco font-italic">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
-            </div>
+    <div class="content-page content_rh" style="margin-top: 40px; padding: 0px 5px">
+        <div class="content">
 
-            <input type="hidden" name="idorgani" id="idorgani" value="{{session('sesionidorg')}}">
-            <input type="hidden" name="" id="AñoOrgani" value="{{$fechaEnviJS}}">
-            <input type="hidden" id="fechaEnviF" >
 
-            <div class="col-md-4 col-12">
-              <div class="row text-center">
-                <div class="col-md-6 col-6">
-                  <select name="" id="selectCalendario" class="form-control">
-                    @foreach ($calendario as $calendarios)
-                        <option class="" value="{{$calendarios->calen_id}}">{{$calendarios->calendario_nombre}}</option>
-                    @endforeach
-                  </select>
+            <div class="row ">
+                <div class="col-md-1 col-0"></div>
+                <div class="col-md-9 col-9" id="calendar">
+
                 </div>
-                <div class="col-md-6 text-left col-6">
-                  <button  onclick="abrirNcalendario()" class="boton" style="font-size: 12px;padding: 4px" >+ Nuevo calendario</button>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2 col-6 bg-primary">
 
-            </div>
-        </div>
-    </nav>
-  </header>
 
-  <div class="content-page content_rh" style="margin-top: 40px; padding: 0px 5px">
-    <div class="content">
 
-      <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días de descanso</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <h5>¿Asignar días de descanso?</h5>
-              <input type="hidden" id="fechaDa" name="fechaDa">
-              {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
-              <input type="hidden" name="start" class="form-control" id="start" readonly>
-              {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
-              <input type="hidden" name="end" class="form-control" id="end" readonly>
-              <input type="hidden" name="title" id="title" value="Descanso">
-            </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-7 text-right">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                  </div>
-                  <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                    <button type="button" id="guardarDescanso" name="guardarDescanso" class="btn btn-secondary">Confirmar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
 
-      <div id="myModalFestivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días no laborales</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <h5>¿Asignar días no laborales?</h5>
-                <input type="hidden" id="fechaDa2" name="fechaDa2">
-                {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
-                <input type="hidden" name="startF" class="form-control" id="startF" readonly>
-                {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
-                <input type="hidden" name="endF" class="form-control" id="endF" readonly>
-                <input type="hidden" name="titleN" id="titleN" value="No laborable">
-            </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-7 text-right">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                  </div>
-                  <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                    <button type="button" id="guardarNoLab" name="guardarNoLab" class="btn btn-secondary">Confirmar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      <div id="myModalEliminarD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días de descanso</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form class="form-horizontal">
-                <h5 style="font-size: 14px" class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
-                <input type="hidden" id="idDescansoEl">
-              </form>
-            </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12 text-right">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                    <button type="button" onclick="EnviarDescansoE()" style="background-color: #163552;" class="btn btn-sm">Eliminar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-      <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nuevo feriado</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="form-group col-md-12">
-                  <div class="col-md-6">
-                    <label for="">Nombre de día feriado:</label>
-                  </div>
-                  <div class="col-md-12">
-                    <form action="javascript:registrarDferiado()">
-                    <input class="form-control" type="text" id="nombreFeriado" required>
-                  </div>
-                </div>
-              </div>
-              <input type="hidden" name="startFeriado" class="form-control" id="startFeriado" readonly>
-              <input type="hidden" name="endFeriado" class="form-control" id="endFeriado" readonly>
-            </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-7 text-right">
-                      <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                  </div>
-                  <div class="col-md-5 text-right" style="padding-right: 38px; ">
-                      <button type="submit"  class="btn btn-secondary">Aceptar</button>
-                  </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-      <div id="myModalEliminarN" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días no Laborales</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form class="form-horizontal">
-                <h5 style="font-size: 14px" class="modal-title" id="myModalLabel">¿Desea eliminar días no laborales?</h5>
-                <input type="hidden" id="idnolabEliminar">
-              </form>
-            </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12 text-right">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                    <button type="button" onclick="eliminarEvNL()" style="background-color: #163552;" class="btn btn-sm">Eliminar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-      <div id="myModalEliminarFeriado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Día feriado de usuario</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form class="form-horizontal">
-                <h5 style="font-size: 14px" class="modal-title" id="myModalLabel">¿Desea eliminar día feriado?</h5>
-                <input type="hidden" id="idFeriadoeliminar">
-              </form>
-            </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12 text-right">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                    <button type="button" onclick="eliminarEvF()" style="background-color: #163552;" class="btn btn-sm">Eliminar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      <div id="agregarCalendarioN" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
-          <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Nuevo calendario</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" style="font-size:12px!important">
-              <div class="row">
-                <div class="col-md-12">
-                  <form id="" action="javascript:agregarcalendario()">
+                <div class="col-md-12"><br></div>
+                <div class="col-md-1"></div>
+                <div class="col-md-5 col-6 pr-2">
                     <div class="row">
-                      <div class="col-md-12">
-                        <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required><br>
-                      </div>
-                      <div class="col-md-4 form-check" style="padding-left: 32px; margin-top: 4px;">
-                        <input type="checkbox"  class="form-check-input" id="clonarCheck">
-                        <label class="form-check-label" for="clonarCheck" >Clonar calendario de:</label>
-                      </div>
-                      <div class="col-md-8">
-                        <select name="" id="selectClonar" class="form-control form-control-sm" disabled >
-                          <option hidden selected>Seleccione calendario</option>
-                          @foreach ($calendario as $calendarios)
-                            <option class="" value="{{$calendarios->calen_id}}">{{$calendarios->calendario_nombre}}</option>
-                          @endforeach
-                        </select>
-                      </div><br><br>
-                      <div class="col-md-12" id="añosCalen">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12 text-right" >
-                    <button type="button"  class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="guardarCalm" name="" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
-                  </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-      <div id="añadirNuevoa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-          <div class="modal-dialog  modal-lg d-flex justify-content-center " style="max-width: 550px;" >
-
-          <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Añadir año</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" style="font-size:12px!important">
-              <div class="row">
-                <div class="col-md-12">
-                  <form id="" action="javascript:editarfinC()">
-                    <div class="row">
-                      <div class="col-md-12" >
-                        <input type="text" id="textoNuevoAño" class="col-md-12" style="font-size: 15px; background-color: rgb(255, 255, 255);border: 0;">
-                        <input type="hidden" id="añotNuevo">
-                      </div>
+                        <div class="col-md-9">
+                            <label style="font-size: 13px; font-weight:600 " for="">Programación de:
+                                {{ $fechaEnvi }} hasta: <label style="font-size: 13px;font-weight:600" for=""
+                                    id="fechaHasta"></label></label>
+                        </div>
+                        <div class="col-md-3 text-right">
+                        </div>
                     </div>
                 </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-12 text-right" >
-                      <button type="button"  class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                      <button type="submit"  name="" style="background-color: #163552;" class="btn btn-sm">Aceptar</button>
-                  </form>
-                     </div>
+                <div class="col-md-4 col-6 text-right pl-2">
+                    <label for="" style="font-style:oblique">Creación de empresa:
+                        {{ $fechaOrga->format('d/m/Y') }}</label>
                 </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+                <input type="hidden" id="pruebaStar">
+                <input type="hidden" id="pruebaEnd">
 
-      <div id="calendarioEmple" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog  modal-lg d-flex modal-dialog-scrollable justify-content-center " style="max-width: 790px;" >
-          <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-              <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar empleados</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" style="font-size:12px!important">
-              <div class="row">
-                  <div class="col-md-12">
-                    <label for="" id="textCalend" style="font-size: 14px;  font-weight: 600;"></label> &nbsp;
-                    <button type="button" class="btn btn-sm mt-1" onclick="$( '#tableDataem' ).toggle();" style="background-color: #163552;color: #f9f9f9;margin-bottom: 6px;" ><i style="height: 16px" data-feather="eye"></i>ver empleados
-                    </button>
-                  </div>
-                  <div class="col-md-12" id="tableDataem" style="display: none">
-                      <br><label style="font-size: 14px; ">Lista de empleados:</label>
-                    <div class="col-md-12" style="    padding-left: 0px;">
-                      <table id='tabEmpleado' width='100%'  class="table  nowrap">
-                        <thead>
-                          <tr>
-                            <td>Nombres</td>
-                            <td>Apellido paterno </td>
-                            <td>Apellido materno </td>
-                          </tr>
-                        </thead>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="col-md-12" style="border-bottom: 1px solid #f1f1f1; padding-bottom: 12px;">
-                    <form id="asignacionCa"  action="javascript:asignarCalendario()">
-                      <div class="row">
-                        <div class="col-md-9" style="zoom:90%;">
-                            <input type="hidden" id="fechaDa" name="fechaDa">
-                            <label for="" style="font-weight: 600;">Seleccionar empleado(s):</label>
-                        </div>
-                        <div class="col-md-7" style="zoom:90%;">
-                          <div class="row" style="margin-left: 6px;">
-                            <div class="col-md-5 form-check">
-                              <input type="checkbox"  class="form-check-input" id="selectTodoCheck">
-                              <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;margin-top: 2px;">Seleccionar todos.</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado"  required>
-                            @foreach ($empleado as  $empleados)
-                              <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                        <div class="col-md-2">
-                          <label for="" style="margin-top: 9px;" >Seleccionar por:</label>
-                        </div>
-                        <div class="row col-md-4">
-                          <select data-plugin="customselect"  id="selectEmpresarial" name="selectEmpresarial" class="form-control" data-placeholder="seleccione">
-                              <option value=""></option>
-                              @foreach ($area as $areas)
-                              <option value="{{$areas->idarea}}">Area : {{$areas->descripcion}}.</option>
-                              @endforeach
-                              @foreach ($cargo as $cargos)
-                              <option value="{{$cargos->idcargo}}">Cargo : {{$cargos->descripcion}}.</option>
-                              @endforeach
-                              @foreach ($local as $locales)
-                              <option value="{{$locales->idlocal}}">Local : {{$locales->descripcion}}.</option>
-                              @endforeach
-                          </select>
-                        </div><br>
-                      </div>
-                  </div>
-                  <div id="espera" class="col-md-12 text-center" style="display: none">
-                    <img src="{{ asset('landing/images/loading.gif') }}" height="100">
-                  </div>
-                  <br><br>
-                  <div class="col-md-6"><br>
-                    <label style="font-size: 14px; ">Empleados seleccionados:</label>
-                  </div>
-                  <div class="col-md-6 text-right" style="padding-right: 24px;margin-bottom: 10px;"><br>
-                    <button type="submit" class="btn  btn-sm" style="background-color: #163552;color: #f9f9f9;">Asignar calendario</button>
-                  </div>
-                  <br><br>
-                </form>
-                <div class="col-md-12">
-                  <div class="col-md-12" style="padding-left: 0px;">
-                    <table id='empleadosSele' width='100%'  class="table  nowrap">
-                      <thead>
-                        <tr>
-                          <td><input type="checkbox" class="ml-4" name="" id="selectEmps"></td>
-                          <td>Nombres</td>
-                          <td>Apellido paterno </td>
-                          <td>Apellido materno </td>
-                          <td>Calendario</td>
-                        </tr>
-                      </thead>
-                      <tbody>
+                @include('calendario.calendarioPlantilla')
 
-                      </tbody>
-                    </table>
-                  </div>
+                <div class="col-md-12 text-right btn_rh">
+                    <a href="{{ '/empleado' }}"><button class="boton btn btn-default mr-1">CONTINUAR</button></a>
                 </div>
-              </div>
             </div>
-            <div class="modal-footer">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12 text-right">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cerrar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-      <div class="row " >
-        <div class="col-md-1 col-0"></div>
-        <div class="col-md-9 col-9" id="calendar">
-
         </div>
-
-       
-
-
-        <div class="col-md-12"><br></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5 col-6 pr-2">
-          <div class="row">
-            <div class="col-md-9">
-              <label style="font-size: 13px; font-weight:600 " for="">Programación de:  {{$fechaEnvi}}   hasta:   <label style="font-size: 13px;font-weight:600" for="" id="fechaHasta"></label></label>
-            </div>
-            <div class="col-md-3 text-right">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-6 text-right pl-2">
-          <label for="" style="font-style:oblique">Creación de empresa: {{$fechaOrga->format('d/m/Y')}}</label>
-        </div>
-        <input type="hidden" id="pruebaStar">
-        <input type="hidden" id="pruebaEnd">
-
-        <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 400px;  margin-top: 185px; left: 94px;" >
-    
-            <div class="modal-content">
-               <div class="modal-header" style="background-color:#163552; padding-bottom: 4px;
-               padding-top: 4px;">
-                   <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar día a calendario</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                       <span aria-hidden="true">&times;</span>
-                   </button>
-               </div>
-               <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-                   <div class="row">
-                      
-                       <div class="col-md-5" style="cursor: pointer" onclick="registrarDdescanso()">
-                        <div class="card">
-                          <div class="card-body text-center botonesD">
-                            <h5 class="card-title"><strong>Descanso</strong></h5>
-                            <div class="text-center">
-                                <img src="{{asset('admin/images/dormir.svg')}}" width="100" height="30">
-                            </div>
-                            
-                          </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-5" style="cursor: pointer" onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')" >
-                        <div class="card">
-                          <div class="card-body text-center botonesD">
-                            <h5 class="card-title"><strong>Feriado</strong></h5>
-                            <div class="text-center">
-                                <img src="{{asset('admin/images/calendario.svg')}}" width="100" height="30">
-                            </div>
-                            
-                          </div>
-                        </div>
-                    </div>
-                          
-                   </div>
-               </div>
-              {{--  <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                   <div class="col-md-12">
-                       <div class="row">
-                           <div class="col-md-12 text-right" >
-                            <button type="button"  class="btn btn-soft-primary btn-sm " data-dismiss="modal">Cancelar</button>
-    
-                        </form>
-                           </div>
-                       </div>
-                   </div>
-               </div> --}}
-           </div><!-- /.modal-content -->
-         </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
-        <div class="col-md-12 text-right btn_rh">
-          <a href="{{('/empleado')}}"><button class="boton btn btn-default mr-1" >CONTINUAR</button></a>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <footer class="border-top" style="background:#163552;">
-    <div class="col-md-12 text-center" style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
-        <span style="color: #faf3f3;font-size: 12px!important">
-          © <?php echo date("Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados &nbsp; |
-        </span>
-        <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
-        <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
-    </div>
-  </footer>
-  <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
-  <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
-  <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
-  <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
-  <script src="{{asset('landing/js/landingpage.js')}}"></script>
-  <script src="{{asset('landing/js/SeleccionarPais.js')}}"></script>
-  <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-  <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
-  <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-  <!-- Vendor js -->
-  {{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
+    <footer class="border-top" style="background:#163552;">
+        <div class="col-md-12 text-center"
+            style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+            <span style="color: #faf3f3;font-size: 12px!important">
+                © <?php echo date('Y'); ?> - RH nube Corp - USA | Todos los derechos
+                reservados &nbsp; |
+            </span>
+            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 |
+                info@rhnube.com.pe</span>
+        </div>
+    </footer>
+    <script src="{{ asset('landing/vendors/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('landing/vendors/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('landing/vendors/owl-carousel/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('landing/vendors/aos/js/aos.js') }}"></script>
+    <script src="{{ asset('landing/js/landingpage.js') }}"></script>
+    <script src="{{ asset('landing/js/SeleccionarPais.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+    <!-- Vendor js -->
+    {{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
 
-  <!-- plugin js -->
-  <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-  <script src="{{   asset('admin/packages/core/main.js')}}"></script>
-  <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
-  <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-  <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
-  <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
-  <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <!-- plugin js -->
+    <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('admin/packages/core/main.js') }}"></script>
+    <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>
+    <script src="{{ asset('admin/packages/timegrid/main.js') }}"></script>
+    <script src="{{ asset('admin/packages/interaction/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 
-   <script src="{{asset('landing/js/calendario.js')}}"></script>
-  <script>
-  $(document).ready(function(){
+    <script src="{{ asset('landing/js/calendario.js') }}"></script>
+    <script>
+        $(document).ready(function() {
 
-      hopscotch.startTour({
-          id:"my-intro",
-          i18n: {
-          nextBtn: ">",
-          prevBtn: "<",
-          doneBtn:"Entendido"
-        },
+            hopscotch.startTour({
+                id: "my-intro",
+                i18n: {
+                    nextBtn: ">",
+                    prevBtn: "<",
+                    doneBtn: "Entendido"
+                },
 
-          steps:[
-          {target:".fc-view-container",
-          title: "Seleccione día(s)",
-          placement:"left",
-          width:161,
-          yOffset:30}
+                steps: [{
+                        target: ".fc-view-container",
+                        title: "Seleccione día(s)",
+                        placement: "left",
+                        width: 161,
+                        yOffset: 30
+                    }
 
-          /*  {target:"#calendarioAsignar",
+                    /*  {target:"#calendarioAsignar",
           title:"Selecione el tipo de dia",
           placement:"right",
           width:200,
@@ -803,33 +398,33 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
         }, */
 
-         ]
-          }
-          )
+                ]
+            })
 
         });
 
+    </script>
+    @if (Auth::user())
+        <script>
+            $(function() {
+                setInterval(function checkSession() {
+                    $.get('/check-session', function(data) {
 
-  </script>
-  @if (Auth::user())
-  <script>
-    $(function() {
-      setInterval(function checkSession() {
-        $.get('/check-session', function(data) {
+                        // if session was expired
+                        if (data.guest == false) {
+                            $('.modal').modal('hide');
+                            $('#modal-error').modal('show');
+                            $(".hopscotch-bubble-arrow-border").remove();
+                            $(".hopscotch-bubble-container").remove();
 
-          // if session was expired
-          if (data.guest==false) {
-            $('.modal').modal('hide');
-             $('#modal-error').modal('show');
-             $( ".hopscotch-bubble-arrow-border" ).remove();
-        $( ".hopscotch-bubble-container" ).remove();
+                        }
+                    });
+                }, 7202000); // every minute
+            });
 
-          }
-        });
-      },7202000); // every minute
-    });
-  </script>
-  <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
-@endif
+        </script>
+        <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
+    @endif
 </body>
+
 </html>
