@@ -454,10 +454,14 @@ class dispositivosController extends Controller
                         "horasObligadas" => $empleado->horasObligadas,
                         "tiempoMuertoI" => $empleado->tiempoMuertoIngreso,
                         "tiempoMuertoS" => $empleado->tiempoMuertoSalida,
-                        "tipoHorarioExtra" => $empleado->tipoHorarioExtra,
-                        "estado25" => $empleado->estado25,
-                        "estado35" => $empleado->estado35,
-                        "estado100" => $empleado->estado100
+                        "idDiurna" => $empleado->idDiurna,
+                        "estado25D" => $empleado->estado25D,
+                        "estado35D" => $empleado->estado35D,
+                        "estado100D" => $empleado->estado100D,
+                        "idNocturna" => $empleado->idNocturna,
+                        "estado25N" => $empleado->estado25N,
+                        "estado35N" => $empleado->estado35N,
+                        "estado100N" => $empleado->estado100N
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["pausas"])) {
@@ -701,23 +705,37 @@ class dispositivosController extends Controller
         }
         $marcaciones = [];
         // DB::enableQueryLog();
+        // * TIPO DISPOSITIVO
         $tipoDispositivo = DB::table('dispositivos as d')
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'd.tipoDispositivo')
             ->select(
                 'd.idDispositivos',
                 'td.dispositivo_descripcion as dispositivo'
             );
+        // * HORAS EXTRAS
+        $horasExtras = DB::table('reglas_horasextras as rh')
+            ->select(
+                'rh.idreglas_horasExtras',
+                'rh.lleno25',
+                'rh.lleno35',
+                'rh.lleno100'
+            );
         $data =  DB::table('empleado as e')
             ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
-            ->leftJoin('reglas_horasextras as rh', 'rh.idreglas_horasExtras', '=', 'hor.idreglas_horasExtras')
             ->leftJoinSub($tipoDispositivo, 'entrada', function ($join) {
                 $join->on('mp.dispositivoEntrada', '=', 'entrada.idDispositivos');
             })
             ->leftJoinSub($tipoDispositivo, 'salida', function ($join) {
                 $join->on('mp.dispositivoSalida', '=', 'salida.idDispositivos');
+            })
+            ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+            })
+            ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
             })
             ->select(
                 'e.emple_id',
@@ -739,10 +757,14 @@ class dispositivosController extends Controller
                 'hoe.estado',
                 'hor.tiempoMingreso as tiempoMuertoIngreso',
                 'hor.tiempoMsalida as tiempoMuertoSalida',
-                DB::raw("IF(rh.tipo_regla is null, null, IF(rh.tipo_regla = 'Normal', 0, 1)) as tipoHorarioExtra"),
-                'rh.lleno25 as estado25',
-                'rh.lleno35 as estado35',
-                'rh.lleno100 as estado100'
+                'diurna.idreglas_horasExtras as idDiurna',
+                'diurna.lleno25 as estado25D',
+                'diurna.lleno35 as estado35D',
+                'diurna.lleno100 as estado100D',
+                'nocturna.idreglas_horasExtras as idNocturna',
+                'nocturna.lleno25 as estado25N',
+                'nocturna.lleno35 as estado35N',
+                'nocturna.lleno100 as estado100N'
             )
             ->where(DB::raw('IF(hoe.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start))'), '=', $fecha)
             ->where('mp.organi_id', '=', session('sesionidorg'))
@@ -816,6 +838,7 @@ class dispositivosController extends Controller
             $horarioEmpleado = DB::table('horario_empleado as he')
                 ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
                 ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->leftJoin('reglas_horasextras as rh', 'rh.idreglas_horasExtras', '=', 'h.idreglas_horasExtras')
                 ->select(
                     'h.horario_descripcion as horario',
                     DB::raw('CONCAT("' . $fecha . '" , " ",h.horaI) as horarioIni'),
@@ -826,7 +849,11 @@ class dispositivosController extends Controller
                     'he.estado as estado',
                     'he.horarioEmp_id as idHorarioE',
                     'h.horasObliga as horasObligadas',
-                    'h.tiempoMingreso as tiempoMuertoIngreso'
+                    'h.tiempoMingreso as tiempoMuertoIngreso',
+                    DB::raw("IF(rh.tipo_regla is null, null, IF(rh.tipo_regla = 'Normal', 0, 1)) as tipoHorarioExtra"),
+                    'rh.lleno25 as estado25',
+                    'rh.lleno35 as estado35',
+                    'rh.lleno100 as estado100'
                 )
                 ->whereNotIn('he.horarioEmp_id', $arrayHorarioE)
                 ->where('empleado_emple_id', '=', $m->emple_id)
