@@ -53,7 +53,7 @@ class calendarioController extends Controller
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
-                
+
 
                   ///
 
@@ -136,7 +136,7 @@ class calendarioController extends Controller
     }
     }
 
-  
+
 
 
     public function destroy(Request $request)
@@ -174,7 +174,7 @@ class calendarioController extends Controller
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
-                
+
 
                   ///
 
@@ -285,9 +285,9 @@ class calendarioController extends Controller
         $calendarioR->fin_fecha=$fincale;
         $calendarioR->save();
 
-        
 
-       
+
+
 
         return $calendarioR;
 
@@ -439,12 +439,18 @@ class calendarioController extends Controller
         //*recorro empleados a asignar
         foreach($idempleado as $idempleados){
 
-         //*verifico si tiene calendario asignado   
+         //*verifico si tiene calendario asignado
          $calendario_empleado = calendario_empleado::where('emple_id', '=', $idempleados)
             ->get();
 
         //*si no tiene calendario asiggnado
         if ($calendario_empleado->isEmpty()) {
+
+            //*asignamos
+            $calendario_empleado=new calendario_empleado();
+            $calendario_empleado->emple_id=$idempleados;
+            $calendario_empleado->calen_id=$idcalendario;
+            $calendario_empleado->save();
 
             //*verifico eventos de calendario
             $eventos_calendario = eventos_calendario::where('organi_id', '=', session('sesionidorg'))
@@ -464,13 +470,25 @@ class calendarioController extends Controller
         }
         else{
 
-            //*verifico si el empleado tiene el mismo calendario
+            //*verifico si el empleado tiene calendario asignado
             $eventos_empleadoRep =  calendario_empleado::where('emple_id', '=', $idempleados)
             ->where('calen_id', '=', $idcalendario)
             ->get();
 
-            //*si no tiene el mismo calendario
+            //*si no tiene  calendario
             if ($eventos_empleadoRep->isEmpty()) {
+
+                //*verifico si existe empleado con cualquier calendario
+                $eventos_empleadoExist =  calendario_empleado::where('emple_id', '=', $idempleados)
+                ->get()->first();
+
+                if($eventos_empleadoExist){
+                     //*actualizo su calendario
+                    $calendario_empleado=calendario_empleado::find( $eventos_empleadoExist->idcalendario_empleado);
+                    $calendario_empleado->calen_id=$idcalendario;
+                    $calendario_empleado->save();
+
+                }
 
                 //*elimino sus incidencias de empleado
                 DB::table('incidencia_dias')
@@ -492,6 +510,8 @@ class calendarioController extends Controller
                         $incidencia_dias->save();
                     }
                 }
+
+             } else{
 
              }
 
