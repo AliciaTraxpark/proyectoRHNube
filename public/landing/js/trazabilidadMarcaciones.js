@@ -31,6 +31,7 @@ var razonSocial = {};
 var direccion = {};
 var ruc = {};
 var paginaGlobal = 10;
+var checkedIncidencias = [];
 function inicializarTabla() {
     table = $("#tablaTrazabilidad").DataTable({
         "searching": false,
@@ -342,7 +343,7 @@ function cargarDatos() {
         var listaI = "";
         for (let item = 0; item < data.incidencias.length; item++) {
             listaI += `<li class="liContenido incidenciaHijo" onclick="javascript:menuIncidencias(${data.incidencias[item].id})">
-                            <input type="checkbox" checked id="incidencia${data.incidencias[item].id}">
+                            <input type="checkbox" id="incidencia${data.incidencias[item].id}">
                             <label for="">${data.incidencias[item].descripcion}</label>
                         </li>`;
         }
@@ -1432,12 +1433,18 @@ function menuIncidencias(id) {
             }
         }
     });
+    var lengthChecked = $('.incidenciaPadre input[type=checkbox]').closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').length;
+    $('.incidenciaPadre input[type=checkbox]').closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').each(function () {
+        if (checkedIncidencias.length == lengthChecked) checkedIncidencias = [];
+        checkedIncidencias.push({ "id": this.id, "valor": $(this).is(":checked") });
+    });
+    console.log(checkedIncidencias);
     toggleColumnas();
 }
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.incidenciaPadre input[type=checkbox]').change(function () {
     $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
-    $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo').click();
+    toggleColumnas();
 });
 // : ***************************** TIEMPO MUERTO ENTRADA *********************************
 $('#tiempoMuertoE').on("change", function (event) {
@@ -1468,7 +1475,27 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.tiempoMuertoS').visible(false);
     }
+    chechIncidencias();
+    // : INCIDENCIAS
+    $('.incidenciaPadre input[type=checkbox]').closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').each(function () {
+        if ($(this).is(":checked")) {
+            dataT.api().columns("." + this.id).visible(true);
+        } else {
+            dataT.api().columns("." + this.id).visible(false);
+        }
+    });
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
+}
+function chechIncidencias() {
+    if (checkedIncidencias.length == 0) {
+        $('.incidenciaPadre input[type=checkbox]').closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop("checked", true);
+        $('.incidenciaHijo input[type=checkbox]').closest('ul').prev('.incidenciaPadre').find('input[type=checkbox]').prop("checked", true);
+    } else {
+        checkedIncidencias.forEach(element => {
+            $('#' + element.id).prop("checked", element.valor);
+        });
+
+    }
 }
 // * FINALIZACION
 $('#tablaTrazabilidad tbody').on('click', 'tr', function () {

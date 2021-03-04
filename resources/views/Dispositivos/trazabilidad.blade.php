@@ -141,7 +141,7 @@
                                         style="cursor: pointer">
                                     <label class="custom-control-label" for="switchO" style="font-weight: bold">
                                         <img src="{{asset('landing/images/insert.svg')}}" height="18">
-                                        Selector de incidencias
+                                        Selector de columnas
                                     </label>
                                 </div>
                             </a>
@@ -156,7 +156,7 @@
                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido incidenciaPadre">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox">
                                         <label for="">Incidencias</label>
                                         <img class="float-right mt-1 ml-2"
                                             src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
