@@ -363,6 +363,7 @@ class dispositivosController extends Controller
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -371,8 +372,6 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -380,6 +379,7 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -387,9 +387,10 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -398,6 +399,7 @@ class dispositivosController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
         }
         if ($invitadod) {
@@ -514,6 +516,7 @@ class dispositivosController extends Controller
                             'e.organi_id'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->orderBy('p.perso_nombre', 'ASC')
                         ->get();
                 } else {
@@ -536,6 +539,7 @@ class dispositivosController extends Controller
                             'e.organi_id'
                         )
                         ->where('e.emple_id', $idemp)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             } else {
@@ -569,6 +573,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->orderBy('p.perso_nombre', 'ASC')
                             ->get();
                     } else {
@@ -596,6 +601,7 @@ class dispositivosController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.emple_id', $idemp)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->get();
                     }
                 } else {
@@ -624,6 +630,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->orderBy('p.perso_nombre', 'ASC')
                             ->get();
                     } else {
@@ -652,6 +659,7 @@ class dispositivosController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.emple_id', $idemp)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->get();
                     }
                 }
@@ -677,6 +685,7 @@ class dispositivosController extends Controller
                         'e.organi_id'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->orderBy('p.perso_nombre', 'ASC')
                     ->get();
             } else {
@@ -700,6 +709,7 @@ class dispositivosController extends Controller
                     )
                     ->where('e.emple_id', $idemp)
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             }
         }
@@ -1050,6 +1060,7 @@ class dispositivosController extends Controller
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -1058,8 +1069,6 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -1067,6 +1076,7 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -1074,9 +1084,10 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -1085,10 +1096,9 @@ class dispositivosController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
         }
-
-
         if ($invitadod) {
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
@@ -1129,6 +1139,7 @@ class dispositivosController extends Controller
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -1137,8 +1148,6 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -1146,6 +1155,7 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -1153,9 +1163,10 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -1164,10 +1175,9 @@ class dispositivosController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
         }
-
-
         if ($invitadod) {
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
@@ -3644,6 +3654,7 @@ class dispositivosController extends Controller
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -3652,8 +3663,6 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -3661,6 +3670,7 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -3668,9 +3678,10 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -3679,6 +3690,7 @@ class dispositivosController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
         }
         if ($invitadod) {
@@ -3807,6 +3819,7 @@ class dispositivosController extends Controller
                             'e.organi_id'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->orderBy('p.perso_nombre', 'ASC')
                         ->get();
                 } else {
@@ -3855,6 +3868,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->orderBy('p.perso_nombre', 'ASC')
                             ->get();
                     } else {
@@ -3902,6 +3916,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->orderBy('p.perso_nombre', 'ASC')
                             ->get();
                     } else {
@@ -3947,6 +3962,7 @@ class dispositivosController extends Controller
                         'e.organi_id'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->orderBy('p.perso_nombre', 'ASC')
                     ->get();
             } else {
