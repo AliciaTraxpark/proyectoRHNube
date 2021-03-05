@@ -265,9 +265,11 @@
             </div>
             <div class="card-body border">
                 <div class="row justify-content-center">
+                    <input type="hidden" id="ID_START">
+                    <input type="hidden" id="ID_END">
                     <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Fecha:</label>
+                            <label class="col-lg-4 col-form-label">Rango de fechas:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fechaInput" class="form-control" data-input>

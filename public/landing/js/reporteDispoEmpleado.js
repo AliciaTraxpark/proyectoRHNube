@@ -326,7 +326,6 @@ $(function () {
 $('#switchO').prop("disabled", true);
 inicializarTabla();
 function cargartabla(fecha1, fecha2) {
-
     var idemp = $('#idempleado').val();
     if (idemp == 0) {
         $.notifyClose();
