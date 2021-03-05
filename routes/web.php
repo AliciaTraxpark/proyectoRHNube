@@ -657,6 +657,6 @@ Route::post('selectModos', 'dashboardController@selectModos');
 Route::get('modos', 'dashboardController@getModos');
 
 //GENERAR AUTOMA SOLO EJECUTAR 1 VEZ
-/* Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
-Route::get('/asignarReglas', 'EmpleadoController@agregarReglas');
+ Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
+/*Route::get('/asignarReglas', 'EmpleadoController@agregarReglas');
 Route::get('/horariosReglas', 'EmpleadoController@generarReglaHorario'); */

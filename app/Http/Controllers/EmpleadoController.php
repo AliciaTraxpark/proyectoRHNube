@@ -42,6 +42,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\calendario_empleado;
 use App\reglas_horasextras;
+use App\tipo_incidencia;
 class EmpleadoController extends Controller
 {
     /**
@@ -913,7 +914,7 @@ class EmpleadoController extends Controller
             $calendario_empleado->calen_id=$objEmpleado['idca'];
             $calendario_empleado->save();
         }
-       
+
 
         $eventos_empleadoVerif = eventos_empleado::where('id_empleado', '=', $idempleado)
             ->get();
@@ -1913,9 +1914,9 @@ class EmpleadoController extends Controller
                 $calendario_empleado->calen_id=$idcalendario;
                 $calendario_empleado->save();
             }
-        }    
-       
-        
+        }
+
+
         if ($eventos_empleado->isEmpty()) {
             $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
@@ -3246,19 +3247,29 @@ class EmpleadoController extends Controller
     //para llenar de calendario  solo eject 1 vez
     public function asignarCalEmp(Request $request){
 
-        $eventos_empleado=DB::table('eventos_empleado')
-        ->where('id_calendario','!=',null)
-        ->groupBy('id_empleado')->get();
-        
-        foreach($eventos_empleado as $eventos_empleados){
-            $calendarioBuscar=DB::table('calendario_empleado')
-            ->where('emple_id','=',$eventos_empleados->id_empleado)
-            ->get();
-            if($calendarioBuscar->isEmpty()){
-                $calendario_empleado=new calendario_empleado();
-                $calendario_empleado->emple_id=$eventos_empleados->id_empleado;
-                $calendario_empleado->calen_id=$eventos_empleados->id_calendario;
-                $calendario_empleado->save();
+         //*TIPO DE INCIDENCIA
+         $tipoIncidencia=[
+            'Feriado',
+            'Incidencia',
+            'Descanso',
+            'De sistema'
+        ];
+
+        $organizaciones=DB::table('organizacion')->get();
+
+        foreach($organizaciones as $organizacion){
+            foreach ($tipoIncidencia as $tipoinci) {
+                $tipoincidencia = new tipo_incidencia();
+                $tipoincidencia->tipoInc_descripcion = $tipoinci;
+                $tipoincidencia->tipoInc_activo = 1;
+                if($tipoinci=='De sistema'){
+                    $tipoincidencia->sistema = 1;
+                } else{
+                    $tipoincidencia->sistema = 0;
+                }
+
+                $tipoincidencia->organi_id =  $organizacion->organi_id;
+                $tipoincidencia->save();
             }
         }
     }
@@ -3270,24 +3281,24 @@ class EmpleadoController extends Controller
         $Organizaciones=DB::table('organizacion')->get();
         //*ARRAY DE REGLAS
             //* 0 es lleno
-            //* 1 es todo 
+            //* 1 es todo
             //* 2 es vacio
             $arrayReglas=[
                 1 => ['idTipoRegla'=>'1', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
                      'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1, 'activo'=>1],
-    
+
                 2 =>['idTipoRegla'=>'2', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25% y 35%)',
                     'lleno25'=>0, 'lleno35'=>1,'lleno100'=>2,'activo'=>1],
-    
+
                 3 =>['idTipoRegla'=>'3', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(35%)',
                 'lleno25'=>2, 'lleno35'=>1,'lleno100'=>2,'activo'=>1],
-                
+
                 4 =>['idTipoRegla'=>'4', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
                 'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1,'activo'=>1],
-                
+
                 5 =>['idTipoRegla'=>'5', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(100%)',
                 'lleno25'=>2, 'lleno35'=>2,'lleno100'=>1,'activo'=>1]
-    
+
             ];
 
             foreach($Organizaciones as $Organizacion){
@@ -3305,7 +3316,7 @@ class EmpleadoController extends Controller
                     $reglas->save();
                 }
             }
-            
+
     }
 
     //*genrar regla de horario
