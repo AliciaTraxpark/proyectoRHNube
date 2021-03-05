@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\ubigeo_peru_departments;
 use App\paises;
 use App\calendario;
+use App\calendario_empleado;
 use App\eventos_empleado;
-use App\eventos_usuario;
+use App\eventos_calendario;
+use App\incidencia_dias;
 use App\organizacion;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -51,7 +53,7 @@ class calendarioController extends Controller
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
-                
+
 
                   ///
 
@@ -134,25 +136,15 @@ class calendarioController extends Controller
     }
     }
 
-    public function show()
-    {
-        $eventos = DB::table('eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end', 'tipo']);
 
-        $eventos_usuario = DB::table('eventos_usuario')
-            ->select(['id', 'title', 'color', 'textColor', 'start', 'end', 'tipo'])
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->union($eventos)
-            ->get();
-        return response()->json($eventos_usuario);
-    }
 
 
     public function destroy(Request $request)
     {  $id=$request->id;
         //calendario::where('eventos_id',$id)->delete();
-        $eventos_usuario = eventos_usuario::findOrFail($id);
-        eventos_usuario::destroy($id);
-        return response()->json($eventos_usuario);
+        $eventos_calendario = eventos_calendario::findOrFail($id);
+        eventos_calendario::destroy($id);
+        return response()->json($eventos_calendario);
     }
     public function indexMenu()
     {
@@ -182,7 +174,7 @@ class calendarioController extends Controller
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
-                
+
 
                   ///
 
@@ -293,9 +285,9 @@ class calendarioController extends Controller
         $calendarioR->fin_fecha=$fincale;
         $calendarioR->save();
 
-        
 
-       
+
+
 
         return $calendarioR;
 
@@ -303,19 +295,20 @@ class calendarioController extends Controller
 
     public function cargarcalendario(Request $request){
         $idcalendario=$request->idcalendario;
-        $eventos_usuario=eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+        $eventos_calendario=eventos_calendario::where('eventos_calendario.organi_id', '=', session('sesionidorg'))
+        ->leftJoin('incidencias','eventos_calendario.inciden_id','=','incidencias.inciden_id')
         ->where('id_calendario','=',$idcalendario)
-        ->select('id','start','end','title','color','textColor','tipo','laborable')
+        ->select('id','start','end','inciden_descripcion as title','color','textColor','laborable')
         ->get();
-        return $eventos_usuario;
+        return $eventos_calendario;
     }
 
     public function verificarID(Request $request){
         $idcalendario=$request->id_calendario;
-        $eventos_empleado = DB::table('eventos_empleado')
-        ->where('id_calendario', '=', $idcalendario)
+        $calendario_empleado = DB::table('calendario_empleado')
+        ->where('calen_id', '=', $idcalendario)
         ->get();
-        if ($eventos_empleado->isEmpty()) {
+        if ($calendario_empleado->isEmpty()) {
             return  0;
         } else{ return  1;}
 
@@ -323,29 +316,24 @@ class calendarioController extends Controller
     public function copiarevenEmpleado(Request $request){
         $idcalendario=$request->id_calendario;
         $idevento=$request->idevento;
-        $eventos_usuario = DB::table('eventos_usuario')
+        $eventos_calendario = DB::table('eventos_calendario')
         ->where('id_calendario', '=', $idcalendario)
         ->where('id', '=',  $idevento)
         ->get()->first();
 
-        $eventos_empleadoN = DB::table('eventos_empleado')
-        ->where('id_calendario', '=', $idcalendario)
-        ->groupBy('id_empleado')
+        $eventos_empleadoN = DB::table('calendario_empleado')
+        ->where('calen_id', '=', $idcalendario)
+        ->groupBy('emple_id')
         ->get();
-        /* dd($eventos_usuario->title); */
+        /* dd($eventos_calendario->title); */
         foreach($eventos_empleadoN as $eventos_empleadosN){
-            $eventos_empleado = new eventos_empleado();
-            $eventos_empleado->title =  $eventos_usuario->title;
-            $eventos_empleado->color = $eventos_usuario->color;
-            $eventos_empleado->textColor = $eventos_usuario->textColor;
-            $eventos_empleado->start = $eventos_usuario->start;
-            $eventos_empleado->end = $eventos_usuario->end;
-            $eventos_empleado->id_empleado =$eventos_empleadosN->id_empleado;
-            $eventos_empleado->tipo_ev = $eventos_usuario->tipo;
-            $eventos_empleado->id_calendario = $eventos_usuario->id_calendario;
-            $eventos_usuario->organi_id = session('sesionidorg');
-            $eventos_empleado->laborable = $eventos_usuario->laborable;
-            $eventos_empleado->save();
+            $incidencia_dias = new incidencia_dias();
+            $incidencia_dias->id_incidencia = $eventos_calendario->inciden_id;
+            $incidencia_dias->inciden_dias_fechaI = $eventos_calendario->start;
+            $incidencia_dias->inciden_dias_fechaF = $eventos_calendario->end;
+            $incidencia_dias->id_empleado = $eventos_empleadosN->emple_id;
+            $incidencia_dias->laborable =$eventos_calendario->laborable;
+            $incidencia_dias->save();
 
         }
 
@@ -356,7 +344,7 @@ class calendarioController extends Controller
         $idcalenda=$request->idcalenda;
         $allValsAños=$request->allValsAños;
         foreach($allValsAños as $allValsAñosx){
-           $eventos_usuarioClon = eventos_usuario::where('id_calendario','=',$idcalenda)->whereYear('start',$allValsAñosx)->get();
+           $eventos_calendarioClon = eventos_calendario::where('id_calendario','=',$idcalenda)->whereYear('start',$allValsAñosx)->get();
 
         }
        $añomax=max($allValsAños)+1;
@@ -369,19 +357,18 @@ class calendarioController extends Controller
         $calendarioR->fin_fecha= $finNew;
         $calendarioR->save();
 
-            foreach ($eventos_usuarioClon as $eventos) {
-            $eventos_usuario = new eventos_usuario();
-            $eventos_usuario->organi_id = session('sesionidorg');
-            $eventos_usuario->users_id = Auth::user()->id;
-            $eventos_usuario->title =$eventos->title;
-            $eventos_usuario->color =$eventos->color;
-            $eventos_usuario->textColor =$eventos->textColor;
-            $eventos_usuario->start =$eventos->start;
-            $eventos_usuario->end =$eventos->end;
-            $eventos_usuario->tipo =$eventos->tipo;
-            $eventos_usuario->id_calendario =$calendarioR->calen_id;
-            $eventos_usuario->laborable =$eventos->laborable;
-            $eventos_usuario->save();
+            foreach ($eventos_calendarioClon as $eventos) {
+            $eventos_calendario = new eventos_calendario();
+            $eventos_calendario->organi_id = session('sesionidorg');
+            $eventos_calendario->users_id = Auth::user()->id;
+            $eventos_calendario->color =$eventos->color;
+            $eventos_calendario->textColor =$eventos->textColor;
+            $eventos_calendario->start =$eventos->start;
+            $eventos_calendario->end =$eventos->end;
+            $eventos_calendario->id_calendario =$calendarioR->calen_id;
+            $eventos_calendario->laborable =$eventos->laborable;
+            $eventos_calendario->inciden_id =$eventos->inciden_id;
+            $eventos_calendario->save();
         }
 
 
@@ -409,9 +396,6 @@ class calendarioController extends Controller
 
     $final=Carbon::create($añoFinc.'-12-31');
 
-  
-
-     
        ////////////////////////////////////
        $añoCale=$añoFinc+1;
        $fechaCal=Carbon::create($añoCale.'-01-01');
@@ -422,133 +406,6 @@ class calendarioController extends Controller
 
        $eventosA=eventos::whereYear('start','=',2020)->get();
 
-
-       /* AÑADIR FERIADOS */
-       foreach ($eventosA as $eventosA2) {
-      /*   $today = Carbon::now(); */
-        $año=$añoFinc;
-           /* PARA START */
-        $fechaMes = Carbon::parse($eventosA2->start);
-
-        $mfecha1= $fechaMes->month;
-        if( $mfecha1<10){
-            $mfecha1='0'.$fechaMes->month;
-        }
-
-        $dfechaDia = $fechaMes->day;
-        if( $dfechaDia<10){
-            $dfechaDia='0'.$fechaMes->day;
-        }
-        $dfechaHora = '00:00:00';
-
-        $finalStart=Carbon::create($año.'-'.$mfecha1.'-'.$dfechaDia.' ' .$dfechaHora);
-        /* fin */
-
-           /* PARA END */
-           $fechaMes2 = Carbon::parse($eventosA2->end);
-
-           $mfecha2= $fechaMes2->month;
-           if( $mfecha2<10){
-               $mfecha2='0'.$fechaMes2->month;
-           }
-
-           $dfechaDia2 = $fechaMes2->day;
-           if( $dfechaDia2<10){
-               $dfechaDia2='0'.$fechaMes2->day;
-           }
-           $dfechaHora2 = '00:00:00';
-
-           $finalEnd=Carbon::create($año.'-'.$mfecha2.'-'.$dfechaDia2.' ' .$dfechaHora2);
-           /* fin */
-
-        $eventos_usuario3 = new eventos_usuario();
-        $eventos_usuario3->organi_id = session('sesionidorg');
-        $eventos_usuario3->users_id = Auth::user()->id;
-        $eventos_usuario3->title =$eventosA2->title;
-        $eventos_usuario3->color =$eventosA2->color;
-        $eventos_usuario3->textColor = $eventosA2->textColor;
-        $eventos_usuario3->start =$finalStart;
-        $eventos_usuario3->tipo =0;
-        $eventos_usuario3->id_calendario =$idcalenda;
-        $eventos_usuario3->laborable =0;
-        $eventos_usuario3->end =$finalEnd;
-        $eventos_usuario3->save();
-         }
-
-      
-
-
-
-           /* EMPLEADOS CON ESTE CALENDARIO */
-           $empleados = DB::table('empleado as e')
-            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
-            ->where('eve.id_calendario','=',$idcalenda)
-            ->select(
-                'e.emple_id',
-                'p.perso_id',
-                'p.perso_nombre',
-                'p.perso_apPaterno',
-                'p.perso_apMaterno',
-                'eve.id_calendario as idcalendar'
-            )
-            ->groupBy('e.emple_id')
-            ->get();
-
-
-
-           foreach($empleados as $emp){
-           foreach ($eventosA as $eventosA2) {
-
-              $año=$añoFinc;
-
-              $fechaMes = Carbon::parse($eventosA2->start);
-
-              $mfecha1= $fechaMes->month;
-              if( $mfecha1<10){
-                  $mfecha1='0'.$fechaMes->month;
-              }
-
-              $dfechaDia = $fechaMes->day;
-              if( $dfechaDia<10){
-                  $dfechaDia='0'.$fechaMes->day;
-              }
-              $dfechaHora = '00:00:00';
-
-              $finalStart=Carbon::create($año.'-'.$mfecha1.'-'.$dfechaDia.' ' .$dfechaHora);
-
-                 $fechaMes2 = Carbon::parse($eventosA2->end);
-
-                 $mfecha2= $fechaMes2->month;
-                 if( $mfecha2<10){
-                     $mfecha2='0'.$fechaMes2->month;
-                 }
-
-                 $dfechaDia2 = $fechaMes2->day;
-                 if( $dfechaDia2<10){
-                     $dfechaDia2='0'.$fechaMes2->day;
-                 }
-                 $dfechaHora2 = '00:00:00';
-
-                 $finalEnd=Carbon::create($año.'-'.$mfecha2.'-'.$dfechaDia2.' ' .$dfechaHora2);
-
-
-              $eventos_usuario31 = new eventos_empleado();
-              $eventos_usuario31->title =$eventosA2->title;
-              $eventos_usuario31->color =$eventosA2->color;
-              $eventos_usuario31->textColor = $eventosA2->textColor;
-              $eventos_usuario31->start =$finalStart;
-              $eventos_usuario31->tipo_ev =0;
-              $eventos_usuario31->id_calendario =$idcalenda;
-              $eventos_usuario31->laborable =0;
-              $eventos_usuario31->end =$finalEnd;
-              $eventos_usuario31->id_empleado=$emp->emple_id;
-              $eventos_usuario31->save();
-               }
-
-          
-                }
-
   }
 
   public function listaEmplCa(Request $request){
@@ -556,16 +413,16 @@ class calendarioController extends Controller
 
     $empleados = DB::table('empleado as e')
     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-    ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+    ->leftJoin('calendario_empleado as ce', 'e.emple_id', '=', 'ce.emple_id')
     ->select(
         'e.emple_id',
         'p.perso_id',
         'p.perso_nombre',
         'p.perso_apPaterno',
         'p.perso_apMaterno',
-        'eve.id_calendario as idcalendar'
+        'ce.calen_id as idcalendar'
     )
-    ->where('eve.id_calendario', '=', $idcalendar)
+    ->where('ce.calen_id', '=', $idcalendar)
     ->where('e.emple_estado', '=', 1)
     ->where('e.organi_id', '=', session('sesionidorg'))
     ->groupBy('e.emple_id')
@@ -577,59 +434,86 @@ class calendarioController extends Controller
 
   public function asignarCalendario(Request $request){
     $idcalendario = $request->idcalenReg;
-        $idempleado = $request->idemples;
+    $idempleado = $request->idemples;
+
+        //*recorro empleados a asignar
         foreach($idempleado as $idempleados){
-         $eventos_empleado = eventos_empleado::where('id_empleado', '=', $idempleados)
+
+         //*verifico si tiene calendario asignado
+         $calendario_empleado = calendario_empleado::where('emple_id', '=', $idempleados)
             ->get();
 
-        if ($eventos_empleado->isEmpty()) {
+        //*si no tiene calendario asiggnado
+        if ($calendario_empleado->isEmpty()) {
 
-            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+            //*asignamos
+            $calendario_empleado=new calendario_empleado();
+            $calendario_empleado->emple_id=$idempleados;
+            $calendario_empleado->calen_id=$idcalendario;
+            $calendario_empleado->save();
+
+            //*verifico eventos de calendario
+            $eventos_calendario = eventos_calendario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
-            if ($eventos_usuario) {
-                foreach ($eventos_usuario as $eventos_usuarios) {
-                    $eventos_empleado_r = new eventos_empleado();
-                    $eventos_empleado_r->id_empleado = $idempleados;
-                    $eventos_empleado_r->title = $eventos_usuarios->title;
-                    $eventos_empleado_r->color = $eventos_usuarios->color;
-                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
-                    $eventos_empleado_r->start = $eventos_usuarios->start;
-                    $eventos_empleado_r->end = $eventos_usuarios->end;
-                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
-                    $eventos_empleado_r->id_calendario = $idcalendario;
-                    $eventos_empleado_r->laborable =0;
-                    $eventos_empleado_r->save();
+
+            if ($eventos_calendario) {
+                foreach ($eventos_calendario as $eventos_calendarios) {
+                    $incidencia_dias = new incidencia_dias();
+                    $incidencia_dias->id_incidencia = $eventos_calendarios->inciden_id;
+                    $incidencia_dias->inciden_dias_fechaI = $eventos_calendarios->start;
+                    $incidencia_dias->inciden_dias_fechaF = $eventos_calendarios->end;
+                    $incidencia_dias->id_empleado = $idempleados;
+                    $incidencia_dias->laborable =$eventos_calendarios->laborable;
+                    $incidencia_dias->save();
                 }
             }
         }
         else{
 
-            $eventos_empleadoRep = eventos_empleado::where('id_empleado', '=', $idempleados)
-            ->where('id_calendario', '=', $idcalendario)
+            //*verifico si el empleado tiene calendario asignado
+            $eventos_empleadoRep =  calendario_empleado::where('emple_id', '=', $idempleados)
+            ->where('calen_id', '=', $idcalendario)
             ->get();
-            if ($eventos_empleadoRep->isEmpty()) {
-                DB::table('eventos_empleado')
-            ->where('id_empleado', '=', $idempleados)
-            ->delete();
-            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
-                ->where('id_calendario', '=', $idcalendario)->get();
-            if ($eventos_usuario) {
-                foreach ($eventos_usuario as $eventos_usuarios) {
-                    $eventos_empleado_r = new eventos_empleado();
-                    $eventos_empleado_r->id_empleado = $idempleados;
-                    $eventos_empleado_r->title = $eventos_usuarios->title;
-                    $eventos_empleado_r->color = $eventos_usuarios->color;
-                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
-                    $eventos_empleado_r->start = $eventos_usuarios->start;
-                    $eventos_empleado_r->end = $eventos_usuarios->end;
-                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
-                    $eventos_empleado_r->id_calendario = $idcalendario;
-                    $eventos_empleado_r->laborable =0;
-                    $eventos_empleado_r->save();
-                }
-            }
 
-            }
+            //*si no tiene  calendario
+            if ($eventos_empleadoRep->isEmpty()) {
+
+                //*verifico si existe empleado con cualquier calendario
+                $eventos_empleadoExist =  calendario_empleado::where('emple_id', '=', $idempleados)
+                ->get()->first();
+
+                if($eventos_empleadoExist){
+                     //*actualizo su calendario
+                    $calendario_empleado=calendario_empleado::find( $eventos_empleadoExist->idcalendario_empleado);
+                    $calendario_empleado->calen_id=$idcalendario;
+                    $calendario_empleado->save();
+
+                }
+
+                //*elimino sus incidencias de empleado
+                DB::table('incidencia_dias')
+                ->where('id_empleado', '=', $idempleados)
+                ->delete();
+
+                 //*verifico eventos de calendario
+                $eventos_calendario = eventos_calendario::where('organi_id', '=', session('sesionidorg'))
+                ->where('id_calendario', '=', $idcalendario)->get();
+
+                if ($eventos_calendario) {
+                    foreach ($eventos_calendario as $eventos_calendarios) {
+                        $incidencia_dias = new incidencia_dias();
+                        $incidencia_dias->id_incidencia = $eventos_calendarios->inciden_id;
+                        $incidencia_dias->inciden_dias_fechaI = $eventos_calendarios->start;
+                        $incidencia_dias->inciden_dias_fechaF = $eventos_calendarios->end;
+                        $incidencia_dias->id_empleado = $idempleados;
+                        $incidencia_dias->laborable =$eventos_calendarios->laborable;
+                        $incidencia_dias->save();
+                    }
+                }
+
+             } else{
+
+             }
 
 
 
@@ -647,15 +531,15 @@ class calendarioController extends Controller
         foreach($idempleado as $idempleados){
             $emps=    DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
-            ->leftJoin('calendario as ca', 'eve.id_calendario', '=', 'ca.calen_id')
+            ->leftJoin('calendario_empleado as ce', 'e.emple_id', '=', 'ce.emple_id')
+            ->leftJoin('calendario as ca', 'ce.calen_id', '=', 'ca.calen_id')
             ->select(
                 'e.emple_id',
                 'p.perso_id',
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',
-                'eve.id_calendario as idcalendar',
+                'ce.calen_id as idcalendar',
                 'ca.calendario_nombre'
             )
             ->where('e.emple_id', '=', $idempleados)
@@ -689,6 +573,42 @@ class calendarioController extends Controller
            $arrayfec->push($i);
       }
       return $arrayfec;
+
+  }
+
+  public function agregarSelectFeriado(Request $request){
+
+    //obtener tipo de incidencia
+    $tipo_incidencia=DB::table('tipo_incidencia')
+    ->where('organi_id','=',session('sesionidorg'))
+    ->where('tipoInc_descripcion','=','Feriado')
+    ->get()->first();
+
+    $incidencias=DB::table('incidencias')
+    ->where('organi_id','=',session('sesionidorg'))
+    ->where('idtipo_incidencia','=',$tipo_incidencia->idtipo_incidencia)
+    ->where('estado','=',1)
+    ->get();
+
+    return ($incidencias);
+
+  }
+
+  public function agregarSelectDescanso(Request $request){
+
+    //obtener tipo de incidencia
+    $tipo_incidencia=DB::table('tipo_incidencia')
+    ->where('organi_id','=',session('sesionidorg'))
+    ->where('tipoInc_descripcion','=','Descanso')
+    ->get()->first();
+
+    $incidencias=DB::table('incidencias')
+    ->where('organi_id','=',session('sesionidorg'))
+    ->where('idtipo_incidencia','=',$tipo_incidencia->idtipo_incidencia)
+    ->where('estado','=',1)
+    ->get();
+
+    return ($incidencias);
 
   }
 }

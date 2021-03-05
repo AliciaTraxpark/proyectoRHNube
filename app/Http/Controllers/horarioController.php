@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\eventos;
 use App\eventos_empleado;
-use App\eventos_usuario;
+use App\eventos_calendario;
 use App\historial_horarioempleado;
 use App\horario;
 use App\horario_dias;
@@ -40,10 +40,10 @@ class horarioController extends Controller
 
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+                ->join('calendario_empleado as eve', 'e.emple_id', '=', 'eve.emple_id')
                 ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
                 ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('eve.id_empleado', '!=', null)
+                ->where('eve.emple_id', '!=', null)
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id')
                 ->get();
@@ -395,14 +395,14 @@ class horarioController extends Controller
         } /* else {
     $eventos1 = DB::table('eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end']);
 
-    $eventos_usuario1 = DB::table('eventos_usuario')
+    $eventos_calendario1 = DB::table('eventos_calendario')
     ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
     ->where('Users_id', '=', Auth::user()->id)
     ->where('evento_departamento', '=', null)
     ->where('evento_pais', '=', 173)
     ->union($eventos1)
     ->get();
-    return [$eventos_usuario1, $eventos_usuario1];
+    return [$eventos_calendario1, $eventos_calendario1];
     } */
     }
     public function vaciartemporal()
@@ -450,10 +450,10 @@ class horarioController extends Controller
 
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+                ->join('calendario_empleado as eve', 'e.emple_id', '=', 'eve.emple_id')
                 ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
                 ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('eve.id_empleado', '!=', null)
+                ->where('eve.emple_id', '!=', null)
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id')
                 ->get();
@@ -1009,9 +1009,7 @@ class horarioController extends Controller
             $horario_empleado->save();
         }
 
-        $eventos_empleado = DB::table('eventos_empleado')
-            ->select(['evEmpleado_id', 'title', 'color', 'textColor', 'start', 'end'])
-            ->where('id_empleado', '=', $idempl);
+
 
         $horario_empleado = DB::table('horario_empleado as he')
             ->select(['id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end'])
@@ -1019,8 +1017,8 @@ class horarioController extends Controller
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
-            ->where('he.estado', '=', 1)
-            ->union($eventos_empleado);
+            ->where('he.estado', '=', 1);
+
 
         $incidencias = DB::table('incidencias as i')
             ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'idi.inciden_dias_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
@@ -1526,10 +1524,10 @@ class horarioController extends Controller
 
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+                ->join('calendario_empleado as eve', 'e.emple_id', '=', 'eve.emple_id')
                 ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
                 ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('eve.id_empleado', '!=', null)
+                ->where('eve.emple_id', '!=', null)
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id')
                 ->get();
@@ -1583,18 +1581,18 @@ class horarioController extends Controller
             ->get();
 
         if ($eventos_empleado->isEmpty()) {
-            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+            $eventos_calendario = eventos_calendario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
-            if ($eventos_usuario) {
-                foreach ($eventos_usuario as $eventos_usuarios) {
+            if ($eventos_calendario) {
+                foreach ($eventos_calendario as $eventos_calendarios) {
                     $eventos_empleado_r = new eventos_empleado();
                     $eventos_empleado_r->id_empleado = $idempleado;
-                    $eventos_empleado_r->title = $eventos_usuarios->title;
-                    $eventos_empleado_r->color = $eventos_usuarios->color;
-                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
-                    $eventos_empleado_r->start = $eventos_usuarios->start;
-                    $eventos_empleado_r->end = $eventos_usuarios->end;
-                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_r->title = $eventos_calendarios->title;
+                    $eventos_empleado_r->color = $eventos_calendarios->color;
+                    $eventos_empleado_r->textColor = $eventos_calendarios->textColor;
+                    $eventos_empleado_r->start = $eventos_calendarios->start;
+                    $eventos_empleado_r->end = $eventos_calendarios->end;
+                    $eventos_empleado_r->tipo_ev = $eventos_calendarios->tipo;
                     $eventos_empleado_r->id_calendario = $idcalendario;
                     $eventos_empleado_r->laborable = 0;
                     $eventos_empleado_r->save();
@@ -1614,13 +1612,6 @@ class horarioController extends Controller
             ->where('idi.id_empleado', '=', $idempleado);
         /*   ->union($horario_empleado); */
 
-        $eventos_empleado = DB::table('eventos_empleado')
-            ->select([
-                'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
-                'title as horaAdic', 'start as idhorario', 'start as horasObliga', 'start as nHoraAdic',
-            ])
-            ->where('id_empleado', '=', $idempleado)
-            ->union($incidencias);
 
         /*   $horario_empleado ->union($eventos_empleado); */
         /* -------HORARIOS QUE NO ESTAN GUARDADOS------ */
@@ -1630,7 +1621,7 @@ class horarioController extends Controller
         ])
             ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
             ->where('users_id', '=', Auth::user()->id)
-            ->union($eventos_empleado);
+            ->union($incidencias);
 
         /* -------------------------------------------- */
         $horario_empleado = DB::table('horario_empleado as he')

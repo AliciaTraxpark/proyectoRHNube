@@ -122,9 +122,9 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                     <span>Asignar horario</span>
                 </a>
-                <a href="/dias/laborales">
+                <a href="/incidencias">
 
-                    <span>Asignar días no laborales</span>
+                    <span>Incidencias</span>
                 </a>
                 @endif
 
@@ -156,7 +156,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <span>Puntos de Control</span>
             </a>
         </li>
-    @else 
+    @else
         <li style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste el modo tareo o asistencia en puerta.">
             <a href="#" data-toggle="modal" data-target="#modos">
                 <img src="{{asset('landing/images/vectorpaint.svg')}}" height="18" style="margin: 0 10px 0 3px;">
@@ -171,7 +171,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <span>Centro de costo</span>
             </a>
         </li>
-    @else 
+    @else
         <li style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste el modo tareo, ni asistencia en puerta ni control en ruta.">
             <a href="#" data-toggle="modal" data-target="#modos">
                 <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
@@ -209,7 +209,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 </li>
             </ul>
         </li>
-    @else 
+    @else
         <li id="li_remoto" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste este modo.">
             <a href="javascript: void(0);">
                 <i data-feather="activity"></i>
@@ -240,7 +240,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </ul>
         </li>
     @endif
-    
+
     @if(colorLi()->Mruta == 1)
     <li id="li_ruta" >
         <a href="javascript: void(0);">
@@ -258,7 +258,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
-    @else 
+    @else
     <li id="li_ruta" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste este modo.">
         <a href="javascript: void(0);">
             <i data-feather="map-pin"></i>
@@ -316,7 +316,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
-    @else 
+    @else
     <li id="li_puerta" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste este modo.">
         <a href="javascript: void(0);">
             <i data-feather="check-circle"></i>
@@ -378,7 +378,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
-    @else 
+    @else
     <li id="li_tareo" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste este modo.">
         <a href="javascript: void(0);">
             <i data-feather="pocket"></i>
@@ -542,7 +542,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     </li>
                 </ul>
             </li>
-        @else 
+        @else
             <li id="li_remotoInv" style="background-color: #D3D3D3">
                 <a href="javascript: void(0);">
                     <i data-feather="activity"></i>
@@ -572,7 +572,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 </ul>
             </li>
         @endif
-    
+
     @endif
 
     @if ($invitadod->ControlRuta==1)
@@ -592,7 +592,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     </li>
                 </ul>
             </li>
-        @else 
+        @else
             <li id="li_rutaInv" style="background-color: #D3D3D3">
                 <a href="javascript: void(0);">
                     <i data-feather="map-pin"></i>
@@ -609,7 +609,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 </ul>
             </li>
         @endif
-    
+
     @endif
 
     @if ($invitadod->asistePuerta==1)
@@ -658,7 +658,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 @endif
             </ul>
         </li>
-    @else 
+    @else
         <li id="li_puertaInv" style="background-color: #D3D3D3">
             <a href="javascript: void(0);">
                 <i data-feather="check-circle"></i>
@@ -704,7 +704,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </ul>
         </li>
     @endif
-    
+
 
     @endif
 
@@ -760,7 +760,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 </ul>
             </li>
         @endif
-    
+
     @endif
 
     <li>

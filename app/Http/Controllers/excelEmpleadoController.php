@@ -27,9 +27,10 @@ use App\actividad_empleado;
 use App\calendario;
 use App\calendario_empleado;
 use App\centrocosto_empleado;
-use App\eventos_usuario;
+use App\eventos_calendario;
 use App\eventos_empleado;
 use App\historial_empleado;
+use App\incidencia_dias;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -502,28 +503,32 @@ class excelEmpleadoController extends Controller
                     ]);
                 }
 
+                //*obtenemos el calendario d peru
                 $calendario = calendario::where('calendario_nombre', '=', 'Perú')
                     ->where('organi_id', '=', session('sesionidorg'))->get()->first();
                 $idcalendario = $calendario->calen_id;
+
+                //*creamos relacion calendario empleado
                 $calendario_empleado=new calendario_empleado();
                 $calendario_empleado->emple_id=$empleadoId->emple_id;
                 $calendario_empleado->calen_id=$calendario->calen_id;
                 $calendario_empleado->save();
-                $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+
+                //*obtenemos eventos de calendario
+                $eventos_calendario = eventos_calendario::where('organi_id', '=', session('sesionidorg'))
                     ->where('id_calendario', '=', $idcalendario)->get();
-                if ($eventos_usuario) {
-                    foreach ($eventos_usuario as $eventos_usuarios) {
-                        $eventos_empleado_r = new eventos_empleado();
-                        $eventos_empleado_r->id_empleado =  $empleadoId->emple_id;
-                        $eventos_empleado_r->title = $eventos_usuarios->title;
-                        $eventos_empleado_r->color = $eventos_usuarios->color;
-                        $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
-                        $eventos_empleado_r->start = $eventos_usuarios->start;
-                        $eventos_empleado_r->end = $eventos_usuarios->end;
-                        $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
-                        $eventos_empleado_r->id_calendario = $idcalendario;
-                        $eventos_empleado_r->laborable = 0;
-                        $eventos_empleado_r->save();
+
+                //*si hay eventos copiamos a empelados seran sus incidencias
+                if ($eventos_calendario) {
+                    foreach ($eventos_calendario as $eventos_calendarios) {
+
+                        $incidencia_dias = new incidencia_dias();
+                        $incidencia_dias->id_incidencia = $eventos_calendarios->inciden_id;
+                        $incidencia_dias->inciden_dias_fechaI = $eventos_calendarios->start;
+                        $incidencia_dias->inciden_dias_fechaF = $eventos_calendarios->end;
+                        $incidencia_dias->id_empleado =$empleadoId->emple_id;
+                        $incidencia_dias->laborable =$eventos_calendarios->laborable;
+                        $incidencia_dias->save();
                     }
                 }
             }

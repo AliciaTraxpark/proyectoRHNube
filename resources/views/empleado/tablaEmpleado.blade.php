@@ -505,6 +505,7 @@
 <script>
     function editarEmpleado(idempleado){
     $('#form-ver').modal();
+    $("#NuevoOEdito").val("0");
     $( "#detallehorario_ed" ).empty();
     $( "#editar_tbodyHistorial" ).empty();
     $('#smartwizard1').smartWizard("reset");
