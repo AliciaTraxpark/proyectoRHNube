@@ -263,13 +263,14 @@
                     <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
                 </div>
             </div>
-            <input type="hidden" id="pasandoV">
             <div class="card-body border">
                 <div class="row justify-content-center">
-                    <div class="col-xl-4">
+                    <input type="hidden" id="ID_START">
+                    <input type="hidden" id="ID_END">
+                    <div class="col-xl-5">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
+                            <label class="col-lg-5 col-form-label">Rango de fechas:</label>
+                            <div class="input-group col-md-7 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -282,7 +283,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-7 col-sm-6">
+                    <div class="col-xl-6 col-sm-6">
                         <div class="form-group   row">
                             <label class="col-lg-3 col-form-label">Empleado</label>
                             <div class="col-lg-9">
@@ -675,7 +676,7 @@
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
-<script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
+<script src="{{ asset('landing/js/reportePorFechaMP.js') }}"></script>
 @endsection
 @section('script-bottom')
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>

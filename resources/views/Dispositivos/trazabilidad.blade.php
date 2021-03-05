@@ -141,7 +141,7 @@
                                         style="cursor: pointer">
                                     <label class="custom-control-label" for="switchO" style="font-weight: bold">
                                         <img src="{{asset('landing/images/insert.svg')}}" height="18">
-                                        Selector de incidencias
+                                        Selector de columnas
                                     </label>
                                 </div>
                             </a>
@@ -154,11 +154,26 @@
                                     Opciones
                                 </h6>
                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px"
-                                    id="menuIncidencias">
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido incidenciaPadre">
+                                        <input type="checkbox">
+                                        <label for="">Incidencias</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleI()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="menuIncidencias"></ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
-                                        <input type="checkbox" checked id="colCargo">
-                                        <label for="">Cargo</label>
+                                        <input type="checkbox" id="tiempoMuertoE">
+                                        <label for="">Tiempo muerto - entrada</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="tiempoMuertoS">
+                                        <label for="">Tiempo muerto - salida</label>
                                     </li>
                                 </ul>
                             </div>
