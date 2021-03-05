@@ -1359,18 +1359,17 @@ class dispositivosController extends Controller
         foreach ($period as $key => $date) {
             array_push($dates, $date->format('Y-m-d'));
         }
-        // : RECORREMOS FECHAS
-        foreach ($dates as $f) {
-            if (!array_key_exists($f, $data)) {
-                $data[$f] = array();
-            }
-        }
-        ksort($data);
-        // * UNIR EMPLEADOS CON MARCACIONES
-        foreach ($data as $key => $d) {
-            $data[$key] = array_values($data[$key]);
-        }
         if (sizeof($empleados) != 0) {
+            // : RECORREMOS FECHAS
+            foreach ($dates as $f) {
+                if (!array_key_exists($f, $data)) {
+                    $data[$f] = array();
+                }
+            }
+            ksort($data);
+            foreach ($data as $key => $d) {
+                $data[$key] = array_values($data[$key]);
+            }
             foreach ($data as $key => $d) {
                 $data[$key] = array_values($data[$key]);
                 for ($index = 0; $index < sizeof($empleados); $index++) {
