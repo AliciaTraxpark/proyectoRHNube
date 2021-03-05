@@ -225,7 +225,7 @@ function inicializarTabla() {
                         var widthFinal = parseFloat(tdWidth * 130);
                         widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
                         if ($(this).attr('colspan')) {
-                            for (var i = 1; i <= $(this).attr('colspan'); $i++) {
+                            for (var i = 1; i <= $(this).attr('colspan'); i++) {
                                 colCount.push('*');
                             }
                         } else {
@@ -352,6 +352,7 @@ function cargartabla(fechaI, fechaF) {
         beforeSend: function () {
             $("#tablaReport").css('opacity', .3);
             $('div.dataTables_processing').show();
+            $('[data-toggle="tooltip"]').tooltip("hide");
         },
     }).then(function (data) {
         $('[data-toggle="tooltip"]').tooltip("hide");
@@ -407,7 +408,6 @@ function cargartabla(fechaI, fechaF) {
             arrayHorario.map((valor) => cantidadM = cantidadM + (valor.split(",")[0] * 7));
             arrayHorario.map((valor) => cantidadP = cantidadP + (valor.split(",")[1] * 4));
             var cantidadColSpan = (6 + (cantidadGruposHorario * 21) + cantidadM + cantidadP + 18);
-            console.log(cantidadColSpan);
             var theadTabla = `<tr>`;
             theadTabla += `<th>#&nbsp;</th>
                             <th class="text-center">Fecha</th>
@@ -536,10 +536,11 @@ function cargartabla(fechaI, fechaF) {
                         });
                     }
                 });
-                tbody += `<tr data-estado="${valorEstado}"><td colspan="${cantidadColSpan}" scope="colgroup" class="text-center">${key}</td>`;
-                // * COMPLEMENTAMOS
+                tbody += `<tr data-estado="${valorEstado}" style="background: #f6f5f1!important;color: #383e56 !important;">
+                            <th colspan="${cantidadColSpan}" scope="colgroup" class="text-left font-weight-bold">${moment(key).format("ddd D, MM-YYYY")}</th>`;
+                // * COMPLEMENTAMOS COLUMNAS
                 for (let completar = 0; completar < (cantidadColSpan - 1); completar++) {
-                    tbody += `<td style="display:none"></td>`;
+                    tbody += `<th style="display:none"></th>`;
                 }
                 tbody += `</tr>`;
                 for (let index = 0; index < data[key].length; index++) {
@@ -2268,7 +2269,7 @@ function cargartabla(fechaI, fechaF) {
                                                             </td>`;
                                         tbodyEntradaySalida += `<td class="text-center colDispositivoE" name="colDispositivoE">---</td>`;
                                         //* COLUMNA DE SALIDA
-                                        tbodyEntradaySalida += `<td name="colMarcaciones" title="Fecha:${moment(marcacionData.salida).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoSalida}">
+                                        tbodyEntradaySalida += `<td name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Fecha:${moment(marcacionData.salida).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoSalida}">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                 ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                             </td>`;

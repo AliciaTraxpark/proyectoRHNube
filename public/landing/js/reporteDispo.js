@@ -211,7 +211,7 @@ function inicializarTabla() {
                         var widthFinal = parseFloat(tdWidth * 130);
                         widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
                         if ($(this).attr('colspan')) {
-                            for (var i = 1; i <= $(this).attr('colspan'); $i++) {
+                            for (var i = 1; i <= $(this).attr('colspan'); i++) {
                                 colCount.push('*');
                             }
                         } else {
@@ -2920,7 +2920,7 @@ function cargartabla(fecha) {
                                                                         </td>`;
                                         tbodyEntradaySalida += `<td class="text-center colDispositivoS" name="colDispositivoS">${marcacionData.dispositivoSalida}</td>`
                                     } else {
-                                        tbodyEntradaySalida += `<td name="colMarcaciones" title="Fecha:${moment(marcacionData.salida).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoSalida}">
+                                        tbodyEntradaySalida += `<td name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Fecha:${moment(marcacionData.salida).format("YYYY-MM-DD")}\nDispositivo:${marcacionData.dispositivoSalida}">
                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                     ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                 </td>`;
