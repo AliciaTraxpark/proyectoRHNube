@@ -1628,6 +1628,65 @@ class EmpleadoController extends Controller
             return 1;
         }
     }
+
+    public function storeCalendarioEdit(Request $request)
+    {
+        //*PRIMERO VERIFICAMOS SI LA INCIDENCIA ES NUEVA O YA ESTA REGISTRADA
+        if( $request->get('tipoDes')==1){
+
+            //obtener tipo de incidencia
+            $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('tipoInc_descripcion','=','Descanso')
+            ->get()->first();
+
+            $incidencias=new incidencias();
+            $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
+            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_descripcion= $request->get('title');
+            $incidencias->inciden_pagado= 1;
+            $incidencias->users_id=Auth::user()->id;
+            $incidencias->organi_id=session('sesionidorg');
+            $incidencias->estado=1;
+            $incidencias->sistema=0;
+            $incidencias->save();
+
+            $idIncidencia=$incidencias->inciden_id;
+
+        } else{
+            $idIncidencia=$request->get('idDescanoInc');
+        }
+        //************************************************************** */
+
+        //*BUSCAMOS SI YA LA TENEMOS REGISTRADA*********************************
+        $fechaRecibida = Carbon::create($request->get('start'))->toDateString();
+        $eventos_empleado_temp = DB::table('incidencia_dias as incd')
+            ->where('incd.id_empleado', '=',$request->get('idempleado'))
+            ->whereDate('incd.inciden_dias_fechaI', '=', $fechaRecibida)
+            ->get();
+
+        if ($eventos_empleado_temp->isNotEmpty()) {
+            return "Ya existe este descanso " ;
+        } else {
+
+            //*BUSCAMOS NOMBRE DE INCIDENCIA
+            $incidenciaNom=DB::table('incidencias')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('inciden_id','=',$idIncidencia)
+            ->get()->first();
+
+
+
+            $incidencia_dias = new incidencia_dias();
+            $incidencia_dias->id_incidencia = $idIncidencia;
+            $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+            $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+            $incidencia_dias->id_empleado = $request->get('idempleado');
+            $incidencia_dias->laborable =0;
+            $incidencia_dias->save();
+            return 1;
+        }
+    }
     public function storeCalendarioTemFeriado(Request $request)
     {
         //*PRIMERO VERIFICAMOS SI LA INCIDENCIA ES NUEVA O YA ESTA REGISTRADA

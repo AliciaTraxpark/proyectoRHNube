@@ -116,6 +116,7 @@ Route::get('email', 'EmpleadoController@comprobarCorreo');
 Route::get('emailE', 'EmpleadoController@comprobarCorreoEditar');
 Route::post('/empleado/calendarioEmpTemp', 'EmpleadoController@calendarioEmpTemp');
 Route::post('/empleado/storeCalendarioTem', 'EmpleadoController@storeCalendarioTem');
+Route::post('/empleado/storeCalendarioEdit', 'EmpleadoController@storeCalendarioEdit');
 Route::post('/empleado/storeCalendarioTemFeriado', 'EmpleadoController@storeCalendarioTemFeriado');
 Route::post('/empleado/storeIncidTem', 'EmpleadoController@storeIncidTem');
 Route::get('/empleado/vaciarcalend', 'EmpleadoController@vaciarcalend');

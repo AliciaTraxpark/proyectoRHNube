@@ -806,7 +806,7 @@ function modalIncidencia_ed() {
     var nuevoSelect;
     //* verificamos si tiene el atributo que es tag
     var nuevoOantiguo=( $('#descripcionInciCa_ed option:selected').attr('data-select2-tag'));
-    console.log(nuevoOantiguo);
+
     if(nuevoOantiguo == 'true'){
         nuevoSelect=1;
     }
@@ -875,7 +875,7 @@ function agregarHorarioSe() {
     textSelec2 = textSelec1.split(separador);
     textSelec = textSelec2[0];
     var idhorar = $("#selectHorario_ed").val();
-    console.log(idhorar);
+
     if (idhorar == null) {
         $('#errorSel').show();
         return false;
@@ -885,10 +885,10 @@ function agregarHorarioSe() {
     var fueraHora;
     if ($('#fueraHSwitch').prop('checked')) {
         fueraHora = 1;
-        console.log(fueraHora);
+
     } else {
         fueraHora = 0;
-        console.log(fueraHora);
+
     }
     // HORARIO COMPENSABLE
     var horarioC;
@@ -1015,7 +1015,7 @@ function laborableTem() {
     }
     var tipoRegDescansoE=$("#NuevoOEdito").val(); //si es 1 registro nuevo empleado, 0 edito nada mas empleado
     //$('#myModal').modal('show');
-
+    console.log('tipoRegDescansoE'+tipoRegDescansoE);
     if(tipoRegDescansoE==1){
         $.ajax({
             type: "POST",
@@ -1084,7 +1084,75 @@ function laborableTem() {
             error: function () { },
         });
     } else{
+        let idempleado=$("#idempleado").val();
+       let  fechaI = $("#pruebaStar_ed").val();
+       let  fechaFin = $("#pruebaEnd_ed").val();
+        $.ajax({
+            type: "POST",
+            url: "/empleado/storeCalendarioEdit",
+            data: {
+                title,
+                color,
+                textColor,
+                start:fechaI,
+                end:fechaFin,
+                idDescanoInc,
+                laborable,
+                id_calendario,
+                tipoDes,idempleado
 
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                },
+            },
+            success: function (data) {
+                //var date = calendar1.getDate();
+                //alert("The current date of the calendar is " + date.toISOString());
+
+
+                if (data == 1) {
+                    calendarioedit.refetchEvents();
+                    calendar2_ed.refetchEvents();
+                    $("#myModalDescanso").modal("hide");
+
+                }
+                else {
+
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
+
+
+
+            },
+            error: function () { },
+        });
     }
 
 }
@@ -1108,64 +1176,69 @@ function diaferiadoTem() {
         tipoFeri=1;
     }
     //$('#myModal').modal('show');
-    $.ajax({
-        type: "POST",
-        url: "/empleado/storeCalendarioTemFeriado",
-        data: {
-            title,
-            color,
-            textColor,
-            start,
-            end,
-            tipoFeri,
-            id_calendario,
-            tipoRegDescansoE, idFeriadoInc
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
+    if(tipoRegDescansoE==1){
+        $.ajax({
+            type: "POST",
+            url: "/empleado/storeCalendarioTemFeriado",
+            data: {
+                title,
+                color,
+                textColor,
+                start,
+                end,
+                tipoFeri,
+                id_calendario,
+                tipoRegDescansoE, idFeriadoInc
             },
-        },
-        success: function (data) {
-            $("#myModalFeriado").modal("hide");
-            if (data == 1) {
-                calendar.refetchEvents();
-                calendar2.refetchEvents();
-            }
-            else {
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                },
+            },
+            success: function (data) {
+                $("#myModalFeriado").modal("hide");
+                if (data == 1) {
+                    calendar.refetchEvents();
+                    calendar2.refetchEvents();
+                }
+                else {
 
-                //*SI NO REGISTRO
-                $.notifyClose();
-                $.notify({
-                    message: data,
-                    icon: '/landing/images/alert1.svg',
-                }, {
-                    element: $('#form-ver'),
-                    position: "fixed",
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
-            }
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
 
 
-        },
-        error: function () { },
-    });
+            },
+            error: function () { },
+         });
+    } else{
+
+    }
+
 }
 //*NO LABORABLE
 function nolaborableTem() {
@@ -1799,10 +1872,10 @@ function agregarHorarioSe_regis() {
     var fueraHora;
     if ($('#fueraHSwitch_re').prop('checked')) {
         fueraHora = 1;
-        console.log(fueraHora);
+
     } else {
         fueraHora = 0;
-        console.log(fueraHora);
+
     }
     // HORARIO COMPENSABLE
     var horarioC;
@@ -3835,7 +3908,7 @@ function enviarEmpleado(accion, objEmpleado) {
         },
         success: function (data) {
             $("#idEmpleado").val(data);
-            console.log(data);
+
             valorCodigoEmpleado();
             $.notify(
                 {
@@ -4752,7 +4825,7 @@ $("#persona-step-1").on("keyup change", function () {
 });
 $("#swE-default-step-2").on("keyup change", function () {
     $("#estadoE").val("true");
-    console.log($("#estadoE").val());
+
 
 });
 $("#formContrato_v").on("keyup change", function () {
@@ -4781,7 +4854,7 @@ $("#sw-default-step-1").on("keyup change", function () {
 });
 $("#sw-default-step-2").on("keyup change click", function () {
     $("#estadoPE").val("true");
-    console.log($("#estadoPE").val());
+
 
 });
 $("#sw-default-step-4").on("keyup change", function () {
@@ -5743,7 +5816,7 @@ function prefijo(num) {
 
 
 $('#selectarea').on("change", function (e) {
-    console.log($('#selectarea').val());
+
     RefreshTablaEmpleadoArea();
 });
 
@@ -5754,7 +5827,7 @@ var modalOculto;
 // * DATOS PERSONALES
 function mostrarContenido() {
     // *OCULTAR FORMULARIO
-    console.log($('#form-registrar').is(':visible'));
+
     if ($('#form-ver').is(':visible') === true) {
         modalOculto = 2;
         $('#form-ver').modal('hide');
@@ -5788,7 +5861,7 @@ function stopVideo() {
 // * DATOS EPRESARIAL
 function mostrarContenidoE() {
     // *OCULTAR FORMULARIO
-    console.log($('#form-registrar').is(':visible'));
+
     if ($('#form-ver').is(':visible') === true) {
         modalOculto = 2;
         $('#form-ver').modal('hide');
@@ -5821,7 +5894,7 @@ function stopVideoE() {
 // * FOTO
 function mostrarContenidoF() {
     // *OCULTAR FORMULARIO
-    console.log($('#form-registrar').is(':visible'));
+
     if ($('#form-ver').is(':visible') === true) {
         modalOculto = 2;
         $('#form-ver').modal('hide');
@@ -5853,7 +5926,7 @@ function stopVideoF() {
 //* CALENDARIO
 function mostrarContenidoC() {
     // *OCULTAR FORMULARIO
-    console.log($('#form-registrar').is(':visible'));
+
     if ($('#form-ver').is(':visible') === true) {
         modalOculto = 2;
         $('#form-ver').modal('hide');
@@ -5885,7 +5958,7 @@ function stopVideoC() {
 // * HORARIO
 function mostrarContenidoH() {
     // *OCULTAR FORMULARIO
-    console.log($('#form-registrar').is(':visible'));
+
     if ($('#form-ver').is(':visible') === true) {
         modalOculto = 2;
         $('#form-ver').modal('hide');
@@ -5917,7 +5990,7 @@ function stopVideoH() {
 // * ACTIVIDADES
 function mostrarContenidoA() {
     // *OCULTAR FORMULARIO
-    console.log($('#form-registrar').is(':visible'));
+
     if ($('#form-ver').is(':visible') === true) {
         modalOculto = 2;
         $('#form-ver').modal('hide');
@@ -5949,7 +6022,7 @@ function stopVideoA() {
 // * DISPOSITIVO
 function mostrarContenidoD() {
     // *OCULTAR FORMULARIO
-    console.log($('#form-registrar').is(':visible'));
+
     if ($('#form-ver').is(':visible') === true) {
         modalOculto = 2;
         $('#form-ver').modal('hide');
@@ -6219,7 +6292,7 @@ $("#descripcionInciCa_ed").select2({
             $.each(data, function (index, element) {
                 option += `<option value="${element.inciden_id}">${element.inciden_descripcion}</option>`;
             });
-            console.log('op'+option);
+
             $("#nombreDescanso").append(option);
         },
         error: function () {},
@@ -6272,7 +6345,7 @@ function agregarMFeriado() {
             $.each(data, function (index, element) {
                 option += `<option value="${element.inciden_id}">${element.inciden_descripcion}</option>`;
             });
-            console.log('op'+option);
+
             $("#nombreFeriado").append(option);
         },
         error: function () {},
