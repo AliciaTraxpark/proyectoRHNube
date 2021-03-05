@@ -3205,8 +3205,7 @@
                                              {{-- <a class="dropdown-item"
                                                      onclick="vaciardlabTem()">D.
                                                      laborables</a> --}}
-                                             <a class="dropdown-item" onclick="vaciardNlabTem()">D. no
-                                                 laborables</a>
+
                                              <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
 
                                          </div>
@@ -4336,8 +4335,7 @@ aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                      {{-- <a class="dropdown-item"
                                              onclick="vaciardlabTem()">D.
                                              laborables</a> --}}
-                                     <a class="dropdown-item" onclick="vaciarNlabBD()">D. no
-                                         laborables</a>
+                                    
                                      <a class="dropdown-item" onclick="vaciardIncidBD()">Incidencia</a>
 
                                  </div>
