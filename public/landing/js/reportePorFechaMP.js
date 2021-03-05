@@ -272,6 +272,19 @@ function inicializarTabla() {
             setTimeout(function () {
                 $("#tablaReport").DataTable().draw();
             }, 1);
+            if (this.api().data().length == 0) {
+                $('.buttons-page-length').prop("disabled", true);
+                $('.buttons-html5').prop("disabled", true);
+                $('#switchO').prop("disabled", true);
+                $('.dropdown-toggle').prop("disabled", true);
+                $('#colEmpleadosCM').prop("disabled", true);
+            } else {
+                $('.buttons-page-length').prop("disabled", false);
+                $('.buttons-html5').prop("disabled", false);
+                $('#switchO').prop("disabled", false);
+                $('.dropdown-toggle').prop("disabled", false);
+                $('#colEmpleadosCM').prop("disabled", false);
+            }
         },
         drawCallback: function () {
             var api = this.api();
@@ -2865,10 +2878,26 @@ function cargartabla(fechaI, fechaF) {
             // * SWITCH DE MOSTRAR DETALLES
             toggleColumnas();
         } else {
-            $('#customSwitDetalles').prop("disabled", true);
-            $('#switPausas').prop("disabled", true);
+            if ($.fn.DataTable.isDataTable("#tablaReport")) {
+                $("#tablaReport").DataTable().destroy();
+            }
+            $('#theadD').empty();
+            var headerT = `<tr>
+                <th>CC</th>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Horario</th>
+                <th id="hEntrada">Hora de entrada</th>
+                <th id="hSalida">Hora de salida</th>
+                <th id="tSitio">Tiempo en sitio</th>
+                <th>Tardanza</th>
+                <th>Faltas</th>
+                <th>Incidencias</th>
+            </tr>`;
+            $('#theadD').append(headerT);
             $('#tbodyD').empty();
-            $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+            inicializarTabla();
         }
     }).fail(function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);
