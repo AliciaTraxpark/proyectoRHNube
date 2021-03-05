@@ -1236,6 +1236,68 @@ function diaferiadoTem() {
             error: function () { },
          });
     } else{
+        let idempleado=$("#idempleado").val();
+        let  fechaI = $("#pruebaStar_ed").val();
+        let  fechaFin = $("#pruebaEnd_ed").val();
+        $.ajax({
+            type: "POST",
+            url: "/empleado/storeCalendarioFeriadoEdit",
+            data: {
+                title,
+                color,
+                textColor,
+                start:fechaI,
+                end:fechaFin,
+                tipoFeri,
+                id_calendario,
+                tipoRegDescansoE, idFeriadoInc,
+                idempleado
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                },
+            },
+            success: function (data) {
+                $("#myModalFeriado").modal("hide");
+                if (data == 1) {
+                    calendarioedit.refetchEvents();
+                    calendar2_ed.refetchEvents();
+                }
+                else {
+
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
+
+
+            },
+            error: function () { },
+         });
 
     }
 
@@ -1393,29 +1455,61 @@ function modalIncidencia() {
         nuevoSelect=0;
     }
     var textDescrip = $("#inputNuevoIncidencia").val();
-    $.ajax({
+    var tipoRegDescansoE=$("#NuevoOEdito").val(); //si es 1 registro nuevo empleado, 0 edito nada mas empleado
+    if(tipoRegDescansoE==1){
+        $.ajax({
+            type: "post",
+            url: "/empleado/storeIncidTem",
+            data: {
+                start: fechaI,
+                title: descripcionI,
+                descuentoI: descuentoI,
+                end: fechaFin,
+                nuevoSelect,
+                id_calendario,textDescrip
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                calendar.refetchEvents();
+                calendar2.refetchEvents();
+                $("#modalIncidencia").modal("hide");
+            },
+            error: function (data) {
+                alert("Ocurrio un error");
+            },
+        });
+    }
+    else{
+       let idempleado=$("#idempleado").val();
+       let  fechaI1 = $("#pruebaStar_ed").val();
+       let  fechaFin1 = $("#pruebaEnd_ed").val();
+       $.ajax({
         type: "post",
-        url: "/empleado/storeIncidTem",
+        url: "/empleado/storeIncidEdit",
         data: {
-            start: fechaI,
+            start: fechaI1,
             title: descripcionI,
             descuentoI: descuentoI,
-            end: fechaFin,
+            end: fechaFin1,
             nuevoSelect,
-            id_calendario,textDescrip
+            id_calendario,textDescrip,idempleado
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            calendar.refetchEvents();
-            calendar2.refetchEvents();
+            calendarioedit.refetchEvents();
+            calendar2_ed.refetchEvents();
             $("#modalIncidencia").modal("hide");
         },
         error: function (data) {
             alert("Ocurrio un error");
         },
     });
+    }
+
 }
 /* ------------------------------------------------------ */
 /* EVENTO CUANDO CAMBIO CALENDARIO EN REGISTRAR EMPLEADO */
@@ -6422,4 +6516,5 @@ $('#descripcionInciCa').on('select2:closing', function (e) {
     $("#divIncidenciaNuevo").show();
     $("#btnAgregaNIncid").hide();
     $('#IncpagadoCheck').prop('disabled',false);
+    $("#divPagadoI").show();
  }

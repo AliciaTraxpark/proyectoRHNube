@@ -118,7 +118,9 @@ Route::post('/empleado/calendarioEmpTemp', 'EmpleadoController@calendarioEmpTemp
 Route::post('/empleado/storeCalendarioTem', 'EmpleadoController@storeCalendarioTem');
 Route::post('/empleado/storeCalendarioEdit', 'EmpleadoController@storeCalendarioEdit');
 Route::post('/empleado/storeCalendarioTemFeriado', 'EmpleadoController@storeCalendarioTemFeriado');
+Route::post('/empleado/storeCalendarioFeriadoEdit', 'EmpleadoController@storeCalendarioFeriadoEdit');
 Route::post('/empleado/storeIncidTem', 'EmpleadoController@storeIncidTem');
+Route::post('/empleado/storeIncidEdit', 'EmpleadoController@storeIncidEdit');
 Route::get('/empleado/vaciarcalend', 'EmpleadoController@vaciarcalend');
 Route::post('/empleado/vaciarcalendId', 'EmpleadoController@vaciarcalendId');
 Route::post('/empleado/registrarHorario', 'EmpleadoController@registrarHorario');

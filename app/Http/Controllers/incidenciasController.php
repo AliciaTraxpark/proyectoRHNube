@@ -106,11 +106,16 @@ class incidenciasController extends Controller
                 ->where('id.id_incidencia', '=', $incidencia->inciden_id)
                 ->get();
 
-                if($incidencias_dias->isNotEmpty()){
-                    $incidencia->uso=1;
+                $eventos_calendario = DB::table('eventos_calendario as evc')
+                ->where('evc.organi_id','=',session('sesionidorg'))
+                ->where('evc.inciden_id', '=', $incidencia->inciden_id)
+                ->get();
+
+                if($incidencias_dias->isEmpty() && $eventos_calendario->isEmpty()){
+                    $incidencia->uso=0;
                 }
                 else{
-                    $incidencia->uso=0;
+                    $incidencia->uso=1;
                 }
         }
         return json_encode($incidencias);
@@ -134,12 +139,19 @@ class incidenciasController extends Controller
             ->where('id.id_incidencia', '=', $incidencia->inciden_id)
             ->get();
 
-            if($incidencias_dias->isNotEmpty()){
-                $incidencia->uso=1;
-            }
-            else{
+            $eventos_calendario = DB::table('eventos_calendario as evc')
+            ->where('evc.organi_id','=',session('sesionidorg'))
+            ->where('evc.inciden_id', '=', $incidencia->inciden_id)
+            ->get();
+
+            if($incidencias_dias->isEmpty() && $eventos_calendario->isEmpty()){
                 $incidencia->uso=0;
             }
+            else{
+                $incidencia->uso=1;
+            }
+
+
 
         return response()->json($incidencia);
 
@@ -163,7 +175,7 @@ class incidenciasController extends Controller
         if($tipoInUpdate!=$tipoFeriado->idtipo_incidencia){
             $incidenciaBuscar = incidencias::where('inciden_codigo', '=', $codigoUp)->where('organi_id', '=', session('sesionidorg'))
             ->where('inciden_id', '!=', $idIncidencia) ->whereNotNull('inciden_codigo')->get()->first();
-            
+
         }
         else{
             $incidenciaBuscar = incidencias::where('inciden_codigo', '=', $codigoUp)->where('organi_id', '=', session('sesionidorg'))
@@ -181,7 +193,7 @@ class incidenciasController extends Controller
         $incidencia->inciden_pagado=$pagadoUp;
         $incidencia->save();
         return response()->json(array("estado" => 1), 200);
-        
+
     }
 
     public function eliminarIncidencia(Request $request){
@@ -202,23 +214,29 @@ class incidenciasController extends Controller
             ->where('id.id_incidencia', '=', $incidencia->inciden_id)
             ->get();
 
-            if($incidencias_dias->isNotEmpty()){
-                $incidencia->uso=1;
-            }
-            else{
+            $eventos_calendario = DB::table('eventos_calendario as evc')
+            ->where('evc.organi_id','=',session('sesionidorg'))
+            ->where('evc.inciden_id', '=', $incidencia->inciden_id)
+            ->get();
+
+            if($incidencias_dias->isEmpty() && $eventos_calendario->isEmpty()){
                 $incidencia->uso=0;
             }
-        
+            else{
+                $incidencia->uso=1;
+            }
+
+
         if($incidencia->uso==1){
             return 1;
         } else{
             $incidencia=incidencias::findOrfail($idIncidencia);
             $incidencia->estado=0;
-       
+
             $incidencia->save();
             return 0;
         }
-        
+
     }
 
     public function recuperarInci(Request $request){

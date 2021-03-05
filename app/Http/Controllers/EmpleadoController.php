@@ -1753,6 +1753,64 @@ class EmpleadoController extends Controller
         }
     }
 
+    public function storeCalendarioFeriadoEdit(Request $request)
+    {
+        //*PRIMERO VERIFICAMOS SI LA INCIDENCIA ES NUEVA O YA ESTA REGISTRADA
+        if( $request->get('tipoFeri')==1){
+
+            //obtener tipo de incidencia
+            $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('tipoInc_descripcion','=','Feriado')
+            ->get()->first();
+
+            $incidencias=new incidencias();
+            $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
+            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_descripcion= $request->get('title');
+            $incidencias->inciden_pagado= 1;
+            $incidencias->users_id=Auth::user()->id;
+            $incidencias->organi_id=session('sesionidorg');
+            $incidencias->estado=1;
+            $incidencias->sistema=0;
+            $incidencias->save();
+
+            $idIncidencia=$incidencias->inciden_id;
+
+        } else{
+            $idIncidencia=$request->get('idFeriadoInc');
+        }
+        //************************************************************** */
+
+        //*BUSCAMOS SI YA LA TENEMOS REGISTRADA*********************************
+        $fechaRecibida = Carbon::create($request->get('start'))->toDateString();
+
+            $eventos_empleado_temp = DB::table('incidencia_dias as incd')
+            ->where('incd.id_empleado', '=',$request->get('idempleado'))
+            ->whereDate('incd.inciden_dias_fechaI', '=', $fechaRecibida)
+            ->get();
+
+        if ($eventos_empleado_temp->isNotEmpty()) {
+            return "Ya existe feriado " ;
+        } else {
+
+            //*BUSCAMOS NOMBRE DE INCIDENCIA
+            $incidenciaNom=DB::table('incidencias')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('inciden_id','=',$idIncidencia)
+            ->get()->first();
+
+            $incidencia_dias = new incidencia_dias();
+            $incidencia_dias->id_incidencia = $idIncidencia;
+            $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+            $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+            $incidencia_dias->id_empleado = $request->get('idempleado');
+            $incidencia_dias->laborable =0;
+            $incidencia_dias->save();
+            return 1;
+        }
+    }
+
 
     public function storeIncidTem(Request $request)
     {
@@ -1804,6 +1862,62 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
             $eventos_empleado_tempSave->organi_id = session('sesionidorg');
             $eventos_empleado_tempSave->save();
+        }
+
+
+        $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
+            ->where('evt.users_id', '=', Auth::user()->id)
+            ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
+            ->where('evt.organi_id', '=', session('sesionidorg'))
+            ->get();
+
+        return $eventos_empleado_temp;
+    }
+
+    public function storeIncidEdit(Request $request)
+    {
+        if ($request->get('nuevoSelect') == 0) {
+            //*BUSCAMOS NOMBRE DE INCIDENCIA
+            $incidenciaNom=DB::table('incidencias')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('inciden_id','=',$request->get('title'))
+            ->get()->first();
+
+            $incidencia_dias = new incidencia_dias();
+            $incidencia_dias->id_incidencia = $request->get('title');
+            $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+            $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+            $incidencia_dias->id_empleado = $request->get('idempleado');
+            $incidencia_dias->laborable =0;
+            $incidencia_dias->save();
+        }
+        else{
+            //obtener tipo de incidencia
+            $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('tipoInc_descripcion','=','Incidencia')
+            ->get()->first();
+
+            $incidencia = new incidencias();
+            $incidencia->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
+            $incidencia->inciden_codigo= null;
+            $incidencia->inciden_descripcion = $request->get('textDescrip');
+            $incidencia->inciden_pagado = $request->get('descuentoI');
+            $incidencia->users_id = Auth::user()->id;
+            $incidencia->organi_id = session('sesionidorg');
+            $incidencia->estado =  1;
+            $incidencia->sistema =  0;
+            $incidencia->save();
+
+
+            $incidencia_dias = new incidencia_dias();
+            $incidencia_dias->id_incidencia = $incidencia->inciden_id;
+            $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+            $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+            $incidencia_dias->id_empleado = $request->get('idempleado');
+            $incidencia_dias->laborable =0;
+            $incidencia_dias->save();
         }
 
 
