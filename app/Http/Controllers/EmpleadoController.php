@@ -1698,9 +1698,15 @@ class EmpleadoController extends Controller
     public function storeIncidTem(Request $request)
     {
         if ($request->get('nuevoSelect') == 0) {
+            //*BUSCAMOS NOMBRE DE INCIDENCIA
+            $incidenciaNom=DB::table('incidencias')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('inciden_id','=',$request->get('title'))
+            ->get()->first();
+
             $eventos_empleado_tempSave = new eventos_empleado_temp();
             $eventos_empleado_tempSave->users_id = Auth::user()->id;
-            $eventos_empleado_tempSave->title = $request->get('textDescrip');
+            $eventos_empleado_tempSave->title = $incidenciaNom->inciden_descripcion;
             $eventos_empleado_tempSave->color = '#9E9E9E';
             $eventos_empleado_tempSave->textColor = '#313131';
             $eventos_empleado_tempSave->start = $request->get('start');
@@ -1711,10 +1717,17 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->save();
         }
         else{
+            //obtener tipo de incidencia
+            $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('tipoInc_descripcion','=','Incidencia')
+            ->get()->first();
+
             $incidencia = new incidencias();
-            $incidencia->inciden_descripcion = $request->get('title');
+            $incidencia->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
+            $incidencia->inciden_codigo= null;
+            $incidencia->inciden_descripcion = $request->get('textDescrip');
             $incidencia->inciden_pagado = $request->get('descuentoI');
-            $incidencia->inciden_hora = $request->get('horaIn');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
             $incidencia->estado =  1;
@@ -1723,7 +1736,7 @@ class EmpleadoController extends Controller
 
             $eventos_empleado_tempSave = new eventos_empleado_temp();
             $eventos_empleado_tempSave->users_id = Auth::user()->id;
-            $eventos_empleado_tempSave->title = $request->get('title');
+            $eventos_empleado_tempSave->title = $request->get('textDescrip');
             $eventos_empleado_tempSave->color = '#9E9E9E';
             $eventos_empleado_tempSave->textColor = '#313131';
             $eventos_empleado_tempSave->start = $request->get('start');
@@ -3327,8 +3340,24 @@ class EmpleadoController extends Controller
     }
 
     public function incidenciasOrganizacion(){
+
+        //*ENCONTRAMOS TIPO DE INCIDENCIA
+        $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('tipoInc_descripcion','=','Incidencia')
+            ->get()->first();
+
+        //*ENCONTRAMOS TIPO DE INCIDENCIA SISTEMA
+        $tipo_incidenciaSist=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('tipoInc_descripcion','=','De sistema')
+            ->get()->first();
+
         $incidencias = DB::table('incidencias')
         ->where('organi_id', '=', session('sesionidorg'))
+        ->where('idtipo_incidencia','=',$tipo_incidencia->idtipo_incidencia)
+        ->orWhere('idtipo_incidencia','=', $tipo_incidenciaSist->idtipo_incidencia)
+        ->where('estado', '=', 1)
         ->get();
         return $incidencias;
     }

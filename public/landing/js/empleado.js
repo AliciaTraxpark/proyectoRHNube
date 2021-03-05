@@ -1,4 +1,5 @@
 var calendarioValid=0;
+
 /*CALENDARIO DISABLED EN REGISTRAR  */
 function calendarioInv() {
     var calendarElInv = document.getElementById("calendarInv");
@@ -997,7 +998,7 @@ function agregarHorarioSe() {
 //*DESCANSO
 function laborableTem() {
     $("#calendarioAsignar").modal("hide");
-
+    $("#calendarioAsignar_ed").modal("hide");
     title =$("#inputNuevoDescanso").val();
     color = "#4673a0";
     textColor = "#ffffff";
@@ -1090,6 +1091,7 @@ function laborableTem() {
 //*FERIADO
 function diaferiadoTem() {
     $("#calendarioAsignar").modal("hide");
+    $("#calendarioAsignar_ed").modal("hide");
     (title = $("#inputNuevoFeriado").val()),
         (color = "#e6bdbd"),
         (textColor = "#775555"),
@@ -1168,6 +1170,7 @@ function diaferiadoTem() {
 //*NO LABORABLE
 function nolaborableTem() {
     $("#calendarioAsignar").modal("hide");
+    $("#calendarioAsignar_ed").modal("hide");
 
     title = "No laborable";
     color = "#a34141";
@@ -1239,7 +1242,16 @@ function nolaborableTem() {
 }
 //*ABRIR MODAL INCIDENCIA
 function agregarinciden() {
+    $("#divPagadoI").hide();
     $("#descripcionInciCa").empty();
+
+    $("#descripcionInciCa").prop('required',true);
+    $("#inputNuevoIncidencia").prop('required',false);
+    $("#inputNuevoIncidencia").val('');
+    $("#divSelectIncidencia").show();
+    $("#divIncidenciaNuevo").hide();
+    $("#btnAgregaNIncid").show();
+
     var options=$('#descripcionInciCa');
 
     $.ajax({
@@ -1280,6 +1292,7 @@ function agregarinciden() {
         error: function () { },
     });
     $("#calendarioAsignar").modal("hide");
+    $("#calendarioAsignar_ed").modal("hide");
     $("#frmIncidenciaCa")[0].reset();
     $("#modalIncidencia").modal("show");
 }
@@ -1288,7 +1301,7 @@ function modalIncidencia() {
     var id_calendario = $("#selectCalendario").val();
     descripcionI = $("#descripcionInciCa").val();
     var descuentoI;
-    if ($("#descuentoCheckCa").prop("checked")) {
+    if ($("#IncpagadoCheck").prop("checked")) {
         descuentoI = 1;
     } else {
         descuentoI = 0;
@@ -1297,16 +1310,16 @@ function modalIncidencia() {
     fechaFin = $("#pruebaEnd").val();
 
     var nuevoSelect;
-    //* verificamos si tiene el atributo que es tag
-    var nuevoOantiguo=( $('#descripcionInciCa option:selected').attr('data-select2-tag'));
+    //* verificamos si es nuevo o antiguo
 
-    if(nuevoOantiguo == 'true'){
+
+    if ($('#divIncidenciaNuevo').is(':visible')){
         nuevoSelect=1;
     }
     else{
         nuevoSelect=0;
     }
-    var textDescrip = $("#descripcionInciCa").text();
+    var textDescrip = $("#inputNuevoIncidencia").val();
     $.ajax({
         type: "post",
         url: "/empleado/storeIncidTem",
@@ -6161,17 +6174,17 @@ function actualizarConfigHorario_re() {
 }
 /* ---------------------------------------------------------------------------- */
 //*select incidencia en editar
-
+/*
 $("#descripcionInciCa_ed").select2({
   tags: true
-});
+}); */
 
 //*select incidencia en registrar
 
-$("#descripcionInciCa").select2({
+/* $("#descripcionInciCa").select2({
     tags: true
   });
-
+ */
 
   //****************** REGISTRAR DESCANSO EN REGISTRAR EMPLEADO****************
 
@@ -6212,6 +6225,7 @@ $("#descripcionInciCa").select2({
         error: function () {},
     });
     $("#calendarioAsignar").modal("hide");
+    $("#calendarioAsignar_ed").modal("hide");
     $("#myModalDescanso").modal("show");
   }
 
@@ -6264,6 +6278,7 @@ function agregarMFeriado() {
         error: function () {},
     });
     $("#calendarioAsignar").modal("hide");
+    $("#calendarioAsignar_ed").modal("hide");
     $("#myModalFeriado").modal("show");
 }
 
@@ -6276,3 +6291,62 @@ function agregarMFeriado() {
     $("#btnAgregaNFeri").hide();
  }
 //* ******************FIN DE REGISTRO DE FERIADO***********************************  */
+
+//****************SELECT INCIDENCIA*********************** */
+$('#descripcionInciCa').on('select2:closing', function (e) {
+    let idInciden=$('#descripcionInciCa').val();
+    $('#IncpagadoCheck').prop('disabled',true);
+    $.ajax({
+        url: "/incidenciasOrganizacion",
+        method: "POST",
+        data: {
+
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+
+            data.forEach(element => {
+                if(element.inciden_id==idInciden){
+                    if(element.inciden_pagado==1){
+                        $('#IncpagadoCheck').prop('checked',true);
+                    } else{
+                        $('#IncpagadoCheck').prop('checked',false);
+                    }
+
+                }
+
+            });
+
+        },
+        error: function () { },
+    });
+    $("#divPagadoI").show();
+
+})
+ //boton nuevo incidencia
+ function nuevaIncidenRegi(){
+    $("#descripcionInciCa").prop('required',false);
+    $("#inputNuevoIncidencia").prop('required',true);
+    $("#divSelectIncidencia").hide();
+    $("#divIncidenciaNuevo").show();
+    $("#btnAgregaNIncid").hide();
+    $('#IncpagadoCheck').prop('disabled',false);
+ }

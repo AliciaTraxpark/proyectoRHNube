@@ -4365,7 +4365,7 @@ aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                                      <button type="button"
                                                          style=" width: 20em!important; height: 43px !important;"
                                                          class="btn btn-secondary btn-sm"
-                                                         onclick="laborable_ed()"><img
+                                                         onclick="regModalDescanso()"><img
                                                              src="{{ asset('admin/images/dormir.svg') }}"
                                                              height="20"> Descanso</button>
                                                  </div>
@@ -4374,7 +4374,7 @@ aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                                      <button type="button"
                                                          style=" width: 20em!important; height: 43px !important;"
                                                          class="btn btn-secondary btn-sm"
-                                                         onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
+                                                         onclick="agregarMFeriado()"><img
                                                              src="{{ asset('admin/images/calendario.svg') }}"
                                                              height="20"> Día feriado</button>
                                                  </div>
@@ -4383,7 +4383,7 @@ aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                                      <button
                                                          style=" width: 20em!important; height: 43px !important;"
                                                          class="btn btn-secondary btn-sm"
-                                                         onclick="agregarinciden_ed()"><img
+                                                         onclick="agregarinciden()"><img
                                                              src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                              height="20"> Incidencia</button>
                                                  </div>
@@ -5507,16 +5507,33 @@ aria-hidden="true">
              <div class="col-md-12">
                  <form id="frmIncidenciaCa" action="javascript:modalIncidencia()">
                      <div class="row">
-                         <div class="col-md-12">
-                             <div class="form-group">
-                                 <label for="">Descripcion:</label>
+                        <div class="col-md-6">
+                            <label for="">Descripcion de incidencia:</label>
+                        </div>
+                         <div class="col-md-10" id="divSelectIncidencia">
                                  <select  class="form-control"
-                                 name="descripcionInciCa" id="descripcionInciCa" data-placeholder="Seleccionar o crear" required >
+                                 name="descripcionInciCa" id="descripcionInciCa" data-placeholder="Seleccionar" data-plugin="customselect" class="form-control form-control-sm" required >
                                  <option value=""></option>
-
                              </select>
 
-                             </div>
+                         </div>
+                         <div class="col-md-2">
+                            <button type="button" class="btn btn-primary btn-sm" id="btnAgregaNIncid"
+                                style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;"
+                                onclick="nuevaIncidenRegi()">
+                                +
+                            </button>
+                        </div>
+                        <div id="divIncidenciaNuevo" class="col-md-12" style="display: none">
+                            <input type="text" id="inputNuevoIncidencia" class="form-control form-control-sm" >
+                        </div>
+                         <div id="divPagadoI" class="col-md-6">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="IncpagadoCheck"
+                                    >
+                                <label class="form-check-label" for="IncpagadoCheck"
+                                    style="margin-top: 2px;">Pagado</label>
+                            </div>
                          </div>
 
 
