@@ -537,7 +537,10 @@ function cargartabla(fechaI, fechaF) {
                     }
                 });
                 tbody += `<tr data-estado="${valorEstado}" style="background: #f6f5f1!important;color: #383e56 !important;">
-                            <th colspan="${cantidadColSpan}" scope="colgroup" class="text-left font-weight-bold">${moment(key).format("ddd D, MM-YYYY")}</th>`;
+                            <th colspan="${cantidadColSpan}" scope="colgroup" class="text-left font-weight-bold">
+                                <img style="margin-bottom: 3px;" src="landing/images/calendarioReporte.svg" height="20" class="mr-2">
+                                ${moment(key).format("ddd D, MM-YYYY")}
+                            </th>`;
                 // * COMPLEMENTAMOS COLUMNAS
                 for (let completar = 0; completar < (cantidadColSpan - 1); completar++) {
                     tbody += `<th style="display:none"></th>`;
@@ -2859,7 +2862,6 @@ function cargartabla(fechaI, fechaF) {
                 $("#tablaReport").css('width', '100%');
                 table.draw(false);
             });
-            console.log(table.columns());
             // * SWITCH DE MOSTRAR DETALLES
             toggleColumnas();
         } else {
