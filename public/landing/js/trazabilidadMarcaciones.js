@@ -227,7 +227,7 @@ function inicializarTabla() {
                         var widthFinal = parseFloat(tdWidth * 130);
                         widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
                         if ($(this).attr('colspan')) {
-                            for (var i = 1; i <= $(this).attr('colspan'); $i++) {
+                            for (var i = 1; i <= $(this).attr('colspan'); i++) {
                                 colCount.push('*');
                             }
                         } else {
@@ -274,6 +274,17 @@ function inicializarTabla() {
                 $("#tablaTrazabilidad").DataTable().draw();
             }, 1);
             this.api().page.len(paginaGlobal).draw(false);
+            if (this.api().data().length == 0) {
+                $('.buttons-page-length').prop("disabled", true);
+                $('.buttons-html5').prop("disabled", true);
+                $('#switchO').prop("disabled", true);
+                $('.dropdown-toggle').prop("disabled", true);
+            } else {
+                $('.buttons-page-length').prop("disabled", false);
+                $('.buttons-html5').prop("disabled", false);
+                $('#switchO').prop("disabled", false);
+                $('.dropdown-toggle').prop("disabled", false);
+            }
         },
         drawCallback: function () {
             var api = this.api();
@@ -1443,6 +1454,11 @@ function menuIncidencias(id) {
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.incidenciaPadre input[type=checkbox]').change(function () {
     $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
+    var lengthChecked = $('.incidenciaPadre input[type=checkbox]').closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').length;
+    $('.incidenciaPadre input[type=checkbox]').closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').each(function () {
+        if (checkedIncidencias.length == lengthChecked) checkedIncidencias = [];
+        checkedIncidencias.push({ "id": this.id, "valor": $(this).is(":checked") });
+    });
     toggleColumnas();
 });
 // : ***************************** TIEMPO MUERTO ENTRADA *********************************
