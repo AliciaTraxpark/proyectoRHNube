@@ -138,7 +138,7 @@ class DispositivoTareoController extends Controller
 
             $nroCel = substr($dispositivosAc->dispoT_movil, 2);
 
-            $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Tareo, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+            $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Tareo, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube.modotareo";
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -389,7 +389,7 @@ class DispositivoTareoController extends Controller
         $dispositivosAc->save();
         $nroCel = substr($dispositivosAc->dispoT_movil, 2);
 
-        $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Tareo, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+        $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Tareo, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube.modotareo";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -434,7 +434,7 @@ class DispositivoTareoController extends Controller
             $envio = Mail::to($email)->queue(new correoVinculacionTareo($codigo, $numero));
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Tareo, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+        $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Tareo, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube.modotareo";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
