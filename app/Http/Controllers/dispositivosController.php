@@ -4670,93 +4670,40 @@ class dispositivosController extends Controller
             array_push($dates, $date->format('Y-m-d'));
         }
         // : RECORREMOS FECHAS
-        foreach ($dates as $d) {
-            // : RECORREMOS MARCACIONES PARA COMPLETAR HORARIOS
-            foreach ($marcaciones as $key => $m) {
-                $idEmpleado = $m->emple_id;
-                // : BUSCAMOS SI YA EXISTE LA FECHA EN EL ARRAY
-                if (array_key_exists($d, $m->data)) {
-                    $horarios = [];
-                    $horarios = array_keys($m->data[$d]["marcaciones"]);
-                    $clave = array_search(0, $horarios);     // : BUSCAMOS HORARIOS CON ID 0
-                    if (!is_bool($clave)) {
-                        unset($horarios[$clave]);            // : DESCARTAMOS LOS HORARIOS CON ID 0
-                    }
-                    $horarioEmpleado = DB::table('horario_empleado as he')
-                        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
-                        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-                        ->select(
-                            'h.horario_id as idHorario',
-                            'h.horario_tolerancia as toleranciaI',
-                            'h.horario_toleranciaF as toleranciaF',
-                            'he.horarioEmp_id as idHorarioE',
-                            DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
-                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
-                            'he.estado',
-                            'h.horasObliga as horasObligadas',
-                            'he.nHoraAdic as horasAdicionales',
-                            'h.tiempoMingreso as tiempoMuertoI',
-                            'h.tiempoMsalida as tiempoMuertoS'
-                        )
-                        ->where(DB::raw('DATE(hd.start)'), '=', $d)
-                        ->where('he.empleado_emple_id', '=', $idEmpleado)
-                        ->whereNotIn('he.horarioEmp_id', $horarios)
-                        ->where('he.estado', '=', 1)
-                        ->get();
-                    foreach ($horarioEmpleado as $he) {
-                        // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
-                        $he->horasAdicionales = $he->horasAdicionales == null ? 0 : $he->horasAdicionales;
-                        if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE])) {
-                            $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE] = array();
+        if (sizeof($marcaciones) != 0) {
+            foreach ($dates as $d) {
+                // : RECORREMOS MARCACIONES PARA COMPLETAR HORARIOS
+                foreach ($marcaciones as $key => $m) {
+                    $idEmpleado = $m->emple_id;
+                    // : BUSCAMOS SI YA EXISTE LA FECHA EN EL ARRAY
+                    if (array_key_exists($d, $m->data)) {
+                        $horarios = [];
+                        $horarios = array_keys($m->data[$d]["marcaciones"]);
+                        $clave = array_search(0, $horarios);     // : BUSCAMOS HORARIOS CON ID 0
+                        if (!is_bool($clave)) {
+                            unset($horarios[$clave]);            // : DESCARTAMOS LOS HORARIOS CON ID 0
                         }
-                        if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataHorario"])) {
-                            $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataHorario"] = $he;
-                        }
-                        if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"])) {
-                            $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"] = array();
-                        }
-                        $dataArrayM = (object)array(
-                            "entrada" => NULL,
-                            "salida" => NULL
-                        );
-                        array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"], $dataArrayM);
-                    }
-                    // * TABLA INCIDENCIAS DIA
-                    $incidencias = DB::table('incidencia_dias as id')
-                        ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
-                        ->select(DB::raw('COUNT(i.inciden_id) as cantidad'))
-                        ->where('id.id_empleado', '=', $idEmpleado)
-                        ->whereBetween('id.inciden_dias_fechaI', [$d, $d])
-                        ->orWhere(function ($query) use ($d, $idEmpleado) {
-                            $query->where('id.id_empleado', '=', $idEmpleado);
-                            $query->where('id.inciden_dias_fechaI', '<=', $d);
-                            $query->where('id.inciden_dias_fechaF', '>', $d);
-                        })
-                        ->get();
-                    $marcaciones[$key]->data[$d]["incidencias"] = $incidencias[0]->cantidad;
-                } else {
-                    $horarioEmpleado = DB::table('horario_empleado as he')
-                        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
-                        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-                        ->select(
-                            'h.horario_id as idHorario',
-                            'h.horario_tolerancia as toleranciaI',
-                            'h.horario_toleranciaF as toleranciaF',
-                            'he.horarioEmp_id as idHorarioE',
-                            DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
-                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
-                            'he.estado',
-                            'h.horasObliga as horasObligadas',
-                            'he.nHoraAdic as horasAdicionales',
-                            'h.tiempoMingreso as tiempoMuertoI',
-                            'h.tiempoMsalida as tiempoMuertoS'
-                        )
-                        ->where(DB::raw('DATE(hd.start)'), '=', $d)
-                        ->where('he.empleado_emple_id', '=', $idEmpleado)
-                        ->where('he.estado', '=', 1)
-                        ->get();
-                    if (sizeof($horarioEmpleado) != 0) {
-                        $marcaciones[$key]->data[$d] = array();
+                        $horarioEmpleado = DB::table('horario_empleado as he')
+                            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                            ->select(
+                                'h.horario_id as idHorario',
+                                'h.horario_tolerancia as toleranciaI',
+                                'h.horario_toleranciaF as toleranciaF',
+                                'he.horarioEmp_id as idHorarioE',
+                                DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
+                                DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
+                                'he.estado',
+                                'h.horasObliga as horasObligadas',
+                                'he.nHoraAdic as horasAdicionales',
+                                'h.tiempoMingreso as tiempoMuertoI',
+                                'h.tiempoMsalida as tiempoMuertoS'
+                            )
+                            ->where(DB::raw('DATE(hd.start)'), '=', $d)
+                            ->where('he.empleado_emple_id', '=', $idEmpleado)
+                            ->whereNotIn('he.horarioEmp_id', $horarios)
+                            ->where('he.estado', '=', 1)
+                            ->get();
                         foreach ($horarioEmpleado as $he) {
                             // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
                             $he->horasAdicionales = $he->horasAdicionales == null ? 0 : $he->horasAdicionales;
@@ -4788,9 +4735,64 @@ class dispositivosController extends Controller
                             })
                             ->get();
                         $marcaciones[$key]->data[$d]["incidencias"] = $incidencias[0]->cantidad;
+                    } else {
+                        $horarioEmpleado = DB::table('horario_empleado as he')
+                            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                            ->select(
+                                'h.horario_id as idHorario',
+                                'h.horario_tolerancia as toleranciaI',
+                                'h.horario_toleranciaF as toleranciaF',
+                                'he.horarioEmp_id as idHorarioE',
+                                DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
+                                DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
+                                'he.estado',
+                                'h.horasObliga as horasObligadas',
+                                'he.nHoraAdic as horasAdicionales',
+                                'h.tiempoMingreso as tiempoMuertoI',
+                                'h.tiempoMsalida as tiempoMuertoS'
+                            )
+                            ->where(DB::raw('DATE(hd.start)'), '=', $d)
+                            ->where('he.empleado_emple_id', '=', $idEmpleado)
+                            ->where('he.estado', '=', 1)
+                            ->get();
+                        if (sizeof($horarioEmpleado) != 0) {
+                            $marcaciones[$key]->data[$d] = array();
+                            foreach ($horarioEmpleado as $he) {
+                                // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
+                                $he->horasAdicionales = $he->horasAdicionales == null ? 0 : $he->horasAdicionales;
+                                if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE])) {
+                                    $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE] = array();
+                                }
+                                if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataHorario"])) {
+                                    $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataHorario"] = $he;
+                                }
+                                if (!isset($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"])) {
+                                    $marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"] = array();
+                                }
+                                $dataArrayM = (object)array(
+                                    "entrada" => NULL,
+                                    "salida" => NULL
+                                );
+                                array_push($marcaciones[$key]->data[$d]["marcaciones"][$he->idHorarioE]["dataMarcaciones"], $dataArrayM);
+                            }
+                            // * TABLA INCIDENCIAS DIA
+                            $incidencias = DB::table('incidencia_dias as id')
+                                ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                                ->select(DB::raw('COUNT(i.inciden_id) as cantidad'))
+                                ->where('id.id_empleado', '=', $idEmpleado)
+                                ->whereBetween('id.inciden_dias_fechaI', [$d, $d])
+                                ->orWhere(function ($query) use ($d, $idEmpleado) {
+                                    $query->where('id.id_empleado', '=', $idEmpleado);
+                                    $query->where('id.inciden_dias_fechaI', '<=', $d);
+                                    $query->where('id.inciden_dias_fechaF', '>', $d);
+                                })
+                                ->get();
+                            $marcaciones[$key]->data[$d]["incidencias"] = $incidencias[0]->cantidad;
+                        }
                     }
+                    ksort($m->data);
                 }
-                ksort($m->data);
             }
         }
         foreach ($marcaciones as $key => $m) {
