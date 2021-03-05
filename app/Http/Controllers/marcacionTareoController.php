@@ -190,6 +190,7 @@ class marcacionTareoController extends Controller
                         ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                         ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                             $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                         })
@@ -209,6 +210,7 @@ class marcacionTareoController extends Controller
 
                         ->select(
                             'e.emple_id',
+                            'ar.area_descripcion',
                             'mt.idmarcaciones_tareo',
                             'e.emple_nDoc',
                             DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
@@ -247,6 +249,7 @@ class marcacionTareoController extends Controller
                         ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                         ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                             $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                         })
@@ -266,6 +269,7 @@ class marcacionTareoController extends Controller
 
                         ->select(
                             'e.emple_id',
+                            'ar.area_descripcion',
                             'mt.idmarcaciones_tareo',
                             'e.emple_nDoc',
                             DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
@@ -318,6 +322,7 @@ class marcacionTareoController extends Controller
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                             ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                                 $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                             })
@@ -337,6 +342,7 @@ class marcacionTareoController extends Controller
 
                             ->select(
                                 'e.emple_id',
+                                'ar.area_descripcion',
                                 'mt.idmarcaciones_tareo',
                                 'e.emple_nDoc',
                                 DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
@@ -380,6 +386,7 @@ class marcacionTareoController extends Controller
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                             ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                                 $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                             })
@@ -399,6 +406,8 @@ class marcacionTareoController extends Controller
 
                             ->select(
                                 'e.emple_id',
+                                'a.area_descripcion',
+                                'ar.area_descripcion',
                                 'mt.idmarcaciones_tareo',
                                 'e.emple_nDoc',
                                 DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
@@ -446,6 +455,7 @@ class marcacionTareoController extends Controller
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                             ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                                 $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                             })
@@ -465,6 +475,8 @@ class marcacionTareoController extends Controller
 
                             ->select(
                                 'e.emple_id',
+                                'a.area_descripcion',
+                                'ar.area_descripcion',
                                 'mt.idmarcaciones_tareo',
                                 'e.emple_nDoc',
                                 DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
@@ -528,6 +540,7 @@ class marcacionTareoController extends Controller
 
                             ->select(
                                 'e.emple_id',
+                                'a.area_descripcion',
                                 'mt.idmarcaciones_tareo',
                                 'e.emple_nDoc',
                                 DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
@@ -574,6 +587,7 @@ class marcacionTareoController extends Controller
                     ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                     ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                         $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                     })
@@ -593,6 +607,7 @@ class marcacionTareoController extends Controller
 
                     ->select(
                         'e.emple_id',
+                        'ar.area_descripcion',
                         'mt.idmarcaciones_tareo',
                         'e.emple_nDoc',
                         DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
@@ -632,6 +647,7 @@ class marcacionTareoController extends Controller
                     ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                     ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                         $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                     })
@@ -651,6 +667,7 @@ class marcacionTareoController extends Controller
 
                     ->select(
                         'e.emple_id',
+                        'ar.area_descripcion',
                         'mt.idmarcaciones_tareo',
                         'e.emple_nDoc',
                         DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
@@ -2370,7 +2387,7 @@ class marcacionTareoController extends Controller
                         $arrayeve->push($marcaciones);
 
                 } else {
-                    
+
                         $marcaciones = DB::table('marcacion_tareo as mt')
                         ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -2431,7 +2448,7 @@ class marcacionTareoController extends Controller
                         $arrayeve->push($marcaciones);
 
 
-                    
+
                   }
             } else {
                 /* CUANDO ES POR EMPLEADOS PERSONALIZADOS */
@@ -2505,7 +2522,7 @@ class marcacionTareoController extends Controller
                             $arrayeve->push($marcaciones);
 
                     } else {
-                        
+
                         $marcaciones = DB::table('marcacion_tareo as mt')
                             ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
@@ -2568,7 +2585,7 @@ class marcacionTareoController extends Controller
                             ->get();
                             $marcaciones=agregarDetalle2($marcaciones);
                             $arrayeve->push($marcaciones);
-                        
+
 
                     }
                 } else {
@@ -2580,7 +2597,6 @@ class marcacionTareoController extends Controller
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                             ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                                 $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                             })
@@ -2616,7 +2632,7 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                                 DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada) as fechaMarcacion'),
                                 'mt.idmarcaciones_tareo as idMarcacion',
-                                'ar.area_descripcion',
+                                'a.area_descripcion',
                                 'pc.descripcion as puntoControl',
                                 'pc.codigoControl as idpuntoControl',
                                 'pc.id as idPC',
@@ -2637,7 +2653,7 @@ class marcacionTareoController extends Controller
                             $arrayeve->push($marcaciones);
 
                     } else {
-                        
+
                         $marcaciones = DB::table('marcacion_tareo as mt')
                             ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
@@ -2645,7 +2661,6 @@ class marcacionTareoController extends Controller
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                             ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
                                 $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
                             })
@@ -2681,7 +2696,7 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                                 DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada) as fechaMarcacion'),
                                 'mt.idmarcaciones_tareo as idMarcacion',
-                                'ar.area_descripcion',
+                                'a.area_descripcion',
                                 'pc.descripcion as puntoControl',
                                 'pc.codigoControl as idpuntoControl',
                                 'pc.id as idPC',
@@ -2701,7 +2716,7 @@ class marcacionTareoController extends Controller
                             ->get();
                             $marcaciones=agregarDetalle2($marcaciones);
                             $arrayeve->push($marcaciones);
-                        
+
 
                     }
                 }
@@ -2769,7 +2784,7 @@ class marcacionTareoController extends Controller
                     $arrayeve->push($marcaciones);
 
             } else {
-                
+
                 $marcaciones = DB::table('marcacion_tareo as mt')
                     ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -2828,7 +2843,7 @@ class marcacionTareoController extends Controller
                     ->get();
                     $marcaciones=agregarDetalle2($marcaciones);
                     $arrayeve->push($marcaciones);
-                
+
 
             }
         }

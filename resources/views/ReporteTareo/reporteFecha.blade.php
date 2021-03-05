@@ -412,6 +412,13 @@
 
                                     <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                         <li class="liContenido">
+                                            <input type="checkbox" id="checArea">
+                                            <label class="form-check-label" for="checArea">Área
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
                                             <input type="checkbox" id="checCargo">
                                             <label class="form-check-label" for="checCargo">Cargo
                                         </li>

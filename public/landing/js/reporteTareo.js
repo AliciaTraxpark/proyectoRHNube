@@ -46,6 +46,7 @@ function cargartabla(fecha) {
     $("#checCodigo").prop("checked", true);
     $("#checnumdoc").prop("checked", true);
     $("#checSexo").prop("checked", false);
+    $("#checArea").prop("checked", false);
     $("#checCargo").prop("checked", false);
     $("#checPuntoc").prop("checked", true);
     $("#checPuntocDescrip").prop("checked", false);
@@ -99,6 +100,7 @@ function cargartabla(fecha) {
                                     <th class="numdocHid">Número de documento </th>
                                     <th>Nombres y Apellidos</th>
                                     <th class="sexoHid" name="tiempoSitHi">Sexo</th>
+                                    <th class="areaHid"  name="tiempoSitHi">Área&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                     <th class="cargoHid"  name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
                 theadTabla += `<th>Cód. Act.</th>
@@ -156,6 +158,12 @@ function cargartabla(fecha) {
                         tbody += `<td class="sexoHid" name="tiempoSitHi">${data[index].perso_sexo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     } else {
                         tbody += `<td class="sexoHid"  name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    }
+
+                    if (data[index].area_descripcion != null) {
+                        tbody += `<td class="areaHid"  name="tiempoSitHi">${data[index].area_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    } else {
+                        tbody += `<td  class="areaHid" name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     }
 
                     if (data[index].cargo_descripcion != null) {
@@ -877,6 +885,7 @@ function cargartabla(fecha) {
                                 <td class="numdocHid"></td>
                                 <td ></td>
                                 <td class="sexoHid"></td>
+                                <td class="areaHid"></td>
                                 <td class="cargoHid"></td>`;
 
                     tbodyTR += `<td ><br><br></td>
@@ -1120,7 +1129,7 @@ function cargartabla(fecha) {
                                             "Eliminar marc.",
                                             ""
                                         );
-                                        
+
                                         var cont13=cont12.replace(
                                             "No tiene controlador de Ent.",
                                             "---"
@@ -1129,7 +1138,7 @@ function cargartabla(fecha) {
                                             "No tiene controlador de Sal.",
                                             "---"
                                         )
-                                        
+
                                         var cont15 = cont14.replace(
                                             "Agregar",
                                             ""
@@ -1390,6 +1399,13 @@ function cargartabla(fecha) {
                             dataT.api().columns(".sexoHid").visible(false);
                         }
 
+                        //*area
+                        if ($("#checArea").prop("checked")) {
+                            dataT.api().columns(".areaHid").visible(true);
+                        } else {
+                            dataT.api().columns(".areaHid").visible(false);
+                        }
+
                         //*cargo
                         if ($("#checCargo").prop("checked")) {
                             dataT.api().columns(".cargoHid").visible(true);
@@ -1528,7 +1544,7 @@ function ocultarModif() {
     var permisoMo=$('#modifReporte').val();
     if(permisoMo==0){
         $('.noExport').hide();
-         $('span').tooltip('dispose') 
+         $('span').tooltip('dispose')
         /* $('.notooltipS').html(`<span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
         <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
         No tiene salida
@@ -1953,6 +1969,19 @@ $("#checSexo").change(function (event) {
     }, 1);
 });
 
+//* AREA
+$("#checArea").change(function (event) {
+    if ($("#checArea").prop("checked")) {
+        dataT.api().columns(".areaHid").visible(true);
+    } else {
+        dataT.api().columns(".areaHid").visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
 //* CARGO
 $("#checCargo").change(function (event) {
     if ($("#checCargo").prop("checked")) {
@@ -2002,7 +2031,7 @@ $("#checControlEn").change(function (event) {
     var permisoMo=$('#modifReporte').val();
     if(permisoMo==0){
         $('.noExport').hide();
-         $('span').tooltip('dispose') 
+         $('span').tooltip('dispose')
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -2021,7 +2050,7 @@ $("#checControlSa").change(function (event) {
     var permisoMo=$('#modifReporte').val();
     if(permisoMo==0){
         $('.noExport').hide();
-         $('span').tooltip('dispose') 
+         $('span').tooltip('dispose')
     }
 
     setTimeout(function () {

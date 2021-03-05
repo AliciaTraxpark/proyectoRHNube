@@ -270,7 +270,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-xl-5">
-                            
+
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label">Rango de fechas:</label>
                                     <input type="hidden" id="ID_START">
@@ -289,7 +289,7 @@
                                 </div>
 
                         </div>
-                        
+
                         <div class="col-xl-6 col-sm-6">
                             <div class="form-group   row">
                                 <label class="col-lg-3 col-form-label">Empleado</label>
@@ -303,9 +303,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-    
+
                             </div>
-                                
+
 
                         </div>
                         <div class="col-xl-1 text-center btnR" style="padding-left: 0%">
@@ -315,13 +315,13 @@
                                     src="{{ asset('landing/images/loupe (1).svg') }}" height="15"></button>
                         </div>
 
-                        
+
                     </div>
 
                     <div class="row">
 
                         <div class="col-md-7" id="MostarDetalles" style="display: none">
-                         
+
                             <div class="dropdown" id="dropSelector">
                                 <br>
                                 <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -371,6 +371,13 @@
                                             <input type="checkbox" id="checSexo">
                                             <label class="form-check-label" for="checSexo">Sexo
                                             </label>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checArea">
+                                            <label class="form-check-label" for="checArea">Área
                                         </li>
                                     </ul>
 
