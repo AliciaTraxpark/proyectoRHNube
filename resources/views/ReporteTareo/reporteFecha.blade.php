@@ -426,6 +426,13 @@
 
                                     <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                         <li class="liContenido">
+                                            <input type="checkbox" id="checCentroc">
+                                            <label class="form-check-label" for="checCentroc">Centro de costo
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
                                             <input type="checkbox" id="checPuntoc">
                                             <label class="form-check-label" for="checPuntoc">Punto de control
                                         </li>
