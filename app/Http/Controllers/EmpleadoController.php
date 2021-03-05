@@ -3495,6 +3495,7 @@ class EmpleadoController extends Controller
             $incidenciaDes->idtipo_incidencia = $tipoDescanso->idtipo_incidencia;
             $incidenciaDes->inciden_descripcion = 'Descanso remunerado';
             $incidenciaDes->inciden_pagado = 1;
+            $incidenciaDes->users_id = $request->get('iduser');
             $incidenciaDes->organi_id =  $organizacion->organi_id;
             $incidenciaDes->estado =  1;
             $incidenciaDes->sistema =  1;

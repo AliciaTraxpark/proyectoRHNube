@@ -1398,7 +1398,25 @@ function activarEstadoCR(idEmpleado, idVinculacion) {
                 }
             );
         },
-        error: function () { },
+        error: function () {
+            $.notifyClose();
+            $.notify({
+                message: "\nAún no ha registrado correo a empleado.",
+                icon: 'admin/images/warning.svg'
+            }, {
+                position: "fixed",
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
     });
 }
 function estadoDispositivoCR(idEmpleado, id, pc, datos) {

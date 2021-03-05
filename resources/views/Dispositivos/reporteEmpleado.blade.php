@@ -178,7 +178,6 @@
                     <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
                 </div>
             </div>
-            <input type="hidden" id="pasandoV">
             <div class="card-body border">
                 <div class="row justify-content-center">
                     <div class="col-xl-6">
@@ -365,6 +364,33 @@
                                         <input type="checkbox" id="tiempoSitHi">
                                         <label for="">Tiempo entre marcaciones</label>
                                     </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido tiemposMPadre">
+                                        <input type="checkbox" name="porTiemposMuertos" id="porTiemposMuertos">
+                                        <label for="">Tiempos muertos</label>
+                                        <img class="float-right mt-1 ml-2" height="9" style="cursor: pointer;"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                            onclick="javascript:togglePorTiemposMuertos()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoPorTM">
+                                        <li class="liContenido tiemposMHijo">
+                                            <input type="checkbox" id="totalTiempoMuertoE">
+                                            <label for="">Por horario - entrada</label>
+                                        </li>
+                                        <li class="liContenido tiemposMHijo">
+                                            <input type="checkbox" id="totalTiempoMuertoS">
+                                            <label for="">Por horario - salida</label>
+                                        </li>
+                                        <li class="liContenido tiemposMHijo">
+                                            <input type="checkbox" id="tiempoMuertoE">
+                                            <label for="">Por marcación - entrada</label>
+                                        </li>
+                                        <li class="liContenido tiemposMHijo">
+                                            <input type="checkbox" id="tiempoMuertoS">
+                                            <label for="">Por marcación - salida</label>
+                                        </li>
+                                    </ul>
                                 </ul>
                             </div>
                         </div>

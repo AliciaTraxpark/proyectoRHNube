@@ -363,6 +363,7 @@ class dispositivosController extends Controller
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -371,8 +372,6 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -380,6 +379,7 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -387,9 +387,10 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -398,6 +399,7 @@ class dispositivosController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
         }
         if ($invitadod) {
@@ -420,7 +422,7 @@ class dispositivosController extends Controller
         }
     }
 
-    // * DETALLE DE ASISTENCIA Y POR FECHA
+    // * DETALLE DE ASISTENCIA
     public function reporteTabla(Request $request)
     {
         $fechaR = $request->fecha;
@@ -451,7 +453,17 @@ class dispositivosController extends Controller
                         "toleranciaF" => $empleado->toleranciaF,
                         "idHorarioE" => $empleado->idHorarioE,
                         "estado" => $empleado->estado,
-                        "horasObligadas" => $empleado->horasObligadas
+                        "horasObligadas" => $empleado->horasObligadas,
+                        "tiempoMuertoI" => $empleado->tiempoMuertoIngreso,
+                        "tiempoMuertoS" => $empleado->tiempoMuertoSalida,
+                        "idDiurna" => $empleado->idDiurna,
+                        "estado25D" => $empleado->estado25D,
+                        "estado35D" => $empleado->estado35D,
+                        "estado100D" => $empleado->estado100D,
+                        "idNocturna" => $empleado->idNocturna,
+                        "estado25N" => $empleado->estado25N,
+                        "estado35N" => $empleado->estado35N,
+                        "estado100N" => $empleado->estado100N
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorarioE]["pausas"])) {
@@ -504,6 +516,7 @@ class dispositivosController extends Controller
                             'e.organi_id'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->orderBy('p.perso_nombre', 'ASC')
                         ->get();
                 } else {
@@ -526,6 +539,7 @@ class dispositivosController extends Controller
                             'e.organi_id'
                         )
                         ->where('e.emple_id', $idemp)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             } else {
@@ -559,6 +573,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->orderBy('p.perso_nombre', 'ASC')
                             ->get();
                     } else {
@@ -586,6 +601,7 @@ class dispositivosController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.emple_id', $idemp)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->get();
                     }
                 } else {
@@ -614,6 +630,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->orderBy('p.perso_nombre', 'ASC')
                             ->get();
                     } else {
@@ -642,6 +659,7 @@ class dispositivosController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.emple_id', $idemp)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->get();
                     }
                 }
@@ -667,6 +685,7 @@ class dispositivosController extends Controller
                         'e.organi_id'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->orderBy('p.perso_nombre', 'ASC')
                     ->get();
             } else {
@@ -690,16 +709,26 @@ class dispositivosController extends Controller
                     )
                     ->where('e.emple_id', $idemp)
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             }
         }
         $marcaciones = [];
         // DB::enableQueryLog();
+        // * TIPO DISPOSITIVO
         $tipoDispositivo = DB::table('dispositivos as d')
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'd.tipoDispositivo')
             ->select(
                 'd.idDispositivos',
                 'td.dispositivo_descripcion as dispositivo'
+            );
+        // * HORAS EXTRAS
+        $horasExtras = DB::table('reglas_horasextras as rh')
+            ->select(
+                'rh.idreglas_horasExtras',
+                'rh.lleno25',
+                'rh.lleno35',
+                'rh.lleno100'
             );
         $data =  DB::table('empleado as e')
             ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
@@ -711,6 +740,12 @@ class dispositivosController extends Controller
             })
             ->leftJoinSub($tipoDispositivo, 'salida', function ($join) {
                 $join->on('mp.dispositivoSalida', '=', 'salida.idDispositivos');
+            })
+            ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+            })
+            ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
             })
             ->select(
                 'e.emple_id',
@@ -729,7 +764,17 @@ class dispositivosController extends Controller
                 'hor.horario_toleranciaF as toleranciaF',
                 'mp.marcaMov_id as idMarcacion',
                 'hor.horasObliga as horasObligadas',
-                'hoe.estado'
+                'hoe.estado',
+                'hor.tiempoMingreso as tiempoMuertoIngreso',
+                'hor.tiempoMsalida as tiempoMuertoSalida',
+                'diurna.idreglas_horasExtras as idDiurna',
+                'diurna.lleno25 as estado25D',
+                'diurna.lleno35 as estado35D',
+                'diurna.lleno100 as estado100D',
+                'nocturna.idreglas_horasExtras as idNocturna',
+                'nocturna.lleno25 as estado25N',
+                'nocturna.lleno35 as estado35N',
+                'nocturna.lleno100 as estado100N'
             )
             ->where(DB::raw('IF(hoe.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start))'), '=', $fecha)
             ->where('mp.organi_id', '=', session('sesionidorg'))
@@ -803,6 +848,7 @@ class dispositivosController extends Controller
             $horarioEmpleado = DB::table('horario_empleado as he')
                 ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
                 ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->leftJoin('reglas_horasextras as rh', 'rh.idreglas_horasExtras', '=', 'h.idreglas_horasExtras')
                 ->select(
                     'h.horario_descripcion as horario',
                     DB::raw('CONCAT("' . $fecha . '" , " ",h.horaI) as horarioIni'),
@@ -812,7 +858,8 @@ class dispositivosController extends Controller
                     'h.horario_toleranciaF as toleranciaF',
                     'he.estado as estado',
                     'he.horarioEmp_id as idHorarioE',
-                    'h.horasObliga as horasObligadas'
+                    'h.horasObliga as horasObligadas',
+                    'h.tiempoMingreso as tiempoMuertoIngreso'
                 )
                 ->whereNotIn('he.horarioEmp_id', $arrayHorarioE)
                 ->where('empleado_emple_id', '=', $m->emple_id)
@@ -881,6 +928,533 @@ class dispositivosController extends Controller
         }
 
         return response()->json($marcaciones, 200);
+    }
+
+    // * REPORTE POR FECHA
+    public function reporteFechaMarcacion(Request $request)
+    {
+        $fechaI = $request->get('fechaI');
+        $fechaF = $request->get('fechaF');
+        $idemp = $request->get('idemp');
+
+        function agruparEmpleadosMarcacionesFecha($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $empleado) {
+                if (!isset($resultado[$empleado->fecha])) {
+                    $resultado[$empleado->fecha] = array();
+                }
+                if (!isset($resultado[$empleado->fecha][$empleado->emple_id])) {
+                    $resultado[$empleado->fecha][$empleado->emple_id] = (object) array(
+                        "emple_id" => $empleado->emple_id,
+                        "organi_id" => $empleado->organi_id
+                    );
+                }
+                if (!isset($resultado[$empleado->fecha][$empleado->emple_id]->data)) {
+                    $resultado[$empleado->fecha][$empleado->emple_id]->data = array();
+                }
+                if (!isset($resultado[$empleado->fecha][$empleado->emple_id]->data[$empleado->idHorarioE]["horario"])) {
+                    $resultado[$empleado->fecha][$empleado->emple_id]->data[$empleado->idHorarioE]["horario"] =  (object) array(
+                        "horario" => $empleado->detalleHorario,
+                        "horarioIni" => $empleado->horarioIni,
+                        "horarioFin" => $empleado->horarioFin,
+                        "idHorario" => $empleado->idHorario,
+                        "toleranciaI" => $empleado->toleranciaI,
+                        "toleranciaF" => $empleado->toleranciaF,
+                        "idHorarioE" => $empleado->idHorarioE,
+                        "estado" => $empleado->estado,
+                        "horasObligadas" => $empleado->horasObligadas,
+                        "tiempoMuertoI" => $empleado->tiempoMuertoIngreso,
+                        "tiempoMuertoS" => $empleado->tiempoMuertoSalida,
+                        "idDiurna" => $empleado->idDiurna,
+                        "estado25D" => $empleado->estado25D,
+                        "estado35D" => $empleado->estado35D,
+                        "estado100D" => $empleado->estado100D,
+                        "idNocturna" => $empleado->idNocturna,
+                        "estado25N" => $empleado->estado25N,
+                        "estado35N" => $empleado->estado35N,
+                        "estado100N" => $empleado->estado100N
+                    );
+                }
+                if (!isset($resultado[$empleado->fecha][$empleado->emple_id]->data[$empleado->idHorarioE]["pausas"])) {
+                    $resultado[$empleado->fecha][$empleado->emple_id]->data[$empleado->idHorarioE]["pausas"] = array();
+                }
+                if (!isset($resultado[$empleado->fecha][$empleado->emple_id]->incidencias)) {
+                    $resultado[$empleado->fecha][$empleado->emple_id]->incidencias = array();
+                }
+                if (!isset($resultado[$empleado->fecha][$empleado->emple_id]->data[$empleado->idHorarioE]["marcaciones"])) {
+                    $resultado[$empleado->fecha][$empleado->emple_id]->data[$empleado->idHorarioE]["marcaciones"] = array();
+                }
+                $arrayMarcacion = (object) array(
+                    "idMarcacion" => $empleado->idMarcacion,
+                    "entrada" => $empleado->entrada,
+                    "salida" => $empleado->salida,
+                    "idH" => $empleado->idHorario,
+                    "idHE" => $empleado->idHorarioE,
+                    "dispositivoEntrada" => ucfirst(strtolower($empleado->dispositivoEntrada)),
+                    "dispositivoSalida" => ucfirst(strtolower($empleado->dispositivoSalida))
+                );
+                array_push($resultado[$empleado->fecha][$empleado->emple_id]->data[$empleado->idHorarioE]["marcaciones"], $arrayMarcacion);
+            }
+            return (array)$resultado;
+        }
+
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->where('rol_id', '=', 3)
+            ->get()->first();
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                if ($idemp == 0 || $idemp == ' ') {
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_nDoc',
+                            'e.emple_codigo',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
+                            'e.emple_estado',
+                            'e.organi_id'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->orderBy('p.perso_nombre', 'ASC')
+                        ->get();
+                } else {
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_nDoc',
+                            'e.emple_codigo',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
+                            'e.emple_estado',
+                            'e.organi_id'
+                        )
+                        ->where('e.emple_id', $idemp)
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
+                }
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+                if ($invitado_empleadoIn != null) {
+                    if ($idemp == 0 || $idemp == ' ') {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_nDoc',
+                                'e.emple_codigo',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'o.organi_razonSocial',
+                                'o.organi_direccion',
+                                'o.organi_ruc',
+                                'e.emple_estado',
+                                'e.organi_id'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->orderBy('p.perso_nombre', 'ASC')
+                            ->get();
+                    } else {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_nDoc',
+                                'e.emple_codigo',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'o.organi_razonSocial',
+                                'o.organi_direccion',
+                                'o.organi_ruc',
+                                'e.emple_estado',
+                                'e.organi_id'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.emple_id', $idemp)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->get();
+                    }
+                } else {
+                    if ($idemp == 0 || $idemp == ' ') {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_nDoc',
+                                'e.emple_codigo',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'o.organi_razonSocial',
+                                'o.organi_direccion',
+                                'o.organi_ruc',
+                                'e.emple_estado',
+                                'e.organi_id'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->orderBy('p.perso_nombre', 'ASC')
+                            ->get();
+                    } else {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                'e.emple_nDoc',
+                                'e.emple_codigo',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'o.organi_razonSocial',
+                                'o.organi_direccion',
+                                'o.organi_ruc',
+                                'e.emple_estado',
+                                'e.organi_id'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.emple_id', $idemp)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->get();
+                    }
+                }
+            }
+        } else {
+            if ($idemp == 0 || $idemp == ' ') {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->select(
+                        'e.emple_id',
+                        'e.emple_nDoc',
+                        'e.emple_codigo',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'o.organi_razonSocial',
+                        'o.organi_direccion',
+                        'o.organi_ruc',
+                        'e.emple_estado',
+                        'e.organi_id'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->orderBy('p.perso_nombre', 'ASC')
+                    ->get();
+            } else {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->select(
+                        'e.emple_id',
+                        'e.emple_nDoc',
+                        'e.emple_codigo',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'o.organi_razonSocial',
+                        'o.organi_direccion',
+                        'o.organi_ruc',
+                        'e.emple_estado',
+                        'e.organi_id'
+                    )
+                    ->where('e.emple_id', $idemp)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->get();
+            }
+        }
+        // DB::enableQueryLog();
+        // * TIPO DISPOSITIVO
+        $tipoDispositivo = DB::table('dispositivos as d')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'd.tipoDispositivo')
+            ->select(
+                'd.idDispositivos',
+                'td.dispositivo_descripcion as dispositivo'
+            );
+        // * HORAS EXTRAS
+        $horasExtras = DB::table('reglas_horasextras as rh')
+            ->select(
+                'rh.idreglas_horasExtras',
+                'rh.lleno25',
+                'rh.lleno35',
+                'rh.lleno100'
+            );
+        $data =  DB::table('empleado as e')
+            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+            ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+            ->leftJoinSub($tipoDispositivo, 'entrada', function ($join) {
+                $join->on('mp.dispositivoEntrada', '=', 'entrada.idDispositivos');
+            })
+            ->leftJoinSub($tipoDispositivo, 'salida', function ($join) {
+                $join->on('mp.dispositivoSalida', '=', 'salida.idDispositivos');
+            })
+            ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+            })
+            ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
+            })
+            ->select(
+                'e.emple_id',
+                'mp.marcaMov_id',
+                'mp.organi_id',
+                DB::raw("IF(entrada.dispositivo is null, 'MANUAL' , entrada.dispositivo) as dispositivoEntrada"),
+                DB::raw("IF(salida.dispositivo is null, 'MANUAL' , salida.dispositivo) as dispositivoSalida"),
+                DB::raw('IF(hor.horario_id is null, 0 , horario_id) as idHorario'),
+                DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
+                DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
+                DB::raw("IF(hor.horaI is null , null , horario_descripcion) as detalleHorario"),
+                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
+                'hor.horario_tolerancia as toleranciaI',
+                'hor.horario_toleranciaF as toleranciaF',
+                'mp.marcaMov_id as idMarcacion',
+                'hor.horasObliga as horasObligadas',
+                'hoe.estado',
+                'hor.tiempoMingreso as tiempoMuertoIngreso',
+                'hor.tiempoMsalida as tiempoMuertoSalida',
+                'diurna.idreglas_horasExtras as idDiurna',
+                'diurna.lleno25 as estado25D',
+                'diurna.lleno35 as estado35D',
+                'diurna.lleno100 as estado100D',
+                'nocturna.idreglas_horasExtras as idNocturna',
+                'nocturna.lleno25 as estado25N',
+                'nocturna.lleno35 as estado35N',
+                'nocturna.lleno100 as estado100N',
+                DB::raw('IF(hoe.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start)) as fecha')
+            )
+            ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null, IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha)) , DATE(hd.start))'), [$fechaI, $fechaF])
+            ->where('mp.organi_id', '=', session('sesionidorg'))
+            ->orderBy(
+                DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),
+                'ASC'
+            )
+            ->orderBy(
+                DB::raw('IF(mp.marcaMov_fecha is null, TIME(mp.marcaMov_salida) , TIME(mp.marcaMov_fecha))'),
+                'ASC'
+            )
+            ->get();
+        $data = agruparEmpleadosMarcacionesFecha($data);  //: CONVERTIR UN SOLO EMPLEADO CON VARIOS MARCACIONES
+        // : OBTENER TODAS LAS FECHAS 
+        $period = Carbon::parse($fechaI)->toPeriod($fechaF);
+        $dates = [];
+        foreach ($period as $key => $date) {
+            array_push($dates, $date->format('Y-m-d'));
+        }
+        // : RECORREMOS FECHAS
+        foreach ($dates as $f) {
+            if (!array_key_exists($f, $data)) {
+                $data[$f] = array();
+            }
+        }
+        ksort($data);
+        // * UNIR EMPLEADOS CON MARCACIONES
+        foreach ($data as $key => $d) {
+            $data[$key] = array_values($data[$key]);
+        }
+        foreach ($data as $key => $d) {
+            $data[$key] = array_values($data[$key]);
+            for ($index = 0; $index < sizeof($empleados); $index++) {
+                $ingreso = true;
+                for ($item = 0; $item < sizeof($d); $item++) {
+                    if ($empleados[$index]->emple_id == $d[$item]->emple_id) {    //: BUSCAMOS EL ID EMPLEADO IGUAL
+                        $ingreso = false;
+                        $d[$item]->emple_id = $empleados[$index]->emple_id;
+                        $d[$item]->emple_nDoc = $empleados[$index]->emple_nDoc;
+                        $d[$item]->emple_codigo = empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo;
+                        $d[$item]->perso_nombre = $empleados[$index]->perso_nombre;
+                        $d[$item]->perso_apPaterno = $empleados[$index]->perso_apPaterno;
+                        $d[$item]->perso_apMaterno = $empleados[$index]->perso_apMaterno;
+                        $d[$item]->cargo_descripcion = empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion;
+                        $d[$item]->organi_id = $d[$item]->organi_id;
+                        $d[$item]->organi_razonSocial = $empleados[$index]->organi_razonSocial;
+                        $d[$item]->organi_direccion = $empleados[$index]->organi_direccion;
+                        $d[$item]->organi_ruc = $empleados[$index]->organi_ruc;
+                        $d[$item]->emple_estado = $empleados[$index]->emple_estado;
+                        $d[$item]->data = $d[$item]->data;
+                        $d[$item]->incidencias = array();
+                    }
+                }
+                if ($ingreso && $empleados[$index]->emple_estado == 1) {         //: VALIDAMOS PARA EMPLEADOS QUE NO TIENEN DATA DE ESA FECHA
+                    $arrayNuevo = (object) array(
+                        "emple_id" => $empleados[$index]->emple_id,
+                        "emple_nDoc" => $empleados[$index]->emple_nDoc,
+                        "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
+                        "perso_nombre" => $empleados[$index]->perso_nombre,
+                        "perso_apPaterno" => $empleados[$index]->perso_apPaterno,
+                        "perso_apMaterno" => $empleados[$index]->perso_apMaterno,
+                        "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
+                        "organi_id" => $empleados[$index]->organi_id,
+                        "organi_razonSocial" => $empleados[$index]->organi_razonSocial,
+                        "organi_direccion" =>  $empleados[$index]->organi_direccion,
+                        "organi_ruc" => $empleados[$index]->organi_ruc,
+                        "emple_estado" => $empleados[$index]->emple_estado,
+                        "data" => array(),
+                        "incidencias" => array()
+                    );
+                    array_push($data[$key], $arrayNuevo);
+                }
+            }
+            usort($data[$key], object_sorter('perso_nombre'));
+        }
+        // * AGREGAR HORARIOS EMPLEADO ASIGNADO POR DIA PARA FALTAS
+        foreach ($data as $d => $dataM) {
+            foreach ($dataM as $m) {
+                $m->data = array_values($m->data);
+                $arrayHorarioE = [];
+                foreach ($m->data as $key => $horario) {
+                    if ($horario["horario"]->idHorarioE != 0) {
+                        array_push($arrayHorarioE, $horario["horario"]->idHorarioE);
+                    }
+                }
+                $horarioEmpleado = DB::table('horario_empleado as he')
+                    ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->leftJoin('reglas_horasextras as rh', 'rh.idreglas_horasExtras', '=', 'h.idreglas_horasExtras')
+                    ->select(
+                        'h.horario_descripcion as horario',
+                        DB::raw('CONCAT("' . $d . '" , " ",h.horaI) as horarioIni'),
+                        DB::raw('CONCAT("' . $d . '" , " ",h.horaF) as horarioFin'),
+                        'h.horario_id  as idHorario',
+                        'h.horario_tolerancia as toleranciaI',
+                        'h.horario_toleranciaF as toleranciaF',
+                        'he.estado as estado',
+                        'he.horarioEmp_id as idHorarioE',
+                        'h.horasObliga as horasObligadas'
+                    )
+                    ->whereNotIn('he.horarioEmp_id', $arrayHorarioE)
+                    ->where('empleado_emple_id', '=', $m->emple_id)
+                    ->where(DB::raw('DATE(hd.start)'), '=', $d)
+                    ->where('he.estado', '=', 1)
+                    ->get();
+
+                foreach ($horarioEmpleado as $he) {
+                    array_push($m->data, array("horario" => $he, "pausas" => array(), "marcaciones" => array()));
+                }
+            }
+        }
+        // * AGREGAR ATRIBUTOS DE HORARIO Y PAUSAS EN CADA HORARIO
+        foreach ($data as $d => $dataM) {
+            foreach ($dataM as  $m) {
+                $m->data = array_values($m->data);
+                // * ********************* PAUSAS ********************
+                foreach ($m->data as $key => $dH) {
+                    if ($dH["horario"]->idHorario != 0) {
+                        // * AÑADIR PAUSAS DEL HORARIO
+                        $pausas = DB::table('pausas_horario')->select(
+                            'idpausas_horario as id',
+                            'pausH_descripcion as descripcion',
+                            'pausH_Inicio as inicio',
+                            'pausH_Fin as fin',
+                            'tolerancia_inicio',
+                            'tolerancia_fin',
+                            'horario_id',
+                            'descontar'
+                        )
+                            ->where('horario_id', '=', $dH["horario"]->idHorario)->get();
+                        foreach ($pausas as $p) {
+                            array_push($m->data[$key]["pausas"], $p);
+                        }
+                    }
+                }
+                // * ******************* INCIDENCIAS *********************
+                $idEmpleado = $m->emple_id;
+                // * TABLA EVENTOS EMPLEADO
+                $eventos = eventos_empleado::select('title as descripcion')
+                    ->where('id_empleado', '=', $idEmpleado)
+                    ->whereBetween(DB::raw('DATE(eventos_empleado.start)'), [$d, $d])
+                    ->orWhere(function ($query) use ($d, $idEmpleado) {
+                        $query->where('id_empleado', '=', $idEmpleado);
+                        $query->whereNotNull('eventos_empleado.end');
+                        $query->where(DB::raw('DATE(eventos_empleado.start)'), '<=', $d);
+                        $query->where(DB::raw('DATE(eventos_empleado.end)'), '>', $d);
+                    })
+                    ->get();
+                foreach ($eventos as $e) {
+                    array_push($m->incidencias, $e);
+                }
+                // * TABLA INCIDENCIAS DIA
+                $incidencias = DB::table('incidencia_dias as id')
+                    ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                    ->select('i.inciden_descripcion as descripcion')
+                    ->where('id.id_empleado', '=', $idEmpleado)
+                    ->whereBetween('id.inciden_dias_fechaI', [$d, $d])
+                    ->orWhere(function ($query) use ($d, $idEmpleado) {
+                        $query->where('id.id_empleado', '=', $idEmpleado);
+                        $query->where('id.inciden_dias_fechaI', '<=', $d);
+                        $query->where('id.inciden_dias_fechaF', '>', $d);
+                    })
+                    ->get();
+                foreach ($incidencias as $i) {
+                    array_push($m->incidencias, $i);
+                }
+            }
+        }
+        return response()->json($data, 200);
     }
 
     public function datosDispoEditar(Request $request)
@@ -1013,6 +1587,7 @@ class dispositivosController extends Controller
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -1021,8 +1596,6 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -1030,6 +1603,7 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -1037,9 +1611,10 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -1048,10 +1623,9 @@ class dispositivosController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
         }
-
-
         if ($invitadod) {
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
@@ -1092,6 +1666,7 @@ class dispositivosController extends Controller
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -1100,8 +1675,6 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -1109,6 +1682,7 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -1116,9 +1690,10 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -1127,10 +1702,9 @@ class dispositivosController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
         }
-
-
         if ($invitadod) {
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
@@ -1183,9 +1757,20 @@ class dispositivosController extends Controller
                         "horario" => $empleado->horario,
                         "fecha" => $empleado->entradaModif,
                         "tolerancia" => $empleado->tolerancia,
+                        "toleranciaF" => $empleado->toleranciaF,
                         "horarioIni" => $empleado->horarioIni,
                         "horarioFin" => $empleado->horarioFin,
-                        "horasO" => $empleado->horasO
+                        "horasO" => $empleado->horasO,
+                        "tiempoMuertoI" => $empleado->tiempoMuertoI,
+                        "tiempoMuertoS" => $empleado->tiempoMuertoS,
+                        "idDiurna" => $empleado->idDiurna,
+                        "estado25D" => $empleado->estado25D,
+                        "estado35D" => $empleado->estado35D,
+                        "estado100D" => $empleado->estado100D,
+                        "idNocturna" => $empleado->idNocturna,
+                        "estado25N" => $empleado->estado25N,
+                        "estado35N" => $empleado->estado35N,
+                        "estado100N" => $empleado->estado100N
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->datos[$empleado->entradaModif][$empleado->idhorario]->incidencias)) {
@@ -1211,6 +1796,14 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->where('rol_id', '=', 3)
             ->get()->first();
+        // * HORAS EXTRAS
+        $horasExtras = DB::table('reglas_horasextras as rh')
+            ->select(
+                'rh.idreglas_horasExtras',
+                'rh.lleno25',
+                'rh.lleno35',
+                'rh.lleno100'
+            );
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
                 $empleado = DB::table('empleado as e')
@@ -1237,6 +1830,12 @@ class dispositivosController extends Controller
                     ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                     ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                     ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+                    ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                        $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+                    })
+                    ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                        $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
+                    })
                     ->select(
                         'e.emple_id',
                         DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start)) as entradaModif'),
@@ -1247,9 +1846,20 @@ class dispositivosController extends Controller
                         DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
                         'mp.marcaMov_id as idMarcacion',
                         'hor.horario_tolerancia as tolerancia',
+                        'hor.horario_toleranciaF as toleranciaF',
                         DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                         DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                        'hor.horasObliga as horasO'
+                        'hor.horasObliga as horasO',
+                        'hor.tiempoMingreso as tiempoMuertoI',
+                        'hor.tiempoMsalida as tiempoMuertoS',
+                        'diurna.idreglas_horasExtras as idDiurna',
+                        'diurna.lleno25 as estado25D',
+                        'diurna.lleno35 as estado35D',
+                        'diurna.lleno100 as estado100D',
+                        'nocturna.idreglas_horasExtras as idNocturna',
+                        'nocturna.lleno25 as estado25N',
+                        'nocturna.lleno35 as estado35N',
+                        'nocturna.lleno100 as estado100N'
                     )
                     ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start))'), [$fecha, $fechaF])
                     ->where('e.emple_id', $idemp)
@@ -1297,6 +1907,12 @@ class dispositivosController extends Controller
                         ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+                        ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                            $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+                        })
+                        ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                            $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
+                        })
                         ->select(
                             'e.emple_id',
                             'o.organi_razonSocial',
@@ -1316,9 +1932,20 @@ class dispositivosController extends Controller
                             DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
                             'mp.marcaMov_id as idMarcacion',
                             'hor.horario_tolerancia as tolerancia',
+                            'hor.horario_toleranciaF as toleranciaF',
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                             DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                            'hor.horasObliga as horasO'
+                            'hor.horasObliga as horasO',
+                            'hor.tiempoMingreso as tiempoMuertoI',
+                            'hor.tiempoMsalida as tiempoMuertoS',
+                            'diurna.idreglas_horasExtras as idDiurna',
+                            'diurna.lleno25 as estado25D',
+                            'diurna.lleno35 as estado35D',
+                            'diurna.lleno100 as estado100D',
+                            'nocturna.idreglas_horasExtras as idNocturna',
+                            'nocturna.lleno25 as estado25N',
+                            'nocturna.lleno35 as estado35N',
+                            'nocturna.lleno100 as estado100N'
                         )
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
@@ -1362,6 +1989,12 @@ class dispositivosController extends Controller
                         ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+                        ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                            $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+                        })
+                        ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                            $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
+                        })
                         ->select(
                             'e.emple_id',
                             DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start)) as entradaModif'),
@@ -1372,9 +2005,20 @@ class dispositivosController extends Controller
                             DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
                             'mp.marcaMov_id as idMarcacion',
                             'hor.horario_tolerancia as tolerancia',
+                            'hor.horario_toleranciaF as toleranciaF',
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                             DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                            'hor.horasObliga as horasO'
+                            'hor.horasObliga as horasO',
+                            'hor.tiempoMingreso as tiempoMuertoI',
+                            'hor.tiempoMsalida as tiempoMuertoS',
+                            'diurna.idreglas_horasExtras as idDiurna',
+                            'diurna.lleno25 as estado25D',
+                            'diurna.lleno35 as estado35D',
+                            'diurna.lleno100 as estado100D',
+                            'nocturna.idreglas_horasExtras as idNocturna',
+                            'nocturna.lleno25 as estado25N',
+                            'nocturna.lleno35 as estado35N',
+                            'nocturna.lleno100 as estado100N'
                         )
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
@@ -1418,6 +2062,12 @@ class dispositivosController extends Controller
                 ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                 ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                 ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+                ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                    $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+                })
+                ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                    $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
+                })
                 ->select(
                     'e.emple_id',
                     DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start)) as entradaModif'),
@@ -1428,9 +2078,20 @@ class dispositivosController extends Controller
                     DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
                     'mp.marcaMov_id as idMarcacion',
                     'hor.horario_tolerancia as tolerancia',
+                    'hor.horario_toleranciaF as toleranciaF',
                     DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                     DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                    'hor.horasObliga as horasO'
+                    'hor.horasObliga as horasO',
+                    'hor.tiempoMingreso as tiempoMuertoI',
+                    'hor.tiempoMsalida as tiempoMuertoS',
+                    'diurna.idreglas_horasExtras as idDiurna',
+                    'diurna.lleno25 as estado25D',
+                    'diurna.lleno35 as estado35D',
+                    'diurna.lleno100 as estado100D',
+                    'nocturna.idreglas_horasExtras as idNocturna',
+                    'nocturna.lleno25 as estado25N',
+                    'nocturna.lleno35 as estado35N',
+                    'nocturna.lleno100 as estado100N'
                 )
                 ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha)), DATE(hd.start))'), [$fecha, $fechaF])
                 ->where('e.emple_id', $idemp)
@@ -1481,9 +2142,12 @@ class dispositivosController extends Controller
                             'h.horario_descripcion as horario',
                             DB::raw('DATE(hd.start) as fecha'),
                             'h.horario_tolerancia as tolerancia',
+                            'h.horario_toleranciaF as toleranciaF',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
                             DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
-                            "h.horasObliga as horasO"
+                            "h.horasObliga as horasO",
+                            'h.tiempoMingreso as tiempoMuertoI',
+                            'h.tiempoMsalida as tiempoMuertoS'
                         )
                         ->where(DB::raw('DATE(hd.start)'), '=', $d)
                         ->where('he.empleado_emple_id', '=', $idemp)
@@ -1504,9 +2168,12 @@ class dispositivosController extends Controller
                             'h.horario_descripcion as horario',
                             DB::raw('DATE(hd.start) as fecha'),
                             'h.horario_tolerancia as tolerancia',
+                            'h.horario_toleranciaF as toleranciaF',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
                             DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
-                            "h.horasObliga as horasO"
+                            "h.horasObliga as horasO",
+                            'h.tiempoMingreso as tiempoMuertoI',
+                            'h.tiempoMsalida as tiempoMuertoS'
                         )
                         ->where(DB::raw('DATE(hd.start)'), '=', $d)
                         ->where('he.empleado_emple_id', '=', $idemp)
@@ -1565,9 +2232,12 @@ class dispositivosController extends Controller
                             "horario" => 0,
                             "fecha" => $d,
                             "tolerancia" => NULL,
+                            "toleranciaF" => NULL,
                             "horarioIni" => 0,
                             "horarioFin" => 0,
                             "horasO" => 0,
+                            "tiempoMuertoI" => NULL,
+                            "tiempoMuertoS" => NULL,
                             "marcaciones" => array(),
                             "incidencias" => array(),
                             "pausas" => array()
@@ -3511,6 +4181,7 @@ class dispositivosController extends Controller
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -3519,8 +4190,6 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-
-
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -3528,6 +4197,7 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -3535,9 +4205,10 @@ class dispositivosController extends Controller
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -3546,6 +4217,7 @@ class dispositivosController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
         }
         if ($invitadod) {
@@ -3618,12 +4290,24 @@ class dispositivosController extends Controller
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataHorario"])) {
                     $resultado[$empleado->emple_id]->data[$empleado->fecha]["marcaciones"][$empleado->idHorarioE]["dataHorario"] = (object) array(
                         "horarioIni" => $empleado->horarioIni,
+                        "horarioFin" => $empleado->horarioFin,
                         "idHorario" => $empleado->idHorario,
                         "toleranciaI" => $empleado->toleranciaI,
                         "idHorarioE" => $empleado->idHorarioE,
                         "estado" => $empleado->estado,
                         "horasObligadas" => $empleado->horasObligadas  == null ? 0 : $empleado->horasObligadas,
-                        "horasAdicionales" => $empleado->horasAdicionales == null ? 0 : $empleado->horasAdicionales
+                        "horasAdicionales" => $empleado->horasAdicionales == null ? 0 : $empleado->horasAdicionales,
+                        "toleranciaF" => $empleado->toleranciaF,
+                        "tiempoMuertoI" => $empleado->tiempoMuertoI,
+                        "tiempoMuertoS" => $empleado->tiempoMuertoS,
+                        "idDiurna" => $empleado->idDiurna,
+                        "estado25D" => $empleado->estado25D,
+                        "estado35D" => $empleado->estado35D,
+                        "estado100D" => $empleado->estado100D,
+                        "idNocturna" => $empleado->idNocturna,
+                        "estado25N" => $empleado->estado25N,
+                        "estado35N" => $empleado->estado35N,
+                        "estado100N" => $empleado->estado100N
                     );
                 }
                 // : CREAR ARRAY DE DATA DE MARCACIONES
@@ -3662,6 +4346,7 @@ class dispositivosController extends Controller
                             'e.organi_id'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->orderBy('p.perso_nombre', 'ASC')
                         ->get();
                 } else {
@@ -3710,6 +4395,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->orderBy('p.perso_nombre', 'ASC')
                             ->get();
                     } else {
@@ -3757,6 +4443,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
                             ->orderBy('p.perso_nombre', 'ASC')
                             ->get();
                     } else {
@@ -3802,6 +4489,7 @@ class dispositivosController extends Controller
                         'e.organi_id'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->orderBy('p.perso_nombre', 'ASC')
                     ->get();
             } else {
@@ -3826,24 +4514,50 @@ class dispositivosController extends Controller
             }
         }
         $marcaciones = [];
+        // * HORAS EXTRAS
+        $horasExtras = DB::table('reglas_horasextras as rh')
+            ->select(
+                'rh.idreglas_horasExtras',
+                'rh.lleno25',
+                'rh.lleno35',
+                'rh.lleno100'
+            );
         $data =  DB::table('empleado as e')
             ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+            ->leftJoinSub($horasExtras, 'diurna', function ($join) {
+                $join->on('hor.idreglas_horasExtras', '=', 'diurna.idreglas_horasExtras');
+            })
+            ->leftJoinSub($horasExtras, 'nocturna', function ($join) {
+                $join->on('hor.idreglas_horasExtrasNoct', '=', 'nocturna.idreglas_horasExtras');
+            })
             ->select(
                 'e.emple_id',
                 DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start)) as fecha'),
                 DB::raw('IF(hor.horario_id is null, 0 , horario_id) as idHorario'),
                 DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
+                DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                 DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
                 'hor.horario_tolerancia as toleranciaI',
+                'hor.horario_toleranciaF as toleranciaF',
                 'mp.marcaMov_id as idMarcacion',
                 'hor.horasObliga as horasObligadas',
                 'hoe.nHoraAdic as horasAdicionales',
-                'hoe.estado'
+                'hoe.estado',
+                'hor.tiempoMingreso as tiempoMuertoI',
+                'hor.tiempoMsalida as tiempoMuertoS',
+                'diurna.idreglas_horasExtras as idDiurna',
+                'diurna.lleno25 as estado25D',
+                'diurna.lleno35 as estado35D',
+                'diurna.lleno100 as estado100D',
+                'nocturna.idreglas_horasExtras as idNocturna',
+                'nocturna.lleno25 as estado25N',
+                'nocturna.lleno35 as estado35N',
+                'nocturna.lleno100 as estado100N'
             )
             ->whereBetween(DB::raw('IF(hoe.horarioEmp_id is null,DATE(mp.marcaMov_fecha),DATE(hd.start))'), [$fechaInicio, $fechaFin])
             ->where('mp.organi_id', '=', session('sesionidorg'))
@@ -3915,11 +4629,15 @@ class dispositivosController extends Controller
                         ->select(
                             'h.horario_id as idHorario',
                             'h.horario_tolerancia as toleranciaI',
+                            'h.horario_toleranciaF as toleranciaF',
                             'he.horarioEmp_id as idHorarioE',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
                             'he.estado',
                             'h.horasObliga as horasObligadas',
-                            'he.nHoraAdic as horasAdicionales'
+                            'he.nHoraAdic as horasAdicionales',
+                            'h.tiempoMingreso as tiempoMuertoI',
+                            'h.tiempoMsalida as tiempoMuertoS'
                         )
                         ->where(DB::raw('DATE(hd.start)'), '=', $d)
                         ->where('he.empleado_emple_id', '=', $idEmpleado)
@@ -3964,11 +4682,15 @@ class dispositivosController extends Controller
                         ->select(
                             'h.horario_id as idHorario',
                             'h.horario_tolerancia as toleranciaI',
+                            'h.horario_toleranciaF as toleranciaF',
                             'he.horarioEmp_id as idHorarioE',
                             DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin"),
                             'he.estado',
                             'h.horasObliga as horasObligadas',
-                            'he.nHoraAdic as horasAdicionales'
+                            'he.nHoraAdic as horasAdicionales',
+                            'h.tiempoMingreso as tiempoMuertoI',
+                            'h.tiempoMsalida as tiempoMuertoS'
                         )
                         ->where(DB::raw('DATE(hd.start)'), '=', $d)
                         ->where('he.empleado_emple_id', '=', $idEmpleado)
