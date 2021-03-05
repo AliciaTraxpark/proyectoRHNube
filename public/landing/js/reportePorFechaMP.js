@@ -526,7 +526,17 @@ function cargartabla(fechaI, fechaF) {
             var tbody = "";
             //* ARMAMOS BODY DE TABLA
             for (const key in data) {
-                tbody += `<tr><td colspan="${cantidadColSpan}" scope="colgroup" class="text-center">${key}</td>`;
+                var valorEstado = 0;
+                data[key].forEach(element => {
+                    if (element.data.length != 0) {
+                        element.data.forEach(value => {
+                            if (value.marcaciones.length != 0) {
+                                valorEstado = 1;
+                            }
+                        });
+                    }
+                });
+                tbody += `<tr data-estado="${valorEstado}"><td colspan="${cantidadColSpan}" scope="colgroup" class="text-center">${key}</td>`;
                 // * COMPLEMENTAMOS
                 for (let completar = 0; completar < (cantidadColSpan - 1); completar++) {
                     tbody += `<td style="display:none"></td>`;
