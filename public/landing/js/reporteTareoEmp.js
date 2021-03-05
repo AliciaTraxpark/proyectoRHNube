@@ -63,6 +63,7 @@ function cargartabla(fecha1,fecha2) {
     $("#checSexo").prop("checked", false);
     $("#checArea").prop("checked", false);
     $("#checCargo").prop("checked", false);
+    $("#checCentroc").prop("checked", true);
     $("#checPuntoc").prop("checked", true);
     $("#checPuntocDescrip").prop("checked", false);
     $("#checControl").prop("checked", true);
@@ -150,7 +151,8 @@ function cargartabla(fecha1,fecha2) {
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
 
-                theadTabla += `     <th class="puntoHid">Cód. Punto C.</th>
+                theadTabla += `     <th class="ccostoHid">Centro de costo</th>
+                                    <th class="puntoHid">Cód. Punto C.</th>
                                    <th class="puntoHid">Punto de control</th>
                                    `;
 
@@ -855,6 +857,14 @@ function cargartabla(fecha1,fecha2) {
                     /* --------------------------------------------------- */
 
                     tbody += tbodyEntradaySalida;
+                    if(marcacionData.centroC_descripcion!=null){
+                        tbody += `
+                        <td class="ccostoHid" > ${marcacionData.centroC_descripcion} </td>`;
+                    }
+                    else{
+                        tbody += `
+                        <td class="ccostoHid" > -- </td>`;
+                    }
 
                     /* -----------PUNTO DE CONTRO ------------ */
 
@@ -934,6 +944,7 @@ function cargartabla(fecha1,fecha2) {
                                 <td class="controHidSa" ></td>
                                 <td ></td>
                                 <td></td>
+                                <td class=ccostoHid"></td>
                                 <td class="puntoHid" ></td>
                                 <td class="puntoHid" ></td>
                                 `;
@@ -1693,6 +1704,18 @@ $("#checCargo").change(function (event) {
         dataT.api().columns(".cargoHid").visible(true);
     } else {
         dataT.api().columns(".cargoHid").visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+//* CENTRO COSTO
+$("#checCentroc").change(function (event) {
+    if ($("#checCentroc").prop("checked")) {
+        dataT.api().columns(".ccostoHid").visible(true);
+    } else {
+        dataT.api().columns(".ccostoHid").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
