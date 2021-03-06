@@ -3956,6 +3956,7 @@ class apiBiometricoController extends Controller
                                         //*pausa inicio sera la salida de la marcacion
                                         $marcacion_automaticaI = marcacion_puerta::find($marcacion_puertaPausa->marcaMov_id);
                                         $marcacion_automaticaI->marcaMov_salida = $pausasDescontar->horaI;
+                                        $marcacion_automaticaI->dispositivoSalida = 81;
                                         $marcacion_automaticaI->save();
 
                                         } else{
@@ -3966,6 +3967,7 @@ class apiBiometricoController extends Controller
                                             $marcacion_automaticaF->organi_id = $empleados->organi_id;
                                             $marcacion_automaticaF->horarioEmp_id = $conhorario;
                                             $marcacion_automaticaF->tipoMarcacionB = 1;
+                                            $marcacion_automaticaF->dispositivoSalida = 81;
                                             $marcacion_automaticaF->save();
                                         }
 
@@ -3976,6 +3978,7 @@ class apiBiometricoController extends Controller
                                         $marcacion_automaticaF->organi_id = $empleados->organi_id;
                                         $marcacion_automaticaF->horarioEmp_id = $conhorario;
                                         $marcacion_automaticaF->tipoMarcacionB = 1;
+                                        $marcacion_automaticaF->dispositivoEntrada =81;
                                         $marcacion_automaticaF->save();
 
                                     }
