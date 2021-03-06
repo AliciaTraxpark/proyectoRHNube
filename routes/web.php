@@ -472,6 +472,7 @@ Route::post('/actualizarDispos', 'dispositivosController@actualizarDispos');
 Route::post('/desactivarDisposi', 'dispositivosController@desactivarDisposi');
 Route::post('/activarDisposi', 'dispositivosController@activarDisposi');
 Route::get('/selectPersonalizadoModoAP', 'dispositivosController@selectBusquedas');
+Route::get('/selectEmpleadoModoAP', 'dispositivosController@empleadosBusqueda');
 // : ***************************** DETALLE DE ASISTENCIA *******************************************
 Route::get('/reporteAsistencia', 'dispositivosController@reporteMarcaciones');
 Route::get('/reporteTablaMarca', 'dispositivosController@reporteTabla');
@@ -663,6 +664,6 @@ Route::post('selectModos', 'dashboardController@selectModos');
 Route::get('modos', 'dashboardController@getModos');
 
 //GENERAR AUTOMA SOLO EJECUTAR 1 VEZ
- Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
+Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
 /*Route::get('/asignarReglas', 'EmpleadoController@agregarReglas');
 Route::get('/horariosReglas', 'EmpleadoController@generarReglaHorario'); */
