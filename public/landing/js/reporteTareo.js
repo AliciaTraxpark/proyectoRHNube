@@ -85,7 +85,7 @@ function cargartabla(fecha) {
                 $("#theadD").empty();
 
 
-                 //*CANTIDAD DE NOMBRES DE DETALLE
+                 //*CANTIDAD DE NOMBRES DE DETALLE******************************
                  var cantidadColumnasDetalle=0
                  for (let i = 0; i < data.length; i++) {
                     //* OBTENER CANTIDAD TOTAL DE COLUMNAS
@@ -93,6 +93,26 @@ function cargartabla(fecha) {
                         cantidadColumnasDetalle = data[i].detalleNombres.length;
                     }
                 }
+                //*************************************************************
+
+                //***CANTIDAD DE ACTIVIDADES FILTRADAS POR |*******************
+
+                var cantidadColumnasActividades=0
+                for (let i = 0; i < data.length; i++) {
+                    //* OBTENER CANTIDAD TOTAL DE COLUMNAS
+                    separador = "|";
+                    if(data[i].Activi_Nombre!=null){
+                        textActividades = data[i].Activi_Nombre.split(separador);
+                    } else{
+                        textActividades = '0';
+                    }
+
+                    if (cantidadColumnasActividades < textActividades.length) {
+                        cantidadColumnasActividades = textActividades.length;
+                        console.log(cantidadColumnasActividades);
+                    }
+                }
+                //**************************************************************
                 //*---------------------------- ARMAR CABEZERA-----------------------------------------
                 var theadTabla = `<tr>
                                     <th># </th>
@@ -104,12 +124,17 @@ function cargartabla(fecha) {
                                     <th class="areaHid"  name="tiempoSitHi">Área&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                     <th class="cargoHid"  name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
-                theadTabla += `<th>Cód. Act.</th>
-                                    <th>Actividad</th>
-                                    <th>Cód. Sub.</th>
-                                    <th>Subactividad</th>
-                                    <th class="controHidEn">Controlador de entrada</th>
-                                    <th>Hora de entrada</th>
+                theadTabla += `<th>Cód. Act.</th>`;
+
+                //*numero de columnas de actividades
+                for (let j = 0; j < cantidadColumnasActividades; j++) {
+                    theadTabla += `<th class="">Actividad ${j + 1} </th>`;
+                    }
+
+                 theadTabla += `<th>Cód. Sub.</th>
+                                <th>Subactividad</th>
+                                <th class="controHidEn">Controlador de entrada</th>
+                                <th>Hora de entrada</th>
 
                                     <th class="controHidSa">Controlador de salida</th>
                                     <th>Hora de salida</th>
@@ -174,6 +199,98 @@ function cargartabla(fecha) {
                         tbody += `<td  class="cargoHid" name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     }
 
+                    if (data[index].codigoActividad != 0) {
+                        tbody += `<td >${data[index].codigoActividad} </td>`;
+                    } else {
+                        tbody += `<td>
+                           --
+                        </td>`;
+                    }
+
+                    //*tabulador |
+                   var separadorT = "|";
+                   if(data[index].Activi_Nombre!=null){
+                    var  textActividadesT = data[index].Activi_Nombre.split(separador);
+                   } else{
+                    var  textActividadesT = '0';
+                   }
+
+
+                     for (let j = 0; j < textActividadesT.length; j++) {
+                        var activData = textActividadesT[j];
+                        if (activData != null && data[index].Activi_Nombre!=null ) {
+                            tbody += `<td>${activData}</td>`;
+                        } else {
+                            tbody += `<td>
+                                <div class=" dropdown">
+                                    <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                        <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar actividad">
+                                            <img style="margin-bottom: 3px;" src="landing/images/actividad.svg" class="mr-2" height="12"/>
+                                            No tiene actividad
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
+                                       <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                           <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                               Opciones
+                                       </h6>
+                                       <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                        <div class="dropdown-item" dropdown-itemM noExport>
+                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                <a onclick="agregarActiv(${data[index].idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                    <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                    Agregar
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </td>`;
+                        }
+                    }
+                    for (let m = textActividadesT.length; m < cantidadColumnasActividades; m++) {
+                        tbody += `<td >---</td>`;
+                    }
+
+
+                    if (data[index].codigoSubactiv != 0) {
+                        tbody += `<td >${data[index].codigoSubactiv} </td>`;
+                    } else {
+                        tbody += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    }
+
+                    if (data[index].subAct_nombre != null) {
+                        tbody += `<td>${data[index].subAct_nombre}</td>`;
+                    } else {
+                        tbody += `<td>
+                            <div class=" dropdown">
+                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar subactividad">
+                                        <img style="margin-bottom: 3px;" src="landing/images/subactividad.svg" class="mr-2" height="12"/>
+                                        No tiene subactividad
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
+                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                           Opciones
+                                   </h6>
+                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                    <div class="dropdown-item" dropdown-itemM noExport>
+                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                            <a onclick="agregarSubAct(${data[index].idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                Agregar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </td>`;
+                    }
+
                     //* ARMAR Y ORDENAR MARCACIONES
                     var tbodyEntradaySalida = "";
                     var tbodyDetalle = "";
@@ -188,81 +305,7 @@ function cargartabla(fecha) {
                             if (
                                 h == moment(marcacionData.entrada).format("HH")
                             ) {
-                                if (marcacionData.codigoActividad != 0) {
-                                    tbodyEntradaySalida += `<td >${marcacionData.codigoActividad} </td>`;
-                                } else {
-                                    tbodyEntradaySalida += `<td>
-                                       --
-                                    </td>`;
-                                }
 
-                                if (marcacionData.Activi_Nombre != null) {
-                                    tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
-                                } else {
-                                    tbodyEntradaySalida += `<td>
-                                        <div class=" dropdown">
-                                            <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar actividad">
-                                                    <img style="margin-bottom: 3px;" src="landing/images/actividad.svg" class="mr-2" height="12"/>
-                                                    No tiene actividad
-                                                </span>
-                                            </a>
-                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
-                                               <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                   <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
-                                                       Opciones
-                                               </h6>
-                                               <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                <div class="dropdown-item" dropdown-itemM noExport>
-                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                        <a onclick="agregarActiv(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
-                                                            Agregar
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </ul>
-                                        </div>
-                                    </td>`;
-                                }
-
-                                if (marcacionData.codigoSubactiv != 0) {
-                                    tbodyEntradaySalida += `<td >${marcacionData.codigoSubactiv} </td>`;
-                                } else {
-                                    tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                }
-
-                                if (marcacionData.subAct_nombre != null) {
-                                    tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
-                                } else {
-                                    tbodyEntradaySalida += `<td>
-                                        <div class=" dropdown">
-                                            <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar subactividad">
-                                                    <img style="margin-bottom: 3px;" src="landing/images/subactividad.svg" class="mr-2" height="12"/>
-                                                    No tiene subactividad
-                                                </span>
-                                            </a>
-                                            <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
-                                               <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                   <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
-                                                       Opciones
-                                               </h6>
-                                               <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                <div class="dropdown-item" dropdown-itemM noExport>
-                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                        <a onclick="agregarSubAct(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
-                                                            Agregar
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </ul>
-                                        </div>
-                                    </td>`;
-                                }
                                 if (marcacionData.controladorEntrada != 0) {
                                     tbodyEntradaySalida += `
                                                 <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
@@ -580,81 +623,6 @@ function cargartabla(fecha) {
                                     h ==
                                     moment(marcacionData.salida).format("HH")
                                 ) {
-                                    if (marcacionData.codigoActividad != 0) {
-                                        tbodyEntradaySalida += `<td >${marcacionData.codigoActividad} </td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td>
-                                            --
-                                        </td>`;
-                                    }
-
-                                    if (marcacionData.Activi_Nombre != null) {
-                                        tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td>
-                                            <div class=" dropdown">
-                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar actividad">
-                                                        <img style="margin-bottom: 3px;" src="landing/images/actividad.svg" class="mr-2" height="12"/>
-                                                        No tiene actividad
-                                                    </span>
-                                                </a>
-                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
-                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
-                                                           Opciones
-                                                   </h6>
-                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                    <div class="dropdown-item" dropdown-itemM noExport>
-                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                            <a onclick="agregarActiv(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
-                                                                Agregar
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </ul>
-                                            </div>
-                                        </td>`;
-                                    }
-
-                                    if (marcacionData.codigoSubactiv != 0) {
-                                        tbodyEntradaySalida += `<td >${marcacionData.codigoSubactiv} </td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                    }
-
-                                    if (marcacionData.subAct_nombre != null) {
-                                        tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td>
-                                            <div class=" dropdown">
-                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar subactividad">
-                                                        <img style="margin-bottom: 3px;" src="landing/images/subactividad.svg" class="mr-2" height="12"/>
-                                                        No tiene subactividad
-                                                    </span>
-                                                </a>
-                                                <ul class="dropdown-menu scrollable-menu noExport"  style="padding: 0rem 0rem;">
-                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
-                                                           Opciones
-                                                   </h6>
-                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                    <div class="dropdown-item" dropdown-itemM noExport>
-                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                            <a onclick="agregarSubAct(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
-                                                                Agregar
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </ul>
-                                            </div>
-                                        </td>`;
-                                    }
 
                                     if (marcacionData.controladorEntrada != 0) {
                                         tbodyEntradaySalida += `
@@ -898,8 +866,11 @@ function cargartabla(fecha) {
                                 <td class="areaHid"></td>
                                 <td class="cargoHid"></td>`;
 
-                    tbodyTR += `<td ><br><br></td>
-                                <td ></td>
+                    tbodyTR += `<td ><br><br></td>`;
+                    for(ac=0;  ac < cantidadColumnasActividades; ac++){
+                        tbodyTR +='<td ></td>';
+                    }
+                    tbodyTR += `
                                 <td ></td>
                                 <td></td>
                                 <td class="controHidEn"></td>
