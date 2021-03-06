@@ -50,8 +50,8 @@ $(function () {
     });
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
-    $("#fechaInput").change();
-
+    $('#ID_START').val(f);
+    $('#ID_END').val(f);
 
 });
 
@@ -908,12 +908,12 @@ function cargartabla(fecha1,fecha2) {
                                 <td class="sexoHid"></td>
                                 <td class="areaHid"></td>
                                 <td class="cargoHid"></td>`;
-                   
+                    tbodyTR += `<td ><br><br></td>`;
+
                                 for(ac=0;  ac < cantidadColumnasActividades; ac++){
                                     tbodyTR +='<td ></td>';
                                 }
                     tbodyTR += `
-                                <td ></td>
                                 <td ></td>
                                 <td></td>
                                 <td class="controHidEn"></td>
