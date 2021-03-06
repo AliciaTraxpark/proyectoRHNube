@@ -125,7 +125,7 @@ $(document).ready(function () {
             {
                 data: "sistema",
                 render: function (data, type, row) {
-                    if(row.tipoSistema == 1){
+                    if(row.tipoSistema == 1 || row.sistema==1){
                         return '<a onclick="IncidenEditar(' + row.inciden_id + ')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>';
                     } else{
                         if (row.uso == 1) {
@@ -405,12 +405,12 @@ function IncidenEditar(idIncidencia){
                 $('#pagadoCheck_ed').prop('disabled',false);
             }
             //**************SI ES DE SISTEMA******************
-            if(data.tipoSistema==1){
+            if(data.tipoSistema==1 || data.sistema==1){
                 $('#descripcionIncid_ed').prop('disabled',true);
                 //*tipo incidencia de sistema
-                if(data.tipoInc_descripcion=='De sistema'){
+                if(data.tipoInc_descripcion=='De sistema' || data.sistema==1){
                     $('#selectTipoIncide_edSis').show();
-                    $('#selectTipoIncide_edSis').val('De sistema');
+                    $('#selectTipoIncide_edSis').val(data.tipoInc_descripcion);
                     $('#selectTipoIncide_edSis').prop('disabled',true);
                     $('#selectTipoIncide_ed').prop('required',false);
                     $('#idTipoInci').val(data.idtipo_incidencia);
