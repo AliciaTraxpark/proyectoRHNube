@@ -118,6 +118,21 @@ class incidenciasController extends Controller
                     $incidencia->uso=1;
                 }
         }
+
+        //*obtenemos si es de sistema el tipo
+        foreach($incidencias as $incidencia){
+            $tipoSistema=DB::table('tipo_incidencia')
+            ->where('tipoInc_descripcion','=','De sistema')
+            ->where('organi_id','=', session('sesionidorg'))
+            ->get()->first();
+
+
+            if($incidencia->idtipo_incidencia==$tipoSistema->idtipo_incidencia){
+                $incidencia->tipoSistema=1;
+            } else{
+                $incidencia->tipoSistema=0;
+            }
+        }
         return json_encode($incidencias);
     }
 
@@ -150,6 +165,21 @@ class incidenciasController extends Controller
             else{
                 $incidencia->uso=1;
             }
+
+             //*obtenemos si es de sistema el tipo
+
+            $tipoSistema=DB::table('tipo_incidencia')
+            ->where('tipoInc_descripcion','=','De sistema')
+            ->where('organi_id','=', session('sesionidorg'))
+            ->get()->first();
+
+
+            if($incidencia->idtipo_incidencia==$tipoSistema->idtipo_incidencia){
+                $incidencia->tipoSistema=1;
+            } else{
+                $incidencia->tipoSistema=0;
+            }
+        
 
 
 
