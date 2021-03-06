@@ -4232,7 +4232,7 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteDis', [
+                    return view('Dispositivos.trazabilidad', [
                         'organizacion' => $nombreOrga,
                         'empleado' => $empleados,
                         'modifReporte' => $invitadod->ModificarReportePuerta
