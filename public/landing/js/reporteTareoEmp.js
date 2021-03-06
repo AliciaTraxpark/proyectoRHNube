@@ -150,7 +150,24 @@ function cargartabla(fecha1,fecha2) {
                     }
                 }
                 //**************************************************************
+                //***CANTIDAD DE SUBACTIVIDADES FILTRADAS POR |*******************
 
+                var cantidadColumnasSubactividades=0
+                for (let i = 0; i < data.length; i++) {
+                    //* OBTENER CANTIDAD TOTAL DE COLUMNAS
+                    separadorS = "|";
+                    if(data[i].subAct_nombre!=null){
+                        textSubactividades = data[i].subAct_nombre.split(separadorS);
+                    } else{
+                        textSubactividades = '0';
+                    }
+
+                    if (cantidadColumnasSubactividades < textSubactividades.length) {
+                        cantidadColumnasSubactividades = textSubactividades.length;
+
+                    }
+                }
+                //**************************************************************
                 //*---------------------------- ARMAR CABEZERA-----------------------------------------
                 var theadTabla = `<tr>
                                     <th># </th>
@@ -169,9 +186,14 @@ function cargartabla(fecha1,fecha2) {
                     theadTabla += `<th class="">Actividad ${j + 1} </th>`;
                     }
 
-                theadTabla += `     <th>Cód. Sub.</th>
-                                    <th>Subactividad</th>
-                                    <th class="controHidEn">Controlador de entrada</th>
+                theadTabla += `     <th>Cód. Sub.</th>`;
+
+                 //*numero de columnas de Subactividades
+                 for (let j = 0; j < cantidadColumnasSubactividades; j++) {
+                    theadTabla += `<th class="">Subactividad ${j + 1} </th>`;
+                    }
+
+                theadTabla += `     <th class="controHidEn">Controlador de entrada</th>
                                     <th>Hora de entrada</th>
 
                                     <th class="controHidSa">Controlador de salida</th>
@@ -301,10 +323,20 @@ function cargartabla(fecha1,fecha2) {
                         tbody += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     }
 
-                    if (data[index].subAct_nombre != null) {
-                        tbody += `<td>${data[index].subAct_nombre}</td>`;
-                    } else {
-                        tbody += `<td>
+                    //*tabulador subact********************************
+
+                    var separadorS = "|";
+                    if(data[index].subAct_nombre!=null){
+                        textSubactividades = data[index].subAct_nombre.split(separadorS);
+                    } else{
+                        textSubactividades = '0';
+                    }
+                    for (let j = 0; j < textSubactividades.length; j++) {
+                        var subactivData = textSubactividades[j];
+                        if(subactivData != null && data[index].subAct_nombre!=null){
+                            tbody += `<td>${subactivData}</td>`;
+                        } else{
+                            tbody += `<td>
                             <div class=" dropdown">
                                 <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -330,7 +362,13 @@ function cargartabla(fecha1,fecha2) {
                                 </ul>
                             </div>
                         </td>`;
+                        }
+
                     }
+                    for (let m = textSubactividades.length; m < cantidadColumnasSubactividades; m++) {
+                        tbody += `<td >---</td>`;
+                    }
+
 
                     //* ARMAR Y ORDENAR MARCACIONES
                     var tbodyEntradaySalida = "";
@@ -910,13 +948,14 @@ function cargartabla(fecha1,fecha2) {
                                 <td class="cargoHid"></td>`;
                     tbodyTR += `<td ><br><br></td>`;
 
-                                for(ac=0;  ac < cantidadColumnasActividades; ac++){
-                                    tbodyTR +='<td ></td>';
-                                }
-                    tbodyTR += `
-                                <td ></td>
-                                <td></td>
-                                <td class="controHidEn"></td>
+                    for(ac=0;  ac < cantidadColumnasActividades; ac++){
+                        tbodyTR +='<td ></td>';
+                    }
+                    tbodyTR += ` <td ></td>`;
+                    for(sc=0;  sc < cantidadColumnasSubactividades; sc++){
+                        tbodyTR +='<td ></td>';
+                    }
+                    tbodyTR += ` <td class="controHidEn"></td>
                                 <td ></td>
                                 <td class="controHidSa" ></td>
                                 <td ></td>
