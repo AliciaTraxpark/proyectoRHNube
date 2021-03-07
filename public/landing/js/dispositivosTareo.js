@@ -453,28 +453,7 @@ function enviarSMS(idDis) {
                     },
                     success: function (data) {
                         $.notifyClose();
-                        if(data!=null || data!=''){
-                            $.notify(
-                                {
-                                    message: data,
-                                    icon: "admin/images/warning.svg",
-                                },
-                                {
-                                    position: "fixed",
-                                    icon_type: "image",
-                                    newest_on_top: true,
-                                    delay: 5000,
-                                    template:
-                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                    "</div>",
-                                    spacing: 35,
-                                }
-                            );
-                        } else{
+
                             $.notify(
                                 {
                                     message: "\nMensaje enviado.",
@@ -495,7 +474,7 @@ function enviarSMS(idDis) {
                                     spacing: 35,
                                 }
                             );
-                        }
+                        
 
                         $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
@@ -540,28 +519,7 @@ function reenviarSMS(idDis) {
                     },
                     success: function (data) {
                         $.notifyClose();
-                        if(data!=null || data!=''){
-                            $.notify(
-                                {
-                                    message: data,
-                                    icon: "admin/images/warning.svg",
-                                },
-                                {
-                                    position: "fixed",
-                                    icon_type: "image",
-                                    newest_on_top: true,
-                                    delay: 5000,
-                                    template:
-                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                    "</div>",
-                                    spacing: 35,
-                                }
-                            );
-                        } else{
+
                             $.notify(
                                 {
                                     message: "\nMensaje enviado.",
@@ -582,7 +540,7 @@ function reenviarSMS(idDis) {
                                     spacing: 35,
                                 }
                             );
-                        }
+
 
                         $("#tablaDips").DataTable().ajax.reload(null, false);
                     },
