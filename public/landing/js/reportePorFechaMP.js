@@ -368,6 +368,7 @@ function cargartabla(fechaI, fechaF) {
             $('[data-toggle="tooltip"]').tooltip("hide");
         },
     }).then(function (data) {
+        console.log(data);
         $('[data-toggle="tooltip"]').tooltip("hide");
         $('div.dataTables_processing').hide();
         $("#tablaReport").css('opacity', 1);

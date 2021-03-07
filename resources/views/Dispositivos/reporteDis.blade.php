@@ -303,7 +303,7 @@
                 </div>
             </div>
             <div class="card-body border">
-                <div class="row justify-content-center">
+                <div class="row">
                     <div class="col-xl-4">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Fecha:</label>
@@ -320,8 +320,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-5">
+                        <div class="for-group row">
+                            <label class="col-lg-3 col-form-label pt-0">Seleccionar por:</label>
+                            <div class="col-lg-9">
+                                <select id="selectPor" data-plugin="customselect" class="form-control" required>
+                                    <option value="" disabled selected>Búsqueda general</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-xl-7 col-sm-6">
-                        <div class="form-group   row">
+                        <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Empleado</label>
                             <div class="col-lg-9">
                                 <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
@@ -1289,6 +1299,7 @@
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>

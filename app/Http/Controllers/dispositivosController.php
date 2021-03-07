@@ -4773,65 +4773,248 @@ class dispositivosController extends Controller
     // * FUNCION DE SELECT DE BSUQUEDA
     public function selectBusquedas()
     {
-        // : CARGO
-        $cargo = DB::table('cargo as c')
-            ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
-            ->select(
-                'c.cargo_id as id',
-                'c.cargo_descripcion as descripcion'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.asistencia_puerta', '=', 1)
-            ->groupBy('c.cargo_id')
-            ->get();
-        // : AREA 
-        $area = DB::table('area as a')
-            ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
-            ->select(
-                'a.area_id as id',
-                'a.area_descripcion as descripcion'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.asistencia_puerta', '=', 1)
-            ->groupBy('a.area_id')
-            ->get();
-        // : NIVEL
-        $nivel = DB::table('nivel as n')
-            ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
-            ->select(
-                'n.nivel_id as id',
-                'n.nivel_descripcion as descripcion'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.asistencia_puerta', '=', 1)
-            ->groupBy('n.nivel_id')
-            ->get();
-        // : LOCAL
-        $local = DB::table('local as l')
-            ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
-            ->select(
-                'l.local_id as id',
-                'l.local_descripcion as descripcion'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.asistencia_puerta', '=', 1)
-            ->groupBy('l.local_id')
-            ->get();
-        // : UNIR QUERY DE CONSULTA
-        foreach ($cargo as $c) {
-            $c->query = "e.e.emple_cargo = " . $c->id;
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                // : CARGO
+                $cargo = DB::table('cargo as c')
+                    ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->select(
+                        DB::raw('CONCAT("emple_cargo",".",c.cargo_id) as id'),
+                        'c.cargo_descripcion as descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->groupBy('c.cargo_id')
+                    ->get();
+                // : AREA 
+                $area = DB::table('area as a')
+                    ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
+                    ->select(
+                        DB::raw('CONCAT("emple_area",".",a.area_id) as id'),
+                        'a.area_descripcion as descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->groupBy('a.area_id')
+                    ->get();
+                // : NIVEL
+                $nivel = DB::table('nivel as n')
+                    ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
+                    ->select(
+                        DB::raw('CONCAT("emple_nivel",".",n.nivel_id) as id'),
+                        'n.nivel_descripcion as descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->groupBy('n.nivel_id')
+                    ->get();
+                // : LOCAL
+                $local = DB::table('local as l')
+                    ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
+                    ->select(
+                        DB::raw('CONCAT("emple_local",".",l.local_id) as id'),
+                        'l.local_descripcion as descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->groupBy('l.local_id')
+                    ->get();
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()
+                    ->first();
+                if (!is_null($invitado_empleadoIn)) {
+                    // : CARGO
+                    $cargo = DB::table('cargo as c')
+                        ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_cargo",".",c.cargo_id) as id'),
+                            'c.cargo_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('c.cargo_id')
+                        ->get();
+                    // : AREA 
+                    $area = DB::table('area as a')
+                        ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_area",".",a.area_id) as id'),
+                            'a.area_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('a.area_id')
+                        ->get();
+                    // : NIVEL
+                    $nivel = DB::table('nivel as n')
+                        ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_nivel",".",n.nivel_id) as id'),
+                            'n.nivel_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('n.nivel_id')
+                        ->get();
+                    // : LOCAL
+                    $local = DB::table('local as l')
+                        ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_local",".",l.local_id) as id'),
+                            'l.local_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('l.local_id')
+                        ->get();
+                } else {
+                    // : CARGO
+                    $cargo = DB::table('cargo as c')
+                        ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_cargo",".",c.cargo_id) as id'),
+                            'c.cargo_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('c.cargo_id')
+                        ->get();
+                    // : AREA 
+                    $area = DB::table('area as a')
+                        ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_area",".",a.area_id) as id'),
+                            'a.area_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('a.area_id')
+                        ->get();
+                    // : NIVEL
+                    $nivel = DB::table('nivel as n')
+                        ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_nivel",".",n.nivel_id) as id'),
+                            'n.nivel_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('n.nivel_id')
+                        ->get();
+                    // : LOCAL
+                    $local = DB::table('local as l')
+                        ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_local",".",l.local_id) as id'),
+                            'l.local_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('l.local_id')
+                        ->get();
+                }
+            }
+        } else {
+            // : CARGO
+            $cargo = DB::table('cargo as c')
+                ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->select(
+                    DB::raw('CONCAT("emple_cargo",".",c.cargo_id) as id'),
+                    'c.cargo_descripcion as descripcion'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->groupBy('c.cargo_id')
+                ->get();
+            // : AREA 
+            $area = DB::table('area as a')
+                ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
+                ->select(
+                    DB::raw('CONCAT("emple_area",".",a.area_id) as id'),
+                    'a.area_descripcion as descripcion'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->groupBy('a.area_id')
+                ->get();
+            // : NIVEL
+            $nivel = DB::table('nivel as n')
+                ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
+                ->select(
+                    DB::raw('CONCAT("emple_nivel",".",n.nivel_id) as id'),
+                    'n.nivel_descripcion as descripcion'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->groupBy('n.nivel_id')
+                ->get();
+            // : LOCAL
+            $local = DB::table('local as l')
+                ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
+                ->select(
+                    DB::raw('CONCAT("emple_local",".",l.local_id) as id'),
+                    'l.local_descripcion as descripcion'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->groupBy('l.local_id')
+                ->get();
         }
-        foreach ($area as $a) {
-            $a->query = "e.emple_area = " . $a->id;
+        $respuesta = array();
+        if (sizeof($cargo) != 0) {
+            $respuesta["Cargo"] = $cargo;
         }
-        foreach ($nivel as $n) {
-            $n->query = "e.emple_nivel = " . $n->id;
+        if (sizeof($area) != 0) {
+            $respuesta["Área"] = $area;
         }
-        foreach ($local as $l) {
-            $l->query = "emple_local = " . $l->id;
+        if (sizeof($nivel) != 0) {
+            $respuesta["Nivel"] = $nivel;
         }
-        $respuesta = array("cargo" => $cargo, "area" => $area, "nivel" => $nivel, "local" => $local);
-
+        if (sizeof($local) != 0) {
+            $respuesta["Local"] = $local;
+        }
         return response()->json($respuesta, 200);
     }
 

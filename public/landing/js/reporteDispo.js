@@ -1,3 +1,4 @@
+$.fn.select2.defaults.set('language', 'es');
 //* FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
     mode: "single",
@@ -6066,3 +6067,43 @@ $("#tablaReport").on('show.bs.dropdown', function () {
     .on('hide.bs.dropdown', function () {
         $('.dataTables_scrollBody').removeClass('dropdown-visible');
     });
+// ! ******************************* SELECT PERSONALIZADOS ****************************************
+// : INICIALIZAR PLUGIN
+$('#selectPor').select2({
+    placeholder: 'Seleccionar'
+});
+// : MOSTRAR DATOS
+$('#selectPor').on("select2:open", function () {
+    console.log($(this).val());
+    var valueSelect = $(this).val();
+    $(this).empty();
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/selectPersonalizadoModoAP",
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            console.log(data);
+            var contenidoData = `<option value="" selected>Búsqueda general</option>`;
+            for (const key in data) {
+                contenidoData += `<optgroup label="${key}">`;
+                data[key].forEach(element => {
+                    contenidoData += `<option value="${element.id}">${element.descripcion}</option>`;
+                });
+                contenidoData += `</optgroup>`;
+            }
+
+            console.log
+            $('#selectPor').append(contenidoData);
+            $('#selectPor').val(valueSelect).trigger("change");
+        },
+        error: function () { }
+    });
+});
