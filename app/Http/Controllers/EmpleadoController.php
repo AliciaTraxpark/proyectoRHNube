@@ -113,6 +113,7 @@ class EmpleadoController extends Controller
 
             $incidencias = DB::table('incidencias')
                 ->where('organi_id', '=', session('sesionidorg'))
+                ->where('estado', '=', 1)
                 ->get();
 
             if ($invitadod) {
@@ -1393,6 +1394,7 @@ class EmpleadoController extends Controller
 
             $incidencias = DB::table('incidencias')
                 ->where('organi_id', '=', session('sesionidorg'))
+                ->where('estado', '=', 1)
                 ->get();
 
             if ($invitadod) {
@@ -3435,6 +3437,7 @@ class EmpleadoController extends Controller
         ->where('idtipo_incidencia','=',$tipo_incidencia->idtipo_incidencia)
         ->orWhere('idtipo_incidencia','=', $tipo_incidenciaSist->idtipo_incidencia)
         ->where('estado', '=', 1)
+        ->where('sistema', '=', 0)
         ->get();
         return $incidencias;
     }
