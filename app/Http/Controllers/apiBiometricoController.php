@@ -4374,4 +4374,24 @@ class apiBiometricoController extends Controller
                 'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 400);
         }
     }
+
+    public function listaHuellas(Request $request){
+
+        $idUsuarioOrgani = $request->idusuario_organizacion;
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario', 'uso.rol_id', 'o.organi_id', 'o.organi_razonSocial', 'O.organi_estado')
+            ->where('uso.usua_orga_id', '=', $idUsuarioOrgani)
+            ->join('users as u', 'uso.user_id', '=', 'u.id')
+            ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
+            ->get()->first();
+
+        $listaHuellas=DB::table('plantilla_empleadobio as pem')
+        ->select('pem.id','pem.idempleado','pem.posicion_huella','pem.tipo_registro',
+        'pem.path','pem.iFlag','pem.iFaceIndex','pem.iLength')
+        ->leftJoin('empleado as e','pem.idempleado','=','e.emple_id')
+        ->where('e.organi_id','=',$usuario_organizacion->organi_id)
+        ->get();
+
+        return response()->json($listaHuellas);
+    }
 }
