@@ -282,6 +282,20 @@
         min-height: 400px !important;
     }
 
+
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background: #ced0d3;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #52565b;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        overflow-y: scroll;
+    }
+
+
     @media (max-width: 767.98px) {
         .separacion {
             padding-right: 1em !important;
@@ -304,7 +318,7 @@
             </div>
             <div class="card-body border">
                 <div class="row">
-                    <div class="col-xl-4">
+                    <div class="col-lg-4">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
@@ -320,11 +334,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-5">
+                    <div class="col-lg-4">
                         <div class="for-group row">
-                            <label class="col-lg-3 col-form-label pt-0">Seleccionar por:</label>
-                            <div class="col-lg-9">
-                                <select id="selectPor" data-plugin="customselect" class="form-control" required>
+                            <label class="col-lg-4 col-form-label pt-0">Seleccionar por:</label>
+                            <div class="col-lg-8">
+                                <select id="selectPor" data-plugin="customselect" class="form-control">
+                                    <option value="0" selected>Búsqueda general</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="for-group row">
+                            <label class="col-lg-4 col-form-label pt-0">Empleado:</label>
+                            <div class="col-lg-8">
+                                <select id="empleadoPor" data-plugin="customselect"
+                                    class="form-control form-control-sm select2Multiple" multiple="multiple" required>
                                     <option value="" disabled selected>Búsqueda general</option>
                                 </select>
                             </div>

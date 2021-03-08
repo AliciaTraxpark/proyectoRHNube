@@ -6068,19 +6068,109 @@ $("#tablaReport").on('show.bs.dropdown', function () {
         $('.dataTables_scrollBody').removeClass('dropdown-visible');
     });
 // ! ******************************* SELECT PERSONALIZADOS ****************************************
-// : INICIALIZAR PLUGIN
-$('#selectPor').select2({
-    placeholder: 'Seleccionar'
+$(function () {
+    // : INICIALIZAR PLUGIN
+    $('#selectPor').select2({
+        placeholder: 'Seleccionar',
+        ajax: {
+            async: false,
+            type: "GET",
+            url: "/selectPersonalizadoModoAP",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+
+                var queryParameters = {
+                    term: params.term
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                var estado = true;
+                return {
+                    results: $.map(data, function (item, key) {
+                        var children = [];
+                        console.log(estado);
+                        for (var k in item) {
+                            var childItem = item[k];
+                            childItem.id = item[k].id;
+                            childItem.text = key + " : " + item[k].descripcion;
+                            children.push(childItem);
+                        }
+                        if (estado) {
+                            estado = false;
+                            return [{
+                                id: "0",
+                                text: "Búsqueda general",
+                                selected: true
+                            }, {
+                                text: key,
+                                children: children,
+                            }
+                            ]
+                        } else {
+                            return {
+                                text: key,
+                                children: children,
+                            }
+                        }
+                    })
+                }
+            },
+            cache: true,
+        }
+    });
+});
+$('#empleadoPor').select2({
+    multiple: true
 });
 // : MOSTRAR DATOS
-$('#selectPor').on("select2:open", function () {
-    console.log($(this).val());
-    var valueSelect = $(this).val();
-    $(this).empty();
+// $('#selectPor').on("select2:open", function () {
+//     var dataArray = [];
+//     var valueSelect = $(this).val();
+//     $(this).empty();
+//     $.ajax({
+//         type: "GET",
+//         url: "/selectPersonalizadoModoAP",
+//         statusCode: {
+//             419: function () {
+//                 location.reload();
+//             },
+//         },
+//         headers: {
+//             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+//         },
+//         success: function (data) {
+//             var contenidoData = `<option value="" selected>Búsqueda general</option>`;
+//             for (const key in data) {
+//                 var childrenArray = [];
+//                 contenidoData += `<optgroup label="${key}">`;
+//                 data[key].forEach(element => {
+//                     contenidoData += `<option value="${element.id}">${key}: ${element.descripcion}</option>`;
+//                     childrenArray.push({ "id": element.id, "text": key + " : " + element.descripcion });
+//                 });
+//                 contenidoData += `</optgroup>`;
+//                 dataArray.push({ "text": key, "children": childrenArray });
+//             }
+//             $('#selectPor').append(contenidoData);
+//             $('#selectPor').select2({
+//                 data: dataArray
+//             })
+//             $('#selectPor').val(valueSelect).trigger("change");
+//         },
+//         error: function () { }
+//     });
+// });
+// : MOSTAR EMPLEADOS
+$('#selectPor').on("change", function () {
+    var valueQuery = $(this).val();
+    $('#empleadoPor').empty();
     $.ajax({
-        async: false,
         type: "GET",
-        url: "/selectPersonalizadoModoAP",
+        url: "/selectEmpleadoModoAP",
+        data: {
+            query: valueQuery
+        },
         statusCode: {
             419: function () {
                 location.reload();
@@ -6091,18 +6181,11 @@ $('#selectPor').on("select2:open", function () {
         },
         success: function (data) {
             console.log(data);
-            var contenidoData = `<option value="" selected>Búsqueda general</option>`;
-            for (const key in data) {
-                contenidoData += `<optgroup label="${key}">`;
-                data[key].forEach(element => {
-                    contenidoData += `<option value="${element.id}">${element.descripcion}</option>`;
-                });
-                contenidoData += `</optgroup>`;
-            }
-
-            console.log
-            $('#selectPor').append(contenidoData);
-            $('#selectPor').val(valueSelect).trigger("change");
+            var contenidoData = ``;
+            data.forEach(element => {
+                contenidoData += `<option value="${element.emple_id}">${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
+            });
+            $('#empleadoPor').append(contenidoData);
         },
         error: function () { }
     });

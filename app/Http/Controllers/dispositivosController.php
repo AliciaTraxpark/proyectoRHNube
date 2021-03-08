@@ -497,6 +497,7 @@ class dispositivosController extends Controller
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
                 if ($idemp == 0 || $idemp == ' ') {
+
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
@@ -666,6 +667,7 @@ class dispositivosController extends Controller
             }
         } else {
             if ($idemp == 0 || $idemp == ' ') {
+                // DB::enableQueryLog();
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
@@ -688,6 +690,7 @@ class dispositivosController extends Controller
                     ->where('e.asistencia_puerta', '=', 1)
                     ->orderBy('p.perso_nombre', 'ASC')
                     ->get();
+                // dd(DB::getQueryLog());
             } else {
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -4771,8 +4774,9 @@ class dispositivosController extends Controller
     }
 
     // * FUNCION DE SELECT DE BSUQUEDA
-    public function selectBusquedas()
+    public function selectBusquedas(Request $request)
     {
+        $busqueda = $request->get('term');
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
             ->where('rol_id', '=', 3)
@@ -5015,6 +5019,26 @@ class dispositivosController extends Controller
         if (sizeof($local) != 0) {
             $respuesta["Local"] = $local;
         }
+        if (!empty($busqueda)) {
+            function filter_array($array, $term)
+            {
+                $matches = array();
+                foreach ($array  as $key => $a) {
+                    foreach ($a as $value) {
+                        $value = (array)$value;
+                        if (stripos($value['descripcion'], $term) !== false) {
+                            if (!isset($matches[$key])) {
+                                $matches[$key] = array();
+                            }
+                            array_push($matches[$key], $value);
+                        }
+                    }
+                }
+                return $matches;
+            }
+            $respuesta = filter_array($respuesta, $busqueda);
+            return response()->json($respuesta, 200);
+        }
         return response()->json($respuesta, 200);
     }
 
@@ -5022,15 +5046,24 @@ class dispositivosController extends Controller
     public function empleadosBusqueda(Request $request)
     {
         $query = $request->get('query');
-        $id = $request->get('id');
-
-        $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.asistencia_puerta', '=', 1)
-            ->where('e.' . $query, '=', $id)
-            ->get();
+        if (!is_null($query)) {
+            $parametro = explode(".", $query)[0];
+            $id = explode(".", $query)[1];
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->where('e.' . $parametro, '=', $id)
+                ->get();
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->get();
+        }
 
         return response()->json($empleado, 200);
     }
