@@ -2500,6 +2500,9 @@ class apiBiometricoController extends Controller
             $posicion_huella = $req['posicion_huella'];
             $tipo_registro = $req['tipo_registro'];
             $path = $req['path'];
+            $iFlag = $req['iFlag'];
+            $iFaceIndex = $req['iFaceIndex'];
+            $iLength = $req['iLength'];
             /* ----------------------------- */
             /* VALIDANDO EMPLEADOIIIII */
             $empleados = DB::table('empleado as e')
@@ -2547,6 +2550,9 @@ class apiBiometricoController extends Controller
                         if ($tipo_registroBD) {
                             $plantilla_empleadobio->tipo_registro = $tipo_registro;
                             $plantilla_empleadobio->path = $path;
+                            $plantilla_empleadobio->iFlag = $iFlag;
+                            $plantilla_empleadobio->iFaceIndex = $iFaceIndex;
+                            $plantilla_empleadobio->iLength = $iLength;
                             $plantilla_empleadobio->save();
 
                             $plantilla_empleadobioArray = array(
@@ -4367,5 +4373,25 @@ class apiBiometricoController extends Controller
             return response()->json(array('status' => 400, 'title' => 'No se pudo registrar marcacion',
                 'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 400);
         }
+    }
+
+    public function listaHuellas(Request $request){
+
+        $idUsuarioOrgani = $request->idusuario_organizacion;
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario', 'uso.rol_id', 'o.organi_id', 'o.organi_razonSocial', 'O.organi_estado')
+            ->where('uso.usua_orga_id', '=', $idUsuarioOrgani)
+            ->join('users as u', 'uso.user_id', '=', 'u.id')
+            ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
+            ->get()->first();
+
+        $listaHuellas=DB::table('plantilla_empleadobio as pem')
+        ->select('pem.id','pem.idempleado','pem.posicion_huella','pem.tipo_registro',
+        'pem.path','pem.iFlag','pem.iFaceIndex','pem.iLength')
+        ->leftJoin('empleado as e','pem.idempleado','=','e.emple_id')
+        ->where('e.organi_id','=',$usuario_organizacion->organi_id)
+        ->get();
+
+        return response()->json($listaHuellas);
     }
 }

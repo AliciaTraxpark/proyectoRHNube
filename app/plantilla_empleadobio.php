@@ -9,6 +9,7 @@ class plantilla_empleadobio extends Model
     //
     protected $table = 'plantilla_empleadobio';
     protected $primaryKey = 'id';
-    protected $fillable = ['id','idempleado','posicion_huella','tipo_registro','path'];
+    protected $fillable = ['id','idempleado','posicion_huella','tipo_registro','path',
+                           'iFlag','iFaceIndex','iLength'];
     public $timestamps = false;
 }
