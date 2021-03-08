@@ -296,7 +296,6 @@ $(function () {
     fechaValue.setDate(f);
     $("#fechaInput").change();
     inicializarTabla();
-    cambiarF();
     // * HORARIO PADRE
     $('.horarioPadre').find('input[type=checkbox]').prop({
         indeterminate: true,
@@ -325,7 +324,38 @@ var ruc;
 // * ESTADO DE HORARIO EMPLEADO
 var contenidoHorario = [];
 function cargartabla(fecha) {
-    var idemp = $('#idempleado').val();
+    var idemp = $('#empleadoPor').val();
+    console.log(idemp.length);
+    if (idemp.length == 0) {
+        $.notifyClose();
+        $.notify(
+            {
+                message:
+                    "\nElegir empleado.",
+                icon: "admin/images/warning.svg",
+            },
+            {
+                position: "fixed",
+                mouse_over: "pause",
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 2000,
+                template:
+                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    "</div>",
+                spacing: 35,
+            }
+        );
+        return false;
+    }
     $.ajax({
         type: "GET",
         url: "/reporteTablaMarca",
@@ -6120,47 +6150,13 @@ $(function () {
             cache: true,
         }
     });
+    $('#empleadoPor').select2({
+        multiple: true,
+        closeOnSelect: false
+    });
+    // : INICIO DE SELECT POR 
+    $('#selectPor').trigger("change");
 });
-$('#empleadoPor').select2({
-    multiple: true
-});
-// : MOSTRAR DATOS
-// $('#selectPor').on("select2:open", function () {
-//     var dataArray = [];
-//     var valueSelect = $(this).val();
-//     $(this).empty();
-//     $.ajax({
-//         type: "GET",
-//         url: "/selectPersonalizadoModoAP",
-//         statusCode: {
-//             419: function () {
-//                 location.reload();
-//             },
-//         },
-//         headers: {
-//             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-//         },
-//         success: function (data) {
-//             var contenidoData = `<option value="" selected>Búsqueda general</option>`;
-//             for (const key in data) {
-//                 var childrenArray = [];
-//                 contenidoData += `<optgroup label="${key}">`;
-//                 data[key].forEach(element => {
-//                     contenidoData += `<option value="${element.id}">${key}: ${element.descripcion}</option>`;
-//                     childrenArray.push({ "id": element.id, "text": key + " : " + element.descripcion });
-//                 });
-//                 contenidoData += `</optgroup>`;
-//                 dataArray.push({ "text": key, "children": childrenArray });
-//             }
-//             $('#selectPor').append(contenidoData);
-//             $('#selectPor').select2({
-//                 data: dataArray
-//             })
-//             $('#selectPor').val(valueSelect).trigger("change");
-//         },
-//         error: function () { }
-//     });
-// });
 // : MOSTAR EMPLEADOS
 $('#selectPor').on("change", function () {
     var valueQuery = $(this).val();
@@ -6180,10 +6176,9 @@ $('#selectPor').on("change", function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             var contenidoData = ``;
             data.forEach(element => {
-                contenidoData += `<option value="${element.emple_id}">${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
+                contenidoData += `<option value="${element.emple_id}" selected>${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
             });
             $('#empleadoPor').append(contenidoData);
         },

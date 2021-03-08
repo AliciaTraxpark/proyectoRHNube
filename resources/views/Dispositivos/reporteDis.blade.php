@@ -288,11 +288,13 @@
     }
 
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background-color: #52565b;
+        background-color: #153e90;
     }
 
     .select2-container--default .select2-selection--multiple {
         overflow-y: scroll;
+        max-height: calc(2.5em + 1rem + 2px);
+        height: calc(2.5em + 1rem + 2px);
     }
 
 
@@ -316,13 +318,12 @@
                     <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
                 </div>
             </div>
-            <div class="card-body border">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
-                                id="fechaSelec">
+            <div class="card-body border pt-2" style="border-color: #dee2e6">
+                <div class="row p-2" style="display: flex;align-items: center;justify-content: center;">
+                    <div class="col-md-3 pr-5">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Fecha</label>
+                            <div class="input-group text-center" style="padding-left: 0px;" id="fechaSelec">
                                 <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
@@ -334,51 +335,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="for-group row">
-                            <label class="col-lg-4 col-form-label pt-0">Seleccionar por:</label>
-                            <div class="col-lg-8">
-                                <select id="selectPor" data-plugin="customselect" class="form-control">
-                                    <option value="0" selected>Búsqueda general</option>
-                                </select>
-                            </div>
+                    <div class="col-md-4 pr-5">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Seleccionar por:</label>
+                            <select id="selectPor" data-plugin="customselect" class="form-control form-control-lg">
+                                <option value="0" selected>Búsqueda general</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="for-group row">
-                            <label class="col-lg-4 col-form-label pt-0">Empleado:</label>
-                            <div class="col-lg-8">
-                                <select id="empleadoPor" data-plugin="customselect"
-                                    class="form-control form-control-sm select2Multiple" multiple="multiple" required>
-                                    <option value="" disabled selected>Búsqueda general</option>
-                                </select>
-                            </div>
-                        </div>
+                    <div class="col-md-4 pr-5">
+                        <label class="col-form-label pt-0 pb-0">Empleado:</label>
+                        <select id="empleadoPor" data-plugin="customselect"
+                            class="form-control form-control-sm select2Multiple" multiple="multiple" required>
+                        </select>
                     </div>
-                    <div class="col-xl-7 col-sm-6">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Empleado</label>
-                            <div class="col-lg-9">
-                                <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
-                                    class="form-control form-control-sm" data-placeholder="Seleccione empleado">
-                                    <option value="0" selected>Todos los empleados</option>
-                                    @foreach ($empleado as $empleados)
-                                    <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
-                                        {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
-                        <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
-                            style="background-color: #163552;" onclick="javascript:cambiarF()">
+                    <div class="col-md-1 text-left btnR" style="padding-left: 0%">
+                        <button type="button" id="btnRecargaTabla" class="btn btn-sm" style="background-color: #1e2139;"
+                            onclick="javascript:cambiarF()">
                             <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
                         </button>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row pt-3 justify-content-left">
                     <div class="col-md-4 pb-1">
                         <div class="dropdown" id="dropSelector">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -794,7 +772,7 @@
                         onclick="javascript:limpiarAtributos()">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
                         Guardar
                     </button>
                     </form>
