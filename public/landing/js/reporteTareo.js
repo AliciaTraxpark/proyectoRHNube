@@ -46,7 +46,7 @@ function cargartabla(fecha) {
     $("#checCodigo").prop("checked", true);
     $("#checnumdoc").prop("checked", true);
     $("#checSexo").prop("checked", false);
-    $("#checArea").prop("checked", false);
+    $("#checArea").prop("checked", true);
     $("#checCargo").prop("checked", false);
     $("#checCentroc").prop("checked", true);
     $("#checPuntoc").prop("checked", true);
@@ -1427,12 +1427,12 @@ function cargartabla(fecha) {
                         }
 
                         //*area
-                        if ($("#checArea").prop("checked")) {
+                       /*  if ($("#checArea").prop("checked")) {
                             dataT.api().columns(".areaHid").visible(true);
                         } else {
                             dataT.api().columns(".areaHid").visible(false);
                         }
-
+ */
                         //*cargo
                         if ($("#checCargo").prop("checked")) {
                             dataT.api().columns(".cargoHid").visible(true);
