@@ -2500,6 +2500,9 @@ class apiBiometricoController extends Controller
             $posicion_huella = $req['posicion_huella'];
             $tipo_registro = $req['tipo_registro'];
             $path = $req['path'];
+            $iFlag = $req['iFlag'];
+            $iFaceIndex = $req['iFaceIndex'];
+            $iLength = $req['iLength'];
             /* ----------------------------- */
             /* VALIDANDO EMPLEADOIIIII */
             $empleados = DB::table('empleado as e')
@@ -2547,6 +2550,9 @@ class apiBiometricoController extends Controller
                         if ($tipo_registroBD) {
                             $plantilla_empleadobio->tipo_registro = $tipo_registro;
                             $plantilla_empleadobio->path = $path;
+                            $plantilla_empleadobio->iFlag = $iFlag;
+                            $plantilla_empleadobio->iFaceIndex = $iFaceIndex;
+                            $plantilla_empleadobio->iLength = $iLength;
                             $plantilla_empleadobio->save();
 
                             $plantilla_empleadobioArray = array(
