@@ -284,12 +284,12 @@ function inicializarTabla() {
                 $('.buttons-page-length').prop("disabled", true);
                 $('.buttons-html5').prop("disabled", true);
                 $('#switchO').prop("disabled", true);
-                $('.dropdown-toggle').prop("disabled", true);
+                $('.dropReporte').prop("disabled", true);
             } else {
                 $('.buttons-page-length').prop("disabled", false);
                 $('.buttons-html5').prop("disabled", false);
                 $('#switchO').prop("disabled", false);
-                $('.dropdown-toggle').prop("disabled", false);
+                $('.dropReporte').prop("disabled", false);
             }
             this.api().page.len(paginaGlobal).draw(false);
         },

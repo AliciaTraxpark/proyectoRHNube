@@ -263,13 +263,13 @@ function inicializarTabla() {
                 $('.buttons-page-length').prop("disabled", true);
                 $('.buttons-html5').prop("disabled", true);
                 $('#switchO').prop("disabled", true);
-                $('.dropdown-toggle').prop("disabled", true);
+                $('.dropReporte').prop("disabled", true);
                 $('#colEmpleadosCM').prop("disabled", true);
             } else {
                 $('.buttons-page-length').prop("disabled", false);
                 $('.buttons-html5').prop("disabled", false);
                 $('#switchO').prop("disabled", false);
-                $('.dropdown-toggle').prop("disabled", false);
+                $('.dropReporte').prop("disabled", false);
                 $('#colEmpleadosCM').prop("disabled", false);
             }
         },
@@ -6117,34 +6117,44 @@ $(function () {
             },
             processResults: function (data) {
                 var estado = true;
-                return {
-                    results: $.map(data, function (item, key) {
-                        var children = [];
-                        console.log(estado);
-                        for (var k in item) {
-                            var childItem = item[k];
-                            childItem.id = item[k].id;
-                            childItem.text = key + " : " + item[k].descripcion;
-                            children.push(childItem);
-                        }
-                        if (estado) {
-                            estado = false;
-                            return [{
-                                id: "0",
-                                text: "Búsqueda general",
-                                selected: true
-                            }, {
-                                text: key,
-                                children: children,
+                if (data.length != 0) {
+                    return {
+                        results: $.map(data, function (item, key) {
+                            var children = [];
+                            console.log(estado);
+                            for (var k in item) {
+                                var childItem = item[k];
+                                childItem.id = item[k].id;
+                                childItem.text = key + " : " + item[k].descripcion;
+                                children.push(childItem);
                             }
-                            ]
-                        } else {
-                            return {
-                                text: key,
-                                children: children,
+                            if (estado) {
+                                estado = false;
+                                return [{
+                                    id: "0",
+                                    text: "Búsqueda general",
+                                    selected: true
+                                }, {
+                                    text: key,
+                                    children: children,
+                                }
+                                ]
+                            } else {
+                                return {
+                                    text: key,
+                                    children: children,
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
+                } else {
+                    return {
+                        results: [{
+                            id: "0",
+                            text: "Búsqueda general",
+                            selected: true
+                        }]
+                    }
                 }
             },
             cache: true,

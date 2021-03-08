@@ -224,7 +224,7 @@
                 <div class="row justify-content-left">
                     <div class="col-md-4 pb-1">
                         <div class="dropdown" id="dropSelector">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            <a class="dropdown-toggle dropReporte" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="cursor: pointer">
                                 <div class="custom-control custom-switch mb-2">
                                     <input type="checkbox" class="custom-control-input" id="switchO" checked
