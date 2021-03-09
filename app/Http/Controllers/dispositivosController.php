@@ -899,52 +899,27 @@ class dispositivosController extends Controller
             ->get()->first();
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
-                if ($idemp == 0 || $idemp == ' ') {
-                    $empleados = DB::table('empleado as e')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                        ->select(
-                            'e.emple_id',
-                            'e.emple_nDoc',
-                            'e.emple_codigo',
-                            'p.perso_nombre',
-                            'p.perso_apPaterno',
-                            'p.perso_apMaterno',
-                            'c.cargo_descripcion',
-                            'o.organi_razonSocial',
-                            'o.organi_direccion',
-                            'o.organi_ruc',
-                            'e.emple_estado',
-                            'e.organi_id'
-                        )
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.asistencia_puerta', '=', 1)
-                        ->orderBy('p.perso_nombre', 'ASC')
-                        ->get();
-                } else {
-                    $empleados = DB::table('empleado as e')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                        ->select(
-                            'e.emple_id',
-                            'e.emple_nDoc',
-                            'e.emple_codigo',
-                            'p.perso_nombre',
-                            'p.perso_apPaterno',
-                            'p.perso_apMaterno',
-                            'c.cargo_descripcion',
-                            'o.organi_razonSocial',
-                            'o.organi_direccion',
-                            'o.organi_ruc',
-                            'e.emple_estado',
-                            'e.organi_id'
-                        )
-                        ->where('e.emple_id', $idemp)
-                        ->where('e.asistencia_puerta', '=', 1)
-                        ->get();
-                }
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->select(
+                        'e.emple_id',
+                        'e.emple_nDoc',
+                        'e.emple_codigo',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'o.organi_razonSocial',
+                        'o.organi_direccion',
+                        'o.organi_ruc',
+                        'e.emple_estado',
+                        'e.organi_id'
+                    )
+                    ->whereIn('e.emple_id', $idemp)
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->get();
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                     ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
@@ -952,169 +927,85 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
-                    if ($idemp == 0 || $idemp == ' ') {
-                        $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->select(
-                                'e.emple_id',
-                                'e.emple_nDoc',
-                                'e.emple_codigo',
-                                'p.perso_nombre',
-                                'p.perso_apPaterno',
-                                'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'o.organi_razonSocial',
-                                'o.organi_direccion',
-                                'o.organi_ruc',
-                                'e.emple_estado',
-                                'e.organi_id'
-                            )
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            ->orderBy('p.perso_nombre', 'ASC')
-                            ->get();
-                    } else {
-                        $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->select(
-                                'e.emple_id',
-                                'e.emple_nDoc',
-                                'e.emple_codigo',
-                                'p.perso_nombre',
-                                'p.perso_apPaterno',
-                                'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'o.organi_razonSocial',
-                                'o.organi_direccion',
-                                'o.organi_ruc',
-                                'e.emple_estado',
-                                'e.organi_id'
-                            )
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.emple_id', $idemp)
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            ->get();
-                    }
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_nDoc',
+                            'e.emple_codigo',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
+                            'e.emple_estado',
+                            'e.organi_id'
+                        )
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->whereIn('e.emple_id', $idemp)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
                 } else {
-                    if ($idemp == 0 || $idemp == ' ') {
-                        $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->select(
-                                'e.emple_id',
-                                'e.emple_nDoc',
-                                'e.emple_codigo',
-                                'p.perso_nombre',
-                                'p.perso_apPaterno',
-                                'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'o.organi_razonSocial',
-                                'o.organi_direccion',
-                                'o.organi_ruc',
-                                'e.emple_estado',
-                                'e.organi_id'
-                            )
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            ->orderBy('p.perso_nombre', 'ASC')
-                            ->get();
-                    } else {
-                        $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->select(
-                                'e.emple_id',
-                                'e.emple_nDoc',
-                                'e.emple_codigo',
-                                'p.perso_nombre',
-                                'p.perso_apPaterno',
-                                'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'o.organi_razonSocial',
-                                'o.organi_direccion',
-                                'o.organi_ruc',
-                                'e.emple_estado',
-                                'e.organi_id'
-                            )
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.emple_id', $idemp)
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            ->get();
-                    }
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->select(
+                            'e.emple_id',
+                            'e.emple_nDoc',
+                            'e.emple_codigo',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
+                            'e.emple_estado',
+                            'e.organi_id'
+                        )
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->whereIn('e.emple_id', $idemp)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
                 }
             }
         } else {
-            if ($idemp == 0 || $idemp == ' ') {
-                $empleados = DB::table('empleado as e')
-                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                    ->select(
-                        'e.emple_id',
-                        'e.emple_nDoc',
-                        'e.emple_codigo',
-                        'p.perso_nombre',
-                        'p.perso_apPaterno',
-                        'p.perso_apMaterno',
-                        'c.cargo_descripcion',
-                        'o.organi_razonSocial',
-                        'o.organi_direccion',
-                        'o.organi_ruc',
-                        'e.emple_estado',
-                        'e.organi_id'
-                    )
-                    ->where('e.organi_id', '=', session('sesionidorg'))
-                    ->where('e.asistencia_puerta', '=', 1)
-                    ->orderBy('p.perso_nombre', 'ASC')
-                    ->get();
-            } else {
-                $empleados = DB::table('empleado as e')
-                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                    ->select(
-                        'e.emple_id',
-                        'e.emple_nDoc',
-                        'e.emple_codigo',
-                        'p.perso_nombre',
-                        'p.perso_apPaterno',
-                        'p.perso_apMaterno',
-                        'c.cargo_descripcion',
-                        'o.organi_razonSocial',
-                        'o.organi_direccion',
-                        'o.organi_ruc',
-                        'e.emple_estado',
-                        'e.organi_id'
-                    )
-                    ->where('e.emple_id', $idemp)
-                    ->where('e.organi_id', '=', session('sesionidorg'))
-                    ->where('e.asistencia_puerta', '=', 1)
-                    ->get();
-            }
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->select(
+                    'e.emple_id',
+                    'e.emple_nDoc',
+                    'e.emple_codigo',
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    'c.cargo_descripcion',
+                    'o.organi_razonSocial',
+                    'o.organi_direccion',
+                    'o.organi_ruc',
+                    'e.emple_estado',
+                    'e.organi_id'
+                )
+                ->whereIn('e.emple_id', $idemp)
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->get();
         }
         // DB::enableQueryLog();
         // * TIPO DISPOSITIVO

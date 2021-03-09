@@ -325,7 +325,6 @@ var ruc;
 var contenidoHorario = [];
 function cargartabla(fecha) {
     var idemp = $('#empleadoPor').val();
-    console.log(idemp.length);
     if (idemp.length == 0) {
         $.notifyClose();
         $.notify(
@@ -6170,6 +6169,7 @@ $(function () {
 // : MOSTAR EMPLEADOS
 $('#selectPor').on("change", function () {
     var valueQuery = $(this).val();
+    var cantidad = 0;
     $('#empleadoPor').empty();
     $.ajax({
         type: "GET",
@@ -6186,12 +6186,20 @@ $('#selectPor').on("change", function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            cantidad = data.length;
+            console.log(cantidad);
             var contenidoData = ``;
             data.forEach(element => {
                 contenidoData += `<option value="${element.emple_id}" selected>${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
             });
             $('#empleadoPor').append(contenidoData);
+            $('#cantidadE').text(cantidad + "\templeados seleccionados.");
         },
         error: function () { }
     });
+});
+$('#empleadoPor').on('select2:close', function () {
+    var cantidad = $('#empleadoPor').select2('data').length;
+    $('#cantidadE').empty();
+    $('#cantidadE').text(cantidad + "\templeados seleccionados.");
 });
