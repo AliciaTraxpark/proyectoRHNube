@@ -273,6 +273,22 @@
         align-items: center;
         justify-content: center;
     }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        background-color: transparent;
+        border: none;
+        border-right: 1px solid white;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        color: white;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 700;
+        padding-top: 0px;
+        padding-right: 4px;
+        padding-bottom: 0px;
+        padding-left: 4px;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
