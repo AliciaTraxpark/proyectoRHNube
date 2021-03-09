@@ -6223,6 +6223,3 @@ $('#empleadoPor').on('select2:close', function () {
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
 });
-$('#formatoC').select2({
-    minimumResultsForSearch: Infinity
-});

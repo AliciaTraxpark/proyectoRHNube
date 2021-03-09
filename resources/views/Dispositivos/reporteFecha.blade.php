@@ -341,7 +341,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row">
                     <div class="col-md-4 pb-1">
                         <div class="dropdown" id="dropSelector">
                             <a class="dropdown-toggle dropReporte" data-toggle="dropdown" aria-haspopup="true"
@@ -639,7 +639,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row">
                     <div class="col-md-4 pb-2">
                         <div class="custom-control custom-switch mb-2">
                             <input type="checkbox" class="custom-control-input" id="colEmpleadosCM">
@@ -648,6 +648,26 @@
                                 <img src="{{asset('landing/images/escaneoM.svg')}}" height="18">
                                 Empleados solo con marcaciones
                             </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row rowPersonalizado">
+                            <div class="col-lg-5">
+                                <img src="{{asset('landing/images/fuenteR.svg')}}" height="18">
+                                <label for="formatoC" class="col-form-label pt-0 pb-0"
+                                    style="font-weight: bold;font-size:12px">
+                                    Formato de celda
+                                </label>
+                            </div>
+                            <div class="col-lg-7">
+                                <select id="formatoC" class="form-control form-control-sm">
+                                    <option value="formatoAYN">Apellidos y nombres</option>
+                                    <option value="formatoNYA" selected>Nombres y apellidos</option>
+                                    <option value="formatoNA">Nombres - Apellidos</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
