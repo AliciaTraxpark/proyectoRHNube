@@ -265,12 +265,14 @@ function inicializarTabla() {
                 $('#switchO').prop("disabled", true);
                 $('.dropReporte').prop("disabled", true);
                 $('#colEmpleadosCM').prop("disabled", true);
+                $('#formatoC').prop("disabled", true);
             } else {
                 $('.buttons-page-length').prop("disabled", false);
                 $('.buttons-html5').prop("disabled", false);
                 $('#switchO').prop("disabled", false);
                 $('.dropReporte').prop("disabled", false);
                 $('#colEmpleadosCM').prop("disabled", false);
+                $('#formatoC').prop("disabled", false);
             }
         },
         drawCallback: function () {
@@ -430,7 +432,10 @@ function cargartabla(fecha) {
                             <th class="text-center">Fecha</th>
                             <th>Número de documento</th>
                             <th name="colCodigo" class="colCodigo">Código de trabajador</th>
-                            <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="formatoNYA">Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="formatoAYN">Apellidos y nombres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="formatoNA">Nombres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="formatoNA">Apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             <th name="colCargo" class="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
             //* GRUPO DE HORARIOS
             for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -567,7 +572,10 @@ function cargartabla(fecha) {
                             <td>${fechaGlobal}</td>
                             <td class="text-center">${data[index].emple_nDoc}</td>
                             <td class="text-center" name="colCodigo">${data[index].emple_codigo}</td>
-                            <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                            <td class="formatoNYA">${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="formatoAYN">${data[index].perso_apPaterno} ${data[index].perso_apMaterno} ${data[index].perso_nombre} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="formatoNA">${data[index].perso_nombre}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="formatoNA">${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                 tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
                 // * ARMAR GRUPO DE HORARIOS
@@ -6088,8 +6096,20 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colDispositivoS').visible(false);
     }
+    // * ************************* TIPO FORMATO CELDA *********************
+    // ? FORMATO DE NOMBRE Y APELLIDOS
+    $("#formatoC > option").each(function () {
+        if (!$(this).is(":checked")) {
+            dataT.api().columns('.' + $(this).val()).visible(false);
+        }
+    });
+    var columnaVisibleFormato = $('#formatoC :selected').val();
+    dataT.api().columns('.' + columnaVisibleFormato).visible(true);
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
+$('#formatoC').on("change", function () {
+    toggleColumnas();
+});
 $("#tablaReport").on('show.bs.dropdown', function () {
     $('.dataTables_scrollBody').addClass('dropdown-visible');
 })
@@ -6202,4 +6222,7 @@ $('#empleadoPor').on('select2:close', function () {
     var cantidad = $('#empleadoPor').select2('data').length;
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
+});
+$('#formatoC').select2({
+    minimumResultsForSearch: Infinity
 });
