@@ -8,7 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-
+use App\organizacion;
 class CorreoRuta extends Mailable
 {
     use Queueable, SerializesModels;
@@ -20,10 +20,12 @@ class CorreoRuta extends Mailable
      */
     public $persona;
     public $vinculacion_ruta;
-    public function __construct(persona $persona, vinculacion_ruta $vinculacion_ruta)
+    public $organizacion
+    public function __construct(persona $persona, vinculacion_ruta $vinculacion_ruta, organizacion $organizacion)
     {
         $this->persona = $persona;
         $this->vinculacion_ruta = $vinculacion_ruta;
+        $this->organizacion = $organizacion;
     }
 
     /**

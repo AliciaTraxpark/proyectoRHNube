@@ -48,7 +48,7 @@ class FinContrato extends Command
     {
       $this->info('Enviar correo de fin de contrato.');
       // SE OBTIENE TODAS LAS ORGANIZACIONES, PORQUE ENVIAMOS CORREOS POR ORGANIZACIONES
-      $organizaciones = organizacion::all('organi_id', 'organi_razonSocial', 'organi_tipo');
+      $organizaciones = organizacion::all('organi_id', 'organi_razonSocial', 'organi_tipo', 'organi_ruc');
       // OBTENEMOS EL DÍA DE HOY
       $todayNow = carbon::now()->subHours(5);
       $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
@@ -173,7 +173,7 @@ class FinContrato extends Command
           if($datos != "" && isset($admins)){
             $mail_body = "<h4 style='color: #163552'>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4>".$datos;
             $email = User::find($admin->user_id)->email;
-            $envio = Mail::to($email)->queue(new correoFinContrato($mail_body));
+            $envio = Mail::to($email)->queue(new correoFinContrato($mail_body, $organizacion));
           }
           $datos = "";
           $mail_body = "";

@@ -47,7 +47,7 @@ class MailHappyBirthday extends Command
     public function handle()
     {
         $this->info('Enviar correo de cumpleaños.');
-        $organizaciones = organizacion::all('organi_id', 'organi_razonSocial', 'organi_tipo');
+        $organizaciones = organizacion::all('organi_id', 'organi_razonSocial', 'organi_tipo', 'organi_ruc');
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $todayNow = carbon::now();
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
@@ -157,7 +157,7 @@ class MailHappyBirthday extends Command
                 if($datos != ""){
                     $mail_body = "<h4 style='color: #163552'>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
                     $email = User::find($admin->user_id)->email;
-                    $envio = Mail::to($email)->queue(new correoHappyBirthday($mail_body));
+                    $envio = Mail::to($email)->queue(new correoHappyBirthday($mail_body, $organizacion));
                     $datos = "";
                     $mail_body = "";
                 }

@@ -21,6 +21,8 @@ function showNotificaciones() {
         success: function (data) {
             $("#notificacionesUser").empty();
             var grupo = ``;
+            var grupoLeidos = ``;
+            var grupoNoLeidos = ``;
             var container = $("#notificacionesUser");
             var contador = 0;
             if (data.length == 0) {
@@ -30,6 +32,7 @@ function showNotificaciones() {
                     style="font-size:12px;color:#7d7d7d">Aún no tienes notificaciones nuevas</label> </div>`;
                 container.append(img);
             } else {
+                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     let month = 0;
                     if (data[i].created_at[5] == 0) 
@@ -118,7 +121,7 @@ function showNotificaciones() {
                             
                             }
                         }
-                        grupo = a + grupo;
+                        grupoNoLeidos = grupoNoLeidos + a;
                     } else {
                         if(data[i].data[0].asunto=='birthday'){
                                 a = `<a class="dropdown-item notify-item border-bottom">
@@ -157,9 +160,10 @@ function showNotificaciones() {
                                     </a>`;
                                 }
                             }
-                        grupo = grupo + a;
+                        grupoLeidos = a + grupoLeidos;
                     }
                 }
+                grupo = grupoNoLeidos + grupoLeidos;
                 container.append(grupo);
                 $("#totalNotifNL").text(contador);
             }

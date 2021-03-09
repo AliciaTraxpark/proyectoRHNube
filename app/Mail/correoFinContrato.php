@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-
+use App\organizacion;
 class correoFinContrato extends Mailable
 {
     use Queueable, SerializesModels;
@@ -17,9 +17,11 @@ class correoFinContrato extends Mailable
      * @return void
      */
     public $datos;
-    public function __construct($datos)
+    public $organizacion;
+    public function __construct($datos, $organizacion)
     {
         $this->datos = $datos;
+        $this->organizacion = $organizacion;
     }
 
     /**

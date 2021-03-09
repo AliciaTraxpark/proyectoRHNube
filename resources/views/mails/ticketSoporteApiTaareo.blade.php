@@ -293,11 +293,7 @@
                                                             style="border-collapse:collapse;border-spacing:0px">
                                                             <tr style="border-collapse:collapse">
                                                                 <td class="es-m-p0l es-m-txt-c" align="left"
-                                                                    style="padding:0;Margin:0;font-size:0px"><img
-                                                                        class="adapt-img"
-                                                                        src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png"
-                                                                        style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="80"></td>
+                                                                    style="padding:0;Margin:0;font-size:0px"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -312,11 +308,28 @@
                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td align="right"
+                                                                        <td align=""
                                                                             class="esd-block-text es-p40t es-p40b">
                                                                             <p style="color: #ffffff;">
                                                                                 <strong>Ticket de Soporte - RH BOX<span
                                                                                         style="color:#FFFFFF;"></span></strong>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td class="esd-container-frame" width="270" align="left"
+                                                            esdev-config="h18">
+                                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td align="right"
+                                                                            class="esd-block-text es-p40t es-p40b">
+                                                                            <p style="color: #ffffff;">
+                                                                                <strong><span style="color:#FFFFFF;">
+                                                                                    {{$organizacion->organi_razonSocial}} - {{$organizacion->organi_ruc}}
+                                                                                </span></strong>
                                                                             </p>
                                                                         </td>
                                                                     </tr>
@@ -354,7 +367,7 @@
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px">
                                                                     <img class="adapt-img"
-                                                                        src="https://i.ibb.co/GdYY63d/llamada-a-la-accion.png"
+                                                                        src="https://i.ibb.co/1R9HMHZ/RH-CUADRADO-NUBE.png"
                                                                         alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                         width="175"></td>

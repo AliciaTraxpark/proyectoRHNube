@@ -58,13 +58,16 @@ $(function () {
 /*   FIN DE COMBO BOX  */
 /*   MOSTRAR GIF DE CARGANDO  */
 $("#btnRecargaTabla").click(function(){
-    $(".loader").show();
-    $(".img-load").show();
+    //$(".loader").show();
+    //$(".img-load").show();
     console.log("click");
 });
 /*   CARGAR TABLA DE CONTROL EN RUTA   */
 function cargartablaRuta(fecha1,fecha2) {
     var idemp = $('#idempleado').val();
+    console.log("Listo I");
+    $(".loader").show();
+    $(".img-load").show();
     $.ajax({
         type: "GET",
         url: "/cargarTablaTardanzasRuta",
@@ -81,6 +84,7 @@ function cargartablaRuta(fecha1,fecha2) {
             }
         },
         success: function (data) {
+            console.log("Listo II");
             if (data.length != 0) {
                 razonSocial = data[0].organi_razonSocial;
                 direccion = data[0].organi_direccion;

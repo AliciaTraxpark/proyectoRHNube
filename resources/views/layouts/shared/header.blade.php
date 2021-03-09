@@ -54,6 +54,10 @@ use App\persona;
             margin-top: 8px !important;
         }
     }
+    .modal{
+        font-family: 'Poppins';
+        margin-top: 3%;
+    }
 </style>
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom" style="padding-left: 0px;">
     <div class="container-fluid pb-3 pt-3 contResponsive">
@@ -295,143 +299,175 @@ use App\persona;
 </div><!-- /.modal -->
 <!-- end Topbar -->
 {{-- MODAL DE SELECCIÓN DE MODOS --}}
-<div class="modal fade show" id="modos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog" style="font-family: poppins">
-    <div class="modal-content">
-      <div class="modal-header" style="background-color: #163652;">
-        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Elige los modos a usar</h5>
-      </div>
-      <div class="modal-body">
-        <div id="msj" style="font-size: 13px; color: red; margin-bottom: 15px">
-          • Debes elegir almenos un modo para continuar.
-        </div>
-        <div class="row">
-              @if(colorLi()->Mremoto == 1)
-                <div class="col-sm-6">
-                    <div class="card sombra" id="cardSelect1">
-                      <div class="card-body text-center">
-                        <h5 class="card-title"><small>MODO:</small><br><strong>Control remoto</strong></h5>
-                        <div id="imgSelect1">
-                            <img src="/landing/home/images/home-office-lila.png" width="80" class="p-1">
-                        </div>
-                        <button type="button" id="btnSelec1" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
-                          <img src='landing/images/check.svg' width='16'> Seleccionado
-                        </button>
-                      </div>
-                    </div>
-                </div>
-              @else 
-                <div class="col-sm-6">
-                    <div class="card" id="cardSelect1">
-                      <div class="card-body text-center">
-                        <h5 class="card-title"><small>MODO:</small><br><strong>Control remoto</strong></h5>
-                        <div id="imgSelect1">
-                            <img src="/landing/home/images/home-office-lila.png" width="80" class="p-1">
-                        </div>
-                        <button type="button" id="btnSelec1" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
-                          Seleccionar
-                        </button>
-                      </div>
-                    </div>
-                </div>
-              @endif
-              @if(colorLi()->Mruta == 1)
-                <div class="col-sm-6">
-                    <div class="card sombra" id="cardSelect2">
-                      <div class="card-body text-center">
-                        <h5 class="card-title"><small>MODO:</small><br><strong>Control en ruta</strong></h5>
-                        <div id="imgSelect2">
-                            <img src="/landing/home/images/control-en-ruta-lila.png" width="80" class="p-1">
-                        </div>
-                        <button type="button" id="btnSelec2" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
-                          <img src='landing/images/check.svg' width='16'> Seleccionado
-                        </button>
-                      </div>
-                    </div>
-                </div>
-              @else 
-                <div class="col-sm-6">
-                    <div class="card" id="cardSelect2">
-                      <div class="card-body text-center">
-                        <h5 class="card-title"><small>MODO:</small><br><strong>Control en ruta</strong></h5>
-                        <div id="imgSelect2">
-                            <img src="/landing/home/images/control-en-ruta-lila.png" width="80" class="p-1">
-                        </div>
-                        <button type="button" id="btnSelec2" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
-                          Seleccionar
-                        </button>
-                      </div>
-                    </div>
-                </div>
-              @endif
+<div class="modal fade" id="modos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 1000px ">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #163652;">
+                <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Elige los modos a usar</h5>
             </div>
-
-            <div class="row">
-                @if(colorLi()->Mpuerta == 1)
-                  <div class="col-sm-6">
-                    <div class="card sombra" id="cardSelect3">
-                      <div class="card-body text-center">
-                        <h5 class="card-title"><small>MODO:</small><br><strong>Asistencia en puerta</strong></h5>
-                        <div id="imgSelect3">
-                            <img src="/landing/home/images/asistencia-en-puerta-lila.png" width="80" class="p-1">
-                        </div>
-                        <button type="button" id="btnSelec3" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
-                          <img src='landing/images/check.svg' width='16'> Seleccionado
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                @else 
-                    <div class="col-sm-6">
-                        <div class="card" id="cardSelect3">
-                          <div class="card-body text-center">
-                            <h5 class="card-title"><small>MODO:</small><br><strong>Asistencia en puerta</strong></h5>
-                            <div id="imgSelect3">
-                                <img src="/landing/home/images/asistencia-en-puerta-lila.png" width="80" class="p-1">
+            <div class="modal-body">
+                <div id="msj" style="font-size: 13px; color: red; margin-bottom: 15px">
+                    • Debes elegir almenos un modo para continuar.
+                </div>
+                <div class="row" style="justify-content: center;">
+                    @if(getLastActivity()[1] == 1)  
+                        @if(colorLi()->Mremoto == 1)
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card sombra" id="cardSelect1">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><small>MODO:</small><br><strong>Control remoto</strong></h5>
+                                        <div id="imgSelect1">
+                                            <img src="/landing/home/images/home-office-lila.png" width="80" class="p-1">
+                                        </div>
+                                        <button type="button" id="btnSelec1" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
+                                            <img src='landing/images/check.svg' width='16'> Seleccionado
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <button type="button" id="btnSelec3" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
-                              Seleccionar
+                        @else 
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card" id="cardSelect1">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><small>MODO:</small><br><strong>Control remoto</strong></h5>
+                                        <div id="imgSelect1">
+                                            <img src="/landing/home/images/home-office-lila.png" width="80" class="p-1">
+                                        </div>
+                                        <button type="button" id="btnSelec1" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
+                                            Seleccionar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @else 
+                        <div style="display: none;">
+                            <button type="button" id="btnSelec1" class="btn btn-second-rh active" data-toggle="button" aria-pressed="false">
+                                Seleccionar
                             </button>
-                          </div>
                         </div>
-                    </div>
-                @endif
-            @if(colorLi()->Mtareo == 1)
-              <div class="col-sm-6">
-                <div class="card sombra" id="cardSelect4">
-                  <div class="card-body text-center">
-                    <h5 class="card-title"><small>MODO:</small><br><strong>Tareo</strong></h5>
-                    <div id="imgSelect4">
-                        <img src="/landing/home/images/Tareo-lila.png" width="80" class="p-1">
-                    </div>
-                    <button type="button" id="btnSelec4" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
-                      <img src='landing/images/check.svg' width='16'> Seleccionado
-                    </button>
-                  </div>
+                    @endif
+
+                    @if(getLastActivity()[2] == 1)
+                        @if(colorLi()->Mruta == 1)
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card sombra" id="cardSelect2">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><small>MODO:</small><br><strong>Control en ruta</strong></h5>
+                                        <div id="imgSelect2">
+                                            <img src="/landing/home/images/control-en-ruta-lila.png" width="80" class="p-1">
+                                        </div>
+                                        <button type="button" id="btnSelec2" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
+                                            <img src='landing/images/check.svg' width='16'> Seleccionado
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @else 
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card" id="cardSelect2">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><small>MODO:</small><br><strong>Control en ruta</strong></h5>
+                                        <div id="imgSelect2">
+                                            <img src="/landing/home/images/control-en-ruta-lila.png" width="80" class="p-1">
+                                        </div>
+                                        <button type="button" id="btnSelec2" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
+                                            Seleccionar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @else 
+                        <div style="display: none;">
+                            <button type="button" id="btnSelec2" class="btn btn-second-rh active" data-toggle="button" aria-pressed="false">
+                                Seleccionar
+                            </button>
+                        </div>
+                    @endif
+
+                    @if(getLastActivity()[3] == 1)
+                        @if(colorLi()->Mpuerta == 1)
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card sombra" id="cardSelect3">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><small>MODO:</small><br><strong>Asistencia en puerta</strong></h5>
+                                        <div id="imgSelect3">
+                                            <img src="/landing/home/images/asistencia-en-puerta-lila.png" width="80" class="p-1">
+                                        </div>
+                                        <button type="button" id="btnSelec3" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
+                                            <img src='landing/images/check.svg' width='16'> Seleccionado
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @else 
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card" id="cardSelect3">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><small>MODO:</small><br><strong>Asistencia en puerta</strong></h5>
+                                        <div id="imgSelect3">
+                                            <img src="/landing/home/images/asistencia-en-puerta-lila.png" width="80" class="p-1">
+                                        </div>
+                                        <button type="button" id="btnSelec3" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
+                                            Seleccionar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @else 
+                        <div style="display: none;">
+                            <button type="button" id="btnSelec3" class="btn btn-second-rh active" data-toggle="button" aria-pressed="false">
+                                Seleccionar
+                            </button>
+                        </div>
+                    @endif
+
+                    @if(getLastActivity()[4] == 1)
+                        @if(colorLi()->Mtareo == 1)
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card sombra" id="cardSelect4">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><small>MODO:</small><br><strong>Tareo</strong></h5>
+                                        <div id="imgSelect4">
+                                            <img src="/landing/home/images/Tareo-lila.png" width="80" class="p-1">
+                                        </div>
+                                        <button type="button" id="btnSelec4" class="btn btn-second-rh active" data-toggle="button" aria-pressed="true">
+                                            <img src='landing/images/check.svg' width='16'> Seleccionado
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @else 
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card" id="cardSelect4">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><small>MODO:</small><br><strong>Tareo</strong></h5>
+                                        <div id="imgSelect4">
+                                            <img src="/landing/home/images/Tareo-lila.png" width="80" class="p-1">
+                                        </div>
+                                        <button type="button" id="btnSelec4" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
+                                            Seleccionar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @else 
+                        <div style="display: none;">
+                            <button type="button" id="btnSelec4" class="btn btn-second-rh active" data-toggle="button" aria-pressed="false">
+                                Seleccionar
+                            </button>
+                        </div>
+                    @endif
                 </div>
-              </div>
-            @else 
-                <div class="col-sm-6">
-                    <div class="card" id="cardSelect4">
-                      <div class="card-body text-center">
-                        <h5 class="card-title"><small>MODO:</small><br><strong>Tareo</strong></h5>
-                        <div id="imgSelect4">
-                            <img src="/landing/home/images/Tareo-lila.png" width="80" class="p-1">
-                        </div>
-                        <button type="button" id="btnSelec4" class="btn btn-second-rh" data-toggle="button" aria-pressed="false">
-                          Seleccionar
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-            @endif
             </div>
-      </div>
-      <div class="modal-footer">
-            <button type="button" class="btn btn-rh" id="btnSelected">Continuar</button>
-      </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-rh" id="btnSelected">Continuar</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 {{-- FIN DE SELECCIÓN DE MODOS --}}
 <script>
@@ -460,10 +496,12 @@ use App\persona;
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-    let a =  {{ getLastActivity() }}
-    
+    let a = 0;
+    a = {{ getLastActivity() }} ;
+    console.log(a);
     $( document ).ready(function() {
-        if(a == 1){
+        if(a[0] == 1){
+            // MUESTRA EL MODAL
             $('#modos').modal('show');
         }
     });
