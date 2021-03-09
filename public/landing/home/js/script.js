@@ -3,14 +3,15 @@ $(document).ready(function() {
     $("div.informacion").hide();
     $("div.agendar-reunion").hide();
     $("div.partner").hide();
-    $("div.login").hide();
+    $("div.identifier").hide();
 
     $("a.logo").click(function() {
         $("div.inicio").show(500);
         $("div.agendar-reunion").hide(500);
         $("div.informacion").hide(500);
         $("div.partner").hide(500);
-        $("div.login").hide(500);
+        $("div.identifier").hide(500);
+        $("div.bg").show(500);
     });
 
     $("a.informacion").click(function() {
@@ -18,7 +19,8 @@ $(document).ready(function() {
         $("div.agendar-reunion").hide(500);
         $("div.inicio").hide(500);
         $("div.partner").hide(500);
-        $("div.login").hide(500);
+        $("div.identifier").hide(500);
+        $("div.bg").show(500);
     });
 
     $("a.agendar-reunion").click(function() {
@@ -26,7 +28,8 @@ $(document).ready(function() {
         $("div.informacion").hide(500);
         $("div.inicio").hide(500);
         $("div.partner").hide(500);
-        $("div.login").hide(500);
+        $("div.identifier").hide(500);
+        $("div.bg").show(500);
     });
 
     $("a.partner").click(function() {
@@ -34,15 +37,17 @@ $(document).ready(function() {
         $("div.informacion").hide(500);
         $("div.inicio").hide(500);
         $("div.agendar-reunion").hide(500);
-        $("div.login").hide(500);
+        $("div.identifier").hide(500);
+        $("div.bg").show(500);
     });
 
-    $("a.login").click(function() {
-        $("div.login").show(500);
+    $("a.identifier").click(function() {
+        $("div.identifier").show(500);
         $("div.partner").hide(500); 
         $("div.informacion").hide(500);
         $("div.inicio").hide(500);
         $("div.agendar-reunion").hide(500);
+        $("div.bg").hide(500);
     });
     $("div#mensajeForm").hide();
     $("#mensajeEmail").hide();
@@ -228,6 +233,17 @@ $(document).ready(function() {
         case '07': fechas[1] = 7; break;
         case '08': fechas[1] = 8; break;
         case '09': fechas[1] = 9; break;
+      }
+      switch(fechas[2]){
+        case '01': fechas[2] = 1; break;
+        case '02': fechas[2] = 2; break;
+        case '03': fechas[2] = 3; break;
+        case '04': fechas[2] = 4; break;
+        case '05': fechas[2] = 5; break;
+        case '06': fechas[2] = 6; break;
+        case '07': fechas[2] = 7; break;
+        case '08': fechas[2] = 8; break;
+        case '09': fechas[2] = 9; break;
       }
       let dateS = fechas[0]+"-"+fechas[1]+"-"+fechas[2];
       $.ajax({

@@ -48,7 +48,7 @@ $(document).ready(function () {
             sheetName: 'Exported data',
             autoFilter: false,
             exportOptions: {
-                columns: [1,2,3,4,5,6]
+                columns: [1,2,3,4,5,6,7]
             }
         }, {
             extend: "pdfHtml5",
@@ -58,7 +58,7 @@ $(document).ready(function () {
             pageSize: 'LEGAL',
             title: 'ORGANIZACIONES',
             exportOptions: {
-                columns: [1,2,3,4,5,6]
+                columns: [1,2,3,4,5,6,7]
             },
             customize: function (doc) {
                 doc['styles'] = {
@@ -120,7 +120,7 @@ $(document).ready(function () {
             { data: "created_at",
             "render": function (data, type, row) {
 
-                return moment(row.created_at).format('DD/MM/YYYY');
+                return moment(row.created_at).format('YYYY/MM/DD');
 
             } },
             {

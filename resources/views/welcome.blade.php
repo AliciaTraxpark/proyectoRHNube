@@ -87,10 +87,10 @@
       </div>
       <ul class="nav justify-content-center">
          <li class="nav-item general">
-            <a class="nav-link active pc" style="padding-top: 3px" href="#">PC</a>
+            <a class="nav-link active pc identifier" style="padding-top: 6px; font-size: 15px;" href="#identifier">IDENTIFIER</a>
          </li>
          <li class="nav-item general">
-            <a class="nav-link movil" style="padding-top: 3px" href="#">Móvil</a>
+            <a class="nav-link movil" style="padding-top: 6px; padding-left: 8px; font-size: 15px;" href="{{route('registroPersona')}}">REGÍSTRATE</a>
          </li>
       </ul>
       <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
@@ -98,6 +98,7 @@
          <img src="{{ asset('/landing/home/images/banner4.jpg') }}" width="100%">
       </div>
       <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
+      {{-- INICIO --}}
       <div class="container-fluid inicio p-10 text-center my-3" id="inicio">
          <div class="row mx-auto my-auto">
             <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
@@ -154,6 +155,7 @@
             </div>
          </div>
       </div>
+      {{-- CHATEA CON NOSOTROS --}}
       <div class="container-fluid inicio p-10">
          <div class="row">
             <div class="col-sm-12 col-lg-4">
@@ -208,6 +210,7 @@
          </div>
          <div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>
       </div>
+      {{-- INFORMACIÓN --}}
       <div id="informacion" class="container informacion">
          <div id="accordion">
             <div class="card">
@@ -319,6 +322,7 @@
          </div>
          <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
       </div>
+      {{-- PARTNER --}}
       <div id="partner" class="container partner">
          <div class="row">
             <div class="col-sm-12 col-lg-12">
@@ -343,6 +347,7 @@
          </div>
          <div class="vc_empty_space" style="height: 30px"><span class="vc_empty_space_inner"></span></div>
       </div>
+      {{-- AGENDA REUNIÓN --}}
       <div class="container agendar-reunion" id="agendar-reunion">
          <div class="row">
             <div class="col-sm-12 col-lg-6">
@@ -358,7 +363,7 @@
                         <input type="text" class="form-control" id="nombre_apellidos" name="nombre_apellidos" placeholder="Nombres y apellidos" onkeypress='return validaTexto(event)' required="">
                      </div>
                      <div class="form-group">
-                        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" onkeypress='return validaNumericos(event)' required="">
+                        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" onkeypress='return validaNumericos(event)' required="" maxlength="9">
                      </div>
                      <div class="form-group">
                         <span id="mensajeEmail" class="alertas"><p>• Ingresa un correo válido.</p></span>
@@ -406,8 +411,57 @@
             </div>
          </div>
       </div>
-      <div class="container login text-center" id="login">
-         
+      {{-- LOGIN --}}
+      <div id="identifier" class="container identifier">
+         <div class="row justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-md-2">
+               <div class="custom-control custom-switch" >
+                  <input type="checkbox" class="custom-control-input" id="reniec" width="5px">
+                  <label class="custom-control-label" for="reniec" style="font-weight: bold; font-size: 18px"> Reniec </label>
+               </div>
+            </div>   
+            <div class="col-12 col-sm-6 col-md-3">
+               <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="antecedentePolicial">
+                  <label class="custom-control-label" for="antecedentePolicial" style="font-weight: bold; font-size: 18px"> Antecedente policial </label>
+               </div>
+            </div>   
+            <div class="col-12 col-sm-6 col-md-4">
+               <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="antecedentePenal">
+                  <label class="custom-control-label" for="antecedentePenal" style="font-weight: bold; font-size: 18px"> Antecedente judicial y penal </label>
+               </div>
+            </div>   
+            <div class="col-12 col-sm-6 col-md-3">
+               <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="recordCrediticio">
+                  <label class="custom-control-label" for="recordCrediticio" style="font-weight: bold; font-size: 18px"> Record crediticio </label>
+               </div>
+            </div>   
+         </div>
+
+         <form>
+            <div class="col-12 d-flex">
+               <input type="text" class="form-control text-center mr-1" id="dni" aria-describedby="DNI" onkeypress='return validaNumericos(event)' placeholder="Ingresa tu documento de identidad" maxlength="8">
+               <button type="submit" class="btn btn-rh" data-toggle="modal" data-target="#proxIdentifier">
+                  <img src="{{ asset('landing/images/loupe (1).svg') }}" height="20">
+               </button>
+            </div>
+         </form>
+
+         <div class="form-check mt-5">
+           <input class="form-check-input" type="radio" name="formaPago" id="agente" value="agente" checked>
+           <label class="form-check-label" for="agente">
+             En el banco o agente más cercano <img src="{{ asset('landing/images/pagoefectivo-logo.png') }}" class="pl-1" height="35">
+           </label>
+         </div>
+         <div class="form-check mt-3">
+           <input class="form-check-input" type="radio" name="formaPago" id="tarjeta" value="tarjeta">
+           <label class="form-check-label" for="tarjeta">
+             Tarjeta de crédito o débito  <img src="{{ asset('landing/images/tarjetas.png') }}" class="pl-6" height="35">
+           </label>
+         </div>
+         <div class="vc_empty_space" style="height: 50px"><span class="vc_empty_space_inner"></span></div>
       </div>
 
       {{-- MODAL FECHAS DISPONIBLES --}}
@@ -445,7 +499,7 @@
                </table>
             </div>
           </div>
-        </div>
+      </div>
       {{-- FIN MODAL FECHAS DISPONIBLES --}}
       {{-- MODAL CONFIRMACIÓN DE AGENDA REUNIÓN --}}
        <div class="modal" tabindex="-1" id="confirmacion_correo">
@@ -504,7 +558,7 @@
                <form id="regirationPartner_form" action="javascript:enviarPartner()"  method="post">
                   @csrf
                   <div class="form-group">
-                     <input type="text" class="form-control form-control-sm" id="rucP" name="rucP" onkeypress='return validaNumericos(event)' placeholder="RUC" required="">
+                     <input type="text" class="form-control form-control-sm" id="rucP" name="rucP" onkeypress='return validaNumericos(event)' placeholder="RUC" required="" maxlength="11">
                   </div>
                   <div class="form-group">
                       <input type="text" class="form-control form-control-sm" id="razonSocialP" name="razonSocialP" placeholder="Razón Social" required="">
@@ -516,7 +570,7 @@
                       <input type="email" class="form-control form-control-sm" id="correoP" name="correoP" placeholder="Correo electrónico" required="">
                   </div>
                   <div class="form-group">
-                      <input type="text" class="form-control form-control-sm" id="telefonoP" name="telefonoP" onkeypress='return validaNumericos(event)' placeholder="Teléfono" required="">
+                      <input type="text" class="form-control form-control-sm" id="telefonoP" name="telefonoP" onkeypress='return validaNumericos(event)' placeholder="Teléfono" required="" maxlength="9">
                   </div>
                   <div class="form-group">
                       <textarea  class="form-control form-control-sm" name="mensajeP" id="mensajeP" placeholder="Mensaje" rows="2"></textarea>
@@ -581,8 +635,32 @@
          </div>
       </div>
       {{-- FIN DE MODAL DE CONFIRMACIÓN --}}
+      {{-- MODAL DE PRÓXIMO LANZAMIENTO IDENTIFIER --}}
+      <div class="modal" id="proxIdentifier" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content mt-5">
+                <div class="modal-header"
+                    style="padding-top: 8px;padding-bottom: 5px;background-color:#163552;color:#ffffff">
+                    <h5 style="font-size: 14px" class="modal-title">Identifier</h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{asset('landing/images/lanzamiento.png')}}" height="45" class="mt-2 mb-2">
+                    <p>Próximo lanzamiento en Perú en abril del 2021.</p>
+                </div>
+                <div class="modal-footer" style="padding-top: 8px;padding-bottom: 8px;">
+                    <button type="button" class="btn btn-sm" data-dismiss="modal" style="background-color:#163552;color:#ffffff" onclick="cerrarModal()">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+         </div>
+      </div>
+      {{-- FIN DE MODAL DE CONFIRMACIÓN --}}
       {{-- PIE DE PÁGINA --}}
-      <footer class="text-center">
+      <footer class="text-center" style="position: fixed; max-width: 100%; width: 100%; bottom: 0px;">
          <div>
             <span class="footer_rh">© 2021 - RH nube Corp - USA | Todos los derechos reservados &nbsp; |</span>
             <a class="footer_rh" style="color:#faf3f3;" href="/politicas">Política de privacidad | </a>

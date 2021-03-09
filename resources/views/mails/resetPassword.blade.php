@@ -295,11 +295,7 @@
                                                             <tr style="border-collapse:collapse">
                                                                 <td class="es-m-p0l
                                                                         es-m-txt-c" align="left"
-                                                                    style="padding:0;Margin:0;font-size:0px"><img
-                                                                        class="adapt-img"
-                                                                        src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png"
-                                                                        style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="193"></td>
+                                                                    style="padding:0;Margin:0;font-size:0px"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -319,7 +315,8 @@
                                                                                 es-p40b">
                                                                             <p style="color:
                                                                                     #ffffff;"><strong><span
-                                                                                        style="color:#FFFFFF;"></span></strong>
+                                                                                        style="color:#FFFFFF;">{{$organizacion->organi_razonSocial}}
+                                                    - {{$organizacion->organi_ruc}}</span></strong>
                                                                             </p>
                                                                         </td>
                                                                     </tr>
@@ -356,22 +353,15 @@
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px">
-                                                                    <img class="adapt-img"
-                                                                        src="https://i.ibb.co/yVMy63b/key-1.png" alt
-                                                                        style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="130"></td>
+                                                                    </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
                                                                     <h1
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">TE DAMOS LA
-                                                                            BIENVENIDA</strong></h1>
-                                                                    <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">&nbsp;RH
-                                                                            NUBE</strong></h1>
+                                                                        <strong style="color: #163552;">SOLICITUD DE RESTABLECIMIENTO DE CONTRASEÑA</strong></h1>
+                                                                    
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
@@ -458,7 +448,7 @@
                                             bgcolor="#ffffff" align="center">
                                             <a target="_blank">
                                                 <img class="adapt-img"
-                                                src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png" alt
+                                                src="https://i.ibb.co/1R9HMHZ/RH-CUADRADO-NUBE.png" alt
                                                     style="display: block;" width="150">
                                             </a>
                                         </td>

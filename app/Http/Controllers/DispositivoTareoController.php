@@ -123,9 +123,10 @@ class DispositivoTareoController extends Controller
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // ENVIO DE CÓDIGO POR CORREO
                 $controlador = controladores_tareo::find($contros)->first();
+                $organizacion = organizacion::find(session('sesionidorg'))->first();
                 $email = $controlador->contrT_correo;
                 $numero = $request->numeroM;
-                $envio = Mail::to($email)->queue(new correoVinculacionTareo($codigo, $numero));
+                $envio = Mail::to($email)->queue(new correoVinculacionTareo($codigo, $numero, $organizacion));
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
@@ -429,9 +430,10 @@ class DispositivoTareoController extends Controller
         $dispoControls = dispositivo_controlador_tareo::where('iddispositivos_tareo', '=', $request->idDis)->get();
         foreach ($dispoControls as $dispoControl) {
             $controlador = controladores_tareo::find($dispoControl->idcontroladores_tareo)->first();
+            $organizacion = organizacion::find(session('sesionidorg'))->first();
             $email = $controlador->contrT_correo;
             $numero = $request->numeroM;
-            $envio = Mail::to($email)->queue(new correoVinculacionTareo($codigo, $numero));
+            $envio = Mail::to($email)->queue(new correoVinculacionTareo($codigo, $numero, $organizacion));
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Tareo, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube.modotareo";

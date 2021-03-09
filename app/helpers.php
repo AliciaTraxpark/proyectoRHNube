@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Collection;
 
 // * FUNCION DE AGRUPAR HORAS MINUTOS
 function horasRemotoRutaJson($array)
@@ -449,28 +450,89 @@ function tiempoMarcacionesPorHorarioEmpleado($idEmpleado, $fecha, $idHorarioEmpl
 }
 
 function getLastActivity(){
-    $band = false;
-    $now = Carbon::now()->subSeconds(5)->addHours(5)->settings([
-        'locale' => 'pe_PE',
-        'timezone' => 'America/Lima',
-    ]);;
-    $inicio = Carbon::create(1970, 01, 1, 0, 0, 0);
-    $secondsNow = $inicio->diffInSeconds($now);
-    $activity = DB::table('sessions')
-    ->select('last_activity')
-    ->where('user_id', Auth::user()->id)
-    ->first();
+    $band = new Collection();
+    $contModos = 0;
+    $contModosIn = 0;
+    $modos = DB::table('usuario_organizacion')->select('Mremoto', 'Mruta', 'Mpuerta', 'Mtareo', 'rol_id')->where('user_id', Auth::user()->id)->where('organi_id', session('sesionidorg'))->first();
 
-    $modos = DB::table('usuario_organizacion')->select('Mremoto', 'Mruta', 'Mpuerta', 'Mtareo')->where('user_id', Auth::user()->id)->where('organi_id', session('sesionidorg'))->first();
+    if ($modos->rol_id == 1) {
+        // ADMINISTRADOR
+        if ($modos->Mremoto == '0' && $modos->Mruta == '0' && $modos->Mpuerta == '0' && $modos->Mtareo == '0') {
+            $band->push(1);
+            $band->push(1); // REMOTO
+            $band->push(1); // PUERTA
+            $band->push(1); // RUTA
+            $band->push(1); // TAREO
+        } else {
+            $band->push(0);
+            $band->push(1); // REMOTO
+            $band->push(1); // PUERTA
+            $band->push(1); // RUTA
+            $band->push(1); // TAREO
+        }
+    } else {
+        if ($modos->rol_id == 3) {
+            $band->push(3);
+            // INVITADO
+            $invitado = DB::table('invitado')->select('modoCR', 'asistePuerta', 'ControlRuta', 'modoTareo')->where('estado', '=', 1)->where('organi_id', '=', session('sesionidorg'))->where('user_Invitado', '=', Auth::user()->id)->first();
 
-    if ($modos->Mremoto == 0 && $modos->Mruta == 0 && $modos->Mpuerta == 0 && $modos->Mtareo == 0) {
-        $band = true;
+            if ($invitado->modoCR == 1) {
+                if ($modos->Mremoto == 0) {
+                    $contModos++;
+                }
+                $contModosIn++;
+                $band->push(1);
+            }
+            else 
+                $band->push(0);
+
+            if ($invitado->asistePuerta == 1) {
+                if ($modos->Mpuerta == 0) {
+                    $contModos++;
+                }
+                $contModosIn++;
+                $band->push(1);
+            }
+            else 
+                $band->push(0);
+
+            if ($invitado->ControlRuta == 1) {
+                if ($modos->Mruta == 0) {
+                    $contModos++;
+                }
+                $contModosIn++;
+                $band->push(1);
+            }
+            else 
+                $band->push(0);
+
+            if ($invitado->modoTareo == 1) {
+                if ($modos->Mtareo == 0) {
+                    $contModos++;
+                }
+                $contModosIn++;
+                $band->push(1);
+            }
+            else 
+                $band->push(0);
+
+            if ($contModosIn == $contModos) {
+                $band[0] = 1;
+            } else 
+                $band[0] = 0;
+        }
     }
 
     return $band;
 }
 
 function colorLi(){
-    $modos = DB::table('usuario_organizacion')->select('Mremoto', 'Mruta', 'Mpuerta', 'Mtareo')->where('user_id', Auth::user()->id)->where('organi_id', session('sesionidorg'))->first();
+    $modos = DB::table('usuario_organizacion')->select('Mremoto', 'Mruta', 'Mpuerta', 'Mtareo', 'rol_id')->where('user_id', Auth::user()->id)->where('organi_id', session('sesionidorg'))->first();
+    
     return $modos;
+}
+
+function getOrgani(){
+    $organizacion = DB::table('organizacion')->select('organi_razonSocial', 'organi_ruc')->where('organi_id', session('sesionidorg'))->first();
+    return $organizacion;
 }

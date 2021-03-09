@@ -612,14 +612,13 @@ class apiSeguimientoRutaContoller extends Controller
         if ($empleado) {
             $persona = persona::findOrFail($empleado->emple_persona);
             $email = "info@rhnube.com.pe";
-
+            $organizacion = organizacion::find($empleado->organi_id);
             if ($tipo == "soporte") {
-
-                Mail::to($email)->queue(new SoporteApi($contenido, $persona, $asunto, $celular));
+                Mail::to($email)->queue(new SoporteApi($contenido, $persona, $asunto, $celular, $organizacion));
                 return response()->json(array("mensaje" => "correo_enviado_con_éxito"), 200);
             }
             if ($tipo == "sugerencia") {
-                Mail::to($email)->queue(new SugerenciaApi($contenido, $persona, $asunto, $celular));
+                Mail::to($email)->queue(new SugerenciaApi($contenido, $persona, $asunto, $celular, $organizacion));
                 return response()->json(array("mensaje" => "correo_Enviado_con_éxito"), 200);
             }
         }

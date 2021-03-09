@@ -281,11 +281,15 @@
                                     style="border-collapse:collapse;border-spacing:0px;background-color:#163552;width:600px"
                                     cellspacing="0" cellpadding="0" bgcolor="#163552" align="center">
                                     <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-color:#163552"
-                                            bgcolor="#163552" align="left">
-                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left"
-                                                style="border-collapse:collapse;border-spacing:0px;float:left">
-
+                                        <td style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px;background-color:#163552"
+                                            bgcolor="#163552" align="right">
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right"
+                                                style="border-collapse:collapse;border-spacing:0px;float:right">
+                                                <p style="color: #ffffff;">
+                                                    <strong>{{$organizacion->organi_razonSocial}}
+                                                        - {{$organizacion->organi_ruc}}<span
+                                                            style="color:#FFFFFF;"></span></strong>
+                                                </p>
                                             </table>
 
                                             <!--[if mso]></td><td style="width:20px"></td><td style="width:270px" valign="top"><![endif]-->
@@ -409,22 +413,7 @@
                     </table>
                     <table class="es-footer" cellspacing="0" cellpadding="0" align="center"
             style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
-            {{-- <tr style="border-collapse:collapse">
-                <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
-                    <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
-                        <tr style="border-collapse:collapse">
-                            <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
-                                bgcolor="#ffffff" align="center">
-                                <a target="_blank">
-                                    <img class="adapt-img" src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png" alt
-                                        style="display: block;" width="150">
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> --}}
+           
             <tr style="border-collapse:collapse">
                 <td align="center"
                     style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">

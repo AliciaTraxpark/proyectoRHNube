@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\controladores_tareo;
+use App\organizacion;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,12 +22,14 @@ class SugerenciaApiTareo extends Mailable
     public $controlador;
     public $asunto;
     public $celular;
-    public function __construct($contenido, controladores_tareo $controlador,$asunto,$celular)
+    public $organizacion;
+    public function __construct($contenido, controladores_tareo $controlador,$asunto,$celular, organizacion $organizacion)
     {
         $this->contenido = $contenido;
         $this->controlador = $controlador;
         $this->asunto = $asunto;
         $this->celular = $celular;
+        $this->organizacion = $organizacion;
     }
 
     /**

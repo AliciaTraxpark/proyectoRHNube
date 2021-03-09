@@ -21,6 +21,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\correoVinculacionPuerta;
+use App\organizacion;
 
 class dispositivosController extends Controller
 {
@@ -188,9 +189,10 @@ class dispositivosController extends Controller
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // ENVIO DE CÓDIGO POR CORREO
                 $controlador = controladores::find($contros)->first();
+                $organizacion = organizacion::find(session('sesionidorg'))->first();
                 $email = $controlador->cont_correo;
                 $numero = $request->numeroM;
-                $envio = Mail::to($email)->queue(new correoVinculacionPuerta($codigo, $numero));
+                $envio = Mail::to($email)->queue(new correoVinculacionPuerta($codigo, $numero, $organizacion));
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
@@ -288,9 +290,10 @@ class dispositivosController extends Controller
         $dispoControls = dispositivo_controlador::where('idDispositivos', '=', $request->idDis)->get();
         foreach ($dispoControls as $dispoControl) {
             $controlador = controladores::find($dispoControl->idControladores)->first();
+            $organizacion = organizacion::find(session('sesionidorg'))->first();
             $email = $controlador->cont_correo;
             $numero = $request->numeroM;
-            $envio = Mail::to($email)->queue(new correoVinculacionPuerta($codigo, $numero));
+            $envio = Mail::to($email)->queue(new correoVinculacionPuerta($codigo, $numero, $organizacion));
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";

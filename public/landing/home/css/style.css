@@ -3,6 +3,10 @@
     font-size: 20px;
 }
 
+body{
+    margin-bottom: 60px;
+}
+
 h5.h5.text-center{
     font-size: 20px;   
 }

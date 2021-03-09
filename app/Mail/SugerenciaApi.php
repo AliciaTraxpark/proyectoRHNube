@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-
+use App\organizacion;
 class SugerenciaApi extends Mailable
 {
     use Queueable, SerializesModels;
@@ -21,12 +21,14 @@ class SugerenciaApi extends Mailable
     public $persona;
     public $asunto;
     public $celular;
-    public function __construct($contenido, persona $persona,$asunto,$celular)
+    public $organizacion;
+    public function __construct($contenido, persona $persona,$asunto,$celular, organizacion $organizacion)
     {
         $this->contenido = $contenido;
         $this->persona = $persona;
         $this->asunto = $asunto;
         $this->celular = $celular;
+        $this->organizacion = $organizacion;
     }
 
     /**

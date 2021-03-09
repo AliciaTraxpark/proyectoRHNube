@@ -281,8 +281,13 @@
                                     style="border-collapse:collapse;border-spacing:0px;background-color:#163552;width:600px"
                                     cellspacing="0" cellpadding="0" bgcolor="#163552" align="center">
                                     <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-color:#163552"
-                                            bgcolor="#163552" align="left">
+                                        <td style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px;background-color:#163552"
+                                            bgcolor="#163552" align="right">
+                                            <p style="color: #ffffff;">
+                                                <strong>{{$organizacion->organi_razonSocial}}
+                                                    - {{$organizacion->organi_ruc}}<span
+                                                        style="color:#FFFFFF;"></span></strong>
+                                            </p>
                                         </td>
                                     </tr>
                                 </table>

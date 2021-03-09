@@ -281,51 +281,13 @@
                                     style="border-collapse:collapse;border-spacing:0px;background-color:#163552;width:600px"
                                     cellspacing="0" cellpadding="0" bgcolor="#163552" align="center">
                                     <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-color:#163552"
-                                            bgcolor="#163552" align="left">
-                                            {{-- <table class="es-left" cellspacing="0" cellpadding="0" align="left"
-                                                style="border-collapse:collapse;border-spacing:0px;float:left">
-                                                <tr style="border-collapse:collapse">
-                                                    <td class="es-m-p20b" align="left"
-                                                        style="padding:0;Margin:0;width:270px">
-                                                        <table width="100%" cellspacing="0" cellpadding="0"
-                                                            role="presentation"
-                                                            style="border-collapse:collapse;border-spacing:0px">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td class="es-m-p0l es-m-txt-c" align="left"
-                                                                    style="padding:0;Margin:0;font-size:0px"><img
-                                                                        class="adapt-img"
-                                                                        src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png"
-                                                                        style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="193"></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table> --}}
-                                            <!--[if mso]></td><td style="width:20px"></td><td style="width:270px" valign="top"><![endif]-->
-                                            {{-- <table class="es-right" cellspacing="0" cellpadding="0" align="right">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="esd-container-frame" width="270" align="left"
-                                                            esdev-config="h18">
-                                                            <table width="100%" cellspacing="0" cellpadding="0">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td align="right"
-                                                                            class="esd-block-text es-p40t es-p40b">
-                                                                            <p style="color: #ffffff;">
-                                                                                <strong>{{$organizacion->organi_razonSocial}}
-                                            - {{$organizacion->organi_ruc}}<span style="color:#FFFFFF;"></span></strong>
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table> --}}
+                                        <td style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px;background-color:#163552"
+                                            bgcolor="#163552" align="right">
+                                            <p style="color: #ffffff;">
+                                                <strong>{{$organizacion->organi_razonSocial}}
+                                                    - {{$organizacion->organi_ruc}}<span
+                                                        style="color:#FFFFFF;"></span></strong>
+                                            </p>                                            
                 </td>
             </tr>
         </table>
@@ -356,19 +318,6 @@
                                                             style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                             width="175"></td>
                                                 </tr>
-                                                {{-- <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
-                                                                    <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">TE DAMOS LA
-                                                                            BIENVENIDA</strong></h1>
-                                                                    <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">&nbsp;RH
-                                                                            NUBE</strong></h1>
-                                                                </td>
-                                                            </tr> --}}
                                                 <tr style="border-collapse:collapse">
                                                     <td align="center"
                                                         style="padding:0;Margin:0;padding-left:40px;padding-right:40px;padding-bottom:10px">
@@ -389,15 +338,6 @@
                                                         </p>
                                                     </td>
                                                 </tr>
-                                                {{-- <tr style="border-collapse:collapse">
-                                                    <td align="center"
-                                                        style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                        <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
-                                                                        uppercase;">
-                                                            Para Windows
-                                                        </strong>
-                                                    </td>
-                                                </tr> --}}
                                                 
                                             </table>
                                         </td>
@@ -411,51 +351,7 @@
         </table>
         <table class="es-footer" cellspacing="0" cellpadding="0" align="center"
             style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
-            {{-- <tr style="border-collapse:collapse">
-                <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
-                    <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
-                        <tr style="border-collapse:collapse">
-                            <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
-                                bgcolor="#ffffff" align="center">
-                                <a target="_blank">
-                                    <img class="adapt-img" src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png" alt
-                                        style="display: block;" width="150">
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> --}}
-            <!-- <tr style="border-collapse:collapse">
-                <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
-                    <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
-                        <tr style="border-collapse:collapse">
-                            <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
-                                bgcolor="#ffffff" align="center">
-                                <span
-                                    style="font-size: 14px; color: #333333; line-height: 120%;"><span>info@rhnube.com.pe</span></span>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr style="border-collapse:collapse">
-                <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
-                    <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
-                        <tr style="border-collapse:collapse">
-                            <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
-                                bgcolor="#ffffff" align="center">
-                                <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>WhatsApp:
-                                        +51
-                                        914 480 786</span></span>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
+            
             <tr style="border-collapse:collapse">
                 <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                     <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"

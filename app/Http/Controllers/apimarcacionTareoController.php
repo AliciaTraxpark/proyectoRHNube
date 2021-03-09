@@ -548,18 +548,18 @@ class apimarcacionTareoController extends Controller
         if ($controlador) {
             $controlador = controladores_tareo::findOrFail($idControlador);
             $email = "info@rhnube.com.pe";
-
+            $organizacion = organizacion::find($controlador->organi_id);
             /* ENVIAMOS EMAIL DE TIPO SOPORTE */
             if ($tipo == "soporte") {
 
-                Mail::to($email)->queue(new SoporteApiTareo($contenido, $controlador, $asunto, $celular));
+                Mail::to($email)->queue(new SoporteApiTareo($contenido, $controlador, $asunto, $celular, $organizacion));
                 return response()->json("Correo Enviado con éxito", 200);
             }
             /* ---------------------------------------- */
 
             /* ENVIAMOS EMAIL DE TIPO SUGERENCIA */
             if ($tipo == "sugerencia") {
-                Mail::to($email)->queue(new SugerenciaApiTareo($contenido, $controlador, $asunto, $celular));
+                Mail::to($email)->queue(new SugerenciaApiTareo($contenido, $controlador, $asunto, $celular, $organizacion));
                 return response()->json("Correo Enviado con éxito", 200);
             }
             /* ---------------------------------------- */

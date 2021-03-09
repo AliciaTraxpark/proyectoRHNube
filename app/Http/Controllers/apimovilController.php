@@ -9,6 +9,7 @@ use App\Mail\SoporteApiMovil;
 use App\Mail\SugerenciaApiMovil;
 use App\marcacion_puerta;
 use Carbon\Carbon;
+use App\organizacion;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -912,18 +913,18 @@ class apimovilController extends Controller
         if ($controlador) {
             $controlador = controladores::findOrFail($idControlador);
             $email = "info@rhnube.com.pe";
-
+            $organizacion = organizacion::find($controlador->organi_id);
             /* ENVIAMOS EMAIL DE TIPO SOPORTE */
             if ($tipo == "soporte") {
 
-                Mail::to($email)->queue(new SoporteApiMovil($contenido, $controlador, $asunto, $celular));
+                Mail::to($email)->queue(new SoporteApiMovil($contenido, $controlador, $asunto, $celular, $organizacion));
                 return response()->json("Correo Enviado con éxito", 200);
             }
             /* ---------------------------------------- */
 
             /* ENVIAMOS EMAIL DE TIPO SUGERENCIA */
             if ($tipo == "sugerencia") {
-                Mail::to($email)->queue(new SugerenciaApiMovil($contenido, $controlador, $asunto, $celular));
+                Mail::to($email)->queue(new SugerenciaApiMovil($contenido, $controlador, $asunto, $celular, $organizacion));
                 return response()->json("Correo Enviado con éxito", 200);
             }
             /* ---------------------------------------- */

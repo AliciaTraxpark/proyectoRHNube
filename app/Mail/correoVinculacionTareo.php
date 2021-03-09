@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-
+use App\organizacion;
 class correoVinculacionTareo extends Mailable
 {
     use Queueable, SerializesModels;
@@ -18,11 +18,12 @@ class correoVinculacionTareo extends Mailable
      */
     public $codigo;
     public $numero;
-
-    public function __construct($codigo, $numero)
+    public $organizacion;
+    public function __construct($codigo, $numero, organizacion $organizacion)
     {
         $this->codigo = $codigo;
         $this->numero = $numero;
+        $this->organizacion = $organizacion;
     }
 
     /**

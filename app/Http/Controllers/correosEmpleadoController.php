@@ -88,7 +88,7 @@ class correosEmpleadoController extends Controller
         if (!empty($vinculacion_ruta->celular)) {
             $empleado = DB::table('empleado as e')
                 ->leftJoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->select('p.perso_nombre as nombre', 'e.emple_Correo as correo', 'p.perso_id')
+                ->select('p.perso_nombre as nombre', 'e.emple_Correo as correo', 'p.perso_id', 'e.organi_id')
                 ->where('e.emple_id', '=', $vinculacion_ruta->idEmpleado)
                 ->get()
                 ->first();
@@ -119,8 +119,9 @@ class correosEmpleadoController extends Controller
             //* CORREO DE COPIA
             if (!empty($empleado->correo)) {
                 $persona = persona::findOrFail($empleado->perso_id);
+                $organizacion = organizacion::find($empleado->organi_id);
                 $email = array($empleado->correo);
-                Mail::to($email)->queue(new CorreoRuta($persona, $vinculacion_ruta));
+                Mail::to($email)->queue(new CorreoRuta($persona, $vinculacion_ruta, $org));
             }
             $response = curl_exec($curl);
             $err = curl_error($curl);
