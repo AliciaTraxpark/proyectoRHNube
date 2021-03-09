@@ -54,10 +54,6 @@ use App\persona;
             margin-top: 8px !important;
         }
     }
-    .modal{
-        font-family: 'Poppins';
-        margin-top: 3%;
-    }
 </style>
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom" style="padding-left: 0px;">
     <div class="container-fluid pb-3 pt-3 contResponsive">
