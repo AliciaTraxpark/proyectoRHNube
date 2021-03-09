@@ -648,7 +648,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <img src="{{asset('landing/images/lanzamiento.png')}}" height="45" class="mt-2 mb-2">
-                    <p>Próximo lanzamiento en Perú en abril del 2021.</p>
+                    <p>Próximo lanzamiento en Perú, abril del 2021.</p>
                 </div>
                 <div class="modal-footer" style="padding-top: 8px;padding-bottom: 8px;">
                     <button type="button" class="btn btn-sm" data-dismiss="modal" style="background-color:#163552;color:#ffffff" onclick="cerrarModal()">
