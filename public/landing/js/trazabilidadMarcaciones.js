@@ -311,13 +311,42 @@ $(function () {
     $('#fechaInicio').val(fechaAyer);
     $('#fechaFin').val(f);
     inicializarTabla();
-    cargarDatos();
 });
 // * OBTENER DATA
 function cargarDatos() {
     var fechaI = $('#fechaInicio').val();
     var fechaF = $('#fechaFin').val();
-    var idsEmpleado = $('#idsEmpleado').val();
+    var idsEmpleado = $('#empleadoPor').val();
+    if (idsEmpleado.length == 0) {
+        $.notifyClose();
+        $.notify(
+            {
+                message:
+                    "\nElegir empleado.",
+                icon: "admin/images/warning.svg",
+            },
+            {
+                position: "fixed",
+                mouse_over: "pause",
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 2000,
+                template:
+                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    "</div>",
+                spacing: 35,
+            }
+        );
+        return false;
+    }
     $.ajax({
         url: "/dataTrazabilidad",
         method: "GET",
@@ -1519,4 +1548,111 @@ $('#tablaTrazabilidad tbody').on('click', 'tr', function () {
 $(window).on('resize', function () {
     $("#tablaTrazabilidad").css('width', '100%');
     table.draw(false);
+});
+// ! ******************************* SELECT PERSONALIZADOS ****************************************
+$(function () {
+    // : INICIALIZAR PLUGIN
+    $('#selectPor').select2({
+        placeholder: 'Seleccionar',
+        ajax: {
+            async: false,
+            type: "GET",
+            url: "/selectPersonalizadoModoAP",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+
+                var queryParameters = {
+                    term: params.term
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                var estado = true;
+                if (data.length != 0) {
+                    return {
+                        results: $.map(data, function (item, key) {
+                            var children = [];
+                            console.log(estado);
+                            for (var k in item) {
+                                var childItem = item[k];
+                                childItem.id = item[k].id;
+                                childItem.text = key + " : " + item[k].descripcion;
+                                children.push(childItem);
+                            }
+                            if (estado) {
+                                estado = false;
+                                return [{
+                                    id: "0",
+                                    text: "Búsqueda general",
+                                    selected: true
+                                }, {
+                                    text: key,
+                                    children: children,
+                                }
+                                ]
+                            } else {
+                                return {
+                                    text: key,
+                                    children: children,
+                                }
+                            }
+                        })
+                    }
+                } else {
+                    return {
+                        results: [{
+                            id: "0",
+                            text: "Búsqueda general",
+                            selected: true
+                        }]
+                    }
+                }
+            },
+            cache: true,
+        }
+    });
+    $('#empleadoPor').select2({
+        multiple: true,
+        closeOnSelect: false
+    });
+    // : INICIO DE SELECT POR 
+    $('#selectPor').trigger("change");
+});
+// : MOSTAR EMPLEADOS
+$('#selectPor').on("change", function () {
+    var valueQuery = $(this).val();
+    var cantidad = 0;
+    $('#empleadoPor').empty();
+    $.ajax({
+        type: "GET",
+        url: "/selectEmpleadoModoAP",
+        data: {
+            query: valueQuery
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            cantidad = data.length;
+            console.log(cantidad);
+            var contenidoData = ``;
+            data.forEach(element => {
+                contenidoData += `<option value="${element.emple_id}" selected>${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
+            });
+            $('#empleadoPor').append(contenidoData);
+            $('#cantidadE').text(cantidad + "\templeados seleccionados.");
+        },
+        error: function () { }
+    });
+});
+$('#empleadoPor').on('select2:close', function () {
+    var cantidad = $('#empleadoPor').select2('data').length;
+    $('#cantidadE').empty();
+    $('#cantidadE').text(cantidad + "\templeados seleccionados.");
 });
