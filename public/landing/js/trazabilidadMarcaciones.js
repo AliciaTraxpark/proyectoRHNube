@@ -1604,7 +1604,7 @@ $(function () {
                                 estado = false;
                                 return [{
                                     id: "0",
-                                    text: "Búsqueda general",
+                                    text: "Todos los empleados",
                                     selected: true
                                 }, {
                                     text: key,
@@ -1623,7 +1623,7 @@ $(function () {
                     return {
                         results: [{
                             id: "0",
-                            text: "Búsqueda general",
+                            text: "Todos los empleados",
                             selected: true
                         }]
                     }
