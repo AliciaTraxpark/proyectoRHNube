@@ -348,7 +348,7 @@ use App\persona;
                         </div>
                     @endif
 
-                    @if(getLastActivity()[2] == 1)
+                    @if(getLastActivity()[3] == 1)
                         @if(colorLi()->Mruta == 1)
                             <div class="col-lg-3 col-sm-6">
                                 <div class="card sombra" id="cardSelect2">
@@ -386,7 +386,7 @@ use App\persona;
                         </div>
                     @endif
 
-                    @if(getLastActivity()[3] == 1)
+                    @if(getLastActivity()[2] == 1)
                         @if(colorLi()->Mpuerta == 1)
                             <div class="col-lg-3 col-sm-6">
                                 <div class="card sombra" id="cardSelect3">
