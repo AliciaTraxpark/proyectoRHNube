@@ -450,13 +450,14 @@ function cargartabla(fechaI, fechaF) {
             var cantidadP = 0;
             arrayHorario.map((valor) => cantidadM = cantidadM + (valor.split(",")[0] * 7));
             arrayHorario.map((valor) => cantidadP = cantidadP + (valor.split(",")[1] * 4));
-            var cantidadColSpan = (6 + (cantidadGruposHorario * 21) + cantidadM + cantidadP + 18);
+            var cantidadColSpan = (7 + (cantidadGruposHorario * 21) + cantidadM + cantidadP + 18);
             var theadTabla = `<tr>`;
             theadTabla += `<th>#&nbsp;</th>
                             <th class="text-center">Fecha</th>
                             <th>Número de documento</th>
                             <th name="colCodigo" class="colCodigo">Código de trabajador</th>
                             <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th>Apellidos y nombres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             <th name="colCargo" class="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
             //* GRUPO DE HORARIOS
             for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -606,7 +607,8 @@ function cargartabla(fechaI, fechaF) {
                             <td>${key}</td>
                             <td class="text-center">${data[key][index].emple_nDoc}</td>
                             <td class="text-center" name="colCodigo">${data[key][index].emple_codigo}</td>
-                            <td>${data[key][index].perso_nombre} ${data[key][index].perso_apPaterno} ${data[key][index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                            <td>${data[key][index].perso_nombre} ${data[key][index].perso_apPaterno} ${data[key][index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>${data[key][index].perso_apPaterno} ${data[key][index].perso_apMaterno} ${data[key][index].perso_nombre} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     tbody += `<td name="colCargo">${data[key][index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
                     // * ARMAR GRUPO DE HORARIOS
