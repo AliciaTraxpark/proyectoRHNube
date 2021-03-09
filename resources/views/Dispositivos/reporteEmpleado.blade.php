@@ -168,6 +168,12 @@
         padding: 0.1rem 1rem !important;
         margin: 0.1rem 0 !important;
     }
+
+    .rowPersonalizado {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -179,13 +185,13 @@
                 </div>
             </div>
             <div class="card-body border">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6">
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label">Rango de fechas:</label>
+                <div class="row rowPersonalizado">
+                    <div class="col-md-3 pr-3 pl-3">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Rango de fechas:</label>
                             <input type="hidden" id="ID_START">
                             <input type="hidden" id="ID_END">
-                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
+                            <div class="input-group text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -198,25 +204,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-5 col-sm-6">
-                        <div class="form-group   row">
-                            <label class="col-lg-3 col-form-label">Empleado</label>
-                            <div class="col-lg-9">
-                                <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
-                                    class="form-control form-control-sm" data-placeholder="Seleccione empleado">
-                                    <option value="0" selected disabled>Seleccionar Empleado</option>
-                                    @foreach ($empleado as $empleados)
-                                    <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
-                                        {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
+                    <div class="col-md-4 pr-3 pl-3">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Seleccionar por:</label>
+                            <select id="selectPor" data-plugin="customselect" class="form-control form-control-lg">
+                                <option value="0" selected>Búsqueda general</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
+                    <div class="col-md-4 pr-3 pl-3">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Empleado:</label>
+                            <select id="empleadoPor" data-plugin="customselect" class="form-control form-control-lg">
+                                <option value="0" selected>Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-right btnR" style="padding-left: 0%">
                         <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
-                            style="background-color: #163552;" onclick="javascript:cambiarF()">
+                            style="background-color: #1e2139;" onclick="javascript:cambiarF()">
                             <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
                         </button>
                     </div>
@@ -224,8 +230,8 @@
                 <div class="row justify-content-left">
                     <div class="col-md-4 pb-1">
                         <div class="dropdown" id="dropSelector">
-                            <a class="dropdown-toggle dropReporte" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                style="cursor: pointer">
+                            <a class="dropdown-toggle dropReporte" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" style="cursor: pointer">
                                 <div class="custom-control custom-switch mb-2">
                                     <input type="checkbox" class="custom-control-input" id="switchO" checked
                                         style="cursor: pointer">
