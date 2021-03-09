@@ -106,6 +106,12 @@
         padding: 0.1rem 1rem !important;
         margin: 0.1rem 0 !important;
     }
+
+    .rowPersonalizado {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 {{-- CONTENIDO --}}
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -117,8 +123,8 @@
                     <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
                 </div>
             </div>
-            <div class="card-body border">
-                <div class="row">
+            <div class="card-body border p-2">
+                <div class="row rowPersonalizado">
                     <div class="col-md-3 pr-3 pl-3">
                         <div class="form-group">
                             <label class="col-form-label pt-0 pb-0">Rango de fechas:</label>
@@ -143,7 +149,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4 pr-3 pl-3">
+                    <div class="col-md-4 pr-3 pl-3 mt-3">
                         <label class="col-form-label pt-0 pb-0">Empleado:</label>
                         <select id="empleadoPor" data-plugin="customselect"
                             class="form-control form-control-sm select2Multiple" multiple="multiple" required>
@@ -157,7 +163,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row">
                     <div class="col-md-4 pb-2">
                         <div class="dropdown" id="dropSelector">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -206,7 +212,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row rowPersonalizado">
+                            <div class="col-lg-5">
+                                <img src="{{asset('landing/images/fuenteR.svg')}}" height="18">
+                                <label for="formatoC" class="col-form-label pt-0 pb-0"
+                                    style="font-weight: bold;font-size:12px">
+                                    Formato de celda
+                                </label>
+                            </div>
+                            <div class="col-lg-7">
+                                <select id="formatoC" class="form-control">
+                                    <option value="formatoAYN">Apellidos y nombres</option>
+                                    <option value="formatoNYA" selected>Nombres y apellidos</option>
+                                    <option value="formatoNA">Nombres - Apellidos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     {{-- GIF DE ESPERA --}}
                     <div id="espera" class="row justify-content-center" style="display: none">
                         <div class="col-md-4">

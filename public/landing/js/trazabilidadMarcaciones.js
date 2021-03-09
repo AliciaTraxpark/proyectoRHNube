@@ -393,7 +393,10 @@ function cargarDatos() {
         var thead = `<tr>
                         <th>#</th>
                         <th>DNI</th>
-                        <th>Empleado</th>
+                        <th class="formatoNYA">Nombres y apellidos</th>
+                        <th class="formatoAYN">Apellidos y nombres</th>
+                        <th class="formatoNA">Nombres</th>
+                        <th class="formatoNA">Apellidos</th>
                         <th>Departamento</th>
                         <th class="text-center">Tardanzas</th>
                         <th class="text-center">Días Trabajados</th>
@@ -1374,7 +1377,10 @@ function cargarDatos() {
             tbody += `<tr>
                         <td>${index + 1}</td>
                         <td>${data.marcaciones[index].emple_nDoc}</td>
-                        <td>${data.marcaciones[index].nombres_apellidos}</td>
+                        <td>${data.marcaciones[index].perso_nombre} ${data.marcaciones[index].perso_apPaterno} ${data.marcaciones[index].perso_apMaterno}</td>
+                        <td>${data.marcaciones[index].perso_apPaterno} ${data.marcaciones[index].perso_apMaterno} ${data.marcaciones[index].perso_nombre}</td>
+                        <td>${data.marcaciones[index].perso_nombre}</td>
+                        <td>${data.marcaciones[index].perso_apPaterno} ${data.marcaciones[index].perso_apMaterno}</td>
                         <td>${data.marcaciones[index].area_descripcion}</td>
                         <td class="text-center">${tardanza}</td>
                         <td class="text-center">${diasTrabajdos}</td>
@@ -1528,6 +1534,15 @@ function toggleColumnas() {
             dataT.api().columns("." + this.id).visible(false);
         }
     });
+    // * ************************* TIPO FORMATO CELDA *********************
+    // ? FORMATO DE NOMBRE Y APELLIDOS
+    $("#formatoC > option").each(function () {
+        if (!$(this).is(":checked")) {
+            dataT.api().columns('.' + $(this).val()).visible(false);
+        }
+    });
+    var columnaVisibleFormato = $('#formatoC :selected').val();
+    dataT.api().columns('.' + columnaVisibleFormato).visible(true);
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
 function chechIncidencias() {
@@ -1548,6 +1563,9 @@ $('#tablaTrazabilidad tbody').on('click', 'tr', function () {
 $(window).on('resize', function () {
     $("#tablaTrazabilidad").css('width', '100%');
     table.draw(false);
+});
+$('#formatoC').on("change", function () {
+    toggleColumnas();
 });
 // ! ******************************* SELECT PERSONALIZADOS ****************************************
 $(function () {

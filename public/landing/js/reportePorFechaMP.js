@@ -278,12 +278,14 @@ function inicializarTabla() {
                 $('#switchO').prop("disabled", true);
                 $('.dropReporte').prop("disabled", true);
                 $('#colEmpleadosCM').prop("disabled", true);
+                $('#formatoC').prop("disabled", true);
             } else {
                 $('.buttons-page-length').prop("disabled", false);
                 $('.buttons-html5').prop("disabled", false);
                 $('#switchO').prop("disabled", false);
                 $('.dropReporte').prop("disabled", false);
                 $('#colEmpleadosCM').prop("disabled", false);
+                $('#formatoC').prop("disabled", false);
             }
         },
         drawCallback: function () {

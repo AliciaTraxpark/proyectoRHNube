@@ -734,7 +734,7 @@
                                 </label>
                             </div>
                             <div class="col-lg-7">
-                                <select id="formatoC" class="form-control form-control-sm">
+                                <select id="formatoC" class="form-control">
                                     <option value="formatoAYN">Apellidos y nombres</option>
                                     <option value="formatoNYA" selected>Nombres y apellidos</option>
                                     <option value="formatoNA">Nombres - Apellidos</option>
