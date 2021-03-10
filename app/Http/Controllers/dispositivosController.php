@@ -2952,6 +2952,7 @@ class dispositivosController extends Controller
                     $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                     // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
                     $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                    $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
                     if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                         if ($horario->fueraH == 0) {
                             // * VALIDAR SIN FUERA DE HORARIO
@@ -2978,7 +2979,8 @@ class dispositivosController extends Controller
                         }
                     } else {
                         return response()->json(
-                            array("respuesta" => "Sobretiempo en la marcación."),
+                            array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
                             200
                         );
                     }
@@ -3080,6 +3082,7 @@ class dispositivosController extends Controller
                     $totalDuration = $horaFParse->diffInSeconds($horaIParse);
                     $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                     $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                    $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
                     if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                         $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
                         $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
@@ -3113,7 +3116,8 @@ class dispositivosController extends Controller
                         }
                     } else {
                         return response()->json(
-                            array("respuesta" => "Sobretiempo en la marcación."),
+                            array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
                             200
                         );
                     }
