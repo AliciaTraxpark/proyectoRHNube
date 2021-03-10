@@ -4625,7 +4625,11 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
                 <button onclick="eliminarMasivoHorarios()" type="button" class="btn btn-soft-danger btn-sm"><i
                         class="uil uil-trash-alt mr-1"></i>Borrar seleccionados</button>
              </div>
-                      </div>`;
+             <div class="col-md-12">
+             <label
+             style="font-weight: 600">Empleados totales:` + data.length +` </label>
+             </div>
+             </div>`;
 
             $.each(data, function (key, item) {
 
@@ -5081,6 +5085,10 @@ function datosModalIncidenciaEmpleado(diadeIncidencia,empleados){
             <div class="col-md-6 text-right">
                 <button onclick="eliminarMasivoIncidencias()" type="button" class="btn btn-soft-danger btn-sm"><i
                         class="uil uil-trash-alt mr-1"></i>Borrar seleccionados</button>
+             </div>
+             <div class="col-md-12">
+             <label
+             style="font-weight: 600">Empleados totales:` + data.length +` </label>
              </div>
                       </div>`;
 
