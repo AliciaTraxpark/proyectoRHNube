@@ -5088,7 +5088,7 @@ function datosModalIncidenciaEmpleado(diadeIncidencia,empleados){
 
             //*NOMBRE DE EMPLEADO
             contenido+=`<div class='col-md-12' style="border-top: 1px dashed #aaaaaa!important;">
-            <h5 class='header-title' style='font-size: 13.4px;'>` + item.nombre +` `+item.apellidos+`</h5>
+            <h5 class='header-title' style='font-size: 13.4px;'>` + item.apellidos +` `+item.nombre+`</h5>
             <h5 class='header-title' style='font-size: 13px'>Incidencias:</h5>
             </div>`;
 
