@@ -5641,6 +5641,14 @@ $('.detalleHijoDeHijoDeHijo input[type=checkbox]').change(function () {
             });
         }
     }
+    var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').prop("indeterminate");
+    var checkedP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').prop("checked");
+    $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+        indeterminate: indeterminanteP,
+        checked: checkedP
+    });
+    console.log($(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').prop("checked"));
+    console.log($(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').prop("indeterminate"));
     toggleColumnas();
 });
 // * HIJOS DE POR HORARIO Y TOTAL
@@ -6302,6 +6310,7 @@ $('#selectPor').on("change", function () {
     }
     $('#empleadoPor').empty();
     $.ajax({
+        async: false,
         type: "GET",
         url: "/selectEmpleadoModoAP",
         data: {
