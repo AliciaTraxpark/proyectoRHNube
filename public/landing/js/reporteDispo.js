@@ -5620,6 +5620,10 @@ function togglePorTotales() {
 function togglePorTiemposMuertos() {
     $('#contenidoPorTM').toggle();
 }
+// * TOGGLE POR TIEMPOS NOCTURNOS
+function togglePorTiemposNocturnosH() {
+    $('#contenidoPorTiemposNocturnosH').toggle();
+}
 // * HIJOS DE TIEMPO DIURNO ENTRE HORARIO
 $('.detalleHijoDeHijoDeHijo input[type=checkbox]').change(function () {
     var contenido = $(this).closest('ul');
@@ -5721,6 +5725,37 @@ $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
                 indeterminate: false,
                 checked: false
             });
+        }
+    }
+    // * PARA SEGUNDO PADRE TIEMPOS POR HORARIO
+
+    var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]:indeterminate').length;
+    var checkedP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]:checked').length;
+    var lengthP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]').length;
+    console.log($(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre'));
+    if (lengthP == checkedP) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
         }
     }
     toggleColumnas();

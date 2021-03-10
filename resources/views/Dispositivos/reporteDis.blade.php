@@ -468,7 +468,8 @@
                                                     src="{{asset('landing/images/chevron-arrow-down.svg')}}"
                                                     onclick="javascript:togglePorTiemposDiurnosH()">
                                             </li>
-                                            <ul class="ulHijoDeHijoPadre" style="display: none" id="contenidoPorTiemposDiurnosH">
+                                            <ul class="ulHijoDeHijoPadre" style="display: none"
+                                                id="contenidoPorTiemposDiurnosH">
                                                 <li class="liContenido detalleHijoDeHijoDeHijo">
                                                     <input type="checkbox" id="colHE25D">
                                                     <label for="">H.E. 25% Diurnas</label>
@@ -491,21 +492,36 @@
                                                 </li>
                                             </ul>
                                             <li class="liContenido detalleHijoDeHijo">
-                                                <input type="checkbox" id="colHE25N">
-                                                <label for="">H.E. 25% Nocturnas</label>
+                                                <input type="checkbox" name="porTiemposNoctunosH"
+                                                    id="porTiemposNoctunosH">
+                                                <label for="porTiemposNoctunosH">Tiempos nocturnos</label>
+                                                <img class="float-right mt-1 ml-2" height="9" style="cursor: pointer;"
+                                                    src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                                    onclick="javascript:togglePorTiemposNocturnosH()">
                                             </li>
-                                            <li class="liContenido detalleHijoDeHijo">
-                                                <input type="checkbox" id="colHE35N">
-                                                <label for="">H.E. 35% Nocturnas</label>
-                                            </li>
-                                            <li class="liContenido detalleHijoDeHijo">
-                                                <input type="checkbox" id="colHE100N">
-                                                <label for="">H.E. 100% Nocturnas</label>
-                                            </li>
-                                            <li class="liContenido detalleHijoDeHijo">
-                                                <input type="checkbox" id="colHoraNocturna">
-                                                <label for="">Horario nocturno</label>
-                                            </li>
+                                            <ul class="ulHijoDeHijoPadre" style="display: none"
+                                                id="contenidoPorTiemposNocturnosH">
+                                                <li class="liContenido detalleHijoDeHijoDeHijo">
+                                                    <input type="checkbox" id="colHE25N">
+                                                    <label for="">H.E. 25% Nocturnas</label>
+                                                </li>
+                                                <li class="liContenido detalleHijoDeHijoDeHijo">
+                                                    <input type="checkbox" id="colHE35N">
+                                                    <label for="">H.E. 35% Nocturnas</label>
+                                                </li>
+                                                <li class="liContenido detalleHijoDeHijoDeHijo">
+                                                    <input type="checkbox" id="colHE100N">
+                                                    <label for="">H.E. 100% Nocturnas</label>
+                                                </li>
+                                                <li class="liContenido detalleHijoDeHijoDeHijo">
+                                                    <input type="checkbox" id="colHoraNocturna">
+                                                    <label for="">Horas nocturnas</label>
+                                                </li>
+                                                <li class="liContenido detalleHijoDeHijoDeHijo">
+                                                    <input type="checkbox" id="colSobreTNocturno">
+                                                    <label for="">Sobretiempo nocturno</label>
+                                                </li>
+                                            </ul>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colFaltaJornada">
                                                 <label for="">Jornada incompleta</label>
@@ -513,10 +529,6 @@
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colSobreTiempo">
                                                 <label for="">Sobretiempo total</label>
-                                            </li>
-                                            <li class="liContenido detalleHijoDeHijo">
-                                                <input type="checkbox" id="colSobreTNocturno">
-                                                <label for="">Sobretiempo nocturno</label>
                                             </li>
                                             <li class="liContenido detalleHijoDeHijo">
                                                 <input type="checkbox" id="colTiempoEntreH">
