@@ -1,3 +1,13 @@
+<style>
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #163552;
+    }
+    .titulo{
+    font-weight: 600!important;
+    color: #0d161f;
+    font-size: 12.5px;
+    }
+</style>
 <div class="row row-divided">
 
     <div class="col-md-12 col-xl-12">
@@ -60,7 +70,7 @@
                         <input type="hidden" id="horario1">
                         <input type="hidden" id="horario2">
                         <div class="row">
-                            <div class="col-md-12" style="padding-left: 24px;">
+                            <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-9" style="zoom:90%;">
                                         <input type="hidden" id="fechaDa" name="fechaDa">
@@ -108,21 +118,22 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="row" style="margin-left: 6px;">
-                                            <div class="col-md-5 form-check">
+                                        <div class="row">
+                                            <div class="col-md-5 form-check" style="padding-left: 55px;">
                                                 <input type="checkbox" class="form-check-input" id="selectTodoCheck">
                                                 <label class="form-check-label" for="selectTodoCheck"
                                                     style="margin-top: 2px;font-size: 11px!important">
                                                     Seleccionar todos.
                                                 </label>
                                             </div>
-                                            <div class="col-md-7">
+                                            <div class="col-md-7 text-right">
                                                 <span style="font-size: 11px!important">
                                                     *Se visualizará empleados con calendario
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="col-md-12" style="padding-left: 5px;">
+                                        <div class="col-md-12" style="padding-left: 24px;
+                                        padding-right: 0px;">
                                             <select class="form-control wide" data-plugin="customselect" multiple
                                                 id="nombreEmpleado">
                                                 @foreach ($empleado as $empleados)
@@ -140,18 +151,25 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="col-md-12 text-center" id="DatoscalendarOculto" style=" display: none">
-                                    <img src="{{ asset('landing/images/loading.gif') }}" height="100">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
+                                    </div>
+
+                                    <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
+                                        <div id="calendar"></div>
+                                    </div>
+
+                                    <input type="hidden" id="horarioEnd">
+                                    <input type="hidden" id="horarioStart">
                                 </div>
-                                <div class="col-md-12">
-                                    <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
-                                </div>
-                                <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
-                                    <div id="calendar"></div>
-                                </div>
-                                <input type="hidden" id="horarioEnd">
-                                <input type="hidden" id="horarioStart">
+
                             </div>
+
 
                         </div>
                     </div>
@@ -173,213 +191,160 @@
                 </div>
             </div>
         </div>
-        <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-            aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                style="width:390px;  margin-top: 150px; left: 30px;">
-                <div class="modal-content">
-                    <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <span id=errorSel style="color: #8b3a1e;display:none">Seleccione un horario</span>
-                                <select data-plugin="customselect"
-                                    class="form-control custom-select custom-select-sm  col-md-10" name="selectHorario"
-                                    id="selectHorario">
-                                    <option hidden selected disabled>Asignar horario</option>
-                                    @foreach ($horario as $horarios)
-                                        <option class="" value="{{ $horarios->horario_id }}">
-                                            {{ $horarios->horario_descripcion }}
-                                            <span style="font-size: 11px;font-style: oblique">
-                                                ({{ $horarios->horaI }}-{{ $horarios->horaF }})
-                                            </span>
-                                        </option>
-                                    @endforeach
-                                </select>
-                                &nbsp;
-                            </div>
-                            <div class="col-md-3 text-left" style="padding-left: 0px;">
-                                <button class="btn btn-primary btn-sm"
-                                    style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;"
-                                    onclick="modalRegistrar()">
-                                    +
-                                </button>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="custom-control custom-switch mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="fueraHSwitch">
-                                    <label class="custom-control-label" for="fueraHSwitch">
-                                        Permite marcar fuera del horario.
-                                    </label>
-                                </div>
-                                <div class="row">
-                                    <div class="custom-control custom-switch mb-2" style="left: 12px;">
-                                        <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
-                                        <label class="custom-control-label" for="horAdicSwitch">
-                                            Permite marcar horas adicionales.
-                                        </label>
-                                    </div>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <select id="nHorasAdic" style="display: none;bottom: 3px;"
-                                        class="form-control form-control-sm col-md-3">
-                                        <option value="0.5">0.5 hora </option>
-                                        <option value="1">1 hora </option>
-                                        <option value="2">2 horas </option>
-                                        <option value="3">3 horas </option>
-                                        <option value="4">4 horas </option>
-                                        <option value="5">5 horas </option>
-                                        <option value="6">6 horas </option>
-                                        <option value="7">7 horas </option>
-                                        <option value="8">8 horas </option>
-                                        <option value="9">9 horas </option>
-                                        <option value="10">10 horas </option>
-                                        <option value="11">11 horas </option>
-                                        <option value="12">12 horas </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                        <div class="col-md-12 text-right" style="padding-right: 0px;">
-                            <button type="button" class="btn btn-light  btn-sm"
-                                style="background:#f3f3f3;border-color: #f3f3f3;"
-                                onclick="$('#horarioAsignar_ed').modal('hide');$('*').removeClass('fc-highlight');">
-                                Cancelar
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm"
-                                style="background-color: #183b5d;border-color:#62778c;" onclick="agregarHorarioSe()">
-                                Registrar
-                            </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div id="verhorarioEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true" data-backdrop="static" style="overflow-y: auto;">
-            <div class="modal-dialog  modal-xl d-flex justify-content-center" style="margin-top: 5px">
+            <div class="modal-dialog d-flex justify-content-center" style="margin-top: 100px;width: 650px">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color:#163552;">
-                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                            Horario de empleado
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input type="hidden" id="fechaDa2" name="fechaDa2">
-                                        <div class="form-group">
-                                            <label for="">Empleado:</label>
-                                            <input type="text" class="form-control form-control-sm" id="idEmHorario"
-                                                disabled>
-                                            <input type="hidden" id="idobtenidoE">
-                                            <input type="hidden" id="docEmpleado">
-                                            <input type="hidden" id="correoEmpleado">
-                                            <input type="hidden" id="celEmpleado">
-                                            <input type="hidden" id="areaEmpleado">
-                                            <input type="hidden" id="cargoEmpleado">
-                                            <input type="hidden" id="ccEmpleado">
-                                            <input type="hidden" id="localEmpleado">
+
+                    <div class="modal-body" style="padding: 0px">
+                        <div class="col-xl-12" style="padding: 0px">
+                                    <ul class="nav nav-pills navtab-bg nav-justified">
+                                        <li class="nav-item">
+                                            <a href="#horario" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                                                <span class="d-block d-sm-none"><i class="uil-home-alt"></i></span>
+                                                <img src="{{ asset('admin/images/calendarioHorario.svg') }}" height="18"><span class="d-none d-sm-block">Horario</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#incidencia" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                                                <span class="d-block d-sm-none"><i class="uil-user"></i></span>
+                                                <img src="{{ asset('admin/images/calendarioIncidencia.svg') }}" height="18"> <span class="d-none d-sm-block">Incidencias</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                    <div class="tab-content text-muted">
+                                        <div class="tab-pane show active" id="horario">
+                                            <div class="modal-body" style="font-size:12px!important;background: #ffffff; padding-top: 0px;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label for="" class="titulo">Seleccione horario:</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <span id=errorSel style="color: #8b3a1e;display:none">Seleccione un horario</span>
+                                                        <select data-plugin="customselect"
+                                                            class="form-control custom-select custom-select-sm  col-md-10" name="selectHorario"
+                                                            id="selectHorario">
+                                                            <option hidden selected disabled>Asignar horario</option>
+                                                            @foreach ($horario as $horarios)
+                                                                <option class="" value="{{ $horarios->horario_id }}">
+                                                                    {{ $horarios->horario_descripcion }}
+                                                                    <span style="font-size: 11px;font-style: oblique">
+                                                                        ({{ $horarios->horaI }}-{{ $horarios->horaF }})
+                                                                    </span>
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        &nbsp;
+                                                    </div>
+                                                    <div class="col-md-3 text-left" style="padding-left: 0px;">
+                                                        <button class="btn btn-primary btn-sm"
+                                                            style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;"
+                                                            onclick="modalRegistrar()">
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="custom-control custom-switch mb-2">
+                                                            <input type="checkbox" class="custom-control-input" id="fueraHSwitch">
+                                                            <label class="custom-control-label" for="fueraHSwitch" style="color: #4b4b5a !important;">
+                                                                Permite marcar fuera del horario.
+                                                            </label>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="custom-control custom-switch mb-2" style="left: 12px;">
+                                                                <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
+                                                                <label class="custom-control-label" for="horAdicSwitch" style="color: #4b4b5a !important;">
+                                                                    Permite marcar horas adicionales.
+                                                                </label>
+                                                            </div>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <select id="nHorasAdic" style="display: none;bottom: 3px;"
+                                                                class="form-control form-control-sm col-md-3">
+                                                                <option value="0.5">0.5 hora </option>
+                                                                <option value="1">1 hora </option>
+                                                                <option value="2">2 horas </option>
+                                                                <option value="3">3 horas </option>
+                                                                <option value="4">4 horas </option>
+                                                                <option value="5">5 horas </option>
+                                                                <option value="6">6 horas </option>
+                                                                <option value="7">7 horas </option>
+                                                                <option value="8">8 horas </option>
+                                                                <option value="9">9 horas </option>
+                                                                <option value="10">10 horas </option>
+                                                                <option value="11">11 horas </option>
+                                                                <option value="12">12 horas </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer" style="padding-top: 15px; padding-bottom: 15px;background: #ffffff;">
+                                                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                                    <button type="button" class="btn btn-light  btn-sm"
+                                                        style="background:#f3f3f3;border-color: #f3f3f3;"
+                                                        onclick="$('#verhorarioEmpleado').modal('hide');$('*').removeClass('fc-highlight');">
+                                                        Cancelar
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                        style="background-color: #183b5d;border-color:#62778c;" onclick="agregarHorarioSe()">
+                                                        Registrar
+                                                    </button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <div class="tab-pane " id="incidencia">
+                                            <div class="modal-body" style="font-size:12px!important;background: #ffffff; padding-top: 0px;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label for="" class="titulo">Seleccione tipo de incidencia:</label>
+                                                    </div>
+                                                    <div class="col-md-12">
+
+                                                        <select data-plugin="customselect"
+                                                            class="form-control custom-select custom-select-sm  col-md-10" name="selectTipoIn"
+                                                            id="selectTipoIn" data-placeholder="seleccione">
+                                                            @foreach ($tipo_incidencia as $tipoI)
+                                                                <option value=""></option>
+                                                                <option value="{{ $tipoI->idtipo_incidencia }}">
+                                                                    {{ $tipoI->tipoInc_descripcion }}</option>
+                                                             @endforeach
+                                                        </select>
+                                                        &nbsp;
+                                                    </div>
+                                                    <div class="col-md-12">
+
+                                                        <select data-plugin="customselect"
+                                                            class="form-control custom-select custom-select-sm  col-md-10" name="incidenciaSelect"
+                                                            id="incidenciaSelect" data-placeholder="escoger incidencia" disabled>
+
+                                                        </select>
+                                                        &nbsp;
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer" style="padding-top: 15px; padding-bottom: 15px;background: #ffffff;">
+                                                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                                    <button type="button" class="btn btn-light  btn-sm"
+                                                        style="background:#f3f3f3;border-color: #f3f3f3;"
+                                                        onclick="$('#verhorarioEmpleado').modal('hide');$('*').removeClass('fc-highlight');">
+                                                        Cancelar
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                        style="background-color: #183b5d;border-color:#62778c;" onclick="registrarIncidencia()">
+                                                        Registrar
+                                                    </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                </div>
-                                <div class="col-md-12 text-right" id="DatoscalendarH" style=" max-width: 100%;">
-                                    <div id="calendarHorario"></div>
-                                </div>
-                                <input type="hidden" id="horarioEndH">
-                                <input type="hidden" id="horarioStartH">
-                                <div class="col-md-12 text-right" id="DatoscalendarH1" style=" max-width: 96%;">
-                                    <div id="calendar1Horario"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="top: 150px;">
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-1" style="  background: #f9e9e9;height: 25px;">
-                                            <h1>&nbsp;</h1>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="" style="font-size: 12px">
-                                                Días no laborales
-                                            </label>
-                                        </div>
-                                        <div class="col-md-1"><br></div>
-                                        <div class="col-md-1"
-                                            style="  background: #ffffff;height: 25px;border: 1px solid #d4d4d4;">
-                                            <h1>&nbsp;</h1>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="" style="font-size: 12px">
-                                                Días laborables
-                                            </label>
-                                            <br><br>
-                                        </div>
-                                        <div class="col-md-12"
-                                            style="padding-left: 0px;height: 220px;overflow-y: scroll; ">
-                                            <label for="" style="font-weight: 600">Horarios de calendario</label>
-                                            <table class="table" id="tablahorarios">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nombre</th>
-                                                        <th>Inicio</th>
-                                                        <th>Fin</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody style="font-size: 12px "></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <br>
-                                <div class="row" style="padding-left:2px;">
-                                    <div class="col-md-9">
-                                        <button style="background-color: #dcc3c3; border-color: #ffffff; color: #44444c"
-                                            class="btn btn-sm  btn-primary" onclick="screenshot();">
-                                            <img src="{{ asset('admin/images/pdf2.svg') }}" height="24">
-                                            Descargar
-                                        </button>
-                                        <select class="form-control custom-select custom-select-sm  col-md-3"
-                                            name="selectHorarioen" id="selectHorarioen">
-                                            <option hidden selected>Asignar horario</option>
-                                            @foreach ($horario as $horarios)
-                                                <option class="" value="{{ $horarios->horario_id }}">
-                                                    {{ $horarios->horario_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                        <button class="btn btn-primary btn-sm"
-                                            style="background-color: #183b5d;border-color:#62778c"
-                                            onclick="abrirHorarioen()">
-                                            +
-                                        </button>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-sm buttonc" onclick="asignarlaboen()">
-                                            Asignar laborable
-                                        </button>
-                                        &nbsp;&nbsp;
-                                        <button class="btn btn-sm buttonc" onclick="asignarNolaboen()">
-                                            Asignar no laborable
-                                        </button>
-                                        &nbsp;&nbsp;
-                                        <button class="btn btn-sm buttonc" onclick="asignarInciEmp()">
-                                            Asignar Incidencia
-                                        </button>
-                                    </div>
-                                    <div class="col-md-3 text-right">
-                                        <button type="button" id="cerrarHorario" class="btn"
-                                            style="background-color: #d9dee2;color: #171413;">
-                                            Cerrar
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -1370,3 +1335,41 @@
         </div><!-- /.modal -->
     </div>
 </div>
+
+{{-- MODAL INCIDENCIAS POR EMPELADO --}}
+<div id="modalIncidenciasEmpleados" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog  modal-dialog-scrollable" style="max-width: 670px;">
+    <div class="modal-content">
+        <div class="modal-header" style="background-color: #163552;">
+            <h5 class="modal-title" id="" style="color:#ffffff;font-size:15px">Incidencias de
+                empleados
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <input type="hidden" id="modalidsEmpleadoIncid">
+        <input type="hidden" id="fechaSelectoraIncid">
+        <div class="modal-body" style="font-size:12px!important;background: #ffffff;">
+            <div class="row" id="rowdivsIncid">
+
+
+            </div>
+
+        </div>
+        <div class="modal-footer" style="background: #ffffff;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-light btn-sm "
+                            data-dismiss="modal">Cerrar</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

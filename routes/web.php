@@ -322,10 +322,13 @@ Route::post('/horario/actualizarConfigHorario', 'horarioController@actualizarCon
 Route::post('/horario/horariosAsignar', 'horarioController@horariosEmpleado');
 Route::post('/horario/horariosVariosEmps', 'horarioController@horariosVariosEmps');
 Route::post('/datosHorarioEmpleado', 'horarioController@datosHorarioEmpleado');
+Route::post('/datosIncidenciaEmpleado', 'horarioController@datosIncidenciaEmpleado');
 Route::post('/elimarhoraEmps', 'horarioController@elimarhoraEmps');
+Route::post('/elimarIncidiEmps', 'horarioController@elimarIncidiEmps');
 Route::post('/clonarHorarios', 'horarioController@clonarHorarios');
 Route::post('/reemplazarHorariosClonacion', 'horarioController@reemplazarHorariosClonacion');
 Route::post('/horario/Incidenciasxtipo', 'horarioController@Incidenciasxtipo');
+Route::post('/horario/registrarInciTemp', 'horarioController@registrarInciTemp');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');
