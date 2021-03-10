@@ -5652,6 +5652,8 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoPorT').hide();
     $('#contenidoDispositivos').hide();
     $('#contenidoPorTM').hide();
+    $('#contenidoPorTiemposDiurnosH').hide();
+    $('#contenidoPorTiemposNocturnosH').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();

@@ -2975,6 +2975,8 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoPorT').hide();
     $('#contenidoDispositivos').hide();
     $('#contenidoPorTM').hide();
+    $('#contenidoPorTiemposDiurnosH').hide();
+    $('#contenidoPorTiemposNocturnosH').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
@@ -2988,6 +2990,10 @@ function toggleD() {
 function togglePorHorario() {
     $('#contenidoPorH').toggle();
 }
+// * TOGGLE POR TIEMPOS DIURNOS
+function togglePorTiemposDiurnosH() {
+    $('#contenidoPorTiemposDiurnosH').toggle();
+}
 // * TOGGLE POR TOTALES
 function togglePorTotales() {
     $('#contenidoPorT').toggle();
@@ -2996,8 +3002,94 @@ function togglePorTotales() {
 function togglePorTiemposMuertos() {
     $('#contenidoPorTM').toggle();
 }
+// * TOGGLE POR TIEMPOS NOCTURNOS
+function togglePorTiemposNocturnosH() {
+    $('#contenidoPorTiemposNocturnosH').toggle();
+}
+// * HIJOS DE TIEMPO DIURNO ENTRE HORARIO
+$('.detalleHijoDeHijoDeHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    // * PARA SEGUNDO PADRE TIEMPOS POR HORARIO
+    var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]:indeterminate').length;
+    var checkedP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]:checked').length;
+    var lengthP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').length;
+    if (lengthP == checkedP) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    }
+    // * PARA PRIMER PADRE CALCULOS DE TIEMPOS
+    var indeterminanteP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]:indeterminate').length;
+    var checkedP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]:checked').length;
+    var lengthP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]').length;
+    if (lengthP1 == checkedP1) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP1 != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP1 != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    }
+    toggleColumnas();
+});
 // * HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
+    $(this).closest('.detalleHijoDeHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     var contenido = $(this).closest('ul');
     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
         contenido.prev('.detalleHijo').find('input[type=checkbox]').prop({
@@ -3017,10 +3109,41 @@ $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
             });
         }
     }
+    // * PARA SEGUNDO PADRE TIEMPOS POR HORARIO
+
+    var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]:indeterminate').length;
+    var checkedP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]:checked').length;
+    var lengthP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]').length;
+    if (lengthP == checkedP) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    }
     toggleColumnas();
 });
 // * PADRE DE HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijo input[type=checkbox]').change(function () {
+    $(this).closest('.detalleHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     $(this).closest('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     var contenido = $(this).closest('ul');
     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
@@ -3045,8 +3168,12 @@ $('.detalleHijo input[type=checkbox]').change(function () {
 });
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.detallePadre input[type=checkbox]').change(function () {
-    $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
+    $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop({
+        indeterminate: false,
+        checked: this.checked
+    });
     $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
+    $('.detalleHijoDeHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
 // : ************************************** COLUMNAS DE PAUSAS ***********************************************
