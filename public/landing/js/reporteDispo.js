@@ -6121,6 +6121,8 @@ $(function () {
     // : INICIALIZAR PLUGIN
     $('#selectPor').select2({
         placeholder: 'Seleccionar',
+        multiple: true,
+        closeOnSelect: false,
         ajax: {
             async: false,
             type: "GET",
@@ -6140,7 +6142,6 @@ $(function () {
                     return {
                         results: $.map(data, function (item, key) {
                             var children = [];
-                            console.log(estado);
                             for (var k in item) {
                                 var childItem = item[k];
                                 childItem.id = item[k].id;
@@ -6184,12 +6185,25 @@ $(function () {
         closeOnSelect: false
     });
     // : INICIO DE SELECT POR 
-    $('#selectPor').trigger("change");
+    $('#selectPor').trigger({
+        type: 'change'
+    });
 });
 // : MOSTAR EMPLEADOS
 $('#selectPor').on("change", function () {
+    var arrayResultado = $(this).val();
+    if (arrayResultado.includes("0")) {
+        var index = arrayResultado.indexOf("0");
+        arrayResultado.splice(index, 1);
+        arrayResultado.forEach(element => {
+            $('#selectPor').find("option[value='" + element + "']").prop("selected", false);
+        });
+    }
     var valueQuery = $(this).val();
     var cantidad = 0;
+    if (valueQuery.length == 0) {
+        return false;
+    }
     $('#empleadoPor').empty();
     $.ajax({
         type: "GET",
@@ -6207,7 +6221,6 @@ $('#selectPor').on("change", function () {
         },
         success: function (data) {
             cantidad = data.length;
-            console.log(cantidad);
             var contenidoData = ``;
             data.forEach(element => {
                 contenidoData += `<option value="${element.emple_id}" selected>${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
@@ -6218,8 +6231,24 @@ $('#selectPor').on("change", function () {
         error: function () { }
     });
 });
+// : MOSTRAR LA CANTIDAD DE EMPLEADOS SELECIONADOS
 $('#empleadoPor').on('select2:close', function () {
     var cantidad = $('#empleadoPor').select2('data').length;
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
+});
+// : CUANDO EL SELECCIONAR POR QUEDE VACIO
+// : SIEMPRE TENER SELECCIONADO POR EMPLEADO
+$('#selectPor').on('select2:unselect', function () {
+    if ($(this).val().length == 0) {
+        $(this).val(0).trigger("change");
+    }
+});
+// : CUANDO SELECIONE OTRA OPCION QUE NO SEA TODOS LOS EMPLEADOS
+// : SE DESACTIVA TODOS LOS EMPLEADOS
+$('#selectPor').on('select2:selecting', function () {
+    var arrayResultado = $(this).val();
+    if (arrayResultado.includes("0")) {
+        $('#selectPor option[value="0"]').prop("selected", false);
+    }
 });

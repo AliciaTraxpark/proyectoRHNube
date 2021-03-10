@@ -4738,9 +4738,7 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()
             ->first();
-        if (!empty($query)) {
-            $parametro = explode(".", $query)[0];
-            $id = explode(".", $query)[1];
+        if (!in_array("0", $query)) {
             if ($invitadod) {
                 if ($invitadod->verTodosEmps == 1) {
                     $empleado = DB::table('empleado as e')
@@ -4748,7 +4746,14 @@ class dispositivosController extends Controller
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.asistencia_puerta', '=', 1)
-                        ->where('e.' . $parametro, '=', $id)
+                        // ->where('e.' . $parametro, '=', $id)
+                        ->where(function ($where) use ($query) {
+                            foreach ($query as $q) {
+                                $parametro = explode(".", $q)[0];
+                                $id = explode(".", $q)[1];
+                                $where->orWhere('e.' . $parametro, '=', $id);
+                            }
+                        })
                         ->get();
                 } else {
                     $invitado_empleadoIn = DB::table('invitado_empleado as invem')
@@ -4767,7 +4772,14 @@ class dispositivosController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.asistencia_puerta', '=', 1)
-                            ->where('e.' . $parametro, '=', $id)
+                            // ->where('e.' . $parametro, '=', $id)
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
                             ->get();
                     } else {
                         $empleado = DB::table('empleado as e')
@@ -4779,7 +4791,14 @@ class dispositivosController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.asistencia_puerta', '=', 1)
-                            ->where('e.' . $parametro, '=', $id)
+                            // ->where('e.' . $parametro, '=', $id)
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
                             ->get();
                     }
                 }
@@ -4789,7 +4808,14 @@ class dispositivosController extends Controller
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.asistencia_puerta', '=', 1)
-                    ->where('e.' . $parametro, '=', $id)
+                    // ->where('e.' . $parametro, '=', $id)
+                    ->where(function ($where) use ($query) {
+                        foreach ($query as $q) {
+                            $parametro = explode(".", $q)[0];
+                            $id = explode(".", $q)[1];
+                            $where->orWhere('e.' . $parametro, '=', $id);
+                        }
+                    })
                     ->get();
             }
         } else {

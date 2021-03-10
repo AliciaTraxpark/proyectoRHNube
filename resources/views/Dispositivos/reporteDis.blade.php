@@ -358,10 +358,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 pr-3 pl-3">
+                    <div class="col-md-4 pr-3 pl-3 mt-3">
                         <div class="form-group">
                             <label class="col-form-label pt-0 pb-0">Seleccionar por:</label>
-                            <select id="selectPor" data-plugin="customselect" class="form-control form-control-lg">
+                            <select id="selectPor" data-plugin="customselect"
+                                class="form-control form-control-sm select2Multiple" multiple="multiple">
                                 <option value="0" selected>Todos los empleados</option>
                             </select>
                         </div>
@@ -369,7 +370,7 @@
                     <div class="col-md-4 pr-3 pl-3 mt-3">
                         <label class="col-form-label pt-0 pb-0">Empleado:</label>
                         <select id="empleadoPor" data-plugin="customselect"
-                            class="form-control form-control-sm select2Multiple" multiple="multiple" required>
+                            class="form-control form-control-sm select2Multiple" multiple="multiple">
                         </select>
                         <span class="float-left" id="cantidadE" style="font-size: 11px"></span>
                     </div>
