@@ -112,6 +112,12 @@ class horarioController extends Controller
             ->where('organi_id','=', session('sesionidorg'))
             ->get();
 
+            //*tipo iincidencia
+            $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('sistema','=',0)
+            ->get();
+
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
                     return redirect('/dashboard');
@@ -119,14 +125,14 @@ class horarioController extends Controller
                     return view('horarios.horarios', [
                          'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                         'area' => $area, 'cargo' => $cargo, 'local' => $local, 'nivel'=>$nivel,
-                        'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras
+                        'centroc'=>$centroc, 'tipo_incidencia'=>$tipo_incidencia
                     ]);
                 }
             } else {
                 return view('horarios.horarios', [
                     'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                     'area' => $area, 'cargo' => $cargo, 'local' => $local,  'nivel'=>$nivel,
-                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras
+                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia
                 ]);
             }
         }
@@ -164,6 +170,7 @@ class horarioController extends Controller
             $tempre = temporal_eventos::where('users_id', '=', Auth::user()->id)
                 ->where('start', '=', $datafechas)
                 ->where('id_horario', '=', $idhorar)
+                ->where('incidencia_id', '=',null)
                 ->get()->first();
             if ($tempre) {
                 $startArre = $tempre->start;
@@ -189,6 +196,7 @@ class horarioController extends Controller
                 ->join('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
                 ->where('start', '=', $datafechas)
                 ->where('users_id', '=', Auth::user()->id)
+                ->where('incidencia_id', '=',null)
                 ->get();
             if ($horarioDentro) {
                 foreach ($horarioDentro as $horarioDentros) {
@@ -327,7 +335,6 @@ class horarioController extends Controller
                 'e.emple_nDoc',
                 'p.perso_id',
                 'e.emple_id',
-                'hd.paises_id',
                 'hd.ubigeo_peru_departments_id',
                 'hor.horario_tipo',
                 'hor.horario_descripcion',
@@ -521,6 +528,12 @@ class horarioController extends Controller
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
+            //*tipo iincidencia
+            $tipo_incidencia=DB::table('tipo_incidencia')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('sistema','=',0)
+            ->get();
+
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
                     return redirect('/dashboard');
@@ -528,14 +541,14 @@ class horarioController extends Controller
                     return view('horarios.horarioMenu', [
                          'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                         'area' => $area, 'cargo' => $cargo, 'local' => $local,'nivel'=>$nivel,
-                        'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras
+                        'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia
                     ]);
                 }
             } else {
                 return view('horarios.horarioMenu', [
                      'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                     'area' => $area, 'cargo' => $cargo, 'local' => $local,'nivel'=>$nivel,
-                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras
+                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia
                 ]);
             }
         }
@@ -656,8 +669,10 @@ class horarioController extends Controller
     public function guardarHorarioC(Request $request)
     {
         $idemps = $request->idemps;
+
+        //*PARA HORARIOS TEMPORALES
         $temporal_eventoH = temporal_eventos::where('users_id', '=', Auth::user()->id)
-            ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)->get();
+        ->where('incidencia_id', '=',null) ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)->get();
         $idasignar = collect();
         $idhors = collect();
         if ($temporal_eventoH->isNotEmpty()) {
@@ -753,98 +768,51 @@ class horarioController extends Controller
             }
         }
 
-        $temporal_evento = temporal_eventos::where('users_id', '=', Auth::user()->id)
-            ->where('id_horario', '=', null)->where('temp_horaF', '=', null)->where('textColor', '!=', '#0b1b29')
-            ->where('textColor', '!=', '#fff7f7')->get();
-        if ($temporal_evento->isNotEmpty()) {
-            $empleadoN = DB::table('empleado as e')
-                ->select('e.emple_id')
-                ->distinct('e.emple_id')
-                ->where('e.emple_estado', '=', 1)
-                ->join('eventos_empleado as ve', 'e.emple_id', '=', 've.id_empleado')
-                ->pluck('e.emple_id');
-            $integerIDs = array_map('intval', $idemps);
+        //***************************INCIDENCIAS REGISTRAR****************************** */
 
-            $nu = Arr::flatten($empleadoN);
-            $filtro = array_diff($integerIDs, $nu);
+        // EVENTOS TEMPORALES QUE SON INCIDENCIAS
+        $temporal_eventoIncid = temporal_eventos::where('users_id', '=', Auth::user()->id)
+        ->where('incidencia_id', '!=',null) ->where('id_horario', '=', null)->get();
 
-            $nuev = Arr::flatten($filtro);
-            //dd($nu,$integerIDs,$nuev);
+        //SI ENCONTRAMOS  INCIDENCIAS
+        if($temporal_eventoIncid->isNotEmpty()){
 
-            foreach ($nuev as $nuevs) {
+            //BUSCAMOS INCIDENCIAS CON LAS MISMAS FECHA PRA EMPLEADOS SELECCIONADOS, SI SON IGUALES
+            //NO REGISTRAMOS DE NUEVO
 
-                foreach ($temporal_evento as $temporal_eventos) {
+            //*BUSCAMOS INCIDENCIAS IGAULES , SI HAY YA NO REGISTRAMOS
+            foreach($temporal_eventoIncid as $temporal_eventoIncid){
 
-                    $eventos_empleado = new eventos_empleado();
-                    $eventos_empleado->title = $temporal_eventos->title;
-                    $eventos_empleado->color = $temporal_eventos->color;
-                    $eventos_empleado->textColor = $temporal_eventos->textColor;
-                    $eventos_empleado->start = $temporal_eventos->start;
-                    $eventos_empleado->end = $temporal_eventos->end;
+                foreach($idemps as $idempInci){
 
-                    $eventos_empleado->id_empleado = $nuevs;
-                    /* if($temporal_eventos->color='#a34141'){
-                    $eventos_empleado->tipo_ev=0;
-                    } else{ $eventos_empleado->tipo_ev=1;} */
-                    /* if($temporal_eventos->color='#4673a0'){
-                    $eventos_empleado->tipo_ev=1;
+                    $incidenciasBuscar=DB::table('incidencia_dias')
+                    ->where('inciden_dias_fechaI', '=', $temporal_eventoIncid->start)
+                    ->where('id_empleado', '=', $idempInci)
+                    ->where('id_incidencia', '=', $temporal_eventoIncid->incidencia_id)
+                    ->get()->first();
+
+                    //*SI NO ENCONTRAMOS ENTONCES REGISTRAMOS
+                    if(!$incidenciasBuscar){
+                        $inc_dias = new incidencia_dias();
+                        $inc_dias->id_incidencia = $temporal_eventoIncid->incidencia_id;
+                        $inc_dias->	inciden_dias_fechaI = $temporal_eventoIncid->start;
+                        $inc_dias->id_empleado = $idempInci;
+                        $inc_dias->laborable=0;
+                        $inc_dias->save();
                     }
 
-                    if($temporal_eventos->color='#e6bdbd'){
-                    $eventos_empleado->tipo_ev=2;
-                    }
 
-                    if($temporal_eventos->color='#dfe6f2'){
-                    $eventos_empleado->tipo_ev=3;
-                    } */
-                    $eventos_empleado->laborable = 0;
-                    $eventos_empleado->save();
                 }
+
             }
+
+
         }
 
-        $temporal_eventotextc = temporal_eventos::where('users_id', '=', Auth::user()->id)
-            ->where('id_horario', '=', null)->where('temp_horaF', '=', null)->where('textColor', '=', '#0b1b29')
-            ->orWhere('textColor', '=', '#fff7f7')->get();
-        if ($temporal_eventotextc->isNotEmpty()) {
-            foreach ($temporal_eventotextc as $temporal_eventotextcs) {
-                foreach ($idemps as $idempleados) {
-                    $eventos_empleado = new eventos_empleado();
-                    $eventos_empleado->title = $temporal_eventotextcs->title;
-                    $eventos_empleado->color = $temporal_eventotextcs->color;
-                    $eventos_empleado->textColor = $temporal_eventotextcs->textColor;
-                    $eventos_empleado->start = $temporal_eventotextcs->start;
-                    $eventos_empleado->end = $temporal_eventotextcs->end;
+        //************************---------FIN INCIDENCIAS---------------**************** */
 
-                    $eventos_empleado->id_empleado = $idempleados;
-                    $eventos_empleado->laborable = 0;
-                    $eventos_empleado->save();
-                }
-            }
-        }
 
-        $temporal_eventoInc = temporal_eventos::where('users_id', '=', Auth::user()->id)
-            ->where('temp_horaF', '!=', null)->get();
-        if ($temporal_eventoInc->isNotEmpty()) {
-            foreach ($temporal_eventoInc as $temporal_eventoIncs) {
-                $inc_dias = new incidencia_dias();
-                $inc_dias->inciden_dias_fechaI = $temporal_eventoIncs->start;
-                $inc_dias->inciden_dias_fechaF = $temporal_eventoIncs->end;
-                $inc_dias->inciden_dias_hora = $temporal_eventoIncs->temp_horaI;
-                $inc_dias->save();
-
-                foreach ($idemps as $idempleados) {
-                    $incidencia = new incidencias();
-                    $incidencia->inciden_descripcion = $temporal_eventoIncs->title;
-                    $incidencia->inciden_pagado = $temporal_eventoIncs->temp_horaF;
-                    $incidencia->inciden_dias_id = $inc_dias->inciden_dias_id;
-                    $incidencia->emple_id = $idempleados;
-                    $incidencia->save();
-                }
-            }
-        }
-
-        /*   dd($datosDentroN); */
+        //*EMPLEADOS CON HORARIOS REPETIDOS
         $empleadosMostrar = collect();
         if ($temporal_eventoH->isNotEmpty()) {
             foreach ($datosDentroN as $datosDentroNs) {
@@ -864,8 +832,36 @@ class horarioController extends Controller
 
     public function vaciarhor(Request $request)
     {
-        DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)
+        DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id) ->where('incidencia_id', '=',null)
             ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)->delete();
+        $temporal_evento = temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
+
+        $empleados = $request->empleados;
+        $aniocalen = $request->aniocalen;
+        $mescale = $request->mescale;
+        if($empleados){
+            foreach ($empleados as $empleado) {
+
+            DB::table('horario_empleado as he')
+                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                ->join('empleado as e', 'he.empleado_emple_id', '=', 'e.emple_id')
+                ->whereYear('hd.start', $aniocalen)
+                ->whereMonth('hd.start', $mescale)
+                ->where('he.estado', '=', 1)
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_id', '=', $empleado)
+                ->update(['he.estado' => 0]);
+            }
+        }
+
+
+        return $temporal_evento;
+    }
+    public function vaciarIncid(Request $request)
+    {
+        DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id) ->where('incidencia_id', '!=',null)
+            ->where('id_horario', '=', null)->delete();
         $temporal_evento = temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
 
         $empleados = $request->empleados;
@@ -1651,7 +1647,7 @@ class horarioController extends Controller
         $idempleados = $request->idempleado;
 
         $horarioEmpleado = new Collection();
-        $eventos_empleado = new Collection();
+        $incidenciasU = new Collection();
 
         /*   foreach($idempleados as $idempleado){
         $incidencias2 = DB::table('incidencias as i')
@@ -1690,12 +1686,16 @@ class horarioController extends Controller
         $horarioEmpleado->push($temporal_eventos);
         /* -------------------------------------------- */
         foreach ($idempleados as $idempleado) {
+
+
+
             $horario_empleado = DB::table('horario_empleado as he')
-                ->select(['he.horarioEmp_id as id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
+                ->select(['he.horarioEmp_id as id', 'h.horario_descripcion as title', 'color', 'textColor',DB::raw('DATE(start) as start') , 'end', 'horaI', 'horaF', 'borderColor', 'h.horario_id as idhorario','laborable'])
                 ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                 ->where('he.estado', '=', 1)
                 ->where('he.empleado_emple_id', '=', $idempleado)
+
                 ->get();
 
             foreach ($horario_empleado as $tab) {
@@ -1708,19 +1708,48 @@ class horarioController extends Controller
 
                 $tab->pausas = $pausas_horario;
 
+
             }
-            foreach ($horario_empleado as $asig) {
+
+            $horarioEmpleado->push($horario_empleado);
+
+            $incidencias = DB::table('incidencia_dias as idi')
+            ->select(['i.inciden_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_pagado as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end',
+            'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'i.inciden_id as idhorario','laborable'])
+            ->leftJoin('incidencias as i', 'idi.id_incidencia', '=', 'i.inciden_id')
+            ->where('idi.id_empleado', '=', $idempleado)
+            ->get();
+            $incidenciasU->push($incidencias);
+        }
+        //convertimos collection a plano y sacamos los unico dias de horario
+        $horariosEs = $horarioEmpleado->collapse()->unique('start');
+
+         //convertimos collection a plano y sacamos los unico dias de incidencias
+         $Incid = $incidenciasU->collapse()->unique('start');
+
+
+        //unimos incidencias con horarios
+        $unimos = $horariosEs->merge($Incid);
+
+        foreach ($unimos as $asig) {
+            if($asig->laborable==1){
                 $asig->title = 'Programado';
                 $asig->borderColor = '';
                 $asig->color = '#fff27d';
                 $asig->textColor = '#000';
-            }
-            $horarioEmpleado->push($horario_empleado);
-        }
 
-        //convertimos collection a plano y sacamos los unico dias de horario
-        $horariosEs = $horarioEmpleado->collapse()->unique('start');
-        return ($horariosEs->values()->all());
+            } else{
+                if($asig->laborable=='0'){
+                  $asig->title = 'Incidencia';
+                $asig->borderColor = '';
+                $asig->color = '#fff0f0';
+                $asig->textColor = '#bd6767';
+                }
+
+            }
+
+        }
+        return ($unimos->values()->all());
     }
 
     public function datosHorarioEmpleado(Request $request)
@@ -1752,7 +1781,7 @@ class horarioController extends Controller
                     DB::raw("IF(he.fuera_horario=1,'Si' , 'No') as fueraHorario"),
                     DB::raw("IF(he.nHoraAdic is null, 0 , nHoraAdic) as horaAdicional"),
                     DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'))
-                ->where(DB::raw('DATE(hd.start)'), '=', $fechaHorario)
+                    ->whereDate('hd.start', '=', $fechaHorario)
                 ->where('he.estado', '=', 1)
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_id', '=', $empleado)
@@ -1804,7 +1833,7 @@ class horarioController extends Controller
                     DB::raw("IF(he.fuera_horario=1,'Si' , 'No') as fueraHorario"),
                     DB::raw("IF(he.nHoraAdic is null, 0 , nHoraAdic) as horaAdicional"),
                     DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'))
-                ->where(DB::raw('DATE(hd.start)'), '=', $fechaHorario)
+                    ->whereDate('hd.start', '=', $fechaHorario)
                 ->where('he.estado', '=', 1)
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_id', '=', $empleado)
@@ -2244,5 +2273,205 @@ class horarioController extends Controller
 
     }
 
+    public function Incidenciasxtipo(Request $request){
+
+        $tipoInci=$request->tipoInci;
+         //*obtenemos si es de sistema el tipo
+
+
+         //*VERIFICAMOS SI ES TIPO INCIDENCIA PORQUE SE DEBE JALAR INCIDENCIA Y SISTEMA********
+         $tipoInciOrg=DB::table('tipo_incidencia')
+         ->where('tipoInc_descripcion','=','Incidencia')
+         ->where('organi_id','=', session('sesionidorg'))
+         ->get()->first();
+
+         $tipoInciOrgSis=DB::table('tipo_incidencia')
+         ->where('tipoInc_descripcion','=','De sistema')
+         ->where('organi_id','=', session('sesionidorg'))
+         ->get()->first();
+
+         if($tipoInci==$tipoInciOrg->idtipo_incidencia){
+
+             //*OBTENEMOS INCIDENCIAS CON EL TIPO QUE ELEGIMOS
+            $incidenciaTipo=DB::table('incidencias')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('idtipo_incidencia','=',$tipoInci)
+            ->orWhere('idtipo_incidencia','=', $tipoInciOrgSis->idtipo_incidencia)
+            ->where('estado', '=', 1)
+            ->get();
+
+         } else{
+
+             //*OBTENEMOS INCIDENCIAS CON EL TIPO QUE ELEGIMOS
+            $incidenciaTipo=DB::table('incidencias')
+            ->where('organi_id','=',session('sesionidorg'))
+            ->where('idtipo_incidencia','=',$tipoInci)
+            ->where('estado', '=', 1)
+            ->get();
+         }
+
+         //************************************************************************************
+
+        //VERIFICAMOS SI ES DE SISTEMA, SI ES DE SISTEMA EN TIPO Y INCIDENCIA ENTONCES NO LLEVAMOS A SELECT
+        $tipoSistema=DB::table('tipo_incidencia')
+        ->where('tipoInc_descripcion','=','De sistema')
+        ->where('organi_id','=', session('sesionidorg'))
+        ->get()->first();
+
+        foreach($incidenciaTipo as $key => $incidenciaTipos){
+            if($incidenciaTipos->idtipo_incidencia==$tipoSistema->idtipo_incidencia){
+                $incidenciaTipos->tipoSistema=1;
+            } else{
+                $incidenciaTipos->tipoSistema=0;
+            }
+
+            if($incidenciaTipos->sistema==1 && $incidenciaTipos->tipoSistema==1){
+
+                //si los 2 lados son de sistema y tipo sistema lo sacamos: fatas, tardanza justificaciones
+                $incidenciaTipo->pull($key);
+
+            }
+        }
+
+        return response()->json($incidenciaTipo);
+    }
+
+
+    public function registrarInciTemp(Request $request){
+
+        //*PARAMETROS
+        $idIncidencia=$request->idIncidencia;
+        $datafecha=$request->fechasArray;
+        $nombreIncidencia=$request->nombreIncidencia;
+
+        $repetidos=0;
+        //*OBTENEMOS INCIDENCIAS TEMPORALES NO REPETIDAS
+        foreach ($datafecha as $key=> $datafechas) {
+
+            //obtenemos temporal eventos que sean iguales a los q tenemos
+            $tempre = temporal_eventos::where('users_id', '=', Auth::user()->id)
+                ->where('start', '=', $datafechas)
+                ->where('id_horario', '=', null)
+                ->where('incidencia_id', '=', $idIncidencia)
+                ->get()->first();
+
+                if ($tempre) {
+                    $repetidos=1;
+                    // si existe incidencia igual la sacamos
+                    Arr::pull($datafecha, $key);
+
+                }
+        }
+
+        //*REGISTRAR INCIDENCIA TEMPORAL
+        foreach ($datafecha as $datafechas) {
+            $temporal_eventos = new temporal_eventos();
+            $temporal_eventos->title = $nombreIncidencia;
+            $temporal_eventos->color = '#9E9E9E';
+            $temporal_eventos->textColor = '#313131';
+            $temporal_eventos->start = $datafechas;
+            $temporal_eventos->incidencia_id = $idIncidencia;
+            $temporal_eventos->users_id = Auth::user()->id;
+            $temporal_eventos->save();
+        }
+
+        return($repetidos);
+
+    }
+
+    public function datosIncidenciaEmpleado(Request $request)
+    {
+
+        //*obtengo paramentros
+        $diadeIncidencia = $request->diadeIncidencia;
+        $empleados = $request->empleados;
+
+        //*formateamos fecha
+        $fecha = Carbon::create($diadeIncidencia);
+        $fechaIncidencia = $fecha->isoFormat('YYYY-MM-DD');
+
+        //*declaramos collection para guardar horarios de empeado
+        $dataIncidencia = new Collection();
+        //*recorremos empleados seleccionnados
+        foreach ($empleados as $empleado) {
+
+            //*buscamos su horario para el dia de hoy
+
+
+                $incidencias = DB::table('incidencia_dias as idi')
+                ->select('idi.inciden_dias_id as idIncidencia', 'i.inciden_descripcion as title', 'i.inciden_pagado as pagado', 'i.inciden_codigo',
+                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','p.perso_nombre as nombre','tipoI.tipoInc_descripcion',
+                 'idi.id_empleado as idempleado',
+                 DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos')
+
+                )
+                ->leftJoin('incidencias as i', 'idi.id_incidencia', '=', 'i.inciden_id')
+                ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('tipo_incidencia as tipoI','i.idtipo_incidencia','=','tipoI.idtipo_incidencia')
+                ->where('idi.id_empleado', '=', $empleado)
+                ->where(DB::raw('DATE(idi.inciden_dias_fechaI)'), '=', $fechaIncidencia)
+                ->get();
+
+            //*obtenr solo de empleado con horario
+            if ($incidencias->isNotEmpty()) {
+                $dataIncidencia->push($incidencias);
+            }
+
+        }
+        return ($dataIncidencia);
+
+    }
+
+    //*ELIMINAR HORARIO EMPLEADOS MASIVAMENTE
+    public function elimarIncidiEmps(Request $request)
+    {
+        $diadeIncidencia = $request->diadeIncidencia;
+        $empleados = $request->empleados;
+        $idsIncEmps = $request->valoresCheck;
+        foreach ($idsIncEmps as $idsIncEmp) {
+            $incidencia_diasBorrar = incidencia_dias::findOrfail($idsIncEmp);
+            $incidencia_diasBorrar->delete();
+
+        }
+
+        //*****LLAMNDO DATOS DE NUEVO PARA QUE ME SIRVA SI TENGO DATOSO O NO*********
+        //*formateamos fecha
+        $fecha = Carbon::create($diadeIncidencia);
+        $fechaIncid = $fecha->isoFormat('YYYY-MM-DD');
+
+        //*declaramos collection para guardar horarios de empeado
+        $dataIncidencia = new Collection();
+        //*recorremos empleados seleccionnados
+        foreach ($empleados as $empleado) {
+
+                $incidencias = DB::table('incidencia_dias as idi')
+                ->select('idi.inciden_dias_id as idIncidencia', 'i.inciden_descripcion as title', 'i.inciden_pagado as pagado', 'i.inciden_codigo',
+                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','p.perso_nombre as nombre','tipoI.tipoInc_descripcion',
+                 'idi.id_empleado as idempleado',
+                 DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos')
+
+                )
+                ->leftJoin('incidencias as i', 'idi.id_incidencia', '=', 'i.inciden_id')
+                ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('tipo_incidencia as tipoI','i.idtipo_incidencia','=','tipoI.idtipo_incidencia')
+                ->where('idi.id_empleado', '=', $empleado)
+                ->where(DB::raw('DATE(idi.inciden_dias_fechaI)'), '=', $fechaIncid)
+                ->get();
+
+            //*obtenr solo de empleado con horario
+            if ($incidencias->isNotEmpty()) {
+                $dataIncidencia->push($incidencias);
+            }
+
+        }
+        if ($dataIncidencia) {
+            return ($dataIncidencia);
+        } else {
+            return ('0');
+        }
+
+    }
 
 }
