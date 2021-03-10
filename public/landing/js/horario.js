@@ -408,6 +408,59 @@ function calendario() {
                         let empleados=$('#nombreEmpleado').val();
                         datosModalIncidenciaEmpleado(diadeIncidencia,empleados);
 
+                    } else{
+                        //*PARA BORRAR INCIDENCIAS
+
+                        let nuevaIncidencia;
+
+                        // si es nuevo
+                        if(info.event.textColor == '#313131'){
+                            nuevaIncidencia=1;
+                        } else{
+                            nuevaIncidencia=0;
+                        }
+                        bootbox.confirm({
+                            title: "Eliminar Incidencias",
+                            message: "¿Desea eliminar: " + info.event.title + " del calendario?",
+                            buttons: {
+                                confirm: {
+                                    label: 'Aceptar',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: 'Cancelar',
+                                    className: 'btn-light'
+                                }
+                            },
+                            callback: function (result) {
+                                if (result == true) {
+                                    $.ajax({
+                                        type: "post",
+                                        url: "/eliminarIncidenciaHorario",
+                                        data: {
+                                            idHora: info.event.id,nuevaIncidencia
+                                        },
+                                        statusCode: {
+
+                                            419: function () {
+                                                location.reload();
+                                            }
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (data) {
+                                            info.event.remove();
+                                        },
+                                        error: function (data) {
+                                            console.log('Ocurrio un error');
+                                        }
+
+
+                                    });
+                                }
+                            }
+                        });
                     }
 
                 }
@@ -495,6 +548,8 @@ function calendario() {
                 }
 
             }
+            } else{
+                $(info.el).tooltip({ title: info.event.title });
             }
 
 
@@ -1851,7 +1906,7 @@ function vaciarIncid() {
                 let empleados=$('#nombreEmpleado').val();
                 $.ajax({
                     type: "get",
-                    url: "/vaciarhor",
+                    url: "/vaciarIncid",
                     data: {
                         mescale,
                         aniocalen,
@@ -1875,7 +1930,7 @@ function vaciarIncid() {
                         $.notifyClose();
                         $.notify(
                             {
-                                message: "\nHorarios borrados",
+                                message: "\nIncidencias borradas",
                                 icon: "admin/images/checked.svg",
                             },
                             {   element: $('#asignarHorario'),

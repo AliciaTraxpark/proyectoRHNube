@@ -569,6 +569,20 @@ class horarioController extends Controller
         }
 
     }
+    public function eliminarIncidenciaHorario(Request $request)
+    {
+        $idHora = $request->idHora;
+        $nuevaIncidencia = $request->nuevaIncidencia;
+
+        if ($nuevaIncidencia == 1) {
+            $temporal_evento = temporal_eventos::where('id', '=', $idHora)->delete();
+        } else {
+            $incidencias = incidencia_dias::findOrfail($idHora);
+            $incidencias->delete();
+
+        }
+
+    }
     public function cambiarEstado(Request $request)
     {
 
@@ -870,16 +884,21 @@ class horarioController extends Controller
         if($empleados){
             foreach ($empleados as $empleado) {
 
-            DB::table('horario_empleado as he')
-                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
-                ->join('empleado as e', 'he.empleado_emple_id', '=', 'e.emple_id')
-                ->whereYear('hd.start', $aniocalen)
-                ->whereMonth('hd.start', $mescale)
-                ->where('he.estado', '=', 1)
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_id', '=', $empleado)
-                ->update(['he.estado' => 0]);
+                $incidencias = DB::table('incidencia_dias as idi')
+                ->select('idi.inciden_dias_id as idIncidencia', 'i.inciden_descripcion as title', 'i.inciden_pagado as pagado', 'i.inciden_codigo',
+                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','p.perso_nombre as nombre','tipoI.tipoInc_descripcion',
+                 'idi.id_empleado as idempleado'
+
+                )
+                ->leftJoin('incidencias as i', 'idi.id_incidencia', '=', 'i.inciden_id')
+                ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('tipo_incidencia as tipoI','i.idtipo_incidencia','=','tipoI.idtipo_incidencia')
+                ->where('idi.id_empleado', '=', $empleado)
+                ->whereYear('idi.inciden_dias_fechaI', $aniocalen)
+                ->whereMonth('idi.inciden_dias_fechaI', $mescale)
+                ->delete();
+
             }
         }
 
