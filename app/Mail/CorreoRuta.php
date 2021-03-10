@@ -20,7 +20,7 @@ class CorreoRuta extends Mailable
      */
     public $persona;
     public $vinculacion_ruta;
-    public $organizacion
+    public $organizacion;
     public function __construct(persona $persona, vinculacion_ruta $vinculacion_ruta, organizacion $organizacion)
     {
         $this->persona = $persona;
