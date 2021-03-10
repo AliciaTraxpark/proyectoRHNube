@@ -5657,19 +5657,48 @@ $('.detalleHijoDeHijoDeHijo input[type=checkbox]').change(function () {
                 checked: false
             });
         } else {
-            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
-                indeterminate: false,
-                checked: false
-            });
+            if (checkedP != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
         }
     }
     // * PARA PRIMER PADRE CALCULOS DE TIEMPOS
-    var indeterminanteP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]').prop("indeterminate");
-    var checkedP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]').prop("checked");
-    $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
-        indeterminate: indeterminanteP1,
-        checked: checkedP1
-    });
+    var indeterminanteP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]:indeterminate').length;
+    var checkedP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]:checked').length;
+    var lengthP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]').length;
+    if (lengthP1 == checkedP1) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP1 != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP1 != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    }
     toggleColumnas();
 });
 // * HIJOS DE POR HORARIO Y TOTAL
