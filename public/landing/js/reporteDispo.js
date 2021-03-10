@@ -5608,6 +5608,10 @@ function toggleD() {
 function togglePorHorario() {
     $('#contenidoPorH').toggle();
 }
+// * TOGGLE POR TIEMPOS DIURNOS
+function togglePorTiemposDiurnosH() {
+    $('#contenidoPorTiemposDiurnosH').toggle();
+}
 // * TOGGLE POR TOTALES
 function togglePorTotales() {
     $('#contenidoPorT').toggle();
@@ -5616,8 +5620,32 @@ function togglePorTotales() {
 function togglePorTiemposMuertos() {
     $('#contenidoPorTM').toggle();
 }
+// * HIJOS DE TIEMPO DIURNO ENTRE HORARIO
+$('.detalleHijoDeHijoDeHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
 // * HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
+    $(this).closest('.detalleHijoDeHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     var contenido = $(this).closest('ul');
     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
         contenido.prev('.detalleHijo').find('input[type=checkbox]').prop({
@@ -5641,6 +5669,7 @@ $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
 });
 // * PADRE DE HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijo input[type=checkbox]').change(function () {
+    $(this).closest('.detalleHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     $(this).closest('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     var contenido = $(this).closest('ul');
     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
@@ -5665,12 +5694,12 @@ $('.detalleHijo input[type=checkbox]').change(function () {
 });
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.detallePadre input[type=checkbox]').change(function () {
-    console.log($(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]'));
     $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop({
         indeterminate: false,
         checked: this.checked
     });
     $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
+    $('.detalleHijoDeHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
 // : ************************************** COLUMNAS DE PAUSAS ***********************************************
