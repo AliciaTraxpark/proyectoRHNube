@@ -5665,7 +5665,11 @@ $('.detalleHijo input[type=checkbox]').change(function () {
 });
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.detallePadre input[type=checkbox]').change(function () {
-    $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
+    console.log($(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]'));
+    $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop({
+        indeterminate: false,
+        checked: this.checked
+    });
     $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
