@@ -3469,6 +3469,7 @@ class dispositivosController extends Controller
                             $totalDuration = $horaFParse->diffInSeconds($horaIParse);
                             $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
                             $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                            $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
                             if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                                 // * VALIDACION CON HORARIO
                                 if ($horario->fueraH == 1) {
@@ -3496,7 +3497,8 @@ class dispositivosController extends Controller
                                 }
                             } else {
                                 return response()->json(
-                                    array("respuesta" => "Sobretiempo en la marcación."),
+                                    array("respuesta" => "<br><b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                        . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
                                     200
                                 );
                             }
