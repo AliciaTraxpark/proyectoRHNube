@@ -4738,9 +4738,72 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()
             ->first();
-        if (!in_array("0", $query)) {
-            if ($invitadod) {
-                if ($invitadod->verTodosEmps == 1) {
+        if (is_array($query)) {
+            if (!in_array("0", $query)) {
+                if ($invitadod) {
+                    if ($invitadod->verTodosEmps == 1) {
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            // ->where('e.' . $parametro, '=', $id)
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
+                            ->get();
+                    } else {
+                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                            ->where('invem.area_id', '=', null)
+                            ->where('invem.emple_id', '!=', null)
+                            ->get()
+                            ->first();
+                        if ($invitado_empleadoIn != null) {
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.asistencia_puerta', '=', 1)
+                                // ->where('e.' . $parametro, '=', $id)
+                                ->where(function ($where) use ($query) {
+                                    foreach ($query as $q) {
+                                        $parametro = explode(".", $q)[0];
+                                        $id = explode(".", $q)[1];
+                                        $where->orWhere('e.' . $parametro, '=', $id);
+                                    }
+                                })
+                                ->get();
+                        } else {
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.asistencia_puerta', '=', 1)
+                                // ->where('e.' . $parametro, '=', $id)
+                                ->where(function ($where) use ($query) {
+                                    foreach ($query as $q) {
+                                        $parametro = explode(".", $q)[0];
+                                        $id = explode(".", $q)[1];
+                                        $where->orWhere('e.' . $parametro, '=', $id);
+                                    }
+                                })
+                                ->get();
+                        }
+                    }
+                } else {
                     $empleado = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -4755,116 +4818,159 @@ class dispositivosController extends Controller
                             }
                         })
                         ->get();
-                } else {
-                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                        ->where('invem.area_id', '=', null)
-                        ->where('invem.emple_id', '!=', null)
-                        ->get()
-                        ->first();
-                    if ($invitado_empleadoIn != null) {
-                        $empleado = DB::table('empleado as e')
-                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            // ->where('e.' . $parametro, '=', $id)
-                            ->where(function ($where) use ($query) {
-                                foreach ($query as $q) {
-                                    $parametro = explode(".", $q)[0];
-                                    $id = explode(".", $q)[1];
-                                    $where->orWhere('e.' . $parametro, '=', $id);
-                                }
-                            })
-                            ->get();
-                    } else {
-                        $empleado = DB::table('empleado as e')
-                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            // ->where('e.' . $parametro, '=', $id)
-                            ->where(function ($where) use ($query) {
-                                foreach ($query as $q) {
-                                    $parametro = explode(".", $q)[0];
-                                    $id = explode(".", $q)[1];
-                                    $where->orWhere('e.' . $parametro, '=', $id);
-                                }
-                            })
-                            ->get();
-                    }
                 }
             } else {
-                $empleado = DB::table('empleado as e')
-                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                    ->where('e.organi_id', '=', session('sesionidorg'))
-                    ->where('e.asistencia_puerta', '=', 1)
-                    // ->where('e.' . $parametro, '=', $id)
-                    ->where(function ($where) use ($query) {
-                        foreach ($query as $q) {
-                            $parametro = explode(".", $q)[0];
-                            $id = explode(".", $q)[1];
-                            $where->orWhere('e.' . $parametro, '=', $id);
+                if ($invitadod) {
+                    if ($invitadod->verTodosEmps == 1) {
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->get();
+                    } else {
+                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                            ->where('invem.area_id', '=', null)
+                            ->where('invem.emple_id', '!=', null)
+                            ->get()
+                            ->first();
+                        if ($invitado_empleadoIn != null) {
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->get();
+                        } else {
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->get();
                         }
-                    })
-                    ->get();
-            }
-        } else {
-            if ($invitadod) {
-                if ($invitadod->verTodosEmps == 1) {
+                    }
+                } else {
                     $empleado = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.asistencia_puerta', '=', 1)
                         ->get();
-                } else {
-                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                        ->where('invem.area_id', '=', null)
-                        ->where('invem.emple_id', '!=', null)
-                        ->get()
-                        ->first();
-                    if ($invitado_empleadoIn != null) {
+                }
+            }
+        } else {
+            if (!empty($query)) {
+                $parametro = explode(".", $query)[0];
+                $id = explode(".", $query)[1];
+                if ($invitadod) {
+                    if ($invitadod->verTodosEmps == 1) {
                         $empleado = DB::table('empleado as e')
                             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where('e.' . $parametro, '=', $id)
+                            ->get();
+                    } else {
+                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                            ->where('invem.area_id', '=', null)
+                            ->where('invem.emple_id', '!=', null)
+                            ->get()
+                            ->first();
+                        if ($invitado_empleadoIn != null) {
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->where('e.' . $parametro, '=', $id)
+                                ->get();
+                        } else {
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->where('e.' . $parametro, '=', $id)
+                                ->get();
+                        }
+                    }
+                } else {
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('e.' . $parametro, '=', $id)
+                        ->get();
+                }
+            } else {
+                if ($invitadod) {
+                    if ($invitadod->verTodosEmps == 1) {
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.asistencia_puerta', '=', 1)
                             ->get();
                     } else {
-                        $empleado = DB::table('empleado as e')
-                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            ->get();
+                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                            ->where('invem.area_id', '=', null)
+                            ->where('invem.emple_id', '!=', null)
+                            ->get()
+                            ->first();
+                        if ($invitado_empleadoIn != null) {
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->get();
+                        } else {
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->get();
+                        }
                     }
+                } else {
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
                 }
-            } else {
-                $empleado = DB::table('empleado as e')
-                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                    ->where('e.organi_id', '=', session('sesionidorg'))
-                    ->where('e.asistencia_puerta', '=', 1)
-                    ->get();
             }
         }
         return response()->json($empleado, 200);

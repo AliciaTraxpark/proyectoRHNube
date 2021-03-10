@@ -6254,3 +6254,12 @@ $('#selectPor').on('select2:selecting', function () {
         $('#selectPor option[value="0"]').prop("selected", false);
     }
 });
+// : DESACTIVAMOS EL BSUCAR
+$('#selectPor').on('select2:opening select2:closing', function( event ) {
+    var $searchfield = $(this).parent().find('.select2-search__field');
+    $searchfield.prop('disabled', true);
+});
+$('#empleadoPor').on('select2:opening select2:closing', function( event ) {
+    var $searchfield = $(this).parent().find('.select2-search__field');
+    $searchfield.prop('disabled', true);
+});
