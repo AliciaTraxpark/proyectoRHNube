@@ -5641,14 +5641,35 @@ $('.detalleHijoDeHijoDeHijo input[type=checkbox]').change(function () {
             });
         }
     }
-    var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').prop("indeterminate");
-    var checkedP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').prop("checked");
-    $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
-        indeterminate: indeterminanteP,
-        checked: checkedP
+    // * PARA SEGUNDO PADRE TIEMPOS POR HORARIO
+    var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]:indeterminate').length;
+    var checkedP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]:checked').length;
+    var lengthP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').length;
+    if (lengthP == checkedP) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    // * PARA PRIMER PADRE CALCULOS DE TIEMPOS
+    var indeterminanteP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]').prop("indeterminate");
+    var checkedP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]').prop("checked");
+    $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+        indeterminate: indeterminanteP1,
+        checked: checkedP1
     });
-    console.log($(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').prop("checked"));
-    console.log($(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').prop("indeterminate"));
     toggleColumnas();
 });
 // * HIJOS DE POR HORARIO Y TOTAL
