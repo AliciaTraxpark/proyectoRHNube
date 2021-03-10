@@ -4028,6 +4028,16 @@ function registrarMar() {
     } else {
         var horaF = $('#fechaNuevaSalida').val() + " " + $('#nuevaSalida').val();
     }
+    if (horaI != null && horaF != null) {
+        if (moment(horaF).isSameOrBefore(moment(horaI))) {
+            $('#am_valid').empty();
+            $('#am_valid').append("Hora Final debe ser mayor a hora inicial");
+            $('#am_valid').show();
+            $('button[type="submit"]').attr("disabled", false);
+            sent = false;
+            return false;
+        }
+    }
     $.ajax({
         async: false,
         type: "POST",
