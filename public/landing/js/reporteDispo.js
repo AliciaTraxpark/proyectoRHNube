@@ -6142,11 +6142,17 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colHoraNormalTotal').visible(false);
     }
-    // : HORARIO NOCTURNO TOTAL
+    // : HORAS NOCTURNAS
     if ($('#colHoraNocturnaTotal').is(":checked")) {
         dataT.api().columns('.colHoraNocturnaTotal').visible(true);
     } else {
         dataT.api().columns('.colHoraNocturnaTotal').visible(false);
+    }
+    // : HORAS NORMALES NOCTURNAS
+    if ($('#colHoraNocturnaNormal').is(":checked")) {
+        dataT.api().columns('.colHoraNocturnaNormal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNocturnaNormal').visible(false);
     }
     // : HORAS EXTRAS 25% DIURNAS TOTALES
     if ($('#colHE25DTotal').is(":checked")) {

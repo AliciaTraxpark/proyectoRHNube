@@ -522,6 +522,10 @@
                                                     <label for="">Horas nocturnas</label>
                                                 </li>
                                                 <li class="liContenido detalleHijoDeHijoDeHijo">
+                                                    <input type="checkbox" id="colHoraNocturnaNormal">
+                                                    <label for="">Horas normales - nocturnas</label>
+                                                </li>
+                                                <li class="liContenido detalleHijoDeHijoDeHijo">
                                                     <input type="checkbox" id="colSobreTNocturno">
                                                     <label for="">Sobretiempo nocturno</label>
                                                 </li>
