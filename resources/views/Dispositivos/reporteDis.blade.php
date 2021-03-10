@@ -487,6 +487,10 @@
                                                     <label for="">Horas diurnas</label>
                                                 </li>
                                                 <li class="liContenido detalleHijoDeHijoDeHijo">
+                                                    <input type="checkbox" id="colHoraDiurnaNormal">
+                                                    <label for="">Horas normales - diurnas</label>
+                                                </li>
+                                                <li class="liContenido detalleHijoDeHijoDeHijo">
                                                     <input type="checkbox" id="colSobreTNormal">
                                                     <label for="">Sobretiempo diurno</label>
                                                 </li>

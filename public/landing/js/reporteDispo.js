@@ -5732,7 +5732,6 @@ $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
     var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]:indeterminate').length;
     var checkedP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]:checked').length;
     var lengthP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]').length;
-    console.log($(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre'));
     if (lengthP == checkedP) {
         $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
             indeterminate: false,
@@ -5995,11 +5994,17 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colFaltaJornada').visible(false);
     }
-    // : HORARIO NORMAL
+    // : HORAS DIURNAS
     if ($('#colHoraNormal').is(":checked")) {
         dataT.api().columns('.colHoraNormal').visible(true);
     } else {
         dataT.api().columns('.colHoraNormal').visible(false);
+    }
+    // : HORAS NORMALES - DIURNAS
+    if ($('#colHoraDiurnaNormal').is(":checked")) {
+        dataT.api().columns('.colHoraDiurnaNormal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraDiurnaNormal').visible(false);
     }
     // : HORARIO NOCTURNO
     if ($('#colHoraNocturna').is(":checked")) {
