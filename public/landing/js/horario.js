@@ -1,4 +1,5 @@
 var dataDeempleado={};
+var dataDeempleadoInc={};
 $.fn.dataTable.ext.errMode = 'throw';
 $(document).ready(function () {
     var table = $("#tablaEmpleado").DataTable({
@@ -180,7 +181,7 @@ function verhorarioEmpleado(idempleado) {
                 $('#cargoEmpleado').val(data[0][0].cargo_descripcion);
                 $('#ccEmpleado').val(data[0][0].centroC_descripcion);
                 $('#localEmpleado').val(data[0][0].local_descripcion);
-                $('#paisHorario').val(data[0][0].paises_id);
+
                 $('#idobtenidoE').val(idempleado);
                 depart = data[0][0].ubigeo_peru_departments_id;
                 if (depart == null) {
@@ -202,7 +203,7 @@ function verhorarioEmpleado(idempleado) {
 
             },
             error: function (data) {
-                alert('Ocurrio un error');
+                console.log('Ocurrio un error');
             }
         });
     });
@@ -251,6 +252,9 @@ $('#btnasignar').on('click', function (e) {
 
     $(".loader").hide();
     $(".img-load").hide();
+
+    $("#divCambios").hide();
+
 });
 //CALENDARIO//
 
@@ -299,7 +303,14 @@ function calendario() {
             $('#fueraHSwitch').prop('disabled', false);
             $('#horAdicSwitch').prop('checked', false)
             $('#horCompSwitch').prop('checked', true)
-            $('#horarioAsignar_ed').modal('show');
+
+            $("#selectTipoIn").val("");
+            $("#selectTipoIn").trigger("change");
+            $("#incidenciaSelect").val("");
+            $("#incidenciaSelect").trigger("change");
+            $('#incidenciaSelect').prop('disabled', true);
+
+            $('#verhorarioEmpleado').modal('show');
 
         },
         eventClick: function (info) {
@@ -349,10 +360,10 @@ function calendario() {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: function (data) {
-                                        info.event.remove();
+                                        calendar.refetchEvents();
                                     },
                                     error: function (data) {
-                                        alert('Ocurrio un error');
+                                        console.log('Ocurrio un error');
                                     }
 
 
@@ -392,6 +403,68 @@ function calendario() {
                     let empleados=$('#nombreEmpleado').val();
                     datosModalHorarioEmpleado(diadeHorario,empleados);
 
+                } else{
+                    //*PARA INCIDENCIAS MODAL
+                    if(info.event.textColor=='#bd6767'){
+                        let diadeIncidencia=moment(info.event.start).format('YYYY-MM-DD HH:mm:ss');
+                        let empleados=$('#nombreEmpleado').val();
+                        datosModalIncidenciaEmpleado(diadeIncidencia,empleados);
+
+                    } else{
+                        //*PARA BORRAR INCIDENCIAS
+
+                        let nuevaIncidencia;
+
+                        // si es nuevo
+                        if(info.event.textColor == '#313131'){
+                            nuevaIncidencia=1;
+                        } else{
+                            nuevaIncidencia=0;
+                        }
+                        bootbox.confirm({
+                            title: "Eliminar Incidencias",
+                            message: "¿Desea eliminar: " + info.event.title + " del calendario?",
+                            buttons: {
+                                confirm: {
+                                    label: 'Aceptar',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: 'Cancelar',
+                                    className: 'btn-light'
+                                }
+                            },
+                            callback: function (result) {
+                                if (result == true) {
+                                    $.ajax({
+                                        type: "post",
+                                        url: "/eliminarIncidenciaHorario",
+                                        data: {
+                                            idHora: info.event.id,nuevaIncidencia
+                                        },
+                                        statusCode: {
+
+                                            419: function () {
+                                                location.reload();
+                                            }
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (data) {
+                                            calendar.refetchEvents();
+                                        },
+                                        error: function (data) {
+                                            console.log('Ocurrio un error');
+                                        }
+
+
+                                    });
+                                }
+                            }
+                        });
+                    }
+
                 }
             }
 
@@ -403,7 +476,7 @@ function calendario() {
         header: {
             left: 'prev,next',
             center: 'title',
-            right: "Clonar,borrarHorarios",
+            right: "Clonar,borrarHorarios,borrarIncidencias",
         },
         eventRender: function (info) {
             $('.tooltip').remove();
@@ -477,6 +550,8 @@ function calendario() {
                 }
 
             }
+            } else{
+                $(info.el).tooltip({ title: info.event.title });
             }
 
 
@@ -486,6 +561,13 @@ function calendario() {
                 text: "Borrar horarios",
                 click: function () {
                     vaciarhor();
+                }
+            },
+
+            borrarIncidencias: {
+                text: "Borrar Incidencias",
+                click: function () {
+                    vaciarIncid();
                 }
             },
 
@@ -522,15 +604,22 @@ function calendario() {
                     },
                     success: function (data) {
 
-                        successCallback(data);
+
+                        successCallback(data[0]);
 
                         $(".loader").hide();
                         $(".img-load").hide();
+                        if(data[1]==1){
+                            $("#divCambios").show();
+                        } else{
+                            $("#divCambios").hide();
+                        }
                     },
                     error: function () {}
                 });
             }
             else{
+
                  if(num>1){
                     $.ajax({
                     type: "POST",
@@ -551,9 +640,14 @@ function calendario() {
                     },
                     success: function (data) {
 
-                        successCallback(data);
+                        successCallback(data[0]);
                         $(".loader").hide();
                         $(".img-load").hide();
+                        if(data[1]==1){
+                            $("#divCambios").show();
+                        } else{
+                            $("#divCambios").hide();
+                        }
 
                     },
                     error: function () {}
@@ -569,6 +663,8 @@ function calendario() {
     calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
     var date1 = calendar.getDate();
     $('#fechaDa').val(date1);
+
+
 
     calendar.setOption('locale', "Es");
     ////
@@ -675,7 +771,7 @@ function agregarHorarioSe() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $('#horarioAsignar_ed').modal('hide');
+                $('#verhorarioEmpleado').modal('hide');
                 $("#selectHorario").val("Asignar horario");
                 $("#selectHorario").trigger("change");
                 $('#horCompSwitch').prop("checked", false);
@@ -695,7 +791,7 @@ function agregarHorarioSe() {
 
             },
             error: function (data) {
-                alert('Ocurrio un error');
+                console.log('Ocurrio un error');
             }
 
 
@@ -751,7 +847,7 @@ $('#guardarHorarioEventos').click(function () {
 
         },
         error: function () {
-            alert("Hay un error");
+            console.log('Ocurrio un error');
         }
     });
 });
@@ -890,7 +986,7 @@ $('#guardarTodoHorario').click(function () {
 
         },
         error: function () {
-            alert("Hay un error");
+            console.log('Ocurrio un error');
         }
     });
 
@@ -973,28 +1069,52 @@ $('#btnasignarIncidencia').on('click', function (e) {
     });
 });
 function registrarIncidencia() {
-    idempleadoI = $('#empIncidencia').val();
-    descripcionI = $('#descripcionInci').val();
-    var descuentoI;
-    if ($('#descuentoCheck').prop('checked')) {
-        descuentoI = 1;
-    } else { descuentoI = 0 }
-    fechaI = $('#fechaI').val();
-    fechaFin = $('#fechaF').val();
-    fechaMoment = moment(fechaFin).add(1, 'day');
-    fechaF = fechaMoment.format('YYYY-MM-DD');
 
-    var horaIn;
-    if ($('#customSwitch1').prop('checked')) {
-        horaIn = null;
-    } else {
+    let idIncidencia = $('#incidenciaSelect').val();
 
-        fechaF = null;
+    //*VALIDAMOS QUE SE HAYA ESCOGIDO INCIDENCIA
+    if(!idIncidencia){
+        console.log('primero seleccione incidencia');
+        return false;
     }
+
+    let textSelec =  $('select[name="incidenciaSelect"] option:selected').text();
+
+    //*CALUCLOAMOS DIAS ENTRE FECHAS SELECCIONADAS
+    var diasEntreFechas = function (desde, hasta) {
+        var dia_actual = desde;
+        var fechas = [];
+        while (dia_actual.isSameOrBefore(hasta)) {
+            fechas.push(dia_actual.format('YYYY-MM-DD'));
+            dia_actual.add(1, 'days');
+        }
+        return fechas;
+    };
+    desde = moment(startH);
+        hasta = moment(finH);
+        var results = diasEntreFechas(desde, hasta);
+        results.pop();
+    //******************************************** */
+
+    //*AQUI AÑADIREMOS LOS ARRAY CON FECHA Y NOMBRE INCIDENCIA*/
+    var fechasArray = [];
+    var fechastart = [];
+    var objeto = [ ];
+
+    $.each(results, function (key, value) {
+        fechasArray.push(textSelec);
+        fechastart.push(value);
+
+        objeto.push({
+            "title": textSelec,
+            "start": value
+        });
+    });
+    //*********************************************************/
     $.ajax({
         type: "post",
-        url: "/registrarInci",
-        data: { idempleadoI, descripcionI, descuentoI, fechaI, fechaF },
+        url: "/horario/registrarInciTemp",
+        data: { idIncidencia, fechasArray: fechastart,nombreIncidencia:textSelec },
         statusCode: {
             /*401: function () {
                 location.reload();
@@ -1005,10 +1125,11 @@ function registrarIncidencia() {
         },
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         success: function (data) {
-            $('#asignarIncidencia').modal('hide');
+            $('#verhorarioEmpleado').modal('toggle');
+            calendar.refetchEvents();
         },
         error: function (data) {
-            alert('Ocurrio un error');
+            console.log('Ocurrio un error');
         }
     });
 
@@ -1109,7 +1230,7 @@ function registrarhDias(idhorar) {
 
         },
         error: function (data) {
-            alert('Ocurrio un error');
+            console.log('Ocurrio un error');
         }
 
 
@@ -1238,14 +1359,14 @@ function registrarHorarioen() {
                             });
                         },
                         error: function (data) {
-                            alert('Ocurrio un error');
+                            console.log('Ocurrio un error');
                         }
 
                     });
 
                 },
                 error: function (data) {
-                    alert('Ocurrio un error');
+                    console.log('Ocurrio un error');
                 }
 
 
@@ -1264,7 +1385,7 @@ function registrarHorarioen() {
             }));
         },
         error: function () {
-            alert("Hay un error");
+            console.log('Ocurrio un error');
         }
     });
 }
@@ -1321,7 +1442,7 @@ function asignarlabo() {
 
                         },
                         error: function (data) {
-                            alert('Ocurrio un error');
+                            console.log('Ocurrio un error');
                         }
 
 
@@ -1389,7 +1510,7 @@ function asignarlaboen() {
 
                         },
                         error: function (data) {
-                            alert('Ocurrio un error');
+                            console.log('Ocurrio un error');
                         }
 
 
@@ -1459,7 +1580,7 @@ function asignarNolabo() {
 
                         },
                         error: function (data) {
-                            alert('Ocurrio un error');
+                            console.log('Ocurrio un error');
                         }
 
 
@@ -1528,7 +1649,7 @@ function asignarNolaboen() {
 
                         },
                         error: function (data) {
-                            alert('Ocurrio un error');
+                            console.log('Ocurrio un error');
                         }
 
 
@@ -1619,7 +1740,7 @@ function registrarIncidenciaHoEm() {
 
         },
         error: function (data) {
-            alert('Ocurrio un error');
+            console.log('Ocurrio un error');
         }
 
 
@@ -1661,7 +1782,7 @@ function registrarIncidenciaHo() {
 
         },
         error: function (data) {
-            alert('Ocurrio un error');
+            console.log('Ocurrio un error');
         }
 
 
@@ -1744,6 +1865,84 @@ function vaciarhor() {
                         $.notify(
                             {
                                 message: "\nHorarios borrados",
+                                icon: "admin/images/checked.svg",
+                            },
+                            {   element: $('#asignarHorario'),
+                                position: "fixed",
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 5000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 50,
+                            }
+                        );
+
+                    },
+                    error: function () {}
+                });
+
+
+            }
+        }
+    });
+
+}
+
+//*VACIAR INCIDENCIAS
+function vaciarIncid() {
+    bootbox.confirm({
+        title: "Elminar Incidencias",
+        message: "¿Esta seguro que desea borrar incidencia(s) de este mes del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                //* obtengo empleados, mes y año de calendario
+                fmes = calendar.getDate();
+                mescale = fmes.getMonth() + 1;
+                aniocalen = fmes.getFullYear();
+                let empleados=$('#nombreEmpleado').val();
+                $.ajax({
+                    type: "get",
+                    url: "/vaciarIncid",
+                    data: {
+                        mescale,
+                        aniocalen,
+                        empleados
+                    },
+                    async:false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+
+                        var mesAg = $('#fechaDa').val();
+                        var d = mesAg;
+                        var fechasM = new Date(d);
+                        calendar.refetchEvents();
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message: "\nIncidencias borradas",
                                 icon: "admin/images/checked.svg",
                             },
                             {   element: $('#asignarHorario'),
@@ -1869,7 +2068,7 @@ function vaciarinH() {
 
         },
         error: function (data) {
-            alert('Ocurrio un error');
+            console.log('Ocurrio un error');
         }
 
     });
@@ -1908,7 +2107,7 @@ function eliminarinctemporal(idinc) {
 
         },
         error: function (data) {
-            alert('Ocurrio un error');
+              console.log('Ocurrio un error');
         }
 
     });
@@ -2013,7 +2212,7 @@ $('#selectHorarioen').change(function (e) {
                         });
                     },
                     error: function (data) {
-                        alert('Ocurrio un error');
+                          console.log('Ocurrio un error');
                     }
 
                 });
@@ -2021,7 +2220,7 @@ $('#selectHorarioen').change(function (e) {
 
             },
             error: function (data) {
-                alert('Ocurrio un error');
+                  console.log('Ocurrio un error');
             }
 
 
@@ -2108,7 +2307,7 @@ function eliminarHorario(idhorario) {
                                     $('#tablaEmpleado').DataTable().ajax.reload(null, false);
                                 },
                                 error: function (data) {
-                                    alert('Ocurrio un error');
+                                      console.log('Ocurrio un error');
                                 }
 
 
@@ -2120,7 +2319,7 @@ function eliminarHorario(idhorario) {
             }
         },
         error: function (data) {
-            alert('Ocurrio un error');
+              console.log('Ocurrio un error');
         }
 
     });
@@ -2185,7 +2384,7 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
 
             },
             error: function (data) {
-                alert('Ocurrio un error');
+                  console.log('Ocurrio un error');
             }
         });
     }
@@ -2216,7 +2415,7 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
 
             },
             error: function (data) {
-                alert('Ocurrio un error');
+                  console.log('Ocurrio un error');
             }
         });
     }
@@ -2248,7 +2447,7 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
 
             },
             error: function (data) {
-                alert('Ocurrio un error');
+                  console.log('Ocurrio un error');
             }
         });
     }
@@ -2281,7 +2480,7 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
 
             },
             error: function (data) {
-                alert('Ocurrio un error');
+                  console.log('Ocurrio un error');
             }
         });
     }
@@ -2314,7 +2513,7 @@ $('#selectEmpresarial').on('select2:closing', function (e) {
 
             },
             error: function (data) {
-                alert('Ocurrio un error');
+                  console.log('Ocurrio un error');
             }
         });
     }
@@ -3081,7 +3280,7 @@ function registrarNuevoHorario() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            if ($('#horarioAsignar_ed').is(':visible')) {
+            if ($('#verhorarioEmpleado').is(':visible')) {
                 obtenerHorarios();
                 $('#selectHorario').val(data).trigger('change');
             }
@@ -3240,7 +3439,7 @@ function modalEditar(id) {
             //regla
             $('#idReglaHora_ed').val(data.horario[0].idreglas_horasExtras);
             $("#idReglaHora_ed").trigger("change");
-           
+
 
 
             // ************************************** PAUSAS ***********************
@@ -4015,7 +4214,7 @@ async function editarHorarioDatos() {
     //*Tiempos muertos
     var tmIngreso;
     var tmSalida;
-    
+
     //tm ingreso
     if ($('#tmIngreso_ed').is(":checked")) {
         tmIngreso = 1;
@@ -4298,7 +4497,7 @@ function eliminarMasivoHorarios(){
                     valoresCheck.push($(this).attr('data-id'));
                 });
                 if(valoresCheck.length<1){
-                    alert('seleccione');
+                    alert('seleccione horarios');
                     return false;
                 }
                 $.ajax({
@@ -4376,7 +4575,7 @@ function eliminarMasivoHorarios(){
 
                     },
                     error: function (data) {
-                        alert('Ocurrio un error');
+                          console.log('Ocurrio un error');
                     }
                 });
 
@@ -4475,7 +4674,7 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
             $('#modalHorarioEmpleados').modal('show');
         },
         error: function (data) {
-            alert('Ocurrio un error');
+              console.log('Ocurrio un error');
         }
 
 
@@ -4702,7 +4901,7 @@ function registrarClonacionH(){
 
                             },
                             error: function (data) {
-                                alert('Ocurrio un error');
+                                  console.log('Ocurrio un error');
                             }
 
 
@@ -4768,7 +4967,7 @@ function registrarClonacionH(){
        $(".img-load").hide();
     },
     error: function (data) {
-        alert('Ocurrio un error');
+          console.log('Ocurrio un error');
     }
 
 
@@ -4776,3 +4975,384 @@ function registrarClonacionH(){
 
 }
 //* ******************************************FIN DE FUNCION ****************************************** */
+
+//*CONFIGURACION SELECT INCIDENCIA
+$(function () {
+$("#incidenciaSelect").select2({
+    language: {
+        loadingMore: function () {
+            return "Cargando más resultados…";
+        },
+        noResults: function () {
+            return "No se encontraron incidencias";
+        },
+    },
+});
+});
+
+//***SELECT TIPO DE INCIDENCIA */
+
+$('#selectTipoIn').on('select2:select', function (e) {
+
+    //*habilitamos incidencia
+    $("#incidenciaSelect").prop("disabled", false);
+
+    $("#incidenciaSelect").empty();
+
+    let tipoInci=$('#selectTipoIn').val();
+    //llenamos select de incidencia
+         $.ajax({
+            type: "post",
+            async:false,
+            url: "/horario/Incidenciasxtipo",
+            data: {
+                tipoInci
+            },
+            statusCode: {
+
+                419: function () {
+                    location.reload();
+                }
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                var optionIncid = `<option value="" ></option>`;
+                $.each(data, function (index, element) {
+                    optionIncid += `<option value="${element.inciden_id}">${element.inciden_descripcion}</option>`;
+
+                });
+                $("#incidenciaSelect").append(optionIncid);
+
+
+            },
+            error: function (data) {
+                  console.log('Ocurrio un error');
+            }
+        });
+
+
+
+
+
+
+
+
+
+})
+
+
+//* -------------------------------------INCIDENCIAS---------------------------- */
+//*FUNCION PARA CREAR LOS DATOS DEL MODAL DE BOTON ASIGNADO PARA VER
+//*EMPLEADOS E INCIDENCIAS
+function datosModalIncidenciaEmpleado(diadeIncidencia,empleados){
+    $.ajax({
+        type: "post",
+        url: "/datosIncidenciaEmpleado",
+        data: {
+            diadeIncidencia,empleados
+        },
+
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#rowdivsIncid").empty();
+            dataDeempleadoInc=data;
+            var contenido= "";
+
+            //*boton para elimnar seleecionados
+            contenido+=`<div class="col-md-12 row mb-2">
+
+            <div class="col-md-6">
+            <div class="form-check" style="padding-bottom: 10px;">
+            <input type="checkbox" class="form-check-input" id="checkselectElimIncid">
+            <label class="form-check-label" for="checkselectElimIncid"
+                style="margin-top: 2px;font-weight: 600">Seleccionar todos</label>
+            </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <button onclick="eliminarMasivoIncidencias()" type="button" class="btn btn-soft-danger btn-sm"><i
+                        class="uil uil-trash-alt mr-1"></i>Borrar seleccionados</button>
+             </div>
+                      </div>`;
+
+            $.each(data, function (key, item) {
+
+            //*NOMBRE DE EMPLEADO
+            contenido+=`<div class='col-md-12' style="border-top: 1px dashed #aaaaaa!important;">
+            <h5 class='header-title' style='font-size: 13.4px;'>` + item[0].nombre +` `+item[0].apellidos+`</h5>
+            <h5 class='header-title' style='font-size: 13px'>Incidencias:</h5>
+            </div>`;
+
+            //*INCIDENCIAS
+            $.each(item, function (key, incidencia) {
+                contenido+=
+                `<div class="col-md-6 mb-3" >
+                <div class="row">
+                <input type="checkbox" style="margin-top: 7px;" data-id="` + incidencia.idIncidencia+`" class="chechInciEmp col-md-2" id="checkEliminarInciE` + incidencia.idIncidencia+`" >
+                <div class="col-md-10 media mediaEInc` + item[0].idempleado+`" style="border:2px solid #e6e6e6;" id="media` + item[0].idempleado+`EINC` + incidencia.idIncidencia+`">
+                    <div class="media-body">
+                    <h6 class="mt-1 mb-0 font-size-14"  style="
+                    padding-bottom: 5px;">` + incidencia.title+`</h6>
+                    </div>
+                    <div class="dropdown align-self-center float-right">
+                    <a  onclick="verDatosIncidencia(` + item[0].idempleado+`,` + incidencia.idIncidencia+`)"
+
+                        class=""
+
+                    >
+                        <i class="uil uil-eye"></i>
+                    </a>
+
+                    </div>
+                </div>
+                </div>
+                </div>
+                `;
+
+            });
+            contenido+=
+            `<div class="col-md-12 row" style="    margin-left: 0px;padding-top: 5px;
+            padding-left: 0px;" id="dataInciElegido` + item[0].idempleado+`"></div>`;
+            });
+            $("#rowdivsIncid").append(contenido);
+
+            $("#fechaSelectoraIncid").val(diadeIncidencia);
+            $("#modalidsEmpleadoIncid").val(empleados);
+
+            $('#modalIncidenciasEmpleados').modal('show');
+        },
+        error: function (data) {
+              console.log('Ocurrio un error');
+        }
+
+
+    });
+}
+/* DATOS DE INCIDENCIA EN MODAL */
+function verDatosIncidencia(idempleado,idIncidencia){
+    $('#dataInciElegido'+ idempleado).empty();
+    $('#dataInciElegido'+ idempleado).css("background","#f3f3f3" );
+
+    $('.mediaEInc'+ idempleado).css( "background","#fff" );
+    var contenidoH= "";
+    $.each(dataDeempleadoInc, function (key, item) {
+        //*empleado
+        if(item[0].idempleado==idempleado){
+            $.each(item, function (key, incidencia) {
+
+                //*datos de horario
+                if(incidencia.idIncidencia==idIncidencia){
+                    $('#media'+ idempleado+'EINC'+idIncidencia).css( "background","#f3f3f3" );
+                    contenidoH+=
+                    `<div class='col-md-4'>
+                      <div class='form-group'>
+                       <span style="font-weight: 700;">Incidencia:</span>
+                       <span>` + incidencia.title+`</span>
+                      </div>
+                    </div>`;
+                    if(incidencia.tipoInc_descripcion=='De sistema'){
+                        contenidoH+=
+                        `<div class='col-md-4'>
+                        <div class='form-group'>
+                        <span style="font-weight: 700;">Tipo de incidencia:</span>
+                        <span>Incidencia</span>
+                        </div>
+                        </div>`;
+
+                    } else{
+                        contenidoH+=
+                        `<div class='col-md-4'>
+                        <div class='form-group'>
+                        <span style="font-weight: 700;">Tipo de incidencia:</span>
+                        <span>` + incidencia.tipoInc_descripcion+`</span>
+                        </div>
+                        </div>`;
+                    }
+
+                    if(incidencia.inciden_codigo!=null){
+                        contenidoH+=
+                        `<div class='col-md-4'>
+                          <div class='form-group'>
+                           <span style="font-weight: 700;">Codigo:</span>
+                           <span>` + incidencia.inciden_codigo+`</span>
+                          </div>
+                        </div>`;
+                    } else{
+                        contenidoH+=
+                        `<div class='col-md-4'>
+                          <div class='form-group'>
+                           <span style="font-weight: 700;">Codigo:</span>
+                           <span>--</span>
+                          </div>
+                        </div>`;
+                    }
+
+                    if(incidencia.pagado==1){
+                        contenidoH+=
+                        `<div class='col-md-4'>
+                          <div class='form-group'>
+                           <span style="font-weight: 700;">Pagado:</span>
+                           <span>SI</span>
+                          </div>
+                        </div>`;
+                    } else{
+                        contenidoH+=
+                        `<div class='col-md-4'>
+                          <div class='form-group'>
+                           <span style="font-weight: 700;">Pagado:</span>
+                           <span>NO</span>
+                          </div>
+                        </div>`;
+                    }
+
+
+
+                    $('#dataInciElegido'+ idempleado).append(contenidoH);
+                }
+
+            });
+        }
+    });
+
+}
+
+//**ELIMINAR INCIDENCIAS EMPLEADOS MASIVOS */
+function eliminarMasivoIncidencias(){
+    bootbox.confirm({
+        title: "Elminar incidencia",
+        message: "¿Estás seguro que desea borrar las incidencia seleccionadas?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+
+                let valoresCheck = [];
+                let empleados=$('#nombreEmpleado').val();
+                let diadeIncidencia=$('#fechaSelectoraIncid').val();
+                $(".chechInciEmp:checked").each(function(){
+                    valoresCheck.push($(this).attr('data-id'));
+                });
+                if(valoresCheck.length<1){
+                    alert('seleccione incidencias');
+                    return false;
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/elimarIncidiEmps",
+                    data:{
+                        valoresCheck,empleados,diadeIncidencia
+                    },
+                    async:false,
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if(data!=0){
+
+                            /* ACTUALIZO LOS DATO DE MODAL */
+                            datosModalIncidenciaEmpleado(diadeIncidencia,empleados);
+                            $.notifyClose();
+                        $.notify(
+                            {
+                                message: "\nIncidencias borradas",
+                                icon: "admin/images/checked.svg",
+                            },
+                            {   element: $('#modalHorarioEmpleados'),
+                                position: "fixed",
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 5000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 50,
+                            }
+                        );
+                            /* ............................. */
+
+                        } else{
+                            console.log('no tengo datos');
+                            $('#modalIncidenciasEmpleados').modal('hide');
+                            calendar.refetchEvents();
+                            $.notifyClose();
+                        $.notify(
+                            {
+                                message: "\nIncidencias borradas",
+                                icon: "admin/images/checked.svg",
+                            },
+                            {   element: $('#asignarHorario'),
+                                position: "fixed",
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 5000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 50,
+                            }
+                        );
+                        }
+
+                    },
+                    error: function (data) {
+                          console.log('Ocurrio un error');
+                    }
+                });
+
+
+            }
+        }
+    });
+
+
+
+}
+
+//*CHECK SELECCIONAR TODOS LAS INCIDENCIAS PARA BORRAR
+$(function () {
+    $(document).on('change', '#checkselectElimIncid', function (event) {
+        if ($('#checkselectElimIncid').prop('checked')) {
+
+            $(".chechInciEmp").prop("checked",true);
+        } else {
+            $(".chechInciEmp").prop("checked",false);
+
+        }
+
+    });
+
+
+});

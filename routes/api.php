@@ -84,6 +84,7 @@ Route::get("descargarExtractor", "apiBiometricoController@descargarExtractor")->
 /* ------------- REGISTRO DE HUELLAS */
 Route::post("registroHuella", "apiBiometricoController@registroHuella")->middleware('token')->middleware('apilogger');
 Route::post("listaHuellas", "apiBiometricoController@listaHuellas")->middleware('token')->middleware('apilogger');
+Route::post("borrarHuellas", "apiBiometricoController@borrarHuellas")->middleware('token')->middleware('apilogger');
 Route::post("importar", "apiBiometricoController@importar");
 Route::post("importarJS", "apiBiometricoController@importarJS");
 /* ----------------------------------------------------------------------------------------------- */

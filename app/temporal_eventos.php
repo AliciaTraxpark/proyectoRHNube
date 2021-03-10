@@ -10,7 +10,7 @@ class temporal_eventos extends Model
     protected $table = 'temporal_eventos';
     protected $primaryKey = 'id';
     protected $fillable = ['id','title','color','textColor','start','end',
-    'users_id','temp_horaI','temp_horaF','id_horario','fuera_horario',
+    'users_id','incidencia_id','temp_horaI','temp_horaF','id_horario','fuera_horario',
       'borderColor','horarioComp','horaAdic','nHoraAdic'];
     public $timestamps = false;
 }

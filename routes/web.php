@@ -284,12 +284,14 @@ Route::get('/copiarEventos', 'horarioController@copiarEventos');
 Route::get('/empleadoIncHorario', 'horarioController@empleadosIncidencia');
 Route::post('/registrarInci', 'horarioController@registrarIncidencia');
 Route::post('/eliminarHora', 'horarioController@eliminarHora');
+Route::post('/eliminarIncidenciaHorario', 'horarioController@eliminarIncidenciaHorario');
 Route::post('/cambiarEstado', 'horarioController@cambiarEstado');
 Route::post('/storeDescanso', 'horarioController@storeDescanso');
 Route::post('/storeLaborable', 'horarioController@storeLabor');
 Route::post('/storeNoLaborable', 'horarioController@storeNoLabor');
 Route::post('/storeIncidencia', 'horarioController@storeIncidencia');
 Route::get('/vaciarhor', 'horarioController@vaciarhor');
+Route::get('/vaciarIncid', 'horarioController@vaciarIncid');
 Route::get('/vaciardl', 'horarioController@vaciardl');
 Route::get('/vaciarndl', 'horarioController@vaciarndl');
 Route::post('/guardarHorarioC', 'horarioController@guardarHorarioC');
@@ -322,10 +324,13 @@ Route::post('/horario/actualizarConfigHorario', 'horarioController@actualizarCon
 Route::post('/horario/horariosAsignar', 'horarioController@horariosEmpleado');
 Route::post('/horario/horariosVariosEmps', 'horarioController@horariosVariosEmps');
 Route::post('/datosHorarioEmpleado', 'horarioController@datosHorarioEmpleado');
+Route::post('/datosIncidenciaEmpleado', 'horarioController@datosIncidenciaEmpleado');
 Route::post('/elimarhoraEmps', 'horarioController@elimarhoraEmps');
+Route::post('/elimarIncidiEmps', 'horarioController@elimarIncidiEmps');
 Route::post('/clonarHorarios', 'horarioController@clonarHorarios');
 Route::post('/reemplazarHorariosClonacion', 'horarioController@reemplazarHorariosClonacion');
 Route::post('/horario/Incidenciasxtipo', 'horarioController@Incidenciasxtipo');
+Route::post('/horario/registrarInciTemp', 'horarioController@registrarInciTemp');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');

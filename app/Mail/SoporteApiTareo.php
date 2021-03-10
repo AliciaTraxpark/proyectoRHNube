@@ -24,7 +24,7 @@ class SoporteApiTareo extends Mailable
      public $contenido;
      public $asunto;
      public $celular;
-     public $organizacion
+     public $organizacion;
     public function __construct($contenido, controladores_tareo $controlador,$asunto,$celular, organizacion $organizacion)
     {
         $this->contenido = $contenido;
