@@ -10,6 +10,7 @@ use App\plantilla_empleadobio;
 use App\User;
 use App\usuario_organizacion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -2503,6 +2504,7 @@ class apiBiometricoController extends Controller
             $iFlag = $req['iFlag'];
             $iFaceIndex = $req['iFaceIndex'];
             $iLength = $req['iLength'];
+            $id_plantilla = $req['id_plantilla'];
             /* ----------------------------- */
             /* VALIDANDO EMPLEADOIIIII */
             $empleados = DB::table('empleado as e')
@@ -2528,6 +2530,7 @@ class apiBiometricoController extends Controller
                     'id' => $plantilla_empleadobioVali->id,
                     'idempleado' => $idempleado,
                     'error' => 'Empleado con biometria duplicada',
+                    'id_plantilla' =>$id_plantilla,
                     'estado' => false);
 
                 /* ---------------------------- */
@@ -2560,12 +2563,14 @@ class apiBiometricoController extends Controller
                                 'idempleado' => $idempleado,
                                 'posicion_huella' => $posicion_huella,
                                 'tipo_registro' => $tipo_registro,
+                                'id_plantilla' =>$id_plantilla,
                                 'estado' => true);
 
                         } else {
                             $plantilla_empleadobioArray = array(
                                 'idempleado' => $idempleado,
                                 'error' => 'Tipo de registro no encontrado',
+                                'id_plantilla' =>$id_plantilla,
                                 'estado' => false);
                         }
 
@@ -2576,6 +2581,7 @@ class apiBiometricoController extends Controller
                         $plantilla_empleadobioArray = array(
                             'idempleado' => $idempleado,
                             'error' => 'Posicion de huella incorrecta',
+                            'id_plantilla' =>$id_plantilla,
                             'estado' => false);
                     }
 
@@ -2586,6 +2592,7 @@ class apiBiometricoController extends Controller
                     $plantilla_empleadobioArray = array(
                         'idempleado' => $idempleado,
                         'error' => 'No se encontro empleados con este id',
+                        'id_plantilla' =>$id_plantilla,
                         'estado' => false);
 
                 }
@@ -4387,11 +4394,64 @@ class apiBiometricoController extends Controller
 
         $listaHuellas=DB::table('plantilla_empleadobio as pem')
         ->select('pem.id','pem.idempleado','pem.posicion_huella','pem.tipo_registro',
-        'pem.path','pem.iFlag','pem.iFaceIndex','pem.iLength')
+        'pem.path','pem.iFlag','pem.iFaceIndex','pem.iLength','pem.estado')
         ->leftJoin('empleado as e','pem.idempleado','=','e.emple_id')
         ->where('e.organi_id','=',$usuario_organizacion->organi_id)
         ->get();
 
         return response()->json($listaHuellas);
+    }
+
+    public function borrarHuellas(Request $request){
+
+        $arrayDatosEliminar = new Collection();
+
+        foreach ($request->all() as $key => $req) {
+            $errores = [];
+            $validacion = Validator::make($req, [
+                'idhuella' => 'required'
+            ], [
+                'required' => ':atributo es obligatorio',
+            ]);
+            if ($validacion->fails()) {
+                //: ARRAY DE ERRORES
+                if (isset($validacion->failed()["idhuella"])) {
+                    array_push($errores, array("campo" => "idhuella", "mensaje" => "Es obligatorio"));
+                }
+                return response()->json(array("errores" => $errores), 400);
+            }
+            /*  RECIBO PARAMENTROS*/
+            $idplantilla = $req['idhuella'];
+            /* ----------------------------- */
+
+            /*CAMBIANDO ESTADO */
+            $plantillaBio=plantilla_empleadobio::find($idplantilla);
+
+            if($plantillaBio){
+                $plantillaBio->estado=0;
+                $plantillaBio->save();
+
+                $borradoArray = array(
+                'id' => $idplantilla,
+                'estado' => true);
+            } else{
+                $borradoArray = array(
+                    'id' => $idplantilla,
+                    'estado' => false);
+            }
+
+
+
+            /* INSERTAMO A AARRAY  */
+            $arrayDatosEliminar->push($borradoArray);
+            /* ---------------------------- */
+        }
+        if ($arrayDatosEliminar != null) {
+            return response()->json($arrayDatosEliminar);
+        } else {
+            return response()->json(array('status' => 500, 'title' => 'No se pudo eliminar',
+                'detail' => 'No se pudo eliminar'), 500);
+        }
+
     }
 }
