@@ -154,7 +154,7 @@
                         <div class="form-group">
                             <label class="col-form-label pt-0 pb-0">Seleccionar por:</label>
                             <select id="selectPor" data-plugin="customselect" class="form-control form-control-lg">
-                                <option value="0" selected>Todos empleados</option>
+                                <option value="0" selected>Todos los empleados</option>
                             </select>
                         </div>
                     </div>
