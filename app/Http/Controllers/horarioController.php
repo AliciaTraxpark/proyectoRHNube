@@ -1691,7 +1691,7 @@ class horarioController extends Controller
         /* -------------------------------------------- */
         foreach ($idempleados as $idempleado) {
             $horario_empleado = DB::table('horario_empleado as he')
-                ->select(['he.horarioEmp_id as id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
+                ->select(['he.horarioEmp_id as id', 'h.horario_descripcion as title', 'color', 'textColor',DB::raw('DATE(start) as start'), 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
                 ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                 ->where('he.estado', '=', 1)
