@@ -4401,8 +4401,8 @@ function verDatosHorario(idempleado,idHorarioEmp){
     var contenidoH= "";
     $.each(dataDeempleado, function (key, item) {
         //*empleado
-        if(item[0].idempleado==idempleado){
-            $.each(item, function (key, horario) {
+        if(item.idempleado==idempleado){
+            $.each(item.horario, function (key, horario) {
 
                 //*datos de horario
                 if(horario.idHorarioEmp==idHorarioEmp){
@@ -4631,23 +4631,23 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
 
             //*NOMBRE DE EMPLEADO
             contenido+=`<div class='col-md-12' style="border-top: 1px dashed #aaaaaa!important;">
-            <h5 class='header-title' style='font-size: 13.4px;'>` + item[0].nombre +` `+item[0].apellidos+`</h5>
+            <h5 class='header-title' style='font-size: 13.4px;'>` + item.apellidos +` `+item.nombre+`</h5>
             <h5 class='header-title' style='font-size: 13px'>Horarios:</h5>
             </div>`;
 
             //*HORARIOS
-            $.each(item, function (key, horario) {
+            $.each(item.horario, function (key, horario) {
                 contenido+=
                 `<div class="col-md-6 mb-3" >
                 <div class="row">
                 <input type="checkbox" style="margin-top: 7px;" data-id="` + horario.idHorarioEmp+`" class="chechHoraEmp col-md-2" id="checkEliminarhoE` + horario.idHorarioEmp+`" >
-                <div class="col-md-10 media mediaE` + item[0].idempleado+`" style="border:2px solid #e6e6e6;" id="media` + item[0].idempleado+`EH` + horario.idHorarioEmp+`">
+                <div class="col-md-10 media mediaE` + item.idempleado+`" style="border:2px solid #e6e6e6;" id="media` + item.idempleado+`EH` + horario.idHorarioEmp+`">
                     <div class="media-body">
                     <h6 class="mt-1 mb-0 font-size-14"  style="
                     padding-bottom: 5px;">` + horario.horario_descripcion+`</h6>
                     </div>
                     <div class="dropdown align-self-center float-right">
-                    <a  onclick="verDatosHorario(` + item[0].idempleado+`,` + horario.idHorarioEmp+`)"
+                    <a  onclick="verDatosHorario(` + item.idempleado+`,` + horario.idHorarioEmp+`)"
 
                         class=""
 
@@ -4664,7 +4664,7 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
             });
             contenido+=
             `<div class="col-md-12 row" style="    margin-left: 0px;padding-top: 5px;
-            padding-left: 0px;" id="dataHorarioElegido` + item[0].idempleado+`"></div>`;
+            padding-left: 0px;" id="dataHorarioElegido` + item.idempleado+`"></div>`;
             });
             $("#rowdivs").append(contenido);
 
@@ -5088,23 +5088,23 @@ function datosModalIncidenciaEmpleado(diadeIncidencia,empleados){
 
             //*NOMBRE DE EMPLEADO
             contenido+=`<div class='col-md-12' style="border-top: 1px dashed #aaaaaa!important;">
-            <h5 class='header-title' style='font-size: 13.4px;'>` + item[0].nombre +` `+item[0].apellidos+`</h5>
+            <h5 class='header-title' style='font-size: 13.4px;'>` + item.nombre +` `+item.apellidos+`</h5>
             <h5 class='header-title' style='font-size: 13px'>Incidencias:</h5>
             </div>`;
 
             //*INCIDENCIAS
-            $.each(item, function (key, incidencia) {
+            $.each(item.incidencias, function (key, incidencia) {
                 contenido+=
                 `<div class="col-md-6 mb-3" >
                 <div class="row">
                 <input type="checkbox" style="margin-top: 7px;" data-id="` + incidencia.idIncidencia+`" class="chechInciEmp col-md-2" id="checkEliminarInciE` + incidencia.idIncidencia+`" >
-                <div class="col-md-10 media mediaEInc` + item[0].idempleado+`" style="border:2px solid #e6e6e6;" id="media` + item[0].idempleado+`EINC` + incidencia.idIncidencia+`">
+                <div class="col-md-10 media mediaEInc` + item.idempleado+`" style="border:2px solid #e6e6e6;" id="media` + item.idempleado+`EINC` + incidencia.idIncidencia+`">
                     <div class="media-body">
                     <h6 class="mt-1 mb-0 font-size-14"  style="
                     padding-bottom: 5px;">` + incidencia.title+`</h6>
                     </div>
                     <div class="dropdown align-self-center float-right">
-                    <a  onclick="verDatosIncidencia(` + item[0].idempleado+`,` + incidencia.idIncidencia+`)"
+                    <a  onclick="verDatosIncidencia(` + item.idempleado+`,` + incidencia.idIncidencia+`)"
 
                         class=""
 
@@ -5121,7 +5121,7 @@ function datosModalIncidenciaEmpleado(diadeIncidencia,empleados){
             });
             contenido+=
             `<div class="col-md-12 row" style="    margin-left: 0px;padding-top: 5px;
-            padding-left: 0px;" id="dataInciElegido` + item[0].idempleado+`"></div>`;
+            padding-left: 0px;" id="dataInciElegido` + item.idempleado+`"></div>`;
             });
             $("#rowdivsIncid").append(contenido);
 
@@ -5146,8 +5146,8 @@ function verDatosIncidencia(idempleado,idIncidencia){
     var contenidoH= "";
     $.each(dataDeempleadoInc, function (key, item) {
         //*empleado
-        if(item[0].idempleado==idempleado){
-            $.each(item, function (key, incidencia) {
+        if(item.idempleado==idempleado){
+            $.each(item.incidencias, function (key, incidencia) {
 
                 //*datos de horario
                 if(incidencia.idIncidencia==idIncidencia){

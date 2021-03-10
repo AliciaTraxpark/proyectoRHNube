@@ -1809,8 +1809,35 @@ class horarioController extends Controller
         //*recorremos empleados seleccionnados
         foreach ($empleados as $empleado) {
 
-            //*buscamos su horario para el dia de hoy
-            $horarioEmpleado = DB::table('horario_empleado as he')
+            $empleadoHorario = DB::table('horario_empleado as he')
+            ->join('empleado as e', 'he.empleado_emple_id', '=', 'e.emple_id')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->select('e.emple_id as idempleado',
+                     'p.perso_nombre as nombre',
+                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'))
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_id', '=', $empleado)
+                ->whereDate('hd.start', '=', $fechaHorario)
+                ->where('he.estado', '=', 1)
+                ->groupBy('e.emple_id')
+                ->get();
+
+            //*obtenr solo de empleado con horario
+            if ($empleadoHorario->isNotEmpty()) {
+                $dataHorario->push($empleadoHorario);
+            }
+
+        }
+
+        $dataHorario=$dataHorario->collapse();
+        $dataHorarioF=$dataHorario->sortBy('apellidos',SORT_STRING)->values()->toArray();
+
+
+
+            foreach($dataHorarioF as $dataHorarios){
+                //*buscamos su horario para el dia de hoy
+                $horarioEmpleado = DB::table('horario_empleado as he')
                 ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                 ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
                 ->join('empleado as e', 'he.empleado_emple_id', '=', 'e.emple_id')
@@ -1818,23 +1845,21 @@ class horarioController extends Controller
                 ->select('he.empleado_emple_id as idempleado', 'he.horarioEmp_id as idHorarioEmp',
                     'h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF',
                     'h.horario_tolerancia as toleranciaI', 'h.horario_toleranciaF as toleranciaF',
-                    'he.fuera_horario', 'p.perso_nombre as nombre', 'h.horasObliga',
+                    'he.fuera_horario', 'h.horasObliga',
                     DB::raw("IF(he.fuera_horario=1,'Si' , 'No') as fueraHorario"),
-                    DB::raw("IF(he.nHoraAdic is null, 0 , nHoraAdic) as horaAdicional"),
-                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'))
+                    DB::raw("IF(he.nHoraAdic is null, 0 , nHoraAdic) as horaAdicional")
+                    )
                     ->whereDate('hd.start', '=', $fechaHorario)
                 ->where('he.estado', '=', 1)
                 ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_id', '=', $empleado)
+                ->where('e.emple_id', '=', $dataHorarios->idempleado)
                 ->get();
 
-            //*obtenr solo de empleado con horario
-            if ($horarioEmpleado->isNotEmpty()) {
-                $dataHorario->push($horarioEmpleado);
+                $dataHorarios->horario= $horarioEmpleado;
+
             }
 
-        }
-        return ($dataHorario);
+        return ($dataHorarioF);
 
     }
 
@@ -2436,31 +2461,51 @@ class horarioController extends Controller
         //*recorremos empleados seleccionnados
         foreach ($empleados as $empleado) {
 
-            //*buscamos su horario para el dia de hoy
 
+            $EmpleadoConInc = DB::table('incidencia_dias as idi')
+            ->select('p.perso_nombre as nombre',
+             'idi.id_empleado as idempleado',
+             DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos')
+            )
+            ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->where('idi.id_empleado', '=', $empleado)
+            ->whereDate('idi.inciden_dias_fechaI', '=', $fechaIncidencia)
+            ->groupBy('e.emple_id')
+            ->get();
 
-                $incidencias = DB::table('incidencia_dias as idi')
-                ->select('idi.inciden_dias_id as idIncidencia', 'i.inciden_descripcion as title', 'i.inciden_pagado as pagado', 'i.inciden_codigo',
-                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','p.perso_nombre as nombre','tipoI.tipoInc_descripcion',
-                 'idi.id_empleado as idempleado',
-                 DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos')
-
-                )
-                ->leftJoin('incidencias as i', 'idi.id_incidencia', '=', 'i.inciden_id')
-                ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->leftJoin('tipo_incidencia as tipoI','i.idtipo_incidencia','=','tipoI.idtipo_incidencia')
-                ->where('idi.id_empleado', '=', $empleado)
-                ->where(DB::raw('DATE(idi.inciden_dias_fechaI)'), '=', $fechaIncidencia)
-                ->get();
 
             //*obtenr solo de empleado con horario
-            if ($incidencias->isNotEmpty()) {
-                $dataIncidencia->push($incidencias);
+            if ($EmpleadoConInc->isNotEmpty()) {
+                $dataIncidencia->push($EmpleadoConInc);
             }
 
         }
-        return ($dataIncidencia);
+
+        //*ORDENAMOS POR APELLIDOS Y APLANAMOS
+        $dataIncidencia=$dataIncidencia->collapse();
+        $dataIncidenciaf=$dataIncidencia->sortBy('apellidos',SORT_STRING)->values()->toArray();
+
+        foreach($dataIncidenciaf as $dataIncidencias){
+
+            //*buscamos su horario para el dia de hoy
+            $incidencias = DB::table('incidencia_dias as idi')
+            ->select('idi.inciden_dias_id as idIncidencia', 'i.inciden_descripcion as title', 'i.inciden_pagado as pagado', 'i.inciden_codigo',
+            'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','tipoI.tipoInc_descripcion',
+            'idi.id_empleado as idempleado'
+            )
+            ->leftJoin('incidencias as i', 'idi.id_incidencia', '=', 'i.inciden_id')
+            ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('tipo_incidencia as tipoI','i.idtipo_incidencia','=','tipoI.idtipo_incidencia')
+            ->where('idi.id_empleado', '=', $dataIncidencias->idempleado)
+            ->whereDate('idi.inciden_dias_fechaI', '=', $fechaIncidencia)
+            ->get();
+
+            $dataIncidencias->incidencias= $incidencias;
+        }
+
+        return ($dataIncidenciaf);
 
     }
 
