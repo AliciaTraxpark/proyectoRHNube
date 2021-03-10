@@ -6191,6 +6191,7 @@ $(function () {
 });
 // : MOSTAR EMPLEADOS
 $('#selectPor').on("change", function () {
+    // * CUANDO SELECIONA DENUEVO TODOS LOS EMPLEADOS
     var arrayResultado = $(this).val();
     if (arrayResultado.includes("0")) {
         var index = arrayResultado.indexOf("0");
@@ -6199,6 +6200,7 @@ $('#selectPor').on("change", function () {
             $('#selectPor').find("option[value='" + element + "']").prop("selected", false);
         });
     }
+    // * ************* FINALIZACION *******************
     var valueQuery = $(this).val();
     var cantidad = 0;
     if (valueQuery.length == 0) {
