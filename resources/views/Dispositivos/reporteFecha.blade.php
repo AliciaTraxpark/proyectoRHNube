@@ -253,6 +253,42 @@
     .dataTables_filter {
         display: none;
     }
+
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background: #ced0d3;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #153e90;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        overflow-y: scroll;
+        max-height: calc(2.5em + 1rem + 2px);
+        height: calc(2.5em + 1rem + 2px);
+    }
+
+    .rowPersonalizado {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        background-color: transparent;
+        border: none;
+        border-right: 1px solid white;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        color: white;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 700;
+        padding-top: 0px;
+        padding-right: 4px;
+        padding-bottom: 0px;
+        padding-left: 4px;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -263,14 +299,14 @@
                     <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
                 </div>
             </div>
-            <div class="card-body border">
-                <div class="row justify-content-center">
+            <div class="card-body border p-2">
+                <div class="row rowPersonalizado">
                     <input type="hidden" id="ID_START">
                     <input type="hidden" id="ID_END">
-                    <div class="col-xl-5">
-                        <div class="form-group row">
-                            <label class="col-lg-5 col-form-label">Rango de fechas:</label>
-                            <div class="input-group col-md-7 text-center" style="padding-left: 0px;padding-right: 0px;"
+                    <div class="col-md-3 pr-3 pl-3">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Rango de fechas:</label>
+                            <div class="input-group text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -283,34 +319,34 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-sm-6">
-                        <div class="form-group   row">
-                            <label class="col-lg-3 col-form-label">Empleado</label>
-                            <div class="col-lg-9">
-                                <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
-                                    class="form-control form-control-sm" data-placeholder="Seleccione empleado">
-                                    <option value="0" selected>Todos los empleados</option>
-                                    @foreach ($empleado as $empleados)
-                                    <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
-                                        {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
+                    <div class="col-md-4 pr-3 pl-3 mt-3">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Seleccionar por:</label>
+                            <select id="selectPor" data-plugin="customselect"
+                                class="form-control form-control-sm select2Multiple" multiple="multiple">
+                                <option value="0" selected>Todos los empleados</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
-                        <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
-                            style="background-color: #163552;" onclick="javascript:cambiarF()">
+                    <div class="col-md-4 pr-3 pl-3 mt-3">
+                        <label class="col-form-label pt-0 pb-0">Empleado:</label>
+                        <select id="empleadoPor" data-plugin="customselect"
+                            class="form-control form-control-sm select2Multiple" multiple="multiple" required>
+                        </select>
+                        <span id="cantidadE" style="font-size: 11px"></span>
+                    </div>
+                    <div class="col-md-1 text-right btnR" style="padding-left: 0%">
+                        <button type="button" id="btnRecargaTabla" class="btn btn-sm" style="background-color: #1e2139;"
+                            onclick="javascript:cambiarF()">
                             <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
                         </button>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row">
                     <div class="col-md-4 pb-1">
                         <div class="dropdown" id="dropSelector">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                style="cursor: pointer">
+                            <a class="dropdown-toggle dropReporte" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" style="cursor: pointer">
                                 <div class="custom-control custom-switch mb-2">
                                     <input type="checkbox" class="custom-control-input" id="switchO" checked
                                         style="cursor: pointer">
@@ -604,7 +640,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row">
                     <div class="col-md-4 pb-2">
                         <div class="custom-control custom-switch mb-2">
                             <input type="checkbox" class="custom-control-input" id="colEmpleadosCM">
@@ -613,6 +649,26 @@
                                 <img src="{{asset('landing/images/escaneoM.svg')}}" height="18">
                                 Empleados solo con marcaciones
                             </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row rowPersonalizado">
+                            <div class="col-lg-5">
+                                <img src="{{asset('landing/images/fuenteR.svg')}}" height="18">
+                                <label for="formatoC" class="col-form-label pt-0 pb-0"
+                                    style="font-weight: bold;font-size:12px">
+                                    Formato de celda
+                                </label>
+                            </div>
+                            <div class="col-lg-7">
+                                <select id="formatoC" class="form-control">
+                                    <option value="formatoAYN">Apellidos y nombres</option>
+                                    <option value="formatoNYA" selected>Nombres y apellidos</option>
+                                    <option value="formatoNA">Nombres - Apellidos</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>

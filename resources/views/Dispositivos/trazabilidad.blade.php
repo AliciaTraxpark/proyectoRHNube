@@ -47,13 +47,39 @@
     }
 
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background-color: #52565b;
+        background-color: #153e90;
     }
 
     .select2-container--default .select2-selection--multiple {
         overflow-y: scroll;
-        max-height: 2em;
+        max-height: calc(2.5em + 1rem + 2px);
+        height: calc(2.5em + 1rem + 2px);
     }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        background-color: transparent;
+        border: none;
+        border-right: 1px solid white;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        color: white;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 700;
+        padding-top: 0px;
+        padding-right: 4px;
+        padding-bottom: 0px;
+        padding-left: 4px;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 34px !important;
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        line-height: 31px;
+    }
+
 
     div.dataTables_processing {
         position: fixed !important;
@@ -80,6 +106,21 @@
         padding: 0.1rem 1rem !important;
         margin: 0.1rem 0 !important;
     }
+
+    .rowPersonalizado {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .custom-select:disabled {
+        color: #3f3a3a;
+        background-color: #fcfcfc;
+    }
+
+    .form-control:disabled {
+        background-color: #fcfcfc;
+    }
 </style>
 {{-- CONTENIDO --}}
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -91,12 +132,12 @@
                     <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
                 </div>
             </div>
-            <div class="card-body border">
-                <div class="row justify-content-center">
-                    <div class="col-xl-4">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-9 text-center" style="padding-left: 0px;padding-right: 0px;"
+            <div class="card-body border p-2">
+                <div class="row rowPersonalizado">
+                    <div class="col-md-3 pr-3 pl-3">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Rango de fechas:</label>
+                            <div class="input-group text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaTrazabilidad">
                                 <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -109,37 +150,38 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-7 col-sm-6">
-                        <div class="form-group   row">
-                            <label class="col-lg-3 col-form-label">Empleado</label>
-                            <div class="col-lg-9">
-                                <select id="idsEmpleado" data-plugin="customselect" class="form-control"
-                                    data-placeholder="Todos los empleados" multiple="multiple">
-                                    @foreach ($empleado as $empleados)
-                                    <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
-                                        {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
+                    <div class="col-md-4 pr-3 pl-3">
+                        <div class="form-group">
+                            <label class="col-form-label pt-0 pb-0">Seleccionar por:</label>
+                            <select id="selectPor" data-plugin="customselect" class="form-control form-control-lg">
+                                <option value="0" selected>Todos los empleados</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
+                    <div class="col-md-4 pr-3 pl-3 mt-3">
+                        <label class="col-form-label pt-0 pb-0">Empleado:</label>
+                        <select id="empleadoPor" data-plugin="customselect"
+                            class="form-control form-control-sm select2Multiple" multiple="multiple" required>
+                        </select>
+                        <span id="cantidadE" style="font-size: 11px"></span>
+                    </div>
+                    <div class="col-md-1 text-right btnR" style="padding-left: 0%">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:cargarDatos()">
                             <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
                         </button>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row">
                     <div class="col-md-4 pb-2">
                         <div class="dropdown" id="dropSelector">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                style="cursor: pointer">
+                            <a class="dropdown-toggle dropReporte" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" style="cursor: pointer">
                                 <div class="custom-control custom-switch mb-2">
                                     <input type="checkbox" class="custom-control-input" id="switchO" checked
                                         style="cursor: pointer">
-                                    <label class="custom-control-label" for="switchO" style="font-weight: bold">
+                                    <label class="custom-control-label" for="switchO"
+                                        style="font-weight: bold;font-size:12px">
                                         <img src="{{asset('landing/images/insert.svg')}}" height="18">
                                         Selector de columnas
                                     </label>
@@ -180,7 +222,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-left">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row rowPersonalizado">
+                            <div class="col-lg-5">
+                                <img src="{{asset('landing/images/fuenteR.svg')}}" height="18">
+                                <label for="formatoC" class="col-form-label pt-0 pb-0"
+                                    style="font-weight: bold;font-size:12px">
+                                    Formato de celda
+                                </label>
+                            </div>
+                            <div class="col-lg-7">
+                                <select id="formatoC" class="form-control">
+                                    <option value="formatoAYN">Apellidos y nombres</option>
+                                    <option value="formatoNYA" selected>Nombres y apellidos</option>
+                                    <option value="formatoNA">Nombres - Apellidos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     {{-- GIF DE ESPERA --}}
                     <div id="espera" class="row justify-content-center" style="display: none">
                         <div class="col-md-4">

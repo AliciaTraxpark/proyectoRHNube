@@ -284,12 +284,12 @@ function inicializarTabla() {
                 $('.buttons-page-length').prop("disabled", true);
                 $('.buttons-html5').prop("disabled", true);
                 $('#switchO').prop("disabled", true);
-                $('.dropdown-toggle').prop("disabled", true);
+                $('.dropReporte').prop("disabled", true);
             } else {
                 $('.buttons-page-length').prop("disabled", false);
                 $('.buttons-html5').prop("disabled", false);
                 $('#switchO').prop("disabled", false);
-                $('.dropdown-toggle').prop("disabled", false);
+                $('.dropReporte').prop("disabled", false);
             }
             this.api().page.len(paginaGlobal).draw(false);
         },
@@ -301,17 +301,6 @@ function inicializarTabla() {
     }).draw();
 }
 $(function () {
-    $('#idempleado').select2({
-        placeholder: 'Seleccionar',
-        language: {
-            inputTooShort: function (e) {
-                return "Escribir nombre o apellido";
-            },
-            loadingMore: function () { return "Cargando más resultados…" },
-            noResults: function () { return "No se encontraron resultados" }
-        },
-        minimumInputLength: 2
-    });
     f = moment();
     fHoy = f.clone().format("YYYY-MM-DD");
     fAyer = f.clone().add("day", -1).format("YYYY-MM-DD");
@@ -328,7 +317,7 @@ $(function () {
 $('#switchO').prop("disabled", true);
 inicializarTabla();
 function cargartabla(fecha1, fecha2) {
-    var idemp = $('#idempleado').val();
+    var idemp = $('#empleadoPor').val();
     if (idemp == 0) {
         $.notifyClose();
         $.notify({
@@ -1903,7 +1892,8 @@ function cargartabla(fecha1, fecha2) {
 function cambiarF() {
     f1 = $("#ID_START").val();
     f2 = $("#ID_END").val();
-    if ($('#idempleado').val() == "" || $('#idempleado').val() == null) {
+    console.log($('#empleadoPor').val());
+    if ($('#empleadoPor').val() == "" || $('#empleadoPor').val() == null) {
         $.notifyClose();
         $.notify(
             {
@@ -1931,9 +1921,10 @@ function cambiarF() {
                 spacing: 35,
             }
         );
-    } else {
-        cargartabla(f1, f2);
+        return false;
     }
+    cargartabla(f1, f2);
+
 }
 $('#tablaReport tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
@@ -2254,3 +2245,100 @@ function toggleColumnas() {
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
+// ! ******************************* SELECT PERSONALIZADOS ****************************************
+$(function () {
+    // : INICIALIZAR PLUGIN
+    $('#selectPor').select2({
+        placeholder: 'Seleccionar',
+        ajax: {
+            async: false,
+            type: "GET",
+            url: "/selectPersonalizadoModoAP",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+
+                var queryParameters = {
+                    term: params.term
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                var estado = true;
+                if (data.length != 0) {
+                    return {
+                        results: $.map(data, function (item, key) {
+                            var children = [];
+                            console.log(estado);
+                            for (var k in item) {
+                                var childItem = item[k];
+                                childItem.id = item[k].id;
+                                childItem.text = key + " : " + item[k].descripcion;
+                                children.push(childItem);
+                            }
+                            if (estado) {
+                                estado = false;
+                                return [{
+                                    id: "0",
+                                    text: "Todos los empleados",
+                                    selected: true
+                                }, {
+                                    text: key,
+                                    children: children,
+                                }
+                                ]
+                            } else {
+                                return {
+                                    text: key,
+                                    children: children,
+                                }
+                            }
+                        })
+                    }
+                } else {
+                    return {
+                        results: [{
+                            id: "0",
+                            text: "Todos los empleados",
+                            selected: true
+                        }]
+                    }
+                }
+            },
+            cache: true,
+        }
+    });
+    $('#empleadoPor').select2({
+        placeholder: 'Seleccionar',
+    });
+    // : INICIO DE SELECT POR 
+    $('#selectPor').trigger("change");
+});
+// : MOSTAR EMPLEADOS
+$('#selectPor').on("change", function () {
+    var valueQuery = $(this).val();
+    $('#empleadoPor').empty();
+    $.ajax({
+        type: "GET",
+        url: "/selectEmpleadoModoAP",
+        data: {
+            query: valueQuery
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            var contenidoData = `<option value="" selected disabled>Seleccionar</option>`;
+            data.forEach(element => {
+                contenidoData += `<option value="${element.emple_id}">${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
+            });
+            $('#empleadoPor').append(contenidoData);
+        },
+        error: function () { }
+    });
+});

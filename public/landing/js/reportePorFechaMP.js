@@ -276,14 +276,16 @@ function inicializarTabla() {
                 $('.buttons-page-length').prop("disabled", true);
                 $('.buttons-html5').prop("disabled", true);
                 $('#switchO').prop("disabled", true);
-                $('.dropdown-toggle').prop("disabled", true);
+                $('.dropReporte').prop("disabled", true);
                 $('#colEmpleadosCM').prop("disabled", true);
+                $('#formatoC').prop("disabled", true);
             } else {
                 $('.buttons-page-length').prop("disabled", false);
                 $('.buttons-html5').prop("disabled", false);
                 $('#switchO').prop("disabled", false);
-                $('.dropdown-toggle').prop("disabled", false);
+                $('.dropReporte').prop("disabled", false);
                 $('#colEmpleadosCM').prop("disabled", false);
+                $('#formatoC').prop("disabled", false);
             }
         },
         drawCallback: function () {
@@ -313,7 +315,6 @@ $(function () {
     $('#ID_START').val(fAyer);
     $('#ID_END').val(fHoy);
     inicializarTabla();
-    cambiarF();
     // * HORARIO PADRE
     $('.horarioPadre').find('input[type=checkbox]').prop({
         indeterminate: true,
@@ -342,7 +343,37 @@ var ruc;
 // * ESTADO DE HORARIO EMPLEADO
 var contenidoHorario = [];
 function cargartabla(fechaI, fechaF) {
-    var idemp = $('#idempleado').val();
+    var idemp = $('#empleadoPor').val();
+    if (idemp.length == 0) {
+        $.notifyClose();
+        $.notify(
+            {
+                message:
+                    "\nElegir empleado.",
+                icon: "admin/images/warning.svg",
+            },
+            {
+                position: "fixed",
+                mouse_over: "pause",
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 2000,
+                template:
+                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    "</div>",
+                spacing: 35,
+            }
+        );
+        return false;
+    }
     $.ajax({
         type: "GET",
         url: "/datosReporteFecha",
@@ -368,6 +399,7 @@ function cargartabla(fechaI, fechaF) {
             $('[data-toggle="tooltip"]').tooltip("hide");
         },
     }).then(function (data) {
+        console.log(data);
         $('[data-toggle="tooltip"]').tooltip("hide");
         $('div.dataTables_processing').hide();
         $("#tablaReport").css('opacity', 1);
@@ -420,13 +452,16 @@ function cargartabla(fechaI, fechaF) {
             var cantidadP = 0;
             arrayHorario.map((valor) => cantidadM = cantidadM + (valor.split(",")[0] * 7));
             arrayHorario.map((valor) => cantidadP = cantidadP + (valor.split(",")[1] * 4));
-            var cantidadColSpan = (6 + (cantidadGruposHorario * 21) + cantidadM + cantidadP + 18);
+            var cantidadColSpan = (9 + (cantidadGruposHorario * 21) + cantidadM + cantidadP + 18);
             var theadTabla = `<tr>`;
             theadTabla += `<th>#&nbsp;</th>
                             <th class="text-center">Fecha</th>
                             <th>Número de documento</th>
                             <th name="colCodigo" class="colCodigo">Código de trabajador</th>
-                            <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="formatoNYA">Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="formatoAYN">Apellidos y nombres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="formatoNA">Nombres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="formatoNA">Apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             <th name="colCargo" class="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
             //* GRUPO DE HORARIOS
             for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -576,7 +611,10 @@ function cargartabla(fechaI, fechaF) {
                             <td>${key}</td>
                             <td class="text-center">${data[key][index].emple_nDoc}</td>
                             <td class="text-center" name="colCodigo">${data[key][index].emple_codigo}</td>
-                            <td>${data[key][index].perso_nombre} ${data[key][index].perso_apPaterno} ${data[key][index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                            <td class="formatoNYA">${data[key][index].perso_nombre} ${data[key][index].perso_apPaterno} ${data[key][index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="formatoAYN">${data[key][index].perso_apPaterno} ${data[key][index].perso_apMaterno} ${data[key][index].perso_nombre} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="formatoNA">${data[key][index].perso_nombre} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="formatoNA">${data[key][index].perso_apPaterno} ${data[key][index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     tbody += `<td name="colCargo">${data[key][index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
                     // * ARMAR GRUPO DE HORARIOS
@@ -3499,11 +3537,170 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colDispositivoS').visible(false);
     }
+    // * ************************* TIPO FORMATO CELDA *********************
+    // ? FORMATO DE NOMBRE Y APELLIDOS
+    $("#formatoC > option").each(function () {
+        if (!$(this).is(":checked")) {
+            dataT.api().columns('.' + $(this).val()).visible(false);
+        }
+    });
+    var columnaVisibleFormato = $('#formatoC :selected').val();
+    dataT.api().columns('.' + columnaVisibleFormato).visible(true);
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
+$('#formatoC').on("change", function () {
+    toggleColumnas();
+});
 $("#tablaReport").on('show.bs.dropdown', function () {
     $('.dataTables_scrollBody').addClass('dropdown-visible');
 })
     .on('hide.bs.dropdown', function () {
         $('.dataTables_scrollBody').removeClass('dropdown-visible');
     });
+// ! ******************************* SELECT PERSONALIZADOS ****************************************
+$(function () {
+    // : INICIALIZAR PLUGIN
+    $('#selectPor').select2({
+        placeholder: 'Seleccionar',
+        multiple: true,
+        closeOnSelect: false,
+        ajax: {
+            async: false,
+            type: "GET",
+            url: "/selectPersonalizadoModoAP",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+
+                var queryParameters = {
+                    term: params.term
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                var estado = true;
+                if (data.length != 0) {
+                    return {
+                        results: $.map(data, function (item, key) {
+                            var children = [];
+                            for (var k in item) {
+                                var childItem = item[k];
+                                childItem.id = item[k].id;
+                                childItem.text = key + " : " + item[k].descripcion;
+                                children.push(childItem);
+                            }
+                            if (estado) {
+                                estado = false;
+                                return [{
+                                    id: "0",
+                                    text: "Todos los empleados",
+                                    selected: true
+                                }, {
+                                    text: key,
+                                    children: children,
+                                }
+                                ]
+                            } else {
+                                return {
+                                    text: key,
+                                    children: children,
+                                }
+                            }
+                        })
+                    }
+                } else {
+                    return {
+                        results: [{
+                            id: "0",
+                            text: "Todos los empleados",
+                            selected: true
+                        }]
+                    }
+                }
+            },
+            cache: true,
+        }
+    });
+    $('#empleadoPor').select2({
+        multiple: true,
+        closeOnSelect: false
+    });
+    // : INICIO DE SELECT POR 
+    $('#selectPor').trigger({
+        type: 'change'
+    });
+});
+// : MOSTAR EMPLEADOS
+$('#selectPor').on("change", function () {
+    // * CUANDO SELECIONA DENUEVO TODOS LOS EMPLEADOS
+    var arrayResultado = $(this).val();
+    if (arrayResultado.includes("0")) {
+        var index = arrayResultado.indexOf("0");
+        arrayResultado.splice(index, 1);
+        arrayResultado.forEach(element => {
+            $('#selectPor').find("option[value='" + element + "']").prop("selected", false);
+        });
+    }
+    // * ************* FINALIZACION *******************
+    var valueQuery = $(this).val();
+    var cantidad = 0;
+    if (valueQuery.length == 0) {
+        return false;
+    }
+    $('#empleadoPor').empty();
+    $.ajax({
+        type: "GET",
+        url: "/selectEmpleadoModoAP",
+        data: {
+            query: valueQuery
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            cantidad = data.length;
+            var contenidoData = ``;
+            data.forEach(element => {
+                contenidoData += `<option value="${element.emple_id}" selected>${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
+            });
+            $('#empleadoPor').append(contenidoData);
+            $('#cantidadE').text(cantidad + "\templeados seleccionados.");
+        },
+        error: function () { }
+    });
+});
+// : MOSTRAR LA CANTIDAD DE EMPLEADOS SELECIONADOS
+$('#empleadoPor').on('select2:close', function () {
+    var cantidad = $('#empleadoPor').select2('data').length;
+    $('#cantidadE').empty();
+    $('#cantidadE').text(cantidad + "\templeados seleccionados.");
+});
+// : CUANDO EL SELECCIONAR POR QUEDE VACIO
+// : SIEMPRE TENER SELECCIONADO POR EMPLEADO
+$('#selectPor').on('select2:unselect', function () {
+    if ($(this).val().length == 0) {
+        $(this).val(0).trigger("change");
+    }
+});
+// : CUANDO SELECIONE OTRA OPCION QUE NO SEA TODOS LOS EMPLEADOS
+// : SE DESACTIVA TODOS LOS EMPLEADOS
+$('#selectPor').on('select2:selecting', function () {
+    var arrayResultado = $(this).val();
+    if (arrayResultado.includes("0")) {
+        $('#selectPor option[value="0"]').prop("selected", false);
+    }
+});
+// : DESACTIVAMOS EL BSUCAR
+$('#selectPor').on('select2:opening select2:closing', function (event) {
+    var $searchfield = $(this).parent().find('.select2-search__field');
+    $searchfield.prop('disabled', true);
+});
+$('#empleadoPor').on('select2:opening select2:closing', function (event) {
+    var $searchfield = $(this).parent().find('.select2-search__field');
+    $searchfield.prop('disabled', true);
+});
