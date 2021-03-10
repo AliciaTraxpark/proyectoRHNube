@@ -1657,7 +1657,19 @@ class horarioController extends Controller
 
             $tab->pausas = $pausas_horario;
         }
-        return $horario_empleado;
+
+        //*EXISTE EVENTOS TEMPORALES
+        $temporal_eventos = DB::table('temporal_eventos')
+            ->where('users_id', '=', Auth::user()->id)->get();
+
+        if($temporal_eventos->isNotEmpty()){
+            $datosTemporales=1;
+
+        } else{
+            $datosTemporales=0;
+        }
+
+        return [$horario_empleado,$datosTemporales];
     }
 
     public function horariosVariosEmps(Request $request)
@@ -1768,7 +1780,17 @@ class horarioController extends Controller
             }
 
         }
-        return ($unimos->values()->all());
+        //*EXISTE EVENTOS TEMPORALES
+        $temporal_eventos = DB::table('temporal_eventos')
+            ->where('users_id', '=', Auth::user()->id)->get();
+
+        if($temporal_eventos->isNotEmpty()){
+            $datosTemporales=1;
+
+        } else{
+            $datosTemporales=0;
+        }
+        return[$unimos->values()->all(),$datosTemporales];
     }
 
     public function datosHorarioEmpleado(Request $request)

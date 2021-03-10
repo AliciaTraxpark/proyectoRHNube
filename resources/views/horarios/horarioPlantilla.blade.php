@@ -156,8 +156,11 @@
                                         <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
                                     </div>
 
-                                    <div class="col-md-6" style="display: none">
-                                        <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
+                                    <div class="col-md-6 text-right">
+                                        <label for="" style="font-weight: 600">Leyenda:   </label>
+                                        <span class="badge " style="background-color:#e2e2e2;color:#3a3535 ">Horarios no guardados</span>
+                                        <span class="badge " style="background-color: #9E9E9E;color:#3a3535 ">Incidencias no guardadas</span>
+
                                     </div>
 
                                     <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
@@ -176,7 +179,16 @@
                     <div class="modal-footer" style="padding-top: 8px;padding-bottom: 8px;">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                <div class="col-md-9 text-right" style="left: 60px;" >
+                                    <div style="display: none; padding-top: 10px;" id="divCambios">
+                                        <img src="{{ asset('admin/images/warning.svg') }}" height="15">
+                                        <label for="" style="font-weight: 600;font-size: 12px;
+                                        color: #353100;">Tienes cambios en el calendario por guardar</label>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3 text-right" style="padding-right: 0px;">
                                     <button type="button" id="" class="btn btn-light" data-dismiss="modal">
                                         Cerrar
                                     </button>

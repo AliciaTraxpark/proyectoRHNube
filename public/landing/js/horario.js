@@ -253,6 +253,8 @@ $('#btnasignar').on('click', function (e) {
     $(".loader").hide();
     $(".img-load").hide();
 
+    $("#divCambios").hide();
+
 });
 //CALENDARIO//
 
@@ -358,7 +360,7 @@ function calendario() {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: function (data) {
-                                        info.event.remove();
+                                        calendar.refetchEvents();
                                     },
                                     error: function (data) {
                                         console.log('Ocurrio un error');
@@ -450,7 +452,7 @@ function calendario() {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function (data) {
-                                            info.event.remove();
+                                            calendar.refetchEvents();
                                         },
                                         error: function (data) {
                                             console.log('Ocurrio un error');
@@ -603,10 +605,15 @@ function calendario() {
                     success: function (data) {
 
 
-                        successCallback(data);
+                        successCallback(data[0]);
 
                         $(".loader").hide();
                         $(".img-load").hide();
+                        if(data[1]==1){
+                            $("#divCambios").show();
+                        } else{
+                            $("#divCambios").hide();
+                        }
                     },
                     error: function () {}
                 });
@@ -633,9 +640,14 @@ function calendario() {
                     },
                     success: function (data) {
 
-                        successCallback(data);
+                        successCallback(data[0]);
                         $(".loader").hide();
                         $(".img-load").hide();
+                        if(data[1]==1){
+                            $("#divCambios").show();
+                        } else{
+                            $("#divCambios").hide();
+                        }
 
                     },
                     error: function () {}
