@@ -2495,7 +2495,50 @@ class apiBiometricoController extends Controller
         $arrayDatos = new Collection();
 
         foreach ($request->all() as $req) {
+            $errores = [];
+            $validacion = Validator::make($req, [
+                'idempleado' => 'required',
+                'posicion_huella' => 'required',
+                'tipo_registro' => 'required',
+                'path' => 'required',
+                'iFlag' => 'required',
+                'iFaceIndex' => 'required',
+                'iLength' => 'required',
+                'id_plantilla' => 'required',
 
+            ], [
+                'required' => ':atributo es obligatorio',
+            ]);
+            if ($validacion->fails()) {
+                //: ARRAY DE ERRORES
+                if (isset($validacion->failed()["idempleado"])) {
+                    array_push($errores, array("campo" => "idempleado", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["posicion_huella"])) {
+                    array_push($errores, array("campo" => "posicion_huella", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["tipo_registro"])) {
+                    array_push($errores, array("campo" => "tipo_registro", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["path"])) {
+                    array_push($errores, array("campo" => "path", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["iFlag"])) {
+                    array_push($errores, array("campo" => "iFlag", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["iFaceIndex"])) {
+                    array_push($errores, array("campo" => "iFaceIndex", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["iLength"])) {
+                    array_push($errores, array("campo" => "iLength", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["id_plantilla"])) {
+                    array_push($errores, array("campo" => "id_plantilla", "mensaje" => "Es obligatorio"));
+                }
+                
+
+                return response()->json(array("errores" => $errores), 400);
+            }
             /*  RECIBO PARAMENTROS*/
             $idempleado = $req['idempleado'];
             $posicion_huella = $req['posicion_huella'];
