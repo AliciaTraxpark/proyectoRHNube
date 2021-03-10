@@ -156,7 +156,7 @@
                                         <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="display: none">
                                         <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
                                     </div>
 

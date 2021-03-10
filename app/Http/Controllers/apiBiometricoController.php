@@ -2535,7 +2535,7 @@ class apiBiometricoController extends Controller
                 if (isset($validacion->failed()["id_plantilla"])) {
                     array_push($errores, array("campo" => "id_plantilla", "mensaje" => "Es obligatorio"));
                 }
-                
+
 
                 return response()->json(array("errores" => $errores), 400);
             }
@@ -4452,19 +4452,19 @@ class apiBiometricoController extends Controller
         foreach ($request->all() as $key => $req) {
             $errores = [];
             $validacion = Validator::make($req, [
-                'idhuella' => 'required'
+                'id' => 'required'
             ], [
                 'required' => ':atributo es obligatorio',
             ]);
             if ($validacion->fails()) {
                 //: ARRAY DE ERRORES
-                if (isset($validacion->failed()["idhuella"])) {
-                    array_push($errores, array("campo" => "idhuella", "mensaje" => "Es obligatorio"));
+                if (isset($validacion->failed()["id"])) {
+                    array_push($errores, array("campo" => "id", "mensaje" => "Es obligatorio"));
                 }
                 return response()->json(array("errores" => $errores), 400);
             }
             /*  RECIBO PARAMENTROS*/
-            $idplantilla = $req['idhuella'];
+            $idplantilla = $req['id'];
             /* ----------------------------- */
 
             /*CAMBIANDO ESTADO */
