@@ -121,7 +121,7 @@ class correosEmpleadoController extends Controller
                 $persona = persona::findOrFail($empleado->perso_id);
                 $organizacion = organizacion::find($empleado->organi_id);
                 $email = array($empleado->correo);
-                Mail::to($email)->queue(new CorreoRuta($persona, $vinculacion_ruta, $org));
+                Mail::to($email)->queue(new CorreoRuta($persona, $vinculacion_ruta, $organizacion));
             }
             $response = curl_exec($curl);
             $err = curl_error($curl);
