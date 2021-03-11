@@ -4437,7 +4437,7 @@ function actualizarConfigHorario_re() {
 //* select empleado cuando cambia
 $( "#nombreEmpleado" ).change(function() {
     nempl=$( "#nombreEmpleado" ).val().length;
-    console.log(nempl);
+
     if(nempl>0){
 
     $(".loader").show();
@@ -4457,7 +4457,7 @@ $( "#nombreEmpleado" ).change(function() {
 function verDatosHorario(idempleado,idHorarioEmp){
     $('#dataHorarioElegido'+ idempleado).empty();
     $('#dataHorarioElegido'+ idempleado).css("background","#f3f3f3" );
-    console.log('#media'+ idempleado+'EH'+idHorarioEmp);
+
     $('.mediaE'+ idempleado).css( "background","#fff" );
     var contenidoH= "";
     $.each(dataDeempleado, function (key, item) {
@@ -4608,7 +4608,7 @@ function eliminarMasivoHorarios(){
                             /* ............................. */
 
                         } else{
-                            console.log('no tengo datos');
+
                             $('#modalHorarioEmpleados').modal('hide');
                             calendar.refetchEvents();
                             $.notifyClose();
@@ -4792,7 +4792,7 @@ function ClonarHorarios(){
    //*INICIO Y FIN DE MES
    var inicioC=  moment().startOf('month').format('YYYY-MM-DD');
    var finC=moment().format('YYYY-MM-DD');
-   console.log('fechaAct'+inicioC+'-'+finC);
+
    $('#ID_START').val(inicioC);
    $('#ID_END').val(finC);
     //*
@@ -5387,7 +5387,7 @@ function eliminarMasivoIncidencias(){
                             /* ............................. */
 
                         } else{
-                            console.log('no tengo datos');
+                            
                             $('#modalIncidenciasEmpleados').modal('hide');
                             calendar.refetchEvents();
                             $.notifyClose();
