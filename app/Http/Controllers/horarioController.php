@@ -869,13 +869,17 @@ class horarioController extends Controller
 
     public function vaciarhor(Request $request)
     {
-        DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id) ->where('incidencia_id', '=',null)
-            ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)->delete();
+
         $temporal_evento = temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
 
         $empleados = $request->empleados;
-        $aniocalen = $request->aniocalen;
-        $mescale = $request->mescale;
+        $inicio =  Carbon::create($request->inicio);
+        $fin = Carbon::create($request->fin);
+
+        DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id) ->where('incidencia_id', '=',null)
+            ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)
+            ->whereBetween(DB::raw('DATE(start)'), [$inicio, $fin]) ->delete();
+
         if($empleados){
             foreach ($empleados as $empleado) {
 
@@ -883,17 +887,13 @@ class horarioController extends Controller
                 ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                 ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
                 ->join('empleado as e', 'he.empleado_emple_id', '=', 'e.emple_id')
-                ->whereYear('hd.start', $aniocalen)
-                ->whereMonth('hd.start', $mescale)
+                ->whereBetween(DB::raw('DATE(hd.start)'), [$inicio, $fin])
                 ->where('he.estado', '=', 1)
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_id', '=', $empleado)
                 ->update(['he.estado' => 0]);
             }
         }
-
-
-        return $temporal_evento;
     }
     public function vaciarIncid(Request $request)
     {
