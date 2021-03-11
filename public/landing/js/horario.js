@@ -4627,7 +4627,7 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
              </div>
              <div class="col-md-12">
              <label
-             style="font-weight: 600">Empleados totales:` + data.length +` </label>
+             style="font-weight: 600">Total empleados: ` + data.length +` </label>
              </div>
              </div>`;
 
@@ -5088,7 +5088,7 @@ function datosModalIncidenciaEmpleado(diadeIncidencia,empleados){
              </div>
              <div class="col-md-12">
              <label
-             style="font-weight: 600">Empleados totales:` + data.length +` </label>
+             style="font-weight: 600">Total empleados: ` + data.length +` </label>
              </div>
                       </div>`;
 
