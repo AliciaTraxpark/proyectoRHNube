@@ -402,8 +402,8 @@ function cargarDatos() {
                         <th>Departamento</th>
                         <th class="text-center">Tardanzas</th>
                         <th class="text-center">Días Trabajados</th>
-                        <th class="text-center">Horario normal</th>
-                        <th class="text-center">Horario nocturno</th>
+                        <th class="text-center">Horas diurnas</th>
+                        <th class="text-center">Horas nocturnas</th>
                         <th class="text-center tiempoMuertoE">Tiempo muerto - entrada</th>
                         <th class="text-center tiempoMuertoS">Tiempo muerto - salida</th>
                         <th class="text-center">Faltas</th>`;
