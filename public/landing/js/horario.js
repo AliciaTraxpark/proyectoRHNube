@@ -1926,80 +1926,104 @@ function eliminarHorariosFecha(){
 }
 //*VACIAR INCIDENCIAS
 function vaciarIncid() {
-    bootbox.confirm({
-        title: "Elminar Incidencias",
-        message: "¿Esta seguro que desea borrar incidencia(s) de este mes del calendario?",
-        buttons: {
-            confirm: {
-                label: 'Aceptar',
-                className: 'btn-success'
-            },
-            cancel: {
-                label: 'Cancelar',
-                className: 'btn-light'
-            }
-        },
-        callback: function (result) {
-            if (result == true) {
-                //* obtengo empleados, mes y año de calendario
-                fmes = calendar.getDate();
-                mescale = fmes.getMonth() + 1;
-                aniocalen = fmes.getFullYear();
-                let empleados=$('#nombreEmpleado').val();
-                $.ajax({
-                    type: "get",
-                    url: "/vaciarIncid",
-                    data: {
-                        mescale,
-                        aniocalen,
-                        empleados
-                    },
-                    async:false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        419: function () {
-                            location.reload();
-                        }
-                    },
-                    success: function (data) {
 
-                        var mesAg = $('#fechaDa').val();
-                        var d = mesAg;
-                        var fechasM = new Date(d);
-                        calendar.refetchEvents();
-                        $.notifyClose();
-                        $.notify(
-                            {
-                                message: "\nIncidencias borradas",
-                                icon: "admin/images/checked.svg",
-                            },
-                            {   element: $('#asignarHorario'),
-                                position: "fixed",
-                                icon_type: "image",
-                                newest_on_top: true,
-                                delay: 5000,
-                                template:
-                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                                    "</div>",
-                                spacing: 50,
-                            }
-                        );
+    //*INICIO Y FIN DE MES OBTENIDO DE CALENDARIO
 
-                    },
-                    error: function () {}
-                });
+    fmes = calendar.getDate();
+
+   var inicioC=  moment(fmes).startOf('month').format('YYYY-MM-DD');
+   var finC=moment(fmes).endOf('month').format('YYYY-MM-DD');
+
+   $('#ID_START_EIF').val(inicioC);
+   $('#ID_END_EIF').val(finC);
+    //*
+
+//* ELEGIR FECHA PARA ELIMINAR HORARIOS */
+var fechaValue = $("#fechaSelecElimI").flatpickr({
+    mode: "range",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "j F",
+    locale: "es",
+    wrap: true,
+    allowInput: true,
+    conjunction: " a ",
+    minRange: 1,
+
+    onChange: function (selectedDates) {
+        var _this = this;
+        var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
+        $('#ID_START_EIF').val(dateArr[0]);
+        $('#ID_END_EIF').val(dateArr[1]);
 
 
-            }
+
+    },
+    defaultDate: [inicioC,finC],
+    onClose: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length == 1) {
+            var fm = moment(selectedDates[0]).add("day", -1).format("YYYY-MM-DD");
+            instance.setDate([fm, selectedDates[0]], true);
         }
-    });
+    }
+});
+$('#modalEliminarIncidenciaF').modal('show');
 
+
+}
+
+//*FUNCION QUE ELIMINA INCIDENCIAS POR FECHAS
+function eliminarIncidenciasFecha(){
+   //* obtengo empleados, mes y año de calendario
+   let inicio = $('#ID_START_EIF').val();
+   let fin =  $('#ID_END_EIF').val();
+   let empleados=$('#nombreEmpleado').val();
+   $.ajax({
+       type: "get",
+       url: "/vaciarIncid",
+       data: {
+           inicio,
+           fin,
+           empleados
+       },
+       async:false,
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       },
+       statusCode: {
+           419: function () {
+               location.reload();
+           }
+       },
+       success: function (data) {
+
+           calendar.refetchEvents();
+           $('#modalEliminarIncidenciaF').modal('hide');
+           $.notifyClose();
+           $.notify(
+               {
+                   message: "\nIncidencias borradas",
+                   icon: "admin/images/checked.svg",
+               },
+               {   element: $('#asignarHorario'),
+                   position: "fixed",
+                   icon_type: "image",
+                   newest_on_top: true,
+                   delay: 5000,
+                   template:
+                       '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                       '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                       '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                       '<span data-notify="title">{1}</span> ' +
+                       '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                       "</div>",
+                   spacing: 50,
+               }
+           );
+
+       },
+       error: function () {}
+   });
 }
 function vaciardl() {
     bootbox.confirm({
