@@ -453,16 +453,18 @@ function cargartabla(fecha) {
                                 </th>
                                 <th name="toleranciaIHorario" class="toleranciaIHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en el ingreso</th>
                                 <th name="toleranciaFHorario" class="toleranciaFHorario" style="border-right: 1px dashed #c8d4de!important;">Tolerancia en la salida</th>
-                                <th name="colTiempoEntreH" class="text-center colTiempoEntreH" style="border-right: 1px dashed #c8d4de!important;">Tiempo total</th>
+                                <th name="colTiempoEntreH" class="text-center colTiempoEntreH" style="border-right: 1px dashed #c8d4de!important;">Tiempo entre horario</th>
                                 <th name="colTiempoMuertoEntrada" class="text-center colTiempoMuertoEntrada" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto - entrada</th>
                                 <th name="colTiempoMuertoSalida" class="text-center colTiempoMuertoSalida" style="border-right: 1px dashed #c8d4de!important;">Tiempo muerto - salida</th>
                                 <th name="colSobreTiempo" class="text-center colSobreTiempo" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo</th>
-                                <th name="colHoraNormal" class="text-center colHoraNormal" style="border-right: 1px dashed #c8d4de!important;">Horario normal</th>
-                                <th name="colSobreTNormal" class="text-center colSobreTNormal" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo normal</th>
+                                <th name="colHoraNormal" class="text-center colHoraNormal" style="border-right: 1px dashed #c8d4de!important;">Horas diurnas</th>
+                                <th name="colHoraDiurnaNormal" class="text-center colHoraDiurnaNormal" style="border-right: 1px dashed #c8d4de!important;">Horas normales - diurnas</th>
+                                <th name="colSobreTNormal" class="text-center colSobreTNormal" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo diurno</th>
                                 <th name="colHE25D" class="text-center colHE25D" style="border-right: 1px dashed #c8d4de!important;">H.E. 25% Diurnas</th>
                                 <th name="colHE35D" class="text-center colHE35D" style="border-right: 1px dashed #c8d4de!important;">H.E. 35% Diurnas</th>
                                 <th name="colHE100D" class="text-center colHE100D" style="border-right: 1px dashed #c8d4de!important;">H.E. 100% Diurnas</th>
-                                <th name="colHoraNocturna" class="text-center colHoraNocturna" style="border-right: 1px dashed #c8d4de!important;">Horario nocturno</th>
+                                <th name="colHoraNocturna" class="text-center colHoraNocturna" style="border-right: 1px dashed #c8d4de!important;">Horas nocturnas</th>
+                                <th name="colHoraNocturnaNormal" class="text-center colHoraNocturnaNormal" style="border-right: 1px dashed #c8d4de!important;">Horas normales - nocturnas</th>
                                 <th name="colSobreTNocturno" class="text-center colSobreTNocturno" style="border-right: 1px dashed #c8d4de!important;">Sobretiempo nocturno</th>
                                 <th name="colHE25N" class="text-center colHE25N" style="border-right: 1px dashed #c8d4de!important;">H.E. 25% Nocturnas</th>
                                 <th name="colHE35N" class="text-center colHE35N" style="border-right: 1px dashed #c8d4de!important;">H.E. 35% Nocturnas</th>
@@ -526,12 +528,12 @@ function cargartabla(fecha) {
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colTiempoMuertoTotalE" class="colTiempoMuertoTotalE">Tiempo muerto total - entrada</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colTiempoMuertoTotalS" class="colTiempoMuertoTotalS">Tiempo muerto total - salida</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo total</th>
-                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horario normal total</th>
-                            <th style="border-left: 1px dashed #aaaaaa!important" name="colSobretiempoNormalT" class="colSobretiempoNormalT">Sobretiempo normal total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNormalTotal" class="colHoraNormalTotal">Horas diurnas total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colSobretiempoNormalT" class="colSobretiempoNormalT">Sobretiempo diurno total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE25DTotal" class="colHE25DTotal">H.E. 25% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE35DTotal" class="colHE35DTotal">H.E. 35% Diurnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE100DTotal" class="colHE100DTotal">H.E. 100% Diurnas total</th>
-                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNocturnaTotal" class="colHoraNocturnaTotal">Horario nocturno total</th>
+                            <th style="border-left: 1px dashed #aaaaaa!important" name="colHoraNocturnaTotal" class="colHoraNocturnaTotal">Horas nocturnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colSobretiempoNocturnoT" class="colSobretiempoNocturnoT">Sobretiempo nocturno total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE25NTotal" class="colHE25NTotal">H.E. 25% Nocturnas total</th>
                             <th style="border-left: 1px dashed #aaaaaa!important" name="colHE35NTotal" class="colHE35NTotal">H.E. 35% Nocturnas total</th>
@@ -600,50 +602,53 @@ function cargartabla(fecha) {
                 // * CANTIDAD DE FALTAS
                 var sumaFaltas = 0;
                 for (let m = 0; m < cantidadGruposHorario; m++) {
-                    // : HORARIO
-                    var idHorarioM = [];
-                    // : PAUSA
-                    var idPausas = [];
+                    // * HORARIO
+                    var idHorarioM = [];                                        //: GUARDAR IDS DE HORARIO
+                    // * PAUSA
+                    var idPausas = [];                                          //: GUARDAR IDS DE PAUSAS
                     // * PAUSAS
-                    var tiempoHoraPausa = "00";        //: HORAS TARDANZA
-                    var tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
-                    var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
-                    var sumaTiemposEntreHorarios = moment.duration(0);       //: SUMANDO LOS TIEMPOS ENTRE HORARIOS
-                    var estadoTiempoHorario = true;
+                    var tiempoHoraPausa = "00";                                 //: HORAS TARDANZA
+                    var tiempoMinutoPausa = "00";                               //: MINUTOS TARDANZA
+                    var tiempoSegundoPausa = "00";                              //: SEGUNDOS TARDANZA
+                    // * TIEMPOE ENTRE HORARIOS 
+                    var sumaTiemposEntreHorarios = moment.duration(0);          //: SUMANDO LOS TIEMPOS ENTRE HORARIOS
+                    var estadoTiempoHorario = true;                             //: VARIABLE BANDERA DE ESTADO ENTRE TIEMPO DE HORARIOS
                     //* EXCESO
-                    var tiempoHoraExceso = "00";
-                    var tiempoMinutoExceso = "00";
-                    var tiempoSegundoExceso = "00";
+                    var tiempoHoraExceso = "00";                                //: HORAS DE EXCESO
+                    var tiempoMinutoExceso = "00";                              //: MINUTOS DE EXCESO
+                    var tiempoSegundoExceso = "00";                             //: SEGUNDOS DE EXCESO
                     // * TARDANZA
-                    var segundosTardanza = "00";
-                    var minutosTardanza = "00";
-                    var horasTardanza = "00";
+                    var segundosTardanza = "00";                                //: SEGUNDOS DE TARDANZA
+                    var minutosTardanza = "00";                                 //: MINUTOS DE TARDANZA
+                    var horasTardanza = "00";                                   //: HORAS DE TARDANZA
                     // * SOBRE TIEMPO
-                    var segundosSobreT = "00";
-                    var minutosSobreT = "00";
-                    var horasSobreT = "00";
+                    var segundosSobreT = "00";                                  //: SEGUNDOS DE SOBRETIEMPO
+                    var minutosSobreT = "00";                                   //: MINUTOS DE SOBRETIEMPO
+                    var horasSobreT = "00";                                     //: HORAS DE SOBRETIEMPO
                     // * FALTA JORNADA
-                    var segundosFaltaJ = "00";
-                    var minutosFaltaJ = "00";
-                    var horasFaltaJ = "00";
-                    // * HORARIO NORMAL
-                    var sumaHorasNormales = moment.duration(0);
-                    var sobretiempoNormales = moment.duration(0);
-                    // * HORARIO NOCTURNO
-                    var sumaHorasNocturnas = moment.duration(0);
-                    var sobretiempoNocturnos = moment.duration(0);
+                    var segundosFaltaJ = "00";                                  //: SEGUNDOS DE FALTA JORNADA
+                    var minutosFaltaJ = "00";                                   //: MINUTOS DE FALTA JORNADA
+                    var horasFaltaJ = "00";                                     //: HORAS DE FALTA JORNADA
+                    // * HORAS DIURNAS
+                    var sumaHorasNormales = moment.duration(0);                 //: TIEMPOS DE HORAS DIURNAS
+                    var sobretiempoNormales = moment.duration(0);               //: SOBRETIEMPO DIURNO
+                    var horasNormalesDiurnas = moment.duration(0);              //: TIEMPOS NORMALES DIURNAS
+                    // * HORAS NOCTURNAS
+                    var sumaHorasNocturnas = moment.duration(0);                //: TIEMPOS DE HORAS NOCTURNAS
+                    var sobretiempoNocturnos = moment.duration(0);              //: SOBRETIEMPO NCOTUNO
+                    var horasNormalesNocturnas = moment.duration(0);            //: TIEMPOS NORMALES NOCTURNAS
                     // * HORAS EXTRAS - DIURNAS
-                    var diurnas25 = moment.duration(0);
-                    var diurnas35 = moment.duration(0);
-                    var diurnas100 = moment.duration(0);
+                    var diurnas25 = moment.duration(0);                         //: DIURNAS 25%
+                    var diurnas35 = moment.duration(0);                         //: DIURNAS 35%
+                    var diurnas100 = moment.duration(0);                        //: DIURNAS 100%
                     // * HORAS EXTRAS - NOCTURNAS
-                    var nocturnas25 = moment.duration(0);
-                    var nocturnas35 = moment.duration(0);
-                    var nocturnas100 = moment.duration(0);
+                    var nocturnas25 = moment.duration(0);                       //: NOCTURNAS 25%
+                    var nocturnas35 = moment.duration(0);                       //: NOCTURNAS 35%
+                    var nocturnas100 = moment.duration(0);                      //: NOCTURNAS 100%
                     // * TIEMPO MUERTO ENTRADA
-                    var tiempoMuertoEntrada = moment.duration(0);
+                    var tiempoMuertoEntrada = moment.duration(0);               //: TIEMPO MUERTO ENTRADA
                     // * TIEMPO MUERTO SALIDA
-                    var tiempoMuertoSalida = moment.duration(0);
+                    var tiempoMuertoSalida = moment.duration(0);                //: TIEMPO MUERTO SALIDA
                     if (data[index].data[m] != undefined) {
                         // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                         var horarioData = data[index].data[m].horario;
@@ -962,7 +967,8 @@ function cargartabla(fecha) {
                                 if (primeraM == 0) {
                                     var nuevaHorasO = {};
                                     if (sumaHorasNormales > horasObligadas) {
-                                        nuevaHorasO = moment.duration(0);
+                                        nuevaHorasO = moment.duration(0);            //: ASIGNAR NUEVO TIEMPO DE HORAS OBLIGADAS
+                                        horasNormalesDiurnas = horasObligadas.clone();
                                         // : ********************************* HORAS EXTRAS NORMALES *****************************
                                         var tiempoExtraResta = sumaHorasNormales - horasObligadas;
                                         var segundosExtra = moment.duration(tiempoExtraResta).seconds();
@@ -1071,6 +1077,7 @@ function cargartabla(fecha) {
                                             var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
                                             var tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                             sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
+                                            horasNormalesNocturnas = nuevaHorasO.clone();
                                             sumaSobreTiempoNocturnasT = sumaSobreTiempoNocturnasT.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                             var tiempoSobranteN = {};
                                             if (horarioData.idNocturna == null) {
@@ -1167,7 +1174,8 @@ function cargartabla(fecha) {
                                         }
                                     } else {
                                         var restaHorasO = horasObligadas - sumaHorasNormales;
-                                        nuevaHorasO = moment.duration(restaHorasO);
+                                        horasNormalesDiurnas = sumaHorasNormales.clone();
+                                        nuevaHorasO = moment.duration(restaHorasO);            //: ASIGNAS NUEVO TIEMPO DE HORAS OBLIGADAS
                                         // : ****************************************  HORAS NOCTURNAS ********************
                                         if (sumaHorasNocturnas > nuevaHorasO) {
                                             // * HORAS EXTRAS
@@ -1270,6 +1278,8 @@ function cargartabla(fecha) {
                                                     sumaHorasE25N = sumaHorasE25N.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                                 }
                                             }
+                                        } else {
+                                            horasNormalesNocturnas = sumaHorasNocturnas.clone();
                                         }
                                     }
                                 } else {
@@ -1284,6 +1294,7 @@ function cargartabla(fecha) {
                                         var horasExtraN = Math.trunc(moment.duration(tiempoExtraRestaN).asHours());
                                         var tiempoExtraN = moment.duration({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                         sobretiempoNocturnos = moment.duration(tiempoExtraRestaN);
+                                        horasNormalesNocturnas = horasObligadas.clone();
                                         sumaSobreTiempoNocturnasT = sumaSobreTiempoNocturnasT.add({ "hours": horasExtraN, "minutes": minutosExtraN, "seconds": segundosExtraN });
                                         var tiempoSobranteN = {};
                                         if (horarioData.idNocturna == null) {
@@ -1379,6 +1390,7 @@ function cargartabla(fecha) {
                                         }
                                         // : *************************************** HORAS NORMALES ********************************
                                         if (sumaHorasNormales > nuevaHorasO) {
+                                            horasNormalesDiurnas = nuevaHorasO.clone();
                                             // * HORAS EXTRAS
                                             var tiempoExtraResta = sumaHorasNormales - nuevaHorasO;
                                             var segundosExtra = moment.duration(tiempoExtraResta).seconds();
@@ -1478,12 +1490,16 @@ function cargartabla(fecha) {
                                                     sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                                 }
                                             }
+                                        } else {
+                                            horasNormalesDiurnas = sumaHorasNormales.clone();
                                         }
                                     } else {
                                         var restaHorasO = horasObligadas - sumaHorasNocturnas;
                                         nuevaHorasO = moment.duration(restaHorasO);
+                                        horasNormalesNocturnas = sumaHorasNocturnas.clone();
                                         // : *************************************** HORAS NORMALES ********************************
                                         if (sumaHorasNormales > nuevaHorasO) {
+                                            horasNormalesDiurnas = nuevaHorasO.clone();
                                             // * HORAS EXTRAS
                                             var tiempoExtraResta = sumaHorasNormales - nuevaHorasO;
                                             var segundosExtra = moment.duration(tiempoExtraResta).seconds();
@@ -1583,6 +1599,8 @@ function cargartabla(fecha) {
                                                     sumaHorasE25D = sumaHorasE25D.add({ "hours": horasExtra, "minutes": minutosExtra, "seconds": segundosExtra });
                                                 }
                                             }
+                                        } else {
+                                            horasNormalesDiurnas = sumaHorasNormales.clone();
                                         }
                                     }
                                 }
@@ -1757,6 +1775,32 @@ function cargartabla(fecha) {
                         if (segundoTiempoMuertoSalida < 10) {
                             segundoTiempoMuertoSalida = "0" + segundoTiempoMuertoSalida;
                         }
+                        // : TIEMPOS NORMALES DE DIURNAS
+                        var horaHorasNormalesDiurnas = Math.trunc(moment.duration(horasNormalesDiurnas).asHours());
+                        var minutoHorasNormalesDiurnas = moment.duration(horasNormalesDiurnas).minutes();
+                        var segundoHorasNormalesDiurnas = moment.duration(horasNormalesDiurnas).seconds();
+                        if (horaHorasNormalesDiurnas < 10) {
+                            horaHorasNormalesDiurnas = "0" + horaHorasNormalesDiurnas;
+                        }
+                        if (minutoHorasNormalesDiurnas < 10) {
+                            minutoHorasNormalesDiurnas = "0" + minutoHorasNormalesDiurnas;
+                        }
+                        if (segundoHorasNormalesDiurnas < 10) {
+                            segundoHorasNormalesDiurnas = "0" + segundoHorasNormalesDiurnas;
+                        }
+                        // : TIEMPOS NORMALES DE NOCTURNAS
+                        var horaHorasNormalesNocturnas = Math.trunc(moment.duration(horasNormalesNocturnas).asHours());
+                        var minutoHorasNormalesNocturnas = moment.duration(horasNormalesNocturnas).minutes();
+                        var segundoHorasNormalesNocturnas = moment.duration(horasNormalesNocturnas).seconds();
+                        if (horaHorasNormalesNocturnas < 10) {
+                            horaHorasNormalesNocturnas = "0" + horaHorasNormalesNocturnas;
+                        }
+                        if (minutoHorasNormalesNocturnas < 10) {
+                            minutoHorasNormalesNocturnas = "0" + minutoHorasNormalesNocturnas;
+                        }
+                        if (segundoHorasNormalesNocturnas < 10) {
+                            segundoHorasNormalesNocturnas = "0" + segundoHorasNormalesNocturnas;
+                        }
                         if (permisoModificar == 1) {
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
@@ -1836,6 +1880,12 @@ function cargartabla(fecha) {
                                                             ${horaSumaHorasNormales}:${minutoSumaHorasNormales}:${segundoSumaHorasNormales}
                                                         </a>
                                                     </td>
+                                                    <td name="colHoraDiurnaNormal" class="text-center colHoraDiurnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${horaHorasNormalesDiurnas}:${minutoHorasNormalesDiurnas}:${segundoHorasNormalesDiurnas}
+                                                        </a>
+                                                    </td>
                                                     <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -1858,6 +1908,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-info mr-2">
                                                             <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                             ${horaSumaHorasNocturnas}:${minutoSumaHorasNocturnas}:${segundoSumaHorasNocturnas}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHoraNocturnaNormal" class="text-center colHoraNocturnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${horaHorasNormalesNocturnas}:${minutoHorasNormalesNocturnas}:${segundoHorasNormalesNocturnas}
                                                         </a>
                                                     </td>
                                                     <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -1979,6 +2035,12 @@ function cargartabla(fecha) {
                                                             ${horaSumaHorasNormales}:${minutoSumaHorasNormales}:${segundoSumaHorasNormales}
                                                         </a>
                                                     </td>
+                                                    <td name="colHoraDiurnaNormal" class="text-center colHoraDiurnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${horaHorasNormalesDiurnas}:${minutoHorasNormalesDiurnas}:${segundoHorasNormalesDiurnas}
+                                                        </a>
+                                                    </td>
                                                     <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -2001,6 +2063,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-info mr-2">
                                                             <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                             ${horaSumaHorasNocturnas}:${minutoSumaHorasNocturnas}:${segundoSumaHorasNocturnas}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHoraNocturnaNormal" class="text-center colHoraNocturnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${horaHorasNormalesNocturnas}:${minutoHorasNormalesNocturnas}:${segundoHorasNormalesNocturnas}
                                                         </a>
                                                     </td>
                                                     <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -2123,6 +2191,12 @@ function cargartabla(fecha) {
                                                         ${horaSumaHorasNormales}:${minutoSumaHorasNormales}:${segundoSumaHorasNormales}
                                                     </a>
                                                 </td>
+                                                <td name="colHoraDiurnaNormal" class="text-center colHoraDiurnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-warning mr-2">
+                                                        <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                        ${horaHorasNormalesDiurnas}:${minutoHorasNormalesDiurnas}:${segundoHorasNormalesDiurnas}
+                                                    </a>
+                                                </td>
                                                 <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-warning mr-2">
                                                         <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -2145,6 +2219,12 @@ function cargartabla(fecha) {
                                                     <a class="badge badge-soft-info mr-2">
                                                         <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                         ${horaSumaHorasNocturnas}:${minutoSumaHorasNocturnas}:${segundoSumaHorasNocturnas}
+                                                    </a>
+                                                </td>
+                                                <td name="colHoraNocturnaNormal" class="text-center colHoraNocturnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-info mr-2">
+                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                        ${horaHorasNormalesNocturnas}:${minutoHorasNormalesNocturnas}:${segundoHorasNormalesNocturnas}
                                                     </a>
                                                 </td>
                                                 <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -2229,6 +2309,12 @@ function cargartabla(fecha) {
                                                             ${horaSumaHorasNormales}:${minutoSumaHorasNormales}:${segundoSumaHorasNormales}
                                                         </a>
                                                     </td>
+                                                    <td name="colHoraDiurnaNormal" class="text-center colHoraDiurnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${horaHorasNormalesDiurnas}:${minutoHorasNormalesDiurnas}:${segundoHorasNormalesDiurnas}
+                                                        </a>
+                                                    </td>
                                                     <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -2251,6 +2337,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-info mr-2">
                                                             <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                             ${horaSumaHorasNocturnas}:${minutoSumaHorasNocturnas}:${segundoSumaHorasNocturnas}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHoraNocturnaNormal" class="text-center colHoraNocturnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${horaHorasNormalesNocturnas}:${minutoHorasNormalesNocturnas}:${segundoHorasNormalesNocturnas}
                                                         </a>
                                                     </td>
                                                     <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -2333,6 +2425,12 @@ function cargartabla(fecha) {
                                                             ${horaSumaHorasNormales}:${minutoSumaHorasNormales}:${segundoSumaHorasNormales}
                                                         </a>
                                                     </td>
+                                                    <td name="colHoraDiurnaNormal" class="text-center colHoraDiurnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-warning mr-2">
+                                                            <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                            ${horaHorasNormalesDiurnas}:${minutoHorasNormalesDiurnas}:${segundoHorasNormalesDiurnas}
+                                                        </a>
+                                                    </td>
                                                     <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                         <a class="badge badge-soft-warning mr-2">
                                                             <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -2355,6 +2453,12 @@ function cargartabla(fecha) {
                                                         <a class="badge badge-soft-info mr-2">
                                                             <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                             ${horaSumaHorasNocturnas}:${minutoSumaHorasNocturnas}:${segundoSumaHorasNocturnas}
+                                                        </a>
+                                                    </td>
+                                                    <td name="colHoraNocturnaNormal" class="text-center colHoraNocturnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                        <a class="badge badge-soft-info mr-2">
+                                                            <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                            ${horaHorasNormalesNocturnas}:${minutoHorasNormalesNocturnas}:${segundoHorasNormalesNocturnas}
                                                         </a>
                                                     </td>
                                                     <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -2441,6 +2545,12 @@ function cargartabla(fecha) {
                                                         ${horaSumaHorasNormales}:${minutoSumaHorasNormales}:${segundoSumaHorasNormales}
                                                     </a>
                                                 </td>
+                                                <td name="colHoraDiurnaNormal" class="text-center colHoraDiurnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-warning mr-2">
+                                                        <img src="landing/images/sun.svg" height="12" class="mr-2">
+                                                        ${horaHorasNormalesDiurnas}:${minutoHorasNormalesDiurnas}:${segundoHorasNormalesDiurnas}
+                                                    </a>
+                                                </td>
                                                 <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
                                                     <a class="badge badge-soft-warning mr-2">
                                                         <img src="landing/images/sun.svg" height="12" class="mr-2">
@@ -2463,6 +2573,12 @@ function cargartabla(fecha) {
                                                     <a class="badge badge-soft-info mr-2">
                                                         <img src="landing/images/moon.svg" height="12" class="mr-2">
                                                         ${horaSumaHorasNocturnas}:${minutoSumaHorasNocturnas}:${segundoSumaHorasNocturnas}
+                                                    </a>
+                                                </td>
+                                                <td name="colHoraNocturnaNormal" class="text-center colHoraNocturnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
+                                                    <a class="badge badge-soft-info mr-2">
+                                                        <img src="landing/images/moon.svg" height="12" class="mr-2">
+                                                        ${horaHorasNormalesNocturnas}:${minutoHorasNormalesNocturnas}:${segundoHorasNormalesNocturnas}
                                                     </a>
                                                 </td>
                                                 <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">
@@ -3195,11 +3311,13 @@ function cargartabla(fecha) {
                                         <td name="colTiempoMuertoSalida" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTiempo" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHoraNormal" class="text-center colHoraNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHoraDiurnaNormal" class="text-center colHoraDiurnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTNormal" class="text-center colSobreTNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHE25D" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHE35D" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHE100D" class="text-center colHE100D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHoraNocturna" class="text-center colHoraNocturna" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
+                                        <td name="colHoraNocturnaNormal" class="text-center colHoraNocturnaNormal" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colSobreTNocturno" class="text-center colSobreTNocturno" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHE25N" class="text-center" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
                                         <td name="colHE35N" class="text-center colHE35D" style="background: #fafafa;border-right: 1px dashed #c8d4de!important;">---</td>
@@ -3909,6 +4027,16 @@ function registrarMar() {
         var horaF = null;
     } else {
         var horaF = $('#fechaNuevaSalida').val() + " " + $('#nuevaSalida').val();
+    }
+    if (horaI != null && horaF != null) {
+        if (moment(horaF).isSameOrBefore(moment(horaI))) {
+            $('#am_valid').empty();
+            $('#am_valid').append("Hora Final debe ser mayor a hora inicial");
+            $('#am_valid').show();
+            $('button[type="submit"]').attr("disabled", false);
+            sent = false;
+            return false;
+        }
     }
     $.ajax({
         async: false,
@@ -5534,6 +5662,8 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoPorT').hide();
     $('#contenidoDispositivos').hide();
     $('#contenidoPorTM').hide();
+    $('#contenidoPorTiemposDiurnosH').hide();
+    $('#contenidoPorTiemposNocturnosH').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
@@ -5547,6 +5677,10 @@ function toggleD() {
 function togglePorHorario() {
     $('#contenidoPorH').toggle();
 }
+// * TOGGLE POR TIEMPOS DIURNOS
+function togglePorTiemposDiurnosH() {
+    $('#contenidoPorTiemposDiurnosH').toggle();
+}
 // * TOGGLE POR TOTALES
 function togglePorTotales() {
     $('#contenidoPorT').toggle();
@@ -5555,8 +5689,94 @@ function togglePorTotales() {
 function togglePorTiemposMuertos() {
     $('#contenidoPorTM').toggle();
 }
+// * TOGGLE POR TIEMPOS NOCTURNOS
+function togglePorTiemposNocturnosH() {
+    $('#contenidoPorTiemposNocturnosH').toggle();
+}
+// * HIJOS DE TIEMPO DIURNO ENTRE HORARIO
+$('.detalleHijoDeHijoDeHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.detalleHijoDeHijo').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    // * PARA SEGUNDO PADRE TIEMPOS POR HORARIO
+    var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]:indeterminate').length;
+    var checkedP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]:checked').length;
+    var lengthP = $(this).closest('ul').parent().find('.detalleHijoDeHijo input[type=checkbox]').length;
+    if (lengthP == checkedP) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detalleHijo').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    }
+    // * PARA PRIMER PADRE CALCULOS DE TIEMPOS
+    var indeterminanteP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]:indeterminate').length;
+    var checkedP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]:checked').length;
+    var lengthP1 = $(this).closest('ul').parent().closest('ul').parent().find('.detalleHijo input[type=checkbox]').length;
+    if (lengthP1 == checkedP1) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP1 != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP1 != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    }
+    toggleColumnas();
+});
 // * HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
+    $(this).closest('.detalleHijoDeHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     var contenido = $(this).closest('ul');
     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
         contenido.prev('.detalleHijo').find('input[type=checkbox]').prop({
@@ -5576,10 +5796,41 @@ $('.detalleHijoDeHijo input[type=checkbox]').change(function () {
             });
         }
     }
+    // * PARA SEGUNDO PADRE TIEMPOS POR HORARIO
+
+    var indeterminanteP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]:indeterminate').length;
+    var checkedP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]:checked').length;
+    var lengthP = $(this).closest('ul').parent().find('.detalleHijo input[type=checkbox]').length;
+    if (lengthP == checkedP) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.detallePadre').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    }
     toggleColumnas();
 });
 // * PADRE DE HIJOS DE POR HORARIO Y TOTAL
 $('.detalleHijo input[type=checkbox]').change(function () {
+    $(this).closest('.detalleHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     $(this).closest('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     var contenido = $(this).closest('ul');
     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
@@ -5604,8 +5855,12 @@ $('.detalleHijo input[type=checkbox]').change(function () {
 });
 // * FUNCIONN DE CHECKBOX DE PADRE DETALLES
 $('.detallePadre input[type=checkbox]').change(function () {
-    $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
+    $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop({
+        indeterminate: false,
+        checked: this.checked
+    });
     $('.detalleHijo').next('ul').find('.detalleHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
+    $('.detalleHijoDeHijo').next('ul').find('.detalleHijoDeHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
 // : ************************************** COLUMNAS DE PAUSAS ***********************************************
@@ -5808,11 +6063,17 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colFaltaJornada').visible(false);
     }
-    // : HORARIO NORMAL
+    // : HORAS DIURNAS
     if ($('#colHoraNormal').is(":checked")) {
         dataT.api().columns('.colHoraNormal').visible(true);
     } else {
         dataT.api().columns('.colHoraNormal').visible(false);
+    }
+    // : HORAS NORMALES - DIURNAS
+    if ($('#colHoraDiurnaNormal').is(":checked")) {
+        dataT.api().columns('.colHoraDiurnaNormal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraDiurnaNormal').visible(false);
     }
     // : HORARIO NOCTURNO
     if ($('#colHoraNocturna').is(":checked")) {
@@ -5893,11 +6154,17 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colHoraNormalTotal').visible(false);
     }
-    // : HORARIO NOCTURNO TOTAL
+    // : HORAS NOCTURNAS
     if ($('#colHoraNocturnaTotal').is(":checked")) {
         dataT.api().columns('.colHoraNocturnaTotal').visible(true);
     } else {
         dataT.api().columns('.colHoraNocturnaTotal').visible(false);
+    }
+    // : HORAS NORMALES NOCTURNAS
+    if ($('#colHoraNocturnaNormal').is(":checked")) {
+        dataT.api().columns('.colHoraNocturnaNormal').visible(true);
+    } else {
+        dataT.api().columns('.colHoraNocturnaNormal').visible(false);
     }
     // : HORAS EXTRAS 25% DIURNAS TOTALES
     if ($('#colHE25DTotal').is(":checked")) {
@@ -6208,6 +6475,7 @@ $('#selectPor').on("change", function () {
     }
     $('#empleadoPor').empty();
     $.ajax({
+        async: false,
         type: "GET",
         url: "/selectEmpleadoModoAP",
         data: {
@@ -6239,10 +6507,11 @@ $('#empleadoPor').on('select2:close', function () {
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
 });
-// : CUANDO EL SELECCIONAR POR QUEDE VACIO
+// : CUANDO EL SELECCIONAR POR QUEDE VACIO Y SE CIERRE
 // : SIEMPRE TENER SELECCIONADO POR EMPLEADO
-$('#selectPor').on('select2:unselect', function () {
-    if ($(this).val().length == 0) {
+$('#selectPor').on('select2:closing', function () {
+    console.log($(this).val());
+    if($(this).val().length == 0){
         $(this).val(0).trigger("change");
     }
 });
@@ -6255,11 +6524,11 @@ $('#selectPor').on('select2:selecting', function () {
     }
 });
 // : DESACTIVAMOS EL BSUCAR
-$('#selectPor').on('select2:opening select2:closing', function( event ) {
+$('#selectPor').on('select2:opening select2:closing', function (event) {
     var $searchfield = $(this).parent().find('.select2-search__field');
     $searchfield.prop('disabled', true);
 });
-$('#empleadoPor').on('select2:opening select2:closing', function( event ) {
+$('#empleadoPor').on('select2:opening select2:closing', function (event) {
     var $searchfield = $(this).parent().find('.select2-search__field');
     $searchfield.prop('disabled', true);
 });

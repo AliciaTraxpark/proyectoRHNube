@@ -402,8 +402,8 @@ function cargarDatos() {
                         <th>Departamento</th>
                         <th class="text-center">Tardanzas</th>
                         <th class="text-center">Días Trabajados</th>
-                        <th class="text-center">Horario normal</th>
-                        <th class="text-center">Horario nocturno</th>
+                        <th class="text-center">Horas diurnas</th>
+                        <th class="text-center">Horas nocturnas</th>
                         <th class="text-center tiempoMuertoE">Tiempo muerto - entrada</th>
                         <th class="text-center tiempoMuertoS">Tiempo muerto - salida</th>
                         <th class="text-center">Faltas</th>`;
@@ -1692,9 +1692,10 @@ $('#empleadoPor').on('select2:close', function () {
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
 });
-// : CUANDO EL SELECCIONAR POR QUEDE VACIO
+// : CUANDO EL SELECCIONAR POR QUEDE VACIO Y SE CIERRE
 // : SIEMPRE TENER SELECCIONADO POR EMPLEADO
-$('#selectPor').on('select2:unselect', function () {
+$('#selectPor').on('select2:closing', function () {
+    console.log($(this).val());
     if ($(this).val().length == 0) {
         $(this).val(0).trigger("change");
     }
@@ -1708,11 +1709,11 @@ $('#selectPor').on('select2:selecting', function () {
     }
 });
 // : DESACTIVAMOS EL BSUCAR
-$('#selectPor').on('select2:opening select2:closing', function( event ) {
+$('#selectPor').on('select2:opening select2:closing', function (event) {
     var $searchfield = $(this).parent().find('.select2-search__field');
     $searchfield.prop('disabled', true);
 });
-$('#empleadoPor').on('select2:opening select2:closing', function( event ) {
+$('#empleadoPor').on('select2:opening select2:closing', function (event) {
     var $searchfield = $(this).parent().find('.select2-search__field');
     $searchfield.prop('disabled', true);
 });
