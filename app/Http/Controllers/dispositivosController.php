@@ -7,7 +7,6 @@ use App\dispositivo_controlador;
 use App\controladores;
 use App\dispositivo_empleado;
 use App\dispositivos;
-use App\eventos_empleado;
 use App\horario_empleado;
 use App\incidencias;
 use App\marcacion_puerta;
@@ -18,7 +17,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\correoVinculacionPuerta;
 use App\organizacion;
@@ -791,20 +789,6 @@ class dispositivosController extends Controller
             }
             // * ******************* INCIDENCIAS *********************
             $idEmpleado = $m->emple_id;
-            // * TABLA EVENTOS EMPLEADO
-            $eventos = eventos_empleado::select('title as descripcion')
-                ->where('id_empleado', '=', $idEmpleado)
-                ->whereBetween(DB::raw('DATE(eventos_empleado.start)'), [$fecha, $fecha])
-                ->orWhere(function ($query) use ($fecha, $idEmpleado) {
-                    $query->where('id_empleado', '=', $idEmpleado);
-                    $query->whereNotNull('eventos_empleado.end');
-                    $query->where(DB::raw('DATE(eventos_empleado.start)'), '<=', $fecha);
-                    $query->where(DB::raw('DATE(eventos_empleado.end)'), '>', $fecha);
-                })
-                ->get();
-            foreach ($eventos as $e) {
-                array_push($m->incidencias, $e);
-            }
             // * TABLA INCIDENCIAS DIA
             $incidencias = DB::table('incidencia_dias as id')
                 ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
@@ -1215,20 +1199,6 @@ class dispositivosController extends Controller
                     }
                     // * ******************* INCIDENCIAS *********************
                     $idEmpleado = $m->emple_id;
-                    // * TABLA EVENTOS EMPLEADO
-                    $eventos = eventos_empleado::select('title as descripcion')
-                        ->where('id_empleado', '=', $idEmpleado)
-                        ->whereBetween(DB::raw('DATE(eventos_empleado.start)'), [$d, $d])
-                        ->orWhere(function ($query) use ($d, $idEmpleado) {
-                            $query->where('id_empleado', '=', $idEmpleado);
-                            $query->whereNotNull('eventos_empleado.end');
-                            $query->where(DB::raw('DATE(eventos_empleado.start)'), '<=', $d);
-                            $query->where(DB::raw('DATE(eventos_empleado.end)'), '>', $d);
-                        })
-                        ->get();
-                    foreach ($eventos as $e) {
-                        array_push($m->incidencias, $e);
-                    }
                     // * TABLA INCIDENCIAS DIA
                     $incidencias = DB::table('incidencia_dias as id')
                         ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
@@ -1975,17 +1945,6 @@ class dispositivosController extends Controller
                 }
                 // * *********************** INCIDENCIAS ***********************
                 $idEmpleado = $m->emple_id;
-                // * TABLA EVENTOS EMPLEADO
-                $eventos = eventos_empleado::select('title as descripcion')
-                    ->where('id_empleado', '=', $idEmpleado)
-                    ->whereBetween(DB::raw('DATE(eventos_empleado.start)'), [$d, $d])
-                    ->orWhere(function ($query) use ($d, $idEmpleado) {
-                        $query->where('id_empleado', '=', $idEmpleado);
-                        $query->whereNotNull('eventos_empleado.end');
-                        $query->where(DB::raw('DATE(eventos_empleado.start)'), '<=', $d);
-                        $query->where(DB::raw('DATE(eventos_empleado.end)'), '>', $d);
-                    })
-                    ->get();
                 // * TABLA INCIDENCIAS DIA
                 $incidencias = DB::table('incidencia_dias as id')
                     ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
@@ -2002,16 +1961,13 @@ class dispositivosController extends Controller
                     $horarios = array_keys($m->datos[$d]);
                     foreach ($horarios as $h) {
                         $marcaciones[$key]->datos[$d][$h]->incidencias = array();
-                        foreach ($eventos as $e) {
-                            array_push($marcaciones[$key]->datos[$d][$h]->incidencias, $e);
-                        }
                         foreach ($incidencias as $i) {
                             array_push($marcaciones[$key]->datos[$d][$h]->incidencias, $i);
                         }
                     }
                 } else {
                     // : REGISTRAMOS LA FECHA SI SOLO TIENE EVENTOS O INCIDENCIAS
-                    if (sizeof($eventos) != 0 || sizeof($incidencias) != 0) {
+                    if (sizeof($incidencias) != 0) {
                         $marcaciones[$key]->datos[$d][0] = (object)array(
                             "idHorario" => 0,
                             "horario" => 0,
@@ -2027,9 +1983,6 @@ class dispositivosController extends Controller
                             "incidencias" => array(),
                             "pausas" => array()
                         );
-                        foreach ($eventos as $e) {
-                            array_push($marcaciones[$key]->datos[$d][0]->incidencias, $e);
-                        }
                         foreach ($incidencias as $i) {
                             array_push($marcaciones[$key]->datos[$d][0]->incidencias, $i);
                         }
