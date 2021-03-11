@@ -128,7 +128,7 @@ class registroEmpresaController extends Controller
                 'lleno25'=>2, 'lleno35'=>1,'lleno100'=>2,'activo'=>1,'organi_id'=> $idorgani],
 
                 3 =>['idTipoRegla'=>'3', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(25% y 35%)',
-                'lleno25'=>0, 'lleno35'=>0,'lleno100'=>2,'activo'=>1,'organi_id'=> $idorgani]
+                'lleno25'=>0, 'lleno35'=>1,'lleno100'=>2,'activo'=>1,'organi_id'=> $idorgani]
 
             ];
 
