@@ -331,6 +331,7 @@ Route::post('/clonarHorarios', 'horarioController@clonarHorarios');
 Route::post('/reemplazarHorariosClonacion', 'horarioController@reemplazarHorariosClonacion');
 Route::post('/horario/Incidenciasxtipo', 'horarioController@Incidenciasxtipo');
 Route::post('/horario/registrarInciTemp', 'horarioController@registrarInciTemp');
+Route::get('/horario/cambiartiporegla', 'horarioController@cambiartiporegla');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');

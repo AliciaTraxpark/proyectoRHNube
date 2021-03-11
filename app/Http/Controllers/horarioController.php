@@ -2585,4 +2585,74 @@ class horarioController extends Controller
 
     }
 
+    //*api para el tipo deregla modificar
+    public function cambiartiporegla(){
+
+        //*PRIMERO VACEAMO LOS CAMPO HORARIOS CON TIPO REGLA*******
+        $horarios=DB::table('horario')->get();
+        foreach($horarios as $horario){
+            $horarioACtualizar=horario::find($horario->horario_id);
+            $horarioACtualizar->idreglas_horasExtras=null;
+            $horarioACtualizar->idreglas_horasExtrasNoct=null;
+            $horarioACtualizar->save();
+        }
+        //*************************************************** */
+
+        //*CAMBIAMOS PARA NORMAL TIPO1
+        $tiposRegla=DB::table('reglas_horasextras')
+        ->where('idTipoRegla','=',1) ->update(['reglas_descripcion' => 'Horas extras(25% y 35%)',
+        'lleno25'=>0,'lleno35'=> 1,'lleno100'=> 2]);
+
+        //*CAMBIAMOS PARA NORMAL TIPO2
+        $tiposRegla=DB::table('reglas_horasextras')
+        ->where('idTipoRegla','=',2) ->update(['tipo_regla'=> 'Nocturno','reglas_descripcion' => 'Horas extras(35%)',
+        'lleno25'=>2,'lleno35'=> 1,'lleno100'=> 2]);
+
+        //*CAMBIAMOS PARA NORMAL TIPO3
+        $tiposRegla=DB::table('reglas_horasextras')
+        ->where('idTipoRegla','=',3) ->update(['reglas_descripcion' => 'Horas extras(25% y 35%)',
+        'lleno25'=>0,'lleno35'=> 1,'lleno100'=> 2]);
+
+         //*ELIMINAMOS TIPO DE REGLA 4Y 5
+         $tiposRegla=DB::table('reglas_horasextras')
+         ->where('idTipoRegla','=',4) ->orWhere('idTipoRegla','=',5)
+         ->delete();
+
+
+         //*SETEANDO TIPO REGLA POR ORGANIZACION
+         $organizaciones=DB::table('organizacion')->get();
+         foreach($organizaciones as $organizacion){
+
+            //*obtenemos tipo regla1 de cada organizacion
+            $tiposReglaOrgN=DB::table('reglas_horasextras')
+            ->where('idTipoRegla','=',1)
+            ->where('organi_id','=',$organizacion->organi_id)
+            ->get()->first();
+
+            //*obtenemos tipo regla3 noct de cada organizacion
+            $tiposReglaOrgNoct=DB::table('reglas_horasextras')
+            ->where('idTipoRegla','=',3)
+            ->where('organi_id','=',$organizacion->organi_id)
+            ->get()->first();
+
+
+            //*OBTENEMOS TODOS LOS HORARIOS DE CADA ORGANIZACION
+            $horariosOrgan=DB::table('horario')
+            ->where('organi_id','=',$organizacion->organi_id)->get();
+
+            //*CAMBIAMOS REGLAS PARA CADA HORARIO
+            foreach($horariosOrgan as $horariosOrg){
+
+                $horarioACtualizar=horario::find($horariosOrg->horario_id);
+                $horarioACtualizar->idreglas_horasExtras=$tiposReglaOrgN->idreglas_horasExtras;
+                $horarioACtualizar->idreglas_horasExtrasNoct=$tiposReglaOrgNoct->idreglas_horasExtras;
+                $horarioACtualizar->save();
+            }
+
+         }
+
+         return('ejecutado con exito, no ejecutar otra vez');
+
+    }
+
 }
