@@ -4629,13 +4629,20 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
              <label
              style="font-weight: 600">Total empleados: ` + data.length +` </label>
              </div>
+             <div class="col-md-12 row">
+             <div class="col-md-3" style="padding-top: 4px;">
+             <label
+             style="font-weight: 600">Buscar empleado: </label> </div>
+             <div class="col-md-5">
+             <input id="buscadorHorario" type="text" value="" onkeyup="buscadorEmpleadoH()" class="form-control form-control-sm"></div>
+             </div>
              </div>`;
 
             $.each(data, function (key, item) {
 
             //*NOMBRE DE EMPLEADO
-            contenido+=`<div class='col-md-12' style="border-top: 1px dashed #aaaaaa!important;">
-            <h5 class='header-title' style='font-size: 13.4px;'>` + item.apellidos +` `+item.nombre+`</h5>
+            contenido+=` <div class='col-md-12 row itemHorario'><div class='col-md-12 ' style="border-top: 1px dashed #aaaaaa!important;">
+            <h5 class='header-title nombres' style='font-size: 13.4px;'>` + item.apellidos +` `+item.nombre+`</h5>
             <h5 class='header-title' style='font-size: 13px'>Horarios:</h5>
             </div>`;
 
@@ -4666,16 +4673,20 @@ function datosModalHorarioEmpleado(diadeHorario,empleados){
                 `;
 
             });
+
             contenido+=
             `<div class="col-md-12 row" style="    margin-left: 0px;padding-top: 5px;
-            padding-left: 0px;" id="dataHorarioElegido` + item.idempleado+`"></div>`;
+            padding-left: 0px;" id="dataHorarioElegido` + item.idempleado+`"></div></div>`;
             });
+
             $("#rowdivs").append(contenido);
 
             $("#fechaSelectora").val(diadeHorario);
             $("#modalidsEmpleado").val(empleados);
 
             $('#modalHorarioEmpleados').modal('show');
+
+
         },
         error: function (data) {
               console.log('Ocurrio un error');
@@ -5090,13 +5101,20 @@ function datosModalIncidenciaEmpleado(diadeIncidencia,empleados){
              <label
              style="font-weight: 600">Total empleados: ` + data.length +` </label>
              </div>
+             <div class="col-md-12 row">
+             <div class="col-md-3" style="padding-top: 4px;">
+             <label
+             style="font-weight: 600">Buscar empleado: </label> </div>
+             <div class="col-md-5">
+             <input id="buscadorIncidencia" type="text" value="" onkeyup="buscadorEmpleadoI()" class="form-control form-control-sm"></div>
+             </div>
                       </div>`;
 
             $.each(data, function (key, item) {
 
             //*NOMBRE DE EMPLEADO
-            contenido+=`<div class='col-md-12' style="border-top: 1px dashed #aaaaaa!important;">
-            <h5 class='header-title' style='font-size: 13.4px;'>` + item.apellidos +` `+item.nombre+`</h5>
+            contenido+=`<div class='col-md-12 row itemIncidencia'><div class='col-md-12' style="border-top: 1px dashed #aaaaaa!important;">
+            <h5 class='header-title nombresInc' style='font-size: 13.4px;'>` + item.apellidos +` `+item.nombre+`</h5>
             <h5 class='header-title' style='font-size: 13px'>Incidencias:</h5>
             </div>`;
 
@@ -5129,7 +5147,7 @@ function datosModalIncidenciaEmpleado(diadeIncidencia,empleados){
             });
             contenido+=
             `<div class="col-md-12 row" style="    margin-left: 0px;padding-top: 5px;
-            padding-left: 0px;" id="dataInciElegido` + item.idempleado+`"></div>`;
+            padding-left: 0px;" id="dataInciElegido` + item.idempleado+`"></div></div>`;
             });
             $("#rowdivsIncid").append(contenido);
 
@@ -5364,3 +5382,39 @@ $(function () {
 
 
 });
+
+//* BUSCADOR DE EMPLEADO EN MODAL HORARIOS
+function buscadorEmpleadoH(){
+    var nombres = $('.nombres');
+
+    var buscando = $('#buscadorHorario').val();
+    var item='';
+    for( var i = 0; i < nombres.length; i++ ){
+        item = $(nombres[i]).html().toLowerCase();
+         for(var x = 0; x < item.length; x++ ){
+             if( buscando.length == 0 || item.indexOf( buscando ) > -1 ){
+                 $(nombres[i]).parents('.itemHorario').show();
+             }else{
+                  $(nombres[i]).parents('.itemHorario').hide();
+             }
+         }
+    }
+}
+
+//* BUSCADOR DE EMPLEADO EN MODAL INCIDENCIAS
+function buscadorEmpleadoI(){
+    var nombres = $('.nombresInc');
+
+    var buscando = $('#buscadorIncidencia').val();
+    var item='';
+    for( var i = 0; i < nombres.length; i++ ){
+        item = $(nombres[i]).html().toLowerCase();
+         for(var x = 0; x < item.length; x++ ){
+             if( buscando.length == 0 || item.indexOf( buscando ) > -1 ){
+                 $(nombres[i]).parents('.itemIncidencia').show();
+             }else{
+                  $(nombres[i]).parents('.itemIncidencia').hide();
+             }
+         }
+    }
+}
