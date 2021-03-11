@@ -672,11 +672,25 @@
                                                 <label for="">Seleccione regla de horas extras:</label>
                                                 <select data-plugin="customselect" id="idReglaHora"
                                                     name="idReglaHora" class="form-control"
-                                                    data-placeholder="seleccione" required>
+                                                     required>
                                                     @foreach ($reglasHExtras as $regla)
-                                                        <option value=""></option>
-                                                        <option value="{{ $regla->idreglas_horasExtras }}">
-                                                            {{ $regla->reglas_descripcion }}({{$regla->tipo_regla}})</option>
+
+                                                        <option value="{{ $regla->idreglas_horasExtras }}" selected>
+                                                            {{ $regla->reglas_descripcion }}({{$regla->tipo_regla}}) </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="">Seleccione regla de horas extras nocturnas:</label>
+                                                <select data-plugin="customselect" id="idReglaHoraNocturna"
+                                                    name="idReglaHoraNocturna" class="form-control"
+                                                    required>
+                                                    @foreach ($reglasHExtrasNocturno as $reglaN)
+
+                                                        <option value="{{ $reglaN->idreglas_horasExtras }}">
+                                                            {{ $reglaN->reglas_descripcion }}({{$reglaN->tipo_regla}})</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -865,11 +879,23 @@
                                                 <label for="">Seleccione regla de horas extras:</label>
                                                 <select data-plugin="customselect" id="idReglaHora_ed"
                                                     name="idReglaHora_ed" class="form-control"
-                                                    data-placeholder="seleccione" required>
+                                                     required>
                                                     @foreach ($reglasHExtras as $regla)
-                                                        <option value=""></option>
                                                         <option value="{{ $regla->idreglas_horasExtras }}">
                                                             {{ $regla->reglas_descripcion }}({{$regla->tipo_regla}})</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="">Seleccione regla de horas extras nocturnas:</label>
+                                                <select data-plugin="customselect" id="idReglaHoraNocturna_ed"
+                                                    name="idReglaHoraNocturna_ed" class="form-control"
+                                                    required>
+                                                    @foreach ($reglasHExtrasNocturno as $reglaN)
+                                                        <option value="{{ $reglaN->idreglas_horasExtras }}">
+                                                            {{ $reglaN->reglas_descripcion }}({{$reglaN->tipo_regla}})</option>
                                                     @endforeach
                                                 </select>
                                             </div>

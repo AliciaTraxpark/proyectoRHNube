@@ -110,6 +110,14 @@ class horarioController extends Controller
             //*reglas
             $reglasHExtras=DB::table('reglas_horasextras')
             ->where('organi_id','=', session('sesionidorg'))
+            ->where('idTipoRegla','=',1)
+            ->get();
+
+            //*reglas nocturnas
+            $reglasHExtrasNocturno=DB::table('reglas_horasextras')
+            ->where('organi_id','=', session('sesionidorg'))
+            ->where('tipo_regla','=','Nocturno')
+            ->orderBy('idTipoRegla','DESC')
             ->get();
 
             //*tipo iincidencia
@@ -125,14 +133,18 @@ class horarioController extends Controller
                     return view('horarios.horarios', [
                          'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                         'area' => $area, 'cargo' => $cargo, 'local' => $local, 'nivel'=>$nivel,
-                        'centroc'=>$centroc, 'tipo_incidencia'=>$tipo_incidencia
+                        'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras,'tipo_incidencia'=>$tipo_incidencia,
+                        'reglasHExtrasNocturno'=>$reglasHExtrasNocturno
+
                     ]);
                 }
             } else {
                 return view('horarios.horarios', [
                     'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                     'area' => $area, 'cargo' => $cargo, 'local' => $local,  'nivel'=>$nivel,
-                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia
+                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia,
+                    'reglasHExtrasNocturno'=>$reglasHExtrasNocturno,
+
                 ]);
             }
         }
@@ -522,7 +534,16 @@ class horarioController extends Controller
             //*reglas
             $reglasHExtras=DB::table('reglas_horasextras')
             ->where('organi_id','=', session('sesionidorg'))
+            ->where('idTipoRegla','=',1)
             ->get();
+
+            //*reglas nocturnas
+            $reglasHExtrasNocturno=DB::table('reglas_horasextras')
+            ->where('organi_id','=', session('sesionidorg'))
+            ->where('tipo_regla','=','Nocturno')
+            ->orderBy('idTipoRegla','DESC')
+            ->get();
+
             $invitadod = DB::table('invitado')
                 ->where('user_Invitado', '=', Auth::user()->id)
                 ->where('organi_id', '=', session('sesionidorg'))
@@ -541,14 +562,16 @@ class horarioController extends Controller
                     return view('horarios.horarioMenu', [
                          'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                         'area' => $area, 'cargo' => $cargo, 'local' => $local,'nivel'=>$nivel,
-                        'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia
+                        'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia,
+                        'reglasHExtrasNocturno'=>$reglasHExtrasNocturno
                     ]);
                 }
             } else {
                 return view('horarios.horarioMenu', [
                      'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                     'area' => $area, 'cargo' => $cargo, 'local' => $local,'nivel'=>$nivel,
-                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia
+                    'centroc'=>$centroc, 'reglasHExtras'=>$reglasHExtras, 'tipo_incidencia'=>$tipo_incidencia,
+                    'reglasHExtrasNocturno'=>$reglasHExtrasNocturno
                 ]);
             }
         }
@@ -1385,6 +1408,7 @@ class horarioController extends Controller
         $horario->tiempoMingreso = $request->get('tmIngreso');
         $horario->tiempoMsalida = $request->get('tmSalida');
         $horario->idreglas_horasExtras = $request->get('idReglaHExtras');
+        $horario->idreglas_horasExtrasNoct = $request->get('idReglaHExtrasNoc');
         $horario->save();
 
         $idHorario = $horario->horario_id;
@@ -1432,6 +1456,7 @@ class horarioController extends Controller
         $horario->tiempoMingreso = $request->get('tmIngreso');
         $horario->tiempoMsalida = $request->get('tmSalida');
         $horario->idreglas_horasExtras = $request->get('idReglaHExtras');
+        $horario->idreglas_horasExtrasNoct = $request->get('idReglaHExtrasNoc');
         $horario->save();
 
         $idHorario = $horario->horario_id;

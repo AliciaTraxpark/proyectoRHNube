@@ -2698,8 +2698,7 @@ function modalRegistrar() {
     $('#toleranciaSalida').val(0);
     $('#tmIngreso').prop('checked',false);
     $('#tmSalida').prop('checked',false);
-    $('#idReglaHora').val('');
-    $('#idReglaHora').trigger('change');
+
 }
 // * SWITCH DE PAUSAS
 var r_cont = 0;
@@ -3217,6 +3216,7 @@ function registrarNuevoHorario() {
     var toleranciaF = $('#toleranciaSalida').val();
     var horasO = $('#horaOblig').val();
     var idReglaHExtras=$('#idReglaHora').val();
+    var idReglaHExtrasNoc=$('#idReglaHoraNocturna').val();
 
     //*Tiempos muertos
     var tmIngreso;
@@ -3266,7 +3266,8 @@ function registrarNuevoHorario() {
             pausas: pausas,
             tmIngreso,
             tmSalida,
-            idReglaHExtras
+            idReglaHExtras,
+            idReglaHExtrasNoc
         },
         statusCode: {
             401: function () {
@@ -3439,6 +3440,10 @@ function modalEditar(id) {
             //regla
             $('#idReglaHora_ed').val(data.horario[0].idreglas_horasExtras);
             $("#idReglaHora_ed").trigger("change");
+
+            //regla nocturna
+            $('#idReglaHoraNocturna_ed').val(data.horario[0].idreglas_horasExtrasNoct);
+            $("#idReglaHoraNocturna_ed").trigger("change");
 
 
 
@@ -4210,6 +4215,7 @@ async function editarHorarioDatos() {
     var toleranciaF = $('#toleranciaSalida_ed').val();
     var horasO = $('#horaOblig_ed').val();
     var idReglaHExtras=$('#idReglaHora_ed').val();
+    var idReglaHExtrasNoc=$('#idReglaHoraNocturna_ed').val();
 
     //*Tiempos muertos
     var tmIngreso;
@@ -4259,7 +4265,8 @@ async function editarHorarioDatos() {
             pausas: pausas,
             tmIngreso,
             tmSalida,
-            idReglaHExtras
+            idReglaHExtras,
+            idReglaHExtrasNoc
         },
         statusCode: {
             401: function () {
