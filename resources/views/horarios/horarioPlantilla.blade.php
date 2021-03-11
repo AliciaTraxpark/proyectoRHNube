@@ -156,12 +156,12 @@
                                         <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
                                     </div>
 
-                                    <div class="col-md-6 text-right">
+                                    {{-- <div class="col-md-6 text-right">
                                         <label for="" style="font-weight: 600">Leyenda:   </label>
                                         <span class="badge " style="background-color:#e2e2e2;color:#3a3535 ">Horarios no guardados</span>
                                         <span class="badge " style="background-color: #9E9E9E;color:#3a3535 ">Incidencias no guardadas</span>
 
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
                                         <div id="calendar"></div>
