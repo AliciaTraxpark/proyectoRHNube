@@ -1831,7 +1831,7 @@ class horarioController extends Controller
         }
 
         $dataHorario=$dataHorario->collapse();
-        $dataHorarioF=$dataHorario->sortBy('apellidos',SORT_STRING)->values()->toArray();
+        $dataHorarioF=$dataHorario->sortBy('apellidos',SORT_LOCALE_STRING)->values()->toArray();
 
 
 
@@ -2484,7 +2484,7 @@ class horarioController extends Controller
 
         //*ORDENAMOS POR APELLIDOS Y APLANAMOS
         $dataIncidencia=$dataIncidencia->collapse();
-        $dataIncidenciaf=$dataIncidencia->sortBy('apellidos',SORT_STRING)->values()->toArray();
+        $dataIncidenciaf=$dataIncidencia->sortBy('apellidos',SORT_LOCALE_STRING)->values()->toArray();
 
         foreach($dataIncidenciaf as $dataIncidencias){
 
