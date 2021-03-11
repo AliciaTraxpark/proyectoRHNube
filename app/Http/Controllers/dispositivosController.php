@@ -3528,6 +3528,48 @@ class dispositivosController extends Controller
                                         ];
                                         $tiempo = $horaFParse->diffinSeconds($p["fin"]);
                                         $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    } else {
+                                        // : PRIMER ELEMENTO
+                                        if ($item == 0) {
+                                            $arrayInsert[] = [
+                                                "marcaMov_fecha" => $horaIParse,
+                                                "marcaMov_emple_id" => $horario->idEmpleado,
+                                                "dispositivoEntrada" => NULL,
+                                                "organi_id" => session('sesionidorg'),
+                                                "horarioEmp_id" => $idHorarioE,
+                                                "marcaMov_salida" => $p["inicio"],
+                                                "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                            ];
+                                            $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                            $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                        } else {
+                                            // : SIGUIENTES ELEMENTOS
+                                            $arrayInsert[] = [
+                                                "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                                "marcaMov_emple_id" => $horario->idEmpleado,
+                                                "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                                "organi_id" => session('sesionidorg'),
+                                                "horarioEmp_id" => $idHorarioE,
+                                                "marcaMov_salida" => $p["inicio"],
+                                                "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                            ];
+                                            $tiempo = $p["inicio"]->diffinSeconds($arrayPausas[$item - 1]["fin"]);
+                                            $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                            // : ULTIMO ELEMENTO
+                                            if ($item == endKey($arrayPausas)) {
+                                                $arrayInsert[] = [
+                                                    "marcaMov_fecha" => $p["fin"],
+                                                    "marcaMov_emple_id" => $horario->idEmpleado,
+                                                    "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                                    "organi_id" => session('sesionidorg'),
+                                                    "horarioEmp_id" => $idHorarioE,
+                                                    "marcaMov_salida" => $horaFParse,
+                                                    "dispositivoSalida" => NULL
+                                                ];
+                                                $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                                $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                            }
+                                        }
                                     }
                                 }
                                 $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($sumaTiempoM);
