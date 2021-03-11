@@ -120,20 +120,15 @@ class registroEmpresaController extends Controller
             //* 1 es todo
             //* 2 es vacio
             $arrayReglas=[
-                1 => ['idTipoRegla'=>'1', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
-                     'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1, 'activo'=>1,'organi_id'=> $idorgani],
 
-                2 =>['idTipoRegla'=>'2', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25% y 35%)',
+                1 =>['idTipoRegla'=>'1', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25% y 35%)',
                     'lleno25'=>0, 'lleno35'=>1,'lleno100'=>2,'activo'=>1,'organi_id'=>$idorgani],
 
-                3 =>['idTipoRegla'=>'3', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(35%)',
+                2 =>['idTipoRegla'=>'2', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(35%)',
                 'lleno25'=>2, 'lleno35'=>1,'lleno100'=>2,'activo'=>1,'organi_id'=> $idorgani],
 
-                4 =>['idTipoRegla'=>'4', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
-                'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1,'activo'=>1,'organi_id'=> $idorgani],
-
-                5 =>['idTipoRegla'=>'5', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(100%)',
-                'lleno25'=>2, 'lleno35'=>2,'lleno100'=>1,'activo'=>1,'organi_id'=>$idorgani]
+                3 =>['idTipoRegla'=>'3', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(25% y 35%)',
+                'lleno25'=>0, 'lleno35'=>0,'lleno100'=>2,'activo'=>1,'organi_id'=> $idorgani]
 
             ];
 
