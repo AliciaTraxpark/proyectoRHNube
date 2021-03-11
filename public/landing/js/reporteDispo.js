@@ -6507,10 +6507,11 @@ $('#empleadoPor').on('select2:close', function () {
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
 });
-// : CUANDO EL SELECCIONAR POR QUEDE VACIO
+// : CUANDO EL SELECCIONAR POR QUEDE VACIO Y SE CIERRE
 // : SIEMPRE TENER SELECCIONADO POR EMPLEADO
-$('#selectPor').on('select2:unselect', function () {
-    if ($(this).val().length == 0) {
+$('#selectPor').on('select2:closing', function () {
+    console.log($(this).val());
+    if($(this).val().length == 0){
         $(this).val(0).trigger("change");
     }
 });

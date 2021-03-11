@@ -441,12 +441,12 @@ function cargartabla(fecha1, fecha2) {
                             <th class="text-center totalTiempoMuertoE">Tiempo muerto - entrada</th>
                             <th class="text-center totalTiempoMuertoS">Tiempo muerto - salida</th>
                             <th class="text-center colSobretiempo">Sobretiempo</th>
-                            <th class="text-center colHorarioNormal">Horario normal</th>
+                            <th class="text-center colHorarioNormal">Horas diurnas</th>
                             <th class="text-center colSobretiempoNormal">Sobretiempo normal</th>
                             <th class="text-center colDiurnas25">H.E. 25% Diurnas</th>
                             <th class="text-center colDiurnas35">H.E. 35% Diurnas</th>
                             <th class="text-center colDiurnas100">H.E. 100% Diurnas</th>
-                            <th class="text-center colHorarioNocturno">Horario nocturno</th>
+                            <th class="text-center colHorarioNocturno">Horas nocturnas</th>
                             <th class="text-center colSobretiempoNocturno">Sobretiempo nocturno</th>
                             <th class="text-center colNocturnas25">H.E. 25% Nocturnas</th>
                             <th class="text-center colNocturnas35">H.E. 35% Nocturnas</th>
@@ -1938,6 +1938,8 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoTiempos').hide();
     $('#contenidoIncidencias').hide();
     $('#contenidoPausas').hide();
+    $('#contenidoPorTiemposD').hide();
+    $('#contenidoPorTiemposN').hide();
 });
 // : ************************** COLUMNAS DE MARCACIONES *************************************************************
 $('#colMarcaciones').change(function (event) {
@@ -1957,8 +1959,69 @@ function toggleTiempos() {
 function togglePorTiemposMuertos() {
     $('#contenidoPorTM').toggle();
 }
+// * TOGGLE POR TIEMPOS DIURNOS
+function toggleTiemposDiurnos() {
+    $('#contenidoPorTiemposD').toggle();
+}
+// * TOGGLE POR TIEMPOS NOCTURNOS
+function toggleTiemposNocturnos() {
+    $('#contenidoPorTiemposN').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS DE HIJOS TIEMPOS
+$('.tiemposHijoDeHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.tiemposHijo').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.tiemposHijo').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.tiemposHijo').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    // * PARA SEGUNDO PADRE TIEMPOS POR HORARIO
+    var indeterminanteP = $(this).closest('ul').parent().find('.tiemposHijo input[type=checkbox]:indeterminate').length;
+    var checkedP = $(this).closest('ul').parent().find('.tiemposHijo input[type=checkbox]:checked').length;
+    var lengthP = $(this).closest('ul').parent().find('.tiemposHijo input[type=checkbox]').length;
+    if (lengthP == checkedP) {
+        $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.tiemposPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (indeterminanteP != 0) {
+            $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.tiemposPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            if (checkedP != 0) {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.tiemposPadre').find('input[type=checkbox]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            } else {
+                $(this).closest('ul').prev('li').closest('ul').prev('li').closest('.tiemposPadre').find('input[type=checkbox]').prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            }
+        }
+    }
+    toggleColumnas();
+});
 // * FUNCION DE CHECKBOX HIJOS TIEMPOS
 $('.tiemposHijo input[type=checkbox]').change(function () {
+    $(this).closest('.tiemposHijo').next('ul').find('.tiemposHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     var contenido = $(this).closest('ul');
     if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
         contenido.prev('.tiemposPadre').find('input[type=checkbox]').prop({
@@ -1983,6 +2046,7 @@ $('.tiemposHijo input[type=checkbox]').change(function () {
 // * FUNCIONN DE CHECKBOX DE PADRE TIEMPOS
 $('.tiemposPadre input[type=checkbox]').change(function () {
     $(this).closest('.tiemposPadre').next('ul').find('.tiemposHijo input[type=checkbox]').prop('checked', this.checked);
+    $('.tiemposHijo').next('ul').find('.tiemposHijoDeHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
 // : ************************************ COLUMNA DE TIEMPO EN SITIO ****************************************************
