@@ -4052,6 +4052,7 @@ class dispositivosController extends Controller
         // : INCIDENCIAS DE ORGANIZACION
         $incidenciasOrganizacion = incidencias::select('inciden_descripcion as descripcion', 'inciden_id as id')
             ->where('organi_id', '=', session('sesionidorg'))
+            ->where('sistema', '=', 0)
             ->orderBy('inciden_descripcion', 'ASC')
             ->get();
         function agruparEmpleadosMData($array)
