@@ -2932,24 +2932,27 @@ class dispositivosController extends Controller
                                 $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
                             } else {
                                 // : FORMATO HORAR MINUTO Y SEGUNDO DE ENTRADA Y SALIDA
-                                $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $entrada)->format('H:i:s');
-                                $horaMinutoSegundoS = Carbon::createFromFormat('Y-m-d H:i:s', $salida)->format('H:i:s');
+                                $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $horario->horaI)->format('H:i:s');
                                 // ! -> INICIO DE PAUSA
                                 if ($horaMinutoSegundoE  <= $pausa->pausH_Inicio) {
                                     $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                    // ! -> FIN DE PAUSA
+                                    if ($pausa->pausH_Fin > $pausa->pausH_Inicio) {
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                    } else {
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                    }
                                 } else {
+                                    // ! -> INICIO DE PAUSA
                                     $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
-                                }
-                                // ! -> FIN DE PAUSA
-                                if ($horaMinutoSegundoS <= $pausa->pausH_Fin) {
-                                    $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
-                                } else {
-                                    $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
+                                    // ! -> FIN DE PAUSA
+                                    $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
                                 }
                             }
                             // : TIEMPOS INGRESADOS POR EL USUARIO
                             $tiempoEntrada = Carbon::parse($entrada);
                             $tiempoSalida = Carbon::parse($salida);
+                            var_dump($tiempoInicioPausa, $tiempoFinPausa);
                             // : VALIDACION CON INICIO DE PAUSA
                             if ($tiempoInicioPausa->gt($tiempoEntrada)  && $tiempoInicioPausa->lt($tiempoSalida)) {
                                 // : VALIDACION CON FIN DE PAUSA
@@ -3246,19 +3249,21 @@ class dispositivosController extends Controller
                                 $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
                             } else {
                                 // : FORMATO HORAR MINUTO Y SEGUNDO DE ENTRADA Y SALIDA
-                                $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $entrada)->format('H:i:s');
-                                $horaMinutoSegundoS = Carbon::createFromFormat('Y-m-d H:i:s', $salida)->format('H:i:s');
+                                $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $horario->horaI)->format('H:i:s');
                                 // ! -> INICIO DE PAUSA
                                 if ($horaMinutoSegundoE  <= $pausa->pausH_Inicio) {
                                     $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                    // ! -> FIN DE PAUSA
+                                    if ($pausa->pausH_Fin > $pausa->pausH_Inicio) {
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                    } else {
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                    }
                                 } else {
+                                    // ! -> INICIO DE PAUSA
                                     $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
-                                }
-                                // ! -> FIN DE PAUSA
-                                if ($horaMinutoSegundoS <= $pausa->pausH_Fin) {
-                                    $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
-                                } else {
-                                    $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
+                                    // ! -> FIN DE PAUSA
+                                    $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
                                 }
                             }
                             // : TIEMPOS INGRESADOS POR EL USUARIO
@@ -3798,18 +3803,20 @@ class dispositivosController extends Controller
                                         $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
                                     } else {
                                         // : FORMATO HORAR MINUTO Y SEGUNDO DE ENTRADA Y SALIDA
-                                        $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $entrada)->format('H:i:s');
-                                        $horaMinutoSegundoS = Carbon::createFromFormat('Y-m-d H:i:s', $salida)->format('H:i:s');
+                                        $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $horario->horaI)->format('H:i:s');
                                         // ! -> INICIO DE PAUSA
                                         if ($horaMinutoSegundoE  <= $pausa->pausH_Inicio) {
                                             $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                            // ! -> FIN DE PAUSA
+                                            if ($pausa->pausH_Fin > $pausa->pausH_Inicio) {
+                                                $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                            } else {
+                                                $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                            }
                                         } else {
+                                            // ! -> INICIO DE PAUSA
                                             $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
-                                        }
-                                        // ! -> FIN DE PAUSA
-                                        if ($horaMinutoSegundoS <= $pausa->pausH_Fin) {
-                                            $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
-                                        } else {
+                                            // ! -> FIN DE PAUSA
                                             $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
                                         }
                                     }
