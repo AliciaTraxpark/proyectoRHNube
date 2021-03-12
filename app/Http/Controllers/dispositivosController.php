@@ -3613,7 +3613,6 @@ class dispositivosController extends Controller
                     if ($entrada->gte($horarioInicio) && $entrada->lte($horarioFin)) {
                         $respuesta = true;
                         foreach ($marcacionesValidar as $mv) {
-                            $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
                             if ($mv->entrada != 0 && $mv->salida != 0) {
                                 $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
                                 if ($respuestaCheck) {
@@ -3621,15 +3620,15 @@ class dispositivosController extends Controller
                                 }
                             }
                             if ($mv->entrada != 0) {
-                                $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                                $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                                $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                                $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                                 if ($horaMinutoV == $horaMinutoE) {
                                     $respuesta = false;
                                 }
                             }
                             if ($mv->salida != 0) {
-                                $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                                $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                                $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                                $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                                 if ($horaMinutoV == $horaMinutoE) {
                                     $respuesta = false;
                                 }
@@ -3663,7 +3662,6 @@ class dispositivosController extends Controller
                     if (!is_null($salida)) {
                         $respuesta = true;
                         foreach ($marcacionesValidar as $mv) {
-                            $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
                             if ($mv->entrada != 0 && $mv->salida != 0) {
                                 $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
                                 if ($respuestaCheck) {
@@ -3671,15 +3669,15 @@ class dispositivosController extends Controller
                                 }
                             }
                             if ($mv->entrada != 0) {
-                                $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                                $horaMinutoE = Carbon::create($salida)->format('H:i');
+                                $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                                $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                                 if ($horaMinutoV == $horaMinutoE) {
                                     $respuesta = false;
                                 }
                             }
                             if ($mv->salida != 0) {
-                                $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                                $horaMinutoE = Carbon::create($salida)->format('H:i');
+                                $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                                $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                                 if ($horaMinutoV == $horaMinutoE) {
                                     $respuesta = false;
                                 }
@@ -3721,7 +3719,6 @@ class dispositivosController extends Controller
                     $respuesta = true;
                     foreach ($marcacionesValidar as $mv) {
                         // : ENTRADA
-                        $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
                             if ($respuestaCheck) {
@@ -3729,21 +3726,20 @@ class dispositivosController extends Controller
                             }
                         }
                         if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         // : SALIDA
-                        $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
                             if ($respuestaCheck) {
@@ -3751,15 +3747,15 @@ class dispositivosController extends Controller
                             }
                         }
                         if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
@@ -3785,7 +3781,6 @@ class dispositivosController extends Controller
                 $respuesta = true;
                 foreach ($marcacionesValidar as $mv) {
                     if (!is_null($entrada)) {
-                        $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
                             if ($respuestaCheck) {
@@ -3793,22 +3788,21 @@ class dispositivosController extends Controller
                             }
                         }
                         if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                     }
                     if (!is_null($salida)) {
-                        $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
                             if ($respuestaCheck) {
@@ -3816,15 +3810,15 @@ class dispositivosController extends Controller
                             }
                         }
                         if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
