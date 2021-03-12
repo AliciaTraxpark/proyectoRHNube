@@ -2952,7 +2952,6 @@ class dispositivosController extends Controller
                             // : TIEMPOS INGRESADOS POR EL USUARIO
                             $tiempoEntrada = Carbon::parse($entrada);
                             $tiempoSalida = Carbon::parse($salida);
-                            var_dump($tiempoInicioPausa, $tiempoFinPausa);
                             // : VALIDACION CON INICIO DE PAUSA
                             if ($tiempoInicioPausa->gt($tiempoEntrada)  && $tiempoInicioPausa->lt($tiempoSalida)) {
                                 // : VALIDACION CON FIN DE PAUSA
