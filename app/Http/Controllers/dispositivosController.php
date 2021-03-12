@@ -3578,9 +3578,22 @@ class dispositivosController extends Controller
                                     return response()->json(sizeof($arrayInsert), 200);
                                 } else {
                                     $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                                    $dataHtml = '';
+                                    foreach ($arrayInsert as $a) {
+                                        // : AGREGAR LINEAS DE HTML
+                                        $dataHtml .= '<span>';
+                                        // : ENTRADA
+                                        if (is_null($a["dispositivoEntrada"])) $dataHtml .= $a["marcaMov_fecha"];
+                                        else $dataHtml .= '<b>' . $a["marcaMov_fecha"] . '<sup>*</sup></b>';
+                                        // : SALIDA
+                                        if (is_null($a["dispositivoSalida"])) $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $a["marcaMov_salida"];
+                                        else $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' .  '<b>' . $a["marcaMov_salida"] . '<sup>*</sup></b>';
+                                        $dataHtml .= '</span><br>';
+                                    }
                                     return response()->json(
                                         array("respuesta" => "<br><b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
-                                            . "<br>Tiempo entre marcaciones: " . gmdate('H:i:s', $sumaTiempoM) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
+                                            . "<br>Tiempo entre marcaciones: " . gmdate('H:i:s', $sumaTiempoM) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)
+                                            . "<br><b>Marcaciones: </b><br>" . $dataHtml . "(*) Marcaciones automáticas"),
                                         200
                                     );
                                 }
