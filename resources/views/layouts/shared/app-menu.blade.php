@@ -146,10 +146,10 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                     <span>Incidencias</span>
                 </a>
-                <!-- <a href="/reporteMatrizHorarios">
+                <a href="/reporteMatrizHorarios">
 
                     <span>Matriz de horarios</span>
-                </a> -->
+                </a>
                 @endif
 
             </li>

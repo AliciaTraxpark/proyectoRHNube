@@ -124,6 +124,7 @@ class horarioController extends Controller
             $tipo_incidencia=DB::table('tipo_incidencia')
             ->where('organi_id','=',session('sesionidorg'))
             ->where('sistema','=',0)
+            ->orderBy('tipoInc_descripcion','DESC')
             ->get();
 
             if ($invitadod) {
@@ -553,6 +554,7 @@ class horarioController extends Controller
             $tipo_incidencia=DB::table('tipo_incidencia')
             ->where('organi_id','=',session('sesionidorg'))
             ->where('sistema','=',0)
+            ->orderBy('tipoInc_descripcion','DESC')
             ->get();
 
             if ($invitadod) {
@@ -2162,6 +2164,119 @@ class horarioController extends Controller
         }
 
     }
+     //*FUNCION PARA CLONAR INCIDENCIAS DE EMPLEADO***************
+     public function clonarIncidencias(Request $request)
+     {
+
+         //**recibir paramentros
+         $empleadosaClonar = $request->empleadosaClonar;
+         $empleadoCLonar = $request->empleadoCLonar;
+         $diaI = Carbon::create($request->diaI);
+         $diaF = Carbon::create($request->diaF);
+         $asigNuevo = $request->asigNuevo;
+         $reempExistente = $request->reempExistente;
+
+         //*OBTENGO INCIDENCIAS DEL EMPLEADO A CLONAR******
+            $incidencia_empleado = DB::table('incidencia_dias as idi')
+            ->select('idi.id_empleado as idempleado', 'idi.inciden_dias_fechaI','idi.id_incidencia'
+            )
+            ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+            ->where('idi.id_empleado', '=', $empleadoCLonar)
+            ->whereBetween(DB::raw('DATE(idi.inciden_dias_fechaI)'), [$diaI, $diaF])
+            ->get();
+
+            //*RECORREMOS EMPLEADOOS A LOS QUE VAMOS A CLONAR INCIDENCIAS
+            foreach ($empleadosaClonar as $empleadosCl) {
+                //*si reemplaza primero borro los otros incidencias que tenga en esas fechas
+                if ($reempExistente == 1) {
+
+                    //*BORRANDO INCIDENCIAS POR EMPLEADO
+                    $incidencia_empleadoElim = DB::table('incidencia_dias as idi')
+                            ->select('idi.id_empleado as idempleado', 'idi.inciden_dias_fechaI'
+                            )
+                            ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+                            ->where('idi.id_empleado', '=',$empleadosCl)
+                            ->whereBetween(DB::raw('DATE(idi.inciden_dias_fechaI)'), [$diaI, $diaF])
+                            ->delete();
+
+
+                    //*AHORA COPIAMOS LAS INCIDENCIAS DE EMPLEADO
+                    if ($incidencia_empleado->isNotEmpty()) {
+                        foreach($incidencia_empleado as $incidencia_empleados){
+                            $inc_dias = new incidencia_dias();
+                            $inc_dias->id_incidencia = $incidencia_empleados->id_incidencia;
+                            $inc_dias->	inciden_dias_fechaI = $incidencia_empleados->inciden_dias_fechaI;
+                            $inc_dias->id_empleado = $empleadosCl;
+                            $inc_dias->laborable=0;
+                            $inc_dias->save();
+
+                        }
+
+                    }
+                } else{
+                    //*SE COPIA NADA MAS LAS INCIDENCIAS
+
+                    //PRIMERO VERIFICAREMOS QUE NO SE REPITAN LAS INCIDENCIAS ANTERIORES DE EMPLEADOS A LAS PNUEVAS A AGREGAR
+                     //*OBTENEOS INCIDENCIA DE EMPLEADO
+                     $incidencia_empleadoOb = DB::table('incidencia_dias as idi')
+                            ->select('idi.id_empleado as idempleado', 'idi.inciden_dias_fechaI','idi.id_incidencia'
+                            )
+                            ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+                            ->where('idi.id_empleado', '=',$empleadosCl)
+                            ->whereBetween(DB::raw('DATE(idi.inciden_dias_fechaI)'), [$diaI, $diaF])
+                            ->get();
+
+                    //*SI ENCONTRAMOS INCIDENCIAS DE EMPLEADO VERIFICAR QUE NO SE REPITA
+                    if ($incidencia_empleadoOb->isNotEmpty()){
+                        foreach($incidencia_empleadoOb as $incidenciasO){
+                            if ($incidencia_empleado->isNotEmpty()) {
+                                foreach ($incidencia_empleado as $key => $incidencia_empleados) {
+                                    if($incidenciasO->id_incidencia==$incidencia_empleados->id_incidencia &&
+                                     $incidenciasO->inciden_dias_fechaI==$incidencia_empleados->inciden_dias_fechaI ){
+                                        $incidencia_empleado->pull($key);
+                                    }
+                                }
+                            }
+                        }
+                        //* COPIAMOS LAS OTRAS INCIDE
+                        if ($incidencia_empleado->isNotEmpty()) {
+                            foreach($incidencia_empleado as $incidencia_empleados){
+                                $inc_dias = new incidencia_dias();
+                                $inc_dias->id_incidencia = $incidencia_empleados->id_incidencia;
+                                $inc_dias->	inciden_dias_fechaI = $incidencia_empleados->inciden_dias_fechaI;
+                                $inc_dias->id_empleado = $empleadosCl;
+                                $inc_dias->laborable=0;
+                                $inc_dias->save();
+
+                            }
+
+                        }
+
+                    } else{
+                        //* SI NO TIENE INCIDENCIAS SOLO COPIAMOS
+                        if ($incidencia_empleado->isNotEmpty()) {
+                            foreach($incidencia_empleado as $incidencia_empleados){
+                                $inc_dias = new incidencia_dias();
+                                $inc_dias->id_incidencia = $incidencia_empleados->id_incidencia;
+                                $inc_dias->	inciden_dias_fechaI = $incidencia_empleados->inciden_dias_fechaI;
+                                $inc_dias->id_empleado = $empleadosCl;
+                                $inc_dias->laborable=0;
+                                $inc_dias->save();
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+         //******************************************* */
+
+
+
+
+     }
 
     //*FUNCION PARA CONFIRMAR REEMPLAZAR Y OMITIR HORARIOS
     public function reemplazarHorariosClonacion(Request $request)
@@ -2912,18 +3027,23 @@ class horarioController extends Controller
         $empleados = DB::table('empleado as e')
         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
         ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-        ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-        ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
         ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
         ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
         ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
         ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
         ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
         ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
             DB::raw('DATE(hd.start) as DP')
         )
         ->where('e.emple_estado', '=', 1)
+        ->where(function ($query) {
+            $query->where('he.estado', '=', 1)
+                  ->orWhereNull('he.estado');
+        })
         ->where('e.organi_id', '=', session('sesionidorg'))
         ->get();
         $empleados = $empleados->groupBy('perso_id')->values();
@@ -3273,18 +3393,24 @@ class horarioController extends Controller
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                    ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                    ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->leftjoin('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                     ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                     ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
                     ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                    ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+                    ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                    ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
                     ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal','o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
                         DB::raw('DATE(hd.start) as DP')
                     )
                     ->where('e.emple_estado', '=', 1)
+                    ->where('he.estado', '=', 1)
+                    ->where(function ($query) {
+                        $query->where('he.estado', '=', 1)
+                              ->orWhereNull('he.estado');
+                    })
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->get();
                     $empleados = $empleados->groupBy('perso_id')->values();
@@ -3441,18 +3567,24 @@ class horarioController extends Controller
                             $empleados = DB::table('empleado as e')
                                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                                 ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                                ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                                ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                                ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                                ->leftjoin('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                                 ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                                 ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                                 ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
                                 ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+                                ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
                                 ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
                                     DB::raw('DATE(hd.start) as DP')
                                 )
                                 ->where('e.emple_estado', '=', 1)
+                                ->where('he.estado', '=', 1)
+                                ->where(function ($query) {
+                                    $query->where('he.estado', '=', 1)
+                                          ->orWhereNull('he.estado');
+                                })
                                 ->whereIn('e.emple_cargo', $area)
                                 ->where('e.organi_id', '=', session('sesionidorg'))
                                 ->get();
@@ -3476,19 +3608,25 @@ class horarioController extends Controller
                         if ($selector == "Área") {
                             $empleados = DB::table('empleado as e')
                                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                                ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                                 ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                                ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                                ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                                ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                                 ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                                 ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                                 ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
                                 ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+                                ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
                                 ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
                                     DB::raw('DATE(hd.start) as DP')
                                 )
                                 ->where('e.emple_estado', '=', 1)
+                                ->where('he.estado', '=', 1)
+                                ->where(function ($query) {
+                                    $query->where('he.estado', '=', 1)
+                                          ->orWhereNull('he.estado');
+                                })
                                 ->whereIn('e.emple_area', $area)
                                 ->where('e.organi_id', '=', session('sesionidorg'))
                                 ->get();
@@ -3512,19 +3650,25 @@ class horarioController extends Controller
                             if ($selector == "Local") {
                                 $empleados = DB::table('empleado as e')
                                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                                ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                                 ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                                ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                                ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                                ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                                 ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                                 ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                                 ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
                                 ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+                                ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
                                 ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
                                     DB::raw('DATE(hd.start) as DP')
                                 )
                                 ->where('e.emple_estado', '=', 1)
+                                ->where('he.estado', '=', 1)
+                                ->where(function ($query) {
+                                    $query->where('he.estado', '=', 1)
+                                          ->orWhereNull('he.estado');
+                                })
                                 ->whereIn('e.emple_local', $area)
                                 ->where('e.organi_id', '=', session('sesionidorg'))
                                 ->get();
@@ -3600,19 +3744,25 @@ class horarioController extends Controller
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                        ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                        ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                        ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                         ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                         ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                         ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                         ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
                         ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+                        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
                         ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
                             DB::raw('DATE(hd.start) as DP')
                         )
                         ->where('e.emple_estado', '=', 1)
+                        ->where('he.estado', '=', 1)
+                        ->where(function ($query) {
+                            $query->where('he.estado', '=', 1)
+                                  ->orWhereNull('he.estado');
+                        })
                         ->whereIn('e.emple_id', $empleadoL)
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->get();
@@ -3778,19 +3928,25 @@ class horarioController extends Controller
                     if($selector == "Área"){
                         $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                        ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                        ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                        ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                         ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                         ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                         ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                         ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
                         ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+                        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
                         ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
                             DB::raw('DATE(hd.start) as DP')
                         )
                         ->where('e.emple_estado', '=', 1)
+                        ->where('he.estado', '=', 1)
+                        ->where(function ($query) {
+                            $query->where('he.estado', '=', 1)
+                                  ->orWhereNull('he.estado');
+                        })
                         ->whereIn('e.emple_area', $area)
                         ->whereIn('e.emple_id', $empleadoL)
                         ->where('e.organi_id', '=', session('sesionidorg'))
@@ -3816,19 +3972,25 @@ class horarioController extends Controller
                         if($selector == "Cargo"){
                             $empleados = DB::table('empleado as e')
                                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                                ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                                 ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                                ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                                ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                                ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                                 ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                                 ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                                 ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
                                 ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+                                ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
                                 ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
                                     DB::raw('DATE(hd.start) as DP')
                                 )
                                 ->where('e.emple_estado', '=', 1)
+                                ->where('he.estado', '=', 1)
+                                ->where(function ($query) {
+                                    $query->where('he.estado', '=', 1)
+                                          ->orWhereNull('he.estado');
+                                })
                                 ->whereIn('e.emple_cargo', $area)
                                 ->whereIn('e.emple_id', $empleadoL)
                                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -3853,19 +4015,25 @@ class horarioController extends Controller
                             if($selector == "Local"){
                                 $empleados = DB::table('empleado as e')
                                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                    ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                                    ->join('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                                     ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                                    ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                                    ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                                    ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                                     ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
                                     ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
                                     ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
                                     ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                                    ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'e.emple_centCosto')
+                                    ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                                    ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
                                     ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
                                         DB::raw('DATE(hd.start) as DP')
                                     )
                                     ->where('e.emple_estado', '=', 1)
+                                    ->where('he.estado', '=', 1)
+                                    ->where(function ($query) {
+                                        $query->where('he.estado', '=', 1)
+                                              ->orWhereNull('he.estado');
+                                    })
                                     ->whereIn('e.emple_local', $area)
                                     ->whereIn('e.emple_id', $empleadoL)
                                     ->where('e.organi_id', '=', session('sesionidorg'))

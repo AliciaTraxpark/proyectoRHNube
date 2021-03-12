@@ -328,6 +328,7 @@ Route::post('/datosIncidenciaEmpleado', 'horarioController@datosIncidenciaEmplea
 Route::post('/elimarhoraEmps', 'horarioController@elimarhoraEmps');
 Route::post('/elimarIncidiEmps', 'horarioController@elimarIncidiEmps');
 Route::post('/clonarHorarios', 'horarioController@clonarHorarios');
+Route::post('/clonarIncidencias', 'horarioController@clonarIncidencias');
 Route::post('/reemplazarHorariosClonacion', 'horarioController@reemplazarHorariosClonacion');
 Route::post('/horario/Incidenciasxtipo', 'horarioController@Incidenciasxtipo');
 Route::post('/horario/registrarInciTemp', 'horarioController@registrarInciTemp');

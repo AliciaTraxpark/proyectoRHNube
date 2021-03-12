@@ -3489,7 +3489,7 @@ class apiBiometricoController extends Controller
         }
     }
 
-    
+
 
     public function listaHuellas(Request $request){
 
@@ -3507,6 +3507,15 @@ class apiBiometricoController extends Controller
         ->leftJoin('empleado as e','pem.idempleado','=','e.emple_id')
         ->where('e.organi_id','=',$usuario_organizacion->organi_id)
         ->get();
+
+        //*poniendo estado
+        foreach($listaHuellas as $listaHuella){
+            if($listaHuella->estado==1){
+                $listaHuella->estado=true;
+            } else{
+                $listaHuella->estado=false;
+            }
+        }
 
         return response()->json($listaHuellas);
     }

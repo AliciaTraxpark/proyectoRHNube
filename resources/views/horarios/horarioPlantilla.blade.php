@@ -317,9 +317,8 @@
 
                                                         <select data-plugin="customselect"
                                                             class="form-control custom-select custom-select-sm  col-md-10" name="selectTipoIn"
-                                                            id="selectTipoIn" data-placeholder="seleccione">
+                                                            id="selectTipoIn">
                                                             @foreach ($tipo_incidencia as $tipoI)
-                                                                <option value=""></option>
                                                                 <option value="{{ $tipoI->idtipo_incidencia }}">
                                                                     {{ $tipoI->tipoInc_descripcion }}</option>
                                                              @endforeach
@@ -327,10 +326,14 @@
                                                         &nbsp;
                                                     </div>
                                                     <div class="col-md-12">
+                                                        <span id="alertSeleccioneIncidencia" style="color: #9e1a16;display:none">*Seleccione incidencia</span>
+                                                    </div>
+
+                                                    <div class="col-md-12">
 
                                                         <select data-plugin="customselect"
                                                             class="form-control custom-select custom-select-sm  col-md-10" name="incidenciaSelect"
-                                                            id="incidenciaSelect" data-placeholder="escoger incidencia" disabled>
+                                                            id="incidenciaSelect" data-placeholder="escoger incidencia" >
 
                                                         </select>
                                                         &nbsp;
@@ -1266,7 +1269,7 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        {{-- MODAL CLONAR POR EMPELADO --}}
+        {{-- MODAL CLONAR HORARIOS POR EMPELADO --}}
         <div id="modalHorarioClonar" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog  modal-dialog-scrollable" style="max-width: 670px; margin-top: 150px;">
                 <div class="modal-content">
@@ -1349,6 +1352,112 @@
                                 <div class="col-md-6">
                                     <span id="alertReemplazar" style="color:#911818;display:none">Se borrará horarios
                                         existentes y crearan nuevos</span>
+                                </div>
+
+                            </div>
+
+                    </div>
+                    <div class="modal-footer" style="background: #ffffff;">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="button" class="btn btn-light btn-sm "
+                                        data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" name="" style="background-color: #163552;"
+                                        class="btn btn-sm">Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+         {{-- MODAL CLONAR INCIDENCIAS POR EMPELADO --}}
+         <div id="modalIncidenciaClonar" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-scrollable" style="max-width: 670px; margin-top: 150px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #163552;">
+                        <h5 class="modal-title"  style="color:#ffffff;font-size:15px">Clonar Incidencias
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body" style="font-size:12px!important;background: #ffffff;">
+                        <form action="javascript:registrarClonacionInci()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label class="col-md-5" style="  padding-top: 8px; font-weight: 600">Seleccione
+                                            empleado:</label>
+                                        <div class="col-md-7" style="padding-left: 0px;">
+                                            <select class="" data-plugin="customselect" id="nombreEmpleadoClonarIn"
+                                                required>
+                                                @foreach ($empleado as $empleados)
+                                                    <option value="{{ $empleados->emple_id }}">
+                                                        {{ $empleados->perso_nombre }}
+                                                        {{ $empleados->perso_apPaterno }}
+                                                        {{ $empleados->perso_apMaterno }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label" style="font-weight: 600">Rango de
+                                            fechas:</label>
+                                        <input type="hidden" id="ID_STARTClonI">
+                                        <input type="hidden" id="ID_ENDClonI">
+                                        <div class="input-group col-md-7 text-center"
+                                            style="padding-left: 0px;padding-right: 12px;" id="fechaSelecClonI">
+                                            <input type="text"  class="col-md-12 form-control"
+                                                data-input>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text form-control flatpickr">
+                                                    <a class="input-button" data-toggle>
+                                                        <i class="uil uil-calender"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12" id="divClonacionIncElegir" style="display: none">
+                                    <span style="color:#911818">*Eliga al menos una opcion.</span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="custom-control custom-switch" style="padding-bottom: 10px;">
+                                        <input type="checkbox" class="custom-control-input" id="asignarNuevoIncidC">
+                                        <label class="custom-control-label" for="asignarNuevoIncidC"
+                                            style="margin-top: 2px;font-weight: 600">Asignar como nuevo</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <span></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="custom-control custom-switch" style="padding-bottom: 10px;">
+                                        <input type="checkbox" class="custom-control-input"
+                                            id="reemplazarNuevaInciC">
+                                        <label class="custom-control-label" for="reemplazarNuevaInciC"
+                                            style="margin-top: 2px;font-weight: 600">Reemplazar existente</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <span id="alertReemplazarInci" style="color:#911818;display:none">Se borrará incidencias
+                                        existentes y crearan nuevas</span>
                                 </div>
 
                             </div>
