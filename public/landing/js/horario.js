@@ -309,7 +309,7 @@ function calendario() {
             $("#incidenciaSelect").val("");
             $("#incidenciaSelect").trigger("change");
             $('#incidenciaSelect').prop('disabled', true);
-
+            $('#alertSeleccioneIncidencia').hide();
             $('#verhorarioEmpleado').modal('show');
 
         },
@@ -1081,7 +1081,11 @@ function registrarIncidencia() {
     //*VALIDAMOS QUE SE HAYA ESCOGIDO INCIDENCIA
     if(!idIncidencia){
         console.log('primero seleccione incidencia');
+        $('#alertSeleccioneIncidencia').show();
+
         return false;
+    } else{
+        $('#alertSeleccioneIncidencia').hide();
     }
 
     let textSelec =  $('select[name="incidenciaSelect"] option:selected').text();

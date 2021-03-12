@@ -327,6 +327,10 @@
                                                         &nbsp;
                                                     </div>
                                                     <div class="col-md-12">
+                                                        <span id="alertSeleccioneIncidencia" style="color: #9e1a16;display:none">*Seleccione incidencia</span>
+                                                    </div>
+
+                                                    <div class="col-md-12">
 
                                                         <select data-plugin="customselect"
                                                             class="form-control custom-select custom-select-sm  col-md-10" name="incidenciaSelect"
