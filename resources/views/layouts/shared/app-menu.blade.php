@@ -54,8 +54,29 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 @endphp
 {{-- MENU CUANDO ES ADMIN  --}}
 @if ($usuario_organizacion[0]->rol_id==1)
+<div class="justify-content-center" style="margin-bottom: 20px !important;">
+    <div class="row">
+        <div class="col-10 m-0 pr-2">
+            <div id="search1" style="display: none;">
+                <input class="form-control text-center" onInput="cambiar(this.value)" id="search" type="search" placeholder="Buscar" aria-label="Buscar" >
+            </div>
+        </div>
+        <div class="col-2 m-0 pl-1 text-right">
+            <div id="lupa" style="display: block;">
+                <a type="button" class="btn btn-sm" onClick="cf1()"> 
+                    <img src="{{asset('landing/images/lupa.png')}}" height="18">
+                </a>
+            </div>
+            <div id="x" style="display: none;">
+                <a type="button" class="btn btn-sm" onClick="cf2()"> 
+                    <img src="{{asset('landing/images/x.png')}}" height="18">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 <ul class="metismenu" id="menu-bar">
-    <li>
+    <li id="gestDashboard">
         <a href="/dashboard" id="menuD">
             <i data-feather="home"></i>
             <span class="badge badge-success float-right">1</span>
@@ -63,7 +84,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </a>
     </li>
 
-    <li class="liNone">
+    <li class="liNone" id="gestCalendario">
         @if ($usuario[0]->user_estado==0)
         <a href="/calendario"> @else <a href="/calendarios"> @endif
                 <i data-feather="calendar"></i>
@@ -71,15 +92,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </a>
 
     </li>
-    <li>
-
+    <li id="gestEmpleado">
         <a href="javascript: void(0);">
             <i data-feather="list"></i>
             <span>Gestión de empleado</span>
             <span class="menu-arrow"></span>
         </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="gestEmpleado_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 @if ($usuario[0]->user_estado==0)
                 <a href="/empleado">
@@ -100,7 +120,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
 
-    <li class="liNone">
+    <li class="liNone" id="gestHorarios">
 
         <a href="javascript: void(0);">
             <i data-feather="clipboard"></i>
@@ -108,7 +128,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span class="menu-arrow"></span>
         </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="gestHorarios_ul" class="nav-second-level" aria-expanded="false">
             <li>
 
                 @if ($usuario[0]->user_estado==0)
@@ -126,18 +146,22 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                     <span>Incidencias</span>
                 </a>
+                <a href="/reporteMatrizHorarios">
+
+                    <span>Matriz de horarios</span>
+                </a>
                 @endif
 
             </li>
         </ul>
     </li>
-    <li>
+    <li id="gestActividades">
         <a href="javascript: void(0);">
             <i data-feather="layers"></i>
             <span>Gestión de actividades</span>
             <span class="menu-arrow"></span>
         </a>
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="gestActividades_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/actividad">
                     <span>Actividades</span>
@@ -150,14 +174,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
     @if(colorLi()->Mruta == 1 || colorLi()->Mpuerta == 1 || colorLi()->Mtareo == 1)
-        <li>
+        <li id="gestPuntosContol">
             <a href="/puntoControl">
                 <img src="{{asset('landing/images/vectorpaint.svg')}}" height="18" style="margin: 0 10px 0 3px;">
                 <span>Puntos de Control</span>
             </a>
         </li>
     @else
-        <li style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste el modo tareo o asistencia en puerta.">
+        <li id="gestPuntosContol" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste el modo tareo o asistencia en puerta.">
             <a href="#" data-toggle="modal" data-target="#modos">
                 <img src="{{asset('landing/images/vectorpaint.svg')}}" height="18" style="margin: 0 10px 0 3px;">
                 <span>Puntos de Control</span>
@@ -165,14 +189,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </li>
     @endif
     @if(colorLi()->Mtareo == 1 || colorLi()->Mpuerta == 1)
-        <li>
+        <li id="gestCentroCosto">
             <a href="/centroCosto">
                 <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
                 <span>Centro de costo</span>
             </a>
         </li>
     @else
-        <li style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste el modo tareo, ni asistencia en puerta ni control en ruta.">
+        <li id="gestCentroCosto" style="background-color: #D3D3D3" data-toggle="tooltip" data-placement="right" title="No seleccionaste el modo tareo, ni asistencia en puerta ni control en ruta.">
             <a href="#" data-toggle="modal" data-target="#modos">
                 <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
                 <span>Centro de costo</span>
@@ -187,7 +211,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <span class="menu-arrow"></span>
             </a>
 
-            <ul class="nav-second-level" aria-expanded="false">
+            <ul id="li_remoto_ul" class="nav-second-level" aria-expanded="false">
                 <li>
                     <a href="/controlRemoto">Dashboard</a>
                     <a href="/tareas">Detalle Diario</a>
@@ -198,7 +222,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                         <span class="menu-arrow"></span>
                     </a>
 
-                    <ul class="nav-third-level" aria-expanded="false">
+                    <ul id="li_remoto_ul_ul" class="nav-third-level" aria-expanded="false">
                         <li>
                             <a href="/reporteSemanal">Tiempos por semana</a>
                             <a href="/reporteMensual">Tiempos por mes</a>
@@ -217,7 +241,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <span class="menu-arrow"></span>
             </a>
 
-            <ul class="nav-second-level" aria-expanded="false">
+            <ul id="li_remoto_ul" class="nav-second-level" aria-expanded="false">
                 <li>
                     <a href="#" data-toggle="modal" data-target="#modos">Dashboard</a>
                     <a href="#" data-toggle="modal" data-target="#modos">Detalle Diario</a>
@@ -228,7 +252,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                         <span class="menu-arrow"></span>
                     </a>
 
-                    <ul class="nav-third-level" aria-expanded="false">
+                    <ul id="li_remoto_ul_ul" class="nav-third-level" aria-expanded="false">
                         <li>
                             <a href="#" data-toggle="modal" data-target="#modos">Tiempos por semana</a>
                             <a href="#" data-toggle="modal" data-target="#modos">Tiempos por mes</a>
@@ -249,7 +273,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span class="menu-arrow"></span>
         </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="li_ruta_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/ruta">Detalle Diario</a>
                 <a href="/rutaReporte">Reporte Semanal</a>
@@ -266,7 +290,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span class="menu-arrow"></span>
         </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="li_ruta_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="#" data-toggle="modal" data-target="#modos">Detalle Diario</a>
                 <a href="#" data-toggle="modal" data-target="#modos">Reporte Semanal</a>
@@ -283,14 +307,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span>Modo: Asistencia en puerta</span>
             <span class="menu-arrow"></span>
         </a>
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="li_puerta_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="javascript: void(0);">
                     <span>Configuración</span>
                     <span class="menu-arrow"></span>
                 </a>
 
-                <ul class="nav-third-level" aria-expanded="false">
+                <ul id="li_puerta_ul_ul" class="nav-third-level" aria-expanded="false">
                     <li>
                         <a href="/dispositivos">Dispositivos</a>
                         <a href="/controladores">Controladores</a>
@@ -304,7 +328,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span class="menu-arrow"></span>
                 </a>
 
-                <ul class="nav-third-level" aria-expanded="false">
+                <ul id="li_puerta_ul_ul2" class="nav-third-level" aria-expanded="false">
                     <li>
                         <a href="/ReporteFecha">Asistencia por fecha</a>
                         <a href="/ReporteEmpleado">Asistencia por empleado</a>
@@ -323,14 +347,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span>Modo: Asistencia en puerta</span>
             <span class="menu-arrow"></span>
         </a>
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="li_puerta_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="javascript: void(0);">
                     <span>Configuración</span>
                     <span class="menu-arrow"></span>
                 </a>
 
-                <ul class="nav-third-level" aria-expanded="false">
+                <ul id="li_puerta_ul_ul" class="nav-third-level" aria-expanded="false">
                     <li>
                         <a href="#" data-toggle="modal" data-target="#modos">Dispositivos</a>
                         <a href="#" data-toggle="modal" data-target="#modos">Controladores</a>
@@ -344,7 +368,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span class="menu-arrow"></span>
                 </a>
 
-                <ul class="nav-third-level" aria-expanded="false">
+                <ul id="li_puerta_ul_ul2" class="nav-third-level" aria-expanded="false">
                     <li>
                         <a href="#" data-toggle="modal" data-target="#modos">Asistencia por fecha</a>
                         <a href="#" data-toggle="modal" data-target="#modos">Asistencia por empleado</a>
@@ -366,7 +390,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span class="menu-arrow"></span>
         </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="li_tareo_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/dispositivosTareo">Dispositivos</a>
                 <a href="/controladoresTareo">Controladores</a>
@@ -386,7 +410,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span class="menu-arrow"></span>
         </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="li_tareo_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="#" data-toggle="modal" data-target="#modos">Dispositivos</a>
                 <a href="#" data-toggle="modal" data-target="#modos">Controladores</a>
@@ -430,6 +454,28 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 {{-- MENU CUANDO ES INVITADO --}}
 @if ($usuario_organizacion[0]->rol_id==3)
 
+<div class="justify-content-center" style="margin-bottom: 20px !important;">
+    <div class="row">
+        <div class="col-10 m-0 pr-2">
+            <div id="search1Inv" style="display: none;">
+                <input class="form-control text-center" onInput="cambiarInv(this.value)" id="searchInv" type="search" placeholder="Buscar" aria-label="Buscar" >
+            </div>
+        </div>
+        <div class="col-2 m-0 pl-1 text-right">
+            <div id="lupaInv" style="display: block;">
+                <a type="button" class="btn btn-sm" onClick="cf1Inv()"> 
+                    <img src="{{asset('landing/images/lupa.png')}}" height="18">
+                </a>
+            </div>
+            <div id="xInv" style="display: none;">
+                <a type="button" class="btn btn-sm" onClick="cf2Inv()"> 
+                    <img src="{{asset('landing/images/x.png')}}" height="18">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <ul class="metismenu" id="menu-bar">
     @php
     $invitadod=DB::table('invitado')
@@ -441,7 +487,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     ->get()->first();
     @endphp
     @if ($invitadod->dashboard==1)
-    <li>
+    <li id="gestDashboard">
         <a href="/dashboard" id="menuD">
             <i data-feather="home"></i>
             <span class="badge badge-success float-right">1</span>
@@ -453,7 +499,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     @endif
 
     @if ($invitadod->gestCalendario==1)
-    <li>
+    <li id="gestCalendario">
         <a href="/calendarios">
             <i data-feather="calendar"></i>
             <span> Calendarios </span>
@@ -463,14 +509,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     @endif
 
     @if ($invitadod->permiso_Emp==1)
-    <li>
+    <li id="gestEmpleado">
         <a href="javascript: void(0);">
             <i data-feather="list"></i>
             <span>Gestión de empleado</span>
             <span class="menu-arrow"></span>
         </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="gestEmpleado_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/empleados">
 
@@ -485,13 +531,13 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     @endif
 
     @if ($invitadod->gestionActiv==1)
-    <li>
+    <li id="gestActividades">
         <a href="javascript: void(0);">
             <i data-feather="layers"></i>
             <span>Gestión de actividades</span>
             <span class="menu-arrow"></span>
         </a>
-        <ul class="nav-second-level" aria-expanded="false">
+        <ul id="gestActividades_ul" class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/actividad">
                     <span>Actividades</span>
@@ -520,7 +566,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span>Modo: Control Remoto</span>
                     <span class="menu-arrow"></span>
                 </a>
-                <ul class="nav-second-level" aria-expanded="false">
+                <ul id="li_remotoInv_ul" class="nav-second-level" aria-expanded="false">
                     <li>
                         <a href="/controlRemoto">Dashboard</a>
                         <a href="/tareas">Detalle Diario</a>
@@ -531,7 +577,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                             <span class="menu-arrow"></span>
                         </a>
 
-                        <ul class="nav-third-level" aria-expanded="false">
+                        <ul id="li_remotoInv_ul_ul" class="nav-third-level" aria-expanded="false">
                             <li>
                                 <a href="/reporteSemanal">Tiempos por semana</a>
                                 <a href="/reporteMensual">Tiempos por mes</a>
@@ -549,7 +595,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span>Modo: Control Remoto</span>
                     <span class="menu-arrow"></span>
                 </a>
-                <ul class="nav-second-level" aria-expanded="false">
+                <ul id="li_remotoInv_ul" class="nav-second-level" aria-expanded="false">
                     <li>
                         <a href="#" data-toggle="modal" data-target="#modos">Dashboard</a>
                         <a href="#" data-toggle="modal" data-target="#modos">Detalle Diario</a>
@@ -560,7 +606,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                             <span class="menu-arrow"></span>
                         </a>
 
-                        <ul class="nav-third-level" aria-expanded="false">
+                        <ul id="li_remotoInv_ul_ul" class="nav-third-level" aria-expanded="false">
                             <li>
                                 <a href="#" data-toggle="modal" data-target="#modos">Tiempos por semana</a>
                                 <a href="#" data-toggle="modal" data-target="#modos">Tiempos por mes</a>
@@ -583,7 +629,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span>Modo: Control en Ruta</span>
                     <span class="menu-arrow"></span>
                 </a>
-                <ul class="nav-second-level" aria-expanded="false">
+                <ul id="li_rutaInv_ul" class="nav-second-level" aria-expanded="false">
                     <li>
                         <a href="/ruta">Detalle Diario</a>
                         <a href="/rutaReporte">Reporte Semanal</a>
@@ -599,7 +645,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span>Modo: Control en Ruta</span>
                     <span class="menu-arrow"></span>
                 </a>
-                <ul class="nav-second-level" aria-expanded="false">
+                <ul id="li_rutaInv_ul" class="nav-second-level" aria-expanded="false">
                     <li>
                         <a href="#" data-toggle="modal" data-target="#modos">Detalle Diario</a>
                         <a href="#" data-toggle="modal" data-target="#modos">Reporte Semanal</a>
@@ -621,14 +667,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <span class="menu-arrow"></span>
             </a>
 
-            <ul class="nav-second-level" aria-expanded="false">
+            <ul id="li_puertaInv_ul" class="nav-second-level" aria-expanded="false">
                 @if ($permiso_invitado->verPuerta==1)
                 <li>
                     <a href="javascript: void(0);">
                         <span>Configuración</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <ul class="nav-third-level" aria-expanded="false">
+                    <ul id="li_puertaInv_ul_ul" class="nav-third-level" aria-expanded="false">
                         <li>
                             <a href="/dispositivos">Dispositivos</a>
                             <a href="/controladores">Controladores</a>
@@ -645,7 +691,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                         <span>Reportes e informes</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <ul class="nav-third-level" aria-expanded="false">
+                    <ul id="li_puertaInv_ul_ul2" class="nav-third-level" aria-expanded="false">
                         <li>
                             <a href="/ReporteFecha">Asistencia por fecha</a>
                             <a href="/ReporteEmpleado">Asistencia por empleado</a>
@@ -666,14 +712,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <span class="menu-arrow"></span>
             </a>
 
-            <ul class="nav-second-level" aria-expanded="false">
+            <ul id="li_puertaInv_ul" class="nav-second-level" aria-expanded="false">
                 @if ($permiso_invitado->verPuerta==1)
                 <li>
                     <a href="javascript: void(0);">
                         <span>Configuración</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <ul class="nav-third-level" aria-expanded="false">
+                    <ul id="li_puertaInv_ul_ul" class="nav-third-level" aria-expanded="false">
                         <li>
                             <a href="#" data-toggle="modal" data-target="#modos">Dispositivos</a>
                             <a href="#" data-toggle="modal" data-target="#modos">Controladores</a>
@@ -690,7 +736,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                         <span>Reportes e informes</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <ul class="nav-third-level" aria-expanded="false">
+                    <ul id="li_puertaInv_ul_ul2" class="nav-third-level" aria-expanded="false">
                         <li>
                             <a href="#" data-toggle="modal" data-target="#modos">Asistencia por fecha</a>
                             <a href="#" data-toggle="modal" data-target="#modos">Asistencia por empleado</a>
@@ -717,7 +763,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span class="menu-arrow"></span>
                 </a>
 
-                <ul class="nav-second-level" aria-expanded="false">
+                <ul id="li_tareoInv_ul" class="nav-second-level" aria-expanded="false">
                     <li>
                         @if ($permiso_invitado->verModoTareo==1)
                         <a href="/dispositivosTareo">Dispositivos</a>
@@ -742,7 +788,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span class="menu-arrow"></span>
                 </a>
 
-                <ul class="nav-second-level" aria-expanded="false">
+                <ul id="li_tareoInv_ul" class="nav-second-level" aria-expanded="false">
                     <li>
                         @if ($permiso_invitado->verModoTareo==1)
                         <a href="#" data-toggle="modal" data-target="#modos">Dispositivos</a>

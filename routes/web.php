@@ -668,7 +668,10 @@ Route::get('/agendaPersonalizada', 'AgendaController@verAgenda');
 Route::post('/partner', 'soportesPorCorreoController@envioPartner');
 Route::post('selectModos', 'dashboardController@selectModos');
 Route::get('modos', 'dashboardController@getModos');
-
+Route::get('/reporteMatrizHorarios', 'horarioController@mostrarReporteHorarios');
+Route::get('/cargarTablaHorarios', 'horarioController@cargarReporteHorarios');
+Route::get('/selectMatrizHorarios', 'horarioController@selectMatrizHorarios');
+Route::get('/cargarMatrizHorario', 'horarioController@cargarMatrizHorario');
 //GENERAR AUTOMA SOLO EJECUTAR 1 VEZ
 Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
 /*Route::get('/asignarReglas', 'EmpleadoController@agregarReglas');

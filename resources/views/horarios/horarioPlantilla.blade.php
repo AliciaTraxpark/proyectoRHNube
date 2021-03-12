@@ -1411,3 +1411,129 @@ aria-hidden="true">
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+ {{-- MODAL ELIMINAR HORARIOS POR RANGO DE FECHA --}}
+ <div id="modalEliminarHorarioF" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-scrollable" style="max-width: 500px; margin-top: 50px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #163552;">
+                <h5 class="modal-title" style="color:#ffffff;font-size:15px">Eliminar horarios
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="font-size:12px!important;background: #ffffff;padding-bottom: 0px;">
+                <form action="javascript:eliminarHorariosFecha()">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                           <label style="font-weight: 600; font-size: 13px">Seleccione rango de fechas a eliminar horarios.</label>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-lg-5 col-form-label">Rango de
+                                    fechas:</label>
+                                <input type="hidden" id="ID_START_EHF">
+                                <input type="hidden" id="ID_END_EHF">
+                                <div class="input-group col-md-7 text-center"
+                                    style="padding-left: 0px;padding-right: 12px;" id="fechaSelecElimH">
+                                    <input type="text"  class="col-md-12 form-control"
+                                        data-input>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control flatpickr">
+                                            <a class="input-button" data-toggle>
+                                                <i class="uil uil-calender"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer" style="background: #ffffff;padding-bottom: 8px;
+            padding-top: 8px;">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm "
+                                data-dismiss="modal">Cerrar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm">Aceptar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+ {{-- MODAL ELIMINAR INCIDENCIAS POR RANGO DE FECHA --}}
+ <div id="modalEliminarIncidenciaF" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-scrollable" style="max-width: 500px; margin-top: 50px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #163552;">
+                <h5 class="modal-title" style="color:#ffffff;font-size:15px">Eliminar Incidencias
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="font-size:12px!important;background: #ffffff;padding-bottom: 0px;">
+                <form action="javascript:eliminarIncidenciasFecha()">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                           <label style="font-weight: 600; font-size: 13px">Seleccione rango de fechas a eliminar incidencias.</label>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-lg-5 col-form-label">Rango de
+                                    fechas:</label>
+                                <input type="hidden" id="ID_START_EIF">
+                                <input type="hidden" id="ID_END_EIF">
+                                <div class="input-group col-md-7 text-center"
+                                    style="padding-left: 0px;padding-right: 12px;" id="fechaSelecElimI">
+                                    <input type="text"  class="col-md-12 form-control"
+                                        data-input>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control flatpickr">
+                                            <a class="input-button" data-toggle>
+                                                <i class="uil uil-calender"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer" style="background: #ffffff;padding-bottom: 8px;
+            padding-top: 8px;">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm "
+                                data-dismiss="modal">Cerrar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm">Aceptar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

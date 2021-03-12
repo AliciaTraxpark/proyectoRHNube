@@ -1818,158 +1818,212 @@ function vaciarcalendario() {
 
 }
 function vaciarhor() {
-    bootbox.confirm({
-        title: "Elminar horario",
-        message: "¿Esta seguro que desea borrar horario(s) de este mes del calendario?",
-        buttons: {
-            confirm: {
-                label: 'Aceptar',
-                className: 'btn-success'
-            },
-            cancel: {
-                label: 'Cancelar',
-                className: 'btn-light'
+
+       //*INICIO Y FIN DE MES OBTENIDO DE CALENDARIO
+
+    fmes = calendar.getDate();
+   /*  mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear(); */
+   var inicioC=  moment(fmes).startOf('month').format('YYYY-MM-DD');
+   var finC=moment(fmes).endOf('month').format('YYYY-MM-DD');
+
+   $('#ID_START_EHF').val(inicioC);
+   $('#ID_END_EHF').val(finC);
+    //*
+
+//* ELEGIR FECHA PARA ELIMINAR HORARIOS */
+var fechaValue = $("#fechaSelecElimH").flatpickr({
+    mode: "range",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "j F",
+    locale: "es",
+    wrap: true,
+    allowInput: true,
+    conjunction: " a ",
+    minRange: 1,
+
+    onChange: function (selectedDates) {
+        var _this = this;
+        var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
+        $('#ID_START_EHF').val(dateArr[0]);
+        $('#ID_END_EHF').val(dateArr[1]);
+
+
+
+    },
+    defaultDate: [inicioC,finC],
+    onClose: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length == 1) {
+            var fm = moment(selectedDates[0]).add("day", -1).format("YYYY-MM-DD");
+            instance.setDate([fm, selectedDates[0]], true);
+        }
+    }
+});
+$('#modalEliminarHorarioF').modal('show');
+
+
+}
+//*FUNCION QUE ELIMINA HORARIOS FECHA
+function eliminarHorariosFecha(){
+
+    //* obtengo empleados, mes y año de calendario
+    fmes = calendar.getDate();
+    let inicio = $('#ID_START_EHF').val();
+    let fin =  $('#ID_END_EHF').val();
+    let empleados=$('#nombreEmpleado').val();
+    $.ajax({
+        type: "get",
+        url: "/vaciarhor",
+        data: {
+            inicio,
+            fin,
+            empleados
+        },
+        async:false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
             }
         },
-        callback: function (result) {
-            if (result == true) {
-                //* obtengo empleados, mes y año de calendario
-                fmes = calendar.getDate();
-                mescale = fmes.getMonth() + 1;
-                aniocalen = fmes.getFullYear();
-                let empleados=$('#nombreEmpleado').val();
-                $.ajax({
-                    type: "get",
-                    url: "/vaciarhor",
-                    data: {
-                        mescale,
-                        aniocalen,
-                        empleados
-                    },
-                    async:false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        419: function () {
-                            location.reload();
-                        }
-                    },
-                    success: function (data) {
+        success: function (data) {
 
-                        var mesAg = $('#fechaDa').val();
-                        var d = mesAg;
-                        var fechasM = new Date(d);
-                        calendar.refetchEvents();
-                        $.notifyClose();
-                        $.notify(
-                            {
-                                message: "\nHorarios borrados",
-                                icon: "admin/images/checked.svg",
-                            },
-                            {   element: $('#asignarHorario'),
-                                position: "fixed",
-                                icon_type: "image",
-                                newest_on_top: true,
-                                delay: 5000,
-                                template:
-                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                                    "</div>",
-                                spacing: 50,
-                            }
-                        );
+            var mesAg = $('#fechaDa').val();
+            var d = mesAg;
+            var fechasM = new Date(d);
+            calendar.refetchEvents();
+            $('#modalEliminarHorarioF').modal('hide');
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nHorarios borrados",
+                    icon: "admin/images/checked.svg",
+                },
+                {   element: $('#asignarHorario'),
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 50,
+                }
+            );
 
-                    },
-                    error: function () {}
-                });
-
-
-            }
-        }
+        },
+        error: function () {}
     });
+
+
+}
+//*VACIAR INCIDENCIAS
+function vaciarIncid() {
+
+    //*INICIO Y FIN DE MES OBTENIDO DE CALENDARIO
+
+    fmes = calendar.getDate();
+
+   var inicioC=  moment(fmes).startOf('month').format('YYYY-MM-DD');
+   var finC=moment(fmes).endOf('month').format('YYYY-MM-DD');
+
+   $('#ID_START_EIF').val(inicioC);
+   $('#ID_END_EIF').val(finC);
+    //*
+
+//* ELEGIR FECHA PARA ELIMINAR HORARIOS */
+var fechaValue = $("#fechaSelecElimI").flatpickr({
+    mode: "range",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "j F",
+    locale: "es",
+    wrap: true,
+    allowInput: true,
+    conjunction: " a ",
+    minRange: 1,
+
+    onChange: function (selectedDates) {
+        var _this = this;
+        var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
+        $('#ID_START_EIF').val(dateArr[0]);
+        $('#ID_END_EIF').val(dateArr[1]);
+
+
+
+    },
+    defaultDate: [inicioC,finC],
+    onClose: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length == 1) {
+            var fm = moment(selectedDates[0]).add("day", -1).format("YYYY-MM-DD");
+            instance.setDate([fm, selectedDates[0]], true);
+        }
+    }
+});
+$('#modalEliminarIncidenciaF').modal('show');
+
 
 }
 
-//*VACIAR INCIDENCIAS
-function vaciarIncid() {
-    bootbox.confirm({
-        title: "Elminar Incidencias",
-        message: "¿Esta seguro que desea borrar incidencia(s) de este mes del calendario?",
-        buttons: {
-            confirm: {
-                label: 'Aceptar',
-                className: 'btn-success'
-            },
-            cancel: {
-                label: 'Cancelar',
-                className: 'btn-light'
-            }
-        },
-        callback: function (result) {
-            if (result == true) {
-                //* obtengo empleados, mes y año de calendario
-                fmes = calendar.getDate();
-                mescale = fmes.getMonth() + 1;
-                aniocalen = fmes.getFullYear();
-                let empleados=$('#nombreEmpleado').val();
-                $.ajax({
-                    type: "get",
-                    url: "/vaciarIncid",
-                    data: {
-                        mescale,
-                        aniocalen,
-                        empleados
-                    },
-                    async:false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        419: function () {
-                            location.reload();
-                        }
-                    },
-                    success: function (data) {
+//*FUNCION QUE ELIMINA INCIDENCIAS POR FECHAS
+function eliminarIncidenciasFecha(){
+   //* obtengo empleados, mes y año de calendario
+   let inicio = $('#ID_START_EIF').val();
+   let fin =  $('#ID_END_EIF').val();
+   let empleados=$('#nombreEmpleado').val();
+   $.ajax({
+       type: "get",
+       url: "/vaciarIncid",
+       data: {
+           inicio,
+           fin,
+           empleados
+       },
+       async:false,
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       },
+       statusCode: {
+           419: function () {
+               location.reload();
+           }
+       },
+       success: function (data) {
 
-                        var mesAg = $('#fechaDa').val();
-                        var d = mesAg;
-                        var fechasM = new Date(d);
-                        calendar.refetchEvents();
-                        $.notifyClose();
-                        $.notify(
-                            {
-                                message: "\nIncidencias borradas",
-                                icon: "admin/images/checked.svg",
-                            },
-                            {   element: $('#asignarHorario'),
-                                position: "fixed",
-                                icon_type: "image",
-                                newest_on_top: true,
-                                delay: 5000,
-                                template:
-                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                                    "</div>",
-                                spacing: 50,
-                            }
-                        );
+           calendar.refetchEvents();
+           $('#modalEliminarIncidenciaF').modal('hide');
+           $.notifyClose();
+           $.notify(
+               {
+                   message: "\nIncidencias borradas",
+                   icon: "admin/images/checked.svg",
+               },
+               {   element: $('#asignarHorario'),
+                   position: "fixed",
+                   icon_type: "image",
+                   newest_on_top: true,
+                   delay: 5000,
+                   template:
+                       '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                       '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                       '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                       '<span data-notify="title">{1}</span> ' +
+                       '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                       "</div>",
+                   spacing: 50,
+               }
+           );
 
-                    },
-                    error: function () {}
-                });
-
-
-            }
-        }
-    });
-
+       },
+       error: function () {}
+   });
 }
 function vaciardl() {
     bootbox.confirm({
@@ -4383,7 +4437,7 @@ function actualizarConfigHorario_re() {
 //* select empleado cuando cambia
 $( "#nombreEmpleado" ).change(function() {
     nempl=$( "#nombreEmpleado" ).val().length;
-    console.log(nempl);
+
     if(nempl>0){
 
     $(".loader").show();
@@ -4403,7 +4457,7 @@ $( "#nombreEmpleado" ).change(function() {
 function verDatosHorario(idempleado,idHorarioEmp){
     $('#dataHorarioElegido'+ idempleado).empty();
     $('#dataHorarioElegido'+ idempleado).css("background","#f3f3f3" );
-    console.log('#media'+ idempleado+'EH'+idHorarioEmp);
+
     $('.mediaE'+ idempleado).css( "background","#fff" );
     var contenidoH= "";
     $.each(dataDeempleado, function (key, item) {
@@ -4554,7 +4608,7 @@ function eliminarMasivoHorarios(){
                             /* ............................. */
 
                         } else{
-                            console.log('no tengo datos');
+
                             $('#modalHorarioEmpleados').modal('hide');
                             calendar.refetchEvents();
                             $.notifyClose();
@@ -4738,7 +4792,7 @@ function ClonarHorarios(){
    //*INICIO Y FIN DE MES
    var inicioC=  moment().startOf('month').format('YYYY-MM-DD');
    var finC=moment().format('YYYY-MM-DD');
-   console.log('fechaAct'+inicioC+'-'+finC);
+
    $('#ID_START').val(inicioC);
    $('#ID_END').val(finC);
     //*
@@ -5333,7 +5387,7 @@ function eliminarMasivoIncidencias(){
                             /* ............................. */
 
                         } else{
-                            console.log('no tengo datos');
+                            
                             $('#modalIncidenciasEmpleados').modal('hide');
                             calendar.refetchEvents();
                             $.notifyClose();

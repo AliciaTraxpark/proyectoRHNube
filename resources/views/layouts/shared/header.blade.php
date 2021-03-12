@@ -505,6 +505,487 @@ use App\persona;
         jivo_api.open();  
     });
 </script>
+<script type="text/javascript">
+    
+    function cf1(){
+        $('#search1').show(300);
+        $('#x').show();
+        $('#lupa').hide();
+    }
+    function cf2(){
+        $('#search1').hide(300);
+        $('#x').hide();
+        $('#lupa').show();
+        cambiar("");
+        $('#search').val("");
+    }
+
+    function cf1Inv(){
+        $('#search1Inv').show(300);
+        $('#xInv').show();
+        $('#lupaInv').hide();
+    }
+    function cf2Inv(){
+        $('#search1Inv').hide(300);
+        $('#xInv').hide();
+        $('#lupaInv').show();
+        cambiarInv("");
+        $('#searchInv').val("");
+    }
+
+    let cadenaE = ["Gestión de empleados", "Gestion de empleados", "Empleados", "Baja", "Empleados de baja"];
+    let cadenaH = ["Horarios", "Asignar horarios", "Incidencias", "Matriz de horarios"];
+    let cadenaC = ["Calendarios"];
+    let cadenaCC = ["Centro de Costo"];
+    let cadenaPC = ["Puntos de Control"];
+    let cadenaA = ["Gestion de Actividades", "Gestión de actividades", "Actividades", "Subactividades"];
+    let cadenaD = ["Dashboard"];
+    let cadenaCR = ["Control remoto", "Remoto", "Detalle diario", "Reportes", "Tiempos por semana", "Tiempos por mes", "Tardanzas", "Matriz por tandanzas", "Dashboard"];
+    let cadenaR = ["Control en ruta", "Control ruta", "Ruta", "Detalle diario", "Reporte semanal", "Tardanzas", "Matriz por tandanzas"];
+    let cadenaP = ["Asistencia en puerta", "Asistencia puerta", "Puerta", "Dispositivos", "Controladores", "Detalle de asistencia", "Asistencia por fecha", "Asistencia por empleado", "Asistencia consolidada", "Tardanzas", "Matriz tardanzas"];
+    let cadenaT = ["Modo Tareo", "Tareo", "Dispositivos", "Controladores", "Detalle Tareo", "Reporte de tareo por fecha", "Reporte de tareo por empleado"];
+
+
+    function cambiar(texto){
+        texto = texto.toUpperCase();
+        let tam = texto.length;
+        let bandE = false;
+        let bandH = false;
+        let bandC = false;
+        let bandCC = false;
+        let bandPC = false;
+        let bandA = false;
+        let bandD = false;
+        let bandCR = false;
+        let bandR = false;
+        let bandAP = false;
+        let bandT = false;
+        let cadena = "";
+        if (tam == 0){
+            $('#gestEmpleado').show();
+            $('#gestCalendario').show();
+            $('#gestHorarios').show();
+            $('#gestCentroCosto').show();
+            $('#gestPuntosContol').show();
+            $('#gestActividades').show();  
+            $('#gestDashboard').show();
+            $('#li_remoto').show();  
+            $('#li_ruta').show();   
+            $('#li_puerta').show();  
+            $('#li_tareo').show();  
+            $('#li_remotoInv').show(); 
+            $('#li_rutaInv').show();   
+            $('#li_puertaInv').show();  
+            $('#li_tareoInv').show(); 
+
+            $("#gestEmpleado").removeClass("mm-active");
+            document.getElementById("gestEmpleado_ul").setAttribute("aria-expanded", false);
+            $("#gestEmpleado_ul").removeClass("mm-show");
+
+            $("#li_remoto").removeClass("mm-active");
+            document.getElementById("li_remoto_ul").setAttribute("aria-expanded", false);
+            $("#li_remoto_ul").removeClass("mm-show");
+
+            $("#li_puerta").removeClass("mm-active");
+            document.getElementById("li_puerta").setAttribute("aria-expanded", false);
+            $("#li_puerta").removeClass("mm-show");
+
+            $("#li_puerta_ul").removeClass("mm-active");
+            document.getElementById("li_puerta_ul").setAttribute("aria-expanded", false);
+            $("#li_puerta_ul").removeClass("mm-show");
+
+            $("#li_puerta_ul_ul").removeClass("mm-active");
+            document.getElementById("li_puerta_ul_ul").setAttribute("aria-expanded", false);
+            $("#li_puerta_ul_ul").removeClass("mm-show");
+
+            $("#li_puerta_ul_ul2").removeClass("mm-active");
+            document.getElementById("li_puerta_ul_ul2").setAttribute("aria-expanded", false);
+            $("#li_puerta_ul_ul2").removeClass("mm-show");
+
+            $("#li_ruta").removeClass("mm-active");
+            document.getElementById("li_ruta_ul").setAttribute("aria-expanded", false);
+            $("#li_ruta_ul").removeClass("mm-show");
+
+            $("#li_tareo").removeClass("mm-active");
+            document.getElementById("li_tareo_ul").setAttribute("aria-expanded", false);
+            $("#li_tareo_ul").removeClass("mm-show");
+        }else {
+            $('#gestEmpleado').hide();
+            $('#gestCalendario').hide();
+            $('#gestHorarios').hide();
+            $('#gestCentroCosto').hide();
+            $('#gestPuntosContol').hide();
+            $('#gestActividades').hide();  
+            $('#gestDashboard').hide(); 
+            $('#li_remoto').hide(); 
+            $('#li_ruta').hide();   
+            $('#li_puerta').hide();  
+            $('#li_tareo').hide();  
+
+            for (let i = 0; cadenaE.length > i; i++) {
+                cadena = cadenaE[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandE = true;
+                } 
+            }
+
+            for (let i = 0; cadenaH.length > i; i++) {
+                cadena = cadenaH[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandH = true;
+                } 
+            }
+
+            for (let i = 0; cadenaC.length > i; i++) {
+                cadena = cadenaC[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandC = true;
+                } 
+            }
+
+            for (let i = 0; cadenaCC.length > i; i++) {
+                cadena = cadenaCC[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandCC = true;
+                } 
+            }
+
+            for (let i = 0; cadenaPC.length > i; i++) {
+                cadena = cadenaPC[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandPC = true;
+                } 
+            }
+
+            for (let i = 0; cadenaA.length > i; i++) {
+                cadena = cadenaA[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandA = true;
+                } 
+            }
+
+            for (let i = 0; cadenaD.length > i; i++) {
+                cadena = cadenaD[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandD = true;
+                } 
+            }
+
+            for (let i = 0; cadenaCR.length > i; i++) {
+                cadena = cadenaCR[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandCR = true;
+                } 
+            }
+
+            for (let i = 0; cadenaR.length > i; i++) {
+                cadena = cadenaR[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandR = true;
+                } 
+            }
+
+            for (let i = 0; cadenaP.length > i; i++) {
+                cadena = cadenaP[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandAP = true;
+                } 
+            }
+
+            for (let i = 0; cadenaT.length > i; i++) {
+                cadena = cadenaT[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandT = true;
+                } 
+            }
+
+            if(bandE == true){
+                $("#gestEmpleado").addClass("mm-active");
+                document.getElementById("gestEmpleado_ul").setAttribute("aria-expanded", true);
+                $("#gestEmpleado_ul").addClass("mm-show");
+                $('#gestEmpleado').show();
+            }
+            if(bandH == true){
+                $("#gestHorarios").addClass("mm-active");
+                document.getElementById("gestHorarios_ul").setAttribute("aria-expanded", true);
+                $("#gestHorarios_ul").addClass("mm-show");
+                $('#gestHorarios').show();
+            }
+            if(bandC == true){
+                $('#gestCalendario').show();
+            }
+            if(bandCC == true){
+                $('#gestCentroCosto').show();
+            }
+            if(bandPC == true){
+                $('#gestPuntosContol').show();
+            }
+            if(bandA == true){
+                $("#gestActividades").addClass("mm-active");
+                document.getElementById("gestActividades_ul").setAttribute("aria-expanded", true);
+                $("#gestActividades_ul").addClass("mm-show");
+                $('#gestActividades').show();
+            }
+            if(bandD == true){
+                $('#gestDashboard').show();
+            }
+            if(bandCR == true){
+                $("#li_remoto").addClass("mm-active");
+                document.getElementById("li_remoto_ul").setAttribute("aria-expanded", true);
+                $("#li_remoto_ul").addClass("mm-show");
+                document.getElementById("li_remoto_ul_ul").setAttribute("aria-expanded", true);
+                $("#li_remoto_ul_ul").addClass("mm-show");
+                $('#li_remoto').show();
+            }
+            if(bandR == true){
+                $("#li_ruta").addClass("mm-active");
+                document.getElementById("li_ruta_ul").setAttribute("aria-expanded", true);
+                $("#li_ruta_ul").addClass("mm-show");
+                $('#li_ruta').show();
+            }
+            if(bandAP == true){
+                $("#li_puerta").addClass("mm-active");
+                document.getElementById("li_puerta_ul").setAttribute("aria-expanded", true);
+                $("#li_puerta_ul").addClass("mm-show");
+                document.getElementById("li_puerta_ul_ul").setAttribute("aria-expanded", true);
+                $("#li_puerta_ul_ul").addClass("mm-show");
+                document.getElementById("li_puerta_ul_ul2").setAttribute("aria-expanded", true);
+                $("#li_puerta_ul_ul2").addClass("mm-show");
+                $('#li_puerta').show();
+            }
+            if(bandT == true){
+                $("#li_tareo").addClass("mm-active");
+                document.getElementById("li_tareo_ul").setAttribute("aria-expanded", true);
+                $("#li_tareo_ul").addClass("mm-show");
+                $('#li_tareo').show();
+            }
+        }
+        console.log(texto.length);
+    }
+
+    function cambiarInv(texto){
+        texto = texto.toUpperCase();
+        let tam = texto.length;
+        let bandE = false;
+        let bandC = false;
+        let bandA = false;
+        let bandD = false;
+        let bandCR = false;
+        let bandR = false;
+        let bandAP = false;
+        let bandT = false;
+        let cadena = "";
+        if (tam == 0){
+            $('#gestEmpleado').show();
+            $('#gestCalendario').show();
+            $('#gestActividades').show();  
+            $('#gestDashboard').show();
+            $('#li_remotoInv').show(); 
+            $('#li_rutaInv').show();   
+            $('#li_puertaInv').show();  
+            $('#li_tareoInv').show(); 
+
+            $("#gestEmpleado").removeClass("mm-active");
+            if($("#gestEmpleado_ul").val() != null){
+                document.getElementById("gestEmpleado_ul").setAttribute("aria-expanded", false);
+            }
+            $("#gestEmpleado_ul").removeClass("mm-show");
+
+            $("#li_remotoInv").removeClass("mm-active");
+            if($("#li_remotoInv_ul").val() != null){
+                document.getElementById("li_remotoInv_ul").setAttribute("aria-expanded", false);
+            }
+            $("#li_remotoInv_ul").removeClass("mm-show");
+
+            $("#li_puertaInv").removeClass("mm-active");
+            if($("#li_puertaInv").val() != null){
+                document.getElementById("li_puertaInv").setAttribute("aria-expanded", false);
+            }
+            $("#li_puertaInv").removeClass("mm-show");
+
+            $("#li_puertaInv_ul").removeClass("mm-active");
+            if($("#li_puertaInv_ul").val() != null){
+                document.getElementById("li_puertaInv_ul").setAttribute("aria-expanded", false);
+            }
+            $("#li_puertaInv_ul").removeClass("mm-show");
+
+            $("#li_puertaInv_ul_ul").removeClass("mm-active");
+            if($("#li_puertaInv_ul_ul").val() != null){
+                document.getElementById("li_puertaInv_ul_ul").setAttribute("aria-expanded", false);
+            }
+            $("#li_puertaInv_ul_ul").removeClass("mm-show");
+
+            $("#li_puertaInv_ul_ul2").removeClass("mm-active");
+            if($("#li_puertaInv_ul_ul2").val() != null){
+                document.getElementById("li_puertaInv_ul_ul2").setAttribute("aria-expanded", false);
+            }
+            $("#li_puertaInv_ul_ul2").removeClass("mm-show");
+
+            $("#li_rutaInv").removeClass("mm-active");
+            if($("#li_rutaInv_ul").val() != null){
+                document.getElementById("li_rutaInv_ul").setAttribute("aria-expanded", false);
+            }
+            $("#li_rutaInv_ul").removeClass("mm-show");
+
+            $("#li_tareoInv").removeClass("mm-active");
+            if($("#li_tareoInv_ul").val() != null){
+                document.getElementById("li_tareoInv_ul").setAttribute("aria-expanded", false);
+            }
+            $("#li_tareoInv_ul").removeClass("mm-show");
+        }else {
+            $('#gestEmpleado').hide();
+            $('#gestCalendario').hide();
+            $('#gestActividades').hide();  
+            $('#gestDashboard').hide(); 
+            $('#li_remotoInv').hide(); 
+            $('#li_rutaInv').hide();   
+            $('#li_puertaInv').hide();  
+            $('#li_tareoInv').hide(); 
+
+            for (let i = 0; cadenaE.length > i; i++) {
+                cadena = cadenaE[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandE = true;
+                } 
+            }
+
+
+            for (let i = 0; cadenaC.length > i; i++) {
+                cadena = cadenaC[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandC = true;
+                } 
+            }
+
+            for (let i = 0; cadenaA.length > i; i++) {
+                cadena = cadenaA[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandA = true;
+                } 
+            }
+
+            for (let i = 0; cadenaD.length > i; i++) {
+                cadena = cadenaD[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandD = true;
+                } 
+            }
+
+            for (let i = 0; cadenaCR.length > i; i++) {
+                cadena = cadenaCR[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandCR = true;
+                } 
+            }
+
+            for (let i = 0; cadenaR.length > i; i++) {
+                cadena = cadenaR[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandR = true;
+                } 
+            }
+
+            for (let i = 0; cadenaP.length > i; i++) {
+                cadena = cadenaP[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandAP = true;
+                } 
+            }
+
+            for (let i = 0; cadenaT.length > i; i++) {
+                cadena = cadenaT[i].toUpperCase();
+                let sub = cadena.substr(0,tam)
+                if(texto == sub){
+                    bandT = true;
+                } 
+            }
+
+            if(bandE == true){
+                $("#gestEmpleado").addClass("mm-active");
+                if($("#gestEmpleado_ul").val() != null){
+                    document.getElementById("gestEmpleado_ul").setAttribute("aria-expanded", true);
+                }
+                $("#gestEmpleado_ul").addClass("mm-show");
+                $('#gestEmpleado').show();
+            }
+            if(bandC == true){
+                $('#gestCalendario').show();
+            }
+            if(bandA == true){
+                $("#gestActividades").addClass("mm-active");
+                if($("#gestActividades_ul").val() != null){
+                    document.getElementById("gestActividades_ul").setAttribute("aria-expanded", true);
+                }
+                $("#gestActividades_ul").addClass("mm-show");
+                $('#gestActividades').show();
+            }
+            if(bandD == true){
+                $('#gestDashboard').show();
+            }
+            if(bandCR == true){
+                $("#li_remotoInv").addClass("mm-active");
+                if($("#li_remotoInv").val() != null){
+                    document.getElementById("li_remotoInv_ul").setAttribute("aria-expanded", true);
+                }
+                $("#li_remotoInv_ul").addClass("mm-show");
+                if($("#li_remotoInv_ul_ul").val() != null){
+                    document.getElementById("li_remotoInv_ul_ul").setAttribute("aria-expanded", true);
+                }
+                $("#li_remotoInv_ul_ul").addClass("mm-show");
+                $('#li_remotoInv').show();
+            }
+            if(bandR == true){
+                $("#li_rutaInv").addClass("mm-active");
+                if($("#li_rutaInv_ul").val() != null){
+                    document.getElementById("li_rutaInv_ul").setAttribute("aria-expanded", true);
+                }
+                $("#li_rutaInv_ul").addClass("mm-show");
+                $('#li_rutaInv').show();
+            }
+            if(bandAP == true){
+                $("#li_puertaInv").addClass("mm-active");
+                document.getElementById("li_puertaInv_ul").setAttribute("aria-expanded", true);
+                $("#li_puertaInv_ul").addClass("mm-show");
+                if($("#li_puertaInv_ul_ul").val() != null){
+                    document.getElementById("li_puertaInv_ul_ul").setAttribute("aria-expanded", true);
+                }
+                $("#li_puertaInv_ul_ul").addClass("mm-show");
+                if($("#li_puertaInv_ul_ul2").val() != null){
+                  document.getElementById("li_puertaInv_ul_ul2").setAttribute("aria-expanded", true);  
+                }
+                $("#li_puertaInv_ul_ul2").addClass("mm-show");
+                $('#li_puertaInv').show();
+            }
+            if(bandT == true){
+                $("#li_tareoInv").addClass("mm-active");
+                if($("#li_tareoInv_ul").val() != null){
+                    document.getElementById("li_tareoInv_ul").setAttribute("aria-expanded", true);
+                }
+                $("#li_tareoInv_ul").addClass("mm-show");
+                $('#li_tareoInv').show();
+            }
+        }
+        console.log(texto.length);
+    }
+</script>
 <script src="{{asset('landing/home/js/modos.js')}}"></script>
 @section('script')
 <script src="{{asset('landing/js/editarPerfil.js')}}"></script>
