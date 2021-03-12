@@ -3810,7 +3810,7 @@ class dispositivosController extends Controller
                                         if ($horaMinutoSegundoS <= $pausa->pausH_Fin) {
                                             $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
                                         } else {
-                                            $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
+                                            $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
                                         }
                                     }
                                     // : TIEMPOS INGRESADOS POR EL USUARIO
