@@ -6445,11 +6445,13 @@ $(function () {
                 }
             },
             cache: true,
-        }
+        },
+        minimumResultsForSearch: 4
     });
     $('#empleadoPor').select2({
         multiple: true,
-        closeOnSelect: false
+        closeOnSelect: false,
+        minimumResultsForSearch: 4
     });
     // : INICIO DE SELECT POR 
     $('#selectPor').trigger({
@@ -6510,7 +6512,6 @@ $('#empleadoPor').on('select2:close', function () {
 // : CUANDO EL SELECCIONAR POR QUEDE VACIO Y SE CIERRE
 // : SIEMPRE TENER SELECCIONADO POR EMPLEADO
 $('#selectPor').on('select2:closing', function () {
-    console.log($(this).val());
     if($(this).val().length == 0){
         $(this).val(0).trigger("change");
     }
@@ -6522,13 +6523,4 @@ $('#selectPor').on('select2:selecting', function () {
     if (arrayResultado.includes("0")) {
         $('#selectPor option[value="0"]').prop("selected", false);
     }
-});
-// : DESACTIVAMOS EL BSUCAR
-$('#selectPor').on('select2:opening select2:closing', function (event) {
-    var $searchfield = $(this).parent().find('.select2-search__field');
-    $searchfield.prop('disabled', true);
-});
-$('#empleadoPor').on('select2:opening select2:closing', function (event) {
-    var $searchfield = $(this).parent().find('.select2-search__field');
-    $searchfield.prop('disabled', true);
 });
