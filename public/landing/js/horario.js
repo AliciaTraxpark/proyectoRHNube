@@ -304,11 +304,11 @@ function calendario() {
             $('#horAdicSwitch').prop('checked', false)
             $('#horCompSwitch').prop('checked', true)
 
-            $("#selectTipoIn").val("");
+
             $("#selectTipoIn").trigger("change");
             $("#incidenciaSelect").val("");
             $("#incidenciaSelect").trigger("change");
-            $('#incidenciaSelect').prop('disabled', true);
+
             $('#alertSeleccioneIncidencia').hide();
             $('#verhorarioEmpleado').modal('show');
 
@@ -5098,7 +5098,7 @@ $("#incidenciaSelect").select2({
 
 //***SELECT TIPO DE INCIDENCIA */
 
-$('#selectTipoIn').on('select2:select', function (e) {
+$('#selectTipoIn').on('change', function (e) {
 
     //*habilitamos incidencia
     $("#incidenciaSelect").prop("disabled", false);

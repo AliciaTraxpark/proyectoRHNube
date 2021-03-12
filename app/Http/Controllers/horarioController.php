@@ -124,6 +124,7 @@ class horarioController extends Controller
             $tipo_incidencia=DB::table('tipo_incidencia')
             ->where('organi_id','=',session('sesionidorg'))
             ->where('sistema','=',0)
+            ->orderBy('tipoInc_descripcion','DESC')
             ->get();
 
             if ($invitadod) {
@@ -553,6 +554,7 @@ class horarioController extends Controller
             $tipo_incidencia=DB::table('tipo_incidencia')
             ->where('organi_id','=',session('sesionidorg'))
             ->where('sistema','=',0)
+            ->orderBy('tipoInc_descripcion','DESC')
             ->get();
 
             if ($invitadod) {
@@ -3158,7 +3160,7 @@ class horarioController extends Controller
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_cargo', $area)
                             ->groupBy('e.emple_id')
-                            ->get(); 
+                            ->get();
                         } else {
                             if ($selector == "Local") {
                                 $empleados = DB::table('empleado as e')
@@ -3275,7 +3277,7 @@ class horarioController extends Controller
                                 }
                             }
                         }
-                        
+
                     }
                 }
             } else {
@@ -3788,7 +3790,7 @@ class horarioController extends Controller
                                 }
                             }
                         }
-                        
+
                     } else {
                         $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                             ->where('invem.idinvitado', '=',  $invitado->idinvitado)
@@ -3924,7 +3926,7 @@ class horarioController extends Controller
                         $contEmpleados = $empleados->count();
                         $empleados = $empleados->concat($dias);
                         $empleados = $empleados->push($contEmpleados);
-                        
+
                     } else {
                         if($selector == "Cargo"){
                             $empleados = DB::table('empleado as e')
@@ -4002,7 +4004,7 @@ class horarioController extends Controller
                             }
                         }
                     }
-                    
+
                 }
             }
         }

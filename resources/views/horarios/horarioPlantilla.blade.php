@@ -317,9 +317,8 @@
 
                                                         <select data-plugin="customselect"
                                                             class="form-control custom-select custom-select-sm  col-md-10" name="selectTipoIn"
-                                                            id="selectTipoIn" data-placeholder="seleccione">
+                                                            id="selectTipoIn">
                                                             @foreach ($tipo_incidencia as $tipoI)
-                                                                <option value=""></option>
                                                                 <option value="{{ $tipoI->idtipo_incidencia }}">
                                                                     {{ $tipoI->tipoInc_descripcion }}</option>
                                                              @endforeach
@@ -334,7 +333,7 @@
 
                                                         <select data-plugin="customselect"
                                                             class="form-control custom-select custom-select-sm  col-md-10" name="incidenciaSelect"
-                                                            id="incidenciaSelect" data-placeholder="escoger incidencia" disabled>
+                                                            id="incidenciaSelect" data-placeholder="escoger incidencia" >
 
                                                         </select>
                                                         &nbsp;
