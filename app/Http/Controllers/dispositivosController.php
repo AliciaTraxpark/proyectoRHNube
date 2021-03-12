@@ -2155,6 +2155,12 @@ class dispositivosController extends Controller
                         $horarioIniT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
                         $horarioFin = Carbon::parse($horario->horaF);
                         $horarioFinT = $horarioFin->copy()->subMinutes($horario->toleranciaF);
+                        if (!($entrada->gte($horarioIniT) && $entrada->lte($horarioFinT))) {
+                            return response()->json(
+                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                200
+                            );
+                        }
                         // : SUMAR TIEMPOS DE MARCACIONES
                         $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
                             ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
@@ -2177,34 +2183,27 @@ class dispositivosController extends Controller
                         // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
                         $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
-                            if ($entrada->gte($horarioIniT) && $entrada->lte($horarioFinT)) {
-                                // ! MARCACION A REGISTRAR ENTRADA
-                                $marcacion->marcaMov_fecha = $nuevaEntrada;
-                                if ($tipo == 2) {
-                                    $marcacion->controladores_idControladores = $marcacionCambiar->controladores_salida;
-                                    $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoSalida;
-                                } else {
-                                    $marcacion->controladores_idControladores  = $marcacionCambiar->controladores_idControladores;
-                                    $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoEntrada;
-                                }
-                                $marcacion->save();
-                                // ! MARCACION A CAMBIAR
-                                if ($tipo == 2) {
-                                    $marcacionCambiar->marcaMov_salida = NULL;
-                                    $marcacionCambiar->controladores_salida = NULL;
-                                    $marcacionCambiar->dispositivoSalida = NULL;
-                                } else {
-                                    $marcacionCambiar->marcaMov_fecha = NULL;
-                                    $marcacionCambiar->controladores_idControladores  = NULL;
-                                    $marcacionCambiar->dispositivoEntrada = NULL;
-                                }
-                                $marcacionCambiar->save();
+                            // ! MARCACION A REGISTRAR ENTRADA
+                            $marcacion->marcaMov_fecha = $nuevaEntrada;
+                            if ($tipo == 2) {
+                                $marcacion->controladores_idControladores = $marcacionCambiar->controladores_salida;
+                                $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoSalida;
                             } else {
-                                return response()->json(
-                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
-                                    200
-                                );
+                                $marcacion->controladores_idControladores  = $marcacionCambiar->controladores_idControladores;
+                                $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoEntrada;
                             }
+                            $marcacion->save();
+                            // ! MARCACION A CAMBIAR
+                            if ($tipo == 2) {
+                                $marcacionCambiar->marcaMov_salida = NULL;
+                                $marcacionCambiar->controladores_salida = NULL;
+                                $marcacionCambiar->dispositivoSalida = NULL;
+                            } else {
+                                $marcacionCambiar->marcaMov_fecha = NULL;
+                                $marcacionCambiar->controladores_idControladores  = NULL;
+                                $marcacionCambiar->dispositivoEntrada = NULL;
+                            }
+                            $marcacionCambiar->save();
                         } else {
                             return response()->json(
                                 array("respuesta" => "Sobretiempo en la marcación."),
