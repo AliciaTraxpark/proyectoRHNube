@@ -2886,6 +2886,17 @@ class dispositivosController extends Controller
             if ($respuesta) {
                 // * VALIDAR CON EL HORARIO
                 if ($idhorarioE != 0) {
+                    // * VALIDAR SIN FUERA DE HORARIO
+                    $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                    $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+                    if ($horario->fueraH == 0) {
+                        if (!($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT))) {
+                            return response()->json(
+                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . ")"),
+                                200
+                            );
+                        }
+                    }
                     // : SUMAR TIEMPOS DE MARCACIONES
                     $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
                         ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
@@ -2907,29 +2918,11 @@ class dispositivosController extends Controller
                     $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                     $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
                     if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
-                        if ($horario->fueraH == 0) {
-                            // * VALIDAR SIN FUERA DE HORARIO
-                            $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                            $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
-                            if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
-                                $marcacion->marcaMov_salida = $salida;
-                                $marcacion->dispositivoSalida = NULL;
-                                $marcacion->controladores_salida = NULL;
-                                $marcacion->save();
-                                return response()->json($marcacion->marcaMov_id, 200);
-                            } else {
-                                return response()->json(
-                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . ")"),
-                                    200
-                                );
-                            }
-                        } else {
-                            $marcacion->marcaMov_salida = $salida;
-                            $marcacion->dispositivoSalida = NULL;
-                            $marcacion->controladores_salida = NULL;
-                            $marcacion->save();
-                            return response()->json($marcacion->marcaMov_id, 200);
-                        }
+                        $marcacion->marcaMov_salida = $salida;
+                        $marcacion->dispositivoSalida = NULL;
+                        $marcacion->controladores_salida = NULL;
+                        $marcacion->save();
+                        return response()->json($marcacion->marcaMov_id, 200);
                     } else {
                         return response()->json(
                             array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
