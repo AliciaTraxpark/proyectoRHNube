@@ -334,7 +334,7 @@
                                                         style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                         <p
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:left">
-                                                            Dispositivo: {{ $numero }} registrado en RH nube - Modo Tareo, tu código es "{{ $codigo }}" - Descárgalo en https://play.google.com/store/apps/details?id=com.pe.rhnube
+                                                            Dispositivo: {{ $numero }} registrado en RH nube - Modo Tareo, tu código es "{{ $codigo }}" - Descárgalo en https://play.google.com/store/apps/details?id=com.pe.rhnube.modotareo
                                                         </p>
                                                     </td>
                                                 </tr>

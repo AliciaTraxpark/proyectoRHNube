@@ -151,45 +151,94 @@
         opacity: .8;
         background: rgb(252,252,252);
     }
-
+    .selectorColumn  {
+        padding: 0.0rem 0.6rem !important;
+        color: #6c757d !important;
+    }
+    .allow-focus {
+        padding: 0rem 0;
+        min-width: 10em !important;
+        height: auto;
+        max-height: 250px;
+        overflow: auto;
+        position: absolute;
+    }
+    
     /* FINALIZACION */
 </style>
 <div class="loader" class="text-center"  style="display: flex !important; justify-content: center !important; align-items: center;">
     <img src="https://rhnube.com.pe/landing/images/logo_animado.gif" height="300" class="img-load" style="display: none">
 </div>
-<div class="row justify-content-center pt-5 pr-5 pl-5 pb-2">
-    <div class="col-xl-4" style="padding-left: 2%;padding-right: 0%;">
-        <div class="input-group col-xl-12 colR">
-            <div class="row">
-                <label class="col-lg-12 col-form-label">Rango de fechas:</label>
-                <input type="hidden" id="ID_START">
-                <input type="hidden" id="ID_END">
-                <div class="input-group col-md-12 col-lg-12 col-xl-12 text-center" style="padding-bottom: 5px;" id="fechaSelec">
-                    <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control" data-input>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text form-control flatpickr">
-                            <a class="input-button" data-toggle>
-                                <i class="uil uil-calender"></i>
-                            </a>
-                        </div>
+<div class="card">
+    <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+        <div class="row">
+            <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
+        </div>
+    </div>
+</div>
+<div class="row pl-3 pr-3">
+    <div class="col-md-4">
+        <div class="row">
+            <label class="col-lg-12 col-form-label">Rango de fechas:</label>
+            <input type="hidden" id="ID_START">
+            <input type="hidden" id="ID_END">
+            <div class="input-group col-10 text-center" style="padding-bottom: 5px;" id="fechaSelecH">
+                <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control" data-input>
+                <div class="input-group-prepend">
+                    <div class="input-group-text form-control flatpickr">
+                        <a class="input-button" data-toggle>
+                            <i class="uil uil-calender"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="pl-2">
-                <button type="button" id="btnRecargaTabla" class="btn btn-sm" style="background-color: #163552;" onclick="javascript:cambiarFCR(1)"> <img src="{{asset('landing/images/loupe (1).svg')}}" height="18" class="text-center mb-1"></button>
+            <div class="col-md-2 col-2" style="align-content: center;">
+                <button type="button" id="btnRecargaTabla" class="btn btn-sm" style="background-color: #163552;" onclick="javascript:cambiarFCR()"> <img src="{{asset('landing/images/loupe (1).svg')}}" height="18" class="text-center mb-1"></button>
             </div>
         </div>
     </div>
-    <div class="col-xl-2 colBtnR" style="margin-right: 5%;">
-        <!-- <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
-            onclick="javascript:mostrarGraficaMensual()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
-        </button>-->
+    <div class="col-md-4">
+        <div class="form-group row busquedaP" id="" style="display: none">
+            <label class="col-lg-12 col-form-label">Seleccionar por:</label>
+            <div class="col-lg-12 ">
+                <select id="areaT" data-plugin="customselect" class="form-control" multiple="multiple">
+                    @foreach ($areas as $area)
+                    <option value="{{$area->area_id}}">Área :
+                        {{$area->area_descripcion}}</option>
+                    @endforeach
+                    @foreach ($cargos as $cargo)
+                        <option value="{{ $cargo->idcargo }}">Cargo :
+                            {{ $cargo->descripcion }}.</option>
+                    @endforeach
+                    @foreach ($locales as $local)
+                        <option value="{{ $local->idlocal }}">Local :
+                            {{ $local->descripcion }}.</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group row busquedaP" style="display: none">
+            <label class="col-lg-12 col-form-label">Empleado:</label>
+            <div class="col-lg-12">
+                <select id="empleadoLT" data-plugin="customselect" class="form-control" multiple="multiple">
+                    @foreach ($empleado as $emple)
+                    <option value="{{$emple->emple_id}}">
+                        {{$emple->perso_nombre}} {{$emple->perso_apPaterno}}
+                        {{$emple->perso_apMaterno}}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="row" id="VacioImg" style="display: block;">
-            <div class="col-xl-12">
+            <div class="col-xl-12 justify-content-center">
                 <img style="margin-left:35%" src="{{URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> 
                 <label for="" style="margin-left:35%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>
             </div>
@@ -198,55 +247,109 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header" style="background-color: #ffffff">
-                        <div class="row pt-2" id="busquedaP" style="display: none">
-                            <div class="col-xl-5">
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Seleccionar por:</label>
-                                    <div class="col-lg-8 ">
-                                        <select id="areaT" data-plugin="customselect" class="form-control" multiple="multiple">
-                                            @foreach ($areas as $area)
-                                            <option value="{{$area->area_id}}">Área :
-                                                {{$area->area_descripcion}}</option>
-                                            @endforeach
-                                            @foreach ($cargos as $cargo)
-                                                <option value="{{ $cargo->idcargo }}">Cargo :
-                                                    {{ $cargo->descripcion }}.</option>
-                                            @endforeach
-                                            @foreach ($locales as $local)
-                                                <option value="{{ $local->idlocal }}">Local :
-                                                    {{ $local->descripcion }}.</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-7">
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label lbl_empleado">Empleado:</label>
-                                    <div class="col-lg-8">
-                                        <select id="empleadoLT" data-plugin="customselect" class="form-control" multiple="multiple">
-                                            @foreach ($empleado as $emple)
-                                            <option value="{{$emple->emple_id}}">
-                                                {{$emple->perso_nombre}} {{$emple->perso_apPaterno}}
-                                                {{$emple->perso_apMaterno}}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="row" id="busquedaA" style="display: none">
                             <div class="col-md-12">
                                 
+                            </div>
+                        </div>
+                        <div class="dropdown mt-4" id="dropSelector" style="display: none">
+                            <a class="dropdown-toggle dropReporte" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" style="cursor: pointer">
+                                <div class="custom-control custom-switch mb-2">
+                                    <input type="checkbox" class="custom-control-input" id="switchO" checked
+                                        style="cursor: pointer">
+                                    <label class="custom-control-label" for="switchO"
+                                        style="font-weight: bold;font-size:13px">
+                                        <img src="{{asset('landing/images/insert.svg')}}" height="18">
+                                        Selector de columnas
+                                    </label>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu allow-focus" style="margin: 0">
+                                <h6 class="dropdown-header text-left"
+                                    style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                    <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"
+                                        height="12" />
+                                    Opciones
+                                </h6>
+                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                <ul class="dropdown-item dropdown-itemSelector selectorColumn" style="font-size: 12.5px; padding-top: 15px; margin: 0">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked id="" disabled="">
+                                        <label for="">Código</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector selectorColumn" style="font-size: 12.5px; margin: 0">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked id="" disabled="">
+                                        <label for="">Número de documento</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector selectorColumn" style="font-size: 12.5px; margin: 0">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked id="" disabled="">
+                                        <label for="">Nombres y Apellidos</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector selectorColumn" style="font-size: 12.5px; margin: 0">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="colArea">
+                                        <label for="colArea">Área</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector selectorColumn" style="font-size: 12.5px; margin: 0">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="colCargo">
+                                        <label for="colCargo">Cargo</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector selectorColumn" style="font-size: 12.5px; margin: 0">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="colNivel">
+                                        <label for="colNivel">Nivel</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector selectorColumn" style="font-size: 12.5px; margin: 0">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="colLocal">
+                                        <label for="colLocal">Local</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector selectorColumn" style="font-size: 12.5px; margin: 0">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="colCentroCosto">
+                                        <label for="colCentroCosto">Centro de costo</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row" id="fotmatoCampos" style="display: none;">
+                            <div class="col-md-4">
+                                <div class="form-group row rowPersonalizado">
+                                    <div class="col-lg-5">
+                                        <img src="{{asset('landing/images/fuenteR.svg')}}" height="18">
+                                        <label for="formatoC" class="col-form-label pt-0 pb-0"
+                                            style="font-weight: bold;font-size:13px">
+                                            Formato de celda
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <select id="formatoC" class="form-control">
+                                            <option value="formatoAYN">Apellidos y nombres</option>
+                                            <option value="formatoNYA" selected>Nombres y apellidos</option>
+                                            <option value="formatoNA">Nombres - Apellidos</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body" id="tablaSinActividadD">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table id="ReporteMensual" class="table nowrap" style="font-size: 13px!important;width: 100%;">
-                                    <thead style="background: #fafafa;" id="diasMensual">
+                                <table id="tablaHorario" class="table nowrap" style="font-size: 13px!important;width: 100%;">
+                                    <thead style="background: #fafafa;" id="theadDHorario">
                                         <tr>
                                             <th>#</th>
                                             <th>Código</th>
@@ -254,7 +357,11 @@
                                             <th>
                                                 <img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class="mr-2" alt="" />Nombres y apellidos
                                             </th>
-                                            <th>TOTAL</th>
+                                            <th>Área</th>
+                                            <th>Cargo</th>
+                                            <th>Nivel</th>
+                                            <th>Local</th>
+                                            <th>Centro de Costo</th>
                                             <th>LUN.</th>
                                             <th>MAR.</th>
                                             <th>MIÉ.</th>
@@ -263,7 +370,7 @@
                                             <th>SÁB.</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="empleadoMensual">
+                                    <tbody id="tbodyDHorario">
                                     </tbody>
                                 </table>
                             </div>
@@ -307,6 +414,7 @@
     <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
     <script src="{{ asset('landing/js/reporteHorarios.js') }}"></script>
 @endsection
 @section('script-bottom')
