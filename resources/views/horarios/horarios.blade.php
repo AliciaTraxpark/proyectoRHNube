@@ -193,7 +193,7 @@ use Carbon\Carbon;
         }
 
         #calendar>div.fc-toolbar.fc-header-toolbar>div.fc-center {
-            margin-right: 200px;
+            padding-left: 100px;
         }
 
         .col-md-6 .select2-container .select2-selection {

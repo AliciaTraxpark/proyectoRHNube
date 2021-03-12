@@ -2162,6 +2162,119 @@ class horarioController extends Controller
         }
 
     }
+     //*FUNCION PARA CLONAR INCIDENCIAS DE EMPLEADO***************
+     public function clonarIncidencias(Request $request)
+     {
+
+         //**recibir paramentros
+         $empleadosaClonar = $request->empleadosaClonar;
+         $empleadoCLonar = $request->empleadoCLonar;
+         $diaI = Carbon::create($request->diaI);
+         $diaF = Carbon::create($request->diaF);
+         $asigNuevo = $request->asigNuevo;
+         $reempExistente = $request->reempExistente;
+
+         //*OBTENGO INCIDENCIAS DEL EMPLEADO A CLONAR******
+            $incidencia_empleado = DB::table('incidencia_dias as idi')
+            ->select('idi.id_empleado as idempleado', 'idi.inciden_dias_fechaI','idi.id_incidencia'
+            )
+            ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+            ->where('idi.id_empleado', '=', $empleadoCLonar)
+            ->whereBetween(DB::raw('DATE(idi.inciden_dias_fechaI)'), [$diaI, $diaF])
+            ->get();
+
+            //*RECORREMOS EMPLEADOOS A LOS QUE VAMOS A CLONAR INCIDENCIAS
+            foreach ($empleadosaClonar as $empleadosCl) {
+                //*si reemplaza primero borro los otros incidencias que tenga en esas fechas
+                if ($reempExistente == 1) {
+
+                    //*BORRANDO INCIDENCIAS POR EMPLEADO
+                    $incidencia_empleadoElim = DB::table('incidencia_dias as idi')
+                            ->select('idi.id_empleado as idempleado', 'idi.inciden_dias_fechaI'
+                            )
+                            ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+                            ->where('idi.id_empleado', '=',$empleadosCl)
+                            ->whereBetween(DB::raw('DATE(idi.inciden_dias_fechaI)'), [$diaI, $diaF])
+                            ->delete();
+
+
+                    //*AHORA COPIAMOS LAS INCIDENCIAS DE EMPLEADO
+                    if ($incidencia_empleado->isNotEmpty()) {
+                        foreach($incidencia_empleado as $incidencia_empleados){
+                            $inc_dias = new incidencia_dias();
+                            $inc_dias->id_incidencia = $incidencia_empleados->id_incidencia;
+                            $inc_dias->	inciden_dias_fechaI = $incidencia_empleados->inciden_dias_fechaI;
+                            $inc_dias->id_empleado = $empleadosCl;
+                            $inc_dias->laborable=0;
+                            $inc_dias->save();
+
+                        }
+
+                    }
+                } else{
+                    //*SE COPIA NADA MAS LAS INCIDENCIAS
+
+                    //PRIMERO VERIFICAREMOS QUE NO SE REPITAN LAS INCIDENCIAS ANTERIORES DE EMPLEADOS A LAS PNUEVAS A AGREGAR
+                     //*OBTENEOS INCIDENCIA DE EMPLEADO
+                     $incidencia_empleadoOb = DB::table('incidencia_dias as idi')
+                            ->select('idi.id_empleado as idempleado', 'idi.inciden_dias_fechaI','idi.id_incidencia'
+                            )
+                            ->join('empleado as e', 'idi.id_empleado', '=', 'e.emple_id')
+                            ->where('idi.id_empleado', '=',$empleadosCl)
+                            ->whereBetween(DB::raw('DATE(idi.inciden_dias_fechaI)'), [$diaI, $diaF])
+                            ->get();
+
+                    //*SI ENCONTRAMOS INCIDENCIAS DE EMPLEADO VERIFICAR QUE NO SE REPITA
+                    if ($incidencia_empleadoOb->isNotEmpty()){
+                        foreach($incidencia_empleadoOb as $incidenciasO){
+                            if ($incidencia_empleado->isNotEmpty()) {
+                                foreach ($incidencia_empleado as $key => $incidencia_empleados) {
+                                    if($incidenciasO->id_incidencia==$incidencia_empleados->id_incidencia &&
+                                     $incidenciasO->inciden_dias_fechaI==$incidencia_empleados->inciden_dias_fechaI ){
+                                        $incidencia_empleado->pull($key);
+                                    }
+                                }
+                            }
+                        }
+                        //* COPIAMOS LAS OTRAS INCIDE
+                        if ($incidencia_empleado->isNotEmpty()) {
+                            foreach($incidencia_empleado as $incidencia_empleados){
+                                $inc_dias = new incidencia_dias();
+                                $inc_dias->id_incidencia = $incidencia_empleados->id_incidencia;
+                                $inc_dias->	inciden_dias_fechaI = $incidencia_empleados->inciden_dias_fechaI;
+                                $inc_dias->id_empleado = $empleadosCl;
+                                $inc_dias->laborable=0;
+                                $inc_dias->save();
+
+                            }
+
+                        }
+
+                    } else{
+                        //* SI NO TIENE INCIDENCIAS SOLO COPIAMOS
+                        if ($incidencia_empleado->isNotEmpty()) {
+                            foreach($incidencia_empleado as $incidencia_empleados){
+                                $inc_dias = new incidencia_dias();
+                                $inc_dias->id_incidencia = $incidencia_empleados->id_incidencia;
+                                $inc_dias->	inciden_dias_fechaI = $incidencia_empleados->inciden_dias_fechaI;
+                                $inc_dias->id_empleado = $empleadosCl;
+                                $inc_dias->laborable=0;
+                                $inc_dias->save();
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+         //******************************************* */
+
+
+
+
+     }
 
     //*FUNCION PARA CONFIRMAR REEMPLAZAR Y OMITIR HORARIOS
     public function reemplazarHorariosClonacion(Request $request)

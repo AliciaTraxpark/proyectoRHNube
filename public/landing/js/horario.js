@@ -476,7 +476,7 @@ function calendario() {
         header: {
             left: 'prev,next',
             center: 'title',
-            right: "Clonar,borrarHorarios,borrarIncidencias",
+            right: "Clonar,ClonarInci,borrarHorarios,borrarIncidencias",
         },
         eventRender: function (info) {
             $('.tooltip').remove();
@@ -575,6 +575,12 @@ function calendario() {
                 text: "Clonar horarios",
                 click: function () {
                     ClonarHorarios();
+                }
+            },
+            ClonarInci: {
+                text: "Clonar incidencias",
+                click: function () {
+                    ClonarIncidencias();
                 }
             },
         },
@@ -4789,6 +4795,26 @@ function ClonarHorarios(){
     $('#modalHorarioClonar').modal('show');
 }
 //************************************* */
+
+//******FUNCION CLONAR INCIDENCIAS******* */
+function ClonarIncidencias(){
+    //*validar que al menos tenga un empleado seelect
+    let idempSelect = $('#nombreEmpleado').val();
+            if (idempSelect == '') {
+                /* calendar.unselect(); */
+                bootbox.alert({
+                    message: "Seleccione empleado",
+
+                });
+
+                return false;
+            }
+    //***************************************** */  */
+    $('#divClonacionIncElegir').hide();
+    $('#alertReemplazarInci').hide();
+    $('#modalIncidenciaClonar').modal('show');
+}
+//************************************* */
    //*INICIO Y FIN DE MES
    var inicioC=  moment().startOf('month').format('YYYY-MM-DD');
    var finC=moment().format('YYYY-MM-DD');
@@ -5387,7 +5413,7 @@ function eliminarMasivoIncidencias(){
                             /* ............................. */
 
                         } else{
-                            
+
                             $('#modalIncidenciasEmpleados').modal('hide');
                             calendar.refetchEvents();
                             $.notifyClose();
@@ -5479,3 +5505,154 @@ function buscadorEmpleadoI(){
          }
     }
 }
+//*************************************************************************** */
+
+//*********************TODO: FUNCIONES Y VALIDACIONES PARA CLONAR INCIDENCIAS***************************************
+//* ELEGIR FECHA PARA CLONAR INCIDENCIAS */
+ //INICIO Y FIN DE MES
+ $('#ID_STARTClonI').val(inicioC);
+ $('#ID_ENDClonI').val(finC);
+
+ //FLATPICKER SELECT RANGO FECHAS DE INCIDENCIAS
+var fechaValue = $("#fechaSelecClonI").flatpickr({
+    mode: "range",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "j F",
+    locale: "es",
+    wrap: true,
+    allowInput: true,
+    conjunction: " a ",
+    minRange: 1,
+
+    onChange: function (selectedDates) {
+        var _this = this;
+        var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
+        $('#ID_STARTClonI').val(dateArr[0]);
+        $('#ID_ENDClonI').val(dateArr[1]);
+
+
+
+    },
+    defaultDate: [inicioC,finC],
+    onClose: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length == 1) {
+            var fm = moment(selectedDates[0]).add("day", -1).format("YYYY-MM-DD");
+            instance.setDate([fm, selectedDates[0]], true);
+        }
+    }
+});
+
+
+//*VALIDAR CHECK EN FORMULARIO CLONAR INCIDENCIAS
+
+//*asignar
+$("#asignarNuevoIncidC").change(function (event) {
+    if ($("#asignarNuevoIncidC").prop("checked")) {
+        $("#reemplazarNuevaInciC").prop("checked", false);
+        $("#alertReemplazarInci").hide();
+    }
+});
+
+//*reemplazar
+$("#reemplazarNuevaInciC").change(function (event) {
+    if ($("#reemplazarNuevaInciC").prop("checked")) {
+        $("#asignarNuevoIncidC").prop("checked", false);
+        $("#alertReemplazarInci").show();
+    } else{
+        $("#alertReemplazarInci").hide();
+    }
+
+});
+//********************************** */
+//* **********************FUNCION PARA REGISTRAR CLONACION DE INCIDENCIAS****************************** */
+function registrarClonacionInci(){
+
+    //**VALIDAR QUE AL MENOS ESTE CHECK UNA OPCION */
+    if (!$("#asignarNuevoIncidC").is(":checked") && !$("#reemplazarNuevaInciC").is(":checked") ){
+        $('#divClonacionIncElegir').show();
+        return false;
+    } else{
+       $('#divClonacionIncElegir').hide();
+    }
+    $('#modalIncidenciaClonar').modal('hide');
+    //*MOSTRAR ESPERA
+    $(".loader").show();
+    $(".img-load").show();
+
+    //*RECOGER DATOS
+    let empleadosaClonar=$('#nombreEmpleado').val();
+    let empleadoCLonar= $('#nombreEmpleadoClonarIn').val();
+    let diaI=$("#ID_STARTClonI").val();
+    let diaF=$("#ID_ENDClonI").val();
+    let asigNuevo;
+    let reempExistente;
+
+    if ($("#asignarNuevoIncidC").is(":checked")) {
+       asigNuevo=1;
+    } else{
+       asigNuevo=0;
+    }
+
+    if ($("#reemplazarNuevaInciC").is(":checked")) {
+       reempExistente=1;
+    } else{
+       reempExistente=0;
+    }
+
+     //*MANDAR AJAX
+     $.ajax({
+       type: "post",
+       url: "/clonarIncidencias",
+       data: {
+           empleadosaClonar,
+           empleadoCLonar,diaI,diaF,
+           asigNuevo,reempExistente
+       },
+       statusCode: {
+
+           419: function () {
+               location.reload();
+           }
+       },
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       },
+       success: function (data) {
+          calendar.refetchEvents();
+
+              $.notifyClose();
+              $.notify(
+                  {
+                      message: "\nCambios guardados.",
+                      icon: "admin/images/checked.svg",
+                  },
+                  {   element: $('#asignarHorario'),
+                      position: "fixed",
+                      icon_type: "image",
+                      newest_on_top: true,
+                      delay: 5000,
+                      template:
+                          '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                          '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                          '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                          '<span data-notify="title">{1}</span> ' +
+                          '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                          "</div>",
+                      spacing: 50,
+                  }
+              );
+
+          $(".loader").hide();
+          $(".img-load").hide();
+       },
+       error: function (data) {
+             console.log('Ocurrio un error');
+       }
+
+
+   });
+
+   }
+   //* *********************FIN DE FUNCION ************************ */
+//*****************TODO: FIN DE FUNCIONES Y VALIDACIONES PARA CLONAR INCIDENCIAS***************************************

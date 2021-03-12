@@ -90,7 +90,7 @@
         }
 
         #calendar>div.fc-toolbar.fc-header-toolbar>div.fc-center {
-            margin-right: 200px;
+            padding-left: 100px;
         }
 
         .fc-time {
@@ -235,7 +235,7 @@
          left: 40%;
         top: 30%;
       /*   width: 50%; */
-        height: 30%; 
+        height: 30%;
         z-index: 9999;
         opacity: .8;
         background: rgb(252,252,252);
