@@ -315,8 +315,7 @@
                                                                                 es-p40b">
                                                                             <p style="color:
                                                                                     #ffffff;"><strong><span
-                                                                                        style="color:#FFFFFF;">{{$organizacion->organi_razonSocial}}
-                                                    - {{$organizacion->organi_ruc}}</span></strong>
+                                                                                        style="color:#FFFFFF;"></span></strong>
                                                                             </p>
                                                                         </td>
                                                                     </tr>

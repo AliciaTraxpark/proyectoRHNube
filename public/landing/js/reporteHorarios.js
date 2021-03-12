@@ -166,8 +166,9 @@ function llenartablaHorarios() {
 
                     for(let i = data[tam-1]; i < data.length - 1; i++){
                         tdata +=  `<td style="border-left:1px solid #aaaaaa!important;" class="text-center">`;
+                        var momentDia = moment(data[i]).format("YYYY-MM-DD");
                         for(let indexI = 0; indexI < data[index].length; indexI++){
-                            if(data[index][indexI].DP == data[i]){
+                            if(data[index][indexI].DP == momentDia){
                                 band = true;
                                tdata += `<a class="badge badge-soft-primary mr-2" data-toggle="tooltip" data-placement="right" title="Hora de inicio: ${data[index][indexI].horaInicio} Hora fin: ${data[index][indexI].horaFinal} Horas obligadas: ${data[index][indexI].horasObligadas}"> ${data[index][indexI].horario} </a>`; 
                             }
