@@ -121,6 +121,11 @@
     .form-control:disabled {
         background-color: #fcfcfc;
     }
+
+    /* SYYLE DE GROUP */
+    .select2-container--default .select2-results__group {
+        color: #62778c;
+    }
 </style>
 {{-- CONTENIDO --}}
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -153,8 +158,8 @@
                     <div class="col-md-4 pr-3 pl-3">
                         <div class="form-group">
                             <label class="col-form-label pt-0 pb-0">Seleccionar por:</label>
-                            <select id="selectPor" data-plugin="customselect" class="form-control form-control-lg">
-                                <option value="0" selected>Todos los empleados</option>
+                            <select id="selectPor" data-plugin="customselect"
+                                class="form-control form-control-sm select2Multiple" multiple="multiple">
                             </select>
                         </div>
                     </div>
