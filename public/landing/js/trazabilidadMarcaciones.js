@@ -1660,3 +1660,14 @@ $('#empleadoPor').on('select2:close', function () {
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
 });
+$('#checkboxTodosEmpleados').on("change", function (event) {
+    if (event.target.checked) {
+        $("#empleadoPor > option").prop("selected", "selected");
+        $('#empleadoPor').trigger("change");
+    } else {
+        $('#empleadoPor').val('').trigger('change');
+    }
+    $('#empleadoPor').trigger({
+        type: 'select2:close'
+    });
+});
