@@ -1,3 +1,4 @@
+var dataDescansoS={};
 function calendario() {
     //
 
@@ -71,7 +72,7 @@ function calendario() {
                 $("#myModalEliminarD").modal();
                 $("#idDescansoEl").val(id);
             }
-           
+
             if (
                 info.event.textColor == "#775555" ||
                 info.event.textColor == "#945353"
@@ -190,7 +191,7 @@ function calendario() {
     calendar.setOption("locale", "Es");
     //DESCANSO
 
-   
+
 
     function datos(method) {
         nuevoEvento = {
@@ -207,7 +208,7 @@ function calendario() {
         return nuevoEvento;
     }
 
-    
+
     ///
     //NO LABORABLE
 
@@ -239,7 +240,7 @@ function calendario() {
 
     //
 
-    
+
     ////
 
     calendar.render();
@@ -259,11 +260,17 @@ function registrarDdescanso() {
 
     var tipoDes;   //tio 1 si es nuevo, tipo 0 si solo selleccione
     if ($('#divDescansoSe').is(':visible')) {
-        tipoDes=0
+        tipoDes=0;
     } else{
         tipoDes=1;
-    } 
-
+    }
+    let codigoDescanso=$('#codigoDescanso').val();
+    let pagadoDescanso;
+    if ($('#sepagaCheck').is(':checked')) {
+        pagadoDescanso=1;
+    } else{
+        pagadoDescanso=0;
+    }
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
@@ -277,7 +284,9 @@ function registrarDdescanso() {
             id_calendario,
             laborable,
             tipoDes,
-            idDescanoInc
+            idDescanoInc,
+            codigoDescanso,
+            pagadoDescanso
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -366,7 +375,7 @@ function registrarDdescanso() {
 function registrarDferiado() {
     $("#calendarioAsignar").modal("hide");
     var ideventoF;
-  
+
     (title = $("#inputNuevoFeriado").val()),
         (color = "#e6bdbd"),
         (textColor = "#775555"),
@@ -377,13 +386,13 @@ function registrarDferiado() {
     idFeriadoInc=$("#nombreFeriado").val();
 
     id_calendario = $("#selectCalendario").val();
-    
+
     var tipoFeri;   //tio 1 si es nuevo, tipo 0 si solo selleccione
     if ($('#divFeriadoSe').is(':visible')) {
         tipoFeri=0
     } else{
         tipoFeri=1;
-    } 
+    }
     $.ajax({
         type: "POST",
         url: "/eventos_calendario/store",
@@ -1279,7 +1288,7 @@ function agregarMFeriado() {
             },
         },
         success: function (data) {
-           
+
             var option = `<option value="" ></option>`;
 
             /* PARA REGISTRO DE SUBACTIVIDAD */
@@ -1312,6 +1321,12 @@ function agregarMDescanso() {
     $("#inputNuevoDescanso").val('');
     $("#divDescansoSe").show();
     $("#divDescansoNuevo").hide();
+
+    $('#codigoDescanso').val('');
+    $('#codigoDescanso').prop('disabled',true);
+    $("#sepagaCheck").prop('disabled',true)
+    $("#sepagaCheck").prop('checked',false)
+
     $("#btnAgregaNDescanso").show();
 
     //agregar feriados a select
@@ -1328,7 +1343,7 @@ function agregarMDescanso() {
             },
         },
         success: function (data) {
-           
+            dataDescansoS=data;
             var option = `<option value="" ></option>`;
 
             /* PARA REGISTRO DE incid */
@@ -1349,5 +1364,24 @@ function nuevoDescansoReg(){
     $("#inputNuevoDescanso").prop('required',true);
     $("#divDescansoSe").hide();
     $("#divDescansoNuevo").show();
+    $('#codigoDescanso').val('');
+    $('#codigoDescanso').prop('disabled',false);
+    $("#sepagaCheck").prop('disabled',false)
+    $("#sepagaCheck").prop('checked',false)
     $("#btnAgregaNDescanso").hide();
  }
+
+ //*OBTENR DATA DE DESCANSO
+ $("#nombreDescanso").change(function () {
+     let idDescanso= $("#nombreDescanso").val();
+     $.each(dataDescansoS, function (index, value) {
+       if(idDescanso==value.inciden_id){
+           $('#codigoDescanso').val(value.inciden_codigo);
+            if(value.inciden_pagado==1){
+                $("#sepagaCheck").prop('checked',true);
+            } else{
+                $("#sepagaCheck").prop('checked',false);
+            }
+       }
+    });
+ });
