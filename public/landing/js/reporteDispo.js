@@ -6425,6 +6425,7 @@ $(function () {
         minimumResultsForSearch: 4
     });
     $('#empleadoPor').select2({
+        placeholder: 'Seleccionar empleado',
         multiple: true,
         closeOnSelect: false,
         minimumResultsForSearch: 4
