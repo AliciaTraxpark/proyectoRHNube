@@ -1653,12 +1653,25 @@ $('#selectPor').on("change", function () {
         },
         error: function () { }
     });
+    if ($("#empleadoPor").select2('data').length === $("#empleadoPor >option").length) {
+        $('#checkboxTodosEmpleados').prop("checked", true);
+    } else {
+        $('#checkboxTodosEmpleados').prop("checked", false);
+    }
 });
 // : MOSTRAR LA CANTIDAD DE EMPLEADOS SELECIONADOS
 $('#empleadoPor').on('select2:close', function () {
     var cantidad = $('#empleadoPor').select2('data').length;
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
+});
+$('#empleadoPor').on("change", function () {
+    console.log($("#empleadoPor").select2('data').length, $("#empleadoPor >option").length);
+    if ($("#empleadoPor").select2('data').length === $("#empleadoPor >option").length) {
+        $('#checkboxTodosEmpleados').prop("checked", true);
+    } else {
+        $('#checkboxTodosEmpleados').prop("checked", false);
+    }
 });
 $('#checkboxTodosEmpleados').on("change", function (event) {
     if (event.target.checked) {
