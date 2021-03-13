@@ -5542,6 +5542,144 @@ class dispositivosController extends Controller
         return response()->json($respuesta, 200);
     }
 
+    // * ENVIAR TODOS LOS EMPLEADOS Y SELECT DE EMPLEADOS
+    public function selectEmpleadoGlobal(Request $request)
+    {
+        $query = $request->get('query');
+        $select = [];
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        // : TODOS LOS EMPLEADOS
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->get();
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()
+                    ->first();
+                if ($invitado_empleadoIn != null) {
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
+                } else {
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
+                }
+            }
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->get();
+        }
+        // : SELECT DE IDS DE EMPLEADO
+        if (!is_null($query)) {
+            if ($invitadod) {
+                if ($invitadod->verTodosEmps == 1) {
+                    $empleadoSelect = DB::table('empleado as e')
+                        ->select('e.emple_id')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where(function ($where) use ($query) {
+                            foreach ($query as $q) {
+                                $parametro = explode(".", $q)[0];
+                                $id = explode(".", $q)[1];
+                                $where->orWhere('e.' . $parametro, '=', $id);
+                            }
+                        })
+                        ->get();
+                } else {
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()
+                        ->first();
+                    if ($invitado_empleadoIn != null) {
+                        $empleadoSelect = DB::table('empleado as e')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
+                            ->get();
+                    } else {
+                        $empleadoSelect = DB::table('empleado as e')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
+                            ->get();
+                    }
+                }
+            } else {
+                $empleadoSelect = DB::table('empleado as e')
+                    ->select('e.emple_id')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->where(function ($where) use ($query) {
+                        foreach ($query as $q) {
+                            $parametro = explode(".", $q)[0];
+                            $id = explode(".", $q)[1];
+                            $where->orWhere('e.' . $parametro, '=', $id);
+                        }
+                    })
+                    ->get();
+            }
+            foreach ($empleadoSelect as $e) {
+                array_push($select, $e->emple_id);
+            }
+        }
+        return response()->json(array("empleado" => $empleado, "select" => $select), 200);
+    }
     // * ENVIAR EMPLEADOS
     public function empleadosBusqueda(Request $request)
     {

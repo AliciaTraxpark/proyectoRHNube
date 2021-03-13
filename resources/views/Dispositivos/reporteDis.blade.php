@@ -363,7 +363,6 @@
                             <label class="col-form-label pt-0 pb-0">Seleccionar por:</label>
                             <select id="selectPor" data-plugin="customselect"
                                 class="form-control form-control-sm select2Multiple" multiple="multiple">
-                                <option value="0" selected>Todos los empleados</option>
                             </select>
                         </div>
                     </div>

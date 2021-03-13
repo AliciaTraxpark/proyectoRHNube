@@ -480,6 +480,7 @@ Route::post('/desactivarDisposi', 'dispositivosController@desactivarDisposi');
 Route::post('/activarDisposi', 'dispositivosController@activarDisposi');
 Route::get('/selectPersonalizadoModoAP', 'dispositivosController@selectBusquedas');
 Route::get('/selectEmpleadoModoAP', 'dispositivosController@empleadosBusqueda');
+Route::get('/selectEmpleadoGlobalAP', 'dispositivosController@selectEmpleadoGlobal');
 // : ***************************** DETALLE DE ASISTENCIA *******************************************
 Route::get('/reporteAsistencia', 'dispositivosController@reporteMarcaciones');
 Route::get('/reporteTablaMarca', 'dispositivosController@reporteTabla');
