@@ -55,9 +55,9 @@ class EventosUsuarioController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoFeriado');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoFeriado');
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;

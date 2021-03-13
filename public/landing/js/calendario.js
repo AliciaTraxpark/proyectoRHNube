@@ -1,4 +1,5 @@
 var dataDescansoS={};
+var dataFeriadoS={};
 function calendario() {
     //
 
@@ -389,9 +390,16 @@ function registrarDferiado() {
 
     var tipoFeri;   //tio 1 si es nuevo, tipo 0 si solo selleccione
     if ($('#divFeriadoSe').is(':visible')) {
-        tipoFeri=0
+        tipoFeri=0;
     } else{
         tipoFeri=1;
+    }
+    let codigoFeriado=$('#codigoFeriado').val();
+    let pagadoFeriado;
+    if ($('#sepagaFCheck').is(':checked')) {
+        pagadoFeriado=1;
+    } else{
+        pagadoFeriado=0;
     }
     $.ajax({
         type: "POST",
@@ -403,7 +411,9 @@ function registrarDferiado() {
             start,
             end,
             id_calendario,
-            laborable,tipoFeri,idFeriadoInc
+            laborable,tipoFeri,idFeriadoInc,
+            codigoFeriado,
+            pagadoFeriado
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1272,6 +1282,12 @@ function agregarMFeriado() {
     $("#inputNuevoFeriado").val('');
     $("#divFeriadoSe").show();
     $("#divFeriadoNuevo").hide();
+
+    $('#codigoFeriado').val('');
+    $('#codigoFeriado').prop('disabled',true);
+    $("#sepagaFCheck").prop('disabled',true)
+    $("#sepagaFCheck").prop('checked',true)
+
     $("#btnAgregaNFeri").show();
 
     //agregar feriados a select
@@ -1288,6 +1304,7 @@ function agregarMFeriado() {
             },
         },
         success: function (data) {
+            dataFeriadoS=data;
 
             var option = `<option value="" ></option>`;
 
@@ -1310,6 +1327,10 @@ function agregarMFeriado() {
     $("#divFeriadoSe").hide();
     $("#divFeriadoNuevo").show();
     $("#btnAgregaNFeri").hide();
+    $('#codigoFeriado').val('');
+    $('#codigoFeriado').prop('disabled',false);
+    $("#sepagaFCheck").prop('disabled',true)
+    $("#sepagaFCheck").prop('checked',true)
  }
 
  /* **************************************************** */
@@ -1385,3 +1406,18 @@ function nuevoDescansoReg(){
        }
     });
  });
+
+ //*OBTENR DATA DE FERIADO
+ $("#nombreFeriado").change(function () {
+    let idFeriado= $("#nombreFeriado").val();
+    $.each(dataFeriadoS, function (index, value) {
+      if(idFeriado==value.inciden_id){
+          $('#codigoFeriado').val(value.inciden_codigo);
+           if(value.inciden_pagado==1){
+               $("#sepagaFCheck").prop('checked',true);
+           } else{
+               $("#sepagaFCheck").prop('checked',false);
+           }
+      }
+   });
+});
