@@ -187,13 +187,13 @@ function inicializarTabla() {
                         tableHeader: {
                             bold: true,
                             fontSize: 11,
-                            color: '#6c757d',
-                            fillColor: '#ffffff',
+                            color: '#ffffff',
+                            fillColor: '#14274e',
                             alignment: 'left'
                         },
                         defaultStyle: {
                             fontSize: 10,
-                            alignment: 'center'
+                            alignment: 'left'
                         }
                     };
                     doc.pageMargins = [20, 150, 20, 30];
@@ -367,7 +367,7 @@ function cargartabla(fecha1, fecha2) {
             razonSocial = data.organi_razonSocial;
             direccion = data.organi_direccion;
             ruc = data.organi_ruc;
-            dni = data.nDoc;
+            dni = data.emple_nDoc;
             nombre = data.nombre + "\t" + data.apPaterno + "\t" + data.apMaterno;
             area = (data.area == null) ? "------" : data.area;
             cargo = (data.cargo == null) ? "------" : data.cargo;

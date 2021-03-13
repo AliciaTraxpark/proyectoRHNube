@@ -1581,9 +1581,9 @@ class dispositivosController extends Controller
                         'o.organi_ruc',
                         'ar.area_descripcion',
                         'e.emple_nDoc',
-                        'p.perso_nombre',
-                        'p.perso_apPaterno',
-                        'p.perso_apMaterno',
+                        'p.perso_nombre as nombre',
+                        'p.perso_apPaterno as apPaterno',
+                        'p.perso_apMaterno as apMaterno',
                         'c.cargo_descripcion'
                     )
                     ->where('e.emple_id', $idemp)
@@ -1656,9 +1656,9 @@ class dispositivosController extends Controller
                             'o.organi_ruc',
                             'ar.area_descripcion',
                             'e.emple_nDoc',
-                            'p.perso_nombre',
-                            'p.perso_apPaterno',
-                            'p.perso_apMaterno',
+                            'p.perso_nombre as nombre',
+                            'p.perso_apPaterno as apPaterno',
+                            'p.perso_apMaterno as apMaterno',
                             'c.cargo_descripcion'
                         )
                         ->where('e.emple_id', $idemp)
@@ -1730,9 +1730,9 @@ class dispositivosController extends Controller
                             'o.organi_ruc',
                             'ar.area_descripcion',
                             'e.emple_nDoc',
-                            'p.perso_nombre',
-                            'p.perso_apPaterno',
-                            'p.perso_apMaterno',
+                            'p.perso_nombre as nombre',
+                            'p.perso_apPaterno as apPaterno',
+                            'p.perso_apMaterno as apMaterno',
                             'c.cargo_descripcion'
                         )
                         ->where('e.emple_id', $idemp)
@@ -1805,9 +1805,9 @@ class dispositivosController extends Controller
                     'o.organi_ruc',
                     'ar.area_descripcion',
                     'e.emple_nDoc',
-                    'p.perso_nombre',
-                    'p.perso_apPaterno',
-                    'p.perso_apMaterno',
+                    'p.perso_nombre as nombre',
+                    'p.perso_apPaterno as apPaterno',
+                    'p.perso_apMaterno as apMaterno',
                     'c.cargo_descripcion'
                 )
                 ->where('e.emple_id', $idemp)
@@ -5793,7 +5793,7 @@ class dispositivosController extends Controller
                     ->get();
             }
         }
-        
+
         return response()->json($empleado, 200);
     }
 }
