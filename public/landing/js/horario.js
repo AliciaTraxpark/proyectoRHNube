@@ -812,12 +812,6 @@ function agregarHorarioSe() {
     }
 };
 
-
-
-
-///////////////////////////////
-
-
 //////////////////////
 $('#guardarHorarioEventos').click(function () {
     $('#guardarHorarioEventos').prop('disabled', true);
@@ -5478,7 +5472,7 @@ $(function () {
 function buscadorEmpleadoH(){
     var nombres = $('.nombres');
 
-    var buscando = $('#buscadorHorario').val();
+    var buscando = $('#buscadorHorario').val().toLowerCase();
     var item='';
     for( var i = 0; i < nombres.length; i++ ){
         item = $(nombres[i]).html().toLowerCase();
@@ -5496,7 +5490,7 @@ function buscadorEmpleadoH(){
 function buscadorEmpleadoI(){
     var nombres = $('.nombresInc');
 
-    var buscando = $('#buscadorIncidencia').val();
+    var buscando = $('#buscadorIncidencia').val().toLowerCase();
     var item='';
     for( var i = 0; i < nombres.length; i++ ){
         item = $(nombres[i]).html().toLowerCase();
