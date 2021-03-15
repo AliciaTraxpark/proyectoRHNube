@@ -131,7 +131,16 @@ function calendario() {
                 },
             },
         },
-
+        eventRender: function (info) {
+            $('.tooltip').remove();
+            $(info.el).tooltip({
+                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                html: true, title:  'Nombre: ' +info.event.title +
+                    '<br> Código: ' + info.event.extendedProps.inciden_codigo +
+                    '<br> Tipo: ' + info.event.extendedProps.tipoInc_descripcion +
+                    ' <br> Se paga: ' +info.event.extendedProps.inciden_pagado
+            });
+        },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario").val();
             var datoscal;

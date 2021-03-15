@@ -271,11 +271,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="pagadoCheck"
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" id="pagadoCheck"
                                                         disabled>
-                                                    <label class="form-check-label" for="pagadoCheck"
-                                                        style="margin-top: 2px;">Pagado</label>
+                                                    <label class="custom-control-label" for="pagadoCheck"
+                                                        style="margin-top: 2px;">Se paga</label>
                                                 </div>
                                             </div>
 
@@ -320,7 +320,7 @@
                                  <form id="frmHorNuevo_ed" action="javascript:UpdateIncidencia();">
                                      <div class="row">
                                          <div class="col-md-6 col-12">
-                                             <div class="form-group">                                          
+                                             <div class="form-group">
                                                      <label for="">Seleccione tipo de incidencia:</label>
                                                      <div id="selectTipo_ed">
                                                         <select data-plugin="customselect" id="selectTipoIncide_ed"
@@ -333,7 +333,7 @@
                                                         @endforeach
                                                     </select>
                                                      </div>
-                                                    
+
                                                     <input type="text" class="form-control form-control-sm"
                                                     id="selectTipoIncide_edSis"   ><input type="hidden" id="idTipoInci">
 
@@ -357,11 +357,11 @@
                                              </div>
                                          </div>
                                          <div class="col-md-6">
-                                             <div class="form-check">
-                                                 <input type="checkbox" class="form-check-input" id="pagadoCheck_ed"
+                                             <div class="custom-control custom-switch">
+                                                 <input type="checkbox" class="custom-control-input" id="pagadoCheck_ed"
                                                      >
-                                                 <label class="form-check-label" for="pagadoCheck_ed"
-                                                     style="margin-top: 2px;">Pagado</label>
+                                                 <label class="custom-control-label" for="pagadoCheck_ed"
+                                                     style="margin-top: 2px;">Se paga</label>
                                              </div>
                                          </div>
 

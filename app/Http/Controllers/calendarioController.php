@@ -297,9 +297,20 @@ class calendarioController extends Controller
         $idcalendario=$request->idcalendario;
         $eventos_calendario=eventos_calendario::where('eventos_calendario.organi_id', '=', session('sesionidorg'))
         ->leftJoin('incidencias','eventos_calendario.inciden_id','=','incidencias.inciden_id')
+        ->join('tipo_incidencia as tip', 'incidencias.idtipo_incidencia', '=', 'tip.idtipo_incidencia')
         ->where('id_calendario','=',$idcalendario)
-        ->select('id','start','end','inciden_descripcion as title','color','textColor','laborable')
+        ->select('id','start','end','inciden_descripcion as title','color','textColor','laborable',
+        'tip.tipoInc_descripcion', 'incidencias.inciden_codigo','incidencias.inciden_pagado')
         ->get();
+
+        foreach ($eventos_calendario as $tab) {
+            if($tab->inciden_pagado==1){
+                $tab->inciden_pagado='Si';
+
+            } else{
+                $tab->inciden_pagado='No';
+            }
+        }
         return $eventos_calendario;
     }
 

@@ -5,6 +5,10 @@
     input[type="text"]:disabled {
   background: #f9f9f9;
 }
+.large.tooltip-inner {
+        max-width: 185px;
+        width: 185px;
+    }
 </style>
 {{-- MODAL DESCANSO --}}
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
