@@ -5852,6 +5852,21 @@
                         <div id="divDescansoNuevo" class="col-md-12" style="display: none">
                             <input type="text" id="inputNuevoDescanso" class="form-control form-control-sm">
                         </div>
+                        <div class="col-md-12"><br></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Código:</label>
+                                <input type="text" class="form-control form-control-sm" disabled
+                                    id="codigoDescanso">
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-right" >
+                            <div class="custom-control custom-switch" style="margin-top: 34px;">
+                                <input type="checkbox" class="custom-control-input" id="sepagaDCheck" disabled>
+                                <label class="custom-control-label" for="sepagaDCheck"
+                                    style=""> Se paga</label><br>
+                            </div>
+                        </div>
 
                     </div>
                     <input type="hidden" name="startDescanso" class="form-control" id="startDescanso" readonly>

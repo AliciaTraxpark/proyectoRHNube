@@ -1580,9 +1580,9 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoDescanso');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoDescanso');
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
@@ -1646,9 +1646,9 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoDescanso');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoDescanso');;
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
@@ -2242,11 +2242,19 @@ class EmpleadoController extends Controller
                 $tab->color = '#e6bdbd';
                 $tab->textColor = '#775555';
 
+                //*VALIDANDO SI ES PAGADO
                 if($tab->horaF==1){
                     $tab->horaF='Si';
 
                 } else{
                     $tab->horaF='No';
+                }
+
+                //*VALIDANDO CODIGO
+                if($tab->horaI){
+                    $tab->horaI=$tab->horaI;
+                } else{
+                    $tab->horaI='--';
                 }
             }
         }

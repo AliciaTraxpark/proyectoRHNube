@@ -1,5 +1,5 @@
 var calendarioValid=0;
-
+var dataDescanso={};
 /*CALENDARIO DISABLED EN REGISTRAR  */
 function calendarioInv() {
     var calendarElInv = document.getElementById("calendarInv");
@@ -1019,7 +1019,13 @@ function laborableTem() {
     }
     var tipoRegDescansoE=$("#NuevoOEdito").val(); //si es 1 registro nuevo empleado, 0 edito nada mas empleado
     //$('#myModal').modal('show');
-    console.log('tipoRegDescansoE'+tipoRegDescansoE);
+    let codigoDescanso=$('#codigoDescanso').val();
+    let pagadoDescanso;
+    if ($('#sepagaDCheck').is(':checked')) {
+        pagadoDescanso=1;
+    } else{
+        pagadoDescanso=0;
+    }
     if(tipoRegDescansoE==1){
         $.ajax({
             type: "POST",
@@ -1033,8 +1039,9 @@ function laborableTem() {
                 idDescanoInc,
                 laborable,
                 id_calendario,
-                tipoDes
-
+                tipoDes,
+                codigoDescanso,
+                pagadoDescanso
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1103,7 +1110,9 @@ function laborableTem() {
                 idDescanoInc,
                 laborable,
                 id_calendario,
-                tipoDes,idempleado
+                tipoDes,idempleado,
+                codigoDescanso,
+                pagadoDescanso
 
             },
             headers: {
@@ -6379,7 +6388,15 @@ $("#descripcionInciCa_ed").select2({
     $("#inputNuevoDescanso").val('');
     $("#divDescansoSe").show();
     $("#divDescansoNuevo").hide();
+
+
+    $('#codigoDescanso').val('');
+    $('#codigoDescanso').prop('disabled',true);
+    $("#sepagaDCheck").prop('disabled',true)
+    $("#sepagaDCheck").prop('checked',false)
+
     $("#btnAgregaNDescanso").show();
+
 
     //agregar feriados a select
     $.ajax({
@@ -6395,6 +6412,7 @@ $("#descripcionInciCa_ed").select2({
             },
         },
         success: function (data) {
+            dataDescanso=data;
 
             var option = `<option value="" ></option>`;
 
@@ -6418,6 +6436,10 @@ function nuevoDescansoReg(){
     $("#inputNuevoDescanso").prop('required',true);
     $("#divDescansoSe").hide();
     $("#divDescansoNuevo").show();
+    $('#codigoDescanso').val('');
+    $('#codigoDescanso').prop('disabled',false);
+    $("#sepagaDCheck").prop('disabled',false)
+    $("#sepagaDCheck").prop('checked',false)
     $("#btnAgregaNDescanso").hide();
  }
 //******************FIN REGISTRAR DESCANSO EN REGISTRAR EMPLEADO************ */
@@ -6534,3 +6556,18 @@ $('#descripcionInciCa').on('select2:closing', function (e) {
     $('#IncpagadoCheck').prop('disabled',false);
     $("#divPagadoI").show();
  }
+
+  //*OBTENR DATA DE DESCANSO
+  $("#nombreDescanso").change(function () {
+    let idDescanso= $("#nombreDescanso").val();
+    $.each(dataDescanso, function (index, value) {
+      if(idDescanso==value.inciden_id){
+          $('#codigoDescanso').val(value.inciden_codigo);
+           if(value.inciden_pagado==1){
+               $("#sepagaDCheck").prop('checked',true);
+           } else{
+               $("#sepagaDCheck").prop('checked',false);
+           }
+      }
+   });
+});
