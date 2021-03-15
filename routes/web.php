@@ -678,3 +678,9 @@ Route::get('/cargarMatrizHorario', 'horarioController@cargarMatrizHorario');
 Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
 /*Route::get('/asignarReglas', 'EmpleadoController@agregarReglas');
 Route::get('/horariosReglas', 'EmpleadoController@generarReglaHorario'); */
+
+// * -------------------------- BACKEND DE SERVICIO VERIFY ----------------------------- *
+Route::get('/tokenWeb', function () {
+    return csrf_token();
+});
+Route::post('/nuevaCredencial', 'servicioVerifyController@nuevaCredencial');
