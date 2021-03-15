@@ -1,5 +1,6 @@
 var calendarioValid=0;
 var dataDescanso={};
+var dataFeriados={};
 /*CALENDARIO DISABLED EN REGISTRAR  */
 function calendarioInv() {
     var calendarElInv = document.getElementById("calendarInv");
@@ -1188,6 +1189,13 @@ function diaferiadoTem() {
     } else{
         tipoFeri=1;
     }
+    let codigoFeriado=$('#codigoFeriado').val();
+    let pagadoFeriado;
+    if ($('#sepagaFCheck').is(':checked')) {
+        pagadoFeriado=1;
+    } else{
+        pagadoFeriado=0;
+    }
     //$('#myModal').modal('show');
     if(tipoRegDescansoE==1){
         $.ajax({
@@ -1201,7 +1209,9 @@ function diaferiadoTem() {
                 end,
                 tipoFeri,
                 id_calendario,
-                tipoRegDescansoE, idFeriadoInc
+                tipoRegDescansoE, idFeriadoInc,
+                codigoFeriado,
+                pagadoFeriado
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1264,7 +1274,9 @@ function diaferiadoTem() {
                 tipoFeri,
                 id_calendario,
                 tipoRegDescansoE, idFeriadoInc,
-                idempleado
+                idempleado,
+                codigoFeriado,
+                pagadoFeriado
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -6454,6 +6466,12 @@ function agregarMFeriado() {
     $("#inputNuevoFeriado").val('');
     $("#divFeriadoSe").show();
     $("#divFeriadoNuevo").hide();
+
+    $('#codigoFeriado').val('');
+    $('#codigoFeriado').prop('disabled',true);
+    $("#sepagaFCheck").prop('disabled',true)
+    $("#sepagaFCheck").prop('checked',false)
+
     $("#btnAgregaNFeri").show();
 
     //agregar feriados a select
@@ -6470,6 +6488,7 @@ function agregarMFeriado() {
             },
         },
         success: function (data) {
+            dataFeriados=data;
 
             var option = `<option value="" ></option>`;
 
@@ -6493,6 +6512,12 @@ function agregarMFeriado() {
     $("#inputNuevoFeriado").prop('required',true);
     $("#divFeriadoSe").hide();
     $("#divFeriadoNuevo").show();
+
+    $('#codigoFeriado').val('');
+    $('#codigoFeriado').prop('disabled',false);
+    $("#sepagaFCheck").prop('disabled',true)
+    $("#sepagaFCheck").prop('checked',true)
+
     $("#btnAgregaNFeri").hide();
  }
 //* ******************FIN DE REGISTRO DE FERIADO***********************************  */
@@ -6567,6 +6592,20 @@ $('#descripcionInciCa').on('select2:closing', function (e) {
                $("#sepagaDCheck").prop('checked',true);
            } else{
                $("#sepagaDCheck").prop('checked',false);
+           }
+      }
+   });
+});
+ //*OBTENR DATA DE FERIADO
+ $("#nombreFeriado").change(function () {
+    let idFeriado= $("#nombreFeriado").val();
+    $.each(dataFeriados, function (index, value) {
+      if(idFeriado==value.inciden_id){
+          $('#codigoFeriado').val(value.inciden_codigo);
+           if(value.inciden_pagado==1){
+               $("#sepagaFCheck").prop('checked',true);
+           } else{
+               $("#sepagaFCheck").prop('checked',false);
            }
       }
    });

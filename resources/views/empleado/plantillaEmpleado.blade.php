@@ -5926,6 +5926,21 @@
                         <div id="divFeriadoNuevo" class="col-md-12" style="display: none">
                             <input type="text" id="inputNuevoFeriado" class="form-control form-control-sm">
                         </div>
+                        <div class="col-md-12"><br></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Código:</label>
+                                <input type="text" class="form-control form-control-sm" disabled
+                                    id="codigoFeriado">
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-right" >
+                            <div class="custom-control custom-switch" style="margin-top: 34px;">
+                                <input type="checkbox" class="custom-control-input" id="sepagaFCheck" disabled>
+                                <label class="custom-control-label" for="sepagaFCheck"
+                                    style=""> Se paga</label><br>
+                            </div>
+                        </div>
 
                     </div>
                     <input type="hidden" name="startFeriado" class="form-control" id="startFeriado" readonly>
