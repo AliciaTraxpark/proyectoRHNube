@@ -2211,10 +2211,11 @@ class EmpleadoController extends Controller
         $incidencias = DB::table('incidencias as i')
             ->select([
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_pagado as textColor',
-                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
+                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_codigo as horaI', 'i.inciden_pagado as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
+                'tip.tipoInc_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
             ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+            ->join('tipo_incidencia as tip', 'i.idtipo_incidencia', '=', 'tip.idtipo_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
         /*   ->union($horario_empleado); */
 
@@ -2237,6 +2238,17 @@ class EmpleadoController extends Controller
                 ->get();
 
             $tab->pausas = $pausas_horario;
+            if($tab->laborable==0){
+                $tab->color = '#e6bdbd';
+                $tab->textColor = '#775555';
+
+                if($tab->horaF==1){
+                    $tab->horaF='Si';
+
+                } else{
+                    $tab->horaF='No';
+                }
+            }
         }
         return $horario_empleado;
     }
@@ -2508,19 +2520,21 @@ class EmpleadoController extends Controller
     }
     public function vaciarFdescansoBD(Request $request)
     {
-        $eliDescaso = eventos_empleado::where('id_empleado', '=', $request->get('idempleado'))
-        /*  ->where('color', '=', '#4673a0')
-        ->where('textColor', '=', '#ffffff') */
-            ->whereIn('tipo_ev', [1, 3])
 
-            ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start', $request->get('mescale'))->get();
-        foreach ($eliDescaso as $eliDescasos) {
-            $eliDescasos->delete();
-        }
+         //*Obtnener id de descanso
+         $tipo_incidencia=DB::table('tipo_incidencia')
+         ->where('organi_id','=',session('sesionidorg'))
+         ->where('tipoInc_descripcion','=','Descanso')
+         ->get()->first();
 
-        /*  $eliDescaso->delete(); */
-        return response()->json($eliDescaso);
+         //buscar inciadencia dias con id de incidencia tipo descanso
+         DB::table('incidencia_dias')
+             ->leftJoin('incidencias','incidencia_dias.id_incidencia','=','incidencias.inciden_id')
+             ->where('id_empleado', '=', $request->get('idempleado'))
+             ->where('incidencias.idtipo_incidencia', '=',$tipo_incidencia->idtipo_incidencia)
+             ->whereYear('inciden_dias_fechaI', $request->get('aniocalen'))
+             ->whereMonth('inciden_dias_fechaI', $request->get('mescale'))
+             ->delete();
     }
     public function vaciardnlaBD(Request $request)
     {
@@ -2534,8 +2548,19 @@ class EmpleadoController extends Controller
     }
     public function vaciarincidelaBD(Request $request)
     {
+
+
+        //*Obtnener id de incidencia
+        $tipo_incidencia=DB::table('tipo_incidencia')
+        ->where('organi_id','=',session('sesionidorg'))
+        ->where('tipoInc_descripcion','=','Incidencia')
+        ->get()->first();
+
+        //buscar inciadencia dias con id de incidencia tipo incidencia
         DB::table('incidencia_dias')
+            ->leftJoin('incidencias','incidencia_dias.id_incidencia','=','incidencias.inciden_id')
             ->where('id_empleado', '=', $request->get('idempleado'))
+            ->where('incidencias.idtipo_incidencia', '=',$tipo_incidencia->idtipo_incidencia)
             ->whereYear('inciden_dias_fechaI', $request->get('aniocalen'))
             ->whereMonth('inciden_dias_fechaI', $request->get('mescale'))
             ->delete();
@@ -3442,7 +3467,7 @@ class EmpleadoController extends Controller
         return $incidencias;
     }
 
-    
+
 
 
 }

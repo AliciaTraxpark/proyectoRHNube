@@ -262,7 +262,7 @@ function calendario_edit() {
             var event = calendarioedit.getEventById(id);
             if (
                 info.event.textColor == "111111" ||
-                info.event.textColor == "1" ||
+                info.event.textColor == "#775555" ||
                 info.event.textColor == "0"
             ) {
                 if (info.event.textColor == "111111") {
@@ -400,7 +400,11 @@ function calendario_edit() {
             /* CUANNDO NO ES HORARIO */
             if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                    title: info.event.title
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaAdic +
+                        ' <br> Se paga: ' +info.event.extendedProps.horaF
                 });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
@@ -2119,7 +2123,11 @@ function calendario3() {
             /* CUANNDO NO ES HORARIO */
             if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                    title: info.event.title
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaAdic +
+                        ' <br> Se paga: ' +info.event.extendedProps.horaF
                 });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
@@ -2194,7 +2202,7 @@ function calendario3() {
             var datoscal;
             $.ajax({
                 type: "POST",
-                url: "/empleado/vercalendario",
+                url: "/empleado/calendarioEmpleado",
                 data: {
                     idempleado,
                 },
@@ -2261,7 +2269,11 @@ function calendario4() {
             /* CUANNDO NO ES HORARIO */
             if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                    title: info.event.title
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaAdic +
+                        ' <br> Se paga: ' +info.event.extendedProps.horaF
                 });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
@@ -2336,7 +2348,7 @@ function calendario4() {
             var datoscal;
             $.ajax({
                 type: "POST",
-                url: "/empleado/vercalendario",
+                url: "/empleado/calendarioEmpleado",
                 data: {
                     idempleado,
                 },
@@ -2445,7 +2457,7 @@ function calendario2_ed() {
             var event = calendarioedit.getEventById(id);
             if (
                 info.event.textColor == "111111" ||
-                info.event.textColor == "1" ||
+                info.event.textColor == "#775555" ||
                 info.event.textColor == "0"
             ) {
                 /* UNBIND SOLO UNA VEZ */
@@ -2653,7 +2665,11 @@ function calendario2_ed() {
             /* CUANNDO NO ES HORARIO */
             if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                    title: info.event.title
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaAdic +
+                        ' <br> Se paga: ' +info.event.extendedProps.horaF
                 });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
