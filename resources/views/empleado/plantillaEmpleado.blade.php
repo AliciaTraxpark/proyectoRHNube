@@ -5544,14 +5544,23 @@
                                         +
                                     </button>
                                 </div>
+
                                 <div id="divIncidenciaNuevo" class="col-md-12" style="display: none">
                                     <input type="text" id="inputNuevoIncidencia" class="form-control form-control-sm">
                                 </div>
-                                <div id="divPagadoI" class="col-md-6">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="IncpagadoCheck">
-                                        <label class="form-check-label" for="IncpagadoCheck"
-                                            style="margin-top: 2px;">Pagado</label>
+                                <div class="col-md-12"><br></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" disabled
+                                            id="codigoIncidencia">
+                                    </div>
+                                </div>
+                                <div id="divPagadoI" class="col-md-4 text-right">
+                                    <div class="custom-control custom-switch" style="margin-top: 34px;">
+                                        <input type="checkbox" class="custom-control-input" id="IncpagadoCheck">
+                                        <label class="custom-control-label" for="IncpagadoCheck"
+                                           >Se paga</label>
                                     </div>
                                 </div>
 

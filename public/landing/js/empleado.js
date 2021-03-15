@@ -1402,7 +1402,7 @@ function nolaborableTem() {
 }
 //*ABRIR MODAL INCIDENCIA
 function agregarinciden() {
-    $("#divPagadoI").hide();
+
     $("#descripcionInciCa").empty();
 
     $("#descripcionInciCa").prop('required',true);
@@ -1410,6 +1410,8 @@ function agregarinciden() {
     $("#inputNuevoIncidencia").val('');
     $("#divSelectIncidencia").show();
     $("#divIncidenciaNuevo").hide();
+    $("#codigoIncidencia").prop('disabled',true);
+    $("#IncpagadoCheck").prop('disabled',true);
     $("#btnAgregaNIncid").show();
 
     var options=$('#descripcionInciCa');
@@ -1481,6 +1483,13 @@ function modalIncidencia() {
     }
     var textDescrip = $("#inputNuevoIncidencia").val();
     var tipoRegDescansoE=$("#NuevoOEdito").val(); //si es 1 registro nuevo empleado, 0 edito nada mas empleado
+    let codigoIncidencia=$('#codigoIncidencia').val();
+    let pagadoIncidencia;
+    if ($('#IncpagadoCheck').is(':checked')) {
+        pagadoIncidencia=1;
+    } else{
+        pagadoIncidencia=0;
+    }
     if(tipoRegDescansoE==1){
         $.ajax({
             type: "post",
@@ -1491,7 +1500,9 @@ function modalIncidencia() {
                 descuentoI: descuentoI,
                 end: fechaFin,
                 nuevoSelect,
-                id_calendario,textDescrip
+                id_calendario,textDescrip,
+                codigoIncidencia,
+                pagadoIncidencia
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1519,7 +1530,9 @@ function modalIncidencia() {
             descuentoI: descuentoI,
             end: fechaFin1,
             nuevoSelect,
-            id_calendario,textDescrip,idempleado
+            id_calendario,textDescrip,idempleado,
+            codigoIncidencia,
+            pagadoIncidencia
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -6561,6 +6574,8 @@ $('#descripcionInciCa').on('select2:closing', function (e) {
                         $('#IncpagadoCheck').prop('checked',false);
                     }
 
+                    $('#codigoIncidencia').val(element.inciden_codigo);
+
                 }
 
             });
@@ -6579,6 +6594,8 @@ $('#descripcionInciCa').on('select2:closing', function (e) {
     $("#divIncidenciaNuevo").show();
     $("#btnAgregaNIncid").hide();
     $('#IncpagadoCheck').prop('disabled',false);
+    $('#codigoIncidencia').prop('disabled',false);
+    $('#codigoIncidencia').val('');
     $("#divPagadoI").show();
  }
 

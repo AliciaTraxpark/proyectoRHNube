@@ -1846,9 +1846,9 @@ class EmpleadoController extends Controller
 
             $incidencia = new incidencias();
             $incidencia->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencia->inciden_codigo= null;
+            $incidencia->inciden_codigo= $request->get('codigoIncidencia');
             $incidencia->inciden_descripcion = $request->get('textDescrip');
-            $incidencia->inciden_pagado = $request->get('descuentoI');
+            $incidencia->inciden_pagado = $request->get('pagadoIncidencia');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
             $incidencia->estado =  1;
@@ -1905,9 +1905,9 @@ class EmpleadoController extends Controller
 
             $incidencia = new incidencias();
             $incidencia->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencia->inciden_codigo= null;
+            $incidencia->inciden_codigo= $request->get('codigoIncidencia');
             $incidencia->inciden_descripcion = $request->get('textDescrip');
-            $incidencia->inciden_pagado = $request->get('descuentoI');
+            $incidencia->inciden_pagado = $request->get('pagadoIncidencia');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
             $incidencia->estado =  1;
