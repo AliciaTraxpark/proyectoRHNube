@@ -185,7 +185,7 @@ class servicioVerifyController extends Controller
                     array_push($arrayConsultar, array("type" => $tipoDocumento->tipoDoc_id, "document" => $d[1]));
                 }
             }
-            
+            dd(session('sesionidorg'));
         }
     }
 }
