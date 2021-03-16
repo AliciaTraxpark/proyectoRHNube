@@ -1580,9 +1580,9 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoDescanso');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoDescanso');
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
@@ -1646,9 +1646,9 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoDescanso');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoDescanso');;
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
@@ -1704,9 +1704,9 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoFeriado');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoFeriado');
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
@@ -1770,7 +1770,7 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoFeriado');
             $incidencias->inciden_descripcion= $request->get('title');
             $incidencias->inciden_pagado= 1;
             $incidencias->users_id=Auth::user()->id;
@@ -1846,9 +1846,9 @@ class EmpleadoController extends Controller
 
             $incidencia = new incidencias();
             $incidencia->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencia->inciden_codigo= null;
+            $incidencia->inciden_codigo= $request->get('codigoIncidencia');
             $incidencia->inciden_descripcion = $request->get('textDescrip');
-            $incidencia->inciden_pagado = $request->get('descuentoI');
+            $incidencia->inciden_pagado = $request->get('pagadoIncidencia');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
             $incidencia->estado =  1;
@@ -1905,9 +1905,9 @@ class EmpleadoController extends Controller
 
             $incidencia = new incidencias();
             $incidencia->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencia->inciden_codigo= null;
+            $incidencia->inciden_codigo= $request->get('codigoIncidencia');
             $incidencia->inciden_descripcion = $request->get('textDescrip');
-            $incidencia->inciden_pagado = $request->get('descuentoI');
+            $incidencia->inciden_pagado = $request->get('pagadoIncidencia');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
             $incidencia->estado =  1;
@@ -2242,11 +2242,19 @@ class EmpleadoController extends Controller
                 $tab->color = '#e6bdbd';
                 $tab->textColor = '#775555';
 
+                //*VALIDANDO SI ES PAGADO
                 if($tab->horaF==1){
                     $tab->horaF='Si';
 
                 } else{
                     $tab->horaF='No';
+                }
+
+                //*VALIDANDO CODIGO
+                if($tab->horaI){
+                    $tab->horaI=$tab->horaI;
+                } else{
+                    $tab->horaI='--';
                 }
             }
         }

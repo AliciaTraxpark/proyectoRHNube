@@ -1641,26 +1641,43 @@ class horarioController extends Controller
         /*  dd($horario_empleado); */
 
         $incidencias = DB::table('incidencias as i')
-            ->select([
+            ->select(
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_descripcion as textColor',
-                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
-            ])
+                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', DB::raw('IF(i.inciden_codigo is null, "--" , i.inciden_codigo) as horaI'),  'tip.tipoInc_descripcion as horaF',
+                 DB::raw('IF(inciden_pagado=1, "Si" , "No") as borderColor'),
+                  'laborable', 'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario',
+                   'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic'
+            )
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+            ->join('tipo_incidencia as tip', 'i.idtipo_incidencia', '=', 'tip.idtipo_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
         /*   ->union($horario_empleado); */
 
 
         /*   $horario_empleado ->union($eventos_empleado); */
         /* -------HORARIOS QUE NO ESTAN GUARDADOS------ */
-        $temporal_eventos = DB::table('temporal_eventos')->select([
+        $temporal_eventosHO = DB::table('temporal_eventos')->select([
             'id', 'title', 'color', 'textColor', 'start', 'end', 'horaI',
             'horaF', 'borderColor', 'color as laborable', 'horaAdic', 'id_horario as idhorario', 'horasObliga', 'nHoraAdic',
         ])
             ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
             ->where('users_id', '=', Auth::user()->id)
+            ->where('id_horario', '!=', null)
+            ->where('incidencia_id', '=', null)
             ->union($incidencias);
 
+         /* -------INCIDENCIAS QUE NO ESTAN GUARDADOS------ */
+         $temporal_eventosIN = DB::table('temporal_eventos')->select([
+            'id', 'title', 'color', 'textColor', 'start', 'end', DB::raw('IF(i.inciden_codigo is null, "--" , i.inciden_codigo) as horaI'),
+            'tip.tipoInc_descripcion as horaF',  DB::raw('IF(inciden_pagado=1, "Si" , "No") as borderColor'), 'color as laborable', 'color as horaAdic', 'id_horario as idhorario', 'color as horasObliga', 'nHoraAdic',
+        ])
+            ->leftJoin('incidencias as i', 'temporal_eventos.incidencia_id', '=', 'i.inciden_id')
+            ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+            ->join('tipo_incidencia as tip', 'i.idtipo_incidencia', '=', 'tip.idtipo_incidencia')
+            ->where('temporal_eventos.users_id', '=', Auth::user()->id)
+            ->where('id_horario', '=', null)
+            ->where('incidencia_id', '!=', null)
+            ->union($temporal_eventosHO);
         /* -------------------------------------------- */
         $horario_empleado = DB::table('horario_empleado as he')
             ->select(['he.horarioEmp_id as id', 'h.horario_descripcion as title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario', 'horasObliga', 'nHoraAdic'])
@@ -1668,7 +1685,7 @@ class horarioController extends Controller
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.estado', '=', 1)
             ->where('he.empleado_emple_id', '=', $idempleado)
-            ->union($temporal_eventos)
+            ->union($temporal_eventosIN)
             ->get();
 
         foreach ($horario_empleado as $tab) {
@@ -3165,7 +3182,7 @@ class horarioController extends Controller
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_cargo', $area)
                             ->groupBy('e.emple_id')
-                            ->get(); 
+                            ->get();
                         } else {
                             if ($selector == "Local") {
                                 $empleados = DB::table('empleado as e')
@@ -3282,7 +3299,7 @@ class horarioController extends Controller
                                 }
                             }
                         }
-                        
+
                     }
                 }
             } else {
@@ -3825,7 +3842,7 @@ class horarioController extends Controller
                                 }
                             }
                         }
-                        
+
                     } else {
                         $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                             ->where('invem.idinvitado', '=',  $invitado->idinvitado)
@@ -3967,7 +3984,7 @@ class horarioController extends Controller
                         $contEmpleados = $empleados->count();
                         $empleados = $empleados->concat($dias);
                         $empleados = $empleados->push($contEmpleados);
-                        
+
                     } else {
                         if($selector == "Cargo"){
                             $empleados = DB::table('empleado as e')
@@ -4057,7 +4074,7 @@ class horarioController extends Controller
                             }
                         }
                     }
-                    
+
                 }
             }
         }
