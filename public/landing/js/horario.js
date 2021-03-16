@@ -479,7 +479,11 @@ function calendario() {
             right: "Clonar,ClonarInci,borrarHorarios,borrarIncidencias",
         },
         eventRender: function (info) {
+            var idempleado = $('#nombreEmpleado').val();
+            num=$('#nombreEmpleado').val().length;
             $('.tooltip').remove();
+            if(num==1){
+
             if(info.event.textColor=='111111'){
               if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
@@ -560,6 +564,13 @@ function calendario() {
                         ' <br> Se paga: ' +info.event.borderColor
                 });
             }
+            } else{
+                if(num>1){
+                    $(info.el).tooltip({ title: 'Click para ver detalles' });
+                }
+            }
+
+
 
 
         },
