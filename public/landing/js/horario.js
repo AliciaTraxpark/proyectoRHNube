@@ -551,7 +551,14 @@ function calendario() {
 
             }
             } else{
-                $(info.el).tooltip({ title: info.event.title });
+
+                $(info.el).tooltip({
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaF +
+                        ' <br> Se paga: ' +info.event.borderColor
+                });
             }
 
 
