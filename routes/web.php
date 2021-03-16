@@ -684,3 +684,5 @@ Route::get('/tokenWeb', function () {
     return csrf_token();
 });
 Route::post('/nuevaCredencial', 'servicioVerifyController@nuevaCredencial');
+Route::get('/loginServicio', 'servicioVerifyController@loginServicio');
+Route::post('/verificarDocumentoServicio', 'servicioVerifyController@verificarRegistroServicio');
