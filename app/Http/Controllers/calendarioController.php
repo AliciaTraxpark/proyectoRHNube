@@ -310,6 +310,11 @@ class calendarioController extends Controller
             } else{
                 $tab->inciden_pagado='No';
             }
+
+            //*
+            if(!$tab->inciden_codigo){
+                $tab->inciden_codigo='--';
+            }
         }
         return $eventos_calendario;
     }
