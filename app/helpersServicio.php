@@ -59,6 +59,7 @@ function loginServicioVerify($client, $credencial)
 function verificarPerson($client, $type_token, $token, $person)
 {
     try {
+        // * API DE CONSULTAR NUMERO DOCUMENTO
         $response = $client->request(
             'POST',
             '/api/v1/person/detailsByDocument/' . $person,
