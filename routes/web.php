@@ -685,4 +685,4 @@ Route::get('/tokenWeb', function () {
 });
 Route::post('/nuevaCredencial', 'servicioVerifyController@nuevaCredencial');
 Route::get('/loginServicio', 'servicioVerifyController@loginServicio');
-Route::post('/verificarDocumentoServicio', 'servicioVerifyController@consultarInformacionVerify');
+Route::post('/consultarInformacionVerify', 'servicioVerifyController@consultarInformacionVerify');

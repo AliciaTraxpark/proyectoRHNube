@@ -10,7 +10,6 @@ use App\organizacion_consultas;
 use App\tipo_documento;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -75,26 +74,7 @@ class servicioVerifyController extends Controller
         // ! ------------------------ CONSULTAR API DE LOGIN DE SERVICIO -----------------------------
         $credencial = crd::where('estado', '=', 1)->get()->first();
         if ($credencial) {
-            // : OBTENIENDO USUARIO Y CLAVE
-            $usuario = base64_decode($credencial->usuario);
-            $clave = base64_decode($credencial->clave);
-            // : LOGUEAR CREDENCIAL
-            try {
-                $response = $this->client->request('POST', '/api/v1/auth/login', ['form_params' => [
-                    'email' => $usuario,
-                    'password' => $clave
-                ]]);
-                $body = json_decode($response->getBody());
-                // : GUARDAR EN LA BD
-                loginServicioVerify($body, $credencial);
-                // : DEVOLVEMOS EL TOKEN Y EL TIPO DE TOKEN
-                return array("token" => $body->token, "token_type" => $body->token_type);
-            } catch (RequestException $e) {
-                if ($e->getResponse()->getStatusCode() == 401) {
-                    return response()->json(array("respuesta" => "Credenciales incorrectas."), 404);
-                }
-                return response()->json(array("respuesta" => "Problemas con el servicio de verificación, comunicarse con nosotros."), 404);
-            }
+            return loginServicioVerify($this->client, $credencial);
         } else {
             return response()->json(array("respuesta" => "No se encuentran credenciales disponibles para login"), 404);
         }
@@ -263,6 +243,21 @@ class servicioVerifyController extends Controller
                     // : VALIDACION DE LENGTH DE DNI
                     $numero_length = Str::length($datos['numeroDocumento']);
                     if ($numero_length == 8) {
+                        // ! ---------------------------------- CONSUMIR SERVICIO ----------------------------------------------------
+                        // : BUSCAR CREDENCIAL
+                        $credencial = crd::where('estado', '=', 1)->get()->first();
+                        if ($credencial) {
+                            $token = crd_token::where('id_crd', '=', $credencial->id);
+                            if ($token) {
+                                // : CUANDO ENCUENTRO EL TOKEN
+
+                            } else {
+                                // : LOGUAERNOS PARA OBTENER TOKEN
+                                $login = loginServicioVerify($this->client, $credencial);
+                            }
+                        } else {
+                            return response()->json(array("respuesta" => "No se encuentran credenciales disponibles para login"), 404);
+                        }
                     } else {
                         return response()->json(array("respuesta" => "DNI invalido debe tener 8 digitos."), 404);
                     }
