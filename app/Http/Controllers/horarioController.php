@@ -3040,6 +3040,7 @@ class horarioController extends Controller
     }
 
     public function cargarReporteHorarios(Request $request){
+        $area = $request->area;
         if($request->area == "" && $request->empleado == ""){
             $empleados = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
@@ -3066,7 +3067,38 @@ class horarioController extends Controller
         } else {
             // area y empleados tienen valor
             if($request->area != "" && $request->empleado != ""){
-                if($request->selector == "Área"){
+                $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                    DB::raw('DATE(hd.start) as DP')
+                )
+                ->where('e.emple_estado', '=', 1)
+                ->where(function ($query) {
+                    $query->where('he.estado', '=', 1)
+                        ->orWhereNull('he.estado');
+                })
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->whereIn('e.emple_id', $request->empleado)
+                ->where(function ($where) use ($area) {
+                    foreach ($area as $q) {
+                        $parametro = explode(".", $q)[0];
+                        $id = explode(".", $q)[1];
+                        $where->orWhere('e.' . $parametro, '=', $id);
+                    }
+                })
+                ->get();
+            } else {
+                if($request->area != ""){
                     $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                     ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
@@ -3088,144 +3120,14 @@ class horarioController extends Controller
                             ->orWhereNull('he.estado');
                     })
                     ->where('e.organi_id', '=', session('sesionidorg'))
-                    ->where('e.emple_area', '=', $request->area)
-                    ->where('e.emple_id', '=', $request->empleado)
+                    ->where(function ($where) use ($area) {
+                        foreach ($area as $q) {
+                            $parametro = explode(".", $q)[0];
+                            $id = explode(".", $q)[1];
+                            $where->orWhere('e.' . $parametro, '=', $id);
+                        }
+                    })
                     ->get();
-                } else {
-                    if($request->selector == "Cargo"){
-                        $empleados = DB::table('empleado as e')
-                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
-                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
-                        ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
-                        ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
-                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
-                        ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
-                            DB::raw('DATE(hd.start) as DP')
-                        )
-                        ->where('e.emple_estado', '=', 1)
-                        ->where(function ($query) {
-                            $query->where('he.estado', '=', 1)
-                                ->orWhereNull('he.estado');
-                        })
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.emple_cargo', '=', $request->area)
-                        ->where('e.emple_id', '=', $request->empleado)
-                        ->get();
-                    } else {
-                        if($request->selector == "Local"){
-                            $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                            ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                            ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                            ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
-                            ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
-                            ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                            ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
-                            ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
-                            ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
-                                DB::raw('DATE(hd.start) as DP')
-                            )
-                            ->where('e.emple_estado', '=', 1)
-                            ->where(function ($query) {
-                                $query->where('he.estado', '=', 1)
-                                    ->orWhereNull('he.estado');
-                            })
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.emple_local', '=', $request->area)
-                            ->where('e.emple_id', '=', $request->empleado)
-                            ->get();
-                        }
-                    }
-                }
-                
-            } else {
-                if($request->area != ""){
-                    if($request->selector == "Área"){
-                        $empleados = DB::table('empleado as e')
-                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
-                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
-                        ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
-                        ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
-                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
-                        ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
-                            DB::raw('DATE(hd.start) as DP')
-                        )
-                        ->where('e.emple_estado', '=', 1)
-                        ->where(function ($query) {
-                            $query->where('he.estado', '=', 1)
-                                ->orWhereNull('he.estado');
-                        })
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.emple_area', '=', $request->area)
-                        ->get();
-                    } else {
-                        if($request->selector == "Cargo"){
-                            $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                            ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                            ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                            ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
-                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
-                            ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
-                            ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                            ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
-                            ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
-                            ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
-                                DB::raw('DATE(hd.start) as DP')
-                            )
-                            ->where('e.emple_estado', '=', 1)
-                            ->where(function ($query) {
-                                $query->where('he.estado', '=', 1)
-                                    ->orWhereNull('he.estado');
-                            })
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.emple_cargo', '=', $request->area)
-                            ->get();
-                        } else {
-                            if($request->selector == "Local"){
-                                $empleados = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-                                ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-                                ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-                                ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
-                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
-                                ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
-                                ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-                                ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
-                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
-                                ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
-                                    DB::raw('DATE(hd.start) as DP')
-                                )
-                                ->where('e.emple_estado', '=', 1)
-                                ->where(function ($query) {
-                                    $query->where('he.estado', '=', 1)
-                                        ->orWhereNull('he.estado');
-                                })
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.emple_local', '=', $request->area)
-                                ->get();
-                            }
-                        }
-                    }
                 }
 
                 if($request->empleado != ""){
@@ -3250,7 +3152,7 @@ class horarioController extends Controller
                             ->orWhereNull('he.estado');
                     })
                     ->where('e.organi_id', '=', session('sesionidorg'))
-                    ->where('e.emple_id', '=', $request->empleado)
+                    ->whereIn('e.emple_id', $request->empleado)
                     ->get();
                 }
             }
@@ -4273,6 +4175,389 @@ class horarioController extends Controller
         }
 
         return response()->json($empleados, 200);
+    }
+
+    public function selectBusquedas(Request $request)
+    {
+        $busqueda = $request->get('term');
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                // : CARGO
+                $cargo = DB::table('cargo as c')
+                    ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->select(
+                        DB::raw('CONCAT("emple_cargo",".",c.cargo_id) as id'),
+                        'c.cargo_descripcion as descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->groupBy('c.cargo_id')
+                    ->get();
+                // : AREA 
+                $area = DB::table('area as a')
+                    ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
+                    ->select(
+                        DB::raw('CONCAT("emple_area",".",a.area_id) as id'),
+                        'a.area_descripcion as descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->groupBy('a.area_id')
+                    ->get();
+                // : NIVEL
+                $nivel = DB::table('nivel as n')
+                    ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
+                    ->select(
+                        DB::raw('CONCAT("emple_nivel",".",n.nivel_id) as id'),
+                        'n.nivel_descripcion as descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->groupBy('n.nivel_id')
+                    ->get();
+                // : LOCAL
+                $local = DB::table('local as l')
+                    ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
+                    ->select(
+                        DB::raw('CONCAT("emple_local",".",l.local_id) as id'),
+                        'l.local_descripcion as descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->groupBy('l.local_id')
+                    ->get();
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()
+                    ->first();
+                if (!is_null($invitado_empleadoIn)) {
+                    // : CARGO
+                    $cargo = DB::table('cargo as c')
+                        ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_cargo",".",c.cargo_id) as id'),
+                            'c.cargo_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('c.cargo_id')
+                        ->get();
+                    // : AREA 
+                    $area = DB::table('area as a')
+                        ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_area",".",a.area_id) as id'),
+                            'a.area_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('a.area_id')
+                        ->get();
+                    // : NIVEL
+                    $nivel = DB::table('nivel as n')
+                        ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_nivel",".",n.nivel_id) as id'),
+                            'n.nivel_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('n.nivel_id')
+                        ->get();
+                    // : LOCAL
+                    $local = DB::table('local as l')
+                        ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_local",".",l.local_id) as id'),
+                            'l.local_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('l.local_id')
+                        ->get();
+                } else {
+                    // : CARGO
+                    $cargo = DB::table('cargo as c')
+                        ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_cargo",".",c.cargo_id) as id'),
+                            'c.cargo_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('c.cargo_id')
+                        ->get();
+                    // : AREA 
+                    $area = DB::table('area as a')
+                        ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_area",".",a.area_id) as id'),
+                            'a.area_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('a.area_id')
+                        ->get();
+                    // : NIVEL
+                    $nivel = DB::table('nivel as n')
+                        ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_nivel",".",n.nivel_id) as id'),
+                            'n.nivel_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('n.nivel_id')
+                        ->get();
+                    // : LOCAL
+                    $local = DB::table('local as l')
+                        ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select(
+                            DB::raw('CONCAT("emple_local",".",l.local_id) as id'),
+                            'l.local_descripcion as descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->groupBy('l.local_id')
+                        ->get();
+                }
+            }
+        } else {
+            // : CARGO
+            $cargo = DB::table('cargo as c')
+                ->join('empleado as e', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->select(
+                    DB::raw('CONCAT("emple_cargo",".",c.cargo_id) as id'),
+                    'c.cargo_descripcion as descripcion'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->groupBy('c.cargo_id')
+                ->get();
+            // : AREA 
+            $area = DB::table('area as a')
+                ->join('empleado as e', 'e.emple_area', '=', 'a.area_id')
+                ->select(
+                    DB::raw('CONCAT("emple_area",".",a.area_id) as id'),
+                    'a.area_descripcion as descripcion'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->groupBy('a.area_id')
+                ->get();
+            // : NIVEL
+            $nivel = DB::table('nivel as n')
+                ->join('empleado as e', 'e.emple_nivel', '=', 'n.nivel_id')
+                ->select(
+                    DB::raw('CONCAT("emple_nivel",".",n.nivel_id) as id'),
+                    'n.nivel_descripcion as descripcion'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->groupBy('n.nivel_id')
+                ->get();
+            // : LOCAL
+            $local = DB::table('local as l')
+                ->join('empleado as e', 'e.emple_local', '=', 'l.local_id')
+                ->select(
+                    DB::raw('CONCAT("emple_local",".",l.local_id) as id'),
+                    'l.local_descripcion as descripcion'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->groupBy('l.local_id')
+                ->get();
+        }
+        $respuesta = array();
+        if (sizeof($cargo) != 0) {
+            $respuesta["Cargo"] = $cargo;
+        }
+        if (sizeof($area) != 0) {
+            $respuesta["Área"] = $area;
+        }
+        if (sizeof($nivel) != 0) {
+            $respuesta["Nivel"] = $nivel;
+        }
+        if (sizeof($local) != 0) {
+            $respuesta["Local"] = $local;
+        }
+        if (!empty($busqueda)) {
+            function filter_array($array, $term)
+            {
+                $matches = array();
+                foreach ($array  as $key => $a) {
+                    foreach ($a as $value) {
+                        $value = (array)$value;
+                        if (stripos($value['descripcion'], $term) !== false) {
+                            if (!isset($matches[$key])) {
+                                $matches[$key] = array();
+                            }
+                            array_push($matches[$key], $value);
+                        }
+                    }
+                }
+                return $matches;
+            }
+            $respuesta = filter_array($respuesta, $busqueda);
+            return response()->json($respuesta, 200);
+        }
+        return response()->json($respuesta, 200);
+    }
+
+    // * ENVIAR TODOS LOS EMPLEADOS Y SELECT DE EMPLEADOS
+    public function selectEmpleadoGlobal(Request $request)
+    {
+        $query = $request->get('query');
+        $select = [];
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        // : TODOS LOS EMPLEADOS
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->get();
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()
+                    ->first();
+                if ($invitado_empleadoIn != null) {
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->get();
+                } else {
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->get();
+                }
+            }
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->get();
+        }
+        // : SELECT DE IDS DE EMPLEADO
+        if (!is_null($query)) {
+            if ($invitadod) {
+                if ($invitadod->verTodosEmps == 1) {
+                    $empleadoSelect = DB::table('empleado as e')
+                        ->select('e.emple_id')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where(function ($where) use ($query) {
+                            foreach ($query as $q) {
+                                $parametro = explode(".", $q)[0];
+                                $id = explode(".", $q)[1];
+                                $where->orWhere('e.' . $parametro, '=', $id);
+                            }
+                        })
+                        ->get();
+                } else {
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()
+                        ->first();
+                    if ($invitado_empleadoIn != null) {
+                        $empleadoSelect = DB::table('empleado as e')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
+                            ->get();
+                    } else {
+                        $empleadoSelect = DB::table('empleado as e')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
+                            ->get();
+                    }
+                }
+            } else {
+                $empleadoSelect = DB::table('empleado as e')
+                    ->select('e.emple_id')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where(function ($where) use ($query) {
+                        foreach ($query as $q) {
+                            $parametro = explode(".", $q)[0];
+                            $id = explode(".", $q)[1];
+                            $where->orWhere('e.' . $parametro, '=', $id);
+                        }
+                    })
+                    ->get();
+            }
+            foreach ($empleadoSelect as $e) {
+                array_push($select, $e->emple_id);
+            }
+        }
+        return response()->json(array("empleado" => $empleado, "select" => $select), 200);
     }
 
 }
