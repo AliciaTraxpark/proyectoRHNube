@@ -551,16 +551,17 @@
                     </div>
                     <div class="col-12 col-sm-3 col-md-3 col-lg-3 inputResponsive">
                         <div class="form-group row">
-                        <label class="col-lg-6 col-md-6 col-sm-6 col-form-label">Seleccionar por:</label>
-                        <td align="center">
-                            <select class="form-control col-lg-6 col-md-6 col-sm-6" name="select" id="select" style="height: 35.5px;">
-                                <option value="2">Documento</option>
-                                <option value="3">Nombre</option>
-                                <option value="4" selected>Apellidos</option>
-                                <option value="5">Cargo</option>
-                                <option value="6">Área</option>
-                            </select>
-                        </td>
+                            <label class="col-lg-6 col-md-6 col-sm-6 col-form-label">Seleccionar por:</label>
+                            <td align="center">
+                                <select class="form-control col-lg-6 col-md-6 col-sm-6" name="select" id="select"
+                                    style="height: 35.5px;">
+                                    <option value="2">Documento</option>
+                                    <option value="3">Nombre</option>
+                                    <option value="4" selected>Apellidos</option>
+                                    <option value="5">Cargo</option>
+                                    <option value="6">Área</option>
+                                </select>
+                            </td>
                         </div>
                     </div>
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 inputResponsive" id="filter_global">
@@ -571,8 +572,8 @@
                     </div>
                     <div class="col-12 col-sm-1 col-md-1 col-lg-1 inputResponsive text-right">
                         <button type="button" id="selectBtn" class="btn btn-sm mt-1 col-lg-8 col-md-8 col-sm-8"
-                        style="background-color: #163552;" > <img
-                            src="{{ asset('landing/images/loupe (1).svg') }}" height="15"></button>
+                            style="background-color: #163552;"> <img src="{{ asset('landing/images/loupe (1).svg') }}"
+                                height="15"></button>
                     </div>
 
 
@@ -1507,9 +1508,11 @@
                                 </div>
                             </div>
                         </div>
-                        <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                        <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de
+                                contrato</strong></label>
                         <div class="row w-100 alertVencimiento">
-                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se
+                                le notifique?</label>
                             <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta"
                                 required="">
                                 <option value="0">Día</option>
