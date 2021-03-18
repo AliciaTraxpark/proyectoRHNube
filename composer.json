@@ -56,7 +56,8 @@
         ],
         "files": [
             "app/helpers.php",
-            "app/helpersServicio.php"
+            "app/helpersServicio.php",
+            "app/funcionesHorario.php"
         ]
     },
     "autoload-dev": {
@@ -64,7 +65,8 @@
             "Tests\\": "tests/"
         },
         "files":[
-            "app/helpers.php"
+            "app/helpers.php",
+            "app/funcionesHorario.php"
         ]
     },
     "minimum-stability": "dev",

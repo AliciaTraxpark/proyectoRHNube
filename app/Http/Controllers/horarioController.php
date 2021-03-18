@@ -11,6 +11,7 @@ use App\horario_dias;
 use App\horario_empleado;
 use App\incidencias;
 use App\incidencia_dias;
+use App\marcacion_puerta;
 use App\paises;
 use App\pausas_horario;
 use App\temporal_eventos;
@@ -3040,29 +3041,222 @@ class horarioController extends Controller
     }
 
     public function cargarReporteHorarios(Request $request){
+        if($request->area == "" && $request->empleado == ""){
+            $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+            ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+            ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+            ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+            ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+            ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+            ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+            ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+            ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                DB::raw('DATE(hd.start) as DP')
+            )
+            ->where('e.emple_estado', '=', 1)
+            ->where(function ($query) {
+                $query->where('he.estado', '=', 1)
+                    ->orWhereNull('he.estado');
+            })
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+        } else {
+            // area y empleados tienen valor
+            if($request->area != "" && $request->empleado != ""){
+                if($request->selector == "Área"){
+                    $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                    ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                    ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                    ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                    ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                    ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                    ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                    ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                        DB::raw('DATE(hd.start) as DP')
+                    )
+                    ->where('e.emple_estado', '=', 1)
+                    ->where(function ($query) {
+                        $query->where('he.estado', '=', 1)
+                            ->orWhereNull('he.estado');
+                    })
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_area', '=', $request->area)
+                    ->where('e.emple_id', '=', $request->empleado)
+                    ->get();
+                } else {
+                    if($request->selector == "Cargo"){
+                        $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                        ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                        ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                        ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                            DB::raw('DATE(hd.start) as DP')
+                        )
+                        ->where('e.emple_estado', '=', 1)
+                        ->where(function ($query) {
+                            $query->where('he.estado', '=', 1)
+                                ->orWhereNull('he.estado');
+                        })
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_cargo', '=', $request->area)
+                        ->where('e.emple_id', '=', $request->empleado)
+                        ->get();
+                    } else {
+                        if($request->selector == "Local"){
+                            $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                            ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                            ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                            ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                            ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                            ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                            ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                                DB::raw('DATE(hd.start) as DP')
+                            )
+                            ->where('e.emple_estado', '=', 1)
+                            ->where(function ($query) {
+                                $query->where('he.estado', '=', 1)
+                                    ->orWhereNull('he.estado');
+                            })
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_local', '=', $request->area)
+                            ->where('e.emple_id', '=', $request->empleado)
+                            ->get();
+                        }
+                    }
+                }
+                
+            } else {
+                if($request->area != ""){
+                    if($request->selector == "Área"){
+                        $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                        ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                        ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                        ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                            DB::raw('DATE(hd.start) as DP')
+                        )
+                        ->where('e.emple_estado', '=', 1)
+                        ->where(function ($query) {
+                            $query->where('he.estado', '=', 1)
+                                ->orWhereNull('he.estado');
+                        })
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_area', '=', $request->area)
+                        ->get();
+                    } else {
+                        if($request->selector == "Cargo"){
+                            $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                            ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                            ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                            ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                            ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                            ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                            ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                                DB::raw('DATE(hd.start) as DP')
+                            )
+                            ->where('e.emple_estado', '=', 1)
+                            ->where(function ($query) {
+                                $query->where('he.estado', '=', 1)
+                                    ->orWhereNull('he.estado');
+                            })
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_cargo', '=', $request->area)
+                            ->get();
+                        } else {
+                            if($request->selector == "Local"){
+                                $empleados = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                                ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                                ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                                ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                                ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                                ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                                ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                                    DB::raw('DATE(hd.start) as DP')
+                                )
+                                ->where('e.emple_estado', '=', 1)
+                                ->where(function ($query) {
+                                    $query->where('he.estado', '=', 1)
+                                        ->orWhereNull('he.estado');
+                                })
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.emple_local', '=', $request->area)
+                                ->get();
+                            }
+                        }
+                    }
+                }
 
-        $empleados = DB::table('empleado as e')
-        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
-        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
-        ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
-        ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
-        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
-        ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
-            DB::raw('DATE(hd.start) as DP')
-        )
-        ->where('e.emple_estado', '=', 1)
-        ->where(function ($query) {
-            $query->where('he.estado', '=', 1)
-                  ->orWhereNull('he.estado');
-        })
-        ->where('e.organi_id', '=', session('sesionidorg'))
-        ->get();
+                if($request->empleado != ""){
+                    $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                    ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                    ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                    ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                    ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                    ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                    ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                    ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                        DB::raw('DATE(hd.start) as DP')
+                    )
+                    ->where('e.emple_estado', '=', 1)
+                    ->where(function ($query) {
+                        $query->where('he.estado', '=', 1)
+                            ->orWhereNull('he.estado');
+                    })
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_id', '=', $request->empleado)
+                    ->get();
+                }
+            }
+        }
+        
         $empleados = $empleados->groupBy('perso_id')->values();
         //dd($empleados);
 
@@ -4080,6 +4274,528 @@ class horarioController extends Controller
         }
 
         return response()->json($empleados, 200);
+    }
+
+    public function cambiarHorarioCambiado(Request $request){
+
+        //*Obteniendo datos
+        $fechaActual=Carbon::now('America/Lima');
+        $fechaDesdeCambio=($fechaActual->subDays(20))->isoFormat('YYYY-MM-DD');
+
+
+        //*----------------------------------- obtenemos horarios que cambiaremos----------------------------------------
+        $marcacion_puertaHorarios=DB::table('marcacion_puerta as mp')
+        ->select('mp.marcaMov_id','mp.marcaMov_emple_id','mp.marcaMov_fecha','mp.marcaMov_salida','mp.horarioEmp_id')
+        ->leftJoin('horario_empleado as he','mp.horarioEmp_id','=','he.horarioEmp_id')
+
+        ->whereDate(DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha)'), '>=', $fechaDesdeCambio)
+        /* ->where('he.estado','=',0)  */
+        ->where('mp.organi_id','=',session('sesionidorg'))
+        ->orderby(DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha)'), 'ASC')
+        ->get();
+
+
+
+        //*********************************************************SI EXISTE MARCACIONES ***********************************************
+        if($marcacion_puertaHorarios->isNotEmpty()){
+
+            //*RECORREMOS PARA REPROCESAR TODAS LAS MARCACIONES
+            foreach($marcacion_puertaHorarios as $marcacion_puertaHorario){
+
+
+
+                //*OBTENEMOS FECHA DE MARCACION A LA CUAL LE QUEREMOS OBTENER SI TIENE HORARIO-------------------------
+                //*SERA LA FECHA DE ENTRADA , EN CASO QUE NO TENGA SE TOMARA LA FECHA DE SALIDA------------------------
+                if($marcacion_puertaHorario->marcaMov_fecha){
+                    $fechaMarcacion=Carbon::create($marcacion_puertaHorario->marcaMov_fecha)->isoFormat('YYYY-MM-DD');
+                } else{
+                    $fechaMarcacion=Carbon::create($marcacion_puertaHorario->marcaMov_salida)->isoFormat('YYYY-MM-DD');
+                }
+                //*-----------------------------------------------------------------------------------------------------
+
+
+                //* VERIFICAMOS SI TIENE HORARIO ENVIADNO LA FECHA DE MARCACION Y EL ID DE EMPLEADO--------------------
+
+                 //OBTENEMOS HORARIO
+                $horarioEmpleado=FHhorarioEmpleado($fechaMarcacion,$marcacion_puertaHorario->marcaMov_emple_id);
+
+                //*SI EXISTE HORARIO RECORREMOS Y HAYAREMOS SUS RANGOS EN QUE SE PUEDE REALIZAR LAS MARCACIONES, VALIDANDO SI
+                //*TIENE PERMITIDO HORAS EXTRAS Y MARCACION FUERA DE HORARIO
+
+                //*SI SE ENCONTRO HORARIOS
+                if($horarioEmpleado->isNotEmpty()){
+
+                    //*----------------------RECORREREMOS HORARIOS PARA HALLAR TIEMPO DE HORAS DE EMPLEADO Y TIEMPO TRABAJADO-------------
+
+                    foreach ($horarioEmpleado as $horarioDentro) {
+
+                         //* OBTENEMOS FECHA DE MARCACION PUERTA A COMPARAR EN CASO SOLO AYA ENTRADA O SALIDA
+                         if($marcacion_puertaHorario->marcaMov_fecha){
+                            $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_fecha;
+                        } else{
+                            $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_salida;
+                        }
+                        $fechaHorahoy = Carbon::create($fechaMarcacionDentro);
+
+
+                        //*OBTENEMOS HORAS QUE PUEDE TRABAJAR EL EMPLEADO
+                        if($horarioDentro->horaAdic==1){
+                            $tiempoTotalDeHorario = Carbon::parse($horarioDentro->horasObliga)->addMinutes($horarioDentro->nHoraAdic * 60);
+                        } else{
+                            $tiempoTotalDeHorario = Carbon::parse($horarioDentro->horasObliga);
+                        }
+
+                        ///*OBTENEMOS TIEMPO TRABAJADO DEL EMPLEADO SIN CONTAR ESTA MARCACION
+                        $sumaTotalDeHoras=FHTiempoTrabajado($fechaHorahoy,$marcacion_puertaHorario->marcaMov_emple_id,
+                        $horarioDentro->idHorarioEmpleado,$marcacion_puertaHorario->horarioEmp_id);
+
+
+
+
+                        /************************************************************************************************
+                         ** VALIDAREMOS MARCACIONES DENTRO DE UN HORARIO
+                         * 1. VALIDAREMOS SEGUN TENGA ENTRADA Y SALIDA
+                         * 2.DENTRO DE CADA VALIDACION 1. VALIDAREMOS SEGUN FUERA HORARIO, HORAS EXTRAS, OHRASS OBLIGADAS
+                        *************************************************************************************************/
+
+                        $horaIParse = Carbon::parse($marcacion_puertaHorario->marcaMov_fecha);     // : INICIALIZAR ENTRADA CON CARBON
+                        $horaFParse = Carbon::parse($marcacion_puertaHorario->marcaMov_salida);    // : INICIALIZAR SALIDA CON CARBON
+
+                        //*OBTENEMOS EL TIEMPO TOTAL TRABAJADO SI AÑADO LA MARCACION
+                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);   // : TIEMPO EN SEGUNDOS ENTRE SALIDA Y ENTRADA
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+
+                         //* SI TENGO ENTRADA Y SALIDA DE MARCACION
+                         if($marcacion_puertaHorario->marcaMov_fecha!=null && $marcacion_puertaHorario->marcaMov_salida!=null){
+
+                            //VALIDAR QUE ENTRADA SI O SI ESTE DENTRO DE RANGO DE HORARIO
+                            $respuestaEntradaDentro= FHcheckHora($horarioDentro->horaI, $horarioDentro->horaF, $horaIParse);
+
+                            //*SI ES ESTADO TRUE , MARCACION PUEDE TENER ESTE HORARIO
+                            if($respuestaEntradaDentro==true){
+
+                                //VALIDAREMOS SI NO TIENE SUS HORAS LLENAS Y SU SALIDA PUEDE ESTAR EN HORARIO
+                                if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                    //! ENTRADA VALIDADO, SI ESTA EN RANGO Y SI TIENE O NO HORAS EXTRAS
+                                    //!SOLO FALTTARIA VALIDAR SU SALIDA
+
+                                   //*FALTA VALIDAR SALIDA
+                                    //validamos su salida
+                                    $validSalida=FHverificarSalidaHorario($horarioDentro,$tiempoTotal,$tiempoTotalDeHorario,$horaFParse);
+
+                                    if($validSalida==true){
+
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+
+                                         //! SI LA ENTRADA DE MARCACION ESTA VALIDADA Y LA SALIDA NO, SE SEPARARA EN 2 ENTRADAS
+                                            //!! UNA CON HORARIO Y LA SALIDA SIN HORARIO
+                                            //********************************
+                                            //*ENCONTRAMOS MARCACION ACTUAL
+                                            $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+
+                                            //*NUEVA MARCACION ***************
+                                            $marcacion_nueva = new marcacion_puerta();
+                                            $marcacion_nueva->marcaMov_fecha = $marcacion_puertaActualizar->marcaMov_salida;
+                                            $marcacion_nueva->marcaMov_emple_id =  $marcacion_puertaActualizar->marcaMov_emple_id;
+                                            $marcacion_nueva->dispositivoEntrada = $marcacion_puertaActualizar->dispositivoSalida;
+                                            $marcacion_nueva->controladores_idControladores = $marcacion_puertaActualizar->controladores_salida;
+                                            $marcacion_nueva->organi_id =  $marcacion_puertaActualizar->organi_id;
+                                            $marcacion_nueva->horarioEmp_id =null;
+                                            $marcacion_nueva->marca_latitud =$marcacion_puertaActualizar->marca_latitud;
+                                            $marcacion_nueva->marca_longitud =$marcacion_puertaActualizar->marca_longitud;
+                                            $marcacion_nueva->marcaIdActivi =$marcacion_puertaActualizar->marcaIdActivi;
+                                            $marcacion_nueva->puntoC_id =$marcacion_puertaActualizar->puntoC_id;
+                                            $marcacion_nueva->centC_id =$marcacion_puertaActualizar->centC_id;
+                                            $marcacion_nueva->tipoMarcacionB =$marcacion_puertaActualizar->tipoMarcacionB;
+                                            $marcacion_nueva->save();
+
+                                            //*ACTUALIZAMOS MARCACION
+                                            $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                            $marcacion_puertaActualizar->marcaMov_salida=null;
+                                            $marcacion_puertaActualizar->dispositivoSalida=null;
+                                            $marcacion_puertaActualizar->controladores_salida=null;
+                                            $marcacion_puertaActualizar->save();
+
+                                            break;
+
+                                    }
+
+                                } else{
+                                    //*SI YA LLENO TODAS SU HORAS OBLIGADAS INCLUIDAS SI TIENE EXTRAS
+                                    //*NO SE ENCONTRO HORARIO
+                                    $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                    $marcacion_puertaActualizar->horarioEmp_id=null;
+                                    $marcacion_puertaActualizar->save();
+
+                                }
+
+                            } else{
+
+                                //*NO ESTA DENTRO DE HORARIO
+                                $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                $marcacion_puertaActualizar->horarioEmp_id=null;
+                                $marcacion_puertaActualizar->save();
+                            }
+
+                         } else{
+
+                            //*SI SOLO TENGO ENTRADA
+                             if($marcacion_puertaHorario->marcaMov_fecha!=null){
+
+                                 //VALIDAR QUE ENTRADA SI O SI ESTE DENTRO DE RANGO DE HORARIO
+                                 $respuestaEntradaDentro= FHcheckHora($horarioDentro->horaI, $horarioDentro->horaF, $horaIParse);
+
+                                 //*SI ES ESTADO TRUE , MARCACION PUEDE TENER ESTE HORARIO
+                                 if($respuestaEntradaDentro==true){
+
+                                    //VALIDAMOS SI NO TIENE HORAS LLENAS
+                                    if ($tiempoTotal->lte($tiempoTotalDeHorario)){
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+                                        //*NO ESTA DENTRO DE HORARIO
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=null;
+                                        $marcacion_puertaActualizar->save();
+                                    }
+
+                                 } else{
+
+                                     //*NO ESTA DENTRO DE HORARIO
+                                    $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                    $marcacion_puertaActualizar->horarioEmp_id=null;
+                                    $marcacion_puertaActualizar->save();
+                                 }
+
+
+                             } else{
+
+                              //*SI SOLO TENGO SALIDA
+                                 //VALIDAREMOS SI NO TIENE SUS HORAS LLENAS Y SU SALIDA PUEDE ESTAR EN HORARIO
+                                 if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                    //validamos su salida
+                                    $validSalida=FHverificarSalidaHorario($horarioDentro,$tiempoTotal,$tiempoTotalDeHorario,$horaFParse);
+
+                                    if($validSalida==true){
+
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+                                        //*NO HAY MAS TIEMPO DE TRABAJO PARA EMPLEADO
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=null;
+                                        $marcacion_puertaActualizar->save();
+                                    }
+                                 } else{
+                                     //*NO HAY MAS TIEMPO DE TRABAJO PARA EMPLEADO
+                                     $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                     $marcacion_puertaActualizar->horarioEmp_id=null;
+                                     $marcacion_puertaActualizar->save();
+                                 }
+
+                             }
+                         }
+
+
+
+
+                    }
+
+
+
+
+                    //*---------------------------------------------------------FIN----------------------------------------------------------
+                }
+
+
+            }
+
+
+        }
+
+
+
+    }
+
+    //*PERSONALIZADO, ELIGIENDO FECHA Y EMPLEADOS
+    public function reprocesarHorarios(Request $request){
+
+        //*Obteniendo datos
+        $fechaActual=Carbon::now('America/Lima');
+        $inicio = $request->inicio;
+        $fin = $request->fin;
+        $idEmpleados = $request->idEmpsRepro;
+
+        $marcacion_puertaHorarios=new Collection();
+        //*----------------------------------- obtenemos horarios que cambiaremos----------------------------------------
+        foreach($idEmpleados as $idempleado){
+            $marcacion_puertaHorarios1=DB::table('marcacion_puerta as mp')
+            ->select('mp.marcaMov_id','mp.marcaMov_emple_id','mp.marcaMov_fecha','mp.marcaMov_salida','mp.horarioEmp_id')
+            ->leftJoin('horario_empleado as he','mp.horarioEmp_id','=','he.horarioEmp_id')
+
+            ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha))'), [$inicio, $fin])
+            /* ->where('he.estado','=',0)  */
+            ->where('mp.organi_id','=',session('sesionidorg'))
+            ->orderby(DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha)'), 'ASC')
+            ->where('mp.marcaMov_emple_id','=',$idempleado)
+            ->get();
+            $marcacion_puertaHorarios->push($marcacion_puertaHorarios1);
+        }
+        $marcacion_puertaHorarios=$marcacion_puertaHorarios->flatten(); //aplanamos
+     
+        //*********************************************************SI EXISTE MARCACIONES ***********************************************
+        if($marcacion_puertaHorarios->isNotEmpty()){
+
+            //*RECORREMOS PARA REPROCESAR TODAS LAS MARCACIONES
+            foreach($marcacion_puertaHorarios as $marcacion_puertaHorario){
+
+
+
+                //*OBTENEMOS FECHA DE MARCACION A LA CUAL LE QUEREMOS OBTENER SI TIENE HORARIO-------------------------
+                //*SERA LA FECHA DE ENTRADA , EN CASO QUE NO TENGA SE TOMARA LA FECHA DE SALIDA------------------------
+                if($marcacion_puertaHorario->marcaMov_fecha){
+                    $fechaMarcacion=Carbon::create($marcacion_puertaHorario->marcaMov_fecha)->isoFormat('YYYY-MM-DD');
+                } else{
+                    $fechaMarcacion=Carbon::create($marcacion_puertaHorario->marcaMov_salida)->isoFormat('YYYY-MM-DD');
+                }
+                //*-----------------------------------------------------------------------------------------------------
+
+
+                //* VERIFICAMOS SI TIENE HORARIO ENVIADNO LA FECHA DE MARCACION Y EL ID DE EMPLEADO--------------------
+
+                 //OBTENEMOS HORARIO
+                $horarioEmpleado=FHhorarioEmpleado($fechaMarcacion,$marcacion_puertaHorario->marcaMov_emple_id);
+
+                //*SI EXISTE HORARIO RECORREMOS Y HAYAREMOS SUS RANGOS EN QUE SE PUEDE REALIZAR LAS MARCACIONES, VALIDANDO SI
+                //*TIENE PERMITIDO HORAS EXTRAS Y MARCACION FUERA DE HORARIO
+
+                //*SI SE ENCONTRO HORARIOS
+                if($horarioEmpleado->isNotEmpty()){
+
+                    //*----------------------RECORREREMOS HORARIOS PARA HALLAR TIEMPO DE HORAS DE EMPLEADO Y TIEMPO TRABAJADO-------------
+
+                    foreach ($horarioEmpleado as $horarioDentro) {
+
+                         //* OBTENEMOS FECHA DE MARCACION PUERTA A COMPARAR EN CASO SOLO AYA ENTRADA O SALIDA
+                         if($marcacion_puertaHorario->marcaMov_fecha){
+                            $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_fecha;
+                        } else{
+                            $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_salida;
+                        }
+                        $fechaHorahoy = Carbon::create($fechaMarcacionDentro);
+
+
+                        //*OBTENEMOS HORAS QUE PUEDE TRABAJAR EL EMPLEADO
+                        if($horarioDentro->horaAdic==1){
+                            $tiempoTotalDeHorario = Carbon::parse($horarioDentro->horasObliga)->addMinutes($horarioDentro->nHoraAdic * 60);
+                        } else{
+                            $tiempoTotalDeHorario = Carbon::parse($horarioDentro->horasObliga);
+                        }
+
+                        ///*OBTENEMOS TIEMPO TRABAJADO DEL EMPLEADO SIN CONTAR ESTA MARCACION
+                        $sumaTotalDeHoras=FHTiempoTrabajado($fechaHorahoy,$marcacion_puertaHorario->marcaMov_emple_id,
+                        $horarioDentro->idHorarioEmpleado,$marcacion_puertaHorario->horarioEmp_id);
+
+
+
+
+                        /************************************************************************************************
+                         ** VALIDAREMOS MARCACIONES DENTRO DE UN HORARIO
+                         * 1. VALIDAREMOS SEGUN TENGA ENTRADA Y SALIDA
+                         * 2.DENTRO DE CADA VALIDACION 1. VALIDAREMOS SEGUN FUERA HORARIO, HORAS EXTRAS, OHRASS OBLIGADAS
+                        *************************************************************************************************/
+
+                        $horaIParse = Carbon::parse($marcacion_puertaHorario->marcaMov_fecha);     // : INICIALIZAR ENTRADA CON CARBON
+                        $horaFParse = Carbon::parse($marcacion_puertaHorario->marcaMov_salida);    // : INICIALIZAR SALIDA CON CARBON
+
+                        //*OBTENEMOS EL TIEMPO TOTAL TRABAJADO SI AÑADO LA MARCACION
+                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);   // : TIEMPO EN SEGUNDOS ENTRE SALIDA Y ENTRADA
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+
+                         //* SI TENGO ENTRADA Y SALIDA DE MARCACION
+                         if($marcacion_puertaHorario->marcaMov_fecha!=null && $marcacion_puertaHorario->marcaMov_salida!=null){
+
+                            //VALIDAR QUE ENTRADA SI O SI ESTE DENTRO DE RANGO DE HORARIO
+                            $respuestaEntradaDentro= FHcheckHora($horarioDentro->horaI, $horarioDentro->horaF, $horaIParse);
+
+                            //*SI ES ESTADO TRUE , MARCACION PUEDE TENER ESTE HORARIO
+                            if($respuestaEntradaDentro==true){
+
+                                //VALIDAREMOS SI NO TIENE SUS HORAS LLENAS Y SU SALIDA PUEDE ESTAR EN HORARIO
+                                if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                    //! ENTRADA VALIDADO, SI ESTA EN RANGO Y SI TIENE O NO HORAS EXTRAS
+                                    //!SOLO FALTTARIA VALIDAR SU SALIDA
+
+                                   //*FALTA VALIDAR SALIDA
+                                    //validamos su salida
+                                    $validSalida=FHverificarSalidaHorario($horarioDentro,$tiempoTotal,$tiempoTotalDeHorario,$horaFParse);
+
+                                    if($validSalida==true){
+
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+
+                                         //! SI LA ENTRADA DE MARCACION ESTA VALIDADA Y LA SALIDA NO, SE SEPARARA EN 2 ENTRADAS
+                                            //!! UNA CON HORARIO Y LA SALIDA SIN HORARIO
+                                            //********************************
+                                            //*ENCONTRAMOS MARCACION ACTUAL
+                                            $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+
+                                            //*NUEVA MARCACION ***************
+                                            $marcacion_nueva = new marcacion_puerta();
+                                            $marcacion_nueva->marcaMov_fecha = $marcacion_puertaActualizar->marcaMov_salida;
+                                            $marcacion_nueva->marcaMov_emple_id =  $marcacion_puertaActualizar->marcaMov_emple_id;
+                                            $marcacion_nueva->dispositivoEntrada = $marcacion_puertaActualizar->dispositivoSalida;
+                                            $marcacion_nueva->controladores_idControladores = $marcacion_puertaActualizar->controladores_salida;
+                                            $marcacion_nueva->organi_id =  $marcacion_puertaActualizar->organi_id;
+                                            $marcacion_nueva->horarioEmp_id =null;
+                                            $marcacion_nueva->marca_latitud =$marcacion_puertaActualizar->marca_latitud;
+                                            $marcacion_nueva->marca_longitud =$marcacion_puertaActualizar->marca_longitud;
+                                            $marcacion_nueva->marcaIdActivi =$marcacion_puertaActualizar->marcaIdActivi;
+                                            $marcacion_nueva->puntoC_id =$marcacion_puertaActualizar->puntoC_id;
+                                            $marcacion_nueva->centC_id =$marcacion_puertaActualizar->centC_id;
+                                            $marcacion_nueva->tipoMarcacionB =$marcacion_puertaActualizar->tipoMarcacionB;
+                                            $marcacion_nueva->save();
+
+                                            //*ACTUALIZAMOS MARCACION
+                                            $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                            $marcacion_puertaActualizar->marcaMov_salida=null;
+                                            $marcacion_puertaActualizar->dispositivoSalida=null;
+                                            $marcacion_puertaActualizar->controladores_salida=null;
+                                            $marcacion_puertaActualizar->save();
+
+                                            break;
+
+                                    }
+
+                                } else{
+                                    //*SI YA LLENO TODAS SU HORAS OBLIGADAS INCLUIDAS SI TIENE EXTRAS
+                                    //*NO SE ENCONTRO HORARIO
+                                    $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                    $marcacion_puertaActualizar->horarioEmp_id=null;
+                                    $marcacion_puertaActualizar->save();
+
+                                }
+
+                            } else{
+
+                                //*NO ESTA DENTRO DE HORARIO
+                                $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                $marcacion_puertaActualizar->horarioEmp_id=null;
+                                $marcacion_puertaActualizar->save();
+                            }
+
+                         } else{
+
+                            //*SI SOLO TENGO ENTRADA
+                             if($marcacion_puertaHorario->marcaMov_fecha!=null){
+
+                                 //VALIDAR QUE ENTRADA SI O SI ESTE DENTRO DE RANGO DE HORARIO
+                                 $respuestaEntradaDentro= FHcheckHora($horarioDentro->horaI, $horarioDentro->horaF, $horaIParse);
+
+                                 //*SI ES ESTADO TRUE , MARCACION PUEDE TENER ESTE HORARIO
+                                 if($respuestaEntradaDentro==true){
+
+                                    //VALIDAMOS SI NO TIENE HORAS LLENAS
+                                    if ($tiempoTotal->lte($tiempoTotalDeHorario)){
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+                                        //*NO ESTA DENTRO DE HORARIO
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=null;
+                                        $marcacion_puertaActualizar->save();
+                                    }
+
+                                 } else{
+
+                                     //*NO ESTA DENTRO DE HORARIO
+                                    $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                    $marcacion_puertaActualizar->horarioEmp_id=null;
+                                    $marcacion_puertaActualizar->save();
+                                 }
+
+
+                             } else{
+
+                              //*SI SOLO TENGO SALIDA
+                                 //VALIDAREMOS SI NO TIENE SUS HORAS LLENAS Y SU SALIDA PUEDE ESTAR EN HORARIO
+                                 if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                    //validamos su salida
+                                    $validSalida=FHverificarSalidaHorario($horarioDentro,$tiempoTotal,$tiempoTotalDeHorario,$horaFParse);
+
+                                    if($validSalida==true){
+
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+                                        //*NO HAY MAS TIEMPO DE TRABAJO PARA EMPLEADO
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=null;
+                                        $marcacion_puertaActualizar->save();
+                                    }
+                                 } else{
+                                     //*NO HAY MAS TIEMPO DE TRABAJO PARA EMPLEADO
+                                     $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                     $marcacion_puertaActualizar->horarioEmp_id=null;
+                                     $marcacion_puertaActualizar->save();
+                                 }
+
+                             }
+                         }
+
+
+
+
+                    }
+
+
+
+
+                    //*---------------------------------------------------------FIN----------------------------------------------------------
+                }
+
+
+            }
+
+
+        }
+
+
+
     }
 
 }
