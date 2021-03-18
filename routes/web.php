@@ -680,3 +680,4 @@ Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
 Route::get('/horariosReglas', 'EmpleadoController@generarReglaHorario'); */
 
 Route::get('/cambiarHorarioCambiado', 'horarioController@cambiarHorarioCambiado');
+Route::get('/reprocesarHorario', 'horarioController@reprocesarHorarios');
