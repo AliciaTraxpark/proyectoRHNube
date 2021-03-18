@@ -3041,29 +3041,222 @@ class horarioController extends Controller
     }
 
     public function cargarReporteHorarios(Request $request){
+        if($request->area == "" && $request->empleado == ""){
+            $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+            ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+            ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+            ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+            ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+            ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+            ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+            ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+            ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                DB::raw('DATE(hd.start) as DP')
+            )
+            ->where('e.emple_estado', '=', 1)
+            ->where(function ($query) {
+                $query->where('he.estado', '=', 1)
+                    ->orWhereNull('he.estado');
+            })
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+        } else {
+            // area y empleados tienen valor
+            if($request->area != "" && $request->empleado != ""){
+                if($request->selector == "Área"){
+                    $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                    ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                    ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                    ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                    ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                    ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                    ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                    ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                        DB::raw('DATE(hd.start) as DP')
+                    )
+                    ->where('e.emple_estado', '=', 1)
+                    ->where(function ($query) {
+                        $query->where('he.estado', '=', 1)
+                            ->orWhereNull('he.estado');
+                    })
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_area', '=', $request->area)
+                    ->where('e.emple_id', '=', $request->empleado)
+                    ->get();
+                } else {
+                    if($request->selector == "Cargo"){
+                        $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                        ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                        ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                        ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                            DB::raw('DATE(hd.start) as DP')
+                        )
+                        ->where('e.emple_estado', '=', 1)
+                        ->where(function ($query) {
+                            $query->where('he.estado', '=', 1)
+                                ->orWhereNull('he.estado');
+                        })
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_cargo', '=', $request->area)
+                        ->where('e.emple_id', '=', $request->empleado)
+                        ->get();
+                    } else {
+                        if($request->selector == "Local"){
+                            $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                            ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                            ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                            ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                            ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                            ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                            ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                                DB::raw('DATE(hd.start) as DP')
+                            )
+                            ->where('e.emple_estado', '=', 1)
+                            ->where(function ($query) {
+                                $query->where('he.estado', '=', 1)
+                                    ->orWhereNull('he.estado');
+                            })
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_local', '=', $request->area)
+                            ->where('e.emple_id', '=', $request->empleado)
+                            ->get();
+                        }
+                    }
+                }
+                
+            } else {
+                if($request->area != ""){
+                    if($request->selector == "Área"){
+                        $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                        ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                        ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                        ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                            DB::raw('DATE(hd.start) as DP')
+                        )
+                        ->where('e.emple_estado', '=', 1)
+                        ->where(function ($query) {
+                            $query->where('he.estado', '=', 1)
+                                ->orWhereNull('he.estado');
+                        })
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_area', '=', $request->area)
+                        ->get();
+                    } else {
+                        if($request->selector == "Cargo"){
+                            $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                            ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                            ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                            ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                            ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                            ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                            ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                            ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                            ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                            ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                            ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                                DB::raw('DATE(hd.start) as DP')
+                            )
+                            ->where('e.emple_estado', '=', 1)
+                            ->where(function ($query) {
+                                $query->where('he.estado', '=', 1)
+                                    ->orWhereNull('he.estado');
+                            })
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_cargo', '=', $request->area)
+                            ->get();
+                        } else {
+                            if($request->selector == "Local"){
+                                $empleados = DB::table('empleado as e')
+                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                                ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                                ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                                ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                                ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                                ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                                ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                                ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                                ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                                ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                                ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                                    DB::raw('DATE(hd.start) as DP')
+                                )
+                                ->where('e.emple_estado', '=', 1)
+                                ->where(function ($query) {
+                                    $query->where('he.estado', '=', 1)
+                                        ->orWhereNull('he.estado');
+                                })
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.emple_local', '=', $request->area)
+                                ->get();
+                            }
+                        }
+                    }
+                }
 
-        $empleados = DB::table('empleado as e')
-        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
-        ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-        ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
-        ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-        ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
-        ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
-        ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
-        ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
-        ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
-        ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
-        ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
-            DB::raw('DATE(hd.start) as DP')
-        )
-        ->where('e.emple_estado', '=', 1)
-        ->where(function ($query) {
-            $query->where('he.estado', '=', 1)
-                  ->orWhereNull('he.estado');
-        })
-        ->where('e.organi_id', '=', session('sesionidorg'))
-        ->get();
+                if($request->empleado != ""){
+                    $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                    ->leftjoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                    ->leftjoin('horario as ho', 'ho.horario_id', '=', 'he.horario_horario_id')
+                    ->leftjoin('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->leftjoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                    ->leftjoin('cargo as c', 'c.cargo_id', '=', 'e.emple_cargo')
+                    ->leftjoin('local as l', 'l.local_id', '=', 'e.emple_local')
+                    ->leftjoin('nivel as n', 'n.nivel_id', '=', 'e.emple_nivel')
+                    ->leftjoin('centrocosto_empleado as cce', 'cce.idEmpleado', '=', 'e.emple_id')
+                    ->leftjoin('centro_costo as cc', 'cc.centroC_id', '=', 'cce.idCentro')
+                    ->select('e.emple_Correo', 'ho.horario_descripcion as horario', 'ho.horaI', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'p.perso_id', 'e.emple_codigo as codigo', 'e.emple_nDoc as documento', 'a.area_descripcion as area', 'c.cargo_descripcion as cargo', 'l.local_descripcion as local', 'n.nivel_descripcion as nivel', 'cc.centroC_descripcion', 'ho.horasObliga as horasObligadas', 'ho.horaI as horaInicio', 'ho.horaF as horaFinal', 'o.organi_ruc', 'organi_razonSocial', 'o.organi_direccion',
+                        DB::raw('DATE(hd.start) as DP')
+                    )
+                    ->where('e.emple_estado', '=', 1)
+                    ->where(function ($query) {
+                        $query->where('he.estado', '=', 1)
+                            ->orWhereNull('he.estado');
+                    })
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_id', '=', $request->empleado)
+                    ->get();
+                }
+            }
+        }
+        
         $empleados = $empleados->groupBy('perso_id')->values();
         //dd($empleados);
 

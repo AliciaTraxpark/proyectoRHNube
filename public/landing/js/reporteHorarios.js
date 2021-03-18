@@ -549,7 +549,7 @@ function getHorarios() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*   CARGAR TABLA DE HORARIOS   */
-function cargartablaHorarios(fecha1,fecha2) {
+function cargartablaHorarios(fecha1, fecha2, area, empleado, selector) {
     $('.busquedaP').show();
     $('#busquedaA').show();
     $('#VacioImg').hide();
@@ -557,14 +557,15 @@ function cargartablaHorarios(fecha1,fecha2) {
     $(".img-load").show();
     $("#dropSelector").show();
     $("#fotmatoCampos").show();
-    var idemp = $('#empleadoLT').val();
+
     fechaInicio = fecha1;
     fechaFin = fecha2;
+    console.log(" "+area+" - "+selector+" - "+empleado);
     $.ajax({
         type: "GET",
         url: "/cargarTablaHorarios",
         data: {
-            fecha1,fecha2, idemp
+            fecha1, fecha2, area, empleado, selector
         },
         async: false,
         headers: {
@@ -576,37 +577,14 @@ function cargartablaHorarios(fecha1,fecha2) {
             }
         },
         success: function (datos) {
-           console.log(datos);
             var tam = datos.length;
             data = datos;
             llenartablaHorarios();
         },
         error: function () { }
     });
-    $('.horasEntrada').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i:s",
-        defaultDate: "00:00:00",
-
-        time_24hr: true,
-        enableSeconds: true,
-        /*  inline:true, */
-        static: true
-    });
-
-    $('.horasSalida').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i:s",
-        defaultDate: "00:00:00",
-
-        time_24hr: true,
-        enableSeconds: true,
-        /*  inline:true, */
-        static: true
-    });
 }
+
 
 function toggleColumnas(){
     dataT.api().columns('.colCargo').visible(false);
@@ -675,19 +653,24 @@ $('#formatoC').on("change", function () {
 });
 
 function cambiarFCR() {
+    
     let f1 = $("#ID_START").val();
     let f2 = moment(f1).format("YYYY-MM-DD");
     $('#pasandoV').val(f2);
     let f3 = $("#ID_END").val();
+
+    let empleado = $("#empleadoLT").val();
+
     if ($.fn.DataTable.isDataTable("#tablaHorario")) {
         /* $('#tablaHorario').DataTable().destroy(); */
     }
     let area = $('#areaT').val();
-    if(area == ""){
-        cargartablaHorarios(f2,f3); 
-    } else {
-        fechaDefectoT();
-    }
+    let textSelec = $('select[id="areaT"] option:selected:last').text();
+    let selector = textSelec.split(' ')[0];
+
+    cargartablaHorarios(f2, f3, area, empleado, selector);
+
+    //fechaDefectoT();
 }
 
 function fechaDefectoT() {
@@ -715,7 +698,7 @@ $(function () {
         language: "es"
     });
     $('#areaT').on("change", function (e) {
-        fechaDefectoT();
+        
         var area = $(this).val();
         let textSelec = $('select[id="areaT"] option:selected:last').text();
         let selector = textSelec.split(' ')[0];
@@ -734,10 +717,7 @@ $(function () {
             statusCode: {
                 401: function () {
                     location.reload();
-                },
-                /*419: function () {
-                    location.reload();
-                }*/
+                }
             },
             success: function (data) {
                 var select = "";
@@ -750,7 +730,7 @@ $(function () {
         });
     });
     $('#empleadoLT').on("change", function (e) {
-        fechaDefectoT();
+        
     });
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
