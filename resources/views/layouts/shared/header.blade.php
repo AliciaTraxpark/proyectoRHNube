@@ -310,10 +310,10 @@ use App\persona;
                         <span>Chatear con nosotros</span>
                     </a>
 
-                    <a onclick="reporocesarHorario()" class="dropdown-item notify-item">
+                   {{--  <a onclick="reporocesarHorario()" class="dropdown-item notify-item">
                         <i data-feather="message-square" class="icon-dual icon-xs mr-2" style="color: #163552"></i>
                         <span>Reprocesar horario</span>
-                    </a>
+                    </a> --}}
                     <a href="{{ route('logout') }}" class="dropdown-item
                         notify-item">
                         <i data-feather="log-out" class="icon-dual icon-xs
