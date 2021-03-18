@@ -676,6 +676,8 @@ Route::get('/reporteMatrizHorarios', 'horarioController@mostrarReporteHorarios')
 Route::get('/cargarTablaHorarios', 'horarioController@cargarReporteHorarios');
 Route::get('/selectMatrizHorarios', 'horarioController@selectMatrizHorarios');
 Route::get('/cargarMatrizHorario', 'horarioController@cargarMatrizHorario');
+Route::get('/selectPersonalizadoHorario', 'horarioController@selectBusquedas');
+Route::get('/selectEmpleadoGlobalHorario', 'horarioController@selectEmpleadoGlobal');
 /*-----------------------------------------------------------------------*/
 
 Route::get('/contratos', 'contratoController@loadContracts');
