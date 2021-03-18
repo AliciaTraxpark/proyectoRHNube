@@ -4083,11 +4083,18 @@ class horarioController extends Controller
         return response()->json($empleados, 200);
     }
 
-    public function cambiarHorarioCambiado(Request $request){
+    public function cambiarHorarioCambiado1(Request $request){
 
         //*Obteniendo datos
         $fechaActual=Carbon::now('America/Lima');
-        $fechaDesdeCambio=($fechaActual->subDays(20))->isoFormat('YYYY-MM-DD');
+        $fechaDesdeCambio=($fechaActual->subDays(21))->isoFormat('YYYY-MM-DD');
+
+        //* obtenemos marcaciones sin horarios
+        $marcacion_puertaSinhorario=DB::table('marcacion_puerta as mp')
+        ->select('mp.marcaMov_id','mp.marcaMov_emple_id','mp.marcaMov_fecha','mp.marcaMov_salida','mp.horarioEmp_id')
+        ->whereNull('mp.horarioEmp_id')
+        ->whereDate(DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha)'), '>=', $fechaDesdeCambio)
+        ;
 
         //* obtenemos horarios que cambiaremos
         $marcacion_puertaHorarios=DB::table('marcacion_puerta as mp')
@@ -4095,15 +4102,18 @@ class horarioController extends Controller
         ->leftJoin('horario_empleado as he','mp.horarioEmp_id','=','he.horarioEmp_id')
         ->whereNotNull('mp.horarioEmp_id')
         ->whereDate(DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha)'), '>=', $fechaDesdeCambio)
-        ->where('he.estado','=',0)
+        ->where('he.estado','=',0) 
+        ->union($marcacion_puertaSinhorario)
         ->get();
 
+         
+
+         
 
         //*SI EXISTE MARCACIONES DESACTUALIZADAS
         if($marcacion_puertaHorarios->isNotEmpty()){
 
-            //*collecction de horarioempleado
-            $dataHorarioEmpleado=new Collection();
+
             foreach($marcacion_puertaHorarios as $marcacion_puertaHorario){
 
                 //TODO::OBTENEMOS HORARIOS ACTIVOS PARA ESE DIA DEL EMPLEADO
@@ -4117,67 +4127,111 @@ class horarioController extends Controller
                     //************************************************
 
                     //* VERIFICAMOS SI TIENE HORARIO
-                    $horarioEmpleado = DB::table('horario_empleado as he')
-                    ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
-                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                    ->select(
-                        'he.empleado_emple_id',
-                        'he.horarioEmp_id as idHorarioEmpleado',
-                        'h.horaI as horaI',
-                        'h.horaF as horaF',
-                        'h.horario_tolerancia as toleranciaI',
-                        'h.horario_toleranciaF as toleranciaF',
-                        'hd.start','h.horario_id'
-                    )
-                    ->where('he.empleado_emple_id', '=', $marcacion_puertaHorario->marcaMov_emple_id)
-                    ->whereDate('hd.start', '=',$fechaMarcacion)
-                    ->where('he.estado', '=', 1)
-                    ->get();
+                    
+                    //OBTENEMOS HORARIO
+                    $horarioEmpleado=FHhorarioEmpleado($fechaMarcacion,$marcacion_puertaHorario->marcaMov_emple_id);
+
                     
                     //* SI TIENE HORARIOS ACTIVOS ESTE DIA  
                     if($horarioEmpleado->isNotEmpty()){
-                        foreach ($horarioEmpleado as $horarioEmpleados) {
 
-                            //*verificamos si hora fin de horario pertenece a hoy
-                            $fecha = Carbon::create($horarioEmpleados->start);
-                            $fechaHorario = $fecha->isoFormat('YYYY-MM-DD');
-                            $despues = $fecha->addDays(1);
-                            $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-        
-                            if (Carbon::parse($horarioEmpleados->horaF)->lt(Carbon::parse($horarioEmpleados->horaI))) {
-        
-                                $horarioEmpleados->horaI = Carbon::parse($fechaHorario . " " . $horarioEmpleados->horaI)->subMinutes($horarioEmpleados->toleranciaI);
-                                $horarioEmpleados->horaF = Carbon::parse($fechaMan . " " . $horarioEmpleados->horaF)->addMinutes($horarioEmpleados->toleranciaF);
-                            } else {
-                                $horarioEmpleados->horaI = Carbon::parse($fechaHorario . " " . $horarioEmpleados->horaI)->subMinutes($horarioEmpleados->toleranciaI);
-                                $horarioEmpleados->horaF = Carbon::parse($fechaHorario . " " . $horarioEmpleados->horaF)->addMinutes($horarioEmpleados->toleranciaF);
-                            }
-                        }
-
+                        //*Obtenemos intervalo de horario
+                        $horarioEmpleado=FHIntervaloHorario($horarioEmpleado);
+                       
                         //*verificamos si esta dentro de horario
 
-                    foreach ($horarioEmpleado as $horarioDentro) {
-                        //* OBTENEMOS FECHA DE MARCACION PUERTA A COMPARAR
-                        if($marcacion_puertaHorario->marcaMov_fecha){
-                            $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_fecha;
-                        } else{
-                            $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_salida;
-                        }
-                        $fechaHorahoy = Carbon::create($fechaMarcacionDentro);
-                        if ($fechaHorahoy->gte($horarioDentro->horaI) && $fechaHorahoy->lte($horarioDentro->horaF)) {
-                            //*se encontro 1 horario y se detiene foreach
-                            $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
-                             $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
-                             $marcacion_puertaActualizar->save();
-                            break;
-                        } else {
-                            //*NO SE ENCONTRO HORARIO
-                            $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
-                            $marcacion_puertaActualizar->horarioEmp_id=null;   
-                            $marcacion_puertaActualizar->save(); 
-                        }
+                        foreach ($horarioEmpleado as $horarioDentro) {
+                            //* OBTENEMOS FECHA DE MARCACION PUERTA A COMPARAR
+                            if($marcacion_puertaHorario->marcaMov_fecha){
+                                $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_fecha;
+                            } else{
+                                $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_salida;
+                            }
+                            $fechaHorahoy = Carbon::create($fechaMarcacionDentro);
+                            //*SI LA ENTRADA DE MARCACION ESTA DENTRO DE RANGO
+                            //*AQUI HAREMOS MULTIPLES VALIDACIONESP
+                            if ($fechaHorahoy->gte($horarioDentro->horaI) && $fechaHorahoy->lte($horarioDentro->horaF)) {
+                                
+                                //*SI TIENE SALIDA 
+                                if($marcacion_puertaHorario->marcaMov_salida){
 
-                    }
+                                    //! SI TIENE SALIDA VALIDAREMOS QUE TBN ESTE DENTRO
+                                    //*OBTENMOS SALIDA
+                                    $fechaSalidaM=Carbon::create($marcacion_puertaHorario->marcaMov_salida);
+
+
+                                    //! PRIMERO VALIDAREMOS SI TRABAJA FUERA DE HORARIO
+                                    //! SI TRABAJA FUERA DE HORARIO PUEDE MARCAR EN EL MISMO
+                                    if($horarioDentro->fuera_horario==1){
+
+                                         //*se encontro 1 horario y se detiene foreach
+                                         $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                         $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                         $marcacion_puertaActualizar->save();
+                                         break;
+                                    } else{
+                                        //*SI TBN ESTA LA SALIDA DENTRO DE RANGO
+                                        if($fechaSalidaM->gte($horarioDentro->horaI) &&  $fechaSalidaM->lte($horarioDentro->horaF)){
+                                            //*se encontro 1 horario y se detiene foreach
+                                            $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                            $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                            $marcacion_puertaActualizar->save();
+                                            break;
+                                        } else{
+                                            //! SI LA ENTRADA DE MARCACION ESTA DENTRO DE RANGO PERO LA SALIDA NO, SE SEPARARA EN 2 ENTRADAS
+                                            //!! UNA CON HORARIO Y LA SALIDA SIN HORARIO
+                                            //******************************** 
+                                            //*ENCONTRAMOS MARCACION ACTUAL
+                                            $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        
+                                            //*NUEVA MARCACION ***************
+                                            $marcacion_nueva = new marcacion_puerta();
+                                            $marcacion_nueva->marcaMov_fecha = $marcacion_puertaActualizar->marcaMov_salida;
+                                            $marcacion_nueva->marcaMov_emple_id =  $marcacion_puertaActualizar->marcaMov_emple_id;
+                                            $marcacion_nueva->dispositivoEntrada = $marcacion_puertaActualizar->dispositivoSalida;
+                                            $marcacion_nueva->controladores_idControladores = $marcacion_puertaActualizar->controladores_salida;
+                                            $marcacion_nueva->organi_id =  $marcacion_puertaActualizar->organi_id;
+                                            $marcacion_nueva->horarioEmp_id =null;
+                                            $marcacion_nueva->marca_latitud =$marcacion_puertaActualizar->marca_latitud;
+                                            $marcacion_nueva->marca_longitud =$marcacion_puertaActualizar->marca_longitud;
+                                            $marcacion_nueva->marcaIdActivi =$marcacion_puertaActualizar->marcaIdActivi;
+                                            $marcacion_nueva->puntoC_id =$marcacion_puertaActualizar->puntoC_id;
+                                            $marcacion_nueva->centC_id =$marcacion_puertaActualizar->centC_id;
+                                            $marcacion_nueva->tipoMarcacionB =$marcacion_puertaActualizar->tipoMarcacionB;
+                                            $marcacion_nueva->save();
+                                            
+                                            //*ACTUALIZAMOS MARCACION
+                                            $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                            $marcacion_puertaActualizar->marcaMov_salida=null;
+                                            $marcacion_puertaActualizar->dispositivoSalida=null;
+                                            $marcacion_puertaActualizar->controladores_salida=null;
+                                            $marcacion_puertaActualizar->save();
+
+                                            break;
+
+                                        }
+                                    }
+                                    
+                                    
+                                } else{
+                                
+                                    //*se encontro 1 horario y se detiene foreach
+                                    $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                    $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                    $marcacion_puertaActualizar->save();
+                                    break;
+                                }
+                                
+                            } else {
+
+                                //! VALIDAR SI LA SALIDA SI ESTA DENTRO O FUERA DE RANGO, PARA ESE SOLO PONER HORARIO
+                                //*NO SE ENCONTRO HORARIO
+                                $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                $marcacion_puertaActualizar->horarioEmp_id=null;   
+                                $marcacion_puertaActualizar->save(); 
+                            }
+
+                        }
 
                     } else{
                         //*SI NO TIENE HORARIOS ACTIVOS ENTONCES SERA NULL IDHORAEMP
@@ -4185,10 +4239,269 @@ class horarioController extends Controller
                         $marcacion_puertaActualizar->horarioEmp_id=null;
                         $marcacion_puertaActualizar->save();
                     }
-                    $dataHorarioEmpleado->push($horarioEmpleado);
+                   
             }
         }
         
+    }
+
+
+    public function cambiarHorarioCambiado(Request $request){
+
+        //*Obteniendo datos
+        $fechaActual=Carbon::now('America/Lima');
+        $fechaDesdeCambio=($fechaActual->subDays(20))->isoFormat('YYYY-MM-DD');
+
+       
+        //*----------------------------------- obtenemos horarios que cambiaremos----------------------------------------
+        $marcacion_puertaHorarios=DB::table('marcacion_puerta as mp')
+        ->select('mp.marcaMov_id','mp.marcaMov_emple_id','mp.marcaMov_fecha','mp.marcaMov_salida','mp.horarioEmp_id')
+        ->leftJoin('horario_empleado as he','mp.horarioEmp_id','=','he.horarioEmp_id')
+        
+        ->whereDate(DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha)'), '>=', $fechaDesdeCambio)
+        /* ->where('he.estado','=',0)  */
+        ->where('mp.organi_id','=',session('sesionidorg'))
+        ->orderby(DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha)'), 'ASC')
+        ->get();
+        
+       
+      
+        //*********************************************************SI EXISTE MARCACIONES ***********************************************
+        if($marcacion_puertaHorarios->isNotEmpty()){
+
+            //*RECORREMOS PARA REPROCESAR TODAS LAS MARCACIONES
+            foreach($marcacion_puertaHorarios as $marcacion_puertaHorario){
+               
+
+
+                //*OBTENEMOS FECHA DE MARCACION A LA CUAL LE QUEREMOS OBTENER SI TIENE HORARIO------------------------- 
+                //*SERA LA FECHA DE ENTRADA , EN CASO QUE NO TENGA SE TOMARA LA FECHA DE SALIDA------------------------
+                if($marcacion_puertaHorario->marcaMov_fecha){
+                    $fechaMarcacion=Carbon::create($marcacion_puertaHorario->marcaMov_fecha)->isoFormat('YYYY-MM-DD');
+                } else{
+                    $fechaMarcacion=Carbon::create($marcacion_puertaHorario->marcaMov_salida)->isoFormat('YYYY-MM-DD');
+                }
+                //*-----------------------------------------------------------------------------------------------------
+
+
+                //* VERIFICAMOS SI TIENE HORARIO ENVIADNO LA FECHA DE MARCACION Y EL ID DE EMPLEADO-------------------- 
+
+                 //OBTENEMOS HORARIO
+                $horarioEmpleado=FHhorarioEmpleado($fechaMarcacion,$marcacion_puertaHorario->marcaMov_emple_id);
+
+                //*SI EXISTE HORARIO RECORREMOS Y HAYAREMOS SUS RANGOS EN QUE SE PUEDE REALIZAR LAS MARCACIONES, VALIDANDO SI 
+                //*TIENE PERMITIDO HORAS EXTRAS Y MARCACION FUERA DE HORARIO
+
+                //*SI SE ENCONTRO HORARIOS
+                if($horarioEmpleado->isNotEmpty()){
+
+                    //*----------------------RECORREREMOS HORARIOS PARA HALLAR TIEMPO DE HORAS DE EMPLEADO Y TIEMPO TRABAJADO-------------
+
+                    foreach ($horarioEmpleado as $horarioDentro) {
+
+                         //* OBTENEMOS FECHA DE MARCACION PUERTA A COMPARAR EN CASO SOLO AYA ENTRADA O SALIDA
+                         if($marcacion_puertaHorario->marcaMov_fecha){
+                            $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_fecha;
+                        } else{
+                            $fechaMarcacionDentro=$marcacion_puertaHorario->marcaMov_salida;
+                        }
+                        $fechaHorahoy = Carbon::create($fechaMarcacionDentro);
+                        
+
+                        //*OBTENEMOS HORAS QUE PUEDE TRABAJAR EL EMPLEADO
+                        if($horarioDentro->horaAdic==1){
+                            $tiempoTotalDeHorario = Carbon::parse($horarioDentro->horasObliga)->addMinutes($horarioDentro->nHoraAdic * 60);
+                        } else{
+                            $tiempoTotalDeHorario = Carbon::parse($horarioDentro->horasObliga);
+                        }
+                       
+                        ///*OBTENEMOS TIEMPO TRABAJADO DEL EMPLEADO SIN CONTAR ESTA MARCACION
+                        $sumaTotalDeHoras=FHTiempoTrabajado($fechaHorahoy,$marcacion_puertaHorario->marcaMov_emple_id,
+                        $horarioDentro->idHorarioEmpleado,$marcacion_puertaHorario->horarioEmp_id);
+                        
+                       
+
+                      
+                        /************************************************************************************************
+                         ** VALIDAREMOS MARCACIONES DENTRO DE UN HORARIO
+                         * 1. VALIDAREMOS SEGUN TENGA ENTRADA Y SALIDA
+                         * 2.DENTRO DE CADA VALIDACION 1. VALIDAREMOS SEGUN FUERA HORARIO, HORAS EXTRAS, OHRASS OBLIGADAS
+                        *************************************************************************************************/
+                         
+                        $horaIParse = Carbon::parse($marcacion_puertaHorario->marcaMov_fecha);     // : INICIALIZAR ENTRADA CON CARBON
+                        $horaFParse = Carbon::parse($marcacion_puertaHorario->marcaMov_salida);    // : INICIALIZAR SALIDA CON CARBON
+
+                        //*OBTENEMOS EL TIEMPO TOTAL TRABAJADO SI AÑADO LA MARCACION
+                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);   // : TIEMPO EN SEGUNDOS ENTRE SALIDA Y ENTRADA
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+
+                         //* SI TENGO ENTRADA Y SALIDA DE MARCACION
+                         if($marcacion_puertaHorario->marcaMov_fecha!=null && $marcacion_puertaHorario->marcaMov_salida!=null){
+
+                            //VALIDAR QUE ENTRADA SI O SI ESTE DENTRO DE RANGO DE HORARIO
+                            $respuestaEntradaDentro= FHcheckHora($horarioDentro->horaI, $horarioDentro->horaF, $horaIParse);
+
+                            //*SI ES ESTADO TRUE , MARCACION PUEDE TENER ESTE HORARIO
+                            if($respuestaEntradaDentro==true){
+                               
+                                //VALIDAREMOS SI NO TIENE SUS HORAS LLENAS Y SU SALIDA PUEDE ESTAR EN HORARIO
+                                if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                    //! ENTRADA VALIDADO, SI ESTA EN RANGO Y SI TIENE O NO HORAS EXTRAS
+                                    //!SOLO FALTTARIA VALIDAR SU SALIDA
+
+                                   //*FALTA VALIDAR SALIDA
+                                    //validamos su salida
+                                    $validSalida=FHverificarSalidaHorario($horarioDentro,$tiempoTotal,$tiempoTotalDeHorario,$horaFParse);
+
+                                    if($validSalida==true){
+
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+
+                                         //! SI LA ENTRADA DE MARCACION ESTA VALIDADA Y LA SALIDA NO, SE SEPARARA EN 2 ENTRADAS
+                                            //!! UNA CON HORARIO Y LA SALIDA SIN HORARIO
+                                            //******************************** 
+                                            //*ENCONTRAMOS MARCACION ACTUAL
+                                            $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        
+                                            //*NUEVA MARCACION ***************
+                                            $marcacion_nueva = new marcacion_puerta();
+                                            $marcacion_nueva->marcaMov_fecha = $marcacion_puertaActualizar->marcaMov_salida;
+                                            $marcacion_nueva->marcaMov_emple_id =  $marcacion_puertaActualizar->marcaMov_emple_id;
+                                            $marcacion_nueva->dispositivoEntrada = $marcacion_puertaActualizar->dispositivoSalida;
+                                            $marcacion_nueva->controladores_idControladores = $marcacion_puertaActualizar->controladores_salida;
+                                            $marcacion_nueva->organi_id =  $marcacion_puertaActualizar->organi_id;
+                                            $marcacion_nueva->horarioEmp_id =null;
+                                            $marcacion_nueva->marca_latitud =$marcacion_puertaActualizar->marca_latitud;
+                                            $marcacion_nueva->marca_longitud =$marcacion_puertaActualizar->marca_longitud;
+                                            $marcacion_nueva->marcaIdActivi =$marcacion_puertaActualizar->marcaIdActivi;
+                                            $marcacion_nueva->puntoC_id =$marcacion_puertaActualizar->puntoC_id;
+                                            $marcacion_nueva->centC_id =$marcacion_puertaActualizar->centC_id;
+                                            $marcacion_nueva->tipoMarcacionB =$marcacion_puertaActualizar->tipoMarcacionB;
+                                            $marcacion_nueva->save();
+                                            
+                                            //*ACTUALIZAMOS MARCACION
+                                            $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                            $marcacion_puertaActualizar->marcaMov_salida=null;
+                                            $marcacion_puertaActualizar->dispositivoSalida=null;
+                                            $marcacion_puertaActualizar->controladores_salida=null;
+                                            $marcacion_puertaActualizar->save();
+
+                                            break;
+
+                                    }
+                                    
+                                } else{
+                                    //*SI YA LLENO TODAS SU HORAS OBLIGADAS INCLUIDAS SI TIENE EXTRAS
+                                    //*NO SE ENCONTRO HORARIO
+                                    $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                    $marcacion_puertaActualizar->horarioEmp_id=null;   
+                                    $marcacion_puertaActualizar->save(); 
+
+                                }
+
+                            } else{
+
+                                //*NO ESTA DENTRO DE HORARIO
+                                $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                $marcacion_puertaActualizar->horarioEmp_id=null;   
+                                $marcacion_puertaActualizar->save(); 
+                            }
+                           
+                         } else{
+
+                            //*SI SOLO TENGO ENTRADA
+                             if($marcacion_puertaHorario->marcaMov_fecha!=null){
+
+                                 //VALIDAR QUE ENTRADA SI O SI ESTE DENTRO DE RANGO DE HORARIO
+                                 $respuestaEntradaDentro= FHcheckHora($horarioDentro->horaI, $horarioDentro->horaF, $horaIParse);
+
+                                 //*SI ES ESTADO TRUE , MARCACION PUEDE TENER ESTE HORARIO
+                                 if($respuestaEntradaDentro==true){
+
+                                    //VALIDAMOS SI NO TIENE HORAS LLENAS
+                                    if ($tiempoTotal->lte($tiempoTotalDeHorario)){
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+                                        //*NO ESTA DENTRO DE HORARIO
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=null;   
+                                        $marcacion_puertaActualizar->save();
+                                    }
+
+                                 } else{
+
+                                     //*NO ESTA DENTRO DE HORARIO
+                                    $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                    $marcacion_puertaActualizar->horarioEmp_id=null;   
+                                    $marcacion_puertaActualizar->save();
+                                 }
+
+
+                             } else{
+
+                              //*SI SOLO TENGO SALIDA 
+                                 //VALIDAREMOS SI NO TIENE SUS HORAS LLENAS Y SU SALIDA PUEDE ESTAR EN HORARIO
+                                 if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                    //validamos su salida
+                                    $validSalida=FHverificarSalidaHorario($horarioDentro,$tiempoTotal,$tiempoTotalDeHorario,$horaFParse);
+
+                                    if($validSalida==true){
+
+                                        //* ENTONCES ESTA MARCACION ESTA DENTRO DE HORARIO Y LO ACTUALIZO
+                                        //*se encontro 1 horario y se detiene foreach
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=$horarioDentro->idHorarioEmpleado;
+                                        $marcacion_puertaActualizar->save();
+                                        break;
+
+                                    } else{
+                                        //*NO HAY MAS TIEMPO DE TRABAJO PARA EMPLEADO
+                                        $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                        $marcacion_puertaActualizar->horarioEmp_id=null;   
+                                        $marcacion_puertaActualizar->save();
+                                    } 
+                                 } else{
+                                     //*NO HAY MAS TIEMPO DE TRABAJO PARA EMPLEADO
+                                     $marcacion_puertaActualizar = marcacion_puerta::find($marcacion_puertaHorario->marcaMov_id);
+                                     $marcacion_puertaActualizar->horarioEmp_id=null;   
+                                     $marcacion_puertaActualizar->save();
+                                 }
+                               
+                             }
+                         }
+
+                                
+
+                   
+                    }
+                   
+                  
+
+
+                    //*---------------------------------------------------------FIN----------------------------------------------------------
+                }
+
+
+            }        
+
+
+        }
+
+       
+
     }
 
 }
