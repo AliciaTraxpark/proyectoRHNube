@@ -669,10 +669,26 @@ Route::get('/agendaPersonalizada', 'AgendaController@verAgenda');
 Route::post('/partner', 'soportesPorCorreoController@envioPartner');
 Route::post('selectModos', 'dashboardController@selectModos');
 Route::get('modos', 'dashboardController@getModos');
+
+/*---------------------------- MATRIZ DE HORARIOS -------------------------------------------*/
 Route::get('/reporteMatrizHorarios', 'horarioController@mostrarReporteHorarios');
 Route::get('/cargarTablaHorarios', 'horarioController@cargarReporteHorarios');
 Route::get('/selectMatrizHorarios', 'horarioController@selectMatrizHorarios');
 Route::get('/cargarMatrizHorario', 'horarioController@cargarMatrizHorario');
+/*-----------------------------------------------------------------------*/
+
+Route::get('/contratos', 'contratoController@loadContracts');
+Route::post('/addContract', 'contratoController@addContracts');
+Route::post('/editContract', 'contratoController@editContracts');
+Route::get('/getContract', 'contratoController@getContract');
+Route::post('/deleteContract', 'contratoController@deleteContract');
+
+Route::get('/actualizarContrato', 'contratoController@empleContracts');
+Route::post('contrato/refreshArea', 'contratoController@refreshContracts');
+Route::get('/contratos/cargar', 'contratoController@cargarDatosContrato');
+Route::get('/exportContracts', 'MyController@exportContracts')->name('exportContracts');
+Route::post('/importContract', 'excelContratoController@import')->name('importContract');
+Route::post('/importContractBDExcel', 'excelContratoController@guardarBD');
 //GENERAR AUTOMA SOLO EJECUTAR 1 VEZ
 Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
 /*Route::get('/asignarReglas', 'EmpleadoController@agregarReglas');
