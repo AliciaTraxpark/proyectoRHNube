@@ -24,6 +24,7 @@ class servicioVerifyController extends Controller
     {
         // : ACCEDIENDO A CLIENTE
         $this->client = new Client(['base_uri' => 'http://dcgtec.verify.com.pe']);
+        $this->middleware(['auth', 'verified']);
     }
 
     // * FUNCION DE REGISTO DE CREDENCIALES PARA LOGIN 
@@ -51,10 +52,10 @@ class servicioVerifyController extends Controller
         if (!$credencial) {                   //: CUANDO NO LOE ENCUENTRA REGISTRADO
             // * COMPARAR USUARIOS Y CLAVES
             if (!(strcmp($request->get('usuario'), $request->get('confirmar_usuario')) === 0)) {
-                return response()->json(array("respuesta" => "Usuario no coinciden."), 404);
+                return response()->json(array("mensaje" => "Usuario no coinciden."), 404);
             }
             if (!(strcmp($request->get('clave'), $request->get('confirmar_clave')) === 0)) {
-                return response()->json(array("respuesta" => "Clave no coinciden."), 404);
+                return response()->json(array("mensaje" => "Clave no coinciden."), 404);
             }
             // * REGISTRAR NUEVAS CREDENCIALES
             $nuevaCredencial = new crd();
@@ -63,9 +64,9 @@ class servicioVerifyController extends Controller
             $nuevaCredencial->clave = base64_encode($request->get('clave'));
             $nuevaCredencial->save();
 
-            return response()->json(array("respuesta" => "Registro exitoso."), 201);
+            return response()->json(array("mensaje" => "Registro exitoso."), 201);
         } else {
-            return response()->json(array("respuesta" => "Usuario ya se encuentra registrado."), 404);
+            return response()->json(array("mensaje" => "Usuario ya se encuentra registrado."), 404);
         }
     }
     // * FUNCION DE LOGUEO DEL SERVICIO DE VERIFY
@@ -76,7 +77,7 @@ class servicioVerifyController extends Controller
         if ($credencial) {
             return loginServicioVerify($this->client, $credencial);
         } else {
-            return response()->json(array("respuesta" => "No se encuentran credenciales disponibles para login"), 404);
+            return response()->json(array("mensaje" => "No se encuentran credenciales disponibles para login"), 404);
         }
     }
 
@@ -104,69 +105,6 @@ class servicioVerifyController extends Controller
             // !-------------------------------------- PRIMER ARRAY -----------------------------------------------
             // $datos = json_decode($request->get('datos'), true);
             $datos = $request->get('datos');
-            // : TIPOS DE DATOS  A CONSULTAR
-            $consulta_identidad = $datos['consulta_identidad'];
-            $consulta_policial = $datos['consulta_policial'];
-            $consulta_penal = $datos['consulta_penal'];
-            $consulta_crediticio = $datos['consulta_crediticio'];
-            $arrayParaBolsaYConsulta = [];
-            // * ---------------------------------- TIPO DE CONSULTA HACIA EL SERVICIO ------------------------------
-            // : CONSULTA DE IDENTIDAD
-            if ($consulta_identidad == 1) {
-                $asoc = asocs_servicio::where('tipo', '=', 'consulta_identidad')->where('activo', '=', 1)->get();
-                $arrayAsoc = [];
-                // * ASOCS DE DE SERVICIO
-                foreach ($asoc as $a) {
-                    array_push($arrayAsoc, $a->codigo);
-                }
-                if (sizeof($asoc) != 0) {
-                    // * BOLSA DE IDENTIDAD
-                    $bolsaIdentidad = $bolsaOrganizacion->saldo_identidad;
-                    array_push($arrayParaBolsaYConsulta, array("bolsa" => $bolsaIdentidad, "asoc" => $arrayAsoc));
-                }
-            }
-            // : CONSULTA DE POLICIALES
-            if ($consulta_policial == 1) {
-                $asoc = asocs_servicio::where('tipo', '=', 'consulta_policial')->where('activo', '=', 1)->get();
-                $arrayAsoc = [];
-                // * ASOCS DE DE SERVICIO
-                foreach ($asoc as $a) {
-                    array_push($arrayAsoc, $a->codigo);
-                }
-                if (sizeof($asoc) != 0) {
-                    // * BOLSA DE POLICIAL
-                    $bolsaPolicial = $bolsaOrganizacion->saldo_policial;
-                    array_push($arrayParaBolsaYConsulta, array("bolsa" => $bolsaPolicial, "asoc" => $arrayAsoc));
-                }
-            }
-            // : CONSULTA DE PENAL
-            if ($consulta_penal == 1) {
-                $asoc = asocs_servicio::where('tipo', '=', 'consulta_penal')->where('activo', '=', 1)->get();
-                $arrayAsoc = [];
-                // * ASOCS DE DE SERVICIO
-                foreach ($asoc as $a) {
-                    array_push($arrayAsoc, $a->codigo);
-                }
-                if (sizeof($asoc) != 0) {
-                    // * BOLSA PENAL
-                    $bolsaPenal = $bolsaOrganizacion->saldo_penal;
-                    array_push($arrayParaBolsaYConsulta, array("bolsa" => $bolsaPenal, "asoc" => $arrayAsoc));
-                }
-            }
-            // : CONSULTA DE CREDITICIO
-            if ($consulta_crediticio == 1) {
-                $asoc = asocs_servicio::where('tipo', '=', 'consulta_crediticio')->where('activo', '=', 1)->get();
-                $arrayAsoc = [];
-                // * ASOCS DE DE SERVICIO
-                foreach ($asoc as $a) {
-                    array_push($arrayAsoc, $a->codigo);
-                }
-                if (sizeof($asoc) != 0) {
-                    // * BOLSA PENAL
-                    $bolsaCrediticio = $bolsaOrganizacion->saldo_crediticio;
-                    array_push($arrayParaBolsaYConsulta, array("bolsa" => $bolsaCrediticio, "asoc" => $arrayAsoc));
-                }
-            }
             // !-------------------------------------- SEGUNDO ARRAY ---------------------------------------------------
             if ($request->hasFile('file')) {
                 $import = new ExcelServicioImport;
@@ -180,11 +118,11 @@ class servicioVerifyController extends Controller
                     if ($key == 0) {
                         // : VALIDAR QUE NO ESTE VACIO LA HOJA DE EXCEL
                         if (empty($d[0])) {
-                            return response()->json(array("respuesta" => "Archivo de carga vacío"), 404);
+                            return response()->json(array("mensaje" => "Archivo de carga vacío"), 404);
                         }
                         // : VALIDAR LAS CABECERAS
                         if (!in_array("tipo_documento", $d) && !in_array("numero_documento", $d)) {
-                            return response()->json(array("respuesta" => "Formato incorrecto, Porfavor descargue la plantilla y actualize sus datos"), 404);
+                            return response()->json(array("mensaje" => "Formato incorrecto, Porfavor descargue la plantilla y actualize sus datos"), 404);
                         }
                     } else {
                         // * QUE NO SE ENCUENTRE VACIO EL CAMPO DE TIPO DE DOCUMENTO
@@ -196,11 +134,11 @@ class servicioVerifyController extends Controller
                                 $tipoDocumento = tipo_documento::where("tipoDoc_descripcion", "like", "%" . escape_like($d[0]) . "%")->first();
                                 // : SI NO ENCUENTRA EL TIPO DE DOCUMENTO EN LA BD
                                 if (is_null($tipoDocumento)) {
-                                    return response()->json(array("respuesta" => "No se encontro el tipo de documento: " . escape_like($d[0]) . ". El proceso se interrumpio en la fila:" . $key), 404);
+                                    return response()->json(array("mensaje" => "No se encontro el tipo de documento: " . escape_like($d[0]) . ". El proceso se interrumpio en la fila:" . $key), 404);
                                 } else {
                                     // : POR AHORA HABILITADO SOLO PARA DNI
                                     if ($tipoDocumento->tipoDoc_id != 1) {
-                                        return response()->json(array("respuesta" => "No se encontra habilitado este tipo documento: " . escape_like($d[0]) . ". El proceso se interrumpio en la fila:" . $key), 404);
+                                        return response()->json(array("mensaje" => "No se encontra habilitado este tipo documento: " . escape_like($d[0]) . ". El proceso se interrumpio en la fila:" . $key), 404);
                                     }
                                 }
                             }
@@ -210,15 +148,15 @@ class servicioVerifyController extends Controller
                             if (!is_null($d[0])) {
                                 // * SOLO DIGITOS NUMERICOS
                                 if (!is_numeric($d[1])) {
-                                    return response()->json(array("respuesta" => "numero de DNI " . $d[1] . " invalido en la importacion(Debe ser númerico)  .El proceso se interrumpio en la fila " . $key . " de excel"), 404);
+                                    return response()->json(array("mensaje" => "numero de DNI " . $d[1] . " invalido en la importacion(Debe ser númerico)  .El proceso se interrumpio en la fila " . $key . " de excel"), 404);
                                 }
                                 // * TAMAÑO DEL DNI
                                 $numero_length = Str::length($d[1]);
                                 if ($numero_length != 8) {
-                                    return response()->json(array("respuesta" => "numero de DNI " . $d[1] . " invalido en la importacion(Debe tener 8 digitos)  .El proceso se interrumpio en la fila " . $key . " de excel"), 404);
+                                    return response()->json(array("mensaje" => "numero de DNI " . $d[1] . " invalido en la importacion(Debe tener 8 digitos)  .El proceso se interrumpio en la fila " . $key . " de excel"), 404);
                                 }
                             } else {
-                                return response()->json(array("respuesta" => "Ingresar un tipo de documento. El proceso se interrumpio en la fila:" . $key), 404);
+                                return response()->json(array("mensaje" => "Ingresar un tipo de documento. El proceso se interrumpio en la fila:" . $key), 404);
                             }
                         }
                         // * INSERTAR DATOS A CONSULTAR
@@ -227,46 +165,50 @@ class servicioVerifyController extends Controller
                 }
             } else {
                 // ! NOTA : CUANDO SOLO QUIERE CONSULTAR DE UNO SOLO Y NO ENVIA NINGUN EXCEL
-                // : VALIDACION QUE EXISTA PARAMETRO DE NUMERO DE DOCUMENTO
-                if (!isset($datos['numeroDocumento'])) {
-                    return response()->json(array("respuesta" => "DNI invalido debe ser númerico"), 404);
-                }
-                // : VALIDACION QUE EXISTA PARAMETRO DE TIPO DE DOCUMENTO
-                if (!isset($datos['tipo'])) {
-                    return response()->json(array("respuesta" => "Seleccionar el tipo documento."), 404);
-                }
-                // : QUE NO SE CAMPO NULL
-                if (!is_null($datos['numeroDocumento']) && !is_null($datos['tipo'])) {
-                    if (!is_numeric($datos['numeroDocumento'])) {
-                        return response()->json(array("respuesta" => "DNI invalido debe tener 8 digitos."), 404);
-                    }
-                    // : VALIDACION DE LENGTH DE DNI
-                    $numero_length = Str::length($datos['numeroDocumento']);
-                    if ($numero_length == 8) {
-                        // ! ---------------------------------- CONSUMIR SERVICIO ----------------------------------------------------
-                        // : BUSCAR CREDENCIAL
-                        $credencial = crd::where('estado', '=', 1)->get()->first();
-                        if ($credencial) {
-                            $token = crd_token::where('id_crd', '=', $credencial->id);
-                            if ($token) {
-                                // : CUANDO ENCUENTRO EL TOKEN
-
+                // : VALIDACION DE CAMPOS
+                $validacion_campos = validacionNumeroDocuemntoVerify($datos['tipo'], $datos['numeroDocumento']);
+                // : SI CUMPLE TODAS LAS VALIDACIONES
+                if (is_bool($validacion_campos)) {
+                    // ! ---------------------------------- CONSUMIR SERVICIO ----------------------------------------------------
+                    // : BUSCAR CREDENCIAL
+                    $credencial = crd::where('estado', '=', 1)->get()->first();
+                    if ($credencial) {
+                        $token = crd_token::where('id_crd', '=', $credencial->id)->get()->first();
+                        if ($token) {
+                            // * CONSULTAR SI ENCUENTRA ACTIVO EL SERVICIO Y TIENE SALDO
+                            $verifica_saldo = verificarYbolsaVerify(
+                                $datos['consulta_identidad'],
+                                $datos['consulta_policial'],
+                                $datos['consulta_penal_judicial'],
+                                $datos['consulta_crediticio'],
+                                0,
+                                $bolsaOrganizacion
+                            );
+                            $verifica_saldo["asocs"] = Arr::flatten($verifica_saldo["asocs"]);
+                            dd($verifica_saldo);
+                            $respuesta_verify = verificarPersonVerify($this->client, $token->token_type, $token->token, $datos['numeroDocumento']);
+                            if (!isset($respuesta_verify->original)) {
+                                // : CONDICIONAL SI LO ENCONTRO
+                                if (!is_bool($respuesta_verify)) {
+                                } else {
+                                    // : REGISTRAR EL NUMERO DOCUMENTO
+                                }
                             } else {
-                                // : LOGUAERNOS PARA OBTENER TOKEN
-                                $login = loginServicioVerify($this->client, $credencial);
+                                return $respuesta_verify;
                             }
                         } else {
-                            return response()->json(array("respuesta" => "No se encuentran credenciales disponibles para login"), 404);
+                            // : LOGUAERNOS PARA OBTENER TOKEN
+                            $login = loginServicioVerify($this->client, $credencial);
                         }
                     } else {
-                        return response()->json(array("respuesta" => "DNI invalido debe tener 8 digitos."), 404);
+                        return response()->json(array("mensaje" => "No se encuentran credenciales disponibles para login"), 404);
                     }
                 } else {
-                    return response()->json(array("respuesta" => "Ingresar número de documento o seleccionar el tipo documento."), 404);
+                    return response()->json($validacion_campos, 404);
                 }
             }
         } else {
-            return response()->json(array("respuesta" => "Recargar bolsas de identificación."), 404);
+            return response()->json(array("mensaje" => "Recargar bolsas de identificación."), 404);
         }
     }
 }
