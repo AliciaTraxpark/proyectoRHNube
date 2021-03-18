@@ -99,10 +99,6 @@ function verificarPersonVerify($client, $type_token, $token, $person)
             ]
         );
         $body = json_decode($response->getBody());
-        // * SI NO ENCUENTRA REGISTRADO EL DOCUMENTO
-        if (isset($body->message)) {
-            return false;
-        }
         return $body;
     } catch (RequestException $e) {
         return response()->json(array(
@@ -269,7 +265,7 @@ function verificarYbolsaVerify($identidad, $policial, $penal_judicial, $creditic
 {
     $array_asoc = [];
     $sin_consultar = [];
-    // ! ----------------------- CONSULTA DE IDENTIDAD ------------------------
+    // ? ----------------------- CONSULTA DE IDENTIDAD ------------------------
     $consulta_identidad = verificarServicioSolicitarVerify($identidad);
     if (!is_null($consulta_identidad)) {
         $respuesta_identidad = bolsaSaldoVerify(1, $contador, $bolsa->saldo_identidad);
@@ -279,7 +275,7 @@ function verificarYbolsaVerify($identidad, $policial, $penal_judicial, $creditic
             array_push($sin_consultar, $respuesta_identidad);
         }
     }
-    // ! ------------------------- CONSULTA DE POLICIAL -----------------------------
+    // ? ------------------------- CONSULTA DE POLICIAL -----------------------------
     $consulta_policial = verificarServicioSolicitarVerify($policial);
     if (!is_null($consulta_policial)) {
         $respuesta_policial = bolsaSaldoVerify(2, $contador, $bolsa->saldo_policial);
@@ -289,7 +285,7 @@ function verificarYbolsaVerify($identidad, $policial, $penal_judicial, $creditic
             array_push($sin_consultar, $respuesta_policial);
         }
     }
-    // ! ----------------------------- CONSULTA DE PENAL ----------------------------
+    // ? ----------------------------- CONSULTA DE PENAL ----------------------------
     $consulta_penal_judicial = verificarServicioSolicitarVerify($penal_judicial);
     if (!is_null($consulta_penal_judicial)) {
         $respuesta_penal_judicial = bolsaSaldoVerify(3, $contador, $bolsa->saldo_penal_judicial);
@@ -299,7 +295,7 @@ function verificarYbolsaVerify($identidad, $policial, $penal_judicial, $creditic
             array_push($sin_consultar, $respuesta_penal_judicial);
         }
     }
-    // ! ----------------------------- CONSULTA DE CREDITICIO ----------------------------
+    // ? ----------------------------- CONSULTA DE CREDITICIO ----------------------------
     $consulta_crediticio = verificarServicioSolicitarVerify($crediticio);
     if (!is_null($consulta_crediticio)) {
         $respuesta_crediticio = bolsaSaldoVerify(4, $contador, $bolsa->saldo_crediticio);

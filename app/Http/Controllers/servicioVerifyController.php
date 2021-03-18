@@ -174,6 +174,7 @@ class servicioVerifyController extends Controller
                     $credencial = crd::where('estado', '=', 1)->get()->first();
                     if ($credencial) {
                         $token = crd_token::where('id_crd', '=', $credencial->id)->get()->first();
+                        $array_informacion = [];
                         if ($token) {
                             // * CONSULTAR SI ENCUENTRA ACTIVO EL SERVICIO Y TIENE SALDO
                             $verifica_saldo = verificarYbolsaVerify(
@@ -185,16 +186,29 @@ class servicioVerifyController extends Controller
                                 $bolsaOrganizacion
                             );
                             $verifica_saldo["asocs"] = Arr::flatten($verifica_saldo["asocs"]);
-                            dd($verifica_saldo);
-                            $respuesta_verify = verificarPersonVerify($this->client, $token->token_type, $token->token, $datos['numeroDocumento']);
-                            if (!isset($respuesta_verify->original)) {
-                                // : CONDICIONAL SI LO ENCONTRO
-                                if (!is_bool($respuesta_verify)) {
-                                } else {
-                                    // : REGISTRAR EL NUMERO DOCUMENTO
+                            // : VALIDAR QUE SELECIONA UN TIPO DE ANTECENDETE O IDENTIDAD
+                            if (empty($verifica_saldo["asocs"]) && empty($verifica_saldo["mensaje"])) {
+                                return response()->json(array("mensaje" => "Seleccionar Identidad o Antecendentes a consultar"), 404);
+                            }
+                            // : SI ENCONTRAMOS SALDO O ACTIVO SERVICIO
+                            if (!empty($verifica_saldo["asocs"])) {
+                                // : POR AHORA SOLO DNI
+                                if ($datos['tipo'] != 1) {
+                                    return response()->json(array("mensaje" => "Tipo documento aún no habilitado."), 404);
                                 }
-                            } else {
-                                return $respuesta_verify;
+                                $objecto_api = (object)array(
+                                    "document" => $datos['numeroDocumento'],
+                                    "type" => $datos['tipo'],
+                                    "asocs" => $verifica_saldo["asocs"]
+                                );
+                                // ! -------------------------------------------- CONSULTAR API DE REGISTRAR ----------------------------------
+                                $respuesta_registrar_verify =  registrarPersonVerify($this->client, $token->token_type, $token->token, $objecto_api);
+                                // *
+                                if (is_bool($respuesta_registrar_verify)) {
+                                    if ($respuesta_registrar_verify) {
+                                        $respuesta_detalle_verify = verificarPersonVerify($this->client, $token->token_type, $token->token, $datos['numeroDocumento']);
+                                    }
+                                } else return $respuesta_registrar_verify;
                             }
                         } else {
                             // : LOGUAERNOS PARA OBTENER TOKEN
