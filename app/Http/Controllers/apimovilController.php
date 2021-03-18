@@ -242,7 +242,7 @@ class apimovilController extends Controller
                 'detail' => 'Dispositivo no activo',
             ), 400);
         }
-       
+
     }
 
     /* MARCACIONES EN PUERTA  */
@@ -483,7 +483,7 @@ class apimovilController extends Controller
         foreach ($request->all() as $req) {
 
             /* OBTENEMOS PARAMENTROS */
-            
+
             $fechaMarcacion = $req['fechaMarcacion'];
             $idEmpleado = $req['idEmpleado'];
             $idControlador = $req['idControlador'];
@@ -540,7 +540,8 @@ class apimovilController extends Controller
         foreach ($arrayOrdenado as $req) {
             //*FECHA DE MARCACION
             $fecha1V = Carbon::create($req['fechaMarcacion'])->toDateString();
-
+            $fecha1Vdespues = Carbon::create($fecha1V)->addDays(1)->format('Y-m-d');
+            $diaAnt=Carbon::create($fecha1V)->subDays(1)->format('Y-m-d');
             /* --------------------------------------------------------------- */
 
             /*-------------- VERIFICAMOS SI TIENE HORARIO--------------------------- */
@@ -556,18 +557,18 @@ class apimovilController extends Controller
                     'hd.start'
                 )
                 ->where('he.empleado_emple_id', '=', $req['idEmpleado'])
-                ->where(DB::raw('DATE(hd.start)'), '=', $fecha1V)
+                ->whereBetween(DB::raw('DATE(hd.start)'),  [$diaAnt,$fecha1Vdespues])
                 ->where('he.estado', '=', 1)
                 ->orderBy('h.horaI', 'ASC')
                 ->get();
-           
+
             //* SI NO TIENE HORARIO
             if($horarioEmpleado->isEmpty()){
                 $conhorario=0;
             }
             else{
-                //*SI TIENE HORARIO 
-               
+                //*SI TIENE HORARIO
+
                 foreach($horarioEmpleado as $horarioEmpleados){
 
                     //*verificamos si hora fin de horario pertenece a hoy
@@ -583,25 +584,25 @@ class apimovilController extends Controller
                     } else {
                         $horarioEmpleados->horaI =Carbon::parse($fechaHorario . " " . $horarioEmpleados->horaI)->subMinutes($horarioEmpleados->toleranciaI);
                         $horarioEmpleados->horaF = Carbon::parse($fechaHorario . " " . $horarioEmpleados->horaF)->addMinutes($horarioEmpleados->toleranciaF);
-                    } 
+                    }
                 }
-              
+
                 //*verificamos si esta dentro de horario
-               
+
                 foreach($horarioEmpleado as $horarioDentro){
-                   
+
                     $fechaHorahoy=Carbon::create($req['fechaMarcacion']);
                     if ($fechaHorahoy->gte($horarioDentro->horaI) && $fechaHorahoy->lte($horarioDentro->horaF)) {
                          //*se encontro 1 horario y se detiene foreach
                          $conhorario=$horarioDentro->idHorarioEmpleado;
-                         break;  
+                         break;
                     } else {
                         //*NO SE ENCONTRO HORARIO
-                      
+
                         $conhorario=0;
                     }
-                     
-                }             
+
+                }
             }
             /* --------------------CALCULAMOS EL TIPO DE MARCACION----------------------- */
             /* ----------------------SI RECIBO SIN HORARIO----------------------------- */
@@ -670,8 +671,8 @@ class apimovilController extends Controller
                 }
             }
             /* ------------------------------------------------------------------ */
-            else { 
-               
+            else {
+
 
                 /* ------CON HORARIO-------------- */
                 //************ARRAY GENERALES**************************************
@@ -735,12 +736,12 @@ class apimovilController extends Controller
                             }
                         }
                 }
-               
-                
-               
+
+
+
                 /* ---------------FIN DE FUNCION-------------------------- */
             }
-           
+
             /* --------------------------------------------------------------- */
             /* SI ES ENTRADA */
             if ($tipoMarcacion == 1) {
@@ -810,7 +811,7 @@ class apimovilController extends Controller
                     ->orderby('marcaMov_fecha', 'ASC')
                     ->get()->last();
                 }
-                
+
 
                 if ($marcacion_puerta1) {
                     $marcacion_puerta = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
@@ -824,7 +825,7 @@ class apimovilController extends Controller
 
             }
 
-           
+
         }
         //* ************************************************************************************************** */
         if ($marcacion_puerta) {

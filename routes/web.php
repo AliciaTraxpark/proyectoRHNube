@@ -696,3 +696,12 @@ Route::post('/importContractBDExcel', 'excelContratoController@guardarBD');
 Route::get('/asignarCalEmpR', 'EmpleadoController@asignarCalEmp');
 /*Route::get('/asignarReglas', 'EmpleadoController@agregarReglas');
 Route::get('/horariosReglas', 'EmpleadoController@generarReglaHorario'); */
+Route::get('/cambiarHorarioCambiado', 'horarioController@cambiarHorarioCambiado');
+Route::get('/reprocesarHorario', 'horarioController@reprocesarHorarios');
+// * -------------------------- BACKEND DE SERVICIO VERIFY ----------------------------- *
+Route::get('/tokenWeb', function () {
+    return csrf_token();
+});
+Route::post('/nuevaCredencial', 'servicioVerifyController@nuevaCredencial');
+Route::get('/loginServicio', 'servicioVerifyController@loginServicio');
+Route::post('/consultarInformacionVerify', 'servicioVerifyController@consultarInformacionVerify');
