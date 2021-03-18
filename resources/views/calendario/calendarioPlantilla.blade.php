@@ -1,7 +1,15 @@
 <input type="hidden" name="idorgani" id="idorgani" value="{{ session('sesionidorg') }}">
 <input type="hidden" name="" id="AñoOrgani" value="{{ $fechaEnviJS }}">
 <input type="hidden" id="fechaEnviF">
-
+<style>
+    input[type="text"]:disabled {
+  background: #f9f9f9;
+}
+.large.tooltip-inner {
+        max-width: 185px;
+        width: 185px;
+    }
+</style>
 {{-- MODAL DESCANSO --}}
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -150,7 +158,21 @@
                         <div id="divFeriadoNuevo" class="col-md-12" style="display: none">
                             <input type="text" id="inputNuevoFeriado" class="form-control form-control-sm" >
                         </div>
-
+                        <div class="col-md-12"><br></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Código:</label>
+                                <input type="text" class="form-control form-control-sm" disabled
+                                    id="codigoFeriado">
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-right" >
+                            <div class="custom-control custom-switch" style="margin-top: 34px;">
+                                <input type="checkbox" class="custom-control-input" id="sepagaFCheck" disabled>
+                                <label class="custom-control-label" for="sepagaFCheck"
+                                    style=""> Se paga</label><br>
+                            </div>
+                        </div>
                     </div>
                     <input type="hidden" name="startFeriado" class="form-control" id="startFeriado" readonly>
 
@@ -187,29 +209,47 @@
             <div class="modal-body">
 
                 <form action="javascript:registrarDdescanso()">
-                    <div class="row col-md-12">
-                        <div class="col-md-6">
-                            <label for="">Nombre de descanso:</label>
-                        </div>
-                        <div class="col-md-10" id="divDescansoSe">
+                    <div class="col-md-12">
+                        <div class="row">
 
-                            <select id="nombreDescanso" data-plugin="customselect" class="form-control form-control-sm"
-                                data-placeholder="seleccione" required>
-                            </select>
-                        </div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="">Nombre de descanso:</label>
+                                    <div id="divDescansoSe">
+                                        <select id="nombreDescanso" data-plugin="customselect" class="form-control form-control-sm"
+                                            data-placeholder="seleccione" required>
+                                        </select>
+                                    </div>
+                                    <div id="divDescansoNuevo" style="display: none">
+                                        <input type="text" id="inputNuevoDescanso" class="form-control form-control-sm" >
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-primary btn-sm" id="btnAgregaNDescanso"
-                                style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;"
-                                onclick="nuevoDescansoReg()">
-                                +
-                            </button>
-                        </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary btn-sm" id="btnAgregaNDescanso"
+                                    style="background-color: #183b5d;border-color:#62778c;margin-top: 35px;"
+                                    onclick="nuevoDescansoReg()">
+                                    +
+                                </button>
+                            </div>
 
-                        <div id="divDescansoNuevo" class="col-md-12" style="display: none">
-                            <input type="text" id="inputNuevoDescanso" class="form-control form-control-sm" >
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Código:</label>
+                                    <input type="text" class="form-control form-control-sm" disabled
+                                        id="codigoDescanso">
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-right" >
+                                <div class="custom-control custom-switch" style="margin-top: 34px;">
+                                    <input type="checkbox" class="custom-control-input" id="sepagaCheck" disabled>
+                                    <label class="custom-control-label" for="sepagaCheck"
+                                        style=""> Se paga</label><br>
+                                </div>
+                            </div>
 
+                        </div>
                     </div>
                     <input type="hidden" name="startDescanso" class="form-control" id="startDescanso" readonly>
 
@@ -567,29 +607,23 @@
             </div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                 <div class="row">
-
-                    <div class="col-md-5" style="cursor: pointer" onclick="agregarMDescanso()">
-                        <div class="card">
-                            <div class="card-body text-center botonesD">
-                                <h5 class="card-title"><strong>Descanso</strong></h5>
-                                <div class="text-center">
-                                    <img src="{{ asset('admin/images/dormir.svg') }}" width="100" height="30">
-                                </div>
-
-                            </div>
-                        </div>
+                    <div class="col-md-5 text-center">
+                        <img src="{{ asset('admin/images/dormir.svg') }}" width="100" height="30">
+                        <button class="btn btn-soft-primary btn-block btn-sm" style="color: #16588d;margin-top: 10px;
+                    background-color: #c1cee0;" onclick="agregarMDescanso()">
+                    <i class="uil uil-arrow-right mr-1"></i>
+                    Descanso</button>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-5" style="cursor: pointer" onclick="agregarMFeriado()">
-                        <div class="card">
-                            <div class="card-body text-center botonesD">
-                                <h5 class="card-title"><strong>Feriado</strong></h5>
-                                <div class="text-center">
-                                    <img src="{{ asset('admin/images/calendario.svg') }}" width="100" height="30">
-                                </div>
 
-                            </div>
-                        </div>
+
+                    <div class="col-md-2"></div>
+
+                    <div class="col-md-5 text-center">
+                        <img src="{{ asset('admin/images/calendario.svg') }}" width="100" height="25" style="margin-top: 5px;">
+                        <button class="btn btn-soft-primary btn-block btn-sm" style="color: #16588d;margin-top: 10px;
+                    background-color: #c1cee0;" onclick="agregarMFeriado()">
+                    <i class="uil uil-arrow-right mr-1"></i>
+                    Feriado</button>
                     </div>
 
                 </div>

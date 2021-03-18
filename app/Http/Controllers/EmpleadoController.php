@@ -1580,9 +1580,9 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoDescanso');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoDescanso');
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
@@ -1646,9 +1646,9 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoDescanso');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoDescanso');;
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
@@ -1704,9 +1704,9 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoFeriado');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoFeriado');
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
@@ -1770,7 +1770,7 @@ class EmpleadoController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoFeriado');
             $incidencias->inciden_descripcion= $request->get('title');
             $incidencias->inciden_pagado= 1;
             $incidencias->users_id=Auth::user()->id;
@@ -1846,9 +1846,9 @@ class EmpleadoController extends Controller
 
             $incidencia = new incidencias();
             $incidencia->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencia->inciden_codigo= null;
+            $incidencia->inciden_codigo= $request->get('codigoIncidencia');
             $incidencia->inciden_descripcion = $request->get('textDescrip');
-            $incidencia->inciden_pagado = $request->get('descuentoI');
+            $incidencia->inciden_pagado = $request->get('pagadoIncidencia');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
             $incidencia->estado =  1;
@@ -1905,9 +1905,9 @@ class EmpleadoController extends Controller
 
             $incidencia = new incidencias();
             $incidencia->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencia->inciden_codigo= null;
+            $incidencia->inciden_codigo= $request->get('codigoIncidencia');
             $incidencia->inciden_descripcion = $request->get('textDescrip');
-            $incidencia->inciden_pagado = $request->get('descuentoI');
+            $incidencia->inciden_pagado = $request->get('pagadoIncidencia');
             $incidencia->users_id = Auth::user()->id;
             $incidencia->organi_id = session('sesionidorg');
             $incidencia->estado =  1;
@@ -2211,10 +2211,11 @@ class EmpleadoController extends Controller
         $incidencias = DB::table('incidencias as i')
             ->select([
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_pagado as color', 'i.inciden_pagado as textColor',
-                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
+                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_codigo as horaI', 'i.inciden_pagado as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
+                'tip.tipoInc_descripcion as horaAdic', 'i.inciden_descripcion as idhorario', 'i.inciden_descripcion as horasObliga', 'i.inciden_descripcion as nHoraAdic',
             ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+            ->join('tipo_incidencia as tip', 'i.idtipo_incidencia', '=', 'tip.idtipo_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
         /*   ->union($horario_empleado); */
 
@@ -2237,6 +2238,25 @@ class EmpleadoController extends Controller
                 ->get();
 
             $tab->pausas = $pausas_horario;
+            if($tab->laborable==0){
+                $tab->color = '#e6bdbd';
+                $tab->textColor = '#775555';
+
+                //*VALIDANDO SI ES PAGADO
+                if($tab->horaF==1){
+                    $tab->horaF='Si';
+
+                } else{
+                    $tab->horaF='No';
+                }
+
+                //*VALIDANDO CODIGO
+                if($tab->horaI){
+                    $tab->horaI=$tab->horaI;
+                } else{
+                    $tab->horaI='--';
+                }
+            }
         }
         return $horario_empleado;
     }
@@ -2508,19 +2528,21 @@ class EmpleadoController extends Controller
     }
     public function vaciarFdescansoBD(Request $request)
     {
-        $eliDescaso = eventos_empleado::where('id_empleado', '=', $request->get('idempleado'))
-        /*  ->where('color', '=', '#4673a0')
-        ->where('textColor', '=', '#ffffff') */
-            ->whereIn('tipo_ev', [1, 3])
 
-            ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start', $request->get('mescale'))->get();
-        foreach ($eliDescaso as $eliDescasos) {
-            $eliDescasos->delete();
-        }
+         //*Obtnener id de descanso
+         $tipo_incidencia=DB::table('tipo_incidencia')
+         ->where('organi_id','=',session('sesionidorg'))
+         ->where('tipoInc_descripcion','=','Descanso')
+         ->get()->first();
 
-        /*  $eliDescaso->delete(); */
-        return response()->json($eliDescaso);
+         //buscar inciadencia dias con id de incidencia tipo descanso
+         DB::table('incidencia_dias')
+             ->leftJoin('incidencias','incidencia_dias.id_incidencia','=','incidencias.inciden_id')
+             ->where('id_empleado', '=', $request->get('idempleado'))
+             ->where('incidencias.idtipo_incidencia', '=',$tipo_incidencia->idtipo_incidencia)
+             ->whereYear('inciden_dias_fechaI', $request->get('aniocalen'))
+             ->whereMonth('inciden_dias_fechaI', $request->get('mescale'))
+             ->delete();
     }
     public function vaciardnlaBD(Request $request)
     {
@@ -2534,8 +2556,19 @@ class EmpleadoController extends Controller
     }
     public function vaciarincidelaBD(Request $request)
     {
+
+
+        //*Obtnener id de incidencia
+        $tipo_incidencia=DB::table('tipo_incidencia')
+        ->where('organi_id','=',session('sesionidorg'))
+        ->where('tipoInc_descripcion','=','Incidencia')
+        ->get()->first();
+
+        //buscar inciadencia dias con id de incidencia tipo incidencia
         DB::table('incidencia_dias')
+            ->leftJoin('incidencias','incidencia_dias.id_incidencia','=','incidencias.inciden_id')
             ->where('id_empleado', '=', $request->get('idempleado'))
+            ->where('incidencias.idtipo_incidencia', '=',$tipo_incidencia->idtipo_incidencia)
             ->whereYear('inciden_dias_fechaI', $request->get('aniocalen'))
             ->whereMonth('inciden_dias_fechaI', $request->get('mescale'))
             ->delete();
@@ -3442,134 +3475,7 @@ class EmpleadoController extends Controller
         return $incidencias;
     }
 
-    //para llenar de calendario  solo eject 1 vez
-    public function asignarCalEmp(Request $request){
-
-        $organizaciones=DB::table('organizacion')->get();
-
-        foreach($organizaciones as $organizacion){
-         //*OBTENER ID DE TIPO_INCIDENCIA DE SITEMA
-         $tipoSistema=DB::table('tipo_incidencia')
-         ->where('tipoInc_descripcion','=','De sistema')
-         ->where('organi_id','=', $organizacion->organi_id)
-         ->get()->first();
-
-            //*OBTENER ID DE TIPO_INCIDENCIA DE SITEMA
-            $tipoDescanso=DB::table('tipo_incidencia')
-                    ->where('tipoInc_descripcion','=','Descanso')
-                    ->where('organi_id','=', $organizacion->organi_id)
-                    ->get()->first();
-
-            //*INCIDENCIAS POR ORGANIZACION
-            $incidencias = [
-            'Permiso o licencia concedidos por el empleador',
-            'Caso fortuito o fuerza mayor',
-            'Enfermedad o accidente',
-            'Lactancia',
-            'Licencia para desempeñar cargo civico',
-            'Permiso y licencia para desempeño de cargos',
-            'Licencia con goce de haber',
-            'Gestiones essalud - social',
-            'Gestiones legales',
-            'Gestiones ocupacionales o medicas',
-            'Visitas a campo',
-            'Reuniones internas',
-            'Reuniones con entidades externas',
-            'Vacaciones',
-            'Descanso médico',
-            'Suspensión',
-            'Falta',
-            'Tardanza',
-            'Jornada incompleta'
-            ];
-            foreach ($incidencias as $inci) {
-            $incidencia = new incidencias();
-            $incidencia->idtipo_incidencia = $tipoSistema->idtipo_incidencia;
-            $incidencia->inciden_descripcion = $inci;
-            $incidencia->inciden_pagado = 0;
-            $incidencia->organi_id =  $organizacion->organi_id;
-            $incidencia->estado =  1;
-            $incidencia->sistema =  1;
-            $incidencia->save();
-            }
-
-            //*incidencia de descanso
-            $incidenciaDes = new incidencias();
-            $incidenciaDes->idtipo_incidencia = $tipoDescanso->idtipo_incidencia;
-            $incidenciaDes->inciden_descripcion = 'Descanso remunerado';
-            $incidenciaDes->inciden_pagado = 1;
-            $incidenciaDes->users_id = $request->get('iduser');
-            $incidenciaDes->organi_id =  $organizacion->organi_id;
-            $incidenciaDes->estado =  1;
-            $incidenciaDes->sistema =  1;
-            $incidenciaDes->save();
 
 
 
-        }
-
-
-    }
-
-    //*llenar regla de  rogani
-
-    public function agregarReglas(Request $reques){
-
-        $Organizaciones=DB::table('organizacion')->get();
-        //*ARRAY DE REGLAS
-            //* 0 es lleno
-            //* 1 es todo
-            //* 2 es vacio
-            $arrayReglas=[
-                1 => ['idTipoRegla'=>'1', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
-                     'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1, 'activo'=>1],
-
-                2 =>['idTipoRegla'=>'2', 'tipo_regla'=>'Normal','reglas_descripcion'=>'Horas extras(25% y 35%)',
-                    'lleno25'=>0, 'lleno35'=>1,'lleno100'=>2,'activo'=>1],
-
-                3 =>['idTipoRegla'=>'3', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(35%)',
-                'lleno25'=>2, 'lleno35'=>1,'lleno100'=>2,'activo'=>1],
-
-                4 =>['idTipoRegla'=>'4', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(25%,35% y 100%)',
-                'lleno25'=>0, 'lleno35'=>0,'lleno100'=>1,'activo'=>1],
-
-                5 =>['idTipoRegla'=>'5', 'tipo_regla'=>'Nocturno','reglas_descripcion'=>'Horas extras(100%)',
-                'lleno25'=>2, 'lleno35'=>2,'lleno100'=>1,'activo'=>1]
-
-            ];
-
-            foreach($Organizaciones as $Organizacion){
-                //REGLAS DE HORAS EXTRAS INSERTAR
-                foreach($arrayReglas as $arrayRegla){
-                    $reglas=new reglas_horasextras;
-                    $reglas->idTipoRegla=$arrayRegla['idTipoRegla'];
-                    $reglas->tipo_regla=$arrayRegla['tipo_regla'];
-                    $reglas->reglas_descripcion=$arrayRegla['reglas_descripcion'];
-                    $reglas->lleno25=$arrayRegla['lleno25'];
-                    $reglas->lleno35=$arrayRegla['lleno35'];
-                    $reglas->lleno100=$arrayRegla['lleno100'];
-                    $reglas->activo=$arrayRegla['activo'];
-                    $reglas->organi_id=$Organizacion->organi_id;
-                    $reglas->save();
-                }
-            }
-
-    }
-
-    //*genrar regla de horario
-
-    public function generarReglaHorario(Request $request){
-        $horario=DB::table('horario') ->where('idreglas_horasExtras','=',null)->get();
-        foreach($horario as $horarios){
-
-            //*obtener id de regla
-            $reglas=DB::table('reglas_horasextras')
-            ->where('organi_id','=',$horarios->organi_id)
-            ->where('idTipoRegla','=',1)->get()->first();
-
-            $horarioAct=horario::find($horarios->horario_id);
-            $horarioAct->idreglas_horasExtras=$reglas->idreglas_horasExtras;
-            $horarioAct->save();
-        }
-    }
 }

@@ -1581,9 +1581,9 @@ class dispositivosController extends Controller
                         'o.organi_ruc',
                         'ar.area_descripcion',
                         'e.emple_nDoc',
-                        'p.perso_nombre',
-                        'p.perso_apPaterno',
-                        'p.perso_apMaterno',
+                        'p.perso_nombre as nombre',
+                        'p.perso_apPaterno as apPaterno',
+                        'p.perso_apMaterno as apMaterno',
                         'c.cargo_descripcion'
                     )
                     ->where('e.emple_id', $idemp)
@@ -1656,9 +1656,9 @@ class dispositivosController extends Controller
                             'o.organi_ruc',
                             'ar.area_descripcion',
                             'e.emple_nDoc',
-                            'p.perso_nombre',
-                            'p.perso_apPaterno',
-                            'p.perso_apMaterno',
+                            'p.perso_nombre as nombre',
+                            'p.perso_apPaterno as apPaterno',
+                            'p.perso_apMaterno as apMaterno',
                             'c.cargo_descripcion'
                         )
                         ->where('e.emple_id', $idemp)
@@ -1730,9 +1730,9 @@ class dispositivosController extends Controller
                             'o.organi_ruc',
                             'ar.area_descripcion',
                             'e.emple_nDoc',
-                            'p.perso_nombre',
-                            'p.perso_apPaterno',
-                            'p.perso_apMaterno',
+                            'p.perso_nombre as nombre',
+                            'p.perso_apPaterno as apPaterno',
+                            'p.perso_apMaterno as apMaterno',
                             'c.cargo_descripcion'
                         )
                         ->where('e.emple_id', $idemp)
@@ -1805,9 +1805,9 @@ class dispositivosController extends Controller
                     'o.organi_ruc',
                     'ar.area_descripcion',
                     'e.emple_nDoc',
-                    'p.perso_nombre',
-                    'p.perso_apPaterno',
-                    'p.perso_apMaterno',
+                    'p.perso_nombre as nombre',
+                    'p.perso_apPaterno as apPaterno',
+                    'p.perso_apMaterno as apMaterno',
                     'c.cargo_descripcion'
                 )
                 ->where('e.emple_id', $idemp)
@@ -2146,7 +2146,8 @@ class dispositivosController extends Controller
                                 'h.horario_toleranciaF as toleranciaF',
                                 'he.fuera_horario as fueraH',
                                 DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
-                                'h.horasObliga as horasO'
+                                'h.horasObliga as horasO',
+                                'h.horario_id as idHorario'
                             )
                             ->where('he.horarioEmp_id', '=', $marcacion->horarioEmp_id)
                             ->get()
@@ -2155,6 +2156,12 @@ class dispositivosController extends Controller
                         $horarioIniT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
                         $horarioFin = Carbon::parse($horario->horaF);
                         $horarioFinT = $horarioFin->copy()->subMinutes($horario->toleranciaF);
+                        if (!($entrada->gte($horarioIniT) && $entrada->lte($horarioFinT))) {
+                            return response()->json(
+                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                200
+                            );
+                        }
                         // : SUMAR TIEMPOS DE MARCACIONES
                         $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
                             ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
@@ -2167,17 +2174,67 @@ class dispositivosController extends Controller
                             ->get();
                         // : CALCULAR TIEMPO
                         $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                        // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
+                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                         // : TIEMPO DE ENTRADA Y SALIDA
                         $horaIParse = Carbon::parse($entrada);
                         $horaFParse = Carbon::parse($salida);
-                        // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
-                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);
-                        // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
-                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
-                        // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
-                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
-                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
-                            if ($entrada->gte($horarioIniT) && $entrada->lte($horarioFinT)) {
+                        // ! --------------------------------------- PAUSAS DE HORARIO -----------------------------------
+                        // : OBTENER LAS PAUSAS DEL HORARIO
+                        $pausasHorario = pausas_horario::where('horario_id', '=', $horario->idHorario)->get();
+                        // : BUSCAR SI TIENE PAUSAS AUTOMATICAS
+                        $estadoPausaAutomatica = true;
+                        $arrayPausas = array();
+                        // : RECORRER PAUSAS
+                        foreach ($pausasHorario as $pausa) {
+                            if ($pausa->descontar == 1) {
+                                // : OBTENEMOS LAS FECHAS DE INICIO Y FIN DEL HORARIO
+                                $fechaHorarioI = Carbon::parse($horario->horaI)->isoFormat("YYYY-MM-DD");
+                                $fechaHorarioF = Carbon::parse($horario->horaF)->isoFormat("YYYY-MM-DD");
+                                //: SI INICIO Y FIN DE HORARIO PERTENECEN EN EL MISMO DIA
+                                if ($fechaHorarioI == $fechaHorarioF) {
+                                    // : TIEMPOS DE PAUSA
+                                    $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                    $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                } else {
+                                    // : FORMATO HORAR MINUTO Y SEGUNDO DE ENTRADA Y SALIDA
+                                    $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $horario->horaI)->format('H:i:s');
+                                    // ! -> INICIO DE PAUSA
+                                    if ($horaMinutoSegundoE  <= $pausa->pausH_Inicio) {
+                                        $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                        // ! -> FIN DE PAUSA
+                                        if ($pausa->pausH_Fin > $pausa->pausH_Inicio) {
+                                            $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                        } else {
+                                            $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                        }
+                                    } else {
+                                        // ! -> INICIO DE PAUSA
+                                        $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
+                                        // ! -> FIN DE PAUSA
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                    }
+                                }
+                                // : TIEMPOS INGRESADOS POR EL USUARIO
+                                $tiempoEntrada = Carbon::parse($entrada);
+                                $tiempoSalida = Carbon::parse($salida);
+                                // : VALIDACION CON INICIO DE PAUSA
+                                if ($tiempoInicioPausa->gt($tiempoEntrada)  && $tiempoInicioPausa->lt($tiempoSalida)) {
+                                    // : VALIDACION CON FIN DE PAUSA
+                                    if ($tiempoFinPausa->gt($tiempoEntrada) && $tiempoFinPausa->lt($tiempoSalida)) {
+                                        $estadoPausaAutomatica = false;
+                                        array_push($arrayPausas, array("inicio" => $tiempoInicioPausa, "fin" => $tiempoFinPausa));
+                                    }
+                                }
+                            }
+                        }
+                        // ! ---------------------------------------- FINALIZACION ---------------------------------------
+                        if ($estadoPausaAutomatica) {
+                            // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                            $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                            // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                            $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                            if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                                 // ! MARCACION A REGISTRAR ENTRADA
                                 $marcacion->marcaMov_fecha = $nuevaEntrada;
                                 if ($tipo == 2) {
@@ -2200,16 +2257,153 @@ class dispositivosController extends Controller
                                 }
                                 $marcacionCambiar->save();
                             } else {
+                                $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
                                 return response()->json(
-                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                    array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                        . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
                                     200
                                 );
                             }
                         } else {
-                            return response()->json(
-                                array("respuesta" => "Sobretiempo en la marcación."),
-                                200
-                            );
+                            $arrayInsert = [];
+                            $arrayUpdate = array();
+                            $sumaTiempoM = 0;
+                            $arraySobreTiempo = [];
+                            $dispositvoMA = dispositivos::select('idDispositivos')->where('tipoDispositivo', '=', 4)->get()->first();
+                            foreach ($arrayPausas as $item => $p) {
+                                if (endKey($arrayPausas) == 0) {
+                                    // * PRIMER PAREJA DE MARCACION
+                                    $arrayInsert[] = [
+                                        "marcaMov_fecha" => $horaIParse,
+                                        "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                        "dispositivoEntrada" => NULL,
+                                        "organi_id" => session('sesionidorg'),
+                                        "horarioEmp_id" => $marcacion->horarioEmp_id,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                    $arraySobreTiempo[] = [
+                                        "marcaMov_fecha" => $horaIParse,
+                                        "dispositivoEntrada" => NULL,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                    $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    // * SEGUNDA PAREJA DE MARCACION
+                                    $arrayUpdate = array(
+                                        'marcaMov_fecha' => $p["fin"],
+                                        'dispositivoEntrada' => $dispositvoMA->idDispositivos
+                                    );
+                                    // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                    $arraySobreTiempo[] = [
+                                        "marcaMov_fecha" => $p["fin"],
+                                        "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                        "marcaMov_salida" => $horaFParse,
+                                        "dispositivoSalida" => NULL
+                                    ];
+                                    $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                    $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                } else {
+                                    // : PRIMER ELEMENTO
+                                    if ($item == 0) {
+                                        $arrayInsert[] = [
+                                            "marcaMov_fecha" => $horaIParse,
+                                            "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                            "dispositivoEntrada" => NULL,
+                                            "organi_id" => session('sesionidorg'),
+                                            "horarioEmp_id" => $marcacion->horarioEmp_id,
+                                            "marcaMov_salida" => $p["inicio"],
+                                            "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                        ];
+                                        // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                        $arraySobreTiempo[] = [
+                                            "marcaMov_fecha" => $horaIParse,
+                                            "dispositivoEntrada" => NULL,
+                                            "marcaMov_salida" => $p["inicio"],
+                                            "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                        ];
+                                        $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                        $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    } else {
+                                        // : SIGUIENTES ELEMENTOS
+                                        $arrayInsert[] = [
+                                            "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                            "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                            "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                            "organi_id" => session('sesionidorg'),
+                                            "horarioEmp_id" => $marcacion->horarioEmp_id,
+                                            "marcaMov_salida" => $p["inicio"],
+                                            "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                        ];
+                                        // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                        $arraySobreTiempo[] = [
+                                            "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                            "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                            "marcaMov_salida" => $p["inicio"],
+                                            "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                        ];
+                                        $tiempo = $p["inicio"]->diffinSeconds($arrayPausas[$item - 1]["fin"]);
+                                        $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                        // : ULTIMO ELEMENTO
+                                        if ($item == endKey($arrayPausas)) {
+                                            $arrayUpdate = array(
+                                                'marcaMov_fecha' => $p["fin"],
+                                                'dispositivoEntrada' => $dispositvoMA->idDispositivos
+                                            );
+                                            // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                            $arraySobreTiempo[] = [
+                                                "marcaMov_fecha" => $p["fin"],
+                                                "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                                "marcaMov_salida" => $horaFParse,
+                                                "dispositivoSalida" => NULL
+                                            ];
+                                            $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                            $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                        }
+                                    }
+                                }
+                            }
+                            $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($sumaTiempoM);
+                            if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                // * PRIMERO ACTUALIZAR
+                                DB::table('marcacion_puerta')->where('marcaMov_id', $marcacion->marcaMov_id)->update($arrayUpdate);
+                                // * SEGUNDO REGISTARR
+                                DB::table('marcacion_puerta')->insert($arrayInsert);
+                                // * RETIRAR CAMPOS DE MARCACION A CAMBIAR
+                                // ! -------------------- MARCACION A CAMBIAR ---------------
+                                if ($tipo == 2) {
+                                    $marcacionCambiar->marcaMov_salida = NULL;
+                                    $marcacionCambiar->controladores_salida = NULL;
+                                    $marcacionCambiar->dispositivoSalida = NULL;
+                                } else {
+                                    $marcacionCambiar->marcaMov_fecha = NULL;
+                                    $marcacionCambiar->controladores_idControladores  = NULL;
+                                    $marcacionCambiar->dispositivoEntrada = NULL;
+                                }
+                                $marcacionCambiar->save();
+                            } else {
+                                $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                                $dataHtml = '';
+                                foreach ($arraySobreTiempo as $a) {
+                                    // : AGREGAR LINEAS DE HTML
+                                    $dataHtml .= '<span>';
+                                    // : ENTRADA
+                                    if (is_null($a["dispositivoEntrada"])) $dataHtml .= $a["marcaMov_fecha"];
+                                    else $dataHtml .= '<b>' . $a["marcaMov_fecha"] . '<sup>*</sup></b>';
+                                    // : SALIDA
+                                    if (is_null($a["dispositivoSalida"])) $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $a["marcaMov_salida"];
+                                    else $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' .  '<b>' . $a["marcaMov_salida"] . '<sup>*</sup></b>';
+                                    $dataHtml .= '</span><br>';
+                                }
+                                return response()->json(
+                                    array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                        . "<br>Tiempo entre marcaciones: " . gmdate('H:i:s', $sumaTiempoM) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)
+                                        . "<br><b>Marcaciones: </b><br>" . $dataHtml . "(*) Marcaciones automáticas"),
+                                    200
+                                );
+                            }
                         }
                     } else {
                         // ! MARCACION A REGISTRAR ENTRADA
@@ -2386,13 +2580,22 @@ class dispositivosController extends Controller
                                 'h.horario_toleranciaF as toleranciaF',
                                 'he.fuera_horario as fueraH',
                                 DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
-                                'h.horasObliga as horasO'
+                                'h.horasObliga as horasO',
+                                'h.horario_id as idHorario'
                             )
                             ->where('he.horarioEmp_id', '=', $marcacion->horarioEmp_id)
                             ->get()
                             ->first();
                         $horarioFin = Carbon::parse($horario->horaF);
                         $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+                        if ($horario->fueraH == 0) {
+                            if (!$salida->lte($horarioFinT)) {
+                                return response()->json(
+                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                    200
+                                );
+                            }
+                        }
                         // : SUMAR TIEMPOS DE MARCACIONES
                         $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
                             ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
@@ -2405,46 +2608,67 @@ class dispositivosController extends Controller
                             ->get();
                         // : CALCULAR TIEMPO
                         $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                        // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
+                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                         // : TIEMPO DE ENTRADA Y SALIDA
                         $horaIParse = Carbon::parse($entrada);
                         $horaFParse = Carbon::parse($salida);
-                        // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
-                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);
-                        // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
-                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
-                        // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
-                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
-                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
-                            if ($horario->fueraH == 0) {
-                                if ($salida->lte($horarioFinT)) {
-                                    // ! MARCACION A REGISTRAR SALIDA
-                                    $marcacion->marcaMov_salida = $nuevaSalida;
-                                    if ($tipo == 2) {
-                                        $marcacion->controladores_salida = $marcacionCambiar->controladores_salida;
-                                        $marcacion->dispositivoSalida = $marcacionCambiar->dispositivoSalida;
-                                    } else {
-                                        $marcacion->controladores_salida  = $marcacionCambiar->controladores_idControladores;
-                                        $marcacion->dispositivoSalida = $marcacionCambiar->dispositivoEntrada;
-                                    }
-                                    $marcacion->save();
-                                    // ! MARCACION A CAMBIAR
-                                    if ($tipo == 2) {
-                                        $marcacionCambiar->marcaMov_salida = NULL;
-                                        $marcacionCambiar->controladores_salida = NULL;
-                                        $marcacionCambiar->dispositivoSalida = NULL;
-                                    } else {
-                                        $marcacionCambiar->marcaMov_fecha = NULL;
-                                        $marcacionCambiar->controladores_idControladores  = NULL;
-                                        $marcacionCambiar->dispositivoEntrada = NULL;
-                                    }
-                                    $marcacionCambiar->save();
+                        // ! --------------------------------------- PAUSAS DE HORARIO -----------------------------------
+                        // : OBTENER LAS PAUSAS DEL HORARIO
+                        $pausasHorario = pausas_horario::where('horario_id', '=', $horario->idHorario)->get();
+                        // : BUSCAR SI TIENE PAUSAS AUTOMATICAS
+                        $estadoPausaAutomatica = true;
+                        $arrayPausas = array();
+                        // : RECORRER PAUSAS
+                        foreach ($pausasHorario as $pausa) {
+                            if ($pausa->descontar == 1) {
+                                // : OBTENEMOS LAS FECHAS DE INICIO Y FIN DEL HORARIO
+                                $fechaHorarioI = Carbon::parse($horario->horaI)->isoFormat("YYYY-MM-DD");
+                                $fechaHorarioF = Carbon::parse($horario->horaF)->isoFormat("YYYY-MM-DD");
+                                //: SI INICIO Y FIN DE HORARIO PERTENECEN EN EL MISMO DIA
+                                if ($fechaHorarioI == $fechaHorarioF) {
+                                    // : TIEMPOS DE PAUSA
+                                    $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                    $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
                                 } else {
-                                    return response()->json(
-                                        array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
-                                        200
-                                    );
+                                    // : FORMATO HORAR MINUTO Y SEGUNDO DE ENTRADA Y SALIDA
+                                    $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $horario->horaI)->format('H:i:s');
+                                    // ! -> INICIO DE PAUSA
+                                    if ($horaMinutoSegundoE  <= $pausa->pausH_Inicio) {
+                                        $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                        // ! -> FIN DE PAUSA
+                                        if ($pausa->pausH_Fin > $pausa->pausH_Inicio) {
+                                            $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                        } else {
+                                            $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                        }
+                                    } else {
+                                        // ! -> INICIO DE PAUSA
+                                        $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
+                                        // ! -> FIN DE PAUSA
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                    }
                                 }
-                            } else {
+                                // : TIEMPOS INGRESADOS POR EL USUARIO
+                                $tiempoEntrada = Carbon::parse($entrada);
+                                $tiempoSalida = Carbon::parse($salida);
+                                // : VALIDACION CON INICIO DE PAUSA
+                                if ($tiempoInicioPausa->gt($tiempoEntrada)  && $tiempoInicioPausa->lt($tiempoSalida)) {
+                                    // : VALIDACION CON FIN DE PAUSA
+                                    if ($tiempoFinPausa->gt($tiempoEntrada) && $tiempoFinPausa->lt($tiempoSalida)) {
+                                        $estadoPausaAutomatica = false;
+                                        array_push($arrayPausas, array("inicio" => $tiempoInicioPausa, "fin" => $tiempoFinPausa));
+                                    }
+                                }
+                            }
+                        }
+                        // ! ---------------------------------------- FINALIZACION ---------------------------------------
+                        if ($estadoPausaAutomatica) {
+                            // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                            $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                            // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                            $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                            if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                                 // ! MARCACION A REGISTRAR SALIDA
                                 $marcacion->marcaMov_salida = $nuevaSalida;
                                 if ($tipo == 2) {
@@ -2466,12 +2690,153 @@ class dispositivosController extends Controller
                                     $marcacionCambiar->dispositivoEntrada = NULL;
                                 }
                                 $marcacionCambiar->save();
+                            } else {
+                                $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                                return response()->json(
+                                    array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                        . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
+                                    200
+                                );
                             }
                         } else {
-                            return response()->json(
-                                array("respuesta" => "Sobretiempo en la marcación."),
-                                200
-                            );
+                            $arrayInsert = [];
+                            $arrayUpdate = array();
+                            $sumaTiempoM = 0;
+                            $arraySobreTiempo = [];
+                            $dispositvoMA = dispositivos::select('idDispositivos')->where('tipoDispositivo', '=', 4)->get()->first();
+                            foreach ($arrayPausas as $item => $p) {
+                                if (endKey($arrayPausas) == 0) {
+                                    // * PRIMER PAREJA DE MARCACION
+                                    $arrayUpdate = array(
+                                        'marcaMov_salida' => $p["inicio"],
+                                        'dispositivoSalida' => $dispositvoMA->idDispositivos
+                                    );
+                                    // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                    $arraySobreTiempo[] = [
+                                        "marcaMov_fecha" => $horaIParse,
+                                        "dispositivoEntrada" => NULL,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                    $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    // * SEGUNDA PAREJA DE MARCACION
+                                    $arrayInsert[] = [
+                                        "marcaMov_fecha" => $p["fin"],
+                                        "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                        "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                        "organi_id" => session('sesionidorg'),
+                                        "horarioEmp_id" => $marcacion->horarioEmp_id,
+                                        "marcaMov_salida" => $horaFParse,
+                                        "dispositivoSalida" => NULL
+                                    ];
+                                    // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                    $arraySobreTiempo[] = [
+                                        "marcaMov_fecha" => $p["fin"],
+                                        "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                        "marcaMov_salida" => $horaFParse,
+                                        "dispositivoSalida" => NULL
+                                    ];
+                                    $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                    $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                } else {
+                                    // : PRIMER ELEMENTO
+                                    if ($item == 0) {
+                                        $arrayUpdate = array(
+                                            'marcaMov_salida' => $p["inicio"],
+                                            'dispositivoSalida' => $dispositvoMA->idDispositivos
+                                        );
+                                        // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                        $arraySobreTiempo[] = [
+                                            "marcaMov_fecha" => $horaIParse,
+                                            "dispositivoEntrada" => NULL,
+                                            "marcaMov_salida" => $p["inicio"],
+                                            "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                        ];
+                                        $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                        $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    } else {
+                                        // : SIGUIENTES ELEMENTOS
+                                        $arrayInsert[] = [
+                                            "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                            "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                            "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                            "organi_id" => session('sesionidorg'),
+                                            "horarioEmp_id" => $marcacion->horarioEmp_id,
+                                            "marcaMov_salida" => $p["inicio"],
+                                            "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                        ];
+                                        // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                        $arraySobreTiempo[] = [
+                                            "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                            "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                            "marcaMov_salida" => $p["inicio"],
+                                            "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                        ];
+                                        $tiempo = $p["inicio"]->diffinSeconds($arrayPausas[$item - 1]["fin"]);
+                                        $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                        // : ULTIMO ELEMENTO
+                                        if ($item == endKey($arrayPausas)) {
+                                            $arrayInsert[] = [
+                                                "marcaMov_fecha" => $p["fin"],
+                                                "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                                "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                                "organi_id" => session('sesionidorg'),
+                                                "horarioEmp_id" => $marcacion->horarioEmp_id,
+                                                "marcaMov_salida" => $horaFParse,
+                                                "dispositivoSalida" => NULL
+                                            ];
+                                            // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                            $arraySobreTiempo[] = [
+                                                "marcaMov_fecha" => $p["fin"],
+                                                "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                                "marcaMov_salida" => $horaFParse,
+                                                "dispositivoSalida" => NULL
+                                            ];
+                                            $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                            $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                        }
+                                    }
+                                }
+                            }
+                            $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($sumaTiempoM);
+                            if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                // * PRIMERO ACTUALIZAR
+                                DB::table('marcacion_puerta')->where('marcaMov_id', $marcacion->marcaMov_id)->update($arrayUpdate);
+                                // * SEGUNDO REGISTARR
+                                DB::table('marcacion_puerta')->insert($arrayInsert);
+                                // ! MARCACION A CAMBIAR
+                                if ($tipo == 2) {
+                                    $marcacionCambiar->marcaMov_salida = NULL;
+                                    $marcacionCambiar->controladores_salida = NULL;
+                                    $marcacionCambiar->dispositivoSalida = NULL;
+                                } else {
+                                    $marcacionCambiar->marcaMov_fecha = NULL;
+                                    $marcacionCambiar->controladores_idControladores  = NULL;
+                                    $marcacionCambiar->dispositivoEntrada = NULL;
+                                }
+                                $marcacionCambiar->save();
+                            } else {
+                                $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                                $dataHtml = '';
+                                foreach ($arraySobreTiempo as $a) {
+                                    // : AGREGAR LINEAS DE HTML
+                                    $dataHtml .= '<span>';
+                                    // : ENTRADA
+                                    if (is_null($a["dispositivoEntrada"])) $dataHtml .= $a["marcaMov_fecha"];
+                                    else $dataHtml .= '<b>' . $a["marcaMov_fecha"] . '<sup>*</sup></b>';
+                                    // : SALIDA
+                                    if (is_null($a["dispositivoSalida"])) $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $a["marcaMov_salida"];
+                                    else $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' .  '<b>' . $a["marcaMov_salida"] . '<sup>*</sup></b>';
+                                    $dataHtml .= '</span><br>';
+                                }
+                                return response()->json(
+                                    array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                        . "<br>Tiempo entre marcaciones: " . gmdate('H:i:s', $sumaTiempoM) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)
+                                        . "<br><b>Marcaciones: </b><br>" . $dataHtml . "(*) Marcaciones automáticas"),
+                                    200
+                                );
+                            }
                         }
                     } else {
                         // ! MARCACION A REGISTRAR SALIDA
@@ -2838,7 +3203,8 @@ class dispositivosController extends Controller
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
                     DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
-                    'h.horasObliga as horasO'
+                    'h.horasObliga as horasO',
+                    'h.horario_id as idHorario'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
                 ->get()
@@ -2886,6 +3252,17 @@ class dispositivosController extends Controller
             if ($respuesta) {
                 // * VALIDAR CON EL HORARIO
                 if ($idhorarioE != 0) {
+                    // * VALIDAR SIN FUERA DE HORARIO
+                    $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                    $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+                    if ($horario->fueraH == 0) {
+                        if (!($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT))) {
+                            return response()->json(
+                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . ")"),
+                                200
+                            );
+                        }
+                    }
                     // : SUMAR TIEMPOS DE MARCACIONES
                     $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
                         ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
@@ -2894,48 +3271,211 @@ class dispositivosController extends Controller
                         ->whereNotNull('m.marcaMov_salida')
                         ->where('m.horarioEmp_id', '=', $idhorarioE)
                         ->get();
-                    // : CALCULAR TIEMPO
+                    // : CALCULAR TIEMPO TRABAJADO POR AHORA CON ESE HORARIO
                     $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                    // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
+                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
                     // : TIEMPO DE ENTRADA Y SALIDA
                     $horaIParse = Carbon::parse($entrada);
                     $horaFParse = Carbon::parse($salida);
-                    // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
-                    $totalDuration = $horaFParse->diffInSeconds($horaIParse);
-                    // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
-                    $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
-                    // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
-                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
-                    $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
-                    if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
-                        if ($horario->fueraH == 0) {
-                            // * VALIDAR SIN FUERA DE HORARIO
-                            $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                            $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
-                            if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
-                                $marcacion->marcaMov_salida = $salida;
-                                $marcacion->dispositivoSalida = NULL;
-                                $marcacion->controladores_salida = NULL;
-                                $marcacion->save();
-                                return response()->json($marcacion->marcaMov_id, 200);
+                    // ! --------------------------------------- PAUSAS DE HORARIO -----------------------------------
+                    // : OBTENER LAS PAUSAS DEL HORARIO
+                    $pausasHorario = pausas_horario::where('horario_id', '=', $horario->idHorario)->get();
+                    // : BUSCAR SI TIENE PAUSAS AUTOMATICAS
+                    $estadoPausaAutomatica = true;
+                    $arrayPausas = array();
+                    // : RECORRER PAUSAS
+                    foreach ($pausasHorario as $pausa) {
+                        if ($pausa->descontar == 1) {
+                            // : OBTENEMOS LAS FECHAS DE INICIO Y FIN DEL HORARIO
+                            $fechaHorarioI = Carbon::parse($horario->horaI)->isoFormat("YYYY-MM-DD");
+                            $fechaHorarioF = Carbon::parse($horario->horaF)->isoFormat("YYYY-MM-DD");
+                            //: SI INICIO Y FIN DE HORARIO PERTENECEN EN EL MISMO DIA
+                            if ($fechaHorarioI == $fechaHorarioF) {
+                                // : TIEMPOS DE PAUSA
+                                $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
                             } else {
-                                return response()->json(
-                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . ")"),
-                                    200
-                                );
+                                // : FORMATO HORAR MINUTO Y SEGUNDO DE ENTRADA Y SALIDA
+                                $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $horario->horaI)->format('H:i:s');
+                                // ! -> INICIO DE PAUSA
+                                if ($horaMinutoSegundoE  <= $pausa->pausH_Inicio) {
+                                    $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                    // ! -> FIN DE PAUSA
+                                    if ($pausa->pausH_Fin > $pausa->pausH_Inicio) {
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                    } else {
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                    }
+                                } else {
+                                    // ! -> INICIO DE PAUSA
+                                    $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
+                                    // ! -> FIN DE PAUSA
+                                    $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                }
                             }
-                        } else {
+                            // : TIEMPOS INGRESADOS POR EL USUARIO
+                            $tiempoEntrada = Carbon::parse($entrada);
+                            $tiempoSalida = Carbon::parse($salida);
+                            // : VALIDACION CON INICIO DE PAUSA
+                            if ($tiempoInicioPausa->gt($tiempoEntrada)  && $tiempoInicioPausa->lt($tiempoSalida)) {
+                                // : VALIDACION CON FIN DE PAUSA
+                                if ($tiempoFinPausa->gt($tiempoEntrada) && $tiempoFinPausa->lt($tiempoSalida)) {
+                                    $estadoPausaAutomatica = false;
+                                    array_push($arrayPausas, array("inicio" => $tiempoInicioPausa, "fin" => $tiempoFinPausa));
+                                }
+                            }
+                        }
+                    }
+                    // ! ---------------------------------------- FINALIZACION ---------------------------------------
+                    if ($estadoPausaAutomatica) {
+                        // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                        // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                             $marcacion->marcaMov_salida = $salida;
                             $marcacion->dispositivoSalida = NULL;
                             $marcacion->controladores_salida = NULL;
                             $marcacion->save();
                             return response()->json($marcacion->marcaMov_id, 200);
+                        } else {
+                            $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                            return response()->json(
+                                array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                    . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
+                                200
+                            );
                         }
                     } else {
-                        return response()->json(
-                            array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
-                                . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
-                            200
-                        );
+                        $arrayInsert = [];
+                        $arrayUpdate = array();
+                        $sumaTiempoM = 0;
+                        $arraySobreTiempo = [];
+                        $dispositvoMA = dispositivos::select('idDispositivos')->where('tipoDispositivo', '=', 4)->get()->first();
+                        foreach ($arrayPausas as $item => $p) {
+                            if (endKey($arrayPausas) == 0) {
+                                // * PRIMER PAREJA DE MARCACION
+                                $arrayUpdate = array(
+                                    'marcaMov_salida' => $p["inicio"],
+                                    'dispositivoSalida' => $dispositvoMA->idDispositivos
+                                );
+                                // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                $arraySobreTiempo[] = [
+                                    "marcaMov_fecha" => $horaIParse,
+                                    "dispositivoEntrada" => NULL,
+                                    "marcaMov_salida" => $p["inicio"],
+                                    "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                ];
+                                $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                // * SEGUNDA PAREJA DE MARCACION
+                                $arrayInsert[] = [
+                                    "marcaMov_fecha" => $p["fin"],
+                                    "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                    "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                    "organi_id" => session('sesionidorg'),
+                                    "horarioEmp_id" => $idhorarioE,
+                                    "marcaMov_salida" => $horaFParse,
+                                    "dispositivoSalida" => NULL
+                                ];
+                                // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                $arraySobreTiempo[] = [
+                                    "marcaMov_fecha" => $p["fin"],
+                                    "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                    "marcaMov_salida" => $horaFParse,
+                                    "dispositivoSalida" => NULL
+                                ];
+                                $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                $sumaTiempoM = $sumaTiempoM + $tiempo;
+                            } else {
+                                // : PRIMER ELEMENTO
+                                if ($item == 0) {
+                                    $arrayUpdate = array(
+                                        'marcaMov_salida' => $p["inicio"],
+                                        'dispositivoSalida' => $dispositvoMA->idDispositivos
+                                    );
+                                    // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                    $arraySobreTiempo[] = [
+                                        "marcaMov_fecha" => $horaIParse,
+                                        "dispositivoEntrada" => NULL,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                    $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                } else {
+                                    // : SIGUIENTES ELEMENTOS
+                                    $arrayInsert[] = [
+                                        "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                        "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                        "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                        "organi_id" => session('sesionidorg'),
+                                        "horarioEmp_id" => $idhorarioE,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                    $arraySobreTiempo[] = [
+                                        "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                        "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    $tiempo = $p["inicio"]->diffinSeconds($arrayPausas[$item - 1]["fin"]);
+                                    $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    // : ULTIMO ELEMENTO
+                                    if ($item == endKey($arrayPausas)) {
+                                        $arrayInsert[] = [
+                                            "marcaMov_fecha" => $p["fin"],
+                                            "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                            "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                            "organi_id" => session('sesionidorg'),
+                                            "horarioEmp_id" => $idhorarioE,
+                                            "marcaMov_salida" => $horaFParse,
+                                            "dispositivoSalida" => NULL
+                                        ];
+                                        // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                        $arraySobreTiempo[] = [
+                                            "marcaMov_fecha" => $p["fin"],
+                                            "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                            "marcaMov_salida" => $horaFParse,
+                                            "dispositivoSalida" => NULL
+                                        ];
+                                        $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                        $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    }
+                                }
+                            }
+                        }
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($sumaTiempoM);
+                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                            // * PRIMERO ACTUALIZAR
+                            DB::table('marcacion_puerta')->where('marcaMov_id', $marcacion->marcaMov_id)->update($arrayUpdate);
+                            // * SEGUNDO REGISTARR
+                            DB::table('marcacion_puerta')->insert($arrayInsert);
+                            return response()->json(sizeof($arrayInsert), 200);
+                        } else {
+                            $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                            $dataHtml = '';
+                            foreach ($arraySobreTiempo as $a) {
+                                // : AGREGAR LINEAS DE HTML
+                                $dataHtml .= '<span>';
+                                // : ENTRADA
+                                if (is_null($a["dispositivoEntrada"])) $dataHtml .= $a["marcaMov_fecha"];
+                                else $dataHtml .= '<b>' . $a["marcaMov_fecha"] . '<sup>*</sup></b>';
+                                // : SALIDA
+                                if (is_null($a["dispositivoSalida"])) $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $a["marcaMov_salida"];
+                                else $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' .  '<b>' . $a["marcaMov_salida"] . '<sup>*</sup></b>';
+                                $dataHtml .= '</span><br>';
+                            }
+                            return response()->json(
+                                array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                    . "<br>Tiempo entre marcaciones: " . gmdate('H:i:s', $sumaTiempoM) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)
+                                    . "<br><b>Marcaciones: </b><br>" . $dataHtml . "(*) Marcaciones automáticas"),
+                                200
+                            );
+                        }
                     }
                 } else {
                     $marcacion->marcaMov_salida = $salida;
@@ -2973,7 +3513,8 @@ class dispositivosController extends Controller
                     'h.horario_toleranciaF as toleranciaF',
                     'he.fuera_horario as fueraH',
                     DB::raw('IF(he.nHoraAdic is null, 0 ,he.nHoraAdic) as horasA'),
-                    'h.horasObliga as horasO'
+                    'h.horasObliga as horasO',
+                    'h.horario_id as idHorario'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
                 ->get()
@@ -3021,6 +3562,24 @@ class dispositivosController extends Controller
             if ($respuesta) {
                 // * VALIDAR CON EL HORARIO
                 if ($idhorarioE != 0) {
+                    $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                    $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+                    // * ENTRADA DEBE ESTAR DENTRO DEL HORARIO
+                    if (!($entrada->gte($horarioInicioT) && $entrada->lte($horarioFinT))) {
+                        return response()->json(
+                            array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . ")"),
+                            200
+                        );
+                    }
+                    // * SI EL HORARIO NO ESTA PERMITDO TRABAJAR FUERA DE HORARIO
+                    if ($horario->fueraH == 0) {
+                        if (!($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT))) {
+                            return response()->json(
+                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . ")"),
+                                200
+                            );
+                        }
+                    }
                     $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
                         ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
                         ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
@@ -3028,51 +3587,209 @@ class dispositivosController extends Controller
                         ->whereNotNull('m.marcaMov_salida')
                         ->where('m.horarioEmp_id', '=', $idhorarioE)
                         ->get();
-                    // * CALCULAR TIEMPO
+                    // : CALCULAR TIEMPO TRABAJADO POR AHORA CON ESE HORARIO
                     $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                    // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
+                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
+                    // : TIEMPO DE ENTRADA Y SALIDA
                     $horaIParse = Carbon::parse($entrada);
                     $horaFParse = Carbon::parse($salida);
-                    $totalDuration = $horaFParse->diffInSeconds($horaIParse);
-                    $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
-                    $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
-                    $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
-                    if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
-                        $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
-                        if ($horario->fueraH == 0) {
-                            // * VALIDAR SIN FUERA DE HORARIO
-                            if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
-                                $marcacion->marcaMov_fecha = $entrada;
-                                $marcacion->dispositivoEntrada = NULL;
-                                $marcacion->controladores_idControladores = NULL;
-                                $marcacion->save();
-                                return response()->json($marcacion->marcaMov_id, 200);
+                    // ! --------------------------------------- PAUSAS DE HORARIO -----------------------------------
+                    // : OBTENER LAS PAUSAS DEL HORARIO
+                    $pausasHorario = pausas_horario::where('horario_id', '=', $horario->idHorario)->get();
+                    // : BUSCAR SI TIENE PAUSAS AUTOMATICAS
+                    $estadoPausaAutomatica = true;
+                    $arrayPausas = array();
+                    // : RECORRER PAUSAS
+                    foreach ($pausasHorario as $pausa) {
+                        if ($pausa->descontar == 1) {
+                            // : OBTENEMOS LAS FECHAS DE INICIO Y FIN DEL HORARIO
+                            $fechaHorarioI = Carbon::parse($horario->horaI)->isoFormat("YYYY-MM-DD");
+                            $fechaHorarioF = Carbon::parse($horario->horaF)->isoFormat("YYYY-MM-DD");
+                            //: SI INICIO Y FIN DE HORARIO PERTENECEN EN EL MISMO DIA
+                            if ($fechaHorarioI == $fechaHorarioF) {
+                                // : TIEMPOS DE PAUSA
+                                $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
                             } else {
-                                return response()->json(
-                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),
-                                    200
-                                );
+                                // : FORMATO HORAR MINUTO Y SEGUNDO DE ENTRADA Y SALIDA
+                                $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $horario->horaI)->format('H:i:s');
+                                // ! -> INICIO DE PAUSA
+                                if ($horaMinutoSegundoE  <= $pausa->pausH_Inicio) {
+                                    $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                    // ! -> FIN DE PAUSA
+                                    if ($pausa->pausH_Fin > $pausa->pausH_Inicio) {
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                    } else {
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                    }
+                                } else {
+                                    // ! -> INICIO DE PAUSA
+                                    $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
+                                    // ! -> FIN DE PAUSA
+                                    $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                }
                             }
-                        } else {
-                            if ($entrada->gte($horarioInicioT) && $entrada->lte($horarioFinT)) {
-                                $marcacion->marcaMov_fecha = $entrada;
-                                $marcacion->dispositivoEntrada = NULL;
-                                $marcacion->controladores_idControladores = NULL;
-                                $marcacion->save();
-                                return response()->json($marcacion->marcaMov_id, 200);
-                            } else {
-                                return response()->json(
-                                    array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . Carbon::parse($horario->horaI)->isoFormat('HH:mm:ss') . " - " . Carbon::parse($horario->horaF)->isoFormat('HH:mm:ss') . " )"),
-                                    200
-                                );
+                            // : TIEMPOS INGRESADOS POR EL USUARIO
+                            $tiempoEntrada = Carbon::parse($entrada);
+                            $tiempoSalida = Carbon::parse($salida);
+                            // : VALIDACION CON INICIO DE PAUSA
+                            if ($tiempoInicioPausa->gt($tiempoEntrada)  && $tiempoInicioPausa->lt($tiempoSalida)) {
+                                // : VALIDACION CON FIN DE PAUSA
+                                if ($tiempoFinPausa->gt($tiempoEntrada) && $tiempoFinPausa->lt($tiempoSalida)) {
+                                    $estadoPausaAutomatica = false;
+                                    array_push($arrayPausas, array("inicio" => $tiempoInicioPausa, "fin" => $tiempoFinPausa));
+                                }
                             }
                         }
+                    }
+                    // ! ---------------------------------------- FINALIZACION ---------------------------------------
+                    if ($estadoPausaAutomatica) {
+                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                        $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                            $marcacion->marcaMov_fecha = $entrada;
+                            $marcacion->dispositivoEntrada = NULL;
+                            $marcacion->controladores_idControladores = NULL;
+                            $marcacion->save();
+                            return response()->json($marcacion->marcaMov_id, 200);
+                        } else {
+                            return response()->json(
+                                array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                    . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
+                                200
+                            );
+                        }
                     } else {
-                        return response()->json(
-                            array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
-                                . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
-                            200
-                        );
+                        $arrayInsert = [];
+                        $arrayUpdate = array();
+                        $sumaTiempoM = 0;
+                        $arraySobreTiempo = [];
+                        $dispositvoMA = dispositivos::select('idDispositivos')->where('tipoDispositivo', '=', 4)->get()->first();
+                        foreach ($arrayPausas as $item => $p) {
+                            if (endKey($arrayPausas) == 0) {
+                                // * PRIMER PAREJA DE MARCACION
+                                $arrayInsert[] = [
+                                    "marcaMov_fecha" => $horaIParse,
+                                    "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                    "dispositivoEntrada" => NULL,
+                                    "organi_id" => session('sesionidorg'),
+                                    "horarioEmp_id" => $idhorarioE,
+                                    "marcaMov_salida" => $p["inicio"],
+                                    "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                ];
+                                // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                $arraySobreTiempo[] = [
+                                    "marcaMov_fecha" => $horaIParse,
+                                    "dispositivoEntrada" => NULL,
+                                    "marcaMov_salida" => $p["inicio"],
+                                    "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                ];
+                                $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                // * SEGUNDA PAREJA DE MARCACION
+                                $arrayUpdate = array(
+                                    'marcaMov_fecha' => $p["fin"],
+                                    'dispositivoEntrada' => $dispositvoMA->idDispositivos
+                                );
+                                // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                $arraySobreTiempo[] = [
+                                    "marcaMov_fecha" => $p["fin"],
+                                    "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                    "marcaMov_salida" => $horaFParse,
+                                    "dispositivoSalida" => NULL
+                                ];
+                                $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                $sumaTiempoM = $sumaTiempoM + $tiempo;
+                            } else {
+                                // : PRIMER ELEMENTO
+                                if ($item == 0) {
+                                    $arrayInsert[] = [
+                                        "marcaMov_fecha" => $horaIParse,
+                                        "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                        "dispositivoEntrada" => NULL,
+                                        "organi_id" => session('sesionidorg'),
+                                        "horarioEmp_id" => $idhorarioE,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                    $arraySobreTiempo[] = [
+                                        "marcaMov_fecha" => $horaIParse,
+                                        "dispositivoEntrada" => NULL,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                    $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                } else {
+                                    // : SIGUIENTES ELEMENTOS
+                                    $arrayInsert[] = [
+                                        "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                        "marcaMov_emple_id" => $marcacion->marcaMov_emple_id,
+                                        "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                        "organi_id" => session('sesionidorg'),
+                                        "horarioEmp_id" => $idhorarioE,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                    $arraySobreTiempo[] = [
+                                        "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                        "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                        "marcaMov_salida" => $p["inicio"],
+                                        "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                    ];
+                                    $tiempo = $p["inicio"]->diffinSeconds($arrayPausas[$item - 1]["fin"]);
+                                    $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    // : ULTIMO ELEMENTO
+                                    if ($item == endKey($arrayPausas)) {
+                                        $arrayUpdate = array(
+                                            'marcaMov_fecha' => $p["fin"],
+                                            'dispositivoEntrada' => $dispositvoMA->idDispositivos
+                                        );
+                                        // * ARRAY PARA MOSTRAR SOBRETIEMPO
+                                        $arraySobreTiempo[] = [
+                                            "marcaMov_fecha" => $p["fin"],
+                                            "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                            "marcaMov_salida" => $horaFParse,
+                                            "dispositivoSalida" => NULL
+                                        ];
+                                        $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                        $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    }
+                                }
+                            }
+                        }
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($sumaTiempoM);
+                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                            // * PRIMERO ACTUALIZAR
+                            DB::table('marcacion_puerta')->where('marcaMov_id', $marcacion->marcaMov_id)->update($arrayUpdate);
+                            // * SEGUNDO REGISTARR
+                            DB::table('marcacion_puerta')->insert($arrayInsert);
+                            return response()->json(sizeof($arrayInsert), 200);
+                        } else {
+                            $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                            $dataHtml = '';
+                            foreach ($arraySobreTiempo as $a) {
+                                // : AGREGAR LINEAS DE HTML
+                                $dataHtml .= '<span>';
+                                // : ENTRADA
+                                if (is_null($a["dispositivoEntrada"])) $dataHtml .= $a["marcaMov_fecha"];
+                                else $dataHtml .= '<b>' . $a["marcaMov_fecha"] . '<sup>*</sup></b>';
+                                // : SALIDA
+                                if (is_null($a["dispositivoSalida"])) $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $a["marcaMov_salida"];
+                                else $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' .  '<b>' . $a["marcaMov_salida"] . '<sup>*</sup></b>';
+                                $dataHtml .= '</span><br>';
+                            }
+                            return response()->json(
+                                array("respuesta" => "<b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                    . "<br>Tiempo entre marcaciones: " . gmdate('H:i:s', $sumaTiempoM) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)
+                                    . "<br><b>Marcaciones: </b><br>" . $dataHtml . "(*) Marcaciones automáticas"),
+                                200
+                            );
+                        }
                     }
                 } else {
                     $marcacion->marcaMov_fecha = $entrada;
@@ -3366,7 +4083,8 @@ class dispositivosController extends Controller
                     'he.empleado_emple_id as idEmpleado',
                     DB::raw('DATE(hd.start) as fecha'),
                     'h.organi_id',
-                    'h.horasObliga as horasO'
+                    'h.horasObliga as horasO',
+                    'h.horario_id as idHorario'
                 )
                 ->where('he.horarioEmp_id', '=', $idHorarioE)
                 ->get()
@@ -3411,6 +4129,11 @@ class dispositivosController extends Controller
                         }
                         // ! SI NO ENCUENTRA CRUCES
                         if ($respuesta) {
+                            if ($horario->fueraH == 0) {
+                                if (!$salida->lte($horarioFin)) {
+                                    return response()->json(array("respuesta" => "Marcación salida " . $salida->isoFormat("YYYY-MM-DD H:mm:ss") . " fuera de horario."), 200);
+                                }
+                            }
                             $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
                                 ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
                                 ->where('m.marcaMov_emple_id', '=', $idEmpleado)
@@ -3419,17 +4142,67 @@ class dispositivosController extends Controller
                                 ->where(DB::raw('DATE(marcaMov_fecha)'), '=', $fechaM)
                                 ->where('m.horarioEmp_id', '=', $idHorarioE)
                                 ->get();
-                            // * CALCULAR TIEMPO
+                            // : CALCULAR TIEMPO TRABAJADO POR AHORA CON ESE HORARIO
                             $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
-                            $horaIParse = Carbon::parse($entrada);
-                            $horaFParse = Carbon::parse($salida);
-                            $totalDuration = $horaFParse->diffInSeconds($horaIParse);
-                            $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                            // : TIEMPO TOTAL DEL HORARIO
                             $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addMinutes($horario->horasA * 60);
-                            $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
-                            if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
-                                // * VALIDACION CON HORARIO
-                                if ($horario->fueraH == 1) {
+                            $horaIParse = Carbon::parse($entrada);                      // : INICIALIZAR ENTRADA CON CARBON
+                            $horaFParse = Carbon::parse($salida);                       // : INICIALIZAR SALIDA CON CARBON
+                            // ! --------------------------------------- PAUSAS DE HORARIO -----------------------------------
+                            // : OBTENER LAS PAUSAS DEL HORARIO
+                            $pausasHorario = pausas_horario::where('horario_id', '=', $horario->idHorario)->get();
+                            // : BUSCAR SI TIENE PAUSAS AUTOMATICAS
+                            $estadoPausaAutomatica = true;
+                            $arrayPausas = array();
+                            // : RECORRER PAUSAS
+                            foreach ($pausasHorario as $pausa) {
+                                if ($pausa->descontar == 1) {
+                                    // : OBTENEMOS LAS FECHAS DE INICIO Y FIN DEL HORARIO
+                                    $fechaHorarioI = Carbon::parse($horario->horaI)->isoFormat("YYYY-MM-DD");
+                                    $fechaHorarioF = Carbon::parse($horario->horaF)->isoFormat("YYYY-MM-DD");
+                                    //: SI INICIO Y FIN DE HORARIO PERTENECEN EN EL MISMO DIA
+                                    if ($fechaHorarioI == $fechaHorarioF) {
+                                        // : TIEMPOS DE PAUSA
+                                        $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                        $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                    } else {
+                                        // : FORMATO HORAR MINUTO Y SEGUNDO DE ENTRADA Y SALIDA
+                                        $horaMinutoSegundoE = Carbon::createFromFormat('Y-m-d H:i:s', $horario->horaI)->format('H:i:s');
+                                        // ! -> INICIO DE PAUSA
+                                        if ($horaMinutoSegundoE  <= $pausa->pausH_Inicio) {
+                                            $tiempoInicioPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Inicio);
+                                            // ! -> FIN DE PAUSA
+                                            if ($pausa->pausH_Fin > $pausa->pausH_Inicio) {
+                                                $tiempoFinPausa = Carbon::parse($fechaHorarioI . " " . $pausa->pausH_Fin);
+                                            } else {
+                                                $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                            }
+                                        } else {
+                                            // ! -> INICIO DE PAUSA
+                                            $tiempoInicioPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Inicio);
+                                            // ! -> FIN DE PAUSA
+                                            $tiempoFinPausa = Carbon::parse($fechaHorarioF . " " . $pausa->pausH_Fin);
+                                        }
+                                    }
+                                    // : TIEMPOS INGRESADOS POR EL USUARIO
+                                    $tiempoEntrada = Carbon::parse($entrada);
+                                    $tiempoSalida = Carbon::parse($salida);
+                                    // : VALIDACION CON INICIO DE PAUSA
+                                    if ($tiempoInicioPausa->gt($tiempoEntrada)  && $tiempoInicioPausa->lt($tiempoSalida)) {
+                                        // : VALIDACION CON FIN DE PAUSA
+                                        if ($tiempoFinPausa->gt($tiempoEntrada) && $tiempoFinPausa->lt($tiempoSalida)) {
+                                            $estadoPausaAutomatica = false;
+                                            array_push($arrayPausas, array("inicio" => $tiempoInicioPausa, "fin" => $tiempoFinPausa));
+                                        }
+                                    }
+                                }
+                            }
+                            // ! ---------------------------------------- FINALIZACION ---------------------------------------
+                            if ($estadoPausaAutomatica) {
+                                $totalDuration = $horaFParse->diffInSeconds($horaIParse);   // : TIEMPO EN SEGUNDOS ENTRE SALIDA Y ENTRADA
+                                $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                                if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                    // * VALIDACION CON HORARIO
                                     $marcacion = new marcacion_puerta();
                                     $marcacion->marcaMov_fecha = $entrada;
                                     $marcacion->marcaMov_emple_id = $horario->idEmpleado;
@@ -3439,31 +4212,118 @@ class dispositivosController extends Controller
                                     $marcacion->save();
                                     return response()->json($marcacion->marcaMov_id, 200);
                                 } else {
-                                    if ($entrada->gte($horarioInicio) && $salida->lte($horarioFin)) {
-                                        $marcacion = new marcacion_puerta();
-                                        $marcacion->marcaMov_fecha = $entrada;
-                                        $marcacion->marcaMov_emple_id = $horario->idEmpleado;
-                                        $marcacion->organi_id = session('sesionidorg');
-                                        $marcacion->horarioEmp_id = $idHorarioE;
-                                        $marcacion->marcaMov_salida = $salida;
-                                        $marcacion->save();
-                                        return response()->json($marcacion->marcaMov_id, 200);
-                                    } else {
-                                        return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
-                                    }
+                                    $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                                    return response()->json(
+                                        array("respuesta" => "<br><b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                            . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
+                                        200
+                                    );
                                 }
                             } else {
-                                return response()->json(
-                                    array("respuesta" => "<br><b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
-                                        . "<br>Tiempo entre marcación: " . gmdate('H:i:s', $totalDuration) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)),
-                                    200
-                                );
+                                $arrayInsert = [];
+                                $sumaTiempoM = 0;
+                                $dispositvoMA = dispositivos::select('idDispositivos')->where('tipoDispositivo', '=', 4)->get()->first();
+                                foreach ($arrayPausas as $item => $p) {
+                                    if (endKey($arrayPausas) == 0) {
+                                        // * PRIMER PAREJA DE MARCACION
+                                        $arrayInsert[] = [
+                                            "marcaMov_fecha" => $horaIParse,
+                                            "marcaMov_emple_id" => $horario->idEmpleado,
+                                            "dispositivoEntrada" => NULL,
+                                            "organi_id" => session('sesionidorg'),
+                                            "horarioEmp_id" => $idHorarioE,
+                                            "marcaMov_salida" => $p["inicio"],
+                                            "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                        ];
+                                        $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                        $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                        // * SEGUNDA PAREJA DE MARCACION
+                                        $arrayInsert[] = [
+                                            "marcaMov_fecha" => $p["fin"],
+                                            "marcaMov_emple_id" => $horario->idEmpleado,
+                                            "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                            "organi_id" => session('sesionidorg'),
+                                            "horarioEmp_id" => $idHorarioE,
+                                            "marcaMov_salida" => $horaFParse,
+                                            "dispositivoSalida" => NULL
+                                        ];
+                                        $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                        $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                    } else {
+                                        // : PRIMER ELEMENTO
+                                        if ($item == 0) {
+                                            $arrayInsert[] = [
+                                                "marcaMov_fecha" => $horaIParse,
+                                                "marcaMov_emple_id" => $horario->idEmpleado,
+                                                "dispositivoEntrada" => NULL,
+                                                "organi_id" => session('sesionidorg'),
+                                                "horarioEmp_id" => $idHorarioE,
+                                                "marcaMov_salida" => $p["inicio"],
+                                                "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                            ];
+                                            $tiempo = $p["inicio"]->diffinSeconds($horaIParse);
+                                            $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                        } else {
+                                            // : SIGUIENTES ELEMENTOS
+                                            $arrayInsert[] = [
+                                                "marcaMov_fecha" => $arrayPausas[$item - 1]["fin"],
+                                                "marcaMov_emple_id" => $horario->idEmpleado,
+                                                "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                                "organi_id" => session('sesionidorg'),
+                                                "horarioEmp_id" => $idHorarioE,
+                                                "marcaMov_salida" => $p["inicio"],
+                                                "dispositivoSalida" => $dispositvoMA->idDispositivos
+                                            ];
+                                            $tiempo = $p["inicio"]->diffinSeconds($arrayPausas[$item - 1]["fin"]);
+                                            $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                            // : ULTIMO ELEMENTO
+                                            if ($item == endKey($arrayPausas)) {
+                                                $arrayInsert[] = [
+                                                    "marcaMov_fecha" => $p["fin"],
+                                                    "marcaMov_emple_id" => $horario->idEmpleado,
+                                                    "dispositivoEntrada" => $dispositvoMA->idDispositivos,
+                                                    "organi_id" => session('sesionidorg'),
+                                                    "horarioEmp_id" => $idHorarioE,
+                                                    "marcaMov_salida" => $horaFParse,
+                                                    "dispositivoSalida" => NULL
+                                                ];
+                                                $tiempo = $horaFParse->diffinSeconds($p["fin"]);
+                                                $sumaTiempoM = $sumaTiempoM + $tiempo;
+                                            }
+                                        }
+                                    }
+                                }
+                                $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($sumaTiempoM);
+                                if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                                    DB::table('marcacion_puerta')->insert($arrayInsert);
+                                    return response()->json(sizeof($arrayInsert), 200);
+                                } else {
+                                    $sobreTiempoT = $tiempoTotal->diffInSeconds($tiempoTotalDeHorario);
+                                    $dataHtml = '';
+                                    foreach ($arrayInsert as $a) {
+                                        // : AGREGAR LINEAS DE HTML
+                                        $dataHtml .= '<span>';
+                                        // : ENTRADA
+                                        if (is_null($a["dispositivoEntrada"])) $dataHtml .= $a["marcaMov_fecha"];
+                                        else $dataHtml .= '<b>' . $a["marcaMov_fecha"] . '<sup>*</sup></b>';
+                                        // : SALIDA
+                                        if (is_null($a["dispositivoSalida"])) $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' . $a["marcaMov_salida"];
+                                        else $dataHtml .= '&nbsp;&nbsp;-&nbsp;&nbsp;' .  '<b>' . $a["marcaMov_salida"] . '<sup>*</sup></b>';
+                                        $dataHtml .= '</span><br>';
+                                    }
+                                    return response()->json(
+                                        array("respuesta" => "<br><b>Sobretiempo en la marcación</b><br> Tiempo total trabajado: " . $sumaTotalDeHoras[0]->totalT
+                                            . "<br>Tiempo entre marcaciones: " . gmdate('H:i:s', $sumaTiempoM) . "<br>Sobretiempo: " . gmdate('H:i:s', $sobreTiempoT)
+                                            . "<br><b>Marcaciones: </b><br>" . $dataHtml . "(*) Marcaciones automáticas"),
+                                        200
+                                    );
+                                }
                             }
                         } else {
                             return response()->json(array("respuesta" => "Posibilidad de cruce de hora."), 200);
                         }
                     } else {
-                        return response()->json(array("respuesta" => "Marcación fuera de horario."), 200);
+                        return response()->json(array("respuesta" => "Marcación entrada " . $entrada->isoFormat("YYYY-MM-DD H:mm:ss") . " fuera de horario."), 200);
                     }
                 } else {
                     return response()->json(array("respuesta" => "Hora salida debe ser mayor a la hora de entrada."), 200);
@@ -3474,7 +4334,6 @@ class dispositivosController extends Controller
                     if ($entrada->gte($horarioInicio) && $entrada->lte($horarioFin)) {
                         $respuesta = true;
                         foreach ($marcacionesValidar as $mv) {
-                            $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
                             if ($mv->entrada != 0 && $mv->salida != 0) {
                                 $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
                                 if ($respuestaCheck) {
@@ -3482,15 +4341,15 @@ class dispositivosController extends Controller
                                 }
                             }
                             if ($mv->entrada != 0) {
-                                $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                                $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                                $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                                $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                                 if ($horaMinutoV == $horaMinutoE) {
                                     $respuesta = false;
                                 }
                             }
                             if ($mv->salida != 0) {
-                                $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                                $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                                $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                                $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                                 if ($horaMinutoV == $horaMinutoE) {
                                     $respuesta = false;
                                 }
@@ -3524,7 +4383,6 @@ class dispositivosController extends Controller
                     if (!is_null($salida)) {
                         $respuesta = true;
                         foreach ($marcacionesValidar as $mv) {
-                            $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
                             if ($mv->entrada != 0 && $mv->salida != 0) {
                                 $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
                                 if ($respuestaCheck) {
@@ -3532,15 +4390,15 @@ class dispositivosController extends Controller
                                 }
                             }
                             if ($mv->entrada != 0) {
-                                $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                                $horaMinutoE = Carbon::create($salida)->format('H:i');
+                                $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                                $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                                 if ($horaMinutoV == $horaMinutoE) {
                                     $respuesta = false;
                                 }
                             }
                             if ($mv->salida != 0) {
-                                $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                                $horaMinutoE = Carbon::create($salida)->format('H:i');
+                                $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                                $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                                 if ($horaMinutoV == $horaMinutoE) {
                                     $respuesta = false;
                                 }
@@ -3582,7 +4440,6 @@ class dispositivosController extends Controller
                     $respuesta = true;
                     foreach ($marcacionesValidar as $mv) {
                         // : ENTRADA
-                        $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
                             if ($respuestaCheck) {
@@ -3590,21 +4447,20 @@ class dispositivosController extends Controller
                             }
                         }
                         if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         // : SALIDA
-                        $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
                             if ($respuestaCheck) {
@@ -3612,15 +4468,15 @@ class dispositivosController extends Controller
                             }
                         }
                         if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
@@ -3646,7 +4502,6 @@ class dispositivosController extends Controller
                 $respuesta = true;
                 foreach ($marcacionesValidar as $mv) {
                     if (!is_null($entrada)) {
-                        $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
                             if ($respuestaCheck) {
@@ -3654,22 +4509,21 @@ class dispositivosController extends Controller
                             }
                         }
                         if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($entrada)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($entrada)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                     }
                     if (!is_null($salida)) {
-                        $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
                             if ($respuestaCheck) {
@@ -3677,15 +4531,15 @@ class dispositivosController extends Controller
                             }
                         }
                         if ($mv->entrada != 0) {
-                            $horaMinutoV = Carbon::create($mv->entrada)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->entrada)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
                         }
                         if ($mv->salida != 0) {
-                            $horaMinutoV = Carbon::create($mv->salida)->format('H:i');
-                            $horaMinutoE = Carbon::create($salida)->format('H:i');
+                            $horaMinutoV = Carbon::parse($mv->salida)->isoFormat('YYYY-MM-DD HH:mm');
+                            $horaMinutoE = Carbon::parse($salida)->isoFormat('YYYY-MM-DD HH:mm');
                             if ($horaMinutoV == $horaMinutoE) {
                                 $respuesta = false;
                             }
@@ -4688,6 +5542,144 @@ class dispositivosController extends Controller
         return response()->json($respuesta, 200);
     }
 
+    // * ENVIAR TODOS LOS EMPLEADOS Y SELECT DE EMPLEADOS
+    public function selectEmpleadoGlobal(Request $request)
+    {
+        $query = $request->get('query');
+        $select = [];
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        // : TODOS LOS EMPLEADOS
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->get();
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()
+                    ->first();
+                if ($invitado_empleadoIn != null) {
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
+                } else {
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
+                }
+            }
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->get();
+        }
+        // : SELECT DE IDS DE EMPLEADO
+        if (!is_null($query)) {
+            if ($invitadod) {
+                if ($invitadod->verTodosEmps == 1) {
+                    $empleadoSelect = DB::table('empleado as e')
+                        ->select('e.emple_id')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where(function ($where) use ($query) {
+                            foreach ($query as $q) {
+                                $parametro = explode(".", $q)[0];
+                                $id = explode(".", $q)[1];
+                                $where->orWhere('e.' . $parametro, '=', $id);
+                            }
+                        })
+                        ->get();
+                } else {
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()
+                        ->first();
+                    if ($invitado_empleadoIn != null) {
+                        $empleadoSelect = DB::table('empleado as e')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
+                            ->get();
+                    } else {
+                        $empleadoSelect = DB::table('empleado as e')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where(function ($where) use ($query) {
+                                foreach ($query as $q) {
+                                    $parametro = explode(".", $q)[0];
+                                    $id = explode(".", $q)[1];
+                                    $where->orWhere('e.' . $parametro, '=', $id);
+                                }
+                            })
+                            ->get();
+                    }
+                }
+            } else {
+                $empleadoSelect = DB::table('empleado as e')
+                    ->select('e.emple_id')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->where(function ($where) use ($query) {
+                        foreach ($query as $q) {
+                            $parametro = explode(".", $q)[0];
+                            $id = explode(".", $q)[1];
+                            $where->orWhere('e.' . $parametro, '=', $id);
+                        }
+                    })
+                    ->get();
+            }
+            foreach ($empleadoSelect as $e) {
+                array_push($select, $e->emple_id);
+            }
+        }
+        return response()->json(array("empleado" => $empleado, "select" => $select), 200);
+    }
     // * ENVIAR EMPLEADOS
     public function empleadosBusqueda(Request $request)
     {
@@ -4698,183 +5690,11 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()
             ->first();
-        if (is_array($query)) {
-            if (!in_array("0", $query)) {
-                if ($invitadod) {
-                    if ($invitadod->verTodosEmps == 1) {
-                        $empleado = DB::table('empleado as e')
-                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            // ->where('e.' . $parametro, '=', $id)
-                            ->where(function ($where) use ($query) {
-                                foreach ($query as $q) {
-                                    $parametro = explode(".", $q)[0];
-                                    $id = explode(".", $q)[1];
-                                    $where->orWhere('e.' . $parametro, '=', $id);
-                                }
-                            })
-                            ->get();
-                    } else {
-                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                            ->where('invem.area_id', '=', null)
-                            ->where('invem.emple_id', '!=', null)
-                            ->get()
-                            ->first();
-                        if ($invitado_empleadoIn != null) {
-                            $empleado = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.asistencia_puerta', '=', 1)
-                                // ->where('e.' . $parametro, '=', $id)
-                                ->where(function ($where) use ($query) {
-                                    foreach ($query as $q) {
-                                        $parametro = explode(".", $q)[0];
-                                        $id = explode(".", $q)[1];
-                                        $where->orWhere('e.' . $parametro, '=', $id);
-                                    }
-                                })
-                                ->get();
-                        } else {
-                            $empleado = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.asistencia_puerta', '=', 1)
-                                // ->where('e.' . $parametro, '=', $id)
-                                ->where(function ($where) use ($query) {
-                                    foreach ($query as $q) {
-                                        $parametro = explode(".", $q)[0];
-                                        $id = explode(".", $q)[1];
-                                        $where->orWhere('e.' . $parametro, '=', $id);
-                                    }
-                                })
-                                ->get();
-                        }
-                    }
-                } else {
-                    $empleado = DB::table('empleado as e')
-                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.asistencia_puerta', '=', 1)
-                        // ->where('e.' . $parametro, '=', $id)
-                        ->where(function ($where) use ($query) {
-                            foreach ($query as $q) {
-                                $parametro = explode(".", $q)[0];
-                                $id = explode(".", $q)[1];
-                                $where->orWhere('e.' . $parametro, '=', $id);
-                            }
-                        })
-                        ->get();
-                }
-            } else {
-                if ($invitadod) {
-                    if ($invitadod->verTodosEmps == 1) {
-                        $empleado = DB::table('empleado as e')
-                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            ->get();
-                    } else {
-                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                            ->where('invem.area_id', '=', null)
-                            ->where('invem.emple_id', '!=', null)
-                            ->get()
-                            ->first();
-                        if ($invitado_empleadoIn != null) {
-                            $empleado = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.asistencia_puerta', '=', 1)
-                                ->get();
-                        } else {
-                            $empleado = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.asistencia_puerta', '=', 1)
-                                ->get();
-                        }
-                    }
-                } else {
-                    $empleado = DB::table('empleado as e')
-                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.asistencia_puerta', '=', 1)
-                        ->get();
-                }
-            }
-        } else {
-            if (!empty($query)) {
-                $parametro = explode(".", $query)[0];
-                $id = explode(".", $query)[1];
-                if ($invitadod) {
-                    if ($invitadod->verTodosEmps == 1) {
-                        $empleado = DB::table('empleado as e')
-                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.asistencia_puerta', '=', 1)
-                            ->where('e.' . $parametro, '=', $id)
-                            ->get();
-                    } else {
-                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                            ->where('invem.area_id', '=', null)
-                            ->where('invem.emple_id', '!=', null)
-                            ->get()
-                            ->first();
-                        if ($invitado_empleadoIn != null) {
-                            $empleado = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.asistencia_puerta', '=', 1)
-                                ->where('e.' . $parametro, '=', $id)
-                                ->get();
-                        } else {
-                            $empleado = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.asistencia_puerta', '=', 1)
-                                ->where('e.' . $parametro, '=', $id)
-                                ->get();
-                        }
-                    }
-                } else {
+        if (!empty($query)) {
+            $parametro = explode(".", $query)[0];
+            $id = explode(".", $query)[1];
+            if ($invitadod) {
+                if ($invitadod->verTodosEmps == 1) {
                     $empleado = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -4882,57 +5702,98 @@ class dispositivosController extends Controller
                         ->where('e.asistencia_puerta', '=', 1)
                         ->where('e.' . $parametro, '=', $id)
                         ->get();
-                }
-            } else {
-                if ($invitadod) {
-                    if ($invitadod->verTodosEmps == 1) {
+                } else {
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()
+                        ->first();
+                    if ($invitado_empleadoIn != null) {
                         $empleado = DB::table('empleado as e')
                             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.asistencia_puerta', '=', 1)
+                            ->where('e.' . $parametro, '=', $id)
                             ->get();
                     } else {
-                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                            ->where('invem.area_id', '=', null)
-                            ->where('invem.emple_id', '!=', null)
-                            ->get()
-                            ->first();
-                        if ($invitado_empleadoIn != null) {
-                            $empleado = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.asistencia_puerta', '=', 1)
-                                ->get();
-                        } else {
-                            $empleado = DB::table('empleado as e')
-                                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                                ->where('invi.estado', '=', 1)
-                                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                                ->where('e.organi_id', '=', session('sesionidorg'))
-                                ->where('e.asistencia_puerta', '=', 1)
-                                ->get();
-                        }
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where('e.' . $parametro, '=', $id)
+                            ->get();
                     }
-                } else {
+                }
+            } else {
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->where('e.' . $parametro, '=', $id)
+                    ->get();
+            }
+        } else {
+            if ($invitadod) {
+                if ($invitadod->verTodosEmps == 1) {
                     $empleado = DB::table('empleado as e')
                         ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.asistencia_puerta', '=', 1)
                         ->get();
+                } else {
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()
+                        ->first();
+                    if ($invitado_empleadoIn != null) {
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->get();
+                    } else {
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->get();
+                    }
                 }
+            } else {
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->get();
             }
         }
+
         return response()->json($empleado, 200);
     }
 }

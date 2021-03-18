@@ -1,5 +1,6 @@
 var calendarioValid=0;
-
+var dataDescanso={};
+var dataFeriados={};
 /*CALENDARIO DISABLED EN REGISTRAR  */
 function calendarioInv() {
     var calendarElInv = document.getElementById("calendarInv");
@@ -262,7 +263,7 @@ function calendario_edit() {
             var event = calendarioedit.getEventById(id);
             if (
                 info.event.textColor == "111111" ||
-                info.event.textColor == "1" ||
+                info.event.textColor == "#775555" ||
                 info.event.textColor == "0"
             ) {
                 if (info.event.textColor == "111111") {
@@ -400,7 +401,11 @@ function calendario_edit() {
             /* CUANNDO NO ES HORARIO */
             if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                    title: info.event.title
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaAdic +
+                        ' <br> Se paga: ' +info.event.extendedProps.horaF
                 });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
@@ -1015,7 +1020,13 @@ function laborableTem() {
     }
     var tipoRegDescansoE=$("#NuevoOEdito").val(); //si es 1 registro nuevo empleado, 0 edito nada mas empleado
     //$('#myModal').modal('show');
-    console.log('tipoRegDescansoE'+tipoRegDescansoE);
+    let codigoDescanso=$('#codigoDescanso').val();
+    let pagadoDescanso;
+    if ($('#sepagaDCheck').is(':checked')) {
+        pagadoDescanso=1;
+    } else{
+        pagadoDescanso=0;
+    }
     if(tipoRegDescansoE==1){
         $.ajax({
             type: "POST",
@@ -1029,8 +1040,9 @@ function laborableTem() {
                 idDescanoInc,
                 laborable,
                 id_calendario,
-                tipoDes
-
+                tipoDes,
+                codigoDescanso,
+                pagadoDescanso
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1099,7 +1111,9 @@ function laborableTem() {
                 idDescanoInc,
                 laborable,
                 id_calendario,
-                tipoDes,idempleado
+                tipoDes,idempleado,
+                codigoDescanso,
+                pagadoDescanso
 
             },
             headers: {
@@ -1175,6 +1189,13 @@ function diaferiadoTem() {
     } else{
         tipoFeri=1;
     }
+    let codigoFeriado=$('#codigoFeriado').val();
+    let pagadoFeriado;
+    if ($('#sepagaFCheck').is(':checked')) {
+        pagadoFeriado=1;
+    } else{
+        pagadoFeriado=0;
+    }
     //$('#myModal').modal('show');
     if(tipoRegDescansoE==1){
         $.ajax({
@@ -1188,7 +1209,9 @@ function diaferiadoTem() {
                 end,
                 tipoFeri,
                 id_calendario,
-                tipoRegDescansoE, idFeriadoInc
+                tipoRegDescansoE, idFeriadoInc,
+                codigoFeriado,
+                pagadoFeriado
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1251,7 +1274,9 @@ function diaferiadoTem() {
                 tipoFeri,
                 id_calendario,
                 tipoRegDescansoE, idFeriadoInc,
-                idempleado
+                idempleado,
+                codigoFeriado,
+                pagadoFeriado
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1377,7 +1402,7 @@ function nolaborableTem() {
 }
 //*ABRIR MODAL INCIDENCIA
 function agregarinciden() {
-    $("#divPagadoI").hide();
+
     $("#descripcionInciCa").empty();
 
     $("#descripcionInciCa").prop('required',true);
@@ -1385,6 +1410,8 @@ function agregarinciden() {
     $("#inputNuevoIncidencia").val('');
     $("#divSelectIncidencia").show();
     $("#divIncidenciaNuevo").hide();
+    $("#codigoIncidencia").prop('disabled',true);
+    $("#IncpagadoCheck").prop('disabled',true);
     $("#btnAgregaNIncid").show();
 
     var options=$('#descripcionInciCa');
@@ -1456,6 +1483,13 @@ function modalIncidencia() {
     }
     var textDescrip = $("#inputNuevoIncidencia").val();
     var tipoRegDescansoE=$("#NuevoOEdito").val(); //si es 1 registro nuevo empleado, 0 edito nada mas empleado
+    let codigoIncidencia=$('#codigoIncidencia').val();
+    let pagadoIncidencia;
+    if ($('#IncpagadoCheck').is(':checked')) {
+        pagadoIncidencia=1;
+    } else{
+        pagadoIncidencia=0;
+    }
     if(tipoRegDescansoE==1){
         $.ajax({
             type: "post",
@@ -1466,7 +1500,9 @@ function modalIncidencia() {
                 descuentoI: descuentoI,
                 end: fechaFin,
                 nuevoSelect,
-                id_calendario,textDescrip
+                id_calendario,textDescrip,
+                codigoIncidencia,
+                pagadoIncidencia
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1494,7 +1530,9 @@ function modalIncidencia() {
             descuentoI: descuentoI,
             end: fechaFin1,
             nuevoSelect,
-            id_calendario,textDescrip,idempleado
+            id_calendario,textDescrip,idempleado,
+            codigoIncidencia,
+            pagadoIncidencia
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -2119,7 +2157,11 @@ function calendario3() {
             /* CUANNDO NO ES HORARIO */
             if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                    title: info.event.title
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaAdic +
+                        ' <br> Se paga: ' +info.event.extendedProps.horaF
                 });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
@@ -2194,7 +2236,7 @@ function calendario3() {
             var datoscal;
             $.ajax({
                 type: "POST",
-                url: "/empleado/vercalendario",
+                url: "/empleado/calendarioEmpleado",
                 data: {
                     idempleado,
                 },
@@ -2261,7 +2303,11 @@ function calendario4() {
             /* CUANNDO NO ES HORARIO */
             if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                    title: info.event.title
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaAdic +
+                        ' <br> Se paga: ' +info.event.extendedProps.horaF
                 });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
@@ -2336,7 +2382,7 @@ function calendario4() {
             var datoscal;
             $.ajax({
                 type: "POST",
-                url: "/empleado/vercalendario",
+                url: "/empleado/calendarioEmpleado",
                 data: {
                     idempleado,
                 },
@@ -2445,7 +2491,7 @@ function calendario2_ed() {
             var event = calendarioedit.getEventById(id);
             if (
                 info.event.textColor == "111111" ||
-                info.event.textColor == "1" ||
+                info.event.textColor == "#775555" ||
                 info.event.textColor == "0"
             ) {
                 /* UNBIND SOLO UNA VEZ */
@@ -2653,7 +2699,11 @@ function calendario2_ed() {
             /* CUANNDO NO ES HORARIO */
             if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                    title: info.event.title
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaAdic +
+                        ' <br> Se paga: ' +info.event.extendedProps.horaF
                 });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
@@ -6363,7 +6413,15 @@ $("#descripcionInciCa_ed").select2({
     $("#inputNuevoDescanso").val('');
     $("#divDescansoSe").show();
     $("#divDescansoNuevo").hide();
+
+
+    $('#codigoDescanso').val('');
+    $('#codigoDescanso').prop('disabled',true);
+    $("#sepagaDCheck").prop('disabled',true)
+    $("#sepagaDCheck").prop('checked',false)
+
     $("#btnAgregaNDescanso").show();
+
 
     //agregar feriados a select
     $.ajax({
@@ -6379,6 +6437,7 @@ $("#descripcionInciCa_ed").select2({
             },
         },
         success: function (data) {
+            dataDescanso=data;
 
             var option = `<option value="" ></option>`;
 
@@ -6402,6 +6461,10 @@ function nuevoDescansoReg(){
     $("#inputNuevoDescanso").prop('required',true);
     $("#divDescansoSe").hide();
     $("#divDescansoNuevo").show();
+    $('#codigoDescanso').val('');
+    $('#codigoDescanso').prop('disabled',false);
+    $("#sepagaDCheck").prop('disabled',false)
+    $("#sepagaDCheck").prop('checked',false)
     $("#btnAgregaNDescanso").hide();
  }
 //******************FIN REGISTRAR DESCANSO EN REGISTRAR EMPLEADO************ */
@@ -6416,6 +6479,12 @@ function agregarMFeriado() {
     $("#inputNuevoFeriado").val('');
     $("#divFeriadoSe").show();
     $("#divFeriadoNuevo").hide();
+
+    $('#codigoFeriado').val('');
+    $('#codigoFeriado').prop('disabled',true);
+    $("#sepagaFCheck").prop('disabled',true)
+    $("#sepagaFCheck").prop('checked',false)
+
     $("#btnAgregaNFeri").show();
 
     //agregar feriados a select
@@ -6432,6 +6501,7 @@ function agregarMFeriado() {
             },
         },
         success: function (data) {
+            dataFeriados=data;
 
             var option = `<option value="" ></option>`;
 
@@ -6455,6 +6525,12 @@ function agregarMFeriado() {
     $("#inputNuevoFeriado").prop('required',true);
     $("#divFeriadoSe").hide();
     $("#divFeriadoNuevo").show();
+
+    $('#codigoFeriado').val('');
+    $('#codigoFeriado').prop('disabled',false);
+    $("#sepagaFCheck").prop('disabled',true)
+    $("#sepagaFCheck").prop('checked',true)
+
     $("#btnAgregaNFeri").hide();
  }
 //* ******************FIN DE REGISTRO DE FERIADO***********************************  */
@@ -6498,6 +6574,8 @@ $('#descripcionInciCa').on('select2:closing', function (e) {
                         $('#IncpagadoCheck').prop('checked',false);
                     }
 
+                    $('#codigoIncidencia').val(element.inciden_codigo);
+
                 }
 
             });
@@ -6516,5 +6594,36 @@ $('#descripcionInciCa').on('select2:closing', function (e) {
     $("#divIncidenciaNuevo").show();
     $("#btnAgregaNIncid").hide();
     $('#IncpagadoCheck').prop('disabled',false);
+    $('#codigoIncidencia').prop('disabled',false);
+    $('#codigoIncidencia').val('');
     $("#divPagadoI").show();
  }
+
+  //*OBTENR DATA DE DESCANSO
+  $("#nombreDescanso").change(function () {
+    let idDescanso= $("#nombreDescanso").val();
+    $.each(dataDescanso, function (index, value) {
+      if(idDescanso==value.inciden_id){
+          $('#codigoDescanso').val(value.inciden_codigo);
+           if(value.inciden_pagado==1){
+               $("#sepagaDCheck").prop('checked',true);
+           } else{
+               $("#sepagaDCheck").prop('checked',false);
+           }
+      }
+   });
+});
+ //*OBTENR DATA DE FERIADO
+ $("#nombreFeriado").change(function () {
+    let idFeriado= $("#nombreFeriado").val();
+    $.each(dataFeriados, function (index, value) {
+      if(idFeriado==value.inciden_id){
+          $('#codigoFeriado').val(value.inciden_codigo);
+           if(value.inciden_pagado==1){
+               $("#sepagaFCheck").prop('checked',true);
+           } else{
+               $("#sepagaFCheck").prop('checked',false);
+           }
+      }
+   });
+});

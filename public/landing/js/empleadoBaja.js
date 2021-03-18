@@ -632,9 +632,9 @@ function RefreshTablaEmpleado() {
                             $("#selectBtn").on("click", function () {
                                 //*reseteamos para que no coga con cache
                                 that
-                                .search( '' )
-                                .columns().search( '' )
-                                .draw();
+                                    .search('')
+                                    .columns().search('')
+                                    .draw();
 
                                 var selector = $("#select").val();
 
@@ -643,7 +643,7 @@ function RefreshTablaEmpleado() {
                                 var val = $("#global_filter").val();
 
                                 //*if valor es diferente null entonces buscamos
-                                if(val!=null || val!=''){
+                                if (val != null || val != '') {
                                     if (that.column(i).search() !== selector) {
                                         that.column(selector).search(val).draw();
                                     }
@@ -838,9 +838,9 @@ function RefreshTablaEmpleadoBajaArea() {
                             $("#selectBtn").on("click", function () {
                                 //*reseteamos para que no coga con cache
                                 that
-                                .search( '' )
-                                .columns().search( '' )
-                                .draw();
+                                    .search('')
+                                    .columns().search('')
+                                    .draw();
 
                                 var selector = $("#select").val();
 
@@ -849,7 +849,7 @@ function RefreshTablaEmpleadoBajaArea() {
                                 var val = $("#global_filter").val();
 
                                 //*if valor es diferente null entonces buscamos
-                                if(val!=null || val!=''){
+                                if (val != null || val != '') {
                                     if (that.column(i).search() !== selector) {
                                         that.column(selector).search(val).draw();
                                     }
@@ -1535,9 +1535,13 @@ function historialEmpVer() {
                             trReg += `<div class="dropdown-item">
                                         <div class="col-xl-12" style="padding-left: 0px;">
                                             <div class="float-left mt-1">
-                                                <i class="uil-download-alt font-size-18"></i>
+                                                <a href="documEmpleado/${value}" target="_blank" class="p-2">
+                                                    <i class="uil-download-alt font-size-18"></i>
+                                                </a>
                                                 &nbsp;
-                                                <span class="d-inline-block text-truncate" style="max-width: 150px;">${mostrarC}</span>
+                                                <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2" style="color:#000000">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 150px;">${mostrarC}</span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>`;

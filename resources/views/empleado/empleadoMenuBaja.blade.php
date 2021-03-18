@@ -629,7 +629,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="sw-default">Condición de pago</label>
-                                    <select class="form-control" name="v_condicionV" id="v_condicionV" required>
+                                    <select class="form-control" name="v_condicionV" id="v_condicionV" required
+                                        disabled>
                                         <option value="">Seleccionar</option>
                                         @foreach ($condicionP as $condicion)
                                         <option class="" value="{{$condicion->id}}">
@@ -641,7 +642,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="sw-default">Monto</label>
-                                    <input type="number" step=".01" class="form-control" name="v_montoV" id="v_montoV">
+                                    <input type="number" step=".01" class="form-control" name="v_montoV" id="v_montoV"
+                                        disabled>
                                 </div>
                             </div>
                         </div>
@@ -653,7 +655,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fechaIEV" id="m_dia_fechaIEV"
-                                            required="">
+                                            required="" disabled>
                                             <option value="0">Día</option>
                                             @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                 {{$i}}
@@ -663,7 +665,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_mes_fechaIEV" id="m_mes_fechaIEV"
-                                            required="">
+                                            required="" disabled>
                                             <option value="0">Mes</option>
                                             <option class="" value="1">Ene.</option>
                                             <option class="" value="2">Feb.</option>
@@ -682,7 +684,7 @@
                                     <div class="col-md-4">
                                         <select class="form-control" style="padding-left: 5px;
                                                     padding-right: 5px;" name="m_ano_fechaIEV" id="m_ano_fechaIEV"
-                                            required="">
+                                            required="" disabled>
                                             <option value="0">Año</option>
                                             @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
                                                 {{$i}}
@@ -695,7 +697,7 @@
                                 <br>
                                 <div class="form-group">
                                     <label for="">Fecha indefinida</label>
-                                    <input type="checkbox" id="checkboxFechaIEV" name="checkboxFechaIEV">
+                                    <input type="checkbox" id="checkboxFechaIEV" name="checkboxFechaIEV" disabled>
                                 </div>
                                 <div id="ocultarFechaEV">
                                     <label for="">Fecha final</label>
@@ -703,7 +705,8 @@
                                         incorrecta.</span>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <select class="form-control" name="m_dia_fechaFEV" id="m_dia_fechaFEV">
+                                            <select class="form-control" name="m_dia_fechaFEV" id="m_dia_fechaFEV"
+                                                disabled>
                                                 <option value="0">Día</option>
                                                 @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                     {{$i}}</option>
@@ -711,7 +714,8 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <select class="form-control" name="m_mes_fechaFEV" id="m_mes_fechaFEV">
+                                            <select class="form-control" name="m_mes_fechaFEV" id="m_mes_fechaFEV"
+                                                disabled>
                                                 <option value="0">Mes</option>
                                                 <option class="" value="1">Ene.</option>
                                                 <option class="" value="2">Feb.</option>
@@ -729,7 +733,8 @@
                                         </div>
                                         <div class="col-md-4">
                                             <select class="form-control" style="padding-left: 5px;
-                                                        padding-right: 5px;" name="m_ano_fechaFEV" id="m_ano_fechaFEV">
+                                                        padding-right: 5px;" name="m_ano_fechaFEV" id="m_ano_fechaFEV"
+                                                disabled>
                                                 <option value="0">Año</option>
                                                 @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
                                                     </option>
@@ -745,7 +750,7 @@
                             <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que
                                 se le notifique?</label>
                             <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver"
-                                required="">
+                                required="" disabled>
                                 <option value="0">Día</option>
                                 @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
                                     @endfor

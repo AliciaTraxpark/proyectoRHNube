@@ -43,10 +43,10 @@ class EventosUsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        //
         //Verificamos el tipo, si es 1 se registra nuevo, si es cero solo se relaciona con su id
         if( $request->get('tipoFeri')==1){
-            
+
             //obtener tipo de incidencia
             $tipo_incidencia=DB::table('tipo_incidencia')
             ->where('organi_id','=',session('sesionidorg'))
@@ -55,15 +55,15 @@ class EventosUsuarioController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoFeriado');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoFeriado');
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
             $incidencias->sistema=0;
             $incidencias->save();
-          
+
             $idIncidencia=$incidencias->inciden_id;
 
         } else{
@@ -80,16 +80,16 @@ class EventosUsuarioController extends Controller
         $eventos_calendario->laborable=$request->get('laborable');
         $eventos_calendario->inciden_id=$idIncidencia;
         $eventos_calendario->save();
-        
+
         return $eventos_calendario->id;
     }
 
     public function storeDescanso(Request $request)
     {
-        // 
+        //
         //Verificamos el tipo, si es 1 se registra nuevo, si es cero solo se relaciona con su id
         if( $request->get('tipoDes')==1){
-            
+
             //obtener tipo de incidencia
             $tipo_incidencia=DB::table('tipo_incidencia')
             ->where('organi_id','=',session('sesionidorg'))
@@ -98,15 +98,15 @@ class EventosUsuarioController extends Controller
 
             $incidencias=new incidencias();
             $incidencias->idtipo_incidencia= $tipo_incidencia->idtipo_incidencia;
-            $incidencias->inciden_codigo= null;
+            $incidencias->inciden_codigo= $request->get('codigoDescanso');
             $incidencias->inciden_descripcion= $request->get('title');
-            $incidencias->inciden_pagado= 1;
+            $incidencias->inciden_pagado= $request->get('pagadoDescanso');
             $incidencias->users_id=Auth::user()->id;
             $incidencias->organi_id=session('sesionidorg');
             $incidencias->estado=1;
             $incidencias->sistema=0;
             $incidencias->save();
-          
+
             $idIncidencia=$incidencias->inciden_id;
 
         } else{
@@ -123,7 +123,7 @@ class EventosUsuarioController extends Controller
         $eventos_calendario->laborable=$request->get('laborable');
         $eventos_calendario->inciden_id=$idIncidencia;
         $eventos_calendario->save();
-        
+
         return $eventos_calendario->id;
     }
 

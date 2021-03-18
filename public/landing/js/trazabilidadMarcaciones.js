@@ -1590,52 +1590,31 @@ $(function () {
                 return queryParameters;
             },
             processResults: function (data) {
-                var estado = true;
-                if (data.length != 0) {
-                    return {
-                        results: $.map(data, function (item, key) {
-                            var children = [];
-                            for (var k in item) {
-                                var childItem = item[k];
-                                childItem.id = item[k].id;
-                                childItem.text = key + " : " + item[k].descripcion;
-                                children.push(childItem);
-                            }
-                            if (estado) {
-                                estado = false;
-                                return [{
-                                    id: "0",
-                                    text: "Todos los empleados",
-                                    selected: true
-                                }, {
-                                    text: key,
-                                    children: children,
-                                }
-                                ]
-                            } else {
-                                return {
-                                    text: key,
-                                    children: children,
-                                }
-                            }
-                        })
-                    }
-                } else {
-                    return {
-                        results: [{
-                            id: "0",
-                            text: "Todos los empleados",
-                            selected: true
-                        }]
-                    }
+                return {
+                    results: $.map(data, function (item, key) {
+                        var children = [];
+                        for (var k in item) {
+                            var childItem = item[k];
+                            childItem.id = item[k].id;
+                            childItem.text = key + " : " + item[k].descripcion;
+                            children.push(childItem);
+                        }
+                        return {
+                            text: key,
+                            children: children,
+                        }
+                    })
                 }
             },
             cache: true,
-        }
+        },
+        minimumResultsForSearch: 4
     });
     $('#empleadoPor').select2({
+        placeholder: 'Seleccionar empleado',
         multiple: true,
-        closeOnSelect: false
+        closeOnSelect: false,
+        minimumResultsForSearch: 4
     });
     // : INICIO DE SELECT POR 
     $('#selectPor').trigger({
@@ -1644,25 +1623,13 @@ $(function () {
 });
 // : MOSTAR EMPLEADOS
 $('#selectPor').on("change", function () {
-    // * CUANDO SELECIONA DENUEVO TODOS LOS EMPLEADOS
-    var arrayResultado = $(this).val();
-    if (arrayResultado.includes("0")) {
-        var index = arrayResultado.indexOf("0");
-        arrayResultado.splice(index, 1);
-        arrayResultado.forEach(element => {
-            $('#selectPor').find("option[value='" + element + "']").prop("selected", false);
-        });
-    }
-    // * ************* FINALIZACION *******************
     var valueQuery = $(this).val();
     var cantidad = 0;
-    if (valueQuery.length == 0) {
-        return false;
-    }
     $('#empleadoPor').empty();
     $.ajax({
+        async: false,
         type: "GET",
-        url: "/selectEmpleadoModoAP",
+        url: "/selectEmpleadoGlobalAP",
         data: {
             query: valueQuery
         },
@@ -1675,16 +1642,22 @@ $('#selectPor').on("change", function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            cantidad = data.length;
             var contenidoData = ``;
-            data.forEach(element => {
-                contenidoData += `<option value="${element.emple_id}" selected>${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
+            data.empleado.forEach(element => {
+                contenidoData += `<option value="${element.emple_id}">${element.perso_nombre} ${element.perso_apPaterno} ${element.perso_apMaterno}</option>`;
             });
             $('#empleadoPor').append(contenidoData);
+            cantidad = data.select.length;
+            $('#empleadoPor').val(data.select).trigger("change");
             $('#cantidadE').text(cantidad + "\templeados seleccionados.");
         },
         error: function () { }
     });
+    if ($("#empleadoPor").select2('data').length === $("#empleadoPor >option").length) {
+        $('#checkboxTodosEmpleados').prop("checked", true);
+    } else {
+        $('#checkboxTodosEmpleados').prop("checked", false);
+    }
 });
 // : MOSTRAR LA CANTIDAD DE EMPLEADOS SELECIONADOS
 $('#empleadoPor').on('select2:close', function () {
@@ -1692,28 +1665,22 @@ $('#empleadoPor').on('select2:close', function () {
     $('#cantidadE').empty();
     $('#cantidadE').text(cantidad + "\templeados seleccionados.");
 });
-// : CUANDO EL SELECCIONAR POR QUEDE VACIO Y SE CIERRE
-// : SIEMPRE TENER SELECCIONADO POR EMPLEADO
-$('#selectPor').on('select2:closing', function () {
-    console.log($(this).val());
-    if ($(this).val().length == 0) {
-        $(this).val(0).trigger("change");
+$('#empleadoPor').on("change", function () {
+    console.log($("#empleadoPor").select2('data').length, $("#empleadoPor >option").length);
+    if ($("#empleadoPor").select2('data').length === $("#empleadoPor >option").length) {
+        $('#checkboxTodosEmpleados').prop("checked", true);
+    } else {
+        $('#checkboxTodosEmpleados').prop("checked", false);
     }
 });
-// : CUANDO SELECIONE OTRA OPCION QUE NO SEA TODOS LOS EMPLEADOS
-// : SE DESACTIVA TODOS LOS EMPLEADOS
-$('#selectPor').on('select2:selecting', function () {
-    var arrayResultado = $(this).val();
-    if (arrayResultado.includes("0")) {
-        $('#selectPor option[value="0"]').prop("selected", false);
+$('#checkboxTodosEmpleados').on("change", function (event) {
+    if (event.target.checked) {
+        $("#empleadoPor > option").prop("selected", "selected");
+        $('#empleadoPor').trigger("change");
+    } else {
+        $('#empleadoPor').val('').trigger('change');
     }
-});
-// : DESACTIVAMOS EL BSUCAR
-$('#selectPor').on('select2:opening select2:closing', function (event) {
-    var $searchfield = $(this).parent().find('.select2-search__field');
-    $searchfield.prop('disabled', true);
-});
-$('#empleadoPor').on('select2:opening select2:closing', function (event) {
-    var $searchfield = $(this).parent().find('.select2-search__field');
-    $searchfield.prop('disabled', true);
+    $('#empleadoPor').trigger({
+        type: 'select2:close'
+    });
 });

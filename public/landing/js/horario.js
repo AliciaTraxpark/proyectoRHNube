@@ -479,7 +479,11 @@ function calendario() {
             right: "Clonar,ClonarInci,borrarHorarios,borrarIncidencias",
         },
         eventRender: function (info) {
+            var idempleado = $('#nombreEmpleado').val();
+            num=$('#nombreEmpleado').val().length;
             $('.tooltip').remove();
+            if(num==1){
+
             if(info.event.textColor=='111111'){
               if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
@@ -551,8 +555,22 @@ function calendario() {
 
             }
             } else{
-                $(info.el).tooltip({ title: info.event.title });
+
+                $(info.el).tooltip({
+                    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                    html: true, title: 'Incidencia: ' + info.event.title +
+                        '<br> Código: ' + info.event.extendedProps.horaI +
+                        '<br> Tipo de Incidencia: ' + info.event.extendedProps.horaF +
+                        ' <br> Se paga: ' +info.event.borderColor
+                });
             }
+            } else{
+                if(num>1){
+                    $(info.el).tooltip({ title: 'Click para ver detalles' });
+                }
+            }
+
+
 
 
         },
@@ -811,12 +829,6 @@ function agregarHorarioSe() {
         })
     }
 };
-
-
-
-
-///////////////////////////////
-
 
 //////////////////////
 $('#guardarHorarioEventos').click(function () {
@@ -5478,7 +5490,7 @@ $(function () {
 function buscadorEmpleadoH(){
     var nombres = $('.nombres');
 
-    var buscando = $('#buscadorHorario').val();
+    var buscando = $('#buscadorHorario').val().toLowerCase();
     var item='';
     for( var i = 0; i < nombres.length; i++ ){
         item = $(nombres[i]).html().toLowerCase();
@@ -5496,7 +5508,7 @@ function buscadorEmpleadoH(){
 function buscadorEmpleadoI(){
     var nombres = $('.nombresInc');
 
-    var buscando = $('#buscadorIncidencia').val();
+    var buscando = $('#buscadorIncidencia').val().toLowerCase();
     var item='';
     for( var i = 0; i < nombres.length; i++ ){
         item = $(nombres[i]).html().toLowerCase();
